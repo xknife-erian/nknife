@@ -4,6 +4,10 @@
 target
 RemoteSystemsTempFiles
 
+.versionsBackup
+.classpath
+.settings
+
 # Package Files #
 *.jar
 *.war
