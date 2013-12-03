@@ -2,7 +2,7 @@ package jknife.mocks;
 
 import java.util.List;
 
-import net.xknife.j.library.DI;
+import net.xknife.library.DI;
 
 import com.google.inject.Injector;
 import com.google.inject.Module;

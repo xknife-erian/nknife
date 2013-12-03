@@ -2,7 +2,7 @@ package jknife.tests.unit.library.utilities;
 
 import java.util.ArrayList;
 
-import net.xknife.j.library.utilities.MongoUtil;
+import net.xknife.library.utilities.MongoUtil;
 
 import org.junit.After;
 import org.junit.Before;

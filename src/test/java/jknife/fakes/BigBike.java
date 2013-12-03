@@ -2,7 +2,7 @@ package jknife.fakes;
 
 import java.util.UUID;
 
-import net.xknife.j.library.utilities.MongoUtil;
+import net.xknife.library.utilities.MongoUtil;
 
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
