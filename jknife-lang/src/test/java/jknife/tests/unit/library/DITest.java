@@ -1,8 +1,8 @@
 package jknife.tests.unit.library;
 
 import jknife.mocks.MockDI;
-import net.xknife.library.DI;
-import net.xknife.library.interfaces.ITranslateable;
+import net.xknife.lang.DI;
+import net.xknife.lang.interfaces.ITranslateable;
 
 import org.junit.After;
 import org.junit.Before;
