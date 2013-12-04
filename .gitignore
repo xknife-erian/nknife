@@ -12,3 +12,4 @@ RemoteSystemsTempFiles
 *.jar
 *.war
 *.ear
+/bin
