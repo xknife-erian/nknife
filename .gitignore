@@ -5,10 +5,10 @@ target
 RemoteSystemsTempFiles
 
 .xml.versionsBackup
-.classpath
 .settings
 
 # Package Files #
 *.jar
 *.war
 *.ear
+/bin
