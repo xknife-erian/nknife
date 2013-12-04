@@ -1,4 +1,4 @@
-package jknife.mocks;
+package net.xknife.web;
 
 import java.lang.reflect.Method;
 import java.util.List;

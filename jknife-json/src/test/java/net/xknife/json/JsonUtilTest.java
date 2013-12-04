@@ -1,4 +1,4 @@
-package jknife.tests.unit.library.utilities;
+package net.xknife.json;
 
 import java.io.IOException;
 import java.util.Date;

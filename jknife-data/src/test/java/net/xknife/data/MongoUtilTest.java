@@ -1,8 +1,8 @@
-package jknife.tests.unit.library.utilities;
+package net.xknife.data;
 
 import java.util.ArrayList;
 
-import net.xknife.library.utilities.MongoUtil;
+import net.xknife.data.MongoUtil;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package net.xknife.library.utilities;
+package net.xknife.data;
 
 import org.bson.types.ObjectId;
 
