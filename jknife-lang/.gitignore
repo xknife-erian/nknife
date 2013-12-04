@@ -1,0 +1,14 @@
+*.class
+
+.metadata
+target
+RemoteSystemsTempFiles
+
+.xml.versionsBackup
+.settings
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/bin
