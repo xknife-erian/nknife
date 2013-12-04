@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-import net.xknife.webknife.interfaces.WebapiMethod;
-import net.xknife.webknife.interfaces.IController.AbstractController;
+import net.xknife.web.interfaces.WebapiMethod;
+import net.xknife.web.interfaces.IController.AbstractController;
 
 import org.apache.commons.dbutils.QueryLoader;
 import org.joda.time.DateTime;

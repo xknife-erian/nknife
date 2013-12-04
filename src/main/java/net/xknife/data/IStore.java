@@ -1,4 +1,4 @@
-package net.xknife.dataknife;
+package net.xknife.data;
 
 import java.util.Iterator;
 import java.util.List;

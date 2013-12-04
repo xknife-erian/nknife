@@ -1,4 +1,4 @@
-package net.xknife.webknife.utilities;
+package net.xknife.web.utilities;
 
 import java.net.InetAddress;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package net.xknife.webknife;
+package net.xknife.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,9 +7,9 @@ import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.xknife.jsonknife.JsonKnife;
+import net.xknife.json.JsonKnife;
 import net.xknife.library.DI;
-import net.xknife.webknife.interfaces.IController;
+import net.xknife.web.interfaces.IController;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;

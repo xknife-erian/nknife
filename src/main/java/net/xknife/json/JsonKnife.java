@@ -1,4 +1,4 @@
-package net.xknife.jsonknife;
+package net.xknife.json;
 
 import java.io.IOException;
 import java.io.StringWriter;

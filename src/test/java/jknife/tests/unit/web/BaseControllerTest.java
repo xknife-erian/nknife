@@ -1,4 +1,4 @@
-package jknife.tests.unit.webknife;
+package jknife.tests.unit.web;
 
 import jknife.mocks.MockController;
 

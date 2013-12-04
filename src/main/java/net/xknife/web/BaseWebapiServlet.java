@@ -1,4 +1,4 @@
-package net.xknife.webknife;
+package net.xknife.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;

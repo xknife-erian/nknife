@@ -1,11 +1,11 @@
-package jknife.tests.unit.dataknife;
+package jknife.tests.unit.data;
 
 import java.io.File;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import jknife.fakes.BigBike;
-import net.xknife.dataknife.IMongo.MongoBase;
+import net.xknife.data.IMongo.MongoBase;
 import net.xknife.library.widgets.OS;
 
 import org.junit.After;

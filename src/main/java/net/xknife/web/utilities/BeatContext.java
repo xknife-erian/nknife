@@ -1,4 +1,4 @@
-package net.xknife.webknife.utilities;
+package net.xknife.web.utilities;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

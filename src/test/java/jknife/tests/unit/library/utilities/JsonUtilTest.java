@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import net.xknife.jsonknife.JsonKnife;
+import net.xknife.json.JsonKnife;
 
 import org.joda.time.DateTime;
 import org.junit.Test;

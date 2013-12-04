@@ -1,4 +1,4 @@
-package net.xknife.webknife.interfaces;
+package net.xknife.web.interfaces;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import net.xknife.jsonknife.JsonKnife;
+import net.xknife.json.JsonKnife;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
