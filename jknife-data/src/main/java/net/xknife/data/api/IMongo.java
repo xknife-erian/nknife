@@ -1,4 +1,4 @@
-package net.xknife.data;
+package net.xknife.data.api;
 
 import java.net.UnknownHostException;
 import java.util.List;

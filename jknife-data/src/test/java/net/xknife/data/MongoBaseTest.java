@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import jknife.fakes.BigBike;
-import net.xknife.data.IMongo.MongoBase;
+import net.xknife.data.api.IMongo.MongoBase;
 import net.xknife.library.widgets.OS;
 
 import org.junit.After;
