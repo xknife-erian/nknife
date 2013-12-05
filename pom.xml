@@ -19,6 +19,7 @@
 		<module>jknife-data</module>
 		<module>jknife-json</module>
 		<module>jknife-web</module>
+		<module>jknife-data-mongo</module>
 	</modules>
 
 	<dependencyManagement>
@@ -44,8 +45,7 @@
 				<version>1.9.5</version>
 				<scope>test</scope>
 			</dependency>
-			<dependency>
-				<!-- mongodb的测试模拟器 -->
+			<dependency><!-- mongodb的测试模拟器 -->
 				<groupId>de.bwaldvogel</groupId>
 				<artifactId>mongo-java-server</artifactId>
 				<version>1.1.1</version>

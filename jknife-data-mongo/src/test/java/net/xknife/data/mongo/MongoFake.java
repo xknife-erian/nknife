@@ -1,4 +1,4 @@
-package jknife.fakes;
+package net.xknife.data.mongo;
 
 import java.net.InetSocketAddress;
 

@@ -1,4 +1,4 @@
-package net.xknife.data;
+package net.xknife.data.mongo;
 
 import org.mongojack.DBQuery;
 import org.mongojack.DBQuery.Query;
