@@ -8,7 +8,7 @@ import java.net.URLDecoder;
 import javax.servlet.http.HttpServletRequest;
 
 import net.xknife.json.JsonKnife;
-import net.xknife.library.DI;
+import net.xknife.lang.DI;
 import net.xknife.web.interfaces.IController;
 
 import com.fasterxml.jackson.core.JsonParseException;

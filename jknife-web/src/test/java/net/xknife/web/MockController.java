@@ -7,8 +7,8 @@ import java.util.Map;
 import net.xknife.web.interfaces.WebapiMethod;
 import net.xknife.web.interfaces.IController.AbstractController;
 
-import org.apache.commons.dbutils.QueryLoader;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import com.google.common.collect.Maps;
 
@@ -38,7 +38,7 @@ public class MockController extends AbstractController
 	}
 
 	@WebapiMethod("method3")
-	public QueryLoader method3()
+	public DateTimeZone method3()
 	{
 		return null;
 	}
