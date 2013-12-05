@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.xknife</groupId>
+		<artifactId>jknife-parent</artifactId>
+		<version>1.0.131201-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jknife-data-mongo</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency><!-- mongodb的测试模拟器 -->
+			<groupId>de.bwaldvogel</groupId>
+			<artifactId>mongo-java-server</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.xknife</groupId>
+			<artifactId>jknife-lang</artifactId>
+			<version>1.0.131201-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.xknife</groupId>
+			<artifactId>jknife-data</artifactId>
+			<version>1.0.131201-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mongojack</groupId>
+			<artifactId>mongojack</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>
