@@ -1,4 +1,4 @@
-package net.xknife.data;
+package net.xknife.data.mongo;
 
 import org.bson.types.ObjectId;
 

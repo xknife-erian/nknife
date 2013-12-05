@@ -26,12 +26,10 @@
 		<dependency>
 			<groupId>com.jolbox</groupId>
 			<artifactId>bonecp</artifactId>
-			<version>0.8.0.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbutils</groupId>
 			<artifactId>commons-dbutils</artifactId>
-			<version>1.5</version>
 		</dependency>
 	</dependencies>
 </project>

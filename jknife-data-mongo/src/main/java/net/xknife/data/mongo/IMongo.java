@@ -1,7 +1,9 @@
-package net.xknife.data.api;
+package net.xknife.data.mongo;
 
 import java.net.UnknownHostException;
 import java.util.List;
+
+import net.xknife.data.api.IStore;
 
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;

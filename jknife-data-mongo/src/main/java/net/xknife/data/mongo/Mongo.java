@@ -1,4 +1,4 @@
-package net.xknife.data;
+package net.xknife.data.mongo;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

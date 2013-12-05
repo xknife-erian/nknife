@@ -1,8 +1,8 @@
-package jknife.fakes;
+package net.xknife.data.mongo;
 
 import java.util.UUID;
 
-import net.xknife.data.MongoUtil;
+import net.xknife.data.mongo.MongoUtil;
 
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
