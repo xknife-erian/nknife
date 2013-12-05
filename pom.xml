@@ -30,7 +30,7 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<!-- 用于多线程测�?-->
+				<!-- 用于多线程测试-->
 				<groupId>com.mycila</groupId>
 				<artifactId>mycila-junit</artifactId>
 				<version>1.4.ga</version>
@@ -151,7 +151,7 @@
 				<artifactId>jackson-datatype-joda</artifactId>
 				<version>${jackson.version}</version>
 			</dependency>
-			<!-- 个别库使�?-->
+			<!-- 个别库使用-->
 			<dependency>
 				<groupId>org.apache.mina</groupId>
 				<artifactId>mina-core</artifactId>
@@ -307,13 +307,13 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>versions-maven-plugin</artifactId>
 					<version>2.1</version>
-					<!--提供了很多目标帮助你管理Maven项目的各种版本信息�?比如列示�?��依赖的最新版本，升级�?��模块的版本号等等�?-->
+					<!--提供了很多目标帮助你管理Maven项目的各种版本信息�?比如列示�?��依赖的最新版本，升级�?��模块的版本号等等�?-->
 				</plugin>
 				<plugin>
 					<groupId>com.pyx4me</groupId>
 					<artifactId>proguard-maven-plugin</artifactId>
 					<version>2.0.4</version>
-					<!-- 代码混淆插件，未配置，故未启�?-->
+					<!-- 代码混淆插件，未配置，故未启�?-->
 				</plugin>
 			</plugins>
 		</pluginManagement>
