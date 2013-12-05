@@ -34,10 +34,17 @@ public class Identities
 	{
 		return Math.abs(random.nextLong());
 	}
+<<<<<<< HEAD
 	//
 	// /**
 	// * 基于Base62编码的SecureRandom随机生成bytes.
 	// */
+=======
+
+	/**
+	 * 基于Base62编码的SecureRandom随机生成bytes.
+	 */
+>>>>>>> 51e27eee47256de0ec3adc8187bc6339e87d5728
 	// public static String randomBase62(final int length) {
 	// byte[] randomBytes = new byte[length];
 	// random.nextBytes(randomBytes);
