@@ -2,7 +2,7 @@ package net.xknife.lang.widgets;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.xknife.lang.exception.VTechnicalException;
+import net.xknife.lang.exception.TechnicalException;
 
 /**
  * 保证只执行一次
@@ -25,11 +25,11 @@ public class OnlyOnceCondition
 
 	private final AtomicBoolean hasChecked = new AtomicBoolean(false);
 
-	public void check() throws VTechnicalException
+	public void check() throws TechnicalException
 	{
 		if (!hasChecked.compareAndSet(false, true))
 		{
-			throw new VTechnicalException(message);
+			throw new TechnicalException(message);
 		}
 	}
 

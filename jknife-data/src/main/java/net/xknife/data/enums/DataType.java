@@ -1,4 +1,4 @@
-package net.xknife.lang.enums;
+package net.xknife.data.enums;
 
 /**
  * @author lukan@jeelu.com

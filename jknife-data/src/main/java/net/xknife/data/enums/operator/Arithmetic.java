@@ -1,4 +1,4 @@
-package net.xknife.lang.enums.operator;
+package net.xknife.data.enums.operator;
 
 /**
  * 运算方式。加，减，乘，除，模

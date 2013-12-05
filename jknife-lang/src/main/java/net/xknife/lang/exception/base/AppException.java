@@ -1,4 +1,4 @@
-package net.xknife.lang.exception;
+package net.xknife.lang.exception.base;
 
 /**
  * 本框架应用异常树的根，系统内一般异常的基类。<BR>

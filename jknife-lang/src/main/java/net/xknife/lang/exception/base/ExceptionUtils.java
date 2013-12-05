@@ -1,4 +1,4 @@
-package net.xknife.lang.exception;
+package net.xknife.lang.exception.base;
 
 import java.io.IOException;
 import java.io.PrintWriter;

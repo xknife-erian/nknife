@@ -1,4 +1,4 @@
-package net.xknife.lang.enums.operator;
+package net.xknife.data.enums.operator;
 
 /**
  * 比较运算符

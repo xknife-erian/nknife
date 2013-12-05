@@ -25,8 +25,8 @@ import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import net.xknife.lang.exception.AppException;
-import net.xknife.lang.exception.VTechnicalException;
+import net.xknife.lang.exception.TechnicalException;
+import net.xknife.lang.exception.base.AppException;
 import net.xknife.lang.widgets.Encoding;
 import net.xknife.lang.widgets.OS;
 import net.xknife.lang.widgets.Sber;
@@ -182,7 +182,7 @@ public class PathUtil
 		return sb.toString();
 	}
 
-	private static StringBuilder simplyStringBuilder(final String url) throws VTechnicalException
+	private static StringBuilder simplyStringBuilder(final String url) throws TechnicalException
 	{
 		StringBuilder sb = new StringBuilder(url.length());
 		StringBuilder path = new StringBuilder();
@@ -203,7 +203,7 @@ public class PathUtil
 
 					if (illegalPath)
 					{
-						throw new VTechnicalException(url);
+						throw new TechnicalException(url);
 					}
 
 					sb.append(path).append('/'); // File.pathSeparatorChar;
@@ -226,7 +226,7 @@ public class PathUtil
 
 					if (!isLegalChar(c))
 					{
-						throw new VTechnicalException(url);
+						throw new TechnicalException(url);
 					}
 
 					illegalPath = false;
@@ -236,7 +236,7 @@ public class PathUtil
 
 		if (illegalPath & (path.length() > 0))
 		{
-			throw new VTechnicalException(url);
+			throw new TechnicalException(url);
 		}
 		else
 		{
@@ -1029,7 +1029,7 @@ public class PathUtil
 	 * @throws IOException
 	 *             创建失败
 	 */
-	public static File createFileIfNoExists(final String path) throws IOException, VTechnicalException
+	public static File createFileIfNoExists(final String path) throws IOException, TechnicalException
 	{
 		String thePath = absolute(path);
 		if (null == thePath)

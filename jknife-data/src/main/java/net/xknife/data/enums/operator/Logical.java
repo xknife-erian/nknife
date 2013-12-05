@@ -1,4 +1,4 @@
-package net.xknife.lang.enums.operator;
+package net.xknife.data.enums.operator;
 
 public enum Logical
 {

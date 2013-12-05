@@ -1,6 +1,6 @@
-package net.xknife.lang.widgets;
+package net.xknife.data;
 
-import net.xknife.lang.enums.operator.Arithmetic;
+import net.xknife.data.enums.operator.Arithmetic;
 
 /**
  * 一个简单公式的字符串表达。可以用在如Sql语句中。

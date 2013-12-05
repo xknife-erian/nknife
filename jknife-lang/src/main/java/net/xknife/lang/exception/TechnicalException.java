@@ -1,12 +1,14 @@
 package net.xknife.lang.exception;
 
+import net.xknife.lang.exception.base.AppException;
+
 /**
  * 技术级异常。
  * 
  * @author lukan@jeelu.com
  * 
  */
-public class VTechnicalException extends AppException
+public class TechnicalException extends AppException
 {
 	private static final long serialVersionUID = -4476926113138034878L;
 
@@ -14,7 +16,7 @@ public class VTechnicalException extends AppException
 	 * @param message
 	 *            记录日志的消息
 	 */
-	public VTechnicalException(final String message)
+	public TechnicalException(final String message)
 	{
 		super("\r技术问题。" + message);
 	}
@@ -23,7 +25,7 @@ public class VTechnicalException extends AppException
 	 * @param logMessage
 	 *            记录日志的消息
 	 */
-	public VTechnicalException(final String logMessage, final int errorNumber)
+	public TechnicalException(final String logMessage, final int errorNumber)
 	{
 		super(logMessage, errorNumber);
 	}
@@ -34,7 +36,7 @@ public class VTechnicalException extends AppException
 	 * @param message
 	 *            记录日志的消息
 	 */
-	public VTechnicalException(final String message, final Throwable cause)
+	public TechnicalException(final String message, final Throwable cause)
 	{
 		super("技术问题。" + message, cause);
 	}
@@ -43,7 +45,7 @@ public class VTechnicalException extends AppException
 	 * @param cause
 	 *            引起异常的原始异常
 	 */
-	public VTechnicalException(final Throwable cause)
+	public TechnicalException(final Throwable cause)
 	{
 		super("技术问题。", cause);
 	}
