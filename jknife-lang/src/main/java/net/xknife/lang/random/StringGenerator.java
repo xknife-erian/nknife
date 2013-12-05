@@ -1,5 +1,7 @@
 package net.xknife.lang.random;
 
+import net.xknife.lang.interfaces.IRandom;
+
 /**
  */
 public class StringGenerator implements IRandom<String>

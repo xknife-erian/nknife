@@ -74,12 +74,12 @@ public class ClassFinder
 				}
 			}
 			Class<?> clazz = classInfo.load();
-			boolean iswebapi = true;
+			boolean isDecorate = true;
 			if (annotation != null)
 			{
-				iswebapi = clazz.isAnnotationPresent(annotation);
+				isDecorate = clazz.isAnnotationPresent(annotation);
 			}
-			if (iswebapi)
+			if (isDecorate)
 			{
 				boolean isBase = true;
 				if (base != null)

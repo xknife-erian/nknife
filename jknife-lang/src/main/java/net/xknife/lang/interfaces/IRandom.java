@@ -1,4 +1,4 @@
-package net.xknife.lang.random;
+package net.xknife.lang.interfaces;
 
 public interface IRandom<T>
 {
