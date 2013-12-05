@@ -3,8 +3,6 @@ package net.xknife.lang.utilities;
 import java.security.SecureRandom;
 import java.util.UUID;
 
-import net.xknife.lang.yy.Encodes;
-
 /**
  * 封装各种生成唯一性ID算法的工具类.
  * 
@@ -37,9 +35,9 @@ public class Identities {
 	/**
 	 * 基于Base62编码的SecureRandom随机生成bytes.
 	 */
-	public static String randomBase62(final int length) {
-		byte[] randomBytes = new byte[length];
-		random.nextBytes(randomBytes);
-		return Encodes.encodeBase62(randomBytes);
-	}
+	// public static String randomBase62(final int length) {
+	// byte[] randomBytes = new byte[length];
+	// random.nextBytes(randomBytes);
+	// return Encodes.encodeBase62(randomBytes);
+	// }
 }
