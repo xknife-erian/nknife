@@ -1,6 +1,4 @@
-package jknife.tests.unit.web;
-
-import net.xknife.web.MockController;
+package net.xknife.web;
 
 import org.junit.After;
 import org.junit.Before;
