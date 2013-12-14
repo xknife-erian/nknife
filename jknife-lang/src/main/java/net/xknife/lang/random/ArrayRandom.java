@@ -9,6 +9,7 @@ import net.xknife.lang.interfaces.IRandom;
 public class ArrayRandom<T> implements IRandom<T>
 {
 	private final T[] array;
+
 	private int len;
 
 	public ArrayRandom(final T[] array)
