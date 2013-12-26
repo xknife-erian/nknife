@@ -1,6 +1,7 @@
 *.class
 
 .metadata
+.idea
 target
 RemoteSystemsTempFiles
 
