@@ -9,30 +9,23 @@
 	</parent>
 
 	<artifactId>jknife-lang</artifactId>
-	<name>jknife</name>
+	<name>jknife-lang</name>
 	<url>http://www.xknife.net/</url>
 
 	<dependencies>
-		<!-- 公共部份 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-		<dependency>
-			<!-- 用于多线程测试 -->
+		<dependency><!-- 用于多线程测试 -->
 			<groupId>com.mycila</groupId>
 			<artifactId>mycila-junit</artifactId>
 		</dependency>
-		<dependency>
-			<!-- 单元测试模拟框架 -->
+		<dependency><!-- 单元测试模拟框架 -->
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 		</dependency>
 		<!-- 以上用于测试 -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -44,10 +37,6 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
 		</dependency>
 
 	</dependencies>

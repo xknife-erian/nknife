@@ -12,7 +12,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
-import com.google.inject.TypeLiteral;
 
 /**
  * 从类路径中查找符合指定条件的类型
@@ -34,13 +33,6 @@ public class ClassFinder
 		{
 		}
 		_ClassinfoSet = classPath.getTopLevelClasses();
-	}
-
-	public static <T> List<Class<T>> find(final TypeLiteral<Class<T>> typeLiteral, final Class<? extends Annotation> annotation, final boolean containAbstract, final String nameFilter)
-	{
-		@SuppressWarnings("unchecked")
-		Class<T> clazz = (Class<T>) typeLiteral.getRawType();
-		return find(clazz, annotation, containAbstract, nameFilter);
 	}
 
 	/**
