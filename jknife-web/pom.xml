@@ -52,5 +52,10 @@
 			<artifactId>jknife-lang</artifactId>
 			<version>1.0.131201-SNAPSHOT</version>
 		</dependency>
+        <dependency>
+            <groupId>net.xknife</groupId>
+            <artifactId>jknife-inject</artifactId>
+            <version>1.0.131201-SNAPSHOT</version>
+        </dependency>
 	</dependencies>
 </project>
