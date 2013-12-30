@@ -26,10 +26,10 @@ import com.google.inject.name.Names;
 public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 {
 	private static final long serialVersionUID = 221407847843999547L;
-	static org.slf4j.Logger _Logger = org.slf4j.LoggerFactory.getLogger(WebapiServlet.class);
+	private static org.slf4j.Logger _Logger = org.slf4j.LoggerFactory.getLogger(WebapiServlet.class);
 
 	/**
-	 * 本项目的API的基础运行函数。本项目约定，绝大多数的API均以POST请求，参数以Json方式传递。
+	 * 本项目的API的基础运行函数。约定，绝大多数的API均以POST请求，参数以Json方式传递。
 	 */
 	@Override
 	protected void runPost(final HttpServletRequest request, final PrintWriter writer)
@@ -37,10 +37,10 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 		String servletPath = request.getServletPath();
 		String[] paths = servletPath.split("/");
 		String moduleName = paths[1];
-		String controlerName = paths[2];
+		String controllerName = paths[2];
 		String methodName = paths[3];
 
-		String controlerFullName = String.format("%s/%s", moduleName, controlerName);
+		String controllerFullName = String.format("%s/%s", moduleName, controllerName);
 		String queryInfo = null;
 		try
 		{
@@ -52,17 +52,17 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 		}
 		try
 		{
-			IController controler = DI.getInstance(Key.get(IController.class, Names.named(controlerFullName)));
+			IController controller = DI.getInstance(Key.get(IController.class, Names.named(controllerFullName)));
 			T params = getParams(queryInfo);// 转换参数为pojo对象
-			controler.process(methodName, params, writer);// 根据找到的controler执行相应的方法
+			controller.process(methodName, params, writer);// 根据找到的controller执行相应的方法
 		}
 		catch (ConfigurationException e)
 		{
-			_Logger.warn(String.format("未通过Guice配置指定的IControler:%s", controlerFullName), e);
+			_Logger.warn(String.format("未通过Guice配置指定的IController:%s", controllerFullName), e);
 		}
 		catch (ProvisionException e)
 		{
-			_Logger.warn(String.format("IControler:%s 实例失败", controlerFullName), e);
+			_Logger.warn(String.format("IController:%s 实例失败", controllerFullName), e);
 		}
 		catch (JsonParseException e)
 		{

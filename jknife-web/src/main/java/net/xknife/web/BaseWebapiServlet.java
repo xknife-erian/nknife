@@ -19,7 +19,7 @@ import com.google.common.base.Strings;
 public abstract class BaseWebapiServlet<T> extends HttpServlet
 {
 	private static final long serialVersionUID = 5870752496794114400L;
-	static org.slf4j.Logger _Logger = org.slf4j.LoggerFactory.getLogger(BaseWebapiServlet.class);
+	private static org.slf4j.Logger _Logger = org.slf4j.LoggerFactory.getLogger(BaseWebapiServlet.class);
 
 	/**
 	 * 收到请求后，打印日志
