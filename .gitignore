@@ -1,15 +1,24 @@
 *.class
+*.iml
+*.ipr
+*.iws
 
-.metadata
-.idea
-target
-RemoteSystemsTempFiles
 
-.xml.versionsBackup
-.settings
+.metadata\
+bin\
+gen\
+target\
 
 # Package Files #
 *.jar
 *.war
 *.ear
-/bin
+/jknife-parent.iml
+
+/jknife-data/*.iml
+/jknife-data-mongo/*.iml
+/jknife-inject/*.iml
+/jknife-json/*.iml
+/jknife-lang/*.iml
+
+/jknife-web/*.iml
