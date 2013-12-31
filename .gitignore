@@ -13,12 +13,4 @@ target\
 *.jar
 *.war
 *.ear
-/jknife-parent.iml
 
-/jknife-data/*.iml
-/jknife-data-mongo/*.iml
-/jknife-inject/*.iml
-/jknife-json/*.iml
-/jknife-lang/*.iml
-
-/jknife-web/*.iml
