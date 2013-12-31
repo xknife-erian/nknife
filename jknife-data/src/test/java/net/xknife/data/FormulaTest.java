@@ -19,28 +19,4 @@ public class FormulaTest
 	{
 	}
 
-	@Test
-	public void testFormula()
-	{
-		fail("尚未实现");
-	}
-
-	@Test
-	public void testAppend()
-	{
-		fail("尚未实现");
-	}
-
-	@Test
-	public void testToStringBuilder()
-	{
-		fail("尚未实现");
-	}
-
-	@Test
-	public void testGetArithmeticOperator()
-	{
-		fail("尚未实现");
-	}
-
 }

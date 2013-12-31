@@ -21,10 +21,10 @@ public class NetUtil
     {
         String ipAddress = "";
 
-        for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();)
+        for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); )
         {
             NetworkInterface net = en.nextElement();
-            for (Enumeration<InetAddress> ip = net.getInetAddresses(); ip.hasMoreElements();)
+            for (Enumeration<InetAddress> ip = net.getInetAddresses(); ip.hasMoreElements(); )
             {
                 InetAddress inetAddress = ip.nextElement();
                 if (!inetAddress.isLoopbackAddress())
