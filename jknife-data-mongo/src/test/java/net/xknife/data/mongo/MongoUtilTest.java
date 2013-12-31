@@ -29,7 +29,7 @@ public class MongoUtilTest
 	public void mongoIdTest()
 	{
 		int expected = 100000;
-		ArrayList<String> ids = new ArrayList<>(expected);
+		ArrayList<String> ids = new ArrayList<String>(expected);
 		for (int i = 0; i < expected; i++)
 		{
 			ids.add(MongoUtil.mongoId());
