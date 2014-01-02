@@ -5,6 +5,11 @@ package gittest;
  */
 public class aaa1
 {
+    public void 芦侃增加的函数5()
+    {
+        //这是我增加的函数。（lukan）
+    }
+
     public void 芦侃增加的函数1()
     {
         //这是我增加的函数。（lukan）
@@ -25,5 +30,16 @@ public class aaa1
     public void fdfffdfdf(){
 
     }
+
+    public void 芦侃增加的函数3()
+    {
+        //这是我增加的函数。（lukan）
+    }
+
+    public void 芦侃增加的函数4()
+    {
+        //这是我增加的函数。（lukan）
+    }
+
 
 }
