@@ -5,4 +5,8 @@ package gittest;
  */
 public class aaa1
 {
+    public void 芦侃增加的函数1()
+    {
+        //这是我增加的函数。（lukan）
+    }
 }
