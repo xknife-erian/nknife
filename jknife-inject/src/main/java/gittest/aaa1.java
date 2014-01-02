@@ -10,7 +10,17 @@ public class aaa1
         //这是我增加的函数。（lukan）
     }
 
+    public void 芦侃增加的函数3()
+    {
+        //这是我增加的函数。（lukan）
+    }
+
     public void 芦侃增加的函数2()
+    {
+        //这是我增加的函数。（lukan）
+    }
+
+    public void 芦侃增加的函数4()
     {
         //这是我增加的函数。（lukan）
     }
