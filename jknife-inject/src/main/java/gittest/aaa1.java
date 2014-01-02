@@ -20,4 +20,7 @@ public class aaa1
     }
 
 
+    public void sdfasdfasdf(){
+
+    }
 }
