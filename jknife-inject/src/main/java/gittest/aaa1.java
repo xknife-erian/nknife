@@ -19,6 +19,10 @@ public class aaa1
     }
 
     public void testset(){
+        //
+    }
+
+    public void fdfffdfdf(){
 
     }
 
