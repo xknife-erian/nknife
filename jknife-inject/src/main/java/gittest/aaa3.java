@@ -5,4 +5,7 @@ package gittest;
  */
 public class aaa3
 {
+    public void sdfsdf(){
+
+    }
 }
