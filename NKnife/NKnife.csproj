@@ -47,6 +47,13 @@
     <Compile Include="Algrithm\IAsyncOperation.cs" />
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="Architecture\ClassLoader.cs" />
+    <Compile Include="Extensions\ArrayExtension.cs" />
+    <Compile Include="Extensions\ControlExtension.cs" />
+    <Compile Include="Extensions\IntegerExtension.cs" />
+    <Compile Include="Extensions\QueryExtension.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Graphics\GraphUtil.cs" />
+    <Compile Include="Graphics\ThemedColors.cs" />
     <Compile Include="GUI\Controls\Container\AppFileNameEditor.cs" />
     <Compile Include="GUI\Controls\Container\WinFormContainer.cs">
       <SubType>Component</SubType>
