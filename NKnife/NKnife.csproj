@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,7 +47,57 @@
     <Compile Include="Algrithm\IAsyncOperation.cs" />
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="Architecture\ClassLoader.cs" />
+    <Compile Include="GUI\Controls\Container\AppFileNameEditor.cs" />
+    <Compile Include="GUI\Controls\Container\WinFormContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\Container\WinFormContainer.Designer.cs" />
+    <Compile Include="GUI\Controls\ExListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\Grouper\Constants.cs" />
+    <Compile Include="GUI\Controls\Grouper\Grouper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\HorizontalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\ISplashForm.cs" />
+    <Compile Include="GUI\Controls\SkinForm\AntiAliasGraphics.cs" />
+    <Compile Include="GUI\Controls\SkinForm\ControlBoxManager.cs" />
+    <Compile Include="GUI\Controls\SkinForm\ControlBoxState.cs" />
+    <Compile Include="GUI\Controls\SkinForm\ControlBoxStyle.cs" />
+    <Compile Include="GUI\Controls\SkinForm\ControlPaintEx.cs" />
+    <Compile Include="GUI\Controls\SkinForm\GraphicsPathHelper.cs" />
+    <Compile Include="GUI\Controls\SkinForm\MouseOperate.cs" />
+    <Compile Include="GUI\Controls\SkinForm\NativeMethods.cs" />
+    <Compile Include="GUI\Controls\SkinForm\RenderHelper.cs" />
+    <Compile Include="GUI\Controls\SkinForm\RoundStyle.cs" />
+    <Compile Include="GUI\Controls\SkinForm\SkinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\SkinForm\SkinFormBackgroundRenderEvent.cs" />
+    <Compile Include="GUI\Controls\SkinForm\SkinFormBorderRenderEvent.cs" />
+    <Compile Include="GUI\Controls\SkinForm\SkinFormCaptionRenderEvent.cs" />
+    <Compile Include="GUI\Controls\SkinForm\SkinFormColorTable.cs" />
+    <Compile Include="GUI\Controls\SkinForm\SkinFormControlBoxRenderEvent.cs" />
+    <Compile Include="GUI\Controls\SkinForm\SkinFormProfessionalRenderer.cs" />
+    <Compile Include="GUI\Controls\SkinForm\SkinFormRenderer.cs" />
+    <Compile Include="GUI\Controls\Splasher.cs" />
+    <Compile Include="GUI\Controls\TabControlEx\Events.cs" />
+    <Compile Include="GUI\Controls\TabControlEx\NativeMethods.cs" />
+    <Compile Include="GUI\Controls\TabControlEx\TabControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\VirticalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -53,6 +105,28 @@
     <Folder Include="Json\" />
     <Folder Include="Lang\" />
     <Folder Include="Web\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computeflag.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\head_1000.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\head_700.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\Controls\Container\WinFormContainer.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
