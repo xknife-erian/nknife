@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algrithm\AsyncOperation.cs" />
+    <Compile Include="Algrithm\AsyncOperationQueue.cs" />
+    <Compile Include="Algrithm\BubbleSort.cs" />
+    <Compile Include="Algrithm\IAsyncOperation.cs" />
+    <Compile Include="Algrithm\OperationResult.cs" />
+    <Compile Include="Architecture\ClassLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
