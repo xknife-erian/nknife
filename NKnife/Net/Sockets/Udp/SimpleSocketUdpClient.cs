@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace NKnife.Net.Socket.Udp
+namespace NKnife.Net.Sockets.Udp
 {
     /// <summary>
     /// FileName: SimpleSocketUdpClient.cs

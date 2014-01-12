@@ -3,8 +3,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using NKnife.Text;
 
-namespace NKnife.Net.Socket.Udp
+namespace NKnife.Net.Sockets.Udp
 {
     /// <summary>
     ///     FileName: SimpleUdpClient.cs

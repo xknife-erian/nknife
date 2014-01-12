@@ -6,7 +6,7 @@ using System.IO;
 
 //代码
 
-namespace NKnife.Graphics
+namespace NKnife.Graph
 {
 
     public class GraphUtil

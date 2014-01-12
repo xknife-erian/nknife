@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace NKnife.Graphics
+namespace NKnife.Graph
 {
     public class ThemedColors
     {
