@@ -30,9 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -114,11 +118,14 @@
     <Compile Include="Platform\IME\GlobeSetIMM.cs" />
     <Compile Include="Platform\IO\Files.cs" />
     <Compile Include="Platform\Timing\AlarmClock.cs" />
+    <Compile Include="Platform\UtilityHardware.cs" />
+    <Compile Include="Platform\UtilityReflection.cs" />
     <Compile Include="Platform\Win32\SysHandler.cs" />
     <Compile Include="Platform\Win32\SystemUtil.cs" />
     <Compile Include="Platform\Win32\Win32Defination.cs" />
     <Compile Include="Platform\Win32\WinMsg.cs" />
     <Compile Include="Platform\Win32\WinMsgUtil.cs" />
+    <Compile Include="Platform\ZipUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -154,6 +161,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\computeflag.gif" />
   </ItemGroup>
   <ItemGroup>
