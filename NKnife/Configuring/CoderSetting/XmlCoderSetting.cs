@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml;
+using NKnife.Configuring.CoderSetting;
 using NLog;
 
 namespace Gean.Configuring.CoderSetting

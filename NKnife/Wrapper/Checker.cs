@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Gean.Resources;
+using NKnife.Resources;
+
 
 namespace Gean
 {

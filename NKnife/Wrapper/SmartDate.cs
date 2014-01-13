@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Resources;
-using Gean.Resources;
+using NKnife.Resources;
 
-namespace Gean
+namespace NKnife.Wrapper
 {
     /// <summary>
     /// 智能日期类型,能够理解"空"日期,能够在日期和空日期之间进行比较。

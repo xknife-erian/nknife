@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
-using System.Reflection;
-using Gean.Resources;
+using Gean;
 using Microsoft.Win32;
+using NKnife.Resources;
 
-namespace Gean
+namespace NKnife.Utility.File
 {
     /// <summary>
     /// 文件与目录等System.IO下的类的扩展
@@ -140,7 +139,7 @@ namespace Gean
             {
                 return false;
             }
-            FileAttributes attr = File.GetAttributes(filename);
+            FileAttributes attr = System.IO.File.GetAttributes(filename);
             return (attr & FileAttributes.Directory) != 0;
         }
 
@@ -250,7 +249,7 @@ namespace Gean
                 foreach (string tmpDir in tmpDirs)
                 {
                     Console.WriteLine(tmpDir);
-                    if (File.GetAttributes(tmpDir) != (FileAttributes.System | FileAttributes.Directory | FileAttributes.Hidden))
+                    if (System.IO.File.GetAttributes(tmpDir) != (FileAttributes.System | FileAttributes.Directory | FileAttributes.Hidden))
                     {
                         rtnDirs.Add(tmpDir);
                         rtnDirs.AddRange(Directory.GetDirectories(tmpDir, searchPattern, searchOption));
@@ -384,17 +383,17 @@ namespace Gean
             foreach (string sourceFileName in Directory.GetFiles(sourceDir))
             {
                 string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PATH_SPLIT_CHAR) + 1));
-                if (File.Exists(targetFileName))
+                if (System.IO.File.Exists(targetFileName))
                 {
                     if (overWrite)
                     {
-                        File.SetAttributes(targetFileName, FileAttributes.Normal);
-                        File.Copy(sourceFileName, targetFileName, true);
+                        System.IO.File.SetAttributes(targetFileName, FileAttributes.Normal);
+                        System.IO.File.Copy(sourceFileName, targetFileName, true);
                     }
                 }
                 else
                 {
-                    File.Copy(sourceFileName, targetFileName, overWrite);
+                    System.IO.File.Copy(sourceFileName, targetFileName, overWrite);
                 }
             }
 
@@ -435,18 +434,18 @@ namespace Gean
             foreach (string sourceFileName in Directory.GetFiles(sourceDir))
             {
                 string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PATH_SPLIT_CHAR) + 1));
-                if (File.Exists(targetFileName))
+                if (System.IO.File.Exists(targetFileName))
                 {
                     if (overWrite)
                     {
-                        File.SetAttributes(targetFileName, FileAttributes.Normal);
-                        File.Delete(targetFileName);
-                        File.Move(sourceFileName, targetFileName);
+                        System.IO.File.SetAttributes(targetFileName, FileAttributes.Normal);
+                        System.IO.File.Delete(targetFileName);
+                        System.IO.File.Move(sourceFileName, targetFileName);
                     }
                 }
                 else
                 {
-                    File.Move(sourceFileName, targetFileName);
+                    System.IO.File.Move(sourceFileName, targetFileName);
                 }
             }
             if (moveSubDir)
@@ -471,8 +470,8 @@ namespace Gean
         {
             foreach (string fileName in Directory.GetFiles(targetDir))
             {
-                File.SetAttributes(fileName, FileAttributes.Normal);
-                File.Delete(fileName);
+                System.IO.File.SetAttributes(fileName, FileAttributes.Normal);
+                System.IO.File.Delete(fileName);
             }
             if (delSubDir)
             {
@@ -771,7 +770,7 @@ namespace Gean
             }
             foreach (string fileName in Directory.GetFiles(sourceDirectory))
             {
-                File.Copy(fileName, Path.Combine(destinationDirectory, Path.GetFileName(fileName)), overwrite);
+                System.IO.File.Copy(fileName, Path.Combine(destinationDirectory, Path.GetFileName(fileName)), overwrite);
             }
             foreach (string directoryName in Directory.GetDirectories(sourceDirectory))
             {
@@ -796,7 +795,7 @@ namespace Gean
             FileInfo[] oldFileAry = oldDirectory.GetFiles();
             foreach (FileInfo aFile in oldFileAry)
             {
-                File.Copy(aFile.FullName, newDirectoryFullName + @"\" + aFile.Name, true);
+                System.IO.File.Copy(aFile.FullName, newDirectoryFullName + @"\" + aFile.Name, true);
             }
 
             DirectoryInfo[] oldDirectoryAry = oldDirectory.GetDirectories();
@@ -952,7 +951,7 @@ namespace Gean
 
             foreach (var f in file)
             {
-                if (ignoreHidden && (File.GetAttributes(f) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                if (ignoreHidden && (System.IO.File.GetAttributes(f) & FileAttributes.Hidden) == FileAttributes.Hidden)
                 {
                     continue;
                 }
@@ -966,7 +965,7 @@ namespace Gean
                 string[] dir = Directory.GetDirectories(directory);
                 foreach (string d in dir)
                 {
-                    if (ignoreHidden && (File.GetAttributes(d) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                    if (ignoreHidden && (System.IO.File.GetAttributes(d) & FileAttributes.Hidden) == FileAttributes.Hidden)
                     {
                         continue;
                     }

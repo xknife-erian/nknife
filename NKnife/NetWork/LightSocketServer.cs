@@ -7,6 +7,7 @@ using System.Threading;
 using Gean.Network.Common;
 using Gean.Network.Interfaces;
 using Gean.Network.Protocol;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Network

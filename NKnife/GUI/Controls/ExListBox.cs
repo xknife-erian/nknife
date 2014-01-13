@@ -19,7 +19,7 @@ namespace NKnife.GUI.Controls
             MeasureItem += ExListBoxMeasureItem;
             DrawItem += ExListBoxDrawItem;
             DrawMode = DrawMode.OwnerDrawVariable;
-            _DefaultConfigImage = Resources.ComputeFlag;
+            _DefaultConfigImage = Properties.Resources.ComputeFlag;
         }
 
         #region IOptionItemManager Members

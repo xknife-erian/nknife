@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Gean.Configuring.Common;
 using Gean.Configuring.Interfaces;
 using Gean.Configuring.OptionCase;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Configuring.Controls

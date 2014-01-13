@@ -2,15 +2,15 @@
 // This source is subject to the GNU General Public License.
 // Please see Notice.txt for details.
 
-using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
-using System.Security;
 using System;
+using System.ComponentModel;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Win32.SafeHandles;
-using System.ComponentModel;
 
-namespace Microsoft.Win32.Ssp
+namespace NKnife.Wrapper.API
 {
 	#region Enums
 

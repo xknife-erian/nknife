@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Gean.Network.Interfaces;
+using NLog;
 
 namespace Gean.Network.Protocol.Implementation
 {
@@ -9,7 +10,7 @@ namespace Gean.Network.Protocol.Implementation
     /// </summary>
     public class Byte4Encoder : IDatagramEncoder
     {
-        private static readonly NLog.Logger _Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger _Logger = NLog.LogManager.GetCurrentClassLogger();
 
         #region IDatagramEncoder Members
 

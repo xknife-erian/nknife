@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
-namespace Gean.Encrypt
+namespace NKnife.Utility.Encrypt
 {
     /// <summary>
     /// 针对加解密方法的扩展

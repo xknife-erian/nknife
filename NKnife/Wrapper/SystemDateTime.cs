@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Gean.Wrapper.API;
+using NKnife.Wrapper.API;
 
 namespace Gean.Wrapper
 {

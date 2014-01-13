@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Gean.Network.Interfaces;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Network.Protocol

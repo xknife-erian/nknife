@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.VisualBasic;
 
-namespace Gean
+namespace NKnife.Utility
 {
     /// <summary>
     /// 有关字符串String的扩展方法

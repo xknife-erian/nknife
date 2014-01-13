@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Gean;
 using Gean.Net.Common;
 using Gean.Net.Interfaces;
 using Gean.Net.Protocol;
+using Gean.Net.SocketServer;
+using NKnife.Extensions;
 using NLog;
-using System.IO;
-using System.Text;
 
-namespace Gean.Net.SocketServer
+namespace NKnife.Net.SocketServer
 {
     public abstract class AliveSocketServer : AblySocketServer
     {

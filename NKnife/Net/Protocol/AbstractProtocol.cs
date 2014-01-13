@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Gean.Net.Config;
+using NKnife.Extensions;
 using NLog;
 using System.IO;
 

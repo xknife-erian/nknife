@@ -11,6 +11,7 @@ using Gean.Configuring.CoderSetting;
 using Gean.Configuring.Common;
 using Gean.Configuring.Interfaces;
 using Gean.Configuring.OptionCase;
+using NKnife.Configuring.CoderSetting;
 using NLog;
 
 namespace Gean.Configuring.Option

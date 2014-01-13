@@ -8,6 +8,7 @@ using System.Timers;
 using Gean.Network.Common;
 using Gean.Network.Interfaces;
 using Gean.Network.Protocol;
+using NKnife.Extensions;
 using NLog;
 using Timer = System.Timers.Timer;
 
