@@ -10,7 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.Win32.SafeHandles;
 using System.ComponentModel;
 
-namespace NKnife.Wrapper.API
+namespace Microsoft.Win32.Ssp
 {
 	#region Enums
 

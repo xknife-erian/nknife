@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace NKnife.Utility
+namespace Gean
 {
 	/// <summary>
 	/// System.Windows.Forms.ClipboardµÄÀ©Õ¹

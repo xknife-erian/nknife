@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace NKnife.Utility.Math
+namespace Gean.Math
 {
     public class Permutations<T> : IEnumerable<IList<T>>
     {

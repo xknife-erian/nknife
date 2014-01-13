@@ -1,4 +1,4 @@
-﻿namespace NKnife.Wrapper
+﻿namespace Gean.Wrapper
 {
     public enum PersonSex
     {

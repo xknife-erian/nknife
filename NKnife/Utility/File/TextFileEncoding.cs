@@ -1,8 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Text;
+using System.IO;
 
-namespace NKnife.Utility.File
+namespace Gean
 {
     /// <summary>
     /// 用于取得一个文本文件的编码方式(Encoding)。
@@ -65,15 +65,15 @@ namespace NKnife.Utility.File
                 stream.Seek(0, SeekOrigin.Begin);
 
                 int nByte = stream.ReadByte();
-                byte1 = System.Convert.ToByte(nByte);
-                byte2 = System.Convert.ToByte(stream.ReadByte());
+                byte1 = Convert.ToByte(nByte);
+                byte2 = Convert.ToByte(stream.ReadByte());
                 if (stream.Length >= 3)
                 {
-                    byte3 = System.Convert.ToByte(stream.ReadByte());
+                    byte3 = Convert.ToByte(stream.ReadByte());
                 }
                 if (stream.Length >= 4)
                 {
-                    byte4 = System.Convert.ToByte(stream.ReadByte());
+                    byte4 = Convert.ToByte(stream.ReadByte());
                 }
                 //根据文件流的前4个字节判断Encoding
                 //Unicode {0xFF, 0xFE};

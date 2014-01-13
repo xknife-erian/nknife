@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -38,18 +39,24 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algrithm\AsyncOperation.cs" />
@@ -72,6 +79,56 @@
     <Compile Include="Collections\PairList.cs" />
     <Compile Include="Collections\SerializableMap.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
+    <Compile Include="Configuring\CoderSetting\CoderSetting.cs" />
+    <Compile Include="Configuring\CoderSetting\CoderSettingChangeEventArgs.cs" />
+    <Compile Include="Configuring\CoderSetting\CoderSettingLoadedEventArgs.cs" />
+    <Compile Include="Configuring\CoderSetting\CoderSettingMap.cs" />
+    <Compile Include="Configuring\CoderSetting\CoderSettingService.cs" />
+    <Compile Include="Configuring\CoderSetting\CoderSettingXmlFile.cs" />
+    <Compile Include="Configuring\CoderSetting\XmlCoderSetting.cs" />
+    <Compile Include="Configuring\Common\HasModifiedEventArgs.cs" />
+    <Compile Include="Configuring\Common\OptionItemAttribute.cs" />
+    <Compile Include="Configuring\Common\OptionLoadEventArgs.cs" />
+    <Compile Include="Configuring\Common\OptionPanelPrecondition.cs" />
+    <Compile Include="Configuring\Common\OptionTableChangedEventArgs.cs" />
+    <Compile Include="Configuring\Controls\AbstractOptionBoxItem.cs" />
+    <Compile Include="Configuring\Controls\AbstractOptionItemBase.cs" />
+    <Compile Include="Configuring\Controls\OptionControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuring\Delegates.cs" />
+    <Compile Include="Configuring\Interfaces\ICoderSetting.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionBoxItem.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionCaseManager.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionControl.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionDataStore.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionDataTableSchema.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionItemManager.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionListItem.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionManager.cs" />
+    <Compile Include="Configuring\Interfaces\IOptionPanelPrecondition.cs" />
+    <Compile Include="Configuring\Interfaces\IUserApplicationData.cs" />
+    <Compile Include="Configuring\OptionCase\AbstractOptionCaseManager.cs" />
+    <Compile Include="Configuring\OptionCase\OptionCaseItem.cs" />
+    <Compile Include="Configuring\OptionCase\OptionCaseMode.cs" />
+    <Compile Include="Configuring\OptionServiceCoderSetting.cs" />
+    <Compile Include="Configuring\Option\AbstractOptionManager.cs" />
+    <Compile Include="Configuring\Option\OptionDataTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Configuring\Option\XmlDataStore.cs" />
+    <Compile Include="Configuring\Option\ZipDataStore.cs" />
+    <Compile Include="Configuring\UserData\UserApplicationData.cs" />
+    <Compile Include="Data\Common\DatabaseCoderSetting.cs" />
+    <Compile Include="Data\Common\DatabaseHelper.cs" />
+    <Compile Include="Data\Common\DatabaseParms.cs" />
+    <Compile Include="Data\Common\SqlDbHelper.cs" />
+    <Compile Include="Data\Interface\IDatabaseHelper.cs" />
+    <Compile Include="Data\Interface\IDataBaseParameters.cs" />
+    <Compile Include="Data\Interface\IDataReaderProcess.cs" />
+    <Compile Include="Data\Interface\IDataSetProcess.cs" />
+    <Compile Include="Data\Process\ArrayProcess.cs" />
+    <Compile Include="Data\Process\IntProcess.cs" />
     <Compile Include="EventData\ChangedEventArgs.cs" />
     <Compile Include="EventData\EventArgs.cs" />
     <Compile Include="Exceptions\GeanException.cs" />
@@ -82,6 +139,12 @@
     <Compile Include="Extensions\CollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Extensions\DataExtension.cs" />
+    <Compile Include="Extensions\DateTimes\CountOfMonth.cs" />
+    <Compile Include="Extensions\DateTimes\DateTimeExtension.cs" />
+    <Compile Include="Extensions\DateTimes\FluentTimeSpan.cs" />
+    <Compile Include="Extensions\DateTimes\NumberExtension.cs" />
+    <Compile Include="Extensions\DateTimes\RoundTo.cs" />
+    <Compile Include="Extensions\DateTimes\TimeSpanExtension.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\IntegerExtension.cs" />
     <Compile Include="Extensions\LoggerExtension.cs" />
@@ -136,6 +199,208 @@
     <Compile Include="GUI\Controls\VirticalLine.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoControlType.cs" />
+    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanelAttribute.cs" />
+    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanelComparer.cs" />
+    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanelXmlDocument.cs" />
+    <Compile Include="GUI\WinForm\AutoLayoutPanel\GroupBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\AutoLayoutPanel\ValueControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\BoundleMenuStripButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\CloudsControl\CloudCollection.cs" />
+    <Compile Include="GUI\WinForm\CloudsControl\CloudLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\CloudsControl\CloudsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\Common\FileSelectControlStyle.cs" />
+    <Compile Include="GUI\WinForm\DataSelector\DataItemSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\DataSelector\DataItemSelector.Designer.cs">
+      <DependentUpon>DataItemSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WinForm\DataSelector\SelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\DockForm\BouncingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\DockForm\BouncingForm.Designer.cs">
+      <DependentUpon>BouncingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WinForm\DockForm\Common\FormAsyncUpdateDelegate.cs" />
+    <Compile Include="GUI\WinForm\ExceptionUI\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\ExceptionUI\ExceptionDialog.designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WinForm\ExceptionUI\InformationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\Ex\ListViewEx.cs" />
+    <Compile Include="GUI\WinForm\FileSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\Forms\IWelcomeForm.cs" />
+    <Compile Include="GUI\WinForm\Forms\WelcomerScreen.cs" />
+    <Compile Include="GUI\WinForm\GifBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\GroupboxPro\CheckGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\GroupboxPro\CheckGroupBox.Designer.cs">
+      <DependentUpon>CheckGroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WinForm\GroupboxPro\RadioButtonPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\GroupboxPro\RadioGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\GroupboxPro\RadioGroupBox.Designer.cs">
+      <DependentUpon>RadioGroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\AddBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\AlertBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\BackBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\BluetoothBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\CloseBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\DeleteBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\DownloadBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\ForwardBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\IconBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\InfoBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\LogOffBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\MusicBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\PrivateBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\PublicBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\RefreshBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\RestartBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IconBox\ShutdownBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\ImageButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IPAddressControl\DotControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IPAddressControl\FieldChangedEventArgs.cs" />
+    <Compile Include="GUI\WinForm\IPAddressControl\FieldControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IPAddressControl\IPAddressControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\IPAddressControl\IPAddressControlDesigner.cs" />
+    <Compile Include="GUI\WinForm\IPAddressControl\NativeMethods.cs" />
+    <Compile Include="GUI\WinForm\LxLedControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\MarqueeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\MultipleImageToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\NumericLedBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\QuickTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\RegexTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\SelectGroup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\SexSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\SimpleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\SingleLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\SingleRowCheckedListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\SpinnerControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\TaskbarNotifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\ToolStripNetVelocityLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\ToolTipPro.cs" />
+    <Compile Include="GUI\WinForm\TouchNumberBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\TouchNumberBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\WaitMessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\WaitMessageForm.Designer.cs">
+      <DependentUpon>WaitMessageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WinForm\WeekGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\XmlTreeViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Icons\IconHelper.cs" />
+    <Compile Include="Icons\IconListManager.cs" />
     <Compile Include="Interface\Converting\IConverting.cs" />
     <Compile Include="Interface\Generator\IGenerator.cs" />
     <Compile Include="Interface\ICommand.cs" />
@@ -152,17 +417,147 @@
     <Compile Include="Interface\Models\IEntityEditable.cs" />
     <Compile Include="Interface\Parse\IParse.cs" />
     <Compile Include="Interface\Tree\ITree.cs" />
+    <Compile Include="Logging\ExecuteHelper.cs" />
+    <Compile Include="Logging\ILog.cs" />
+    <Compile Include="Logging\LogBase.cs" />
+    <Compile Include="Logging\LogConsole.cs" />
+    <Compile Include="Logging\LogEvent.cs" />
+    <Compile Include="Logging\LogFile.cs" />
+    <Compile Include="Logging\LogFormatter.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LogHelper.cs" />
+    <Compile Include="Logging\LogInstance.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\LogMulti.cs" />
+    <Compile Include="Logging\LogSettings.cs" />
     <Compile Include="Media\MediaSoundPlayerWarrper.cs" />
+    <Compile Include="MvvmBase\FormCommand.cs" />
+    <Compile Include="MvvmBase\Interfaces\IFormCommand.cs" />
+    <Compile Include="MvvmBase\NotificationObject.cs" />
+    <Compile Include="MvvmBase\PropertyInfoHelper.cs" />
+    <Compile Include="NetWork\Common\BufferContainer.cs" />
+    <Compile Include="NetWork\Common\ConnectionStatus.cs" />
+    <Compile Include="NetWork\Common\Delegates.cs" />
+    <Compile Include="NetWork\Common\Enums.cs" />
+    <Compile Include="NetWork\Common\Exceptions.cs" />
+    <Compile Include="NetWork\Common\ReceiveQueue.cs" />
+    <Compile Include="NetWork\Common\SocketAsyncEventArgsPool.cs" />
+    <Compile Include="NetWork\Common\Tcps.cs" />
+    <Compile Include="NetWork\Config\LightSocketClientSetting.cs" />
+    <Compile Include="NetWork\Config\LightSocketServerSetting.cs" />
+    <Compile Include="NetWork\Config\ProtocolSetting.cs" />
+    <Compile Include="NetWork\Interfaces\IDatagramCommandParser.cs" />
+    <Compile Include="NetWork\Interfaces\IDatagramDecoder.cs" />
+    <Compile Include="NetWork\Interfaces\IDatagramEncoder.cs" />
+    <Compile Include="NetWork\Interfaces\IProtocol.cs" />
+    <Compile Include="NetWork\Interfaces\IProtocolContent.cs" />
+    <Compile Include="NetWork\Interfaces\IProtocolHead.cs" />
+    <Compile Include="NetWork\Interfaces\IProtocolPackage.cs" />
+    <Compile Include="NetWork\Interfaces\IProtocolParser.cs" />
+    <Compile Include="NetWork\Interfaces\IProtocolTail.cs" />
+    <Compile Include="NetWork\Interfaces\ISocketBase.cs" />
+    <Compile Include="NetWork\Interfaces\ISocketClient.cs" />
+    <Compile Include="NetWork\Interfaces\ISocketClientSetting.cs" />
+    <Compile Include="NetWork\Interfaces\ISocketServer.cs" />
+    <Compile Include="NetWork\Interfaces\ISocketServerSetting.cs" />
+    <Compile Include="NetWork\LightSocketClient.cs" />
+    <Compile Include="NetWork\LightSocketServer.cs" />
+    <Compile Include="NetWork\Protocol\AbstractProtocol.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\Byte4Decoder.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\Byte4Encoder.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\DatagramCommandParser.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\DatagramDecoder.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\DatagramEncoder.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\EndMarkDecoder.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\EndMarkEncoder.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\ProtocolDataTableDeserializeParser.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\ProtocolDeserializeParser.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\ProtocolHead.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\ProtocolTail.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\ProtocolXmlPackage.cs" />
+    <Compile Include="NetWork\Protocol\Implementation\ProtocolXmlParser.cs" />
+    <Compile Include="NetWork\Protocol\ProtocolContent.cs" />
+    <Compile Include="NetWork\Protocol\ProtocolFactory.cs" />
+    <Compile Include="NetWork\Protocol\ProtocolFamily.cs" />
+    <Compile Include="NetWork\Protocol\ProtocolFamilyType.cs" />
+    <Compile Include="NetWork\Protocol\ProtocolTools.cs" />
+    <Compile Include="NetWork\QuickSocket.cs" />
+    <Compile Include="Net\Common\BufferPool\BufferManager.cs" />
+    <Compile Include="Net\Common\BufferPool\LockFreeFastPool.cs" />
+    <Compile Include="Net\Common\BufferPool\LockFreeItem.cs" />
+    <Compile Include="Net\Common\BufferPool\LockFreePool.cs" />
+    <Compile Include="Net\Common\BufferPool\LockFreeQueue.cs" />
+    <Compile Include="Net\Common\BufferPool\LockFreeStack.cs" />
+    <Compile Include="Net\Common\BufferPool\SmartBufferPool.cs" />
+    <Compile Include="Net\Common\Buffer\BufferFormat.cs" />
+    <Compile Include="Net\Common\Buffer\BufferList.cs" />
+    <Compile Include="Net\Common\Buffer\Buffers.cs" />
+    <Compile Include="Net\Common\Buffer\FormatClassAttibutes.cs" />
+    <Compile Include="Net\Common\Buffer\ReadBytes.cs" />
+    <Compile Include="Net\Common\Delegates.cs" />
+    <Compile Include="Net\Common\Enums.cs" />
+    <Compile Include="Net\Common\Exceptions.cs" />
+    <Compile Include="Net\Common\ReceiveQueue.cs" />
+    <Compile Include="Net\Common\Tcps.cs" />
+    <Compile Include="Net\Config\AliveSocketClientSetting.cs" />
+    <Compile Include="Net\Config\AliveSocketServerSetting.cs" />
+    <Compile Include="Net\Config\ProtocolSetting.cs" />
     <Compile Include="Net\CurCmd.cs" />
     <Compile Include="Net\EMTASS\DbEvent.cs" />
     <Compile Include="Net\EMTASS\EMTASS21.cs" />
     <Compile Include="Net\EMTASS\SocketSession.cs" />
+    <Compile Include="Net\Interfaces\ISocketBase.cs" />
+    <Compile Include="Net\Interfaces\ISocketClient.cs" />
+    <Compile Include="Net\Interfaces\ISocketClientSetting.cs" />
+    <Compile Include="Net\Interfaces\ISocketServer.cs" />
     <Compile Include="Net\NetUtil.cs" />
+    <Compile Include="Net\Protocol\AbstractProtocol.cs" />
+    <Compile Include="Net\Protocol\General\Byte4Decoder.cs" />
+    <Compile Include="Net\Protocol\General\Byte4Encoder.cs" />
+    <Compile Include="Net\Protocol\General\EndMarkDecoder.cs" />
+    <Compile Include="Net\Protocol\General\EndMarkEncoder.cs" />
+    <Compile Include="Net\Protocol\General\GeneralDatagramCommandParser.cs" />
+    <Compile Include="Net\Protocol\General\GeneralDatagramDecoder.cs" />
+    <Compile Include="Net\Protocol\General\GeneralDatagramEncoder.cs" />
+    <Compile Include="Net\Protocol\General\GeneralProtocolDataTableDeserializeParser.cs" />
+    <Compile Include="Net\Protocol\General\GeneralProtocolDeserializeParser.cs" />
+    <Compile Include="Net\Protocol\General\GeneralProtocolHead.cs" />
+    <Compile Include="Net\Protocol\General\GeneralProtocolTail.cs" />
+    <Compile Include="Net\Protocol\General\GeneralProtocolXmlPackage.cs" />
+    <Compile Include="Net\Protocol\General\GeneralProtocolXmlParser.cs" />
+    <Compile Include="Net\Protocol\General\ProtocolContent.cs" />
+    <Compile Include="Net\Protocol\IDatagramCommandParser.cs" />
+    <Compile Include="Net\Protocol\IDatagramDecoder.cs" />
+    <Compile Include="Net\Protocol\IDatagramEncoder.cs" />
+    <Compile Include="Net\Protocol\IProtocol.cs" />
+    <Compile Include="Net\Protocol\IProtocolContent.cs" />
+    <Compile Include="Net\Protocol\IProtocolHead.cs" />
+    <Compile Include="Net\Protocol\IProtocolPackage.cs" />
+    <Compile Include="Net\Protocol\IProtocolParser.cs" />
+    <Compile Include="Net\Protocol\IProtocolTail.cs" />
+    <Compile Include="Net\Protocol\ISocketServerSetting.cs" />
+    <Compile Include="Net\Protocol\Protocols.cs" />
+    <Compile Include="Net\Protocol\ProtocolsFamily.cs" />
+    <Compile Include="Net\Protocol\ProtocolsFamilyType.cs" />
+    <Compile Include="Net\Protocol\ProtocolTools.cs" />
     <Compile Include="Net\SimpleSocket.cs" />
+    <Compile Include="Net\SocketClient\AblySocketClient.cs" />
+    <Compile Include="Net\SocketClient\SimpleSocket.cs" />
+    <Compile Include="Net\SocketServer\AblySocketServer.cs" />
+    <Compile Include="Net\SocketServer\BufferContainer.cs" />
+    <Compile Include="Net\SocketServer\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Net\SocketWrapper.cs" />
     <Compile Include="Net\Sockets\Udp\SimpleSocketUdpClient.cs" />
     <Compile Include="Net\Sockets\Udp\SimpleUdpClient.cs" />
     <Compile Include="Net\TcpClientConnector.cs" />
+    <Compile Include="Net\Webs\HttpProc.cs" />
+    <Compile Include="Net\Webs\RequestState.cs" />
+    <Compile Include="Net\Webs\ServletClientException.cs" />
+    <Compile Include="Net\Webs\UtilityWebs.cs" />
+    <Compile Include="Net\Webs\WebClientEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Net\Webs\WebRequestBeginGetRequestStream.cs" />
     <Compile Include="Patterns\Option\ProfileManager.cs" />
     <Compile Include="Platform\IME\GlobeSetIMM.cs" />
     <Compile Include="Platform\IO\Files.cs" />
@@ -218,6 +613,13 @@
     <Compile Include="TSQL\MSSql.cs" />
     <Compile Include="Utility\Converts\Converting.cs" />
     <Compile Include="Utility\Converts\UtilityConvert.cs" />
+    <Compile Include="Utility\Drawing\Thumbnail.cs" />
+    <Compile Include="Utility\Drawing\UtilityDrawing.cs" />
+    <Compile Include="Utility\Encrypt\FileMD5.cs" />
+    <Compile Include="Utility\Encrypt\RSACryption.cs" />
+    <Compile Include="Utility\Encrypt\SoftwareSN.cs" />
+    <Compile Include="Utility\Encrypt\TripleDESHelper.cs" />
+    <Compile Include="Utility\Encrypt\UtilityEncrypt.cs" />
     <Compile Include="Utility\File\FileEnums.cs" />
     <Compile Include="Utility\File\FileSearching.cs" />
     <Compile Include="Utility\File\NoDotNetAssemblyFiles.cs" />
@@ -253,16 +655,34 @@
     <Compile Include="Wrapper\API\Secur32.cs" />
     <Compile Include="Wrapper\API\SysDateTime.cs" />
     <Compile Include="Wrapper\Checker.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseIDCardValid.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseRmb.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseSBCAndDBC.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseSpell.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseSpellRandom.cs" />
     <Compile Include="Wrapper\Computer.cs" />
     <Compile Include="Wrapper\CPUInfo.cs" />
     <Compile Include="Wrapper\CSVFile.cs" />
+    <Compile Include="Wrapper\DateTimes\Time.cs" />
     <Compile Include="Wrapper\Duration.cs" />
+    <Compile Include="Wrapper\FTP\FTP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
     <Compile Include="Wrapper\GZip.cs" />
     <Compile Include="Wrapper\IDCardData.cs" />
     <Compile Include="Wrapper\IDGenerator.cs" />
     <Compile Include="Wrapper\IniFile.cs" />
     <Compile Include="Wrapper\LocalRegistry.cs" />
+    <Compile Include="Wrapper\Logger\GLoggerLevel.cs" />
+    <Compile Include="Wrapper\Logger\GLoggerWriter.cs" />
+    <Compile Include="Wrapper\Logger\IGLoggerWriter.cs" />
+    <Compile Include="Wrapper\Logger\LogString.cs" />
+    <Compile Include="Wrapper\Mail\MailSender.cs" />
     <Compile Include="Wrapper\MoreFileZip.cs" />
+    <Compile Include="Wrapper\Mp3\MP3Player.cs" />
+    <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
+    <Compile Include="Wrapper\Mp3\Speech.cs" />
     <Compile Include="Wrapper\PersonSex.cs" />
     <Compile Include="Wrapper\SerialPorter.cs" />
     <Compile Include="Wrapper\SmartDate.cs" />
@@ -270,12 +690,21 @@
     <Compile Include="Wrapper\SystemDateTime.cs" />
     <Compile Include="Wrapper\TaskAlarm.cs" />
     <Compile Include="Wrapper\WMI.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlAttribute.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlElement.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlNode.cs" />
+    <Compile Include="Wrapper\Xml\Linq\AbstractXmlFile.cs" />
+    <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
+    <Compile Include="Wrapper\Xml\XmlFormat.cs" />
+    <Compile Include="Wrapper\Xml\XmlHelper.cs" />
+    <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
+    <Compile Include="Xaml\XamlHelper.cs" />
     <Compile Include="XML\SerializableDictionary.cs" />
     <Compile Include="XML\SerializeUtility.cs" />
     <Compile Include="XML\XmlUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Inject\" />
     <Folder Include="Json\" />
     <Folder Include="Lang\" />
@@ -283,6 +712,33 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.resx" />
+    <EmbeddedResource Include="GUI\WinForm\DataSelector\DataItemSelector.resx">
+      <DependentUpon>DataItemSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\DockForm\BouncingForm.resx">
+      <DependentUpon>BouncingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\ExceptionUI\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\ExceptionUI\InformationPanel.resx">
+      <DependentUpon>InformationPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\GroupboxPro\RadioGroupBox.resx">
+      <DependentUpon>RadioGroupBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\MarqueeControl.resx">
+      <DependentUpon>MarqueeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\SexSelector.resx">
+      <DependentUpon>SexSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\WaitMessageForm.resx">
+      <DependentUpon>WaitMessageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\WeekGroup.resx">
+      <DependentUpon>WeekGroup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -309,6 +765,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\Database.option" />
+    <None Include="NetWork\Framework.cd" />
+    <None Include="NetWork\Freamwork.cd" />
+    <None Include="Net\Gean.Net.Socket.cd" />
     <None Include="packages.config" />
     <None Include="Resources\computeflag.gif" />
   </ItemGroup>
@@ -334,6 +794,26 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NetWork\Config\ConfigDemo.xml" />
+    <Content Include="Net\Config\ConfigDemo.xml" />
+    <Content Include="Resources\BaseActionIcon\Add.ico" />
+    <Content Include="Resources\BaseActionIcon\Alert.ico" />
+    <Content Include="Resources\BaseActionIcon\Back.ico" />
+    <Content Include="Resources\BaseActionIcon\Bluetooth.ico" />
+    <Content Include="Resources\BaseActionIcon\Close.ico" />
+    <Content Include="Resources\BaseActionIcon\Delete.ico" />
+    <Content Include="Resources\BaseActionIcon\Download.ico" />
+    <Content Include="Resources\BaseActionIcon\Forward.ico" />
+    <Content Include="Resources\BaseActionIcon\Info.ico" />
+    <Content Include="Resources\BaseActionIcon\LogOff.ico" />
+    <Content Include="Resources\BaseActionIcon\Music.ico" />
+    <Content Include="Resources\BaseActionIcon\Private.ico" />
+    <Content Include="Resources\BaseActionIcon\Public.ico" />
+    <Content Include="Resources\BaseActionIcon\Refresh.ico" />
+    <Content Include="Resources\BaseActionIcon\Restart.ico" />
+    <Content Include="Resources\BaseActionIcon\Shutdown.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

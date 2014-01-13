@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.Attributes
+namespace Gean.Attributes
 {
     /// <summary>描述当前实体对象的属性在存储到数据表时所在列相关的属性
     /// </summary>

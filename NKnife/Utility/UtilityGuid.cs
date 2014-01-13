@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace NKnife.Utility
+namespace Gean
 {
     /// <summary>
     /// 相关Guid的封装类

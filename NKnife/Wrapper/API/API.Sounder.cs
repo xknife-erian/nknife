@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Runtime.InteropServices;
 
-namespace NKnife.Wrapper.API
+namespace Gean
 {
     public sealed partial class API
     {

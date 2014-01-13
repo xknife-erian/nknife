@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Network.LightSocketClient" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgCFAAIAweAhgQAIASIFGUTgQCEAAAABAgaJBoSIKAg=</HashCode>
+      <FileName>LightSocketClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Network.LightSocketServer" Collapsed="true">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UMQFAAKE0agBIAAAAAI9iEjI4AAAAAABKAKpEACAKEI=</HashCode>
+      <FileName>LightSocketServer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Gean.Network.Interfaces.ISocketClient" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAAAAACAAGAQAACEAAAAAAAQAAAQIAAA=</HashCode>
+      <FileName>Interfaces\ISocketClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.ISocketServer" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAAQAgAIAAAAAAsCAiIAAAAAAABAAAgAAAAAAA=</HashCode>
+      <FileName>Interfaces\ISocketServer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.ISocketBase">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAgIABAAAAAAABAABAAAAAAAABAAAJAACAAAA=</HashCode>
+      <FileName>Interfaces\ISocketBase.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IProtocol">
+    <Position X="5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AiQgAAAAA4BQIAVACAIABABAAAAAAAAAQIAAAAAABAA=</HashCode>
+      <FileName>Interfaces\IProtocol.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IProtocolContent" Collapsed="true">
+    <Position X="7.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAIAAAAAABAAAAAAAAEAIAAACAAAgAAA=</HashCode>
+      <FileName>Interfaces\IProtocolContent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IProtocolTail" Collapsed="true">
+    <Position X="7.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Interfaces\IProtocolTail.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IProtocolHead" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IProtocolHead.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IProtocolPackage" Collapsed="true">
+    <Position X="7.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Interfaces\IProtocolPackage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IProtocolParser" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IProtocolParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IDatagramCommandParser" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Interfaces\IDatagramCommandParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IDatagramEncoder" Collapsed="true">
+    <Position X="2.5" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IDatagramEncoder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Network.Interfaces.IDatagramDecoder" Collapsed="true">
+    <Position X="2.5" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IDatagramDecoder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

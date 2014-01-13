@@ -130,11 +130,9 @@
      Electronics Letters, 32(6), 1996, pp 537-538.
 */
 #endregion
-
 using System;
-using Gean;
 
-namespace NKnife.Utility.Math
+namespace Gean.Math
 {
 
     /// <summary>

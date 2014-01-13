@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace NKnife.Utility
+namespace Gean.Utility
 {
     /// <summary>
     /// 有关DateTime的扩展方法
@@ -52,9 +52,9 @@ namespace NKnife.Utility
             switch (interval)
             {
                 case "y": //返回日期的年份间隔     
-                    return System.Convert.ToInt32(objT.Days/dblYearLen);
+                    return Convert.ToInt32(objT.Days/dblYearLen);
                 case "M": //返回日期的月份间隔     
-                    return System.Convert.ToInt32(objT.Days / dblMonthLen);
+                    return Convert.ToInt32(objT.Days/dblMonthLen);
                 case "d": //返回日期的天数间隔     
                     return objT.Days;
                 case "h": //返回日期的小时间隔     
@@ -91,7 +91,7 @@ namespace NKnife.Utility
             }
             try
             {
-                datetimestr = System.Convert.ToDateTime(datetimestr).ToString("yyyy-MM-dd").Replace("1900-01-01", replacestr);
+                datetimestr = Convert.ToDateTime(datetimestr).ToString("yyyy-MM-dd").Replace("1900-01-01", replacestr);
             }
             catch
             {
@@ -141,7 +141,7 @@ namespace NKnife.Utility
             {
                 return fDateTime;
             }
-            DateTime s = System.Convert.ToDateTime(fDateTime);
+            DateTime s = Convert.ToDateTime(fDateTime);
             return s.ToString(formatStr);
         }
 
@@ -269,7 +269,7 @@ namespace NKnife.Utility
         public static void ThisWeekRange(ref DateTime start, ref DateTime end)
         {
             DateTime dt = DateTime.Today;
-            int weekNow = System.Convert.ToInt32(dt.DayOfWeek);
+            int weekNow = Convert.ToInt32(dt.DayOfWeek);
             int dayDiff = (-1)*weekNow;
             int dayAdd = 6 - weekNow;
             start = DateTime.Now.AddDays(dayDiff).Date;
@@ -294,7 +294,7 @@ namespace NKnife.Utility
             var firstDay = new DateTime(year, 1, 1);
 
             //当年的第一天是星期几
-            int firstOfWeek = System.Convert.ToInt32(firstDay.DayOfWeek);
+            int firstOfWeek = Convert.ToInt32(firstDay.DayOfWeek);
 
             //计算当年第一周的起止日期，可能跨年
             int dayDiff = (-1)*firstOfWeek;

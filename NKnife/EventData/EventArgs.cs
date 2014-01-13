@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.EventData
+namespace Gean
 {
     public class EventArgs<T> : EventArgs
     {

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Runtime.Serialization;
 
-namespace NKnife.Exceptions
+namespace Gean.Exceptions
 {
     /// <summary>
     /// Gean.Library的的基础异常类，所有的异常从本类派生

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Xml;
-using Gean;
+using Gean.Interface;
 
-namespace NKnife.Interface.Models
+namespace Gean
 {
     [Serializable]
     public abstract class AbstractModel : IModel, IToXmlElement

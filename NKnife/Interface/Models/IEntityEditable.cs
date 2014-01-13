@@ -1,6 +1,6 @@
 using System;
 
-namespace NKnife.Interface.Models
+namespace Gean.Interface.Models
 {
     public interface IEntityEditable<T>
         where T : class, new()

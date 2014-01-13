@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Gean.Resources;
 
-namespace NKnife.Utility
+namespace Gean
 {
     public class UtilityRegex
     {

@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Collections;
 
-namespace NKnife.Utility.Math
+namespace Gean.Math
 {
     public class Combinations<T> : IEnumerable<IList<T>>
     {

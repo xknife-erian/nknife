@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace NKnife.Base
+namespace Gean
 {
     /// <summary>
     /// 一个存储了三个值（非键值对类型）的类型。

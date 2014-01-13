@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NKnife.Interface;
-using NKnife.Utility.Math;
 
-namespace NKnife.Wrapper
+namespace Gean
 {
     /// <summary>
     /// 由本框架定义思想构建的ID生成器。本生成器主要思想是将当前时间中的年月日时分替换成一个在当年不可重
@@ -49,7 +47,7 @@ namespace NKnife.Wrapper
             const int timeLength = 366 * 24 * 60;
             char[] src = "ABCDEFGHJKLMNPQRSTWXY23456789".ToCharArray();//减除不易识读的：I,O,U,V,Z,0,1
             _TimeFlag = new List<string>(timeLength);
-            var permut = new Permutations<char>(src, 4);
+            var permut = new Math.Permutations<char>(src, 4);
             int i = 0;
             foreach (char[] charArray in permut)
             {

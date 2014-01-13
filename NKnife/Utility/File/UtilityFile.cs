@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
-using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
+using System.Reflection;
 using Gean.Resources;
 using Microsoft.Win32;
 
-namespace NKnife.Utility.File
+namespace Gean
 {
     /// <summary>
     /// 文件与目录等System.IO下的类的扩展
@@ -138,7 +140,7 @@ namespace NKnife.Utility.File
             {
                 return false;
             }
-            FileAttributes attr = System.IO.File.GetAttributes(filename);
+            FileAttributes attr = File.GetAttributes(filename);
             return (attr & FileAttributes.Directory) != 0;
         }
 
@@ -248,7 +250,7 @@ namespace NKnife.Utility.File
                 foreach (string tmpDir in tmpDirs)
                 {
                     Console.WriteLine(tmpDir);
-                    if (System.IO.File.GetAttributes(tmpDir) != (FileAttributes.System | FileAttributes.Directory | FileAttributes.Hidden))
+                    if (File.GetAttributes(tmpDir) != (FileAttributes.System | FileAttributes.Directory | FileAttributes.Hidden))
                     {
                         rtnDirs.Add(tmpDir);
                         rtnDirs.AddRange(Directory.GetDirectories(tmpDir, searchPattern, searchOption));
@@ -382,17 +384,17 @@ namespace NKnife.Utility.File
             foreach (string sourceFileName in Directory.GetFiles(sourceDir))
             {
                 string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PATH_SPLIT_CHAR) + 1));
-                if (System.IO.File.Exists(targetFileName))
+                if (File.Exists(targetFileName))
                 {
                     if (overWrite)
                     {
-                        System.IO.File.SetAttributes(targetFileName, FileAttributes.Normal);
-                        System.IO.File.Copy(sourceFileName, targetFileName, true);
+                        File.SetAttributes(targetFileName, FileAttributes.Normal);
+                        File.Copy(sourceFileName, targetFileName, true);
                     }
                 }
                 else
                 {
-                    System.IO.File.Copy(sourceFileName, targetFileName, overWrite);
+                    File.Copy(sourceFileName, targetFileName, overWrite);
                 }
             }
 
@@ -433,18 +435,18 @@ namespace NKnife.Utility.File
             foreach (string sourceFileName in Directory.GetFiles(sourceDir))
             {
                 string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PATH_SPLIT_CHAR) + 1));
-                if (System.IO.File.Exists(targetFileName))
+                if (File.Exists(targetFileName))
                 {
                     if (overWrite)
                     {
-                        System.IO.File.SetAttributes(targetFileName, FileAttributes.Normal);
-                        System.IO.File.Delete(targetFileName);
-                        System.IO.File.Move(sourceFileName, targetFileName);
+                        File.SetAttributes(targetFileName, FileAttributes.Normal);
+                        File.Delete(targetFileName);
+                        File.Move(sourceFileName, targetFileName);
                     }
                 }
                 else
                 {
-                    System.IO.File.Move(sourceFileName, targetFileName);
+                    File.Move(sourceFileName, targetFileName);
                 }
             }
             if (moveSubDir)
@@ -469,8 +471,8 @@ namespace NKnife.Utility.File
         {
             foreach (string fileName in Directory.GetFiles(targetDir))
             {
-                System.IO.File.SetAttributes(fileName, FileAttributes.Normal);
-                System.IO.File.Delete(fileName);
+                File.SetAttributes(fileName, FileAttributes.Normal);
+                File.Delete(fileName);
             }
             if (delSubDir)
             {
@@ -769,7 +771,7 @@ namespace NKnife.Utility.File
             }
             foreach (string fileName in Directory.GetFiles(sourceDirectory))
             {
-                System.IO.File.Copy(fileName, Path.Combine(destinationDirectory, Path.GetFileName(fileName)), overwrite);
+                File.Copy(fileName, Path.Combine(destinationDirectory, Path.GetFileName(fileName)), overwrite);
             }
             foreach (string directoryName in Directory.GetDirectories(sourceDirectory))
             {
@@ -794,7 +796,7 @@ namespace NKnife.Utility.File
             FileInfo[] oldFileAry = oldDirectory.GetFiles();
             foreach (FileInfo aFile in oldFileAry)
             {
-                System.IO.File.Copy(aFile.FullName, newDirectoryFullName + @"\" + aFile.Name, true);
+                File.Copy(aFile.FullName, newDirectoryFullName + @"\" + aFile.Name, true);
             }
 
             DirectoryInfo[] oldDirectoryAry = oldDirectory.GetDirectories();
@@ -950,7 +952,7 @@ namespace NKnife.Utility.File
 
             foreach (var f in file)
             {
-                if (ignoreHidden && (System.IO.File.GetAttributes(f) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                if (ignoreHidden && (File.GetAttributes(f) & FileAttributes.Hidden) == FileAttributes.Hidden)
                 {
                     continue;
                 }
@@ -964,7 +966,7 @@ namespace NKnife.Utility.File
                 string[] dir = Directory.GetDirectories(directory);
                 foreach (string d in dir)
                 {
-                    if (ignoreHidden && (System.IO.File.GetAttributes(d) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                    if (ignoreHidden && (File.GetAttributes(d) & FileAttributes.Hidden) == FileAttributes.Hidden)
                     {
                         continue;
                     }

@@ -1,6 +1,6 @@
 ﻿using System;
-using NKnife.Exceptions;
-using NKnife.Interface.Converting;
+using Gean;
+using Gean.Exceptions;
 
 namespace NKnife.Utility.Converts
 {

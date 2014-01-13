@@ -1,6 +1,9 @@
-﻿using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
 
-namespace NKnife.Interface
+namespace Gean.Interface
 {
     public interface IToXmlElement
     {

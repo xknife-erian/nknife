@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace NKnife.Interface
+namespace Gean
 {
     /// <summary>
     /// A basic command interface. A command has simply an owner which "runs" the command

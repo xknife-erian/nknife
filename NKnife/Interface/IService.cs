@@ -1,4 +1,5 @@
-﻿namespace NKnife.Interface
+﻿using System;
+namespace Gean
 {
     /// <summary>
     /// 一个描述应用程序服务的接口

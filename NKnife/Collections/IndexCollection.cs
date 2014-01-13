@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace NKnife.Collections
+namespace Gean
 {
     /// <summary>
     /// 集合基础类（泛型）

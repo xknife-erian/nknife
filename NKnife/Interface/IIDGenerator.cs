@@ -1,4 +1,5 @@
-﻿namespace NKnife.Interface
+﻿using System;
+namespace Gean
 {
     /// <summary>
     /// 定义一个全局ID生成器的接口

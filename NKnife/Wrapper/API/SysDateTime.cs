@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
-namespace NKnife.Wrapper.API
+namespace Gean.Wrapper.API
 {
     /// <summary>
     /// 系统时间的结构封装

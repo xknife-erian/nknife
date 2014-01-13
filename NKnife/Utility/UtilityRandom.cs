@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using NKnife.Utility.Math;
+using Gean.Math;
 
-namespace NKnife.Utility
+namespace Gean
 {
     /// <summary>
     /// 针对.net的Random随机数生成器的扩展。

@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Net.SocketServer.AliveSocketServer" Collapsed="true">
+    <Position X="0.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\SocketServer\AblySocketServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Net.SocketServer.AblySocketServer" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UMQFAAKE0agBIAAAAAI9iEiI4AAAAAABKAKpAACAKEI=</HashCode>
+      <FileName>Net\SocketServer\AblySocketServer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Net.SocketServer.BufferContainer" Collapsed="true">
+    <Position X="9.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAQAAAAAAAAAAAEAAAAAAECACAAAAAEA=</HashCode>
+      <FileName>Net\SocketServer\BufferContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Net.SocketServer.SocketAsyncEventArgsPool" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAABAAAAAAAAQABACAAAAAAAAAAABACAA=</HashCode>
+      <FileName>Net\SocketServer\SocketAsyncEventArgsPool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.SocketClient.AliveSocketClient" Collapsed="true">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\SocketClient\AblySocketClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Net.SocketClient.AblySocketClient" Collapsed="true">
+    <Position X="5.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgCFAAIAw+AhgQAIASIFGcSgQGEAAAABAgaJBoSIKAg=</HashCode>
+      <FileName>Net\SocketClient\AblySocketClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.AbstractProtocol" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiUgAAAAA4BQIAVECAIABABAAAAAAAAAQIAAAAAAJAA=</HashCode>
+      <FileName>Net\Protocol\AbstractProtocol.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.Protocols" Collapsed="true">
+    <Position X="13.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAIAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Net\Protocol\Protocols.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Net.Protocol.ProtocolsFamily" Collapsed="true">
+    <Position X="15" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Net\Protocol\ProtocolsFamily.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Net.Protocol.ProtocolTools" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAIBBAAAQAAAAAAAAAAAAAAACAAAAIDA=</HashCode>
+      <FileName>Net\Protocol\ProtocolTools.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.Byte4Decoder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAQAAAgAAAAABBAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Net\Protocol\General\Byte4Decoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.Byte4Encoder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Net\Protocol\General\Byte4Encoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.EndMarkDecoder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\EndMarkDecoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.EndMarkEncode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\EndMarkEncoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralDatagramCommandParser" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAIAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralDatagramCommandParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralDatagramDecoder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralDatagramDecoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralDatagramEncoder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralDatagramEncoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralProtocolDataTableDeserializeParser" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralProtocolDataTableDeserializeParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralProtocolDeserializeParser" Collapsed="true">
+    <Position X="3.25" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralProtocolDeserializeParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralProtocolHead" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralProtocolHead.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralProtocolTail" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralProtocolTail.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralProtocolXmlPackage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAABAAAAAAAABAABAAAAAAAAAAAABAAAAIAA=</HashCode>
+      <FileName>Net\Protocol\General\GeneralProtocolXmlPackage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.GeneralProtocolXmlParser" Collapsed="true">
+    <Position X="2" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAABAAAAAgIAAQAAAAAAAAAAAAAAEAAIAAAgAQAYAE=</HashCode>
+      <FileName>Net\Protocol\General\GeneralProtocolXmlParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Net.Protocol.General.ProtocolContent" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAIAEAAAABAAAAAAAAEAIAAACAAAgAAA=</HashCode>
+      <FileName>Net\Protocol\General\ProtocolContent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Gean.Net.Protocol.IDatagramCommandParser" Collapsed="true">
+    <Position X="8" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Net\Protocol\IDatagramCommandParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IDatagramDecoder" Collapsed="true">
+    <Position X="9.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\IDatagramDecoder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IDatagramEncoder" Collapsed="true">
+    <Position X="11.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\IDatagramEncoder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IProtocol" Collapsed="true">
+    <Position X="13.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiQgAAAAA4BQIAVACAIABABAAAAAAAAAQIAAAAAABAA=</HashCode>
+      <FileName>Net\Protocol\IProtocol.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IProtocolContent" Collapsed="true">
+    <Position X="15" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAIAAAAAABAAAAAAAAEAIAAACAAAgAAA=</HashCode>
+      <FileName>Net\Protocol\IProtocolContent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IProtocolHead" Collapsed="true">
+    <Position X="8" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\IProtocolHead.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IProtocolPackage" Collapsed="true">
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\IProtocolPackage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IProtocolParser" Collapsed="true">
+    <Position X="11.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\IProtocolParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Protocol.IProtocolTail" Collapsed="true">
+    <Position X="13.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\IProtocolTail.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Interfaces.ISocketServerSetting" Collapsed="true">
+    <Position X="8" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAgAAAAAAACAAIAAAICAAACAABAAAAAAAAAAA=</HashCode>
+      <FileName>Net\Protocol\ISocketServerSetting.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+
+  <Interface Name="Gean.Net.Interfaces.ISocketBase" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAgIABAAAAAAABAAAAAAAAAAABAAAJAACAAAA=</HashCode>
+      <FileName>Net\Interfaces\ISocketBase.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Interfaces.ISocketClient" Collapsed="true">
+    <Position X="2.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAAAAACAAGAQAACEAAAAAAAQAAAQIAAA=</HashCode>
+      <FileName>Net\Interfaces\ISocketClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Net.Interfaces.ISocketServer" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAAQAgAIAAAAAAsCAiIAAAAAAABAAAgAAAAAAA=</HashCode>
+      <FileName>Net\Interfaces\ISocketServer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Gean.Net.Protocol.ProtocolsFamilyType" Collapsed="true">
+    <Position X="8" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEQAQAQAAQAgAAAEAAAAgAAAAAAAAAAQAAAAAIA=</HashCode>
+      <FileName>Net\Protocol\ProtocolsFamilyType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

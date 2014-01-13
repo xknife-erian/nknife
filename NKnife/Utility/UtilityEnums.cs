@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Collections;
 using NKnife.Utility.Converts;
 
-namespace NKnife.Utility
+namespace Gean
 {
     public static class UtilityEnums
     {

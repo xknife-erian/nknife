@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace NKnife.Extensions
+namespace System.Text
 {
     public static class StringBuilderExtension
     {

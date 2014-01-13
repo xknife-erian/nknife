@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
-using NKnife.Utility.File;
 
-namespace NKnife.Wrapper
+namespace Gean.Wrapper
 {
     /// <summary>
     /// 对SharpZipLib的使用进行了一些易用性封装

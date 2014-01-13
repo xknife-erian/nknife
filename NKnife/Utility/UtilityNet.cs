@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Text;
+using System.Runtime.InteropServices;
 using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 
-namespace NKnife.Utility
+namespace Gean
 {
     /// <summary>
     /// 一些简单的基于网络的小型扩展方法
@@ -81,7 +82,7 @@ namespace NKnife.Utility
                 ManagementObjectCollection nics = mc.GetInstances();
                 foreach (ManagementObject nic in nics)
                 {
-                    if (System.Convert.ToBoolean(nic["ipEnabled"]) == true)
+                    if (Convert.ToBoolean(nic["ipEnabled"]) == true)
                     {
                         string ipstr = (nic[ipType] as String[])[0];
                         return IPAddress.Parse(ipstr);

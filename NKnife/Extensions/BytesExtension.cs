@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace NKnife.Extensions
+namespace System
 {
     public static class BytesExtension
     {

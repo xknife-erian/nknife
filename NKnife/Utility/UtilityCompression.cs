@@ -2,8 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 
-namespace NKnife.Utility
+namespace Gean
 {
     /// <summary>对一些压缩方法的封装
     /// </summary>

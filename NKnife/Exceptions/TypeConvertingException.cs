@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace NKnife.Exceptions
+namespace Gean.Exceptions
 {
     /// <summary>
     /// 类型转换异常

@@ -6,7 +6,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 
-namespace NKnife.Wrapper
+namespace Gean
 {
     /// <summary>支持多种多个文件/文件夹的压缩和解压还原(支持中文).工作原理:读取多文件,格式化后,按照某种规则保存到一个文件中
     /// </summary>

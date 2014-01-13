@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
-namespace NKnife.Utility
+namespace Gean
 {
     public static class UtilityEquals
     {

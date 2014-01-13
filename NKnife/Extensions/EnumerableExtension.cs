@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Text;
 
-namespace NKnife.Extensions
+namespace System.Collections
 {
     public static class EnumerableExtension
     {

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace NKnife.EventData
+namespace Gean
 {
     public class ChangedEventArgs<T> : EventArgs
     {

@@ -1,4 +1,8 @@
-﻿namespace NKnife.Interface
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Gean
 {
     /// <summary>
     /// 工厂接口

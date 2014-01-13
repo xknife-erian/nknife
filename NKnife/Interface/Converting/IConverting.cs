@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace NKnife.Interface.Converting
+namespace Gean
 {
     /// <summary>
     /// 值转换成特定类型的接口

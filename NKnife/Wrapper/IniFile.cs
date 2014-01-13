@@ -1,7 +1,8 @@
-using System.Runtime.InteropServices;
+using System;
 using System.Text;
+using System.Runtime.InteropServices;
 
-namespace NKnife.Wrapper
+namespace Gean
 {
     /// <summary>
     /// 一个描述通过系统方法读写INI文件的类型

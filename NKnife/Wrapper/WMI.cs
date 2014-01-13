@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Management;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Management;
 using System.Text;
 
-namespace NKnife.Wrapper
+namespace Rainsoft.Management
 {
 
     #region WMIPath

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using NKnife.Wrapper.API;
+using Gean.Wrapper.API;
 
-namespace NKnife.Wrapper
+namespace Gean.Wrapper
 {
     /// <summary>
     /// 系统时间的修改。
