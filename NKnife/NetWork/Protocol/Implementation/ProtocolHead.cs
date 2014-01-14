@@ -1,4 +1,4 @@
-﻿using Gean.Network.Interfaces;
+﻿using NKnife.NetWork.Interfaces;
 
 namespace Gean.Network.Protocol.Implementation
 {

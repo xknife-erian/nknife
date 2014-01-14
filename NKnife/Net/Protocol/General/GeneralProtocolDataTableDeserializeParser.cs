@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Text;
 using System.Xml;
 using NLog;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     /// <summary>含有序列化对象(DataTable)的解析器
     /// </summary>

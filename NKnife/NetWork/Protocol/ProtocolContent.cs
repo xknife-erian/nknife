@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Collections;
-using Gean.Network.Interfaces;
+using System.Text;
+using NKnife.NetWork.Interfaces;
 
-namespace Gean.Network.Protocol
+namespace NKnife.NetWork.Protocol
 {
     /// <summary>
     /// 一个协议的具体内容。其中：

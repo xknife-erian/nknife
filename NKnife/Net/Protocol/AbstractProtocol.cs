@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gean.Net.Config;
 using NKnife.Extensions;
 using NLog;
-using System.IO;
 
-namespace Gean.Net.Protocol
+namespace NKnife.Net.Protocol
 {
     /// <summary>
     /// 协议的抽象实现

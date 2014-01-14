@@ -1,7 +1,4 @@
-﻿using System;
-using Gean.Net.Protocol;
-
-namespace Gean.Net.Interfaces
+﻿namespace NKnife.Net.Protocol
 {
     public interface ISocketServerSetting
     {

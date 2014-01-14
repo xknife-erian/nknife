@@ -5,11 +5,12 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Network.Interfaces;
+using Gean;
 using NKnife.Extensions;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     /// <summary>
     /// 描述一个将协议内容按指定的格式组装成一个指定类型(一般是字符串，但也可以是任何，如文件)

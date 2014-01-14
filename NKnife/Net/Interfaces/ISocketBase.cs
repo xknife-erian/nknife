@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Gean.Net.Common;
-using Gean.Net.Protocol;
+using NKnife.Net.Protocol;
 
 namespace Gean.Net.Interfaces
 {

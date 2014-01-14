@@ -5,14 +5,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
+using Gean;
 using Gean.Network.Common;
-using Gean.Network.Interfaces;
-using Gean.Network.Protocol;
 using NKnife.Extensions;
+using NKnife.NetWork.Interfaces;
+using NKnife.NetWork.Protocol;
 using NLog;
 using Timer = System.Timers.Timer;
 
-namespace Gean.Network
+namespace NKnife.NetWork
 {
     /// <summary>轻量Socket框架客户端。GEAN原创。
     /// </summary>
@@ -219,7 +220,7 @@ namespace Gean.Network
         /// 协议家族
         /// </summary>
         /// <value>The type of the family.</value>
-        public string FamilyType { get; private set; }
+        public ProtocolFamilyType FamilyType { get; private set; }
 
         #endregion
 
@@ -792,7 +793,7 @@ namespace Gean.Network
                 if (string.IsNullOrWhiteSpace(dg))
                     continue;
                 string command = CommandParser.GetCommand(dg);
-                IProtocol protocol = Protocols.Get(FamilyType, command);
+                IProtocol protocol = Protocols.Get(FamilyType.ToString(), command);
                 string dgByLog = dg;
                 _Logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
                 if (protocol != null)

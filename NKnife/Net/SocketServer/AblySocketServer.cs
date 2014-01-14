@@ -5,18 +5,20 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Gean;
-using Gean.Net.Common;
-using Gean.Net.Interfaces;
-using Gean.Net.Protocol;
-using Gean.Net.SocketServer;
+using Gean.Network.Common;
+using Gean.Network.Protocol;
 using NKnife.Extensions;
+using NKnife.NetWork.Interfaces;
+using NKnife.NetWork.Protocol;
 using NLog;
+using BufferContainer = Gean.Net.SocketServer.BufferContainer;
+using SocketAsyncEventArgsPool = Gean.Net.SocketServer.SocketAsyncEventArgsPool;
 
 namespace NKnife.Net.SocketServer
 {
     public abstract class AliveSocketServer : AblySocketServer
     {
-        protected AliveSocketServer(SocketMode mode, ProtocolsFamilyType family, string host, int port, int maxConnectCount, int maxBufferSize) : 
+        protected AliveSocketServer(SocketMode mode, ProtocolFamilyType family, string host, int port, int maxConnectCount, int maxBufferSize) : 
             base(mode, family, host, port, maxConnectCount, maxBufferSize)
         {
         }
@@ -71,7 +73,7 @@ namespace NKnife.Net.SocketServer
         #region 构造函数
 
         protected AblySocketServer(
-            SocketMode mode, ProtocolsFamilyType family,
+            SocketMode mode, ProtocolFamilyType family,
             string host, int port,
             int maxConnectCount, int maxBufferSize)
         {
@@ -105,7 +107,7 @@ namespace NKnife.Net.SocketServer
 
         public SocketMode Mode { get; internal set; }
 
-        public ProtocolsFamilyType FamilyType { get; internal set; }
+        public ProtocolFamilyType FamilyType { get; internal set; }
 
         /// <summary>接收数据队列MAP,Key是客户端,Value是接收到的数据的队列
         /// </summary>

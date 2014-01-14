@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Xml;
-using Gean.Net.Protocol;
+using Gean;
 using Gean.Configuring.CoderSetting;
+using NKnife.Net.Protocol;
 using NLog;
 
-namespace Gean.Net.Config
+namespace NKnife.Net.Config
 {
     public class ProtocolSetting : XmlCoderSetting
     {

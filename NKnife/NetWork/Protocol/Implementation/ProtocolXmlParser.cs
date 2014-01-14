@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
+using Gean;
 using Gean.Interface;
-using Gean.Network.Interfaces;
 using NKnife.Extensions;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     public class ProtocolXmlParser : IProtocolParser
     {

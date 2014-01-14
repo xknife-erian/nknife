@@ -4,10 +4,11 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Network.Interfaces;
+using Gean;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>

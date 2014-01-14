@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
 using System.IO;
+using System.Text;
 using System.Xml;
-using Gean.Net.Config;
+using System.Xml.Serialization;
+using Gean;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>

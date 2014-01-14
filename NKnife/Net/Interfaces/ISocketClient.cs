@@ -1,6 +1,6 @@
 ﻿using System;
 using Gean.Net.Common;
-using Gean.Net.Protocol;
+
 namespace Gean.Net.Interfaces
 {
     public interface ISocketClient : ISocketBase

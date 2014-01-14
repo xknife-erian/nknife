@@ -1,4 +1,4 @@
-﻿using Gean.Net.Protocol;
+﻿using NKnife.Net.Protocol;
 
 namespace Gean.Net.Interfaces
 {

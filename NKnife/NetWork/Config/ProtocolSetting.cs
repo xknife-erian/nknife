@@ -1,18 +1,42 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Xml;
+using Gean;
 using Gean.Configuring.CoderSetting;
-using Gean.Network.Protocol;
 using NKnife.Extensions;
+using NKnife.NetWork.Protocol;
 using NLog;
 
-namespace Gean.Network.Config
+namespace NKnife.NetWork.Config
 {
-    public abstract class ProtocolSetting : XmlCoderSetting
+    public class ProtocolSetting : XmlCoderSetting
     {
         private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
 
-        protected ProtocolSetting()
+        #region 单件实例
+
+        /// <summary>
+        /// 获得一个本类型的单件实例.
+        /// </summary>
+        /// <value>The instance.</value>
+        public static ProtocolSetting ME
+        {
+            get { return Singleton.Instance; }
+        }
+
+        private class Singleton
+        {
+            internal static readonly ProtocolSetting Instance;
+
+            static Singleton()
+            {
+                Instance = new ProtocolSetting();
+            }
+        }
+
+        #endregion 单件实例
+
+        private ProtocolSetting()
         {
             FamilyMap = new ConcurrentDictionary<string, ProtocolFamily>();
             ProtocolContentMap = new ConcurrentDictionary<string, Type>();

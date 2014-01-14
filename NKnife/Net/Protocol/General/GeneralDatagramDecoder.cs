@@ -1,5 +1,4 @@
 ﻿using System;
-using Gean.Net.Protocol;
 using NKnife.Utility;
 
 namespace NKnife.Net.Protocol.General

@@ -4,7 +4,7 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 using Gean.Net.Common;
-using Gean.Net.Protocol;
+using NKnife.Net.Protocol;
 
 namespace Gean.Net.Interfaces
 {

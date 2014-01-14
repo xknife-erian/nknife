@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Xml;
-using Gean.Network.Interfaces;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     /// <summary>含有序列化对象(DataTable)的解析器
     /// </summary>

@@ -22,21 +22,21 @@ namespace NKnife.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class FilterString {
+    public class FilterString {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FilterString() {
+        public FilterString() {
         }
         
         /// <summary>
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NKnife.Resources.FilterString", typeof(FilterString).Assembly);
@@ -51,7 +51,7 @@ namespace NKnife.Resources {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace NKnife.Resources {
         /// <summary>
         ///   查找类似 All Files|*.* 的本地化字符串。
         /// </summary>
-        internal static string All {
+        public static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace NKnife.Resources {
         /// <summary>
         ///   查找类似 Image Files|*.bmp;*.jpg;*.ico;*.icon;*.png;*.gif;|All Files|*.* 的本地化字符串。
         /// </summary>
-        internal static string Image {
+        public static string Image {
             get {
                 return ResourceManager.GetString("Image", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace NKnife.Resources {
         /// <summary>
         ///   查找类似 Media Files|*.mpg;*.avi;*.wma;*.mov;*.wav;*.mp2;*.mp3|All Files|*.* 的本地化字符串。
         /// </summary>
-        internal static string Media {
+        public static string Media {
             get {
                 return ResourceManager.GetString("Media", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace NKnife.Resources {
         /// <summary>
         ///   查找类似 SimpleSudoku Files (*.simsudo)|*.simsudo|All Files (*.*)|*.* 的本地化字符串。
         /// </summary>
-        internal static string SimpleSudoku {
+        public static string SimpleSudoku {
             get {
                 return ResourceManager.GetString("SimpleSudoku", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace NKnife.Resources {
         /// <summary>
         ///   查找类似 Text Files (*.txt)|*.txt|All Files (*.*)|*.* 的本地化字符串。
         /// </summary>
-        internal static string Txt {
+        public static string Txt {
             get {
                 return ResourceManager.GetString("Txt", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace NKnife.Resources {
         /// <summary>
         ///   查找类似 Xml Files (*.xml)|*.xml|All Files (*.*)|*.* 的本地化字符串。
         /// </summary>
-        internal static string Xml {
+        public static string Xml {
             get {
                 return ResourceManager.GetString("Xml", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace NKnife.Resources {
         /// <summary>
         ///   查找类似 Zip Files (*.zip)|*.zip|All Files (*.*)|*.* 的本地化字符串。
         /// </summary>
-        internal static string Zip {
+        public static string Zip {
             get {
                 return ResourceManager.GetString("Zip", resourceCulture);
             }

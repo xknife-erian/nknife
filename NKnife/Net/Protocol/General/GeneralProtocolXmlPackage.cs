@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Xml;
+using Gean;
 using NKnife.Extensions;
-using NLog;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     /// <summary>
     /// 描述一个将协议内容按指定的格式组装成一个指定类型(一般是字符串，但也可以是任何，如文件)

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.IO;
+using System.Xml;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     /// <summary>
     /// 一个基本的从协议字符串中解析命令字的工具

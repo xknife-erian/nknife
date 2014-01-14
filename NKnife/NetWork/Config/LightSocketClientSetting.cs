@@ -1,9 +1,10 @@
 ﻿using System.Net;
 using System.Xml;
+using Gean;
 using Gean.Configuring.CoderSetting;
-using Gean.Network.Interfaces;
+using NKnife.NetWork.Interfaces;
 
-namespace Gean.Network.Config
+namespace NKnife.NetWork.Config
 {
     public abstract class LightSocketClientSetting : XmlCoderSetting, ISocketClientSetting
     {
@@ -22,6 +23,7 @@ namespace Gean.Network.Config
         public virtual int Port { get; set; }
 
         public int TalkOneLength { get; private set; }
+        public bool EnablePingServer { get; set; }
 
         #endregion
 

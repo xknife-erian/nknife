@@ -1,4 +1,4 @@
-﻿namespace Gean.Network.Interfaces
+﻿namespace NKnife.NetWork.Interfaces
 {
     /// <summary>
     /// 描述Socket服务的消息头。

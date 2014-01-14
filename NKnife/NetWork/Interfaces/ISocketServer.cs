@@ -2,9 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using Gean.Network.Common;
-using Gean.Network.Protocol;
 
-namespace Gean.Network.Interfaces
+namespace NKnife.NetWork.Interfaces
 {
     public interface ISocketServer : ISocketBase
     {

@@ -1,4 +1,4 @@
-﻿namespace Gean.Network.Interfaces
+﻿namespace NKnife.NetWork.Interfaces
 {
     /// <summary>
     /// 从原生消息体中获取命令字

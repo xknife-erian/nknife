@@ -1,10 +1,11 @@
 ﻿using System;
-using Gean.Network.Config;
-using Gean.Network.Interfaces;
+using Gean;
 using NKnife.Extensions;
+using NKnife.NetWork.Config;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Network.Protocol
+namespace NKnife.NetWork.Protocol
 {
     /// <summary>Socket通讯协议工厂
     /// </summary>

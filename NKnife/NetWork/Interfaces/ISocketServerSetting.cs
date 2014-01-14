@@ -1,6 +1,4 @@
-﻿using Gean.Network.Interfaces;
-
-namespace Gean.Network.Protocol
+﻿namespace NKnife.NetWork.Interfaces
 {
     public interface ISocketServerSetting
     {

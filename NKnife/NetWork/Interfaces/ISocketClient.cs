@@ -1,6 +1,6 @@
 ﻿using Gean.Network.Common;
 
-namespace Gean.Network.Interfaces
+namespace NKnife.NetWork.Interfaces
 {
     public interface ISocketClient : ISocketBase
     {

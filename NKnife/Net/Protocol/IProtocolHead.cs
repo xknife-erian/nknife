@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gean.Net.Protocol
+﻿namespace NKnife.Net.Protocol
 {
     /// <summary>
     /// 描述Socket服务的消息头。

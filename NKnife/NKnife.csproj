@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\q-qms-csharp\library\NKnife\</OutputPath>
+    <OutputPath>..\..\q-qms-csharp\trunk\CQMS\Library\NKnife\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\q-qms-csharp\library\NKnife\</OutputPath>
+    <OutputPath>..\..\q-qms-csharp\trunk\CQMS\Library\NKnife\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -485,66 +485,14 @@
     <Compile Include="NetWork\Protocol\ProtocolFactory.cs" />
     <Compile Include="NetWork\Protocol\ProtocolFamily.cs" />
     <Compile Include="NetWork\Protocol\ProtocolFamilyType.cs" />
+    <Compile Include="NetWork\Protocol\Protocols.cs" />
     <Compile Include="NetWork\Protocol\ProtocolTools.cs" />
     <Compile Include="NetWork\QuickSocket.cs" />
-    <Compile Include="Net\Common\BufferPool\BufferManager.cs" />
-    <Compile Include="Net\Common\BufferPool\LockFreeFastPool.cs" />
-    <Compile Include="Net\Common\BufferPool\LockFreeItem.cs" />
-    <Compile Include="Net\Common\BufferPool\LockFreePool.cs" />
-    <Compile Include="Net\Common\BufferPool\LockFreeQueue.cs" />
-    <Compile Include="Net\Common\BufferPool\LockFreeStack.cs" />
-    <Compile Include="Net\Common\BufferPool\SmartBufferPool.cs" />
-    <Compile Include="Net\Common\Buffer\BufferFormat.cs" />
-    <Compile Include="Net\Common\Buffer\BufferList.cs" />
-    <Compile Include="Net\Common\Buffer\Buffers.cs" />
-    <Compile Include="Net\Common\Buffer\FormatClassAttibutes.cs" />
-    <Compile Include="Net\Common\Buffer\ReadBytes.cs" />
-    <Compile Include="Net\Common\Delegates.cs" />
-    <Compile Include="Net\Common\Enums.cs" />
-    <Compile Include="Net\Common\Exceptions.cs" />
-    <Compile Include="Net\Common\ReceiveQueue.cs" />
-    <Compile Include="Net\Common\Tcps.cs" />
-    <Compile Include="Net\Config\AliveSocketClientSetting.cs" />
-    <Compile Include="Net\Config\AliveSocketServerSetting.cs" />
-    <Compile Include="Net\Config\ProtocolSetting.cs" />
     <Compile Include="Net\CurCmd.cs" />
     <Compile Include="Net\EMTASS\DbEvent.cs" />
     <Compile Include="Net\EMTASS\EMTASS21.cs" />
     <Compile Include="Net\EMTASS\SocketSession.cs" />
-    <Compile Include="Net\Interfaces\ISocketBase.cs" />
-    <Compile Include="Net\Interfaces\ISocketClient.cs" />
-    <Compile Include="Net\Interfaces\ISocketClientSetting.cs" />
-    <Compile Include="Net\Interfaces\ISocketServer.cs" />
     <Compile Include="Net\NetUtil.cs" />
-    <Compile Include="Net\Protocol\AbstractProtocol.cs" />
-    <Compile Include="Net\Protocol\General\Byte4Decoder.cs" />
-    <Compile Include="Net\Protocol\General\Byte4Encoder.cs" />
-    <Compile Include="Net\Protocol\General\EndMarkDecoder.cs" />
-    <Compile Include="Net\Protocol\General\EndMarkEncoder.cs" />
-    <Compile Include="Net\Protocol\General\GeneralDatagramCommandParser.cs" />
-    <Compile Include="Net\Protocol\General\GeneralDatagramDecoder.cs" />
-    <Compile Include="Net\Protocol\General\GeneralDatagramEncoder.cs" />
-    <Compile Include="Net\Protocol\General\GeneralProtocolDataTableDeserializeParser.cs" />
-    <Compile Include="Net\Protocol\General\GeneralProtocolDeserializeParser.cs" />
-    <Compile Include="Net\Protocol\General\GeneralProtocolHead.cs" />
-    <Compile Include="Net\Protocol\General\GeneralProtocolTail.cs" />
-    <Compile Include="Net\Protocol\General\GeneralProtocolXmlPackage.cs" />
-    <Compile Include="Net\Protocol\General\GeneralProtocolXmlParser.cs" />
-    <Compile Include="Net\Protocol\General\ProtocolContent.cs" />
-    <Compile Include="Net\Protocol\IDatagramCommandParser.cs" />
-    <Compile Include="Net\Protocol\IDatagramDecoder.cs" />
-    <Compile Include="Net\Protocol\IDatagramEncoder.cs" />
-    <Compile Include="Net\Protocol\IProtocol.cs" />
-    <Compile Include="Net\Protocol\IProtocolContent.cs" />
-    <Compile Include="Net\Protocol\IProtocolHead.cs" />
-    <Compile Include="Net\Protocol\IProtocolPackage.cs" />
-    <Compile Include="Net\Protocol\IProtocolParser.cs" />
-    <Compile Include="Net\Protocol\IProtocolTail.cs" />
-    <Compile Include="Net\Protocol\ISocketServerSetting.cs" />
-    <Compile Include="Net\Protocol\Protocols.cs" />
-    <Compile Include="Net\Protocol\ProtocolsFamily.cs" />
-    <Compile Include="Net\Protocol\ProtocolsFamilyType.cs" />
-    <Compile Include="Net\Protocol\ProtocolTools.cs" />
     <Compile Include="Net\SimpleSocket.cs" />
     <Compile Include="Net\SocketClient\AblySocketClient.cs" />
     <Compile Include="Net\SocketClient\SimpleSocket.cs" />
@@ -802,7 +750,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="NetWork\Config\ConfigDemo.xml" />
-    <Content Include="Net\Config\ConfigDemo.xml" />
     <Content Include="Resources\BaseActionIcon\Add.ico" />
     <Content Include="Resources\BaseActionIcon\Alert.ico" />
     <Content Include="Resources\BaseActionIcon\Back.ico" />

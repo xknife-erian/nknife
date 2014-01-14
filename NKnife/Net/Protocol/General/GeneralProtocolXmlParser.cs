@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
+using Gean;
 using Gean.Interface;
 using NKnife.Extensions;
 using NLog;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     public class GeneralProtocolXmlParser : IProtocolParser
     {

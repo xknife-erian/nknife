@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     public class GeneralProtocolTail : IProtocolTail
     {

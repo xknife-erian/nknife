@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.IO;
-using Gean.Network.Interfaces;
+using NKnife.NetWork.Interfaces;
 
 namespace Gean.Network.Protocol.Implementation
 {

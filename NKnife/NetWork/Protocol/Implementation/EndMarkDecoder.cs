@@ -1,5 +1,5 @@
 ﻿using System;
-using Gean.Network.Interfaces;
+using NKnife.NetWork.Interfaces;
 using NKnife.Utility;
 
 namespace NKnife.NetWork.Protocol.Implementation

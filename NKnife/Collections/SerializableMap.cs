@@ -4,8 +4,9 @@ using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Gean;
 
-namespace Gean.Collections
+namespace NKnife.Collections
 {
     /// <summary>描述一个可序列化的Map类型, 网上流传的SerializableDictionary偏于简单，细节考虑不够
     /// </summary>

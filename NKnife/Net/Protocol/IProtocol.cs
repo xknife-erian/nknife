@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Gean.Net.Protocol
+namespace NKnife.Net.Protocol
 {
     /// <summary>描述一个通讯会话中一次交易的内容的封装。进出协议的将都是组好的字符串，字节数组的解码与编码在通讯器中完成。
     /// </summary>

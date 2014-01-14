@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Gean.Network.Protocol
+namespace NKnife.NetWork.Protocol
 {
     /// <summary>
     /// 协议族

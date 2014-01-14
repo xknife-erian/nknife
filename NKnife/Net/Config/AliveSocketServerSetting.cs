@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Xml;
-using Gean.Net.Protocol;
 using Gean.Net.Interfaces;
 using Gean.Configuring.CoderSetting;
+using NKnife.Net.Protocol;
 
 namespace Gean.Net.Config
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gean.Net.Protocol
+﻿namespace NKnife.Net.Protocol
 {
     /// <summary>
     /// 协议的尾部标记

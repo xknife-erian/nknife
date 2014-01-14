@@ -2,7 +2,7 @@
 using System.Xml;
 using Gean.Configuring.CoderSetting;
 using Gean.Net.Interfaces;
-using Gean.Net.Protocol;
+using NKnife.Net.Protocol;
 
 namespace Gean.Net.Config
 {

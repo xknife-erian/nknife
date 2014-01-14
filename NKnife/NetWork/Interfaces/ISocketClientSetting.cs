@@ -1,4 +1,4 @@
-﻿namespace Gean.Network.Interfaces
+﻿namespace NKnife.NetWork.Interfaces
 {
     public interface ISocketClientSetting
     {
@@ -21,5 +21,10 @@
         string IPAddress { get; set; }
         int Port { get; set; }
         int TalkOneLength { get; }
+
+        /// <summary>
+        /// 尝试 Ping 服务器，以判断网络状态
+        /// </summary>
+        bool EnablePingServer { get; set; }
     }
 }

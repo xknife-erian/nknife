@@ -1,4 +1,4 @@
-﻿namespace Gean.Network.Interfaces
+﻿namespace NKnife.NetWork.Interfaces
 {
     /// <summary>
     /// 协议的尾部标记

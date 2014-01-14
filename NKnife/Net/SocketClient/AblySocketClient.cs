@@ -5,10 +5,10 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
 using Gean;
-using Gean.Net.Common;
-using Gean.Net.Interfaces;
-using Gean.Net.Protocol;
+using Gean.Network.Common;
 using NKnife.Extensions;
+using NKnife.NetWork.Interfaces;
+using NKnife.NetWork.Protocol;
 using NLog;
 using Timer = System.Timers.Timer;
 
@@ -16,7 +16,7 @@ namespace NKnife.Net.SocketClient
 {
     public abstract class AliveSocketClient : AblySocketClient
     {
-        protected AliveSocketClient(SocketMode mode, ProtocolsFamilyType family) 
+        protected AliveSocketClient(SocketMode mode, ProtocolFamilyType family) 
             : base(mode, family)
         {
         }
@@ -63,7 +63,7 @@ namespace NKnife.Net.SocketClient
 
         #region 构造函数
 
-        protected AblySocketClient(SocketMode mode, ProtocolsFamilyType family)
+        protected AblySocketClient(SocketMode mode, ProtocolFamilyType family)
         {
             Mode = mode; 
             FamilyType = family;
@@ -239,7 +239,7 @@ namespace NKnife.Net.SocketClient
         /// 协议家族
         /// </summary>
         /// <value>The type of the family.</value>
-        public ProtocolsFamilyType FamilyType { get; private set; }
+        public ProtocolFamilyType FamilyType { get; private set; }
 
         #endregion
 

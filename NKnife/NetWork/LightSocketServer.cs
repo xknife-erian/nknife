@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Gean;
 using Gean.Network.Common;
-using Gean.Network.Interfaces;
 using Gean.Network.Protocol;
 using NKnife.Extensions;
+using NKnife.NetWork.Config;
+using NKnife.NetWork.Interfaces;
+using NKnife.NetWork.Protocol;
 using NLog;
 
-namespace Gean.Network
+namespace NKnife.NetWork
 {
     /// <summary>轻量Socket服务器端。GEAN原创。
     /// </summary>
@@ -65,6 +68,7 @@ namespace Gean.Network
             int maxConnectCount, int maxBufferSize)
         {
             Mode = mode;
+
             FamilyType = family;
             MaxBufferSize = maxBufferSize;
             MaxConnectCount = maxConnectCount;
@@ -103,7 +107,7 @@ namespace Gean.Network
         /// </summary>
         public abstract ProtocolFactory Protocols { get; }
 
-        public string FamilyType { get; internal set; }
+        public ProtocolFamilyType FamilyType { get; internal set; }
 
         /// <summary>接收数据队列MAP,Key是客户端,Value是接收到的数据的队列
         /// </summary>
@@ -673,7 +677,7 @@ namespace Gean.Network
                 try
                 {
                     string command = CommandParser.GetCommand(dg);
-                    IProtocol protocol = Protocols.Get(FamilyType, command);
+                    IProtocol protocol = Protocols.Get(FamilyType.ToString(), command);
                     _Logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
                     if (protocol != null)
                     {

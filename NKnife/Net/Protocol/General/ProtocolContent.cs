@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.Specialized;
-using System.Collections;
-using Gean.Interface;
+using System.Text;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     /// <summary>
     /// 一个协议的具体内容。其中：

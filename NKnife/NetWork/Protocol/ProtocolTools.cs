@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Xml;
-using Gean.Network.Interfaces;
+using Gean;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Network.Protocol
+namespace NKnife.NetWork.Protocol
 {
     /// <summary>协议工具接口集合
     /// </summary>

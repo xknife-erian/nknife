@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Xml;
+using Gean;
 using NLog;
 
-namespace Gean.Net.Protocol
+namespace NKnife.Net.Protocol
 {
     /// <summary>协议工具接口集合
     /// </summary>

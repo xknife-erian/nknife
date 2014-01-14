@@ -1,9 +1,10 @@
 ﻿using System.Xml;
+using Gean;
 using Gean.Configuring.CoderSetting;
-using Gean.Network.Interfaces;
 using Gean.Network.Protocol;
+using NKnife.NetWork.Interfaces;
 
-namespace Gean.Network.Config
+namespace NKnife.NetWork.Config
 {
     public abstract class LightSocketServerSetting : XmlCoderSetting, ISocketServerSetting
     {

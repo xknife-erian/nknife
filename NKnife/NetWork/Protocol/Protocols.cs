@@ -1,9 +1,11 @@
 ﻿using System;
-using Gean.Net.Config;
+using Gean;
 using NKnife.Extensions;
+using NKnife.NetWork.Config;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Net.Protocol
+namespace NKnife.NetWork.Protocol
 {
     /// <summary>Socket通讯协议工厂
     /// </summary>
@@ -16,7 +18,7 @@ namespace Gean.Net.Protocol
         /// <param name="family">协议族</param>
         /// <param name="command">命令字</param>
         /// <returns></returns>
-        public static IProtocol Factory(ProtocolsFamilyType family, string command)
+        public static IProtocol Factory(ProtocolFamilyType family, string command)
         {
             return Factory(family.ToString(), command);
         }
@@ -31,7 +33,7 @@ namespace Gean.Net.Protocol
             IProtocol protocol = null;
             try
             {
-                ProtocolsFamily pfamily;
+                ProtocolFamily pfamily;
                 if (!ProtocolSetting.ME.FamilyMap.TryGetValue(family, out pfamily))
                 {
                     _Logger.Warn(string.Format("协议族缓存中没有对应的协议族({0})。", family));

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using Gean.Network.Interfaces;
+using NKnife.NetWork.Interfaces;
 
 namespace Gean.Network.Common
 {

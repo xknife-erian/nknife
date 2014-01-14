@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gean;
-using Gean.Net.Protocol;
 using NKnife.Extensions;
 using NKnife.Utility;
 using NLog;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gean.Network.Interfaces;
 using NKnife.Extensions;
+using NKnife.NetWork.Interfaces;
 using NLog;
 
-namespace Gean.Network.Protocol
+namespace NKnife.NetWork.Protocol
 {
     /// <summary>协议的抽象实现
     /// </summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using Gean.Net.Common;
+using NKnife.Net.Protocol;
 
 namespace Gean.Net.Interfaces
 {

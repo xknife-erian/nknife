@@ -1,4 +1,4 @@
-﻿namespace Gean.Net.Protocol
+﻿namespace NKnife.Net.Protocol
 {
     /// <summary>协议家族枚举
     /// </summary>

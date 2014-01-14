@@ -1,7 +1,7 @@
 ﻿using Gean.Network.Common;
-using Gean.Network.Protocol;
+using NKnife.NetWork.Protocol;
 
-namespace Gean.Network.Interfaces
+namespace NKnife.NetWork.Interfaces
 {
     public interface ISocketBase
     {
@@ -10,14 +10,10 @@ namespace Gean.Network.Interfaces
         /// <value>The mode.</value>
         SocketMode Mode { get; }
 
-        /// <summary>协议的创建工厂
-        /// </summary>
-        ProtocolFactory Protocols { get; }
-
         /// <summary>协议家族
         /// </summary>
         /// <value>The type of the family.</value>
-        string FamilyType { get; }
+        ProtocolFamilyType FamilyType { get; }
 
         /// <summary>接收到的消息的解析器
         /// </summary>

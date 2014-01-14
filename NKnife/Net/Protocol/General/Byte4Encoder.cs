@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
+using Gean;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器

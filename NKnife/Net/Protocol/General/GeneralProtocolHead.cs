@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gean.Net.Protocol.General
+﻿namespace NKnife.Net.Protocol.General
 {
     public class GeneralProtocolHead : IProtocolHead
     {
