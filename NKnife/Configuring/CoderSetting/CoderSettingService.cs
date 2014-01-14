@@ -4,10 +4,14 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using Gean;
+using Gean.Configuring.CoderSetting;
 using Gean.Configuring.Interfaces;
+using NKnife.Extensions;
+using NKnife.Utility.File;
 using NLog;
 
-namespace Gean.Configuring.CoderSetting
+namespace NKnife.Configuring.CoderSetting
 {
     /// <summary>CoderSetting（程序员配置）服务管理器
     /// </summary>

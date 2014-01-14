@@ -1,7 +1,8 @@
 ﻿using System;
 using Gean.Network.Interfaces;
+using NKnife.Utility;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     /// <summary>
     /// 一个最常用的 字符数组 => 字符串 转换器。

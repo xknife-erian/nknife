@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using Gean.Network.Interfaces;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Network.Protocol.Implementation

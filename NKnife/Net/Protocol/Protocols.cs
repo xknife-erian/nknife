@@ -1,5 +1,6 @@
 ﻿using System;
 using Gean.Net.Config;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Net.Protocol

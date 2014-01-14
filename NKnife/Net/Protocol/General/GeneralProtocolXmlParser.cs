@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
 using Gean.Interface;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Net.Protocol.General

@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using Gean.Xml;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Net.Protocol.General

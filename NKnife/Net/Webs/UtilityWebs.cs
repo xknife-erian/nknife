@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Text;
 using System.Web;
+using NKnife.Net.Webs;
 
 namespace Gean.Net.Webs
 {

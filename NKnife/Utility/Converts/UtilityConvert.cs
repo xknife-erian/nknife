@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Gean;
-using Gean.Resources;
+using NKnife.Resources;
 
 namespace NKnife.Utility.Converts
 {

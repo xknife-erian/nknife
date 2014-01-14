@@ -1,9 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Text;
-
-namespace Gean
+﻿namespace NKnife.Wrapper.API
 {
     /// <summary>
     /// 面向C#使用API的封装

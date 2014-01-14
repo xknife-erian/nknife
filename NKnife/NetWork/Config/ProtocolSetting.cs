@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Xml;
 using Gean.Configuring.CoderSetting;
 using Gean.Network.Protocol;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Network.Config

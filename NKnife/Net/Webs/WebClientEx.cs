@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Net;
-using System.Text;
-using Gean.Resources;
+using NKnife.Resources;
 
-namespace Gean.Net.Webs
+namespace NKnife.Net.Webs
 {
     public class WebClientEx : System.Net.WebClient
     {

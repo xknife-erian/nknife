@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using NKnife.Utility.File;
 
 namespace Gean.Wrapper
 {

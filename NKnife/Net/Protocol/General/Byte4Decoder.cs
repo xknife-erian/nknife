@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gean;
+using Gean.Net.Protocol;
+using NKnife.Extensions;
+using NKnife.Utility;
 using NLog;
 
-namespace Gean.Net.Protocol.General
+namespace NKnife.Net.Protocol.General
 {
     /// <summary>
     /// 一个最常用的 字符数组 => 字符串 转换器。

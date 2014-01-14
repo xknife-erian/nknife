@@ -8,6 +8,7 @@ using System.Xml;
 using Gean.Configuring.Common;
 using Gean.Configuring.Interfaces;
 using Gean.Xml;
+using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Configuring.Option

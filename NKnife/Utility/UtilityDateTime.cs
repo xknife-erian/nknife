@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace Gean.Utility
+namespace NKnife.Utility
 {
     /// <summary>
     /// 有关DateTime的扩展方法
