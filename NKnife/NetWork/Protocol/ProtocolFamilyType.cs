@@ -47,5 +47,9 @@
         /// <summary>平安单机报表
         /// </summary>
         AgreeTechNATP = 10109,
+
+        /// <summary>平安虚拟评价器
+        /// </summary>
+        PanEvaluator = 10110,
     }
 }
