@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-
-namespace Gean.Utility
+﻿namespace NKnife.Utility
 {
     public class UtilityRegistry
     {

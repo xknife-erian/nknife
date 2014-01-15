@@ -10,6 +10,7 @@ using Gean.Network.Protocol;
 using NKnife.Extensions;
 using NKnife.NetWork.Interfaces;
 using NKnife.NetWork.Protocol;
+using NKnife.Utility;
 using NLog;
 using BufferContainer = Gean.Net.SocketServer.BufferContainer;
 using SocketAsyncEventArgsPool = Gean.Net.SocketServer.SocketAsyncEventArgsPool;

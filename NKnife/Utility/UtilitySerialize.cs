@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Gean
+namespace NKnife.Utility
 {
     public static class UtilitySerialize
     {

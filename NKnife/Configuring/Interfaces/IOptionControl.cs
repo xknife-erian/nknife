@@ -1,5 +1,6 @@
 ﻿using Gean.Configuring.Common;
 using Gean.Configuring.OptionCase;
+using NKnife.Configuring.OptionCase;
 
 namespace Gean.Configuring.Interfaces
 {

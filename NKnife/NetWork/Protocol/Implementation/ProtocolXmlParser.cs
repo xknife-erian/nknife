@@ -6,6 +6,7 @@ using Gean;
 using Gean.Interface;
 using NKnife.Extensions;
 using NKnife.NetWork.Interfaces;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.NetWork.Protocol.Implementation

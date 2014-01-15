@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using Gean.Configuring.Interfaces;
 using Gean.Configuring.OptionCase;
+using NKnife.Configuring.OptionCase;
+using NKnife.Utility;
 using NLog;
 
 namespace Gean.Configuring.Option
@@ -45,12 +47,12 @@ namespace Gean.Configuring.Option
         #region Implementation of IOptionManager
 
         private string _CurrentClientId = "";
-        private OptionCase.OptionCaseItem _CurrentCase;
+        private OptionCaseItem _CurrentCase;
 
         /// <summary>当前应用程序的选项信息组的名称
         /// </summary>
         /// <value>The name of the curr option group.</value>
-        public virtual OptionCase.OptionCaseItem CurrentCase
+        public virtual OptionCaseItem CurrentCase
         {
             get { return _CurrentCase; }
             set
@@ -200,7 +202,7 @@ namespace Gean.Configuring.Option
         /// 更新解决方案的保存(当已存在时就更新，否则添加)
         /// </summary>
         /// <param name="solution">The solution.</param>
-        public void AddOrUpdateCaseStore(OptionCase.OptionCaseItem solution)
+        public void AddOrUpdateCaseStore(OptionCaseItem solution)
         {
             DataStore.AddOrUpdateCaseStore(solution);
         }
@@ -208,7 +210,7 @@ namespace Gean.Configuring.Option
         /// <summary>删除一个解决方案的保存
         /// </summary>
         /// <param name="solution">The solution.</param>
-        public void RemoveCaseStore(OptionCase.OptionCaseItem solution)
+        public void RemoveCaseStore(OptionCaseItem solution)
         {
             DataStore.RemoveCaseStore(solution);
         }
@@ -216,9 +218,9 @@ namespace Gean.Configuring.Option
         /// <summary>以源方案为模板复制一套新的解决方案
         /// </summary>
         /// <param name="srcSolution">源方案.</param>
-        public virtual OptionCase.OptionCaseItem CopyCaseFrom(OptionCase.OptionCaseItem srcSolution)
+        public virtual OptionCaseItem CopyCaseFrom(OptionCaseItem srcSolution)
         {
-            var targetSolution = new OptionCase.OptionCaseItem();
+            var targetSolution = new OptionCaseItem();
             foreach (OptionDataTable table in DataStore.DataTables.Values)
             {
                 DataRow[] rows = table[srcSolution.Name];
@@ -244,7 +246,7 @@ namespace Gean.Configuring.Option
         /// </summary>
         /// <param name="solution">The solution.</param>
         /// <param name="isStore">True时同时持久化，否则反之</param>
-        public virtual void AddCase(OptionCase.OptionCaseItem solution, bool isStore = true)
+        public virtual void AddCase(OptionCaseItem solution, bool isStore = true)
         {
             CaseManager.Add(solution);
             if (isStore)
@@ -255,7 +257,7 @@ namespace Gean.Configuring.Option
         /// </summary>
         /// <param name="solution">The solution.</param>
         /// <param name="isStore"></param>
-        public virtual void RemoveCase(OptionCase.OptionCaseItem solution, bool isStore = true)
+        public virtual void RemoveCase(OptionCaseItem solution, bool isStore = true)
         {
             foreach (OptionDataTable dataTable in DataStore.DataTables.Values)
             {

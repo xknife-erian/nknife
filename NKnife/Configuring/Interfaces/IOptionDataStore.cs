@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using Gean.Configuring.Option;
 using Gean.Configuring.OptionCase;
+using NKnife.Configuring.OptionCase;
 
 namespace Gean.Configuring.Interfaces
 {

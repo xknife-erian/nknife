@@ -5,6 +5,7 @@ using Gean;
 using NKnife.Configuring.CoderSetting;
 using NKnife.Extensions;
 using NKnife.NetWork.Protocol;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.NetWork.Config

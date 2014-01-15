@@ -6,6 +6,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Gean.Configuring.Interfaces;
+using NKnife.Configuring.OptionCase;
 using NLog;
 
 namespace Gean.Configuring.OptionCase

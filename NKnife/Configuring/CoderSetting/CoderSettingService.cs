@@ -7,6 +7,7 @@ using System.Xml;
 using Gean;
 using Gean.Configuring.Interfaces;
 using NKnife.Extensions;
+using NKnife.Utility;
 using NKnife.Utility.File;
 using NLog;
 

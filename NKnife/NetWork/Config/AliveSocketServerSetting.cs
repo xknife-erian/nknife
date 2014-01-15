@@ -2,6 +2,7 @@
 using Gean;
 using NKnife.Configuring.CoderSetting;
 using NKnife.NetWork.Interfaces;
+using NKnife.Utility;
 
 namespace NKnife.NetWork.Config
 {

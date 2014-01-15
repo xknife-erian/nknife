@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WinForms = System.Windows.Forms;
 using System.Diagnostics;
 
-namespace Gean
+namespace NKnife.Utility
 {
     /// <summary>
     /// 相关键盘的键(Key)封装的类
@@ -16,14 +13,14 @@ namespace Gean
         /// </summary>
         /// <param name="shortcutChar">描述键值的字符串,例如: ctrl+shift+a</param>
         /// <returns>Windows的键</returns>
-        public static WinForms.Keys ParseByShortcutChar(string shortcutChar)
+        public static System.Windows.Forms.Keys ParseByShortcutChar(string shortcutChar)
         {
             if (string.IsNullOrEmpty(shortcutChar))
             {
-                return WinForms.Keys.None;
+                return System.Windows.Forms.Keys.None;
             }
 
-            WinForms.Keys key = WinForms.Keys.None;
+            System.Windows.Forms.Keys key = System.Windows.Forms.Keys.None;
             string[] strs = shortcutChar.Split('+');
             foreach (string str in strs)
             {
@@ -49,7 +46,7 @@ namespace Gean
                 }
                 try
                 {
-                    key |= (WinForms.Keys)Enum.Parse(typeof(WinForms.Keys), output);
+                    key |= (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), output);
                 }
                 catch (Exception ex)//如解析失败，将返回的是未按键
                 {

@@ -3,6 +3,7 @@ using Gean;
 using NKnife.Extensions;
 using NKnife.NetWork.Config;
 using NKnife.NetWork.Interfaces;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.NetWork.Protocol

@@ -6,9 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using Gean;
 using NKnife.Utility.File;
 
-namespace Gean
+namespace NKnife.Utility
 {
     public static class UtilityType
     {

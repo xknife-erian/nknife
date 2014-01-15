@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using NKnife.NetWork.Interfaces;
+using NKnife.Utility;
 using NLog;
 
 namespace Gean.Network.Protocol.Implementation

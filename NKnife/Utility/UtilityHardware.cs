@@ -5,7 +5,7 @@ using System.Management;
 using Gean.Wrapper;
 using Microsoft.Win32;
 
-namespace Gean
+namespace NKnife.Utility
 {
     public class UtilityHardware
     {

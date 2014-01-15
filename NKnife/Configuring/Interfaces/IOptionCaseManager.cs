@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Gean.Configuring.OptionCase;
+using NKnife.Configuring.OptionCase;
 
 namespace Gean.Configuring.Interfaces
 {

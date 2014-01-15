@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using System.Diagnostics;
 using Microsoft.Win32;
 
-namespace Gean
+namespace NKnife.Wrapper
 {
     /// <summary>
     /// 有关计算机的一些操作方法

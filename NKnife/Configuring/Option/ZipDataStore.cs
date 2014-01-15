@@ -5,15 +5,17 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Gean.Configuring;
 using Gean.Configuring.Common;
 using Gean.Configuring.Interfaces;
-using Gean.Configuring.OptionCase;
-using Gean.Wrapper;
+using Gean.Configuring.Option;
+using NKnife.Configuring.OptionCase;
 using NKnife.Extensions;
 using NKnife.Utility.File;
+using NKnife.Wrapper;
 using NLog;
 
-namespace Gean.Configuring.Option
+namespace NKnife.Configuring.Option
 {
     /// <summary>通过ZIP打包方式实现的选项持久化。
     /// 将所有的子选项分别通过DataTable的模式保存成Xml文件，然后压缩并打包所有文件。

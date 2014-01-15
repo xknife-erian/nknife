@@ -11,6 +11,7 @@ using NKnife.Extensions;
 using NKnife.NetWork.Config;
 using NKnife.NetWork.Interfaces;
 using NKnife.NetWork.Protocol;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.NetWork

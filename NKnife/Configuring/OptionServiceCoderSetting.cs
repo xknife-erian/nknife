@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Gean.Base;
 using Gean.Configuring.Interfaces;
+using NKnife.Utility;
 
 namespace Gean.Configuring
 {

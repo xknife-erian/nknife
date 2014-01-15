@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text.RegularExpressions;
+using System.Net.Sockets;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Web;
 
-namespace Gean
+namespace NKnife.Utility
 {
     /// <summary>
     /// 一些简单的基于网络的小型扩展方法

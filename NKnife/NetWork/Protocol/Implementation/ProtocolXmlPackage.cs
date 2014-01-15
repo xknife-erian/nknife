@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean;
 using NKnife.Extensions;
 using NKnife.NetWork.Interfaces;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.NetWork.Protocol.Implementation

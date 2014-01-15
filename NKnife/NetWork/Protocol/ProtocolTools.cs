@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Xml;
 using Gean;
 using NKnife.NetWork.Interfaces;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.NetWork.Protocol

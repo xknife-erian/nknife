@@ -11,6 +11,8 @@ using Gean.Configuring.Common;
 using Gean.Configuring.Interfaces;
 using Gean.Configuring.OptionCase;
 using NKnife.Configuring.CoderSetting;
+using NKnife.Configuring.OptionCase;
+using NKnife.Utility;
 using NLog;
 
 namespace Gean.Configuring.Option
@@ -67,9 +69,9 @@ namespace Gean.Configuring.Option
 
         /// <summary>更新解决方案的保存(当已存在时就更新，否则添加)
         /// </summary>
-        public void AddOrUpdateCaseStore(OptionCase.OptionCaseItem optionCase)
+        public void AddOrUpdateCaseStore(OptionCaseItem optionCase)
         {
-            var serializer = new XmlSerializer(typeof(OptionCase.OptionCaseItem));
+            var serializer = new XmlSerializer(typeof(OptionCaseItem));
             if (Document.DocumentElement != null)
             {
                 var srcElement = Document.DocumentElement.SelectSingleNode("CaseList");
@@ -89,7 +91,7 @@ namespace Gean.Configuring.Option
 
         /// <summary>删除一个解决方案的保存
         /// </summary>
-        public void RemoveCaseStore(OptionCase.OptionCaseItem optionCase)
+        public void RemoveCaseStore(OptionCaseItem optionCase)
         {
             if (Document.DocumentElement != null)
             {

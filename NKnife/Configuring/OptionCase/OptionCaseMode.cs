@@ -1,4 +1,4 @@
-﻿namespace Gean.Configuring.OptionCase
+﻿namespace NKnife.Configuring.OptionCase
 {
     /// <summary>选项解决方案模式
     /// </summary>

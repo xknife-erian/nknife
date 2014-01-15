@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Schema;
 using Gean;
+using NKnife.Utility;
 
 namespace System.Xml
 {

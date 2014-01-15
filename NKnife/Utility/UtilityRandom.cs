@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using Gean.Math;
 
-namespace Gean
+namespace NKnife.Utility
 {
     /// <summary>
     /// 针对.net的Random随机数生成器的扩展。

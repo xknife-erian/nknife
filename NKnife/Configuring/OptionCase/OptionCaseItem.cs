@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Gean.Wrapper;
 
-namespace Gean.Configuring.OptionCase
+namespace NKnife.Configuring.OptionCase
 {
     /// <summary>往往应用程序的选项可以是多份，每一份在匹配的场景或时段下被使用，在这里我们理解一份选项是一个广义的实例。
     /// 本类型描述的就是一个选项实例。

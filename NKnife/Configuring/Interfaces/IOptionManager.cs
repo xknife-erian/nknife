@@ -1,5 +1,6 @@
 using System;
 using Gean.Configuring.Option;
+using NKnife.Configuring.OptionCase;
 
 namespace Gean.Configuring.Interfaces
 {
@@ -74,31 +75,31 @@ namespace Gean.Configuring.Interfaces
         /// <summary>当前应用程序的选项信息组的名称
         /// </summary>
         /// <value>The name of the curr option group.</value>
-        OptionCase.OptionCaseItem CurrentCase { get; set; }
+        OptionCaseItem CurrentCase { get; set; }
 
         /// <summary>更新解决方案的保存(当已存在时就更新，否则添加)
         /// </summary>
-        void AddOrUpdateCaseStore(OptionCase.OptionCaseItem optionCase);
+        void AddOrUpdateCaseStore(OptionCaseItem optionCase);
 
         /// <summary>删除一个解决方案的保存
         /// </summary>
-        void RemoveCaseStore(OptionCase.OptionCaseItem optionCase);
+        void RemoveCaseStore(OptionCaseItem optionCase);
 
         /// <summary>以源方案为模板复制一套新的解决方案
         /// </summary>
         /// <param name="srcCase">源方案.</param>
-        OptionCase.OptionCaseItem CopyCaseFrom(OptionCase.OptionCaseItem srcCase);
+        OptionCaseItem CopyCaseFrom(OptionCaseItem srcCase);
 
         /// <summary>新增一套方案
         /// </summary>
         /// <param name="optionCase">The solution.</param>
         /// <param name="isStore">True时同时持久化，否则反之</param>
-        void AddCase(OptionCase.OptionCaseItem optionCase, bool isStore);
+        void AddCase(OptionCaseItem optionCase, bool isStore);
 
         /// <summary>删除一套方案
         /// </summary>
         /// <param name="optionCase">The solution.</param>
         /// <param name="isStore">True时同时从持久化中删除，否则反之</param>
-        void RemoveCase(OptionCase.OptionCaseItem optionCase, bool isStore);
+        void RemoveCase(OptionCaseItem optionCase, bool isStore);
     }
 }
