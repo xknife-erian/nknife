@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gean.Configuring.CoderSetting
+namespace NKnife.Configuring.CoderSetting
 {
     /// <summary>
     /// 选项值发生改变时的包含事件数据的类

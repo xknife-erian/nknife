@@ -1,8 +1,7 @@
-using Gean.Configuring.CoderSetting;
-using Gean.Configuring.Common;
+using Gean.Configuring;
 using Gean.Configuring.Interfaces;
 
-namespace Gean.Configuring.CoderSetting
+namespace NKnife.Configuring.CoderSetting
 {
     /// <summary>应用程序 CoderSetting（程序员配置）框架的选项节点类型
     /// </summary>

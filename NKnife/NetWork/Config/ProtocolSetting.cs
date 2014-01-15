@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Xml;
 using Gean;
-using Gean.Configuring.CoderSetting;
+using NKnife.Configuring.CoderSetting;
 using NKnife.Extensions;
 using NKnife.NetWork.Protocol;
 using NLog;
@@ -36,7 +36,7 @@ namespace NKnife.NetWork.Config
 
         #endregion 单件实例
 
-        private ProtocolSetting()
+        protected ProtocolSetting()
         {
             FamilyMap = new ConcurrentDictionary<string, ProtocolFamily>();
             ProtocolContentMap = new ConcurrentDictionary<string, Type>();

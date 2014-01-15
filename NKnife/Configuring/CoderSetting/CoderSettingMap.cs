@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gean.Configuring.Interfaces;
 
-namespace Gean.Configuring.CoderSetting
+namespace NKnife.Configuring.CoderSetting
 {
     /// <summary>
     /// CoderSetting（程序员配置）集合

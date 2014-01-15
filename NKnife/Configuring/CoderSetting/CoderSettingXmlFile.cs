@@ -1,6 +1,6 @@
 ﻿using Gean.Xml;
 
-namespace Gean.Configuring.CoderSetting
+namespace NKnife.Configuring.CoderSetting
 {
     /// <summary>
     /// 描述一个CoderSetting（程序员配置）XML文件。

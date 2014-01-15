@@ -448,6 +448,8 @@
     <Compile Include="NetWork\Common\ReceiveQueue.cs" />
     <Compile Include="NetWork\Common\SocketAsyncEventArgsPool.cs" />
     <Compile Include="NetWork\Common\Tcps.cs" />
+    <Compile Include="NetWork\Config\AliveSocketClientSetting.cs" />
+    <Compile Include="NetWork\Config\AliveSocketServerSetting.cs" />
     <Compile Include="NetWork\Config\LightSocketClientSetting.cs" />
     <Compile Include="NetWork\Config\LightSocketServerSetting.cs" />
     <Compile Include="NetWork\Config\ProtocolSetting.cs" />
@@ -494,11 +496,11 @@
     <Compile Include="Net\EMTASS\SocketSession.cs" />
     <Compile Include="Net\NetUtil.cs" />
     <Compile Include="Net\SimpleSocket.cs" />
-    <Compile Include="Net\SocketClient\AblySocketClient.cs" />
-    <Compile Include="Net\SocketClient\SimpleSocket.cs" />
-    <Compile Include="Net\SocketServer\AblySocketServer.cs" />
-    <Compile Include="Net\SocketServer\BufferContainer.cs" />
-    <Compile Include="Net\SocketServer\SocketAsyncEventArgsPool.cs" />
+    <Compile Include="NetWork\SocketClient\AblySocketClient.cs" />
+    <Compile Include="NetWork\SocketClient\SimpleSocket.cs" />
+    <Compile Include="NetWork\SocketServer\AblySocketServer.cs" />
+    <Compile Include="NetWork\SocketServer\BufferContainer.cs" />
+    <Compile Include="NetWork\SocketServer\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Net\SocketWrapper.cs" />
     <Compile Include="Net\Sockets\Udp\SimpleSocketUdpClient.cs" />
     <Compile Include="Net\Sockets\Udp\SimpleUdpClient.cs" />

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Configuring.CoderSetting;
 using Gean.Configuring.Common;
 using Gean.Configuring.Interfaces;
 using Gean.Configuring.OptionCase;

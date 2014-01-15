@@ -63,7 +63,7 @@ namespace NKnife.NetWork
         #region 构造函数
 
         protected LightSocketServer(
-            SocketMode mode, string family,
+            SocketMode mode, ProtocolFamilyType family,
             string host, int port,
             int maxConnectCount, int maxBufferSize)
         {

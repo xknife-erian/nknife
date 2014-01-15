@@ -1,6 +1,6 @@
 ﻿using System;
-using Gean.Configuring.CoderSetting;
 using Gean.Configuring.Common;
+using NKnife.Configuring.CoderSetting;
 
 namespace Gean.Configuring
 {

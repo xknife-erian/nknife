@@ -1,17 +1,16 @@
 ﻿using System.Xml;
 using Gean;
-using Gean.Network.Protocol;
 using NKnife.Configuring.CoderSetting;
 using NKnife.NetWork.Interfaces;
 
 namespace NKnife.NetWork.Config
 {
-    public abstract class LightSocketServerSetting : XmlCoderSetting, ISocketServerSetting
+    public abstract class AliveSocketServerSetting : XmlCoderSetting, ISocketServerSetting
     {
-        public string Host { get; private set; }
-        public int Port { get; private set; }
-        public int MaxBufferSize { get; private set; }
-        public int MaxConnectCount { get; private set; }
+        public string Host { get;  set; }
+        public int Port { get;  set; }
+        public int MaxBufferSize { get;  set; }
+        public int MaxConnectCount { get;  set; }
         /// <summary>
         /// Gets or sets 心跳间隔.
         /// </summary>

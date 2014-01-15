@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Xml;
-using Gean.Configuring.CoderSetting;
-using Gean.Net.Interfaces;
-using NKnife.Net.Protocol;
+using Gean;
+using NKnife.Configuring.CoderSetting;
+using NKnife.NetWork.Interfaces;
 
-namespace Gean.Net.Config
+namespace NKnife.NetWork.Config
 {
     public abstract class AliveSocketClientSetting : XmlCoderSetting, ISocketClientSetting
     {

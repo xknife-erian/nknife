@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Xml;
-using NKnife.Configuring.CoderSetting;
 using NLog;
 
-namespace Gean.Configuring.CoderSetting
+namespace NKnife.Configuring.CoderSetting
 {
     /// <summary>内容保存在XML中的CoderSetting（程序员配置）的抽象类
     /// </summary>

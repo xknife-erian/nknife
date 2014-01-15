@@ -59,7 +59,7 @@ namespace NKnife.NetWork
 
         #region 构造函数
 
-        protected LightSocketClient(SocketMode mode, string family)
+        protected LightSocketClient(SocketMode mode, ProtocolFamilyType family)
         {
             Mode = mode;
             FamilyType = family;

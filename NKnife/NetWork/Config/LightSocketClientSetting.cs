@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Xml;
 using Gean;
-using Gean.Configuring.CoderSetting;
+using NKnife.Configuring.CoderSetting;
 using NKnife.NetWork.Interfaces;
 
 namespace NKnife.NetWork.Config

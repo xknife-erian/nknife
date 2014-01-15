@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using Gean.Configuring.CoderSetting;
+using NKnife.Configuring.CoderSetting;
 
 namespace Gean.Data.Common
 {

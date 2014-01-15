@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using Gean;
-using Gean.Configuring.CoderSetting;
 using Gean.Configuring.Interfaces;
 using NKnife.Extensions;
 using NKnife.Utility.File;
