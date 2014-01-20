@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Gean.Wrapper
+namespace NKnife.Wrapper
 {
     /// <summary>身份证
     /// </summary>
