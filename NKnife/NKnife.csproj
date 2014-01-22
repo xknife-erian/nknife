@@ -40,6 +40,9 @@
       <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Ninject">
+      <HintPath>..\..\sdf-tools-csharp\trunk\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\q-qms-csharp\trunk\CQMS\packages\NLog.2.1.0\lib\net40\NLog.dll</HintPath>
@@ -134,6 +137,7 @@
     <Compile Include="Data\Interface\IDataSetProcess.cs" />
     <Compile Include="Data\Process\ArrayProcess.cs" />
     <Compile Include="Data\Process\IntProcess.cs" />
+    <Compile Include="Ioc\DI.cs" />
     <Compile Include="EventData\ChangedEventArgs.cs" />
     <Compile Include="EventData\EventArgs.cs" />
     <Compile Include="Exceptions\GeanException.cs" />
@@ -660,7 +664,6 @@
     <Compile Include="XML\XmlUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Inject\" />
     <Folder Include="Json\" />
     <Folder Include="Lang\" />
     <Folder Include="Web\" />
@@ -721,8 +724,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Database.option" />
-    <None Include="NetWork\Framework.cd" />
-    <None Include="NetWork\Freamwork.cd" />
     <None Include="Net\Gean.Net.Socket.cd" />
     <None Include="packages.config" />
     <None Include="Resources\computeflag.gif" />
