@@ -1,5 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
 using Ninject;
+using NKnife.Utility.File;
 
 namespace NKnife.Ioc
 {
@@ -20,9 +21,10 @@ namespace NKnife.Ioc
         public static void Initialize()
         {
             _CoreKernel = new CoreKernel();
-            Assembly calling = Assembly.GetCallingAssembly();
-            Assembly curr = Assembly.GetExecutingAssembly();
-            _CoreKernel.Load(calling, curr);
+            //Assembly calling = Assembly.GetCallingAssembly();
+            //Assembly curr = Assembly.GetExecutingAssembly();
+            var assems = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            _CoreKernel.Load(assems);
         }
 
         private class CoreKernel : StandardKernel
