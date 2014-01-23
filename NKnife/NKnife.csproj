@@ -491,30 +491,18 @@
     <Compile Include="NetWork\Protocol\ProtocolFamilyType.cs" />
     <Compile Include="NetWork\Protocol\Protocols.cs" />
     <Compile Include="NetWork\Protocol\ProtocolTools.cs" />
-    <Compile Include="NetWork\QuickSocket.cs" />
-    <Compile Include="Net\CurCmd.cs" />
+    <Compile Include="Net\QuickSocket.cs" />
     <Compile Include="Net\EMTASS\DbEvent.cs" />
     <Compile Include="Net\EMTASS\EMTASS21.cs" />
     <Compile Include="Net\EMTASS\SocketSession.cs" />
-    <Compile Include="Net\NetUtil.cs" />
     <Compile Include="Net\SimpleSocket.cs" />
     <Compile Include="NetWork\SocketClient\AblySocketClient.cs" />
     <Compile Include="NetWork\SocketClient\SimpleSocket.cs" />
     <Compile Include="NetWork\SocketServer\AblySocketServer.cs" />
     <Compile Include="NetWork\SocketServer\BufferContainer.cs" />
     <Compile Include="NetWork\SocketServer\SocketAsyncEventArgsPool.cs" />
-    <Compile Include="Net\SocketWrapper.cs" />
-    <Compile Include="Net\Sockets\Udp\SimpleSocketUdpClient.cs" />
-    <Compile Include="Net\Sockets\Udp\SimpleUdpClient.cs" />
-    <Compile Include="Net\TcpClientConnector.cs" />
-    <Compile Include="Net\Webs\HttpProc.cs" />
-    <Compile Include="Net\Webs\RequestState.cs" />
-    <Compile Include="Net\Webs\ServletClientException.cs" />
+    <Compile Include="Net\Udp\SimpleUdpClient.cs" />
     <Compile Include="Net\Webs\UtilityWebs.cs" />
-    <Compile Include="Net\Webs\WebClientEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Net\Webs\WebRequestBeginGetRequestStream.cs" />
     <Compile Include="Patterns\Option\ProfileManager.cs" />
     <Compile Include="Platform\IME\GlobeSetIMM.cs" />
     <Compile Include="Platform\IO\Files.cs" />
@@ -666,11 +654,7 @@
     <Compile Include="XML\SerializeUtility.cs" />
     <Compile Include="XML\XmlUtility.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Json\" />
-    <Folder Include="Lang\" />
-    <Folder Include="Web\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.resx" />
     <EmbeddedResource Include="GUI\WinForm\DataSelector\DataItemSelector.resx">
@@ -728,7 +712,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Data\Database.option" />
-    <None Include="Net\Gean.Net.Socket.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

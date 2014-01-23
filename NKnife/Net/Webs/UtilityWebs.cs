@@ -1,33 +1,15 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using System.Net;
 using System.Text;
 using System.Web;
-using NKnife.Net.Webs;
+using NKnife.Resources;
 
-namespace Gean.Net.Webs
+namespace NKnife.Net.Webs
 {
     public class UtilityWebs
     {
-        #region 单例
-
-        private static UtilityWebs _Instance;
-        private static readonly object _LockObj = new object();
-
-        private UtilityWebs()
-        {
-        }
-
-        public static UtilityWebs Instance()
-        {
-            lock (_LockObj)
-            {
-                if (_Instance == null) _Instance = new UtilityWebs();
-            }
-            return _Instance;
-        }
-
-        #endregion
-
-        private WebClientEx _WebClient;
+        private WebClientPro _WebClient;
 
         /// <summary>通过WebClient的扩展类型(增加随机的UserArgent，Cookie容器)进Post操作
         /// </summary>
@@ -49,7 +31,7 @@ namespace Gean.Net.Webs
         /// <returns></returns>
         public string WebPost(string url, Encoding encoding, int timeout, NameValueCollection postVars)
         {
-            _WebClient = new WebClientEx();
+            _WebClient = new WebClientPro();
             _WebClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
 
             _WebClient.Timeout = timeout;
@@ -73,5 +55,48 @@ namespace Gean.Net.Webs
             string test = result.ToString().TrimEnd('&');
             return test;
         }
+
+        public class WebClientPro : System.Net.WebClient
+        {
+            private static readonly string[] _MultiUserAgents = GeneralString.HttpUserAgents.Split('~');
+            private static readonly Random _Random = new Random();
+
+            public WebClientPro()
+            {
+                Timeout = 800;
+                UserAgent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)";
+                CookieContainer = new CookieContainer();
+            }
+
+            public CookieContainer CookieContainer { get; set; }
+
+            public string UserAgent { get; set; }
+
+            public int Timeout { get; set; }
+
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                WebRequest request = base.GetWebRequest(address);
+                RefreshUserAgent();
+
+                if (request != null)
+                {
+                    if (request.GetType() == typeof(HttpWebRequest))
+                    {
+                        ((HttpWebRequest)request).CookieContainer = CookieContainer;
+                        ((HttpWebRequest)request).UserAgent = UserAgent;
+                        (request).Timeout = Timeout;
+                    }
+                }
+                return request;
+            }
+
+            private void RefreshUserAgent()
+            {
+                UserAgent = _MultiUserAgents[_Random.Next(0, _MultiUserAgents.Length)];
+            }
+        }
     }
+
+
 }
