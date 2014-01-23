@@ -495,14 +495,13 @@
     <Compile Include="Net\EMTASS\DbEvent.cs" />
     <Compile Include="Net\EMTASS\EMTASS21.cs" />
     <Compile Include="Net\EMTASS\SocketSession.cs" />
-    <Compile Include="Net\SimpleSocket.cs" />
     <Compile Include="NetWork\SocketClient\AblySocketClient.cs" />
     <Compile Include="NetWork\SocketClient\SimpleSocket.cs" />
     <Compile Include="NetWork\SocketServer\AblySocketServer.cs" />
     <Compile Include="NetWork\SocketServer\BufferContainer.cs" />
     <Compile Include="NetWork\SocketServer\SocketAsyncEventArgsPool.cs" />
-    <Compile Include="Net\Udp\SimpleUdpClient.cs" />
-    <Compile Include="Net\Webs\UtilityWebs.cs" />
+    <Compile Include="Net\QuickUdpClient.cs" />
+    <Compile Include="Net\QuickWebs.cs" />
     <Compile Include="Patterns\Option\ProfileManager.cs" />
     <Compile Include="Platform\IME\GlobeSetIMM.cs" />
     <Compile Include="Platform\IO\Files.cs" />

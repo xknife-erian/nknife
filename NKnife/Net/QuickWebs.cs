@@ -5,9 +5,9 @@ using System.Text;
 using System.Web;
 using NKnife.Resources;
 
-namespace NKnife.Net.Webs
+namespace NKnife.Net
 {
-    public class UtilityWebs
+    public class QuickWebs
     {
         private WebClientPro _WebClient;
 
