@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using Gean.Configuring.Common;
-using Gean.Configuring.Interfaces;
-using Gean.Configuring.OptionCase;
+using NKnife.Configuring.Common;
+using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
-using NKnife.Extensions;
 using NLog;
 
-namespace Gean.Configuring.Controls
+namespace NKnife.Configuring.Controls
 {
     public class OptionControlBase : UserControl, IOptionControl
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Gean.Collections
+namespace NKnife.Collections
 {
     [Serializable]
     public class DictionaryOrdered<TKey, TValue> : IDictionary<TKey, TValue>

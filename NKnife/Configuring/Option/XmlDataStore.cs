@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Configuring.Common;
-using Gean.Configuring.Interfaces;
-using Gean.Configuring.OptionCase;
+using Gean.Configuring.Option;
 using NKnife.Configuring.CoderSetting;
+using NKnife.Configuring.Common;
+using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Utility;
 using NLog;
 
-namespace Gean.Configuring.Option
+namespace NKnife.Configuring.Option
 {
     public class XmlDataStore : IOptionDataStore
     {

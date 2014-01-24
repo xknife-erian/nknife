@@ -1,7 +1,7 @@
 ﻿using System;
 using NLog;
 
-namespace NKnife.Extensions
+namespace System
 {
     public static class LoggerEx
     {

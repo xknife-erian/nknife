@@ -6,7 +6,6 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
 using Gean.Network.Common;
-using NKnife.Extensions;
 using NKnife.NetWork.Interfaces;
 using NKnife.NetWork.Protocol;
 using NKnife.Utility;

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using Gean.Configuring.Option;
-using Gean.Configuring.OptionCase;
 using NKnife.Configuring.OptionCase;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     /// <summary>
     /// 描述应用程序选项信息存储空间操作方法的封装

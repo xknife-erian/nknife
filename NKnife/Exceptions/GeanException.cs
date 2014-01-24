@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.Serialization;
 
-namespace Gean.Exceptions
+namespace NKnife.Exceptions
 {
     /// <summary>
     /// Gean.Library的的基础异常类，所有的异常从本类派生
     /// </summary>
     [Serializable]
-    public class GeanException : ApplicationException
+    public class NKnifeException : ApplicationException
     {
         /// <summary>
         /// 构造函数
         /// </summary>
-        public GeanException()
+        public NKnifeException()
             : this(0, null, null)
         {
         }
@@ -24,7 +21,7 @@ namespace Gean.Exceptions
         /// </summary>
         /// <param name="message">异常消息</param>
         /// <param name="innerException">内部异常</param>
-        public GeanException(string message, Exception innerException)
+        public NKnifeException(string message, Exception innerException)
             : this(0, message, innerException)
         {
         }
@@ -33,7 +30,7 @@ namespace Gean.Exceptions
         /// 构造函数
         /// </summary>
         /// <param name="message">异常消息</param>
-        public GeanException(string message)
+        public NKnifeException(string message)
             : this(0, message)
         {
         }
@@ -43,7 +40,7 @@ namespace Gean.Exceptions
         /// </summary>
         /// <param name="errorNo">异常编号</param>
         /// <param name="message">异常消息</param>
-        public GeanException(int errorNo, string message)
+        public NKnifeException(int errorNo, string message)
             : this(errorNo, message, null)
         {
         }
@@ -54,7 +51,7 @@ namespace Gean.Exceptions
         /// <param name="errorNo">异常编号</param>
         /// <param name="message">异常消息</param>
         /// <param name="innerException">内部异常</param>
-        public GeanException(int errorNo, string message, Exception innerException)
+        public NKnifeException(int errorNo, string message, Exception innerException)
             : base(message, innerException)
         {
             this._ErrorNo = errorNo;

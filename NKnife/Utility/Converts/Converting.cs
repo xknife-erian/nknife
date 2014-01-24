@@ -1,6 +1,7 @@
 ﻿using System;
 using Gean;
-using Gean.Exceptions;
+using NKnife.Exceptions;
+using NKnife.Interface;
 
 namespace NKnife.Utility.Converts
 {
@@ -176,7 +177,7 @@ namespace NKnife.Utility.Converts
             {
                 if (throwError)
                 {
-                    throw new GeanException("转换成Type时错误", e);
+                    throw new NKnifeException("转换成Type时错误", e);
                 }
             }
             return type;

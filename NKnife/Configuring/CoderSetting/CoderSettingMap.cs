@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Gean.Configuring.Interfaces;
+using NKnife.Configuring.Interfaces;
 
 namespace NKnife.Configuring.CoderSetting
 {

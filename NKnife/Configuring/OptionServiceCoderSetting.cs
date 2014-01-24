@@ -2,11 +2,11 @@
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Base;
-using Gean.Configuring.Interfaces;
+using NKnife.Base;
+using NKnife.Configuring.Interfaces;
 using NKnife.Utility;
 
-namespace Gean.Configuring
+namespace NKnife.Configuring
 {
     /// <summary>Gean.Configuring框架中Option服务的程序员配置
     /// </summary>

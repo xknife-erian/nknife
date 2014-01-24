@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using Gean.Data.Interface;
+using NKnife.Data.Interface;
 
-namespace Gean.Data.Process
+namespace NKnife.Data.Process
 {
     public class IntProcess : IDataReaderProcess<int>
     {

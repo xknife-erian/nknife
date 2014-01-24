@@ -2,23 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 
-namespace NKnife.Extensions
+namespace System.Data
 {
     public static class QueryExtension
     {
-        //public static void Add(this ConcurrentDictionary<int, Counter> dict,int key, Counter value)
-        //{
-        //    dict.TryAdd(key, value);
-        //}
-
-        //public static IEnumerable<DataRow> AsEnumerable(this DataTable table)
-        //{
-        //    return table.Rows.Cast<DataRow>();
-        //}
-
         public static IEnumerable<T> AsEnumerable<T>(this DataTable table, bool dateTimeToString) where T : class, new()
         {
             return table.ToList<T>(dateTimeToString).AsEnumerable();
@@ -110,28 +99,5 @@ namespace NKnife.Extensions
             }
         }
         #endregion
-    }
-
-    /// <summary>
-    /// linq 表达式创建类
-    /// </summary>
-    public static class PredicateBuilder
-    {
-        public static Expression<Func<T, bool>> True<T>() { return f => true; }
-        public static Expression<Func<T, bool>> False<T>() { return f => false; }
-
-        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
-        {
-            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters.Cast<Expression>());
-            return Expression.Lambda<Func<T, bool>>
-            (Expression.OrElse(expr1.Body, invokedExpr), expr1.Parameters);
-        }
-
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
-        {
-            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters.Cast<Expression>());
-            return Expression.Lambda<Func<T, bool>>
-            (Expression.AndAlso(expr1.Body, invokedExpr), expr1.Parameters);
-        }
     }
 }

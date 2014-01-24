@@ -1,7 +1,6 @@
 using System;
-using System.Drawing;
 
-namespace Gean.Configuring.Common
+namespace NKnife.Configuring.Common
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
     public sealed class OptionPanelAttribute : Attribute, IComparable

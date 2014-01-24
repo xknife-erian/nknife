@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using Gean.Data.Interface;
-using NKnife.Extensions;
+using NKnife.Data.Interface;
 using NLog;
 
-namespace Gean.Data.Common
+namespace NKnife.Data.Common
 {
     public abstract class DatabaseHelper : IDataBaseHelper
     {

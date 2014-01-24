@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NKnife.Extensions
+namespace System
 {
     public static class RandomExtension
     {

@@ -1,4 +1,4 @@
-﻿namespace Gean.Base
+﻿namespace NKnife.Base
 {
     /// <summary>
     /// 应用程序状态

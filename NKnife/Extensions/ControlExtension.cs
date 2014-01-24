@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace NKnife.Extensions
+namespace System
 {
     public static class ControlExtension
     {

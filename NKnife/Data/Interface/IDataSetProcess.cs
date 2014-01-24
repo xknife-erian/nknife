@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Gean.Data.Interface
+namespace NKnife.Data.Interface
 {
     public interface IDataSetProcess<out T>
     {

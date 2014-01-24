@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 
-namespace Gean.Data.Interface
+namespace NKnife.Data.Interface
 {
     /// <summary>针对数据库的操作帮助类。来自Geansoft的设计。
     /// </summary>

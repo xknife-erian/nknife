@@ -2,10 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
-using Gean.Configuring.Interfaces;
-using Gean.Xml;
+using NKnife.Configuring.Interfaces;
 
-namespace Gean.Configuring.UserData
+namespace NKnife.Configuring.UserData
 {
     /// <summary>这是一个保存用户目录下的选项文件，该文件可以不存在，当使用时发现该文件不存在时，将创建，并创建默认值 
     /// </summary>
@@ -132,7 +131,7 @@ namespace Gean.Configuring.UserData
                 Debug.Fail("this.FilePath is Null!");
                 return;
             }
-            FileAttributes fileAtts = FileAttributes.Normal;
+            var fileAtts = FileAttributes.Normal;
             if (File.Exists(FileName))
             {
                 fileAtts = File.GetAttributes(FileName); //先获取此文件的属性

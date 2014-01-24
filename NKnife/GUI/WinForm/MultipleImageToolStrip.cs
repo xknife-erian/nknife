@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
+using NKnife.Events;
 
 namespace Gean.Gui.WinForm
 {

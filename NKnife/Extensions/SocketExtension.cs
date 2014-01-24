@@ -4,7 +4,7 @@ using System.Net.Sockets;
 
 namespace System.Net.Sockets
 {
-	public static class SocketEx
+    internal static class SocketExtension
 	{
 		public static void SafeShutdownClose(this Socket socket)
 		{

@@ -7,7 +7,6 @@ using System.Threading;
 using Gean;
 using Gean.Network.Common;
 using Gean.Network.Protocol;
-using NKnife.Extensions;
 using NKnife.NetWork.Config;
 using NKnife.NetWork.Interfaces;
 using NKnife.NetWork.Protocol;

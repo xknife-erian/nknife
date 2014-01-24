@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Gean.Configuring.Interfaces;
+﻿using NKnife.Configuring.Interfaces;
 
-namespace Gean.Configuring.Common
+namespace NKnife.Configuring.Common
 {
     public class OptionPanelPrecondition : IOptionPanelPrecondition
     {

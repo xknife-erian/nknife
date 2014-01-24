@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using Gean.Configuring.Common;
-using Gean.Configuring.Controls;
-using Gean.Configuring.Option;
+using NKnife.Configuring.Controls;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     public interface IOptionListItem : IComparable
     {

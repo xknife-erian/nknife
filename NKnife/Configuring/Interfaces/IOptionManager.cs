@@ -1,8 +1,7 @@
 using System;
-using Gean.Configuring.Option;
 using NKnife.Configuring.OptionCase;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     /// <summary>
     /// 应用程序选项信息的管理器

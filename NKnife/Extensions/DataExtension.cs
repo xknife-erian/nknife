@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using Gean.Attributes;
+using NKnife.Attributes;
 using NLog;
 
-namespace NKnife.Extensions
+namespace System.Data
 {
     public static class DataExtensions
     {

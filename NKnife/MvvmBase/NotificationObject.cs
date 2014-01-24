@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
-namespace Gean.MvvmBase
+namespace NKnife.MvvmBase
 {
     /// <summary>
     /// Base class for items that support property notification.

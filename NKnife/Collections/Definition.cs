@@ -8,8 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Gean;
+using NKnife.Events;
 
-namespace Gean.Collections
+namespace NKnife.Collections
 {
     /// <summary>
     /// 一个灵活的针对键值对进行了扩展的集合类型。

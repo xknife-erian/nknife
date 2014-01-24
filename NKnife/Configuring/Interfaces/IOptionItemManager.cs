@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Gean.Configuring.Interfaces;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     public interface IOptionItemManager
     {

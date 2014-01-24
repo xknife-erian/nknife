@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
-using Gean.Configuring.Interfaces;
-using Gean.Configuring.OptionCase;
+using Gean.Configuring.Option;
+using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Utility;
 using NLog;
 
-namespace Gean.Configuring.Option
+namespace NKnife.Configuring.Option
 {
     /// <summary>(核心类)描述一个选项信息的管理与贮存的类型。
     /// </summary>

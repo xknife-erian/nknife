@@ -1,9 +1,8 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Gean.MvvmBase
+namespace NKnife.MvvmBase
 {
     ///<summary>
     /// Provides support for extracting property information based on a property expression.

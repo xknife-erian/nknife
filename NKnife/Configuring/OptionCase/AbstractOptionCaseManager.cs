@@ -5,11 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Configuring.Interfaces;
-using NKnife.Configuring.OptionCase;
+using NKnife.Configuring.Interfaces;
 using NLog;
 
-namespace Gean.Configuring.OptionCase
+namespace NKnife.Configuring.OptionCase
 {
     /// <summary>
     /// 往往应用程序的选项可以是多份，每一份在匹配的场景或时段下被使用，在这里我们理解一份选项是一个广义的实例，

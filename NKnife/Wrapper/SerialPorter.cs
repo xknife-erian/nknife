@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Text;
-using NKnife.Extensions;
 using NLog;
 
 namespace Gean.Wrapper

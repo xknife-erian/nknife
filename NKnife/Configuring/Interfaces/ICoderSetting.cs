@@ -1,7 +1,6 @@
 ﻿using System;
-using Gean.Configuring.Common;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     /// <summary>
     /// 这是一个描述CoderSetting（程序员配置）的接口。

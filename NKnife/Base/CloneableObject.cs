@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Reflection;
 
-namespace Gean
+namespace NKnife.Base
 {
     /// <summary>  
     /// CloneableObject类是一个用来继承的抽象类。   

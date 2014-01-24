@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using Gean;
+using NKnife.Base;
 using NKnife.Utility.File;
 
 namespace NKnife.Utility

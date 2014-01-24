@@ -1,7 +1,7 @@
 ﻿using System;
-using Gean.MvvmBase.Interfaces;
+using NKnife.MvvmBase.Interfaces;
 
-namespace Gean.MvvmBase
+namespace NKnife.MvvmBase
 {
     /// <summary>一些较为简单的命令可以使用这个比较简单的委托命令类型
     /// </summary>

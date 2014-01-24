@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Text;
-using NKnife.Interface.Generator;
+using NKnife.Interface;
 
 namespace Gean.Gui.WinForm
 {

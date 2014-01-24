@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NKnife.Extensions
+namespace System
 {
     public static class IntegerExtension
     {

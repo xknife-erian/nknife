@@ -1,8 +1,8 @@
 ﻿using System;
-using Gean.Configuring.Common;
 using NKnife.Configuring.CoderSetting;
+using NKnife.Configuring.Common;
 
-namespace Gean.Configuring
+namespace NKnife.Configuring
 {
     public delegate void CoderSettingChangedEventHandler(object sender, CoderSettingChangeEventArgs e);
     public delegate void CoderSettingChangingEventHandler(object sender, CoderSettingChangeEventArgs e);

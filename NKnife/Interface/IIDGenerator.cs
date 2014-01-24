@@ -1,10 +1,9 @@
-﻿using System;
-namespace Gean
+﻿namespace NKnife.Interface
 {
     /// <summary>
     /// 定义一个全局ID生成器的接口
     /// </summary>
-    public interface IIDGenerator
+    public interface IIdGenerator
     {
         /// <summary>
         /// 根据当前类的输出规则生成一个全局不重复的ID。

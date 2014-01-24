@@ -1,4 +1,4 @@
-﻿using Gean.Collections;
+﻿using NKnife.Collections;
 
 namespace Gean.Network.Common
 {

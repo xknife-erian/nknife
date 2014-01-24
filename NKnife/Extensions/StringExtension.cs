@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace System
 {
-    public static class StringEx
+    public static class StringExtension
     {
         /// <summary>是否是Null,空,全部是空白或全部为0的字符串
         /// </summary>

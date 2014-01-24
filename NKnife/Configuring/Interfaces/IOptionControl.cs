@@ -1,8 +1,7 @@
-﻿using Gean.Configuring.Common;
-using Gean.Configuring.OptionCase;
+﻿using NKnife.Configuring.Common;
 using NKnife.Configuring.OptionCase;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     /// <summary>一类“配置”的配置界面
     /// </summary>

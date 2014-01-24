@@ -2,7 +2,7 @@
 using System.Xml;
 using NKnife.Configuring.CoderSetting;
 
-namespace Gean.Data.Common
+namespace NKnife.Data.Common
 {
     public abstract class DatabaseCoderSetting : XmlCoderSetting
     {

@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Gean.Configuring.Common;
-using Gean.Configuring.Interfaces;
 using Gean.Xml;
-using NKnife.Extensions;
+using NKnife.Configuring;
+using NKnife.Configuring.Common;
+using NKnife.Configuring.Interfaces;
 using NLog;
 
 namespace Gean.Configuring.Option

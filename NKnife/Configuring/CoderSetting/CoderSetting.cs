@@ -1,5 +1,5 @@
 using Gean.Configuring;
-using Gean.Configuring.Interfaces;
+using NKnife.Configuring.Interfaces;
 
 namespace NKnife.Configuring.CoderSetting
 {

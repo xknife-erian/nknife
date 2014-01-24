@@ -6,13 +6,14 @@ namespace NKnife.Algrithm
     /// <summary>
     /// 该函数由C++版本移植而来
     /// </summary>
-    public class BubbleSort<T> where T:IComparable
+    public class BubbleSort<T> where T : IComparable
     {
-        public static void Sort(ref List<T> collection,T element,int count,bool ascend = true)
+        public static void Sort(ref List<T> collection, T element, int count, bool ascend = true)
         {
-            List<int> df = new List<int>();
             for (int i = 0; i < count - 1; i++)
+            {
                 for (int j = 0; j < count - 1 - i; j++)
+                {
                     if (ascend)
                     {
                         // 升序
@@ -26,14 +27,16 @@ namespace NKnife.Algrithm
                     else
                     {
                         // 降序
-                        if (collection[j + 1].CompareTo(collection[j])>0)
+                        if (collection[j + 1].CompareTo(collection[j]) > 0)
                         {
                             T temp = collection[j];
                             collection[j] = collection[j + 1];
                             collection[j + 1] = temp;
                         }
                     }
-        } 
+                }
+            }
+        }
     }
 
     // 该函数模板使用冒泡法对集合元素进行排序，参数说明：

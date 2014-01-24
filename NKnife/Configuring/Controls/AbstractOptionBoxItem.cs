@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
-using Gean.Configuring.Interfaces;
+using NKnife.Configuring.Interfaces;
 
-namespace Gean.Configuring.Controls
+namespace NKnife.Configuring.Controls
 {
     /// <summary>
     /// 2011.11.30放弃使用,改用定制特性

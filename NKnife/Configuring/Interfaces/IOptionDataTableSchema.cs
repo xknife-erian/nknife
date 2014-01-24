@@ -1,8 +1,6 @@
-using System.Data;
 using Gean.Configuring.Option;
-using Gean.Configuring.Common;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     public interface IOptionDataTableSchema
     {

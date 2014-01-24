@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gean.MvvmBase.Interfaces
+namespace NKnife.MvvmBase.Interfaces
 {
     /// <summary>一个基于WinForm的MVVM模式的命令的接口
     /// </summary>

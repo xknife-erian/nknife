@@ -1,6 +1,4 @@
-﻿using System.Xml;
-
-namespace Gean.Configuring.Interfaces
+﻿namespace NKnife.Configuring.Interfaces
 {
     public interface IUserApplicationData
     {

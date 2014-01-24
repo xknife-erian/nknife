@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Gean;
+using NKnife.Interface;
 
 namespace NKnife.Wrapper
 {
@@ -21,7 +22,7 @@ namespace NKnife.Wrapper
     /// Hibernate的UUIDGenerator生成生成500万个ID需要时间（毫秒）： 60331，每秒生成：82000
     /// Guid生成500万个ID需要时间（毫秒）： 5182，每秒生成：964000
     /// </summary>
-    public class IDGenerator : IIDGenerator
+    public class IDGenerator : IIdGenerator
     {
         /// <summary>
         /// 累计数，消除当以秒为单位时出现重复的可能。

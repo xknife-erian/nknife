@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
 using Gean;
-using Gean.Configuring.Interfaces;
-using NKnife.Extensions;
+using NKnife.Configuring.Interfaces;
+using NKnife.Interface;
 using NKnife.Utility;
 using NKnife.Utility.File;
 using NLog;

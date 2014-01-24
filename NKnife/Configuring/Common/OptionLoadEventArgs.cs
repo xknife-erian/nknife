@@ -1,6 +1,6 @@
 using System;
 
-namespace Gean.Configuring.Common
+namespace NKnife.Configuring.Common
 {
     public class OptionLoadEventArgs : EventArgs
     {

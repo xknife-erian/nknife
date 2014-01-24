@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using Gean.Configuring.Interfaces;
+using NKnife.Configuring.Interfaces;
 
-namespace Gean.Configuring.Controls
+namespace NKnife.Configuring.Controls
 {
     /// <summary>
     /// 2011.09.06放弃使用

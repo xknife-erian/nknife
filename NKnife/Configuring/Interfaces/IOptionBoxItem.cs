@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Gean.Configuring.Interfaces
+namespace NKnife.Configuring.Interfaces
 {
     public interface IOptionBoxItem : IComparable
     {

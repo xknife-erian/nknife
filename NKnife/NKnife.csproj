@@ -135,15 +135,15 @@
     <Compile Include="Data\Interface\IDataSetProcess.cs" />
     <Compile Include="Data\Process\ArrayProcess.cs" />
     <Compile Include="Data\Process\IntProcess.cs" />
+    <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Ioc\DI.cs" />
-    <Compile Include="EventData\ChangedEventArgs.cs" />
-    <Compile Include="EventData\EventArgs.cs" />
+    <Compile Include="Events\ChangedEventArgs.cs" />
+    <Compile Include="Events\EventArgs.cs" />
     <Compile Include="Exceptions\GeanException.cs" />
     <Compile Include="Exceptions\TypeConvertingException.cs" />
     <Compile Include="Extensions\ArrayExtension.cs" />
     <Compile Include="Extensions\ArraySegmentExtension.cs" />
     <Compile Include="Extensions\BytesExtension.cs" />
-    <Compile Include="Extensions\CollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Extensions\DataExtension.cs" />
     <Compile Include="Extensions\DateTimes\CountOfMonth.cs" />
@@ -152,15 +152,14 @@
     <Compile Include="Extensions\DateTimes\NumberExtension.cs" />
     <Compile Include="Extensions\DateTimes\RoundTo.cs" />
     <Compile Include="Extensions\DateTimes\TimeSpanExtension.cs" />
-    <Compile Include="Extensions\EnumerableExtension.cs" />
+    <Compile Include="Extensions\CollectionExtension.cs" />
     <Compile Include="Extensions\IntegerExtension.cs" />
     <Compile Include="Extensions\LoggerExtension.cs" />
     <Compile Include="Extensions\QueryExtension.cs" />
     <Compile Include="Extensions\SocketExtension.cs" />
     <Compile Include="Extensions\StringBuilderExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="Graph\GraphUtil.cs" />
-    <Compile Include="Graph\ThemedColors.cs" />
+    <Compile Include="Utility\UtilityGraph.cs" />
     <Compile Include="GUI\Controls\Container\AppFileNameEditor.cs" />
     <Compile Include="GUI\Controls\Container\WinFormContainer.cs">
       <SubType>Component</SubType>
@@ -406,38 +405,36 @@
     <Compile Include="GUI\WinForm\XmlTreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Icons\IconHelper.cs" />
-    <Compile Include="Icons\IconListManager.cs" />
-    <Compile Include="Interface\Converting\IConverting.cs" />
-    <Compile Include="Interface\Generator\IGenerator.cs" />
+    <Compile Include="Wrapper\Icons\IconHelper.cs" />
+    <Compile Include="Wrapper\Icons\IconListManager.cs" />
+    <Compile Include="Interface\IConverting.cs" />
+    <Compile Include="Interface\IGenerator.cs" />
     <Compile Include="Interface\ICommand.cs" />
     <Compile Include="Interface\IEnvironmentItem.cs" />
-    <Compile Include="Interface\IFactory.cs" />
     <Compile Include="Interface\IIDGenerator.cs" />
     <Compile Include="Interface\IJson.cs" />
-    <Compile Include="Interface\IModel.cs" />
     <Compile Include="Interface\IRegistry.cs" />
     <Compile Include="Interface\IService.cs" />
-    <Compile Include="Interface\Item\IItem.cs" />
+    <Compile Include="Interface\IItem.cs" />
     <Compile Include="Interface\IToXmlElement.cs" />
-    <Compile Include="Interface\Models\AbstractModel.cs" />
-    <Compile Include="Interface\Models\IEntityEditable.cs" />
-    <Compile Include="Interface\Parse\IParse.cs" />
-    <Compile Include="Interface\Tree\ITree.cs" />
-    <Compile Include="Logging\ExecuteHelper.cs" />
-    <Compile Include="Logging\ILog.cs" />
-    <Compile Include="Logging\LogBase.cs" />
-    <Compile Include="Logging\LogConsole.cs" />
-    <Compile Include="Logging\LogEvent.cs" />
-    <Compile Include="Logging\LogFile.cs" />
-    <Compile Include="Logging\LogFormatter.cs" />
-    <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Logging\LogHelper.cs" />
-    <Compile Include="Logging\LogInstance.cs" />
-    <Compile Include="Logging\LogLevel.cs" />
-    <Compile Include="Logging\LogMulti.cs" />
-    <Compile Include="Logging\LogSettings.cs" />
-    <Compile Include="Media\MediaSoundPlayerWarrper.cs" />
+    <Compile Include="Interface\IParse.cs" />
+    <Compile Include="Interface\ITree.cs" />
+    <Compile Include="Logging\Base\LogDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Logging\Base\NLogListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Logging\LoggerWPFControl\LoggerWpfControlTarget.cs" />
+    <Compile Include="Logging\LoggerWPFControl\LogMessage.cs" />
+    <Compile Include="Logging\LoggerWPFControl\LogMessageCollection.cs" />
+    <Compile Include="Logging\LogPanel\LogPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Logging\LogPanel\LogPanel.Designer.cs">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logging\LogPanel\ShowLogPanelTarget.cs" />
     <Compile Include="MvvmBase\FormCommand.cs" />
     <Compile Include="MvvmBase\Interfaces\IFormCommand.cs" />
     <Compile Include="MvvmBase\NotificationObject.cs" />
@@ -502,7 +499,28 @@
     <Compile Include="NetWork\SocketServer\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Net\QuickUdpClient.cs" />
     <Compile Include="Net\QuickWebs.cs" />
-    <Compile Include="Patterns\Option\ProfileManager.cs" />
+    <Compile Include="NSerial\Base\DataRecvEventArgs.cs" />
+    <Compile Include="NSerial\Base\ISerialCommunication.cs" />
+    <Compile Include="NSerial\Base\ISerialCommunicationManager.cs" />
+    <Compile Include="NSerial\Base\ISerialDataPool.cs" />
+    <Compile Include="NSerial\Base\ISerialPortWrapper.cs" />
+    <Compile Include="NSerial\Base\NoResponseEventArgs.cs" />
+    <Compile Include="NSerial\Base\PackageBase.cs" />
+    <Compile Include="NSerial\Base\PackageSentEventArgs.cs" />
+    <Compile Include="NSerial\Base\SendInterval.cs" />
+    <Compile Include="NSerial\Base\SendRecvEventArgs.cs" />
+    <Compile Include="NSerial\Base\SerialProDataReceivedEventArgs.cs" />
+    <Compile Include="NSerial\OneWayPackage.cs" />
+    <Compile Include="NSerial\QueryPackage.cs" />
+    <Compile Include="NSerial\SerialCommunication.cs" />
+    <Compile Include="NSerial\SerialCommunicationManager.cs" />
+    <Compile Include="NSerial\SerialDataPool.cs" />
+    <Compile Include="NSerial\SerialPortPro.cs" />
+    <Compile Include="NSerial\SerialPortWrapper.cs" />
+    <Compile Include="NSerial\SerialPortWrapperDotNet.cs" />
+    <Compile Include="NSerial\SerialType.cs" />
+    <Compile Include="NSerial\TwoWayPackage.cs" />
+    <Compile Include="Configuring\ProfileManager.cs" />
     <Compile Include="Platform\IME\GlobeSetIMM.cs" />
     <Compile Include="Platform\IO\Files.cs" />
     <Compile Include="Platform\Timing\AlarmClock.cs" />
@@ -683,6 +701,20 @@
     <EmbeddedResource Include="GUI\WinForm\WeekGroup.resx">
       <DependentUpon>WeekGroup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Logging\Base\LogDetailForm.resx">
+      <DependentUpon>LogDetailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\LogPanel\LogPanel.en-US.resx">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\LogPanel\LogPanel.resx">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\LogPanel\LogPanel.zh-CN.resx">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -710,7 +742,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Data\Database.option" />
+    <None Include="Data\Database.template" />
+    <None Include="Logging\NLog.config.template">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

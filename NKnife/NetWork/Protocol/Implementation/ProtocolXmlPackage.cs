@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NKnife.Extensions;
 using NKnife.NetWork.Interfaces;
 using NKnife.Utility;
 using NLog;

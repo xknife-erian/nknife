@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Gean.Collections
+namespace NKnife.Collections
 {
     /// <summary>一个同步安全的队列类型，内部实现一个AutoResetEvent，可通过该AutoResetEvent处理本队列的监听。
     /// </summary>
@@ -128,7 +128,7 @@ namespace Gean.Collections
         ///   <paramref name="array"/> 是多维的。- 或 -源 <see cref="T:System.Collections.ICollection"/> 中的元素数目大于从 <paramref name="index"/> 到目标 <paramref name="array"/> 末尾之间的可用空间。</exception>
         ///   
         /// <exception cref="T:System.ArgumentException">源 <see cref="T:System.Collections.ICollection"/> 的类型无法自动转换为目标 <paramref name="array"/> 的类型。</exception>
-        public virtual void CopyTo(Array array, int index)
+        public void CopyTo(Array array, int index)
         {
             if (!(array is T[]))
                 throw new ArgumentException("传入数据不是指定的类型，应传入T[]。");
@@ -143,7 +143,7 @@ namespace Gean.Collections
         /// </summary>
         /// <returns>
         ///   <see cref="T:System.Collections.ICollection"/> 中包含的元素数。</returns>
-        public virtual int Count
+        public int Count
         {
             get
             {
@@ -158,7 +158,7 @@ namespace Gean.Collections
         /// 获取一个可用于同步对 <see cref="T:System.Collections.ICollection"/> 的访问的对象。
         /// </summary>
         /// <returns>可用于同步对 <see cref="T:System.Collections.ICollection"/> 的访问的对象。</returns>
-        public virtual object SyncRoot
+        public object SyncRoot
         {
             get { return this; }
         }
@@ -167,7 +167,7 @@ namespace Gean.Collections
         /// 获取一个值，该值指示是否同步对 <see cref="T:System.Collections.ICollection"/> 的访问（线程安全）。
         /// </summary>
         /// <returns>如果对 <see cref="T:System.Collections.ICollection"/> 的访问是同步的（线程安全），则为 true；否则为 false。</returns>
-        public virtual bool IsSynchronized
+        public bool IsSynchronized
         {
             get { return true; }
         }
