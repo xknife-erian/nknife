@@ -10,32 +10,8 @@ namespace NKnife.Logging.LogPanel
     /// </summary>
     public sealed partial class LogPanel : UserControl
     {
-        #region 单件实例
-
-        /// <summary>
-        /// 获得一个本类型的单件实例.
-        /// </summary>
-        /// <value>The instance.</value>
-        public static LogPanel ME
+        public LogPanel()
         {
-            get { return Singleton._Instance; }
-        }
-
-        private class Singleton
-        {
-            internal static readonly LogPanel _Instance;
-
-            static Singleton()
-            {
-                _Instance = new LogPanel();
-            }
-        }
-
-        #endregion
-
-        private LogPanel()
-        {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(NKnife.Properties.Settings.Default.CultureInfoName);
             SetStyle
                 (
                     ControlStyles.DoubleBuffer |

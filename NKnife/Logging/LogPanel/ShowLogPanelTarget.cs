@@ -1,4 +1,5 @@
 ﻿using System;
+using NKnife.Ioc;
 using NLog;
 using NLog.Targets;
 
@@ -12,11 +13,10 @@ namespace NKnife.Logging.LogPanel
     {
         public ShowLogPanelTarget()
         {
-           
-            LogPanel = LogPanel.ME;
+            LogPanel = DI.Get<LogPanel>();
         }
 
-        public LogPanel LogPanel { get; private set; }
+        protected LogPanel LogPanel { get; private set; }
 
         protected override void Write(LogEventInfo logEvent)
         {

@@ -21,8 +21,6 @@ namespace NKnife.Ioc
         public static void Initialize()
         {
             _CoreKernel = new CoreKernel();
-            //Assembly calling = Assembly.GetCallingAssembly();
-            //Assembly curr = Assembly.GetExecutingAssembly();
             var assems = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory);
             _CoreKernel.Load(assems);
         }
