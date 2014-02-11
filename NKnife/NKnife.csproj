@@ -742,7 +742,6 @@
     <None Include="Data\Database.template" />
     <None Include="Logging\NLog.config.template">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Resources\computeflag.gif" />

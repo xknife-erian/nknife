@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using NKnife.Ioc;
 
 namespace NKnife.StarterKit
 {
@@ -15,6 +16,9 @@ namespace NKnife.StarterKit
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            DI.Initialize();
+
             Application.Run(new KitListForm());
         }
     }

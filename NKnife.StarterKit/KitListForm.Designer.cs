@@ -28,40 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this._ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.loggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripContainer.BottomToolStripPanel.SuspendLayout();
-            this._ToolStripContainer.TopToolStripPanel.SuspendLayout();
-            this._ToolStripContainer.SuspendLayout();
+            this._LogPanelTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // _ToolStripContainer
-            // 
-            // 
-            // _ToolStripContainer.BottomToolStripPanel
-            // 
-            this._ToolStripContainer.BottomToolStripPanel.Controls.Add(this.statusStrip1);
-            // 
-            // _ToolStripContainer.ContentPanel
-            // 
-            this._ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(784, 514);
-            this._ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._ToolStripContainer.Location = new System.Drawing.Point(0, 0);
-            this._ToolStripContainer.Name = "_ToolStripContainer";
-            this._ToolStripContainer.Size = new System.Drawing.Size(784, 561);
-            this._ToolStripContainer.TabIndex = 0;
-            this._ToolStripContainer.Text = "toolStripContainer1";
-            // 
-            // _ToolStripContainer.TopToolStripPanel
-            // 
-            this._ToolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip1);
-            // 
             // menuStrip1
             // 
-            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loggingToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -72,48 +47,52 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
             // 
             // loggingToolStripMenuItem
             // 
+            this.loggingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._LogPanelTestMenuItem});
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
             this.loggingToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.loggingToolStripMenuItem.Text = "Logging";
+            // 
+            // _LogPanelTestMenuItem
+            // 
+            this._LogPanelTestMenuItem.Name = "_LogPanelTestMenuItem";
+            this._LogPanelTestMenuItem.Size = new System.Drawing.Size(153, 22);
+            this._LogPanelTestMenuItem.Text = "LogPanel测试";
+            this._LogPanelTestMenuItem.Click += new System.EventHandler(this._LogPanelTestMenuItem_Click);
             // 
             // KitListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this._ToolStripContainer);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Calibri", 8.25F);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "KitListForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NKnife.StarterKit";
-            this._ToolStripContainer.BottomToolStripPanel.ResumeLayout(false);
-            this._ToolStripContainer.BottomToolStripPanel.PerformLayout();
-            this._ToolStripContainer.TopToolStripPanel.ResumeLayout(false);
-            this._ToolStripContainer.TopToolStripPanel.PerformLayout();
-            this._ToolStripContainer.ResumeLayout(false);
-            this._ToolStripContainer.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolStripContainer _ToolStripContainer;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem loggingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _LogPanelTestMenuItem;
     }
 }
 
