@@ -2,38 +2,26 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using NKnife.Ioc;
 using NLog;
 
 namespace NKnife.Logging.Base
 {
     /// <summary>日志详细信息展现窗体
     /// </summary>
-    internal sealed class LogInfoForm : Form
+    public sealed class LogDetailForm : Form
     {
-        #region 单件实例
-
         public static void Show(LogEventInfo info)
         {
-            LogInfoForm form = Singleton.Instance;
+            var form = DI.Get<LogDetailForm>();
             form.Size = new Size(600, 480);
             form.FillLogInfo(info);
             form.ShowDialog();
         }
 
-        private class Singleton
+        public LogDetailForm()
         {
-            internal static readonly LogInfoForm Instance;
-
-            static Singleton()
-            {
-                Instance = new LogInfoForm();
-            }
-        }
-
-        #endregion
-
-        private LogInfoForm()
-        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Global.Culture);
             components = new Container();
             SuspendLayout();
             AutoScaleMode = AutoScaleMode.Font;
@@ -92,10 +80,10 @@ namespace NKnife.Logging.Base
         private TextBox _LogInfoTextBox;
         private TextBox _SourceTextBox;
         private TextBox _TimeTextBox;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
+        private Label _Label1;
+        private Label _Label2;
+        private Label _Label3;
+        private Label _Label4;
         private TabControl _MainTabControl;
         private TabPage _MainPage;
         private TabPage _ExInfoPage;
@@ -120,10 +108,10 @@ namespace NKnife.Logging.Base
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
+            _Label1 = new Label();
+            _Label2 = new Label();
+            _Label3 = new Label();
+            _Label4 = new Label();
             _LevelTextBox = new TextBox();
             _TimeTextBox = new TextBox();
             _SourceTextBox = new TextBox();
@@ -140,46 +128,40 @@ namespace NKnife.Logging.Base
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(24, 18);
-            label1.Name = "label1";
-            label1.Size = new Size(59, 12);
-            label1.TabIndex = 0;
-            label1.Text = "日志级别:";
+            _Label1.AutoSize = true;
+            _Label1.Location = new Point(24, 18);
+            _Label1.Size = new Size(59, 12);
+            _Label1.TabIndex = 0;
+            _Label1.Text = "日志级别:";
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(24, 43);
-            label2.Name = "label2";
-            label2.Size = new Size(59, 12);
-            label2.TabIndex = 1;
-            label2.Text = "发生时间:";
+            _Label2.AutoSize = true;
+            _Label2.Location = new Point(24, 43);
+            _Label2.Size = new Size(59, 12);
+            _Label2.TabIndex = 1;
+            _Label2.Text = "发生时间:";
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(36, 66);
-            label3.Name = "label3";
-            label3.Size = new Size(47, 12);
-            label3.TabIndex = 2;
-            label3.Text = "日志源:";
+            _Label3.AutoSize = true;
+            _Label3.Location = new Point(36, 66);
+            _Label3.Size = new Size(47, 12);
+            _Label3.TabIndex = 2;
+            _Label3.Text = "日志源:";
             // 
             // label4
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(24, 91);
-            label4.Name = "label4";
-            label4.Size = new Size(59, 12);
-            label4.TabIndex = 3;
-            label4.Text = "日志信息:";
+            _Label4.AutoSize = true;
+            _Label4.Location = new Point(24, 91);
+            _Label4.Size = new Size(59, 12);
+            _Label4.TabIndex = 3;
+            _Label4.Text = "日志信息:";
             // 
             // _LevelTextBox
             // 
-            _LevelTextBox.Anchor = ((((AnchorStyles.Top | AnchorStyles.Left)
-                                      | AnchorStyles.Right)));
+            _LevelTextBox.Anchor = ((((AnchorStyles.Top | AnchorStyles.Left)| AnchorStyles.Right)));
             _LevelTextBox.Location = new Point(89, 13);
-            _LevelTextBox.Name = "_LevelTextBox";
             _LevelTextBox.ReadOnly = true;
             _LevelTextBox.Size = new Size(364, 21);
             _LevelTextBox.TabIndex = 5;
@@ -189,7 +171,6 @@ namespace NKnife.Logging.Base
             _TimeTextBox.Anchor = ((((AnchorStyles.Top | AnchorStyles.Left)
                                      | AnchorStyles.Right)));
             _TimeTextBox.Location = new Point(89, 38);
-            _TimeTextBox.Name = "_TimeTextBox";
             _TimeTextBox.ReadOnly = true;
             _TimeTextBox.Size = new Size(364, 21);
             _TimeTextBox.TabIndex = 6;
@@ -225,7 +206,6 @@ namespace NKnife.Logging.Base
             // _CloseButton
             // 
             _CloseButton.Anchor = (((AnchorStyles.Bottom | AnchorStyles.Right)));
-            _CloseButton.DialogResult = DialogResult.Cancel;
             _CloseButton.Location = new Point(359, 251);
             _CloseButton.Name = "_CloseButton";
             _CloseButton.Size = new Size(132, 27);
@@ -248,11 +228,11 @@ namespace NKnife.Logging.Base
             // 
             // tabPage1
             // 
-            _MainPage.Controls.Add(label4);
-            _MainPage.Controls.Add(label1);
-            _MainPage.Controls.Add(label2);
+            _MainPage.Controls.Add(_Label4);
+            _MainPage.Controls.Add(_Label1);
+            _MainPage.Controls.Add(_Label2);
             _MainPage.Controls.Add(_LogInfoTextBox);
-            _MainPage.Controls.Add(label3);
+            _MainPage.Controls.Add(_Label3);
             _MainPage.Controls.Add(_SourceTextBox);
             _MainPage.Controls.Add(_LevelTextBox);
             _MainPage.Controls.Add(_TimeTextBox);
@@ -279,15 +259,13 @@ namespace NKnife.Logging.Base
             // 
             AcceptButton = _CloseButton;
             AutoScaleDimensions = new SizeF(6F, 12F);
-            AutoScaleMode = AutoScaleMode.Font;
             CancelButton = _CloseButton;
             ClientSize = new Size(503, 290);
             Controls.Add(_MainTabControl);
             Controls.Add(_CloseButton);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "LogInfoForm";
-            SizeGripStyle = SizeGripStyle.Hide;
+            Name = "LogDetailForm";
             _MainTabControl.ResumeLayout(false);
             _MainPage.ResumeLayout(false);
             _MainPage.PerformLayout();

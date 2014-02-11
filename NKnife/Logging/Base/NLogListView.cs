@@ -7,7 +7,7 @@ namespace NKnife.Logging.Base
 {
     /// <summary>展示日志的具体ListView，同时双缓冲解决闪烁
     /// </summary>
-    internal class NLogListView : ListView
+    public class NLogListView : ListView
     {
         private static readonly ConcurrentDictionary<string, ListViewGroup> _LevelGroups = new ConcurrentDictionary<string, ListViewGroup>();
 
@@ -138,7 +138,7 @@ namespace NKnife.Logging.Base
                 var info = (LogEventInfo) si.Item.Tag;
                 if (info != null)
                 {
-                    LogInfoForm.Show(info);
+                    LogDetailForm.Show(info);
                 }
             }
         }

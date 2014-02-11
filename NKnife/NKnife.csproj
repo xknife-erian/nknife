@@ -136,6 +136,7 @@
     <Compile Include="Data\Process\ArrayProcess.cs" />
     <Compile Include="Data\Process\IntProcess.cs" />
     <Compile Include="Extensions\ExpressionExtension.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="Ioc\DI.cs" />
     <Compile Include="Events\ChangedEventArgs.cs" />
     <Compile Include="Events\EventArgs.cs" />

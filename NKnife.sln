@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.UnitTests", "NKnife.UnitTests\NKnife.UnitTests.csproj", "{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.StarterKit", "NKnife.StarterKit\NKnife.StarterKit.csproj", "{BFC7CF57-92D4-4950-B926-8606EC571395}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

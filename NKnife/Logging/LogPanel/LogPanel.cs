@@ -12,6 +12,7 @@ namespace NKnife.Logging.LogPanel
     {
         public LogPanel()
         {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Global.Culture);
             SetStyle
                 (
                     ControlStyles.DoubleBuffer |
