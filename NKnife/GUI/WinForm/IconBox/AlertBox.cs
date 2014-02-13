@@ -6,7 +6,7 @@ namespace NKnife.GUI.WinForm.IconBox
     {
         protected override Icon CoreIcon
         {
-            get { return Properties.Resources.Alert; }
+            get { return NKnife.Resources.IconBoxResource.Alert; }
         }
     }
 }

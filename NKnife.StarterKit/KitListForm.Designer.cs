@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.loggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._LogPanelTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this._MultiLanguageLoPanleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,16 +46,10 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
-            this.statusStrip1.TabIndex = 0;
-            // 
             // loggingToolStripMenuItem
             // 
             this.loggingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._MultiLanguageLoPanleMenuItem,
             this._LogPanelTestMenuItem});
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
             this.loggingToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
@@ -63,9 +58,23 @@
             // _LogPanelTestMenuItem
             // 
             this._LogPanelTestMenuItem.Name = "_LogPanelTestMenuItem";
-            this._LogPanelTestMenuItem.Size = new System.Drawing.Size(153, 22);
-            this._LogPanelTestMenuItem.Text = "LogPanel测试";
+            this._LogPanelTestMenuItem.Size = new System.Drawing.Size(201, 22);
+            this._LogPanelTestMenuItem.Text = "打开LogPanel承载窗体";
             this._LogPanelTestMenuItem.Click += new System.EventHandler(this._LogPanelTestMenuItem_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.TabIndex = 0;
+            // 
+            // _MultiLanguageLoPanleMenuItem
+            // 
+            this._MultiLanguageLoPanleMenuItem.CheckOnClick = true;
+            this._MultiLanguageLoPanleMenuItem.Name = "_MultiLanguageLoPanleMenuItem";
+            this._MultiLanguageLoPanleMenuItem.Size = new System.Drawing.Size(201, 22);
+            this._MultiLanguageLoPanleMenuItem.Text = "中文LogPanel";
             // 
             // KitListForm
             // 
@@ -93,6 +102,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem loggingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _LogPanelTestMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _MultiLanguageLoPanleMenuItem;
     }
 }
 

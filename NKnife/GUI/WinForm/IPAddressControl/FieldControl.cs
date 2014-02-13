@@ -111,7 +111,7 @@ namespace NKnife.GUI.WinForm.IPAddressControl
             Graphics g = Graphics.FromHwnd( Handle );
 
             Size minimumSize = TextRenderer.MeasureText( g,
-               Properties.Resources.FieldMeasureText, Font, Size,
+               "255", Font, Size,
                _textFormatFlags );
 
             g.Dispose();

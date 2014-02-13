@@ -12,7 +12,7 @@ namespace NKnife.Ioc
         public override void Load()
         {
             Bind<LogPanel>().To<LogPanel>().InSingletonScope();
-            Bind<LogDetailForm>().To<LogDetailForm>().InSingletonScope();
+            Bind<NLogDetailForm>().To<NLogDetailForm>().InSingletonScope();
         }
     }
 }

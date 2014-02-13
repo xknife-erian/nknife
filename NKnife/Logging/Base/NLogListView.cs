@@ -1,6 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using System.Drawing;
 using System.Windows.Forms;
+using NKnife.Resources;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.Logging.Base
@@ -29,15 +31,15 @@ namespace NKnife.Logging.Base
             UpdateStyles();
 
             var timeHeader = new ColumnHeader();
-            timeHeader.Text = "时间";
+            timeHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Time_Header");
             timeHeader.Width = 80;
 
             var logMessageHeader = new ColumnHeader();
-            logMessageHeader.Text = "日志信息";
+            logMessageHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Info_Header");
             logMessageHeader.Width = 380;
 
             var loggerNameHeader = new ColumnHeader();
-            loggerNameHeader.Text = "日志源";
+            loggerNameHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Source_Header");
             loggerNameHeader.Width = 130;
 
             Columns.AddRange(
@@ -138,7 +140,7 @@ namespace NKnife.Logging.Base
                 var info = (LogEventInfo) si.Item.Tag;
                 if (info != null)
                 {
-                    LogDetailForm.Show(info);
+                    NLogDetailForm.Show(info);
                 }
             }
         }

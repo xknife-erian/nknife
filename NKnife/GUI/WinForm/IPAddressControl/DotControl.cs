@@ -52,7 +52,7 @@ namespace NKnife.GUI.WinForm.IPAddressControl
 
       public DotControl()
       {
-         Text = Properties.Resources.FieldSeparator;
+         Text = ".";
 
          BackColor = SystemColors.Window;
          Size = MinimumSize;

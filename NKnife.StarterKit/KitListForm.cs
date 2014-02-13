@@ -15,10 +15,15 @@ namespace NKnife.StarterKit
         public KitListForm()
         {
             InitializeComponent();
+            _MultiLanguageLoPanleMenuItem.CheckedChanged += (s, e) =>
+            {
+                _MultiLanguageLoPanleMenuItem.Text = _MultiLanguageLoPanleMenuItem.Checked ? "英文LogPanel" : "中文LogPanel";
+            };
         }
 
         private void _LogPanelTestMenuItem_Click(object sender, EventArgs e)
         {
+            NKnife.Global.Culture = _MultiLanguageLoPanleMenuItem.Checked ? "en-US" : "zh-CN";
             var form = new LoggingStarterForm();
             form.MdiParent = this;
             form.Show();

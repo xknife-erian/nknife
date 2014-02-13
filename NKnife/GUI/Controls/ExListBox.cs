@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using NKnife.Properties;
 
 namespace NKnife.GUI.Controls
 {
@@ -19,7 +18,6 @@ namespace NKnife.GUI.Controls
             MeasureItem += ExListBoxMeasureItem;
             DrawItem += ExListBoxDrawItem;
             DrawMode = DrawMode.OwnerDrawVariable;
-            _DefaultConfigImage = Properties.Resources.ComputeFlag;
         }
 
         #region IOptionItemManager Members
