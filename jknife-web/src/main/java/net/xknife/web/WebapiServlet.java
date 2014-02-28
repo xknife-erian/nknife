@@ -41,13 +41,12 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 		String methodName = paths[3];
 
 		String controllerFullName = String.format("%s/%s", moduleName, controllerName);
-		String queryInfo = null;
+		String queryInfo = "";
+        T params = null;
 
 		try
 		{
-			IController controller = DI.getInstance(Key.get(IController.class, Names.named(controllerFullName)));
-			T params = getParams(request);// 转换参数为pojo对象
-			controller.process(methodName, params, writer);// 根据找到的controller执行相应的方法
+			params = getParams(request);// 转换参数为pojo对象
 		}
 		catch (ConfigurationException e)
 		{
@@ -69,6 +68,15 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 		{
 			_Logger.warn(String.format("JSON转换器异常:%s", queryInfo), e);
 		}
+        try
+        {
+            IController controller = DI.getInstance(Key.get(IController.class, Names.named(controllerFullName)));
+            controller.process(methodName, params, writer);// 根据找到的controller执行相应的方法
+        }
+        catch (Exception e)
+        {
+            _Logger.warn(String.format("IController(%s)异常:%s", controllerFullName, queryInfo), e);
+        }
 	}
 
 	/**

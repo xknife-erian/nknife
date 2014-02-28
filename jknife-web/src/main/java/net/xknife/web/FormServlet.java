@@ -18,6 +18,7 @@ import java.util.List;
 public abstract class FormServlet<T> extends WebapiServlet<T>
 {
     private static org.slf4j.Logger _Logger = org.slf4j.LoggerFactory.getLogger(FormServlet.class);
+
     /**
      * 将URL信息中的参数信息(json格式)转换成当前servlet的参数pojo类型
      *
@@ -32,16 +33,21 @@ public abstract class FormServlet<T> extends WebapiServlet<T>
     {
         Sber sb = Sber.ME();
         String queryInfo = null;
-        Enumeration<String> names =  request.getParameterNames();
-        while(names.hasMoreElements())
+        Enumeration<String> names = request.getParameterNames();
+        while (names.hasMoreElements())
         {
             String name = names.nextElement();
             String value = request.getParameter(name);
             sb.append("\"").append(name).append("\"").append(":");
-            sb.append("\"").append(value).append("\"").append(";");
+            sb.append("\"").append(value).append("\"").append(",");
         }
-        sb.surround("{","}");
+        if (sb.length() > 0)
+        {
+            sb.trimEnd();
+        }
+        sb.surround("{", "}");
         queryInfo = sb.toString();
+        _Logger.debug(String.format("Form提交内容转换:%s", queryInfo));
         return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
     }
 }
