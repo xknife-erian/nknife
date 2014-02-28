@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-// import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -19,63 +18,6 @@ public class Collections3
 {
 
 	/**
-	 * 提取集合中的对象的两个属性(通过Getter函数), 组合成Map.
-	 * 
-	 * @param collection 来源集合.
-	 * @param keyPropertyName 要提取为Map中的Key值的属性名.
-	 * @param valuePropertyName 要提取为Map中的Value值的属性名.
-	 */
-	// public static Map extractToMap(final Collection collection, final String keyPropertyName,
-	// final String valuePropertyName) {
-	// Map map = new HashMap(collection.size());
-	//
-	// try {
-	// for (Object obj : collection) {
-	// map.put(PropertyUtils.getProperty(obj, keyPropertyName),
-	// PropertyUtils.getProperty(obj, valuePropertyName));
-	// }
-	// } catch (Exception e) {
-	// throw Reflections.convertReflectionExceptionToUnchecked(e);
-	// }
-	//
-	// return map;
-	// }
-
-	/**
-	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
-	 * 
-	 * @param collection 来源集合.
-	 * @param propertyName 要提取的属性名.
-	 */
-	// public static List extractToList(final Collection collection, final String propertyName) {
-	// List list = new ArrayList(collection.size());
-	//
-	// try {
-	// for (Object obj : collection) {
-	// list.add(PropertyUtils.getProperty(obj, propertyName));
-	// }
-	// } catch (Exception e) {
-	// throw Reflections.convertReflectionExceptionToUnchecked(e);
-	// }
-	//
-	// return list;
-	// }
-
-	/**
-	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成由分割符分隔的字符串.
-	 * 
-	 * @param collection 来源集合.
-	 * @param propertyName 要提取的属性名.
-	 * @param separator 分隔符.
-	 */
-	// public static <T> String extractToString(final Collection<T> collection, final String propertyName, final String separator)
-	// {
-	// @SuppressWarnings("rawtypes")
-	// List list = extractToList(collection, propertyName);
-	// return StringUtils.join(list, separator);
-	// }
-
-	/**
 	 * 转换Collection所有元素(通过toString())为String, 中间以 separator分隔。
 	 */
 	public static <T> String convertToString(final Collection<T> collection, final String separator)
@@ -84,7 +26,7 @@ public class Collections3
 	}
 
 	/**
-	 * 转换Collection所有元素(通过toString())为String, 每个元素的前面加入prefix，后面加入postfix，如<div>mymessage</div>。
+	 * 转换Collection所有元素(通过toString())为String, 每个元素的前面加入prefix，后面加入postfix，如<div>message</div>。
 	 */
 	public static <T> String convertToString(final Collection<T> collection, final String prefix, final String postfix)
 	{
@@ -121,7 +63,6 @@ public class Collections3
 		{
 			return null;
 		}
-
 		return collection.iterator().next();
 	}
 
@@ -134,14 +75,12 @@ public class Collections3
 		{
 			return null;
 		}
-
 		// 当类型为List时，直接取得最后一个元素 。
 		if (collection instanceof List)
 		{
 			List<T> list = (List<T>) collection;
 			return list.get(list.size() - 1);
 		}
-
 		// 其他类型通过iterator滚动到最后一个元素.
 		Iterator<T> iterator = collection.iterator();
 		while (true)
@@ -174,7 +113,6 @@ public class Collections3
 		{
 			list.remove(element);
 		}
-
 		return list;
 	}
 
@@ -184,7 +122,6 @@ public class Collections3
 	public static <T> List<T> intersection(final Collection<T> a, final Collection<T> b)
 	{
 		List<T> list = new ArrayList<T>();
-
 		for (T element : a)
 		{
 			if (b.contains(element))
@@ -194,4 +131,61 @@ public class Collections3
 		}
 		return list;
 	}
+
+    /**
+     * 提取集合中的对象的两个属性(通过Getter函数), 组合成Map.
+     *
+     * @param collection 来源集合.
+     * @param keyPropertyName 要提取为Map中的Key值的属性名.
+     * @param valuePropertyName 要提取为Map中的Value值的属性名.
+     */
+    // public static Map extractToMap(final Collection collection, final String keyPropertyName,
+    // final String valuePropertyName) {
+    // Map map = new HashMap(collection.size());
+    //
+    // try {
+    // for (Object obj : collection) {
+    // map.put(PropertyUtils.getProperty(obj, keyPropertyName),
+    // PropertyUtils.getProperty(obj, valuePropertyName));
+    // }
+    // } catch (Exception e) {
+    // throw Reflections.convertReflectionExceptionToUnchecked(e);
+    // }
+    //
+    // return map;
+    // }
+
+    /**
+     * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
+     *
+     * @param collection 来源集合.
+     * @param propertyName 要提取的属性名.
+     */
+    // public static List extractToList(final Collection collection, final String propertyName) {
+    // List list = new ArrayList(collection.size());
+    //
+    // try {
+    // for (Object obj : collection) {
+    // list.add(PropertyUtils.getProperty(obj, propertyName));
+    // }
+    // } catch (Exception e) {
+    // throw Reflections.convertReflectionExceptionToUnchecked(e);
+    // }
+    //
+    // return list;
+    // }
+
+    /**
+     * 提取集合中的对象的一个属性(通过Getter函数), 组合成由分割符分隔的字符串.
+     *
+     * @param collection 来源集合.
+     * @param propertyName 要提取的属性名.
+     * @param separator 分隔符.
+     */
+    // public static <T> String extractToString(final Collection<T> collection, final String propertyName, final String separator)
+    // {
+    // @SuppressWarnings("rawtypes")
+    // List list = extractToList(collection, propertyName);
+    // return StringUtils.join(list, separator);
+    // }
 }

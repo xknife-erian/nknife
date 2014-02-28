@@ -86,6 +86,6 @@ public abstract class BaseWebapiServlet<T> extends HttpServlet
 
 	protected abstract void runGet(final HttpServletRequest request, final PrintWriter writer);
 
-	protected abstract T getParams(final String queryInfo) throws JsonParseException, JsonMappingException, IOException;
+	protected abstract T getParams(final HttpServletRequest queryInfo) throws JsonParseException, JsonMappingException, IOException;
 
 }

@@ -42,18 +42,11 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 
 		String controllerFullName = String.format("%s/%s", moduleName, controllerName);
 		String queryInfo = null;
-		try
-		{
-			queryInfo = URLDecoder.decode(request.getQueryString(), "utf-8");
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			_Logger.warn(String.format("参数解码异常:%s", request.getQueryString()), e);
-		}
+
 		try
 		{
 			IController controller = DI.getInstance(Key.get(IController.class, Names.named(controllerFullName)));
-			T params = getParams(queryInfo);// 转换参数为pojo对象
+			T params = getParams(request);// 转换参数为pojo对象
 			controller.process(methodName, params, writer);// 根据找到的controller执行相应的方法
 		}
 		catch (ConfigurationException e)
@@ -90,15 +83,24 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 	/**
 	 * 将URL信息中的参数信息(json格式)转换成当前servlet的参数pojo类型
 	 * 
-	 * @param queryInfo
+	 * @param request
 	 * @return
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
 	@Override
-	protected T getParams(final String queryInfo) throws JsonParseException, JsonMappingException, IOException
+	protected T getParams(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException
 	{
+        String queryInfo = null;
+        try
+        {
+            queryInfo = URLDecoder.decode(request.getQueryString(), "utf-8");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            _Logger.warn(String.format("参数解码异常:%s", request.getQueryString()), e);
+        }
 		return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
 	}
 
