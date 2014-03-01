@@ -45,6 +45,21 @@ public class ClassFinder
      */
     public static <T> List<Class<T>> find(final Class<T> base, final Class<? extends Annotation> annotation, final boolean containAbstract, final String nameFilter)
     {
+        return find(base,annotation,containAbstract,nameFilter,null);
+    }
+
+    /**
+     * 查找指定条件的类型集合
+     *
+     * @param base            待查找类型的基类（超类或接口）
+     * @param annotation      类型上修饰的注解
+     * @param containAbstract 是否包含抽象类
+     * @param nameFilter      名称的过滤（包含的字符串）
+     * @param excludeNameFilter 名称的排除（包含的字符串）
+     * @return 符合指定条件的类型
+     */
+    public static <T> List<Class<T>> find(final Class<T> base, final Class<? extends Annotation> annotation, final boolean containAbstract, final String nameFilter, final String excludeNameFilter)
+    {
         if ((base == null) && (annotation == null))
         {
             return null;
@@ -60,6 +75,16 @@ public class ClassFinder
                     continue;
                 }
             }
+
+            if (!Strings.isNullOrEmpty(excludeNameFilter))
+            {
+                if (classInfoName.contains(excludeNameFilter))
+                {
+                    continue;
+                }
+            }
+
+
             Class<?> clazz = classInfo.load();
             boolean isDecorate = true;
             if (annotation != null)
