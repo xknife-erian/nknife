@@ -19,7 +19,7 @@ import com.google.inject.ProvisionException;
 import com.google.inject.name.Names;
 
 /**
- * 本项目中的webapi的抽象基类。
+ * 针对多数Ajax的提交数据为Json时的Servlet的基类。
  * 
  * @author lukan@jeelu.com 2013-8-22
  */
@@ -71,7 +71,8 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
         try
         {
             IController controller = DI.getInstance(Key.get(IController.class, Names.named(controllerFullName)));
-            controller.process(methodName, params, writer);// 根据找到的controller执行相应的方法
+            // 根据找到的controller执行相应的方法
+            controller.process(methodName, params, writer);
         }
         catch (Exception e)
         {

@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
+ * 传统的页面提交数据是通过form方式提交是格式是xxx=yyyy$aaa=bbbb时的Servlet的基类
  * Created by erianlu on 14-2-28.
  */
 public abstract class FormServlet<T> extends WebapiServlet<T>

@@ -36,6 +36,25 @@ public interface IController
 			}
 		}
 
+        protected int flushResultToWriter(final Object result, final Writer writer){
+            try
+            {
+                JsonGenerator jsonGenerator = JsonKnife.getFactory().createGenerator(writer);
+                jsonGenerator.writeObject(result);
+                jsonGenerator.flush();
+                jsonGenerator.close();
+            }
+            catch (JsonProcessingException e)
+            {
+                return -2;
+            }
+            catch (IOException e)
+            {
+                return -1;
+            }
+            return 1;
+        }
+
 		@Override
 		public int process(final String methodName, final Object params, final Writer writer)
 		{
@@ -65,22 +84,7 @@ public interface IController
 			{
 				return -12;
 			}
-			try
-			{
-				JsonGenerator jsonGenerator = JsonKnife.getFactory().createGenerator(writer);
-				jsonGenerator.writeObject(result);
-				jsonGenerator.flush();
-				jsonGenerator.close();
-			}
-			catch (JsonProcessingException e)
-			{
-				return -2;
-			}
-			catch (IOException e)
-			{
-				return -1;
-			}
-			return 1;
+            return flushResultToWriter(result,writer);
 		}
 	}
 }
