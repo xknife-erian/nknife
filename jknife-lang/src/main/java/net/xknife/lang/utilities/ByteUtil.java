@@ -85,6 +85,23 @@ public class ByteUtil
 		return buffer.toString();
 	}
 
+    /**
+     * toHexString的逆操作
+     *
+     * @param bytes
+     *            The bytes to translate
+     * @return The string
+     */
+    public static byte[] fromHexString(final String data)
+    {
+        int len = data.length() /2;
+        byte[] b=new byte[len];
+        for(int i=0;i<len;i++){
+            b[i]=(byte)Integer.parseInt(data.substring(i*2,i*2+2),16);
+        }
+        return b;
+    }
+
 	/**
 	 * Translate the given byte array into a string of 1s and 0s
 	 * 
