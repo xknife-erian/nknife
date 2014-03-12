@@ -36,11 +36,9 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 	{
 		String servletPath = request.getServletPath();
 		String[] paths = servletPath.split("/");
-		String moduleName = paths[1];
-		String controllerName = paths[2];
-		String methodName = paths[3];
+		String methodName = paths[paths.length];
 
-		String controllerFullName = String.format("%s/%s", moduleName, controllerName);
+		String controllerFullName = getControllerName(servletPath);
 		String queryInfo = "";
         T params = null;
 
@@ -113,7 +111,21 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 		return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
 	}
 
-	/**
+    /**
+     * 实现从默认规范的servlet路径获取controller的DI注入名称，默认规范的servlet路径为：/模块名称/实体名称/具体操作方法，例如/user/administrator/query。
+     * @param servletPath
+     * @return
+     */
+    @Override
+    protected String getControllerName(String servletPath)
+    {
+        String[] paths = servletPath.split("/");
+        String moduleName = paths[1];
+        String controllerName = paths[2];
+        return String.format("%s/%s", moduleName, controllerName);
+    }
+
+    /**
 	 * 获取参数pojo类型。在最后的实现类中实现。
 	 * 
 	 * @return

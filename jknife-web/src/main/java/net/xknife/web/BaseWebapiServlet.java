@@ -88,4 +88,5 @@ public abstract class BaseWebapiServlet<T> extends HttpServlet
 
 	protected abstract T getParams(final HttpServletRequest queryInfo) throws JsonParseException, JsonMappingException, IOException;
 
+    protected abstract String getControllerName(final String servletPath);
 }
