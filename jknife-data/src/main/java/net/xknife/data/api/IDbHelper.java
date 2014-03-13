@@ -101,17 +101,6 @@ public interface IDbHelper
 	public abstract <T> T query(String sql, ResultSetHandler<T> rsh);
 
 	/**
-	 * 构造一个Sql语句
-	 * 
-	 * @param sqlType
-	 *            语句类型
-	 * @param params
-	 *            构造语句的参数集合
-	 * @return Sql语句
-	 */
-	public abstract String buildSql(int sqlType, String... params);
-
-	/**
 	 * 使用JDBC访问数据库的通用助手类。(此处是指的一个数据库)<BR>
 	 * 使用<code>BoneCP</code>进行数据库连接池管理。<BR>
 	 * 使用<code>QueryRunner</code>进行查询过程的封装。
