@@ -36,7 +36,7 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 	{
 		String servletPath = request.getServletPath();
 		String[] paths = servletPath.split("/");
-		String methodName = paths[paths.length];
+		String methodName = paths[paths.length - 1];
 
 		String controllerFullName = getControllerName(servletPath);
 		String queryInfo = "";
