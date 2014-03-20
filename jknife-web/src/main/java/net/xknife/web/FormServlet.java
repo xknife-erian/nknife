@@ -3,14 +3,11 @@ package net.xknife.web;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import net.xknife.json.JsonKnife;
-import net.xknife.lang.widgets.Sber;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Enumeration;
-import java.util.List;
 
 /**
  * 传统的页面提交数据是通过form方式提交是格式是xxx=yyyy$aaa=bbbb时的Servlet的基类
@@ -32,23 +29,15 @@ public abstract class FormServlet<T> extends WebapiServlet<T>
     @Override
     protected T getParams(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException
     {
-        Sber sb = Sber.ME();
         String queryInfo = null;
-        Enumeration<String> names = request.getParameterNames();
-        while (names.hasMoreElements())
+        try
         {
-            String name = names.nextElement();
-            String value = request.getParameter(name);
-            sb.append("\"").append(name).append("\"").append(":");
-            sb.append("\"").append(value).append("\"").append(",");
+            queryInfo = URLDecoder.decode(request.getQueryString(), "utf-8");
         }
-        if (sb.length() > 0)
+        catch (UnsupportedEncodingException e)
         {
-            sb.trimEnd();
+            _Logger.warn(String.format("参数解码异常:%s", request.getQueryString()), e);
         }
-        sb.surround("{", "}");
-        queryInfo = sb.toString();
-        _Logger.debug(String.format("Form提交内容转换:%s", queryInfo));
         return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
     }
 }

@@ -1,22 +1,20 @@
 package net.xknife.web;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-import javax.servlet.http.HttpServletRequest;
-
-import net.xknife.inject.DI;
-import net.xknife.json.JsonKnife;
-import net.xknife.web.interfaces.IController;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.inject.ConfigurationException;
 import com.google.inject.Key;
 import com.google.inject.ProvisionException;
 import com.google.inject.name.Names;
+import net.xknife.inject.DI;
+import net.xknife.json.JsonKnife;
+import net.xknife.lang.widgets.Sber;
+import net.xknife.web.interfaces.IController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
 
 /**
  * 针对多数Ajax的提交数据为Json时的Servlet的基类。
@@ -99,16 +97,24 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
 	@Override
 	protected T getParams(final HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException
 	{
+        Sber sb = Sber.ME();
         String queryInfo = null;
-        try
+        Enumeration<String> names = request.getParameterNames();
+        while (names.hasMoreElements())
         {
-            queryInfo = URLDecoder.decode(request.getQueryString(), "utf-8");
+            String name = names.nextElement();
+            String value = request.getParameter(name);
+            sb.append("\"").append(name).append("\"").append(":");
+            sb.append("\"").append(value).append("\"").append(",");
         }
-        catch (UnsupportedEncodingException e)
+        if (sb.length() > 0)
         {
-            _Logger.warn(String.format("参数解码异常:%s", request.getQueryString()), e);
+            sb.trimEnd();
         }
-		return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
+        sb.surround("{", "}");
+        queryInfo = sb.toString();
+        _Logger.debug(String.format("Form提交内容转换:%s", queryInfo));
+        return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
 	}
 
     /**
