@@ -26,7 +26,7 @@ public abstract class AppException extends Exception
 	public AppException(final String message, final int error)
 	{
 		super(message);
-		_ErrotNumber = error;
+		_ErrorNumber = error;
 	}
 
 	/**
@@ -49,22 +49,22 @@ public abstract class AppException extends Exception
 		super(cause);
 	}
 
-	protected int _ErrotNumber;
+	protected int _ErrorNumber;
 
 	/**
-	 * @return errotNumber
+	 * @return errorNumber
 	 */
-	public int getErrotNumber()
+	public int getErrorNumber()
 	{
-		return _ErrotNumber;
+		return _ErrorNumber;
 	}
 
 	/**
-	 * @param errotNumber
-	 *            要设置的 errotNumber
+	 * @param errorNumber
+	 *            要设置的 errorNumber
 	 */
-	public void setErrotNumber(final int errotNumber)
+	public void setErrorNumber(final int errorNumber)
 	{
-		_ErrotNumber = errotNumber;
+		_ErrorNumber = errorNumber;
 	}
 }
