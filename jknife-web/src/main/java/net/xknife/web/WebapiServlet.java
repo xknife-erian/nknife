@@ -113,7 +113,7 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
         }
         sb.surround("{", "}");
         queryInfo = sb.toString();
-        _Logger.debug(String.format("Form提交内容转换:%s", queryInfo));
+        logRequest(request,queryInfo);
         return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
 	}
 

@@ -33,6 +33,7 @@ public abstract class FormServlet<T> extends WebapiServlet<T>
         try
         {
             queryInfo = URLDecoder.decode(request.getQueryString(), "utf-8");
+            logRequest(request,queryInfo);
         }
         catch (UnsupportedEncodingException e)
         {
