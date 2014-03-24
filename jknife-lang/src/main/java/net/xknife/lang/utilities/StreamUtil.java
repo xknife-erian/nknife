@@ -1,20 +1,6 @@
 package net.xknife.lang.utilities;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.Flushable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 
 import net.xknife.lang.widgets.Encoding;
 
@@ -23,6 +9,23 @@ import net.xknife.lang.widgets.Encoding;
  */
 public class StreamUtil
 {
+    /**
+     * 将指定的输入流进行复制，得到一个新的输入流
+     * @param source
+     * @return
+     * @throws IOException
+     */
+    public static InputStream copy(InputStream source) throws IOException
+    {
+        //读取源流成为字节数组
+        int count = source.available();
+        byte[] b = new byte[count];
+        source.read(b);
+        //通过字节数组流复制出新的输入流
+        InputStream in = new ByteArrayInputStream(b);
+        return in;
+    }
+
     /**
      * 判断两个输入流是否严格相等
      */

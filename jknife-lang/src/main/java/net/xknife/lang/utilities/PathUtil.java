@@ -78,10 +78,10 @@ public class PathUtil
 
         if (relative.length() == 0)
         {
-            return "/";
+            return OS.file_separator();
         }
 
-        return "/" + relative.substring(0, relative.length() - 1);
+        return String.format("%s%s", OS.file_separator(), relative.substring(0, relative.length() - 1));
     }
 
     /**
@@ -109,9 +109,9 @@ public class PathUtil
     {
         StringBuilder simplyParent = simplyStringBuilder(parentUrl);
 
-        if ((simplyParent.length() == 0) || ('/' != simplyParent.charAt(simplyParent.length() - 1)))
+        if ((simplyParent.length() == 0) || (File.separator.charAt(0) != simplyParent.charAt(simplyParent.length() - 1)))
         {
-            simplyParent.append('/');
+            simplyParent.append(File.separator);
         }
 
         String simplyChild = simplyWithoutPrefix(childUrl);
@@ -131,7 +131,7 @@ public class PathUtil
     {
         StringBuilder simply = simplyStringBuilder(url);
 
-        if ((simply.length() > 0) && ('/' == simply.charAt(0)))
+        if ((simply.length() > 0) && (File.separator.charAt(0) == simply.charAt(0)))
         {
             simply.deleteCharAt(0);
         }
@@ -150,7 +150,7 @@ public class PathUtil
     public static String simplyWithoutSuffix(final String url) throws AppException
     {
         StringBuilder simply = simplyStringBuilder(url);
-        if ((simply.length() > 1) && ('/' == simply.charAt(simply.length() - 1)))
+        if ((simply.length() > 1) && (File.separator.charAt(0) == simply.charAt(simply.length() - 1)))
         {
             simply.deleteCharAt(simply.length() - 1);
         }
