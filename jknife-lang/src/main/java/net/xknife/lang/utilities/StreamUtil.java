@@ -21,6 +21,7 @@ public class StreamUtil
         int count = source.available();
         byte[] b = new byte[count];
         source.read(b);
+        source.close();
         //通过字节数组流复制出新的输入流
         InputStream in = new ByteArrayInputStream(b);
         return in;
