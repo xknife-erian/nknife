@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gean.Network.Common
+namespace NKnife.NetWork.Common
 {
     /// <summary>
     /// Socket客户端无法连接时的异常

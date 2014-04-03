@@ -1,6 +1,6 @@
 ﻿using NKnife.Collections;
 
-namespace Gean.Network.Common
+namespace NKnife.NetWork.Common
 {
     public class ReceiveQueue : SyncQueue<byte[]>
     {

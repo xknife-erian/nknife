@@ -4,7 +4,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Gean.Network.Common
+namespace NKnife.NetWork.Common
 {
     public class Tcps
     {

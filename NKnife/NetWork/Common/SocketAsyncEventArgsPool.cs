@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 
-namespace Gean.Network.Common
+namespace NKnife.NetWork.Common
 {
     /// <summary>
     /// Based on example from:

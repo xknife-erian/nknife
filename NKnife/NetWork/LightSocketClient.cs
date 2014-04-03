@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
-using Gean.Network.Common;
+using NKnife.NetWork.Common;
 using NKnife.NetWork.Interfaces;
 using NKnife.NetWork.Protocol;
 using NKnife.Utility;

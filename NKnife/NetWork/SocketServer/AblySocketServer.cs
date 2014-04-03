@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Gean;
-using Gean.Network.Common;
-using Gean.Network.Protocol;
+using NKnife.NetWork.Common;
 using NKnife.NetWork.Interfaces;
 using NKnife.NetWork.Protocol;
 using NKnife.Utility;
@@ -14,7 +12,7 @@ using NLog;
 using BufferContainer = Gean.Net.SocketServer.BufferContainer;
 using SocketAsyncEventArgsPool = Gean.Net.SocketServer.SocketAsyncEventArgsPool;
 
-namespace NKnife.Net.SocketServer
+namespace NKnife.NetWork.SocketServer
 {
     public abstract class AliveSocketServer : AblySocketServer
     {

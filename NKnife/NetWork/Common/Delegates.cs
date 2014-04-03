@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using NKnife.NetWork.Interfaces;
 
-namespace Gean.Network.Common
+namespace NKnife.NetWork.Common
 {
 
     #region 服务器侦听到新客户端连接事件
@@ -146,4 +146,5 @@ namespace Gean.Network.Common
     }
 
     #endregion
+
 }

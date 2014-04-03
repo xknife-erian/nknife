@@ -1,4 +1,4 @@
-namespace Gean.Network.Common
+namespace NKnife.NetWork.Common
 {
     /// <summary>
     /// ÍøÂçÁ¬½Ó×´Ì¬

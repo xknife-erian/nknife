@@ -4,15 +4,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
-using Gean;
-using Gean.Network.Common;
+using NKnife.NetWork.Common;
 using NKnife.NetWork.Interfaces;
 using NKnife.NetWork.Protocol;
 using NKnife.Utility;
 using NLog;
 using Timer = System.Timers.Timer;
 
-namespace NKnife.Net.SocketClient
+namespace NKnife.NetWork.SocketClient
 {
     public abstract class AliveSocketClient : AblySocketClient
     {

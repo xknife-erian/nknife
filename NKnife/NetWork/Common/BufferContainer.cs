@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 
-namespace Gean.Network.Common
+namespace NKnife.NetWork.Common
 {
     /// <summary>
     /// 一个数据包容器, 将SocketAsyncEventArgs的缓存预先打开备用。
