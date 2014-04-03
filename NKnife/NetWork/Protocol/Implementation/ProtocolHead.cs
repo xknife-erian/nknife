@@ -1,6 +1,6 @@
 ﻿using NKnife.NetWork.Interfaces;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     public class ProtocolHead : IProtocolHead
     {

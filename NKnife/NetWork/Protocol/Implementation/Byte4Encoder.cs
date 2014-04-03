@@ -4,7 +4,7 @@ using NKnife.NetWork.Interfaces;
 using NKnife.Utility;
 using NLog;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器

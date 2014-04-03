@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
-using Gean;
 using NKnife.Interface;
 using NKnife.NetWork.Interfaces;
 using NKnife.Utility;

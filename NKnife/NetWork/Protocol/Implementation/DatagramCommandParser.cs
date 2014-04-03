@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Xml;
 using System.IO;
+using System.Xml;
 using NKnife.NetWork.Interfaces;
 
-namespace Gean.Network.Protocol.Implementation
+namespace NKnife.NetWork.Protocol.Implementation
 {
     /// <summary>
     /// 一个基本的从协议字符串中解析命令字的工具
