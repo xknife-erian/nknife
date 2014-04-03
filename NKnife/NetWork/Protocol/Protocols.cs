@@ -52,6 +52,7 @@ namespace NKnife.NetWork.Protocol
                 ProtocolTools tools = null;
                 if (ProtocolSetting.ME.ProtocolToolsMap.TryGetValue(toolKey, out tools))
                     protocol.Tools = tools;
+                protocol.Content = GetBlankContent(family, command);
                 return protocol;
             }
             catch (Exception e)
