@@ -1,15 +1,14 @@
 package net.xknife.web;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.google.common.base.Strings;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * 本项目中的webapi的抽象基类。
@@ -27,7 +26,7 @@ public abstract class BaseWebapiServlet<T> extends HttpServlet
 	 * @param request
 	 * @param data
 	 */
-	private void logRequest(final HttpServletRequest request, final String data)
+	protected void logRequest(final HttpServletRequest request, final String data)
 	{
 		_Logger.trace(String.format("请求:%s;%s;%s;Data:%s", request.getProtocol(), request.getMethod(), request.getServletPath(), data));
 	}
@@ -38,12 +37,6 @@ public abstract class BaseWebapiServlet<T> extends HttpServlet
 		PrintWriter writer = response.getWriter();
 		try
 		{
-			String data = request.getQueryString();
-			if (Strings.isNullOrEmpty(data))
-			{
-				data = "...";
-			}
-			logRequest(request, data);
 			runGet(request, writer);
 			writer.flush();
 		}
@@ -63,12 +56,6 @@ public abstract class BaseWebapiServlet<T> extends HttpServlet
 		PrintWriter writer = response.getWriter();
 		try
 		{
-			String data = request.getQueryString();
-			if (Strings.isNullOrEmpty(data))
-			{
-				data = "...";
-			}
-			logRequest(request, data);
 			runPost(request, writer);
 			writer.flush();
 		}

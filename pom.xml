@@ -6,7 +6,7 @@
     <properties>
         <log4j2.version>2.0-beta9</log4j2.version>
         <jackson.version>2.3.0</jackson.version>
-        <jdk.version>1.6</jdk.version>
+        <jdk.version>1.7</jdk.version>
         <devServer.address>124.205.183.34:18081</devServer.address>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--build编码 -->
@@ -72,7 +72,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.1</version>
+                <version>3.3.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
