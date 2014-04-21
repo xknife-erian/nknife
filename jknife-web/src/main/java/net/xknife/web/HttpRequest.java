@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -29,17 +31,18 @@ public class HttpRequest
      */
     public String sendGet(String url, String param) {
         String result = "";
+        String temp = "";
         try {
-            URL realUrl = new URL(url + "?" + param);
-            // 打开和URL之间的连接
+            temp = url + "?" + param;
+            _Logger.trace(temp);
+            URL realUrl = new URL(temp);
             URLConnection connection = realUrl.openConnection();
-            setRequestProperty(connection);
-            // 建立实际的连接
+            setRequestProperty((HttpURLConnection)connection, "GET");
             connection.connect();
 
             result = read(connection.getInputStream());
         } catch (Exception e) {
-            _Logger.error("发送GET请求出现异常！" + e.getStackTrace());
+            _Logger.error("发送GET请求出现异常！{url="+ temp + "}", e);
         }
         return result;
     }
@@ -60,13 +63,14 @@ public class HttpRequest
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
-            setRequestProperty(connection);
+
+            setRequestProperty((HttpURLConnection)connection, "POST");
             setDoIO(connection);
 
             out = print(connection.getOutputStream(), param);
             result = read(connection.getInputStream());
         } catch (Exception e) {
-            _Logger.error("发送 POST 请求出现异常！" + e.getStackTrace());
+            _Logger.error("发送 POST 请求出现异常！", e);
         } finally{
             close(null,out);
         }
@@ -130,11 +134,14 @@ public class HttpRequest
      *
      * @param connection
      */
-    private void setRequestProperty(URLConnection connection)
+    private void setRequestProperty(HttpURLConnection connection, String method) throws ProtocolException
     {
         connection.setRequestProperty("accept", "*/*");
         connection.setRequestProperty("connection", "Keep-Alive");
-        connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+        connection.setRequestProperty("user-agent", "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0)");
+        connection.setRequestMethod(method);
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
     }
 
     /**
