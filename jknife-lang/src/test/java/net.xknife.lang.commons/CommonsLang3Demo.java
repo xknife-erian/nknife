@@ -103,7 +103,7 @@ public class CommonsLang3Demo
 //    返回类本身的toString()方法结果,对象为null时，返回0长度字符串.
 //    Fri Apr 18 15:34:51 CST 2014
 //
-//    Fri Apr 18 15:34:51 CST 2014
+//    Fri Apr 18 15:34:51 CST 2014,
     public void objectUtilsDemo()
     {
         System.out.println("**ObjectUtilsDemo**");
@@ -133,7 +133,7 @@ public class CommonsLang3Demo
 //    {-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,1,69,115,-62,101,-2,120}
 //    Fri Apr 18 15:34:51 CST 2014
 //    Fri Apr 18 15:34:51 CST 2014
-//    true
+//    false
 //    false
 //    true
     public void serializationUtilsDemo()
@@ -146,7 +146,7 @@ public class CommonsLang3Demo
 
         Date reDate = (Date) SerializationUtils.deserialize(bytes);
         System.out.println(reDate);
-        System.out.println(ObjectUtils.equals(date, reDate));
+        System.out.println(ObjectUtils.notEqual(date, reDate));
         System.out.println(date == reDate);
 
         FileOutputStream fos = null;
@@ -344,12 +344,17 @@ public class CommonsLang3Demo
 //    转换特殊字符.
 //    html:/n
 //
+//    html:/n
+//
+//    html:&lt;p&gt;
 //    html:<p>
     public void stringEscapeUtilsDemo()
     {
         System.out.println(genHeader("StringEcsapeUtils"));
         System.out.println("转换特殊字符.");
         System.out.println("html:" + StringEscapeUtils.escapeHtml4("/n\n"));
+        System.out.println("html:" + StringEscapeUtils.unescapeHtml4("/n\n"));
+        System.out.println("html:" + StringEscapeUtils.escapeHtml4("<p>"));
         System.out.println("html:" + StringEscapeUtils.unescapeHtml4("<p>"));
     }
 
