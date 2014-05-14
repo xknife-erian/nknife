@@ -1,20 +1,15 @@
 package net.xknife.data.api;
 
-import java.sql.Connection;
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.Properties;
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
+import java.sql.*;
 
+/**
+ * 实现了BoneCP、c3p0、Hikari。
+ *
+ * all@xknife.net  on 2014/5/14 0014.
+ */
 public interface IDbHelper
 {
 	public abstract Connection getConnection();
@@ -100,69 +95,17 @@ public interface IDbHelper
 	 */
 	public abstract <T> T query(String sql, ResultSetHandler<T> rsh);
 
-	/**
-	 * 使用JDBC访问数据库的通用助手类。(此处是指的一个数据库)<BR>
-	 * 使用<code>BoneCP</code>进行数据库连接池管理。<BR>
-	 * 使用<code>QueryRunner</code>进行查询过程的封装。
-	 * 
-	 * @author lukan@xknife.net
-	 */
-	public abstract class DbHelper implements IDbHelper
+	public abstract class AbstractBaseDbHelper implements IDbHelper
 	{
-		static org.slf4j.Logger _Logger = org.slf4j.LoggerFactory.getLogger(DbHelper.class);
-		protected BoneCP _ConnPool = null;
+		static org.slf4j.Logger _Logger = org.slf4j.LoggerFactory.getLogger(AbstractBaseDbHelper.class);
 
-		/**
-		 * 在子类中描述连接池的配置
-		 */
-		protected abstract Properties getPoolConfigProperties();
+        public abstract Connection getConnection();
 
-		/**
-		 * 构造函数，在构造函数中初始化连接池与DbUtil
-		 */
-		public DbHelper()
-		{
-			setBoneCP();
-		}
-
-		/**
-		 * 设置数据库连接池
-		 */
-		protected void setBoneCP()
-		{
-			BoneCPConfig config = null;
-			try
-			{
-				config = new BoneCPConfig(getPoolConfigProperties());
-			}
-			catch (Exception e)
-			{
-				_Logger.error("无法载入连接池配置信息。", e);
-				return;
-			}
-			try
-			{
-				_ConnPool = new BoneCP(config);
-			}
-			catch (SQLException e)
-			{
-				_Logger.error("无法创建数据库连接池。", e);
-			}
-		}
-
-		@Override
-		public Connection getConnection()
-		{
-			try
-			{
-				return _ConnPool.getConnection();
-			}
-			catch (SQLException e)
-			{
-				_Logger.warn("无法从连接池中获得数据库连接", e);
-				return null;
-			}
-		}
+        /**
+         * 数据库连接Connection的提供者是否存在
+         * @return
+         */
+        public abstract boolean hasConnectionProvider();
 
 		/**
 		 * Executes the given INSERT, UPDATE, or DELETE SQL statement without any replacement parameters. The <code>Connection</code> is retrieved from the
@@ -271,7 +214,7 @@ public interface IDbHelper
 			Connection connection = getConnection();
 			try
 			{
-				connection.setAutoCommit(true);
+				connection.setAutoCommit(false);
 				replay = new QueryRunner().batch(connection, sql, params);
 			}
 			catch (SQLException e)
@@ -397,7 +340,7 @@ public interface IDbHelper
 
 		protected Statement getStatement()
 		{
-			if (_ConnPool == null)
+			if (!hasConnectionProvider())
 			{
 				return null;
 			}
@@ -414,7 +357,7 @@ public interface IDbHelper
 
 		protected PreparedStatement getPreparedStatement(final String cmdText, final Object... cmdParams)
 		{
-			if (_ConnPool == null)
+			if (!hasConnectionProvider())
 			{
 				return null;
 			}
@@ -496,6 +439,83 @@ public interface IDbHelper
 				_Logger.error("Connection关闭方法：异常。" + e.getMessage(), e);
 			}
 		}
+
+        //==========================
+        private ThreadLocal<Connection> threadLocal = new ThreadLocal<Connection>();
+
+        /**
+         * 开始事务
+         */
+        public void startTransaction()
+        {
+            Connection conn = threadLocal.get();
+            try{
+                if(conn == null)
+                {
+                    conn = getConnection();
+                    threadLocal.set(conn);
+                }
+                conn.setAutoCommit(false);
+            }
+            catch(Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+
+        /**
+         * 回滚事务
+         */
+        public void rollback()
+        {
+            try
+            {
+                Connection conn = threadLocal.get();
+                if(conn!=null)
+                    conn.rollback();
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+
+        /**
+         * 提交事务
+         */
+        public void commit()
+        {
+            try
+            {
+                Connection conn = threadLocal.get();
+                if(conn!=null)
+                    conn.commit();
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+
+        /**
+         * 关闭当前连接，并释放
+         */
+        public void release()
+        {
+            try
+            {
+                Connection conn = threadLocal.get();
+                if(conn!=null)
+                {
+                    conn.close();
+                    threadLocal.remove();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
 
 	}
 
