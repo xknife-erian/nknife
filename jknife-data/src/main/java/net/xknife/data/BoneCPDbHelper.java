@@ -15,7 +15,7 @@ import java.util.Properties;
  * 使用<code>BoneCP</code>进行数据库连接池管理。<BR>
  * 使用<code>QueryRunner</code>进行查询过程的封装。
  *
- * Created by yangjuntao@p-an.com on 2014/5/13 0013.
+ * Created by yangjuntao@xknife.net on 2014/5/13 0013.
  */
 public abstract class BoneCPDbHelper extends IDbHelper.AbstractBaseDbHelper
 {
