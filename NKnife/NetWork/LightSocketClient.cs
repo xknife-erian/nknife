@@ -728,7 +728,7 @@ namespace NKnife.NetWork
             }
             catch (Exception ex)
             {
-                _Logger.ErrorE("继续异步地从服务端 Socket 接收数据异常。", ex);
+                _Logger.ErrorException("继续异步地从服务端 Socket 接收数据异常。", ex);
             }
         }
 
