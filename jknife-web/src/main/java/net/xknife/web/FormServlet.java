@@ -17,8 +17,7 @@ import java.io.PrintWriter;
 import java.util.Enumeration;
 
 /**
- * 针对多数Ajax的提交数据为Json时的Servlet的基类。
- * 
+ * 传统的页面提交数据是通过Form方式提交是格式是xxx=yyyy$aaa=bbbb时的Servlet的基类
  * @author lukan@jeelu.com 2013-8-22
  */
 public abstract class FormServlet<T> extends WebapiServlet<T>

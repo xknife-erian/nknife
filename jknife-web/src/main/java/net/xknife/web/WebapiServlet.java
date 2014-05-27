@@ -18,7 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 /**
- * 传统的页面提交数据是通过form方式提交是格式是xxx=yyyy$aaa=bbbb时的Servlet的基类
+ * 针对提交数据为Json时的Servlet的基类。
  * Created by erianlu on 14-2-28.
  */
 public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
@@ -119,7 +119,8 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
     }
 
     /**
-     * 实现从默认规范的servlet路径获取controller的DI注入名称，默认规范的servlet路径为：/模块名称/实体名称/具体操作方法，例如/user/administrator/query。
+     * 实现从默认规范的servlet路径获取controller的DI注入名称，
+     * 默认规范的servlet路径为：/模块名称/实体名称/具体操作方法，例如/user/administrator/query。
      * @param servletPath
      * @return
      */

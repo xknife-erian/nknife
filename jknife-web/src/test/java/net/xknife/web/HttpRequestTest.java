@@ -1,5 +1,7 @@
 package net.xknife.web;
 
+import net.xknife.web.utilities.HttpRequest;
+
 /**
  * Created by Cripps.Yang on 2014/4/19.
  */
