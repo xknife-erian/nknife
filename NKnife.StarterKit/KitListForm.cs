@@ -26,7 +26,14 @@ namespace NKnife.StarterKit
             NKnife.Global.Culture = _MultiLanguageLoPanleMenuItem.Checked ? "en-US" : "zh-CN";
             var form = new LoggingStarterForm();
             form.MdiParent = this;
+            form.FormClosed += form_FormClosed;
             form.Show();
+        }
+
+        void form_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            var form = (Form) sender;
+            form = null;
         }
     }
 }
