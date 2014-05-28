@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Window", "NKnife.Win
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Tools.Robot.CubeOctopus", "NKnife.Tools\NKnife.Tools.Robot.CubeOctopus\NKnife.Tools.Robot.CubeOctopus.csproj", "{45F2128D-547E-457A-A788-7BE662D4B072}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Tools.Ele.ResistanceValueCombiner", "NKnife.Tools\NKnife.Tools.Ele.ResistanceValueCombiner\NKnife.Tools.Ele.ResistanceValueCombiner.csproj", "{260137D2-3427-49AC-B4C7-1F040937572A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{45F2128D-547E-457A-A788-7BE662D4B072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45F2128D-547E-457A-A788-7BE662D4B072}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45F2128D-547E-457A-A788-7BE662D4B072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
