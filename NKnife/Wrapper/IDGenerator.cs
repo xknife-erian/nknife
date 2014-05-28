@@ -22,7 +22,7 @@ namespace NKnife.Wrapper
     /// Hibernate的UUIDGenerator生成生成500万个ID需要时间（毫秒）： 60331，每秒生成：82000
     /// Guid生成500万个ID需要时间（毫秒）： 5182，每秒生成：964000
     /// </summary>
-    public class IDGenerator : IIdGenerator
+    public class IdGenerator : IIdGenerator
     {
         /// <summary>
         /// 累计数，消除当以秒为单位时出现重复的可能。
@@ -36,7 +36,7 @@ namespace NKnife.Wrapper
         /// <summary>
         /// 静态构造函数。
         /// </summary>
-        static IDGenerator()
+        static IdGenerator()
         {
             FillTimeFLag();
         }
