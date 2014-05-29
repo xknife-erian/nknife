@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NKnife.Tools.CubeOctopus.Base
+namespace NKnife.Tools.Robot.CubeOctopus.Base
 {
     /// <summary>描述舵机的指令
     /// </summary>

@@ -1,4 +1,4 @@
-﻿using NKnife.Tools.CubeOctopus.Base;
+﻿using NKnife.Tools.Robot.CubeOctopus.Base;
 
 namespace NKnife.Tools.CubeOctopus
 {

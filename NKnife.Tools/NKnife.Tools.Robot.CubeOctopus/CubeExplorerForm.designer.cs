@@ -1,7 +1,6 @@
-﻿using NKnife.Tools.CubeOctopus.Base;
-using NKnife.Tools.Robot.CubeOctopus.Base;
+﻿using NKnife.Tools.Robot.CubeOctopus.Base;
 
-namespace NKnife.Tools.CubeOctopus
+namespace NKnife.Tools.Robot.CubeOctopus
 {
     partial class CubeExplorerForm
     {

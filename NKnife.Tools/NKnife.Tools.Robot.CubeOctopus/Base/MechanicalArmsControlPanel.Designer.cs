@@ -1,4 +1,4 @@
-﻿namespace NKnife.Tools.CubeOctopus.Base
+﻿namespace NKnife.Tools.Robot.CubeOctopus.Base
 {
     partial class MechanicalArmsControlPanel
     {

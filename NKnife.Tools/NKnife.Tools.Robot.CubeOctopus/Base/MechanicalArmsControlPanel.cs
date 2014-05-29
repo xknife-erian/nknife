@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using NKnife.Tools.Robot.CubeOctopus.Base;
 
-namespace NKnife.Tools.CubeOctopus.Base
+namespace NKnife.Tools.Robot.CubeOctopus.Base
 {
     /*
     顺时针方向caseworker

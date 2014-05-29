@@ -2,7 +2,6 @@
 using System.Text;
 using NKnife.NSerial;
 using NKnife.NSerial.Base;
-using NKnife.Tools.CubeOctopus.Base;
 
 namespace NKnife.Tools.Robot.CubeOctopus.Base
 {

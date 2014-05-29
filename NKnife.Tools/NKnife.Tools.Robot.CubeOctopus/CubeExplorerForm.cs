@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using NKnife.Utility;
 
-namespace NKnife.Tools.CubeOctopus
+namespace NKnife.Tools.Robot.CubeOctopus
 {
     public partial class CubeExplorerForm : Form
     {

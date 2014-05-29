@@ -1,4 +1,4 @@
-﻿namespace NKnife.Tools.CubeOctopus.Base
+﻿namespace NKnife.Tools.Robot.CubeOctopus.Base
 {
     /// <summary>描述指定的舵机将要到达的位置
     /// </summary>
