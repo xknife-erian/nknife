@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csproj", "{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B05220AF-877B-4D85-88CD-151A4D4471B8}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Window", "NKnife.Window\NKnife.Window.csproj", "{157C4B57-2692-4D66-973A-A612AB36116B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Tools.Robot.CubeOctopus", "NKnife.Tools\NKnife.Tools.Robot.CubeOctopus\NKnife.Tools.Robot.CubeOctopus.csproj", "{45F2128D-547E-457A-A788-7BE662D4B072}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Tools.Ele.ResistanceValueCombiner", "NKnife.Tools\NKnife.Tools.Ele.ResistanceValueCombiner\NKnife.Tools.Ele.ResistanceValueCombiner.csproj", "{260137D2-3427-49AC-B4C7-1F040937572A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{157C4B57-2692-4D66-973A-A612AB36116B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157C4B57-2692-4D66-973A-A612AB36116B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157C4B57-2692-4D66-973A-A612AB36116B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157C4B57-2692-4D66-973A-A612AB36116B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F2128D-547E-457A-A788-7BE662D4B072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F2128D-547E-457A-A788-7BE662D4B072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F2128D-547E-457A-A788-7BE662D4B072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F2128D-547E-457A-A788-7BE662D4B072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260137D2-3427-49AC-B4C7-1F040937572A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
