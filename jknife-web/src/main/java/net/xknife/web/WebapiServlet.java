@@ -19,6 +19,7 @@ import java.net.URLDecoder;
 
 /**
  * 针对提交数据为Json时的Servlet的基类。
+ * 例如请求为：http://localhost/query?{"name":"kevin"}
  * Created by erianlu on 14-2-28.
  */
 public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
