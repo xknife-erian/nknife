@@ -116,6 +116,7 @@ public abstract class WebapiServlet<T> extends BaseWebapiServlet<T>
         {
             _Logger.warn(String.format("参数解码异常:%s", request.getQueryString()), e);
         }
+        Class<T> paramsType = getParamsType();
         return JsonKnife.getMapper().readValue(queryInfo, getParamsType());
     }
 
