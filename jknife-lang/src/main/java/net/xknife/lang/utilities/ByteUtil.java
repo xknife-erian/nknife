@@ -88,9 +88,9 @@ public class ByteUtil
     /**
      * toHexString的逆操作
      *
-     * @param bytes
-     *            The bytes to translate
-     * @return The string
+     * @param data
+     *            The String to translate
+     * @return The byte[]
      */
     public static byte[] fromHexString(final String data)
     {
