@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using NKnife.IME;
 using NKnife.StarterKit.Forms;
 
 namespace NKnife.StarterKit
@@ -26,14 +27,20 @@ namespace NKnife.StarterKit
             NKnife.Global.Culture = _MultiLanguageLoPanleMenuItem.Checked ? "en-US" : "zh-CN";
             var form = new LoggingStarterForm();
             form.MdiParent = this;
-            form.FormClosed += form_FormClosed;
+            form.FormClosed += LoggingFormClosed;
             form.Show();
         }
 
-        void form_FormClosed(object sender, FormClosedEventArgs e)
+        void LoggingFormClosed(object sender, FormClosedEventArgs e)
         {
             var form = (Form) sender;
-            form = null;
+            form.Close();
+        }
+
+        private void _IMEPopwinToolItem_Click(object sender, EventArgs e)
+        {
+            var form = new ImePopWindow();
+            form.Show();
         }
     }
 }

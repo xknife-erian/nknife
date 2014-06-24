@@ -30,16 +30,19 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.loggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._MultiLanguageLoPanleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._LogPanelTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this._MultiLanguageLoPanleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._IMEPopwinToolItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loggingToolStripMenuItem});
+            this.loggingToolStripMenuItem,
+            this.iMEToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(784, 25);
@@ -55,6 +58,13 @@
             this.loggingToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.loggingToolStripMenuItem.Text = "Logging";
             // 
+            // _MultiLanguageLoPanleMenuItem
+            // 
+            this._MultiLanguageLoPanleMenuItem.CheckOnClick = true;
+            this._MultiLanguageLoPanleMenuItem.Name = "_MultiLanguageLoPanleMenuItem";
+            this._MultiLanguageLoPanleMenuItem.Size = new System.Drawing.Size(201, 22);
+            this._MultiLanguageLoPanleMenuItem.Text = "中文LogPanel";
+            // 
             // _LogPanelTestMenuItem
             // 
             this._LogPanelTestMenuItem.Name = "_LogPanelTestMenuItem";
@@ -69,12 +79,20 @@
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
             // 
-            // _MultiLanguageLoPanleMenuItem
+            // iMEToolStripMenuItem
             // 
-            this._MultiLanguageLoPanleMenuItem.CheckOnClick = true;
-            this._MultiLanguageLoPanleMenuItem.Name = "_MultiLanguageLoPanleMenuItem";
-            this._MultiLanguageLoPanleMenuItem.Size = new System.Drawing.Size(201, 22);
-            this._MultiLanguageLoPanleMenuItem.Text = "中文LogPanel";
+            this.iMEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._IMEPopwinToolItem});
+            this.iMEToolStripMenuItem.Name = "iMEToolStripMenuItem";
+            this.iMEToolStripMenuItem.Size = new System.Drawing.Size(43, 21);
+            this.iMEToolStripMenuItem.Text = "IME";
+            // 
+            // _IMEPopwinToolItem
+            // 
+            this._IMEPopwinToolItem.Name = "_IMEPopwinToolItem";
+            this._IMEPopwinToolItem.Size = new System.Drawing.Size(160, 22);
+            this._IMEPopwinToolItem.Text = "弹出输入法窗体";
+            this._IMEPopwinToolItem.Click += new System.EventHandler(this._IMEPopwinToolItem_Click);
             // 
             // KitListForm
             // 
@@ -103,6 +121,8 @@
         private System.Windows.Forms.ToolStripMenuItem loggingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _LogPanelTestMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _MultiLanguageLoPanleMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem iMEToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _IMEPopwinToolItem;
     }
 }
 

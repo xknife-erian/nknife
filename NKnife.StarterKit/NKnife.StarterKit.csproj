@@ -42,8 +42,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.2.1.0\lib\net40\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +55,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms\LoggingStarterForm.cs">
@@ -99,6 +103,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NKnife.IME\NKnife.IME.csproj">
+      <Project>{E0D2F875-E6C2-49DE-86CC-62396EB8D585}</Project>
+      <Name>NKnife.IME</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
