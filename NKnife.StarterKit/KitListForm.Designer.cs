@@ -35,6 +35,7 @@
             this.iMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._IMEPopwinToolItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.简易拼音输入法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,7 +76,8 @@
             // iMEToolStripMenuItem
             // 
             this.iMEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._IMEPopwinToolItem});
+            this._IMEPopwinToolItem,
+            this.简易拼音输入法ToolStripMenuItem});
             this.iMEToolStripMenuItem.Name = "iMEToolStripMenuItem";
             this.iMEToolStripMenuItem.Size = new System.Drawing.Size(43, 21);
             this.iMEToolStripMenuItem.Text = "IME";
@@ -93,6 +95,13 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
+            // 
+            // 简易拼音输入法ToolStripMenuItem
+            // 
+            this.简易拼音输入法ToolStripMenuItem.Name = "简易拼音输入法ToolStripMenuItem";
+            this.简易拼音输入法ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.简易拼音输入法ToolStripMenuItem.Text = "简易拼音输入法";
+            this.简易拼音输入法ToolStripMenuItem.Click += new System.EventHandler(this.简易拼音输入法ToolStripMenuItem_Click);
             // 
             // KitListForm
             // 
@@ -123,6 +132,7 @@
         private System.Windows.Forms.ToolStripMenuItem _MultiLanguageLoPanleMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iMEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _IMEPopwinToolItem;
+        private System.Windows.Forms.ToolStripMenuItem 简易拼音输入法ToolStripMenuItem;
     }
 }
 

@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.International.Formatters;
 using NKnife.IME;
 using NKnife.StarterKit.Forms;
 
@@ -42,6 +41,13 @@ namespace NKnife.StarterKit
         private void _IMEPopwinToolItem_Click(object sender, EventArgs e)
         {
             var form = new ImePopWindow();
+            form.Show();
+        }
+
+        private void 简易拼音输入法ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new ChineseCharForm();
+            form.MdiParent = this;
             form.Show();
         }
 

@@ -25,7 +25,7 @@ namespace NKnife.IME
         {     
             const int GWL_EXSTYLE = (-20);
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
-            API.User32.GetWindowLong(hwnd, GWL_EXSTYLE);
+            //API.User32.GetWindowLong(hwnd, GWL_EXSTYLE);
             API.User32.SetWindowLong(hwnd, GWL_EXSTYLE, 0x8000000);
             _InkAnalyer = new InkAnalyzer();
             _HintNode = _InkAnalyer.CreateAnalysisHint();

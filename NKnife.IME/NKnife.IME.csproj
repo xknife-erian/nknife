@@ -37,17 +37,23 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\.library\Simplified Chinese Pin-Yin Conversion Library\ChnCharInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="ChnCharInfo.resources">
+      <HintPath>..\.library\Simplified Chinese Pin-Yin Conversion Library\zh-CN\ChnCharInfo.resources.dll</HintPath>
+    </Reference>
     <Reference Include="IACore, Version=1.7.6223.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\.library\InkCanvs\IACore.dll</HintPath>
+      <HintPath>..\.library\InkAnalyer\IACore.dll</HintPath>
     </Reference>
     <Reference Include="IALoader, Version=1.7.6223.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\.library\InkCanvs\IALoader.dll</HintPath>
+      <HintPath>..\.library\InkAnalyer\IALoader.dll</HintPath>
     </Reference>
     <Reference Include="IAWinFX, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\.library\InkCanvs\IAWinFX.dll</HintPath>
+      <HintPath>..\.library\InkAnalyer\IAWinFX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
