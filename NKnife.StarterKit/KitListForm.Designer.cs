@@ -32,9 +32,9 @@
             this.loggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._MultiLanguageLoPanleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._LogPanelTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.iMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._IMEPopwinToolItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,13 +72,6 @@
             this._LogPanelTestMenuItem.Text = "打开LogPanel承载窗体";
             this._LogPanelTestMenuItem.Click += new System.EventHandler(this._LogPanelTestMenuItem_Click);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
-            this.statusStrip1.TabIndex = 0;
-            // 
             // iMEToolStripMenuItem
             // 
             this.iMEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -93,6 +86,13 @@
             this._IMEPopwinToolItem.Size = new System.Drawing.Size(160, 22);
             this._IMEPopwinToolItem.Text = "弹出输入法窗体";
             this._IMEPopwinToolItem.Click += new System.EventHandler(this._IMEPopwinToolItem_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.TabIndex = 0;
             // 
             // KitListForm
             // 

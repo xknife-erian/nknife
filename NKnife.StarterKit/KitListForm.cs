@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.International.Formatters;
 using NKnife.IME;
 using NKnife.StarterKit.Forms;
 
@@ -42,5 +44,6 @@ namespace NKnife.StarterKit
             var form = new ImePopWindow();
             form.Show();
         }
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -13,47 +12,49 @@ namespace NKnife.IME
     /// </summary>
     public partial class ImePopWindow : Window
     {
-        private AnalysisHintNode hint;
-        private InkAnalyzer theInkAnalyer;
+        private AnalysisHintNode _HintNode;
+        private InkAnalyzer _InkAnalyer;
 
         public ImePopWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {     
-            int GWL_EXSTYLE = (-20); // get - retrieves information about a specified window            
-            IntPtr HWND = new WindowInteropHelper(this).Handle;
-            API.User32.SetWindowLong(HWND, GWL_EXSTYLE, (0x8000000));
-            theInkAnalyer = new InkAnalyzer();
-            hint = theInkAnalyer.CreateAnalysisHint();
-            hint.Guide.Columns = 1;
-            hint.Guide.Rows = 1;
-            hint.WordMode = true;
-            hint.TopInkBreaksOnly = true;
+            const int GWL_EXSTYLE = (-20);
+            IntPtr hwnd = new WindowInteropHelper(this).Handle;
+            API.User32.GetWindowLong(hwnd, GWL_EXSTYLE);
+            API.User32.SetWindowLong(hwnd, GWL_EXSTYLE, 0x8000000);
+            _InkAnalyer = new InkAnalyzer();
+            _HintNode = _InkAnalyer.CreateAnalysisHint();
+            _HintNode.Guide.Columns = 1;
+            _HintNode.Guide.Rows = 1;
+            _HintNode.WordMode = true;
+            _HintNode.TopInkBreaksOnly = true;
         }
 
-        private void inkCanvs_MouseUp(object sender, MouseButtonEventArgs e)
+        private void InkCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            hint.Location.MakeInfinite();
-            theInkAnalyer.RemoveStrokes(InkCanvas.Strokes);
-            theInkAnalyer.AddStrokes(InkCanvas.Strokes);
-            theInkAnalyer.SetStrokesLanguageId(InkCanvas.Strokes, 0x0804);
-            theInkAnalyer.SetStrokesType(InkCanvas.Strokes, StrokeType.Writing);
-            AnalysisStatus status = theInkAnalyer.Analyze();
+            _HintNode.Location.MakeInfinite();
+            _InkAnalyer.RemoveStrokes(InkCanvas.Strokes);
+            _InkAnalyer.AddStrokes(InkCanvas.Strokes);
+            _InkAnalyer.SetStrokesLanguageId(InkCanvas.Strokes, 0x0804);
+            _InkAnalyer.SetStrokesType(InkCanvas.Strokes, StrokeType.Writing);
+            AnalysisStatus status = _InkAnalyer.Analyze();
             if (status.Successful)
             {
-                for (int i = 0; i < theInkAnalyer.GetAlternates().Count; i++)
+                for (int i = 0; i < _InkAnalyer.GetAlternates().Count; i++)
                 {
-                    //var thisButton = FindName("b" + i) as Button;
-                    string resultStr = theInkAnalyer.GetAlternates()[i].RecognizedString;
+                    string resultStr = _InkAnalyer.GetAlternates()[i].RecognizedString;
                     if (resultStr.Length == 1)
                     {
-                        //thisButton.Content = resultStr;
+                        TextBox.Text = resultStr;
                     }
                 }
             }
         }
+
     }
 }

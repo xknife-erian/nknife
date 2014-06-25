@@ -944,6 +944,9 @@ namespace NKnife.Wrapper.API
             [DllImport("user32.dll")]
             public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern UInt32 GetWindowLong(IntPtr hWnd, int nIndex);
+
             /// <summary>
             /// 该函数检索指定窗口客户区域或整个屏幕的显示设备上下文环境的句柄，在随后的GDI函数中可以使用该句柄在设备上下文环境中绘图。
             /// </summary>
