@@ -1,20 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
-namespace Gean
+namespace NKnife.Utility.Drawing
 {
     /// <summary>
     /// 一个图片缩放的类
     /// </summary>
     public class Thumbnail
     {
-        public Thumbnail()
-        {
-        }
-
         /// <SUMMARY>
         /// 图片缩放
         /// </SUMMARY>

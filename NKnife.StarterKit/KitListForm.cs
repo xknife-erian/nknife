@@ -46,7 +46,14 @@ namespace NKnife.StarterKit
 
         private void 简易拼音输入法ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new ChineseCharForm();
+            var form = new PinyinImeForm();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void 汉字使用频率ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new ChineseCharUseFrequency();
             form.MdiParent = this;
             form.Show();
         }

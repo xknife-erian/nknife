@@ -60,11 +60,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\ChineseCharForm.cs">
+    <Compile Include="Forms\PinyinImeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ChineseCharForm.Designer.cs">
-      <DependentUpon>ChineseCharForm.cs</DependentUpon>
+    <Compile Include="Forms\PinyinImeForm.Designer.cs">
+      <DependentUpon>PinyinImeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChineseCharUseFrequency.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChineseCharUseFrequency.Designer.cs">
+      <DependentUpon>ChineseCharUseFrequency.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoggingStarterForm.cs">
       <SubType>Form</SubType>
@@ -80,8 +86,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\ChineseCharForm.resx">
-      <DependentUpon>ChineseCharForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PinyinImeForm.resx">
+      <DependentUpon>PinyinImeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChineseCharUseFrequency.resx">
+      <DependentUpon>ChineseCharUseFrequency.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoggingStarterForm.resx">
       <DependentUpon>LoggingStarterForm.cs</DependentUpon>

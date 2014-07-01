@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Web;
 
-namespace Gean
+namespace NKnife.Utility.Drawing
 {
     public static class UtilityDrawing
     {
         /// <summary>
-        /// 将指定的图片去除指定的透明色调，返回一个图片中的图形形状
+        ///     将指定的图片去除指定的透明色调，返回一个图片中的图形形状
         /// </summary>
         /// <param name="bitmap">指定的图片</param>
         /// <param name="transparencyColor">指定的透明色调</param>
@@ -25,7 +25,7 @@ namespace Gean
             int height = bitmap.Height;
             int width = bitmap.Width;
             Region region = null;
-            using (GraphicsPath path = new GraphicsPath())
+            using (var path = new GraphicsPath())
             {
                 for (int j = 0; j < height; j++)
                     for (int i = 0; i < width; i++)
@@ -43,7 +43,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 对指定的图片进行色彩反转
+        ///     对指定的图片进行色彩反转
         /// </summary>
         /// <param name="bitmap">指定的图片</param>
         /// <returns></returns>
@@ -53,20 +53,20 @@ namespace Gean
             BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmpData.Stride;
-            System.IntPtr Scan0 = bmpData.Scan0;
+            IntPtr scan = bmpData.Scan0;
 
             unsafe
             {
-                byte* p = (byte*)(void*)Scan0;
+                var p = (byte*) (void*) scan;
 
-                int nOffset = stride - bitmap.Width * 3;
-                int nWidth = bitmap.Width * 3;
+                int nOffset = stride - bitmap.Width*3;
+                int nWidth = bitmap.Width*3;
 
                 for (int y = 0; y < bitmap.Height; ++y)
                 {
                     for (int x = 0; x < nWidth; ++x)
                     {
-                        p[0] = (byte)(255 - p[0]);
+                        p[0] = (byte) (255 - p[0]);
                         ++p;
                     }
                     p += nOffset;
@@ -79,7 +79,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 变成黑白图
+        ///     变成黑白图
         /// </summary>
         /// <param name="pimage">原始图</param>
         /// <returns></returns>
@@ -104,20 +104,21 @@ namespace Gean
 
             BitmapData sourceData = source.LockBits(new Rectangle(0, 0, source.Width, source.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
-            int imageSize = sourceData.Stride * sourceData.Height;
+            int imageSize = sourceData.Stride*sourceData.Height;
             var sourceBuffer = new byte[imageSize];
             Marshal.Copy(sourceData.Scan0, sourceBuffer, 0, imageSize);
 
             source.UnlockBits(sourceData);
 
             // Create destination bitmap
-            Bitmap destination = new Bitmap(source.Width, source.Height, PixelFormat.Format1bppIndexed);
+            var destination = new Bitmap(source.Width, source.Height, PixelFormat.Format1bppIndexed);
 
             // Lock destination bitmap in memory
-            BitmapData destinationData = destination.LockBits(new Rectangle(0, 0, destination.Width, destination.Height), ImageLockMode.WriteOnly, PixelFormat.Format1bppIndexed);
+            BitmapData destinationData = destination.LockBits(new Rectangle(0, 0, destination.Width, destination.Height), ImageLockMode.WriteOnly,
+                PixelFormat.Format1bppIndexed);
 
             // Create destination buffer
-            imageSize = destinationData.Stride * destinationData.Height;
+            imageSize = destinationData.Stride*destinationData.Height;
             var destinationBuffer = new byte[imageSize];
 
             int height = source.Height;
@@ -127,8 +128,8 @@ namespace Gean
             // Iterate lines
             for (int y = 0; y < height; y++)
             {
-                int sourceIndex = y * sourceData.Stride;
-                int destinationIndex = y * destinationData.Stride;
+                int sourceIndex = y*sourceData.Stride;
+                int destinationIndex = y*destinationData.Stride;
                 byte destinationValue = 0;
                 int pixelValue = 128;
 
@@ -139,7 +140,7 @@ namespace Gean
                     int pixelTotal = sourceBuffer[sourceIndex + 1] + sourceBuffer[sourceIndex + 2] + sourceBuffer[sourceIndex + 3];
                     if (pixelTotal > threshold)
                     {
-                        destinationValue += (byte)pixelValue;
+                        destinationValue += (byte) pixelValue;
                     }
                     if (pixelValue == 1)
                     {
@@ -173,7 +174,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 对指定的图片进行置为灰度模式
+        ///     对指定的图片进行置为灰度模式
         /// </summary>
         /// <param name="bmp">指定的图片</param>
         public static bool GrayScale(Bitmap bmp)
@@ -182,12 +183,12 @@ namespace Gean
             BitmapData bmData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
-            System.IntPtr ptr = bmData.Scan0;
+            IntPtr ptr = bmData.Scan0;
 
             unsafe
             {
-                var p = (byte*)(void*)ptr;
-                int nOffset = stride - bmp.Width * 3;
+                var p = (byte*) (void*) ptr;
+                int nOffset = stride - bmp.Width*3;
                 for (int y = 0; y < bmp.Height; ++y)
                 {
                     for (int x = 0; x < bmp.Width; ++x)
@@ -196,7 +197,7 @@ namespace Gean
                         byte green = p[1];
                         byte red = p[2];
 
-                        p[0] = p[1] = p[2] = (byte)(.299 * red + .587 * green + .114 * blue);
+                        p[0] = p[1] = p[2] = (byte) (.299*red + .587*green + .114*blue);
                         p += 3;
                     }
                     p += nOffset;
@@ -207,7 +208,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 对指定的图片进行指定数量的亮度调节
+        ///     对指定的图片进行指定数量的亮度调节
         /// </summary>
         /// <param name="b">指定的图片</param>
         /// <param name="nBrightness">指定数量</param>
@@ -221,27 +222,27 @@ namespace Gean
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
+            IntPtr scan = bmData.Scan0;
 
             int nVal = 0;
 
             unsafe
             {
-                byte* p = (byte*)(void*)Scan0;
+                var p = (byte*) (void*) scan;
 
-                int nOffset = stride - b.Width * 3;
-                int nWidth = b.Width * 3;
+                int nOffset = stride - b.Width*3;
+                int nWidth = b.Width*3;
 
                 for (int y = 0; y < b.Height; ++y)
                 {
                     for (int x = 0; x < nWidth; ++x)
                     {
-                        nVal = (int)(p[0] + nBrightness);
+                        nVal = p[0] + nBrightness;
 
                         if (nVal < 0) nVal = 0;
                         if (nVal > 255) nVal = 255;
 
-                        p[0] = (byte)nVal;
+                        p[0] = (byte) nVal;
 
                         ++p;
                     }
@@ -255,7 +256,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 对指定的图片进行指定数量的对比度调节
+        ///     对指定的图片进行指定数量的对比度调节
         /// </summary>
         /// <param name="b">指定的图片</param>
         /// <param name="nContrast">指定数量</param>
@@ -265,7 +266,7 @@ namespace Gean
             if (nContrast < -100) return false;
             if (nContrast > 100) return false;
 
-            double pixel = 0, contrast = (100.0 + nContrast) / 100.0;
+            double pixel = 0, contrast = (100.0 + nContrast)/100.0;
 
             contrast *= contrast;
 
@@ -275,13 +276,13 @@ namespace Gean
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
+            IntPtr Scan0 = bmData.Scan0;
 
             unsafe
             {
-                byte* p = (byte*)(void*)Scan0;
+                var p = (byte*) (void*) Scan0;
 
-                int nOffset = stride - b.Width * 3;
+                int nOffset = stride - b.Width*3;
 
                 for (int y = 0; y < b.Height; ++y)
                 {
@@ -291,32 +292,32 @@ namespace Gean
                         green = p[1];
                         red = p[2];
 
-                        pixel = red / 255.0;
+                        pixel = red/255.0;
                         pixel -= 0.5;
                         pixel *= contrast;
                         pixel += 0.5;
                         pixel *= 255;
                         if (pixel < 0) pixel = 0;
                         if (pixel > 255) pixel = 255;
-                        p[2] = (byte)pixel;
+                        p[2] = (byte) pixel;
 
-                        pixel = green / 255.0;
+                        pixel = green/255.0;
                         pixel -= 0.5;
                         pixel *= contrast;
                         pixel += 0.5;
                         pixel *= 255;
                         if (pixel < 0) pixel = 0;
                         if (pixel > 255) pixel = 255;
-                        p[1] = (byte)pixel;
+                        p[1] = (byte) pixel;
 
-                        pixel = blue / 255.0;
+                        pixel = blue/255.0;
                         pixel -= 0.5;
                         pixel *= contrast;
                         pixel += 0.5;
                         pixel *= 255;
                         if (pixel < 0) pixel = 0;
                         if (pixel > 255) pixel = 255;
-                        p[0] = (byte)pixel;
+                        p[0] = (byte) pixel;
 
                         p += 3;
                     }
@@ -335,28 +336,28 @@ namespace Gean
             if (green < .2 || green > 5) return false;
             if (blue < .2 || blue > 5) return false;
 
-            byte[] redGamma = new byte[256];
-            byte[] greenGamma = new byte[256];
-            byte[] blueGamma = new byte[256];
+            var redGamma = new byte[256];
+            var greenGamma = new byte[256];
+            var blueGamma = new byte[256];
 
             for (int i = 0; i < 256; ++i)
             {
-                redGamma[i] = (byte)System.Math.Min(255, (int)((255.0 * System.Math.Pow(i / 255.0, 1.0 / red)) + 0.5));
-                greenGamma[i] = (byte)System.Math.Min(255, (int)((255.0 * System.Math.Pow(i / 255.0, 1.0 / green)) + 0.5));
-                blueGamma[i] = (byte)System.Math.Min(255, (int)((255.0 * System.Math.Pow(i / 255.0, 1.0 / blue)) + 0.5));
+                redGamma[i] = (byte) Math.Min(255, (int) ((255.0*Math.Pow(i/255.0, 1.0/red)) + 0.5));
+                greenGamma[i] = (byte) Math.Min(255, (int) ((255.0*Math.Pow(i/255.0, 1.0/green)) + 0.5));
+                blueGamma[i] = (byte) Math.Min(255, (int) ((255.0*Math.Pow(i/255.0, 1.0/blue)) + 0.5));
             }
 
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
+            IntPtr Scan0 = bmData.Scan0;
 
             unsafe
             {
-                byte* p = (byte*)(void*)Scan0;
+                var p = (byte*) (void*) Scan0;
 
-                int nOffset = stride - b.Width * 3;
+                int nOffset = stride - b.Width*3;
 
                 for (int y = 0; y < b.Height; ++y)
                 {
@@ -387,13 +388,13 @@ namespace Gean
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
+            IntPtr Scan0 = bmData.Scan0;
 
             unsafe
             {
-                byte* p = (byte*)(void*)Scan0;
+                var p = (byte*) (void*) Scan0;
 
-                int nOffset = stride - b.Width * 3;
+                int nOffset = stride - b.Width*3;
                 int nPixel;
 
                 for (int y = 0; y < b.Height; ++y)
@@ -401,16 +402,16 @@ namespace Gean
                     for (int x = 0; x < b.Width; ++x)
                     {
                         nPixel = p[2] + red;
-                        nPixel = System.Math.Max(nPixel, 0);
-                        p[2] = (byte)System.Math.Min(255, nPixel);
+                        nPixel = Math.Max(nPixel, 0);
+                        p[2] = (byte) Math.Min(255, nPixel);
 
                         nPixel = p[1] + green;
-                        nPixel = System.Math.Max(nPixel, 0);
-                        p[1] = (byte)System.Math.Min(255, nPixel);
+                        nPixel = Math.Max(nPixel, 0);
+                        p[1] = (byte) Math.Min(255, nPixel);
 
                         nPixel = p[0] + blue;
-                        nPixel = System.Math.Max(nPixel, 0);
-                        p[0] = (byte)System.Math.Min(255, nPixel);
+                        nPixel = Math.Max(nPixel, 0);
+                        p[0] = (byte) Math.Min(255, nPixel);
 
                         p += 3;
                     }
@@ -424,45 +425,41 @@ namespace Gean
         }
 
         /// <summary>
-        /// 获取指定mimeType的ImageCodecInfo
+        ///     获取指定mimeType的ImageCodecInfo
         /// </summary>
         private static ImageCodecInfo GetImageCodecInfo(string mimeType)
         {
-            ImageCodecInfo[] CodecInfo = ImageCodecInfo.GetImageEncoders();
-            foreach (ImageCodecInfo ici in CodecInfo)
-            {
-                if (ici.MimeType == mimeType) return ici;
-            }
-            return null;
+            ImageCodecInfo[] codecInfo = ImageCodecInfo.GetImageEncoders();
+            return codecInfo.FirstOrDefault(ici => ici.MimeType == mimeType);
         }
 
         /// <summary>
-        ///  获取inputStream中的Bitmap对象
+        ///     获取inputStream中的Bitmap对象
         /// </summary>
         public static Bitmap GetBitmapFromStream(Stream inputStream)
         {
-            Bitmap bitmap = new Bitmap(inputStream);
+            var bitmap = new Bitmap(inputStream);
             return bitmap;
         }
 
         /// <summary>
-        /// 将Bitmap对象压缩为JPG图片类型
-        /// </summary>
+        ///     将Bitmap对象压缩为JPG图片类型
         /// </summary>
         /// <param name="bmp">源bitmap对象</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
         /// <param name="quality">压缩质量，越大照片越清晰，推荐80</param>
         public static void CompressAsJPG(Bitmap bmp, string saveFilePath, int quality)
         {
-            EncoderParameter p = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality); ;
-            EncoderParameters ps = new EncoderParameters(1);
+            var p = new EncoderParameter(Encoder.Quality, quality);
+            ;
+            var ps = new EncoderParameters(1);
             ps.Param[0] = p;
             bmp.Save(saveFilePath, GetImageCodecInfo("image/jpeg"), ps);
             bmp.Dispose();
         }
 
         /// <summary>
-        /// 将inputStream中的对象压缩为JPG图片类型
+        ///     将inputStream中的对象压缩为JPG图片类型
         /// </summary>
         /// <param name="inputStream">源Stream对象</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
@@ -474,7 +471,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 将Bitmap对象裁剪为指定JPG文件
+        ///     将Bitmap对象裁剪为指定JPG文件
         /// </summary>
         /// <param name="bmp">源bmp对象</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
@@ -503,7 +500,7 @@ namespace Gean
                 height = bmpH - y;
             }
 
-            Bitmap bmpOut = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+            var bmpOut = new Bitmap(width, height, PixelFormat.Format24bppRgb);
             Graphics g = Graphics.FromImage(bmpOut);
             g.DrawImage(bmp, new Rectangle(0, 0, width, height), new Rectangle(x, y, width, height), GraphicsUnit.Pixel);
             g.Dispose();
@@ -512,7 +509,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 将Stream中的对象裁剪为指定JPG文件
+        ///     将Stream中的对象裁剪为指定JPG文件
         /// </summary>
         /// <param name="inputStream">源bmp对象</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
@@ -526,300 +523,17 @@ namespace Gean
             CutAsJPG(bmp, saveFilePath, x, y, width, height);
         }
 
-        #region 图片水印操作
-
         /// <summary>
-        /// 给图片添加图片水印
+        ///     获取图片中的各帧
         /// </summary>
-        /// <param name="inputStream">包含要源图片的流</param>
-        /// <param name="watermarkPath">水印图片的物理地址</param>
-        /// <param name="saveFilePath">目标图片的存储地址</param>
-        /// <param name="mp">水印位置</param>
-        public static void AddPicWatermarkAsJPG(Stream inputStream, string watermarkPath, string saveFilePath, MarkPosition mp)
-        {
-
-            Image image = Image.FromStream(inputStream);
-            Bitmap b = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
-            Graphics g = Graphics.FromImage(b);
-            g.Clear(System.Drawing.Color.White);
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.InterpolationMode = InterpolationMode.High;
-            g.DrawImage(image, 0, 0, image.Width, image.Height);
-
-            AddWatermarkImage(g, watermarkPath, mp, image.Width, image.Height);
-
-            try
-            {
-                CompressAsJPG(b, saveFilePath, 80);
-            }
-            catch { ;}
-            finally
-            {
-                b.Dispose();
-                image.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// 给图片添加图片水印
-        /// </summary>
-        /// <param name="sourcePath">源图片的存储地址</param>
-        /// <param name="watermarkPath">水印图片的物理地址</param>
-        /// <param name="saveFilePath">目标图片的存储地址</param>
-        /// <param name="mp">水印位置</param>
-        public static void AddPicWatermarkAsJPG(string sourcePath, string watermarkPath, string saveFilePath, MarkPosition mp)
-        {
-            if (File.Exists(sourcePath))
-            {
-                using (StreamReader sr = new StreamReader(sourcePath))
-                {
-                    AddPicWatermarkAsJPG(sr.BaseStream, watermarkPath, saveFilePath, mp);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 给图片添加文字水印
-        /// </summary>
-        /// <param name="inputStream">包含要源图片的流</param>
-        /// <param name="text">水印文字</param>
-        /// <param name="saveFilePath">目标图片的存储地址</param>
-        /// <param name="mp">水印位置</param>
-        public static void AddTextWatermarkAsJPG(Stream inputStream, string text, string saveFilePath, MarkPosition mp)
-        {
-
-            Image image = Image.FromStream(inputStream);
-            Bitmap b = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
-            Graphics g = Graphics.FromImage(b);
-            g.Clear(System.Drawing.Color.White);
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.InterpolationMode = InterpolationMode.High;
-            g.DrawImage(image, 0, 0, image.Width, image.Height);
-
-            AddWatermarkText(g, text, mp, image.Width, image.Height);
-
-            try
-            {
-                CompressAsJPG(b, saveFilePath, 80);
-            }
-            catch { ;}
-            finally
-            {
-                b.Dispose();
-                image.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// 给图片添加文字水印
-        /// </summary>
-        /// <param name="sourcePath">源图片的存储地址</param>
-        /// <param name="text">水印文字</param>
-        /// <param name="saveFilePath">目标图片的存储地址</param>
-        /// <param name="mp">水印位置</param>
-        public static void AddTextWatermarkAsJPG(string sourcePath, string text, string saveFilePath, MarkPosition mp)
-        {
-            if (File.Exists(sourcePath))
-            {
-                using (StreamReader sr = new StreamReader(sourcePath))
-                {
-                    AddTextWatermarkAsJPG(sr.BaseStream, text, saveFilePath, mp);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 添加文字水印
-        /// </summary>
-        /// <param name="picture">要加水印的原图像</param>
-        /// <param name="text">水印文字</param>
-        /// <param name="mp">添加的位置</param>
-        /// <param name="width">原图像的宽度</param>
-        /// <param name="height">原图像的高度</param>
-        private static void AddWatermarkText(Graphics picture, string text, MarkPosition mp, int width, int height)
-        {
-            int[] sizes = new int[] { 16, 14, 12, 10, 8, 6, 4 };
-            Font crFont = null;
-            SizeF crSize = new SizeF();
-            for (int i = 0; i < 7; i++)
-            {
-                crFont = new Font("Arial", sizes[i], FontStyle.Bold);
-                crSize = picture.MeasureString(text, crFont);
-
-                if ((ushort)crSize.Width < (ushort)width)
-                    break;
-            }
-
-            float xpos = 0;
-            float ypos = 0;
-
-            switch (mp)
-            {
-                case MarkPosition.MP_Left_Top:
-                    xpos = ((float)width * (float).01) + (crSize.Width / 2);
-                    ypos = (float)height * (float).01;
-                    break;
-                case MarkPosition.MP_Right_Top:
-                    xpos = ((float)width * (float).99) - (crSize.Width / 2);
-                    ypos = (float)height * (float).01;
-                    break;
-                case MarkPosition.MP_Right_Bottom:
-                    xpos = ((float)width * (float).99) - (crSize.Width / 2);
-                    ypos = ((float)height * (float).99) - crSize.Height;
-                    break;
-                case MarkPosition.MP_Left_Bottom:
-                    xpos = ((float)width * (float).01) + (crSize.Width / 2);
-                    ypos = ((float)height * (float).99) - crSize.Height;
-                    break;
-            }
-
-            StringFormat StrFormat = new StringFormat();
-            StrFormat.Alignment = StringAlignment.Center;
-
-            SolidBrush semiTransBrush2 = new SolidBrush(System.Drawing.Color.FromArgb(153, 0, 0, 0));
-            picture.DrawString(text, crFont, semiTransBrush2, xpos + 1, ypos + 1, StrFormat);
-
-            SolidBrush semiTransBrush = new SolidBrush(System.Drawing.Color.FromArgb(153, 255, 255, 255));
-            picture.DrawString(text, crFont, semiTransBrush, xpos, ypos, StrFormat);
-
-            semiTransBrush2.Dispose();
-            semiTransBrush.Dispose();
-
-        }
-
-        /// <summary>
-        /// 添加图片水印
-        /// </summary>
-        /// <param name="picture">要加水印的原图像</param>
-        /// <param name="waterMarkPath">水印文件的物理地址</param>
-        /// <param name="mp">添加的位置</param>
-        /// <param name="width">原图像的宽度</param>
-        /// <param name="height">原图像的高度</param>
-        private static void AddWatermarkImage(Graphics picture, string waterMarkPath, MarkPosition mp, int width, int height)
-        {
-            Image watermark = new Bitmap(waterMarkPath);
-
-            ImageAttributes imageAttributes = new ImageAttributes();
-            ColorMap colorMap = new ColorMap();
-
-            colorMap.OldColor = System.Drawing.Color.FromArgb(255, 0, 255, 0);
-            colorMap.NewColor = System.Drawing.Color.FromArgb(0, 0, 0, 0);
-            ColorMap[] remapTable = { colorMap };
-
-            imageAttributes.SetRemapTable(remapTable, ColorAdjustType.Bitmap);
-
-            float[][] colorMatrixElements = {
-                                                 new float[] {1.0f,  0.0f,  0.0f,  0.0f, 0.0f},
-                                                 new float[] {0.0f,  1.0f,  0.0f,  0.0f, 0.0f},
-                                                 new float[] {0.0f,  0.0f,  1.0f,  0.0f, 0.0f},
-                                                 new float[] {0.0f,  0.0f,  0.0f,  0.3f, 0.0f},
-                                                 new float[] {0.0f,  0.0f,  0.0f,  0.0f, 1.0f}
-                                             };
-
-            ColorMatrix colorMatrix = new ColorMatrix(colorMatrixElements);
-
-            imageAttributes.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
-            int xpos = 0;
-            int ypos = 0;
-            int WatermarkWidth = 0;
-            int WatermarkHeight = 0;
-            double bl = 1d;
-            if ((width > watermark.Width * 4) && (height > watermark.Height * 4))
-            {
-                bl = 1;
-            }
-            else if ((width > watermark.Width * 4) && (height < watermark.Height * 4))
-            {
-                bl = Convert.ToDouble(height / 4) / Convert.ToDouble(watermark.Height);
-
-            }
-            else
-
-                if ((width < watermark.Width * 4) && (height > watermark.Height * 4))
-                {
-                    bl = Convert.ToDouble(width / 4) / Convert.ToDouble(watermark.Width);
-                }
-                else
-                {
-                    if ((width * watermark.Height) > (height * watermark.Width))
-                    {
-                        bl = Convert.ToDouble(height / 4) / Convert.ToDouble(watermark.Height);
-
-                    }
-                    else
-                    {
-                        bl = Convert.ToDouble(width / 4) / Convert.ToDouble(watermark.Width);
-
-                    }
-
-                }
-
-            WatermarkWidth = Convert.ToInt32(watermark.Width * bl);
-            WatermarkHeight = Convert.ToInt32(watermark.Height * bl);
-
-
-            switch (mp)
-            {
-                case MarkPosition.MP_Left_Top:
-                    xpos = 10;
-                    ypos = 10;
-                    break;
-                case MarkPosition.MP_Right_Top:
-                    xpos = width - WatermarkWidth - 10;
-                    ypos = 10;
-                    break;
-                case MarkPosition.MP_Right_Bottom:
-                    xpos = width - WatermarkWidth - 10;
-                    ypos = height - WatermarkHeight - 10;
-                    break;
-                case MarkPosition.MP_Left_Bottom:
-                    xpos = 10;
-                    ypos = height - WatermarkHeight - 10;
-                    break;
-            }
-
-            picture.DrawImage(watermark, new Rectangle(xpos, ypos, WatermarkWidth, WatermarkHeight), 0, 0, watermark.Width, watermark.Height, GraphicsUnit.Pixel, imageAttributes);
-
-
-            watermark.Dispose();
-            imageAttributes.Dispose();
-        }
-
-        /// <summary>
-        /// 水印的位置
-        /// </summary>
-        public enum MarkPosition
-        {
-            /// <summary>
-            /// 左上角
-            /// </summary>
-            MP_Left_Top,
-            /// <summary>
-            /// 左下角
-            /// </summary>
-            MP_Left_Bottom,
-            /// <summary>
-            /// 右上角
-            /// </summary>
-            MP_Right_Top,
-            /// <summary>
-            /// 右下角
-            /// </summary>
-            MP_Right_Bottom
-        }
-
-        #endregion
-
-        /// <summary>
-        /// 获取图片中的各帧  
-        /// </summary>  
-        /// <param name="pPath"><param name="pPath">图片路径</param>  
-        /// <param name="pSavePath"><param name="pSavePath">保存路径</param>  
+        /// <param name="pPath">
+        ///     <param name="pPath">图片路径</param>
+        ///     <param name="pSavePath">
+        ///         <param name="pSavePath">保存路径</param>
         public static void GetGifFrames(string pPath, string pSavedPath)
         {
             Image gif = Image.FromFile(pPath);
-            FrameDimension fd = new FrameDimension(gif.FrameDimensionsList[0]);
+            var fd = new FrameDimension(gif.FrameDimensionsList[0]);
 
             //获取帧数(gif图片可能包含多帧，其它格式图片一般仅一帧)  
             int count = gif.GetFrameCount(fd);
@@ -833,42 +547,60 @@ namespace Gean
         }
 
         /// <summary>
-        /// 获取图片指定部分  
-        /// </summary>  
-        /// <param name="pPath"><param name="pPath">图片路径</param>  
-        /// <param name="pSavePath"><param name="pSavePath">保存路径</param>  
-        /// <param name="pPartStartPointX"><param name="pPartStartPointX">目标图片开始绘制处的坐标X值(通常为)</param>  
-        /// <param name="pPartStartPointY"><param name="pPartStartPointY">目标图片开始绘制处的坐标Y值(通常为)</param>  
-        /// <param name="pPartWidth"><param name="pPartWidth">目标图片的宽度</param>  
-        /// <param name="pPartHeight"><param name="pPartHeight">目标图片的高度</param>  
-        /// <param name="pOrigStartPointX"><param name="pOrigStartPointX">原始图片开始截取处的坐标X值</param>  
-        /// <param name="pOrigStartPointY"><param name="pOrigStartPointY">原始图片开始截取处的坐标Y值</param>  
-        /// <param name="pFormat"><param name="pFormat">保存格式，通常可以是jpeg</param>  
-        public static void GetPart(string pPath, string pSavedPath, int pPartStartPointX, int pPartStartPointY, int pPartWidth, int pPartHeight, int pOrigStartPointX, int pOrigStartPointY)
+        ///     获取图片指定部分
+        /// </summary>
+        /// <param name="pPath">图片路径</param>
+        /// <param name="pSavePath">保存路径</param>
+        /// <param name="pPartStartPointX">目标图片开始绘制处的坐标X值(通常为)</param>
+        /// <param name="pPartStartPointY">目标图片开始绘制处的坐标Y值(通常为)</param>
+        /// <param name="pPartWidth">目标图片的宽度</param>
+        /// <param name="pPartHeight">目标图片的高度</param>
+        /// <param name="pOrigStartPointX">原始图片开始截取处的坐标X值</param>
+        /// <param name="pOrigStartPointY">原始图片开始截取处的坐标Y值</param>
+        /// <param name="pFormat">保存格式，通常可以是jpeg</param>
+        public static void GetPart(string pPath, string pSavedPath, int pPartStartPointX, int pPartStartPointY, int pPartWidth, int pPartHeight,
+            int pOrigStartPointX, int pOrigStartPointY)
         {
             Image originalImg = Image.FromFile(pPath);
 
-            Bitmap partImg = new Bitmap(pPartWidth, pPartHeight);
+            var partImg = new Bitmap(pPartWidth, pPartHeight);
             Graphics graphics = Graphics.FromImage(partImg);
-            Rectangle destRect = new Rectangle(new Point(pPartStartPointX, pPartStartPointY), new Size(pPartWidth, pPartHeight));//目标位置  
-            Rectangle origRect = new Rectangle(new Point(pOrigStartPointX, pOrigStartPointY), new Size(pPartWidth, pPartHeight));//原图位置（默认从原图中截取的图片大小等于目标图片的大小）  
+            var destRect = new Rectangle(new Point(pPartStartPointX, pPartStartPointY), new Size(pPartWidth, pPartHeight)); //目标位置  
+            var origRect = new Rectangle(new Point(pOrigStartPointX, pOrigStartPointY), new Size(pPartWidth, pPartHeight)); //原图位置（默认从原图中截取的图片大小等于目标图片的大小）  
 
             graphics.DrawImage(originalImg, destRect, origRect, GraphicsUnit.Pixel);
             partImg.Save(pSavedPath + "\\part.jpg", ImageFormat.Jpeg);
         }
-        
+
+        /// <summary>
+        ///     判断文件类型是否为WEB格式图片
+        ///     (注：JPG,GIF,BMP,PNG)
+        /// </summary>
+        /// <param name="contentType">HttpPostedFile.ContentType</param>
+        /// <returns></returns>
+        public static bool IsWebImage(string contentType)
+        {
+            if (contentType == "image/pjpeg" || contentType == "image/jpeg" || contentType == "image/gif" || contentType == "image/bmp" ||
+                contentType == "image/png")
+            {
+                return true;
+            }
+            return false;
+        }
+
         #region 正方型裁剪并缩放
+
         /// <summary>
-        /// 正方型裁剪
-        /// 以图片中心为轴心，截取正方型，然后等比缩放
-        /// 用于头像处理
+        ///     正方型裁剪
+        ///     以图片中心为轴心，截取正方型，然后等比缩放
+        ///     用于头像处理
         /// </summary>
         /// <remarks>吴剑 2010-11-23</remarks>
         /// <param name="postedFile">原图HttpPostedFile对象</param>
         /// <param name="fileSaveUrl">缩略图存放地址</param>
         /// <param name="side">指定的边长（正方型）</param>
         /// <param name="quality">质量（范围0-100）</param>
-        public static void CutForSquare(System.Web.HttpPostedFile postedFile, string fileSaveUrl, int side, int quality)
+        public static void CutForSquare(HttpPostedFile postedFile, string fileSaveUrl, int side, int quality)
         {
             //创建目录
             string dir = Path.GetDirectoryName(fileSaveUrl);
@@ -876,12 +608,12 @@ namespace Gean
                 Directory.CreateDirectory(dir);
 
             //原始图片（获取原始图片创建对象，并使用流中嵌入的颜色管理信息）
-            System.Drawing.Image initImage = System.Drawing.Image.FromStream(postedFile.InputStream, true);
+            Image initImage = Image.FromStream(postedFile.InputStream, true);
 
             //原图宽高均小于模版，不作处理，直接保存
             if (initImage.Width <= side && initImage.Height <= side)
             {
-                initImage.Save(fileSaveUrl, System.Drawing.Imaging.ImageFormat.Jpeg);
+                initImage.Save(fileSaveUrl, ImageFormat.Jpeg);
             }
             else
             {
@@ -893,61 +625,61 @@ namespace Gean
                 if (initWidth != initHeight)
                 {
                     // 截图对象
-                    System.Drawing.Image pickedImage = null;
-                    System.Drawing.Graphics pickedG = null;
+                    Image pickedImage = null;
+                    Graphics pickedG = null;
 
                     // 宽大于高的横图
                     if (initWidth > initHeight)
                     {
                         //对象实例化
-                        pickedImage = new System.Drawing.Bitmap(initHeight, initHeight);
-                        pickedG = System.Drawing.Graphics.FromImage(pickedImage);
+                        pickedImage = new Bitmap(initHeight, initHeight);
+                        pickedG = Graphics.FromImage(pickedImage);
                         //设置质量
-                        pickedG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                        pickedG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                        pickedG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        pickedG.SmoothingMode = SmoothingMode.HighQuality;
                         //定位
-                        Rectangle fromR = new Rectangle((initWidth - initHeight) / 2, 0, initHeight, initHeight);
-                        Rectangle toR = new Rectangle(0, 0, initHeight, initHeight);
+                        var fromR = new Rectangle((initWidth - initHeight)/2, 0, initHeight, initHeight);
+                        var toR = new Rectangle(0, 0, initHeight, initHeight);
                         //画图
-                        pickedG.DrawImage(initImage, toR, fromR, System.Drawing.GraphicsUnit.Pixel);
+                        pickedG.DrawImage(initImage, toR, fromR, GraphicsUnit.Pixel);
                         //重置宽
                         initWidth = initHeight;
                     }
-                    // 高大于宽的竖图
+                        // 高大于宽的竖图
                     else
                     {
                         //对象实例化
-                        pickedImage = new System.Drawing.Bitmap(initWidth, initWidth);
-                        pickedG = System.Drawing.Graphics.FromImage(pickedImage);
+                        pickedImage = new Bitmap(initWidth, initWidth);
+                        pickedG = Graphics.FromImage(pickedImage);
                         //设置质量
-                        pickedG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                        pickedG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                        pickedG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        pickedG.SmoothingMode = SmoothingMode.HighQuality;
                         //定位
-                        Rectangle fromR = new Rectangle(0, (initHeight - initWidth) / 2, initWidth, initWidth);
-                        Rectangle toR = new Rectangle(0, 0, initWidth, initWidth);
+                        var fromR = new Rectangle(0, (initHeight - initWidth)/2, initWidth, initWidth);
+                        var toR = new Rectangle(0, 0, initWidth, initWidth);
                         //画图
-                        pickedG.DrawImage(initImage, toR, fromR, System.Drawing.GraphicsUnit.Pixel);
+                        pickedG.DrawImage(initImage, toR, fromR, GraphicsUnit.Pixel);
                         //重置高
                         initHeight = initWidth;
                     }
 
                     // 将截图对象赋给原图
-                    initImage = (System.Drawing.Image)pickedImage.Clone();
+                    initImage = (Image) pickedImage.Clone();
                     // 释放截图资源
                     pickedG.Dispose();
                     pickedImage.Dispose();
                 }
 
                 //缩略图对象
-                System.Drawing.Image resultImage = new System.Drawing.Bitmap(side, side);
-                System.Drawing.Graphics resultG = System.Drawing.Graphics.FromImage(resultImage);
+                Image resultImage = new Bitmap(side, side);
+                Graphics resultG = Graphics.FromImage(resultImage);
                 //设置质量
-                resultG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                resultG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                resultG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                resultG.SmoothingMode = SmoothingMode.HighQuality;
                 //用指定背景色清空画布
                 resultG.Clear(System.Drawing.Color.White);
                 //绘制缩略图
-                resultG.DrawImage(initImage, new System.Drawing.Rectangle(0, 0, side, side), new System.Drawing.Rectangle(0, 0, initWidth, initHeight), System.Drawing.GraphicsUnit.Pixel);
+                resultG.DrawImage(initImage, new Rectangle(0, 0, side, side), new Rectangle(0, 0, initWidth, initHeight), GraphicsUnit.Pixel);
 
                 //关键质量控制
                 //获取系统编码类型数组,包含了jpeg,bmp,png,gif,tiff
@@ -960,8 +692,8 @@ namespace Gean
                         ici = i;
                     }
                 }
-                EncoderParameters ep = new EncoderParameters(1);
-                ep.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, (long)quality);
+                var ep = new EncoderParameters(1);
+                ep.Param[0] = new EncoderParameter(Encoder.Quality, quality);
 
                 //保存缩略图
                 resultImage.Save(fileSaveUrl, ici, ep);
@@ -979,16 +711,16 @@ namespace Gean
         }
 
         /// <summary>
-        /// 正方型裁剪
-        /// 以图片中心为轴心，截取正方型，然后等比缩放
-        /// 用于头像处理
+        ///     正方型裁剪
+        ///     以图片中心为轴心，截取正方型，然后等比缩放
+        ///     用于头像处理
         /// </summary>
         /// <remarks>吴剑 2010-11-23</remarks>
-        /// <param name="postedFile">原图HttpPostedFile对象</param>
+        /// <param name="fromFile">原图HttpPostedFile对象</param>
         /// <param name="fileSaveUrl">缩略图存放地址</param>
         /// <param name="side">指定的边长（正方型）</param>
         /// <param name="quality">质量（范围0-100）</param>
-        public static void CutForSquare(System.IO.Stream fromFile, string fileSaveUrl, int side, int quality)
+        public static void CutForSquare(Stream fromFile, string fileSaveUrl, int side, int quality)
         {
             //创建目录
             string dir = Path.GetDirectoryName(fileSaveUrl);
@@ -996,12 +728,12 @@ namespace Gean
                 Directory.CreateDirectory(dir);
 
             //原始图片（获取原始图片创建对象，并使用流中嵌入的颜色管理信息）
-            System.Drawing.Image initImage = System.Drawing.Image.FromStream(fromFile, true);
+            Image initImage = Image.FromStream(fromFile, true);
 
             //原图宽高均小于模版，不作处理，直接保存
             if (initImage.Width <= side && initImage.Height <= side)
             {
-                initImage.Save(fileSaveUrl, System.Drawing.Imaging.ImageFormat.Jpeg);
+                initImage.Save(fileSaveUrl, ImageFormat.Jpeg);
             }
             else
             {
@@ -1013,61 +745,61 @@ namespace Gean
                 if (initWidth != initHeight)
                 {
                     // 截图对象
-                    System.Drawing.Image pickedImage = null;
-                    System.Drawing.Graphics pickedG = null;
+                    Image pickedImage = null;
+                    Graphics pickedG = null;
 
                     // 宽大于高的横图
                     if (initWidth > initHeight)
                     {
                         //对象实例化
-                        pickedImage = new System.Drawing.Bitmap(initHeight, initHeight);
-                        pickedG = System.Drawing.Graphics.FromImage(pickedImage);
+                        pickedImage = new Bitmap(initHeight, initHeight);
+                        pickedG = Graphics.FromImage(pickedImage);
                         //设置质量
-                        pickedG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                        pickedG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                        pickedG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        pickedG.SmoothingMode = SmoothingMode.HighQuality;
                         //定位
-                        Rectangle fromR = new Rectangle((initWidth - initHeight) / 2, 0, initHeight, initHeight);
-                        Rectangle toR = new Rectangle(0, 0, initHeight, initHeight);
+                        var fromR = new Rectangle((initWidth - initHeight)/2, 0, initHeight, initHeight);
+                        var toR = new Rectangle(0, 0, initHeight, initHeight);
                         //画图
-                        pickedG.DrawImage(initImage, toR, fromR, System.Drawing.GraphicsUnit.Pixel);
+                        pickedG.DrawImage(initImage, toR, fromR, GraphicsUnit.Pixel);
                         //重置宽
                         initWidth = initHeight;
                     }
-                    // 高大于宽的竖图
+                        // 高大于宽的竖图
                     else
                     {
                         //对象实例化
-                        pickedImage = new System.Drawing.Bitmap(initWidth, initWidth);
-                        pickedG = System.Drawing.Graphics.FromImage(pickedImage);
+                        pickedImage = new Bitmap(initWidth, initWidth);
+                        pickedG = Graphics.FromImage(pickedImage);
                         //设置质量
-                        pickedG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                        pickedG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                        pickedG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        pickedG.SmoothingMode = SmoothingMode.HighQuality;
                         //定位
-                        Rectangle fromR = new Rectangle(0, (initHeight - initWidth) / 2, initWidth, initWidth);
-                        Rectangle toR = new Rectangle(0, 0, initWidth, initWidth);
+                        var fromR = new Rectangle(0, (initHeight - initWidth)/2, initWidth, initWidth);
+                        var toR = new Rectangle(0, 0, initWidth, initWidth);
                         //画图
-                        pickedG.DrawImage(initImage, toR, fromR, System.Drawing.GraphicsUnit.Pixel);
+                        pickedG.DrawImage(initImage, toR, fromR, GraphicsUnit.Pixel);
                         //重置高
                         initHeight = initWidth;
                     }
 
                     // 将截图对象赋给原图
-                    initImage = (System.Drawing.Image)pickedImage.Clone();
+                    initImage = (Image) pickedImage.Clone();
                     // 释放截图资源
                     pickedG.Dispose();
                     pickedImage.Dispose();
                 }
 
                 //缩略图对象
-                System.Drawing.Image resultImage = new System.Drawing.Bitmap(side, side);
-                System.Drawing.Graphics resultG = System.Drawing.Graphics.FromImage(resultImage);
+                Image resultImage = new Bitmap(side, side);
+                Graphics resultG = Graphics.FromImage(resultImage);
                 //设置质量
-                resultG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                resultG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                resultG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                resultG.SmoothingMode = SmoothingMode.HighQuality;
                 //用指定背景色清空画布
                 resultG.Clear(System.Drawing.Color.White);
                 //绘制缩略图
-                resultG.DrawImage(initImage, new System.Drawing.Rectangle(0, 0, side, side), new System.Drawing.Rectangle(0, 0, initWidth, initHeight), System.Drawing.GraphicsUnit.Pixel);
+                resultG.DrawImage(initImage, new Rectangle(0, 0, side, side), new Rectangle(0, 0, initWidth, initHeight), GraphicsUnit.Pixel);
 
                 //关键质量控制
                 //获取系统编码类型数组,包含了jpeg,bmp,png,gif,tiff
@@ -1080,8 +812,8 @@ namespace Gean
                         ici = i;
                     }
                 }
-                EncoderParameters ep = new EncoderParameters(1);
-                ep.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, (long)quality);
+                var ep = new EncoderParameters(1);
+                ep.Param[0] = new EncoderParameter(Encoder.Quality, quality);
 
                 //保存缩略图
                 resultImage.Save(fileSaveUrl, ici, ep);
@@ -1097,12 +829,14 @@ namespace Gean
                 initImage.Dispose();
             }
         }
+
         #endregion
 
         #region 固定模版裁剪并缩放
+
         /// <summary>
-        /// 指定长宽裁剪
-        /// 按模版比例最大范围的裁剪图片并缩放至模版尺寸
+        ///     指定长宽裁剪
+        ///     按模版比例最大范围的裁剪图片并缩放至模版尺寸
         /// </summary>
         /// <remarks>吴剑 2010-11-15</remarks>
         /// <param name="postedFile">原图HttpPostedFile对象</param>
@@ -1110,96 +844,98 @@ namespace Gean
         /// <param name="maxWidth">最大宽(单位:px)</param>
         /// <param name="maxHeight">最大高(单位:px)</param>
         /// <param name="quality">质量（范围0-100）</param>
-        public static void CutForCustom(System.Web.HttpPostedFile postedFile, string fileSaveUrl, int maxWidth, int maxHeight, int quality)
+        public static void CutForCustom(HttpPostedFile postedFile, string fileSaveUrl, int maxWidth, int maxHeight, int quality)
         {
             //从文件获取原始图片，并使用流中嵌入的颜色管理信息
-            System.Drawing.Image initImage = System.Drawing.Image.FromStream(postedFile.InputStream, true);
+            Image initImage = Image.FromStream(postedFile.InputStream, true);
 
             //原图宽高均小于模版，不作处理，直接保存
             if (initImage.Width <= maxWidth && initImage.Height <= maxHeight)
             {
-                initImage.Save(fileSaveUrl, System.Drawing.Imaging.ImageFormat.Jpeg);
+                initImage.Save(fileSaveUrl, ImageFormat.Jpeg);
             }
             else
             {
                 //模版的宽高比例
-                double templateRate = (double)maxWidth / maxHeight;
+                double templateRate = (double) maxWidth/maxHeight;
                 //原图片的宽高比例
-                double initRate = (double)initImage.Width / initImage.Height;
+                double initRate = (double) initImage.Width/initImage.Height;
 
                 //原图与模版比例相等，直接缩放
                 if (templateRate == initRate)
                 {
                     // 按模版大小生成最终图片
-                    System.Drawing.Image templateImage = new System.Drawing.Bitmap(maxWidth, maxHeight);
-                    System.Drawing.Graphics templateG = System.Drawing.Graphics.FromImage(templateImage);
-                    templateG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-                    templateG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    Image templateImage = new Bitmap(maxWidth, maxHeight);
+                    Graphics templateG = Graphics.FromImage(templateImage);
+                    templateG.InterpolationMode = InterpolationMode.High;
+                    templateG.SmoothingMode = SmoothingMode.HighQuality;
                     templateG.Clear(System.Drawing.Color.White);
-                    templateG.DrawImage(initImage, new System.Drawing.Rectangle(0, 0, maxWidth, maxHeight), new System.Drawing.Rectangle(0, 0, initImage.Width, initImage.Height), System.Drawing.GraphicsUnit.Pixel);
-                    templateImage.Save(fileSaveUrl, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    templateG.DrawImage(initImage, new Rectangle(0, 0, maxWidth, maxHeight), new Rectangle(0, 0, initImage.Width, initImage.Height),
+                        GraphicsUnit.Pixel);
+                    templateImage.Save(fileSaveUrl, ImageFormat.Jpeg);
                 }
-                //原图与模版比例不等，裁剪后缩放
+                    //原图与模版比例不等，裁剪后缩放
                 else
                 {
                     // 裁剪对象
-                    System.Drawing.Image pickedImage = null;
-                    System.Drawing.Graphics pickedG = null;
+                    Image pickedImage = null;
+                    Graphics pickedG = null;
 
                     // 定位
-                    Rectangle fromR = new Rectangle(0, 0, 0, 0);//原图裁剪定位
-                    Rectangle toR = new Rectangle(0, 0, 0, 0);//目标定位
+                    var fromR = new Rectangle(0, 0, 0, 0); //原图裁剪定位
+                    var toR = new Rectangle(0, 0, 0, 0); //目标定位
 
                     // 宽为标准进行裁剪
                     if (templateRate > initRate)
                     {
                         //裁剪对象实例化
-                        pickedImage = new System.Drawing.Bitmap(initImage.Width, (int)System.Math.Floor(initImage.Width / templateRate));
-                        pickedG = System.Drawing.Graphics.FromImage(pickedImage);
+                        pickedImage = new Bitmap(initImage.Width, (int) Math.Floor(initImage.Width/templateRate));
+                        pickedG = Graphics.FromImage(pickedImage);
 
                         //裁剪源定位
                         fromR.X = 0;
-                        fromR.Y = (int)System.Math.Floor((initImage.Height - initImage.Width / templateRate) / 2);
+                        fromR.Y = (int) Math.Floor((initImage.Height - initImage.Width/templateRate)/2);
                         fromR.Width = initImage.Width;
-                        fromR.Height = (int)System.Math.Floor(initImage.Width / templateRate);
+                        fromR.Height = (int) Math.Floor(initImage.Width/templateRate);
 
                         //裁剪目标定位
                         toR.X = 0;
                         toR.Y = 0;
                         toR.Width = initImage.Width;
-                        toR.Height = (int)System.Math.Floor(initImage.Width / templateRate);
+                        toR.Height = (int) Math.Floor(initImage.Width/templateRate);
                     }
-                    // 高为标准进行裁剪
+                        // 高为标准进行裁剪
                     else
                     {
-                        pickedImage = new System.Drawing.Bitmap((int)System.Math.Floor(initImage.Height * templateRate), initImage.Height);
-                        pickedG = System.Drawing.Graphics.FromImage(pickedImage);
+                        pickedImage = new Bitmap((int) Math.Floor(initImage.Height*templateRate), initImage.Height);
+                        pickedG = Graphics.FromImage(pickedImage);
 
-                        fromR.X = (int)System.Math.Floor((initImage.Width - initImage.Height * templateRate) / 2);
+                        fromR.X = (int) Math.Floor((initImage.Width - initImage.Height*templateRate)/2);
                         fromR.Y = 0;
-                        fromR.Width = (int)System.Math.Floor(initImage.Height * templateRate);
+                        fromR.Width = (int) Math.Floor(initImage.Height*templateRate);
                         fromR.Height = initImage.Height;
 
                         toR.X = 0;
                         toR.Y = 0;
-                        toR.Width = (int)System.Math.Floor(initImage.Height * templateRate);
+                        toR.Width = (int) Math.Floor(initImage.Height*templateRate);
                         toR.Height = initImage.Height;
                     }
 
                     // 设置质量
-                    pickedG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    pickedG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    pickedG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    pickedG.SmoothingMode = SmoothingMode.HighQuality;
 
                     // 裁剪
-                    pickedG.DrawImage(initImage, toR, fromR, System.Drawing.GraphicsUnit.Pixel);
+                    pickedG.DrawImage(initImage, toR, fromR, GraphicsUnit.Pixel);
 
                     // 按模版大小生成最终图片
-                    System.Drawing.Image templateImage = new System.Drawing.Bitmap(maxWidth, maxHeight);
-                    System.Drawing.Graphics templateG = System.Drawing.Graphics.FromImage(templateImage);
-                    templateG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-                    templateG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    Image templateImage = new Bitmap(maxWidth, maxHeight);
+                    Graphics templateG = Graphics.FromImage(templateImage);
+                    templateG.InterpolationMode = InterpolationMode.High;
+                    templateG.SmoothingMode = SmoothingMode.HighQuality;
                     templateG.Clear(System.Drawing.Color.White);
-                    templateG.DrawImage(pickedImage, new System.Drawing.Rectangle(0, 0, maxWidth, maxHeight), new System.Drawing.Rectangle(0, 0, pickedImage.Width, pickedImage.Height), System.Drawing.GraphicsUnit.Pixel);
+                    templateG.DrawImage(pickedImage, new Rectangle(0, 0, maxWidth, maxHeight), new Rectangle(0, 0, pickedImage.Width, pickedImage.Height),
+                        GraphicsUnit.Pixel);
 
                     // 关键质量控制
                     //获取系统编码类型数组,包含了jpeg,bmp,png,gif,tiff
@@ -1212,8 +948,8 @@ namespace Gean
                             ici = i;
                         }
                     }
-                    EncoderParameters ep = new EncoderParameters(1);
-                    ep.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, (long)quality);
+                    var ep = new EncoderParameters(1);
+                    ep.Param[0] = new EncoderParameter(Encoder.Quality, quality);
 
                     // 保存缩略图
                     templateImage.Save(fileSaveUrl, ici, ep);
@@ -1231,11 +967,13 @@ namespace Gean
             //释放资源
             initImage.Dispose();
         }
+
         #endregion
 
         #region 等比缩放
+
         /// <summary>
-        /// 图片等比缩放
+        ///     图片等比缩放
         /// </summary>
         /// <remarks>吴剑 2011-01-21</remarks>
         /// <param name="postedFile">原图HttpPostedFile对象</param>
@@ -1244,7 +982,8 @@ namespace Gean
         /// <param name="targetHeight">指定的最大高度</param>
         /// <param name="watermarkText">水印文字(为""表示不使用水印)</param>
         /// <param name="watermarkImage">水印图片路径(为""表示不使用水印)</param>
-        public static void ZoomAuto(System.Web.HttpPostedFile postedFile, string savePath, System.Double targetWidth, System.Double targetHeight, string watermarkText, string watermarkImage)
+        public static void ZoomAuto(HttpPostedFile postedFile, string savePath, Double targetWidth, Double targetHeight, string watermarkText,
+            string watermarkImage)
         {
             //创建目录
             string dir = Path.GetDirectoryName(savePath);
@@ -1252,7 +991,7 @@ namespace Gean
                 Directory.CreateDirectory(dir);
 
             //原始图片（获取原始图片创建对象，并使用流中嵌入的颜色管理信息）
-            System.Drawing.Image initImage = System.Drawing.Image.FromStream(postedFile.InputStream, true);
+            Image initImage = Image.FromStream(postedFile.InputStream, true);
 
             //原图宽高均小于模版，不作处理，直接保存
             if (initImage.Width <= targetWidth && initImage.Height <= targetHeight)
@@ -1260,10 +999,10 @@ namespace Gean
                 //文字水印
                 if (watermarkText != "")
                 {
-                    using (System.Drawing.Graphics gWater = System.Drawing.Graphics.FromImage(initImage))
+                    using (Graphics gWater = Graphics.FromImage(initImage))
                     {
-                        System.Drawing.Font fontWater = new Font("黑体", 10);
-                        System.Drawing.Brush brushWater = new SolidBrush(System.Drawing.Color.White);
+                        var fontWater = new Font("黑体", 10);
+                        Brush brushWater = new SolidBrush(System.Drawing.Color.White);
                         gWater.DrawString(watermarkText, fontWater, brushWater, 10, 10);
                         gWater.Dispose();
                     }
@@ -1272,10 +1011,10 @@ namespace Gean
                 //透明图片水印
                 if (watermarkImage != "")
                 {
-                    if (File.Exists(watermarkImage))
+                    if (System.IO.File.Exists(watermarkImage))
                     {
                         //获取水印图片
-                        using (System.Drawing.Image wrImage = System.Drawing.Image.FromFile(watermarkImage))
+                        using (Image wrImage = Image.FromFile(watermarkImage))
                         {
                             //水印绘制条件：原始图片宽高均大于或等于水印图片
                             if (initImage.Width >= wrImage.Width && initImage.Height >= wrImage.Height)
@@ -1283,24 +1022,27 @@ namespace Gean
                                 Graphics gWater = Graphics.FromImage(initImage);
 
                                 //透明属性
-                                ImageAttributes imgAttributes = new ImageAttributes();
-                                ColorMap colorMap = new ColorMap();
+                                var imgAttributes = new ImageAttributes();
+                                var colorMap = new ColorMap();
                                 colorMap.OldColor = System.Drawing.Color.FromArgb(255, 0, 255, 0);
                                 colorMap.NewColor = System.Drawing.Color.FromArgb(0, 0, 0, 0);
-                                ColorMap[] remapTable = { colorMap };
+                                ColorMap[] remapTable = {colorMap};
                                 imgAttributes.SetRemapTable(remapTable, ColorAdjustType.Bitmap);
 
-                                float[][] colorMatrixElements = {
-                                   new float[] {1.0f,  0.0f,  0.0f,  0.0f, 0.0f},
-                                   new float[] {0.0f,  1.0f,  0.0f,  0.0f, 0.0f},
-                                   new float[] {0.0f,  0.0f,  1.0f,  0.0f, 0.0f},
-                                   new float[] {0.0f,  0.0f,  0.0f,  0.5f, 0.0f},//透明度:0.5
-                                   new float[] {0.0f,  0.0f,  0.0f,  0.0f, 1.0f}
+                                float[][] colorMatrixElements =
+                                {
+                                    new[] {1.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+                                    new[] {0.0f, 1.0f, 0.0f, 0.0f, 0.0f},
+                                    new[] {0.0f, 0.0f, 1.0f, 0.0f, 0.0f},
+                                    new[] {0.0f, 0.0f, 0.0f, 0.5f, 0.0f}, //透明度:0.5
+                                    new[] {0.0f, 0.0f, 0.0f, 0.0f, 1.0f}
                                 };
 
-                                ColorMatrix wmColorMatrix = new ColorMatrix(colorMatrixElements);
+                                var wmColorMatrix = new ColorMatrix(colorMatrixElements);
                                 imgAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                                gWater.DrawImage(wrImage, new Rectangle(initImage.Width - wrImage.Width, initImage.Height - wrImage.Height, wrImage.Width, wrImage.Height), 0, 0, wrImage.Width, wrImage.Height, GraphicsUnit.Pixel, imgAttributes);
+                                gWater.DrawImage(wrImage,
+                                    new Rectangle(initImage.Width - wrImage.Width, initImage.Height - wrImage.Height, wrImage.Width, wrImage.Height), 0, 0,
+                                    wrImage.Width, wrImage.Height, GraphicsUnit.Pixel, imgAttributes);
 
                                 gWater.Dispose();
                             }
@@ -1310,7 +1052,7 @@ namespace Gean
                 }
 
                 //保存
-                initImage.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                initImage.Save(savePath, ImageFormat.Jpeg);
             }
             else
             {
@@ -1326,10 +1068,10 @@ namespace Gean
                     {
                         //宽按模版，高按比例缩放
                         newWidth = targetWidth;
-                        newHeight = initImage.Height * (targetWidth / initImage.Width);
+                        newHeight = initImage.Height*(targetWidth/initImage.Width);
                     }
                 }
-                //高大于宽（竖图）
+                    //高大于宽（竖图）
                 else
                 {
                     // 如果高大于模版
@@ -1337,32 +1079,33 @@ namespace Gean
                     {
                         //高按模版，宽按比例缩放
                         newHeight = targetHeight;
-                        newWidth = initImage.Width * (targetHeight / initImage.Height);
+                        newWidth = initImage.Width*(targetHeight/initImage.Height);
                     }
                 }
 
                 //生成新图
                 //新建一个bmp图片
-                System.Drawing.Image newImage = new System.Drawing.Bitmap((int)newWidth, (int)newHeight);
+                Image newImage = new Bitmap((int) newWidth, (int) newHeight);
                 //新建一个画板
-                System.Drawing.Graphics newG = System.Drawing.Graphics.FromImage(newImage);
+                Graphics newG = Graphics.FromImage(newImage);
 
                 //设置质量
-                newG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                newG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                newG.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                newG.SmoothingMode = SmoothingMode.HighQuality;
 
                 //置背景色
                 newG.Clear(System.Drawing.Color.White);
                 //画图
-                newG.DrawImage(initImage, new System.Drawing.Rectangle(0, 0, newImage.Width, newImage.Height), new System.Drawing.Rectangle(0, 0, initImage.Width, initImage.Height), System.Drawing.GraphicsUnit.Pixel);
+                newG.DrawImage(initImage, new Rectangle(0, 0, newImage.Width, newImage.Height), new Rectangle(0, 0, initImage.Width, initImage.Height),
+                    GraphicsUnit.Pixel);
 
                 //文字水印
                 if (watermarkText != "")
                 {
-                    using (System.Drawing.Graphics gWater = System.Drawing.Graphics.FromImage(newImage))
+                    using (Graphics gWater = Graphics.FromImage(newImage))
                     {
-                        System.Drawing.Font fontWater = new Font("宋体", 10);
-                        System.Drawing.Brush brushWater = new SolidBrush(System.Drawing.Color.White);
+                        var fontWater = new Font("宋体", 10);
+                        Brush brushWater = new SolidBrush(System.Drawing.Color.White);
                         gWater.DrawString(watermarkText, fontWater, brushWater, 10, 10);
                         gWater.Dispose();
                     }
@@ -1371,10 +1114,10 @@ namespace Gean
                 //透明图片水印
                 if (watermarkImage != "")
                 {
-                    if (File.Exists(watermarkImage))
+                    if (System.IO.File.Exists(watermarkImage))
                     {
                         //获取水印图片
-                        using (System.Drawing.Image wrImage = System.Drawing.Image.FromFile(watermarkImage))
+                        using (Image wrImage = Image.FromFile(watermarkImage))
                         {
                             //水印绘制条件：原始图片宽高均大于或等于水印图片
                             if (newImage.Width >= wrImage.Width && newImage.Height >= wrImage.Height)
@@ -1382,24 +1125,27 @@ namespace Gean
                                 Graphics gWater = Graphics.FromImage(newImage);
 
                                 //透明属性
-                                ImageAttributes imgAttributes = new ImageAttributes();
-                                ColorMap colorMap = new ColorMap();
+                                var imgAttributes = new ImageAttributes();
+                                var colorMap = new ColorMap();
                                 colorMap.OldColor = System.Drawing.Color.FromArgb(255, 0, 255, 0);
                                 colorMap.NewColor = System.Drawing.Color.FromArgb(0, 0, 0, 0);
-                                ColorMap[] remapTable = { colorMap };
+                                ColorMap[] remapTable = {colorMap};
                                 imgAttributes.SetRemapTable(remapTable, ColorAdjustType.Bitmap);
 
-                                float[][] colorMatrixElements = {
-                                   new float[] {1.0f,  0.0f,  0.0f,  0.0f, 0.0f},
-                                   new float[] {0.0f,  1.0f,  0.0f,  0.0f, 0.0f},
-                                   new float[] {0.0f,  0.0f,  1.0f,  0.0f, 0.0f},
-                                   new float[] {0.0f,  0.0f,  0.0f,  0.5f, 0.0f},//透明度:0.5
-                                   new float[] {0.0f,  0.0f,  0.0f,  0.0f, 1.0f}
+                                float[][] colorMatrixElements =
+                                {
+                                    new[] {1.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+                                    new[] {0.0f, 1.0f, 0.0f, 0.0f, 0.0f},
+                                    new[] {0.0f, 0.0f, 1.0f, 0.0f, 0.0f},
+                                    new[] {0.0f, 0.0f, 0.0f, 0.5f, 0.0f}, //透明度:0.5
+                                    new[] {0.0f, 0.0f, 0.0f, 0.0f, 1.0f}
                                 };
 
-                                ColorMatrix wmColorMatrix = new ColorMatrix(colorMatrixElements);
+                                var wmColorMatrix = new ColorMatrix(colorMatrixElements);
                                 imgAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                                gWater.DrawImage(wrImage, new Rectangle(newImage.Width - wrImage.Width, newImage.Height - wrImage.Height, wrImage.Width, wrImage.Height), 0, 0, wrImage.Width, wrImage.Height, GraphicsUnit.Pixel, imgAttributes);
+                                gWater.DrawImage(wrImage,
+                                    new Rectangle(newImage.Width - wrImage.Width, newImage.Height - wrImage.Height, wrImage.Width, wrImage.Height), 0, 0,
+                                    wrImage.Width, wrImage.Height, GraphicsUnit.Pixel, imgAttributes);
                                 gWater.Dispose();
                             }
                             wrImage.Dispose();
@@ -1408,7 +1154,7 @@ namespace Gean
                 }
 
                 //保存缩略图
-                newImage.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                newImage.Save(savePath, ImageFormat.Jpeg);
 
                 //释放资源
                 newG.Dispose();
@@ -1419,23 +1165,292 @@ namespace Gean
 
         #endregion
 
+        #region 图片水印操作
+
         /// <summary>
-        /// 判断文件类型是否为WEB格式图片
-        /// (注：JPG,GIF,BMP,PNG)
+        ///     水印的位置
         /// </summary>
-        /// <param name="contentType">HttpPostedFile.ContentType</param>
-        /// <returns></returns>
-        public static bool IsWebImage(string contentType)
+        public enum MarkPosition
         {
-            if (contentType == "image/pjpeg" || contentType == "image/jpeg" || contentType == "image/gif" || contentType == "image/bmp" || contentType == "image/png")
+            /// <summary>
+            ///     左上角
+            /// </summary>
+            MP_Left_Top,
+
+            /// <summary>
+            ///     左下角
+            /// </summary>
+            MP_Left_Bottom,
+
+            /// <summary>
+            ///     右上角
+            /// </summary>
+            MP_Right_Top,
+
+            /// <summary>
+            ///     右下角
+            /// </summary>
+            MP_Right_Bottom
+        }
+
+        /// <summary>
+        ///     给图片添加图片水印
+        /// </summary>
+        /// <param name="inputStream">包含要源图片的流</param>
+        /// <param name="watermarkPath">水印图片的物理地址</param>
+        /// <param name="saveFilePath">目标图片的存储地址</param>
+        /// <param name="mp">水印位置</param>
+        public static void AddPicWatermarkAsJPG(Stream inputStream, string watermarkPath, string saveFilePath, MarkPosition mp)
+        {
+            Image image = Image.FromStream(inputStream);
+            var b = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
+            Graphics g = Graphics.FromImage(b);
+            g.Clear(System.Drawing.Color.White);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.InterpolationMode = InterpolationMode.High;
+            g.DrawImage(image, 0, 0, image.Width, image.Height);
+
+            AddWatermarkImage(g, watermarkPath, mp, image.Width, image.Height);
+
+            try
             {
-                return true;
+                CompressAsJPG(b, saveFilePath, 80);
+            }
+            catch
+            {
+                ;
+            }
+            finally
+            {
+                b.Dispose();
+                image.Dispose();
+            }
+        }
+
+        /// <summary>
+        ///     给图片添加图片水印
+        /// </summary>
+        /// <param name="sourcePath">源图片的存储地址</param>
+        /// <param name="watermarkPath">水印图片的物理地址</param>
+        /// <param name="saveFilePath">目标图片的存储地址</param>
+        /// <param name="mp">水印位置</param>
+        public static void AddPicWatermarkAsJPG(string sourcePath, string watermarkPath, string saveFilePath, MarkPosition mp)
+        {
+            if (System.IO.File.Exists(sourcePath))
+            {
+                using (var sr = new StreamReader(sourcePath))
+                {
+                    AddPicWatermarkAsJPG(sr.BaseStream, watermarkPath, saveFilePath, mp);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     给图片添加文字水印
+        /// </summary>
+        /// <param name="inputStream">包含要源图片的流</param>
+        /// <param name="text">水印文字</param>
+        /// <param name="saveFilePath">目标图片的存储地址</param>
+        /// <param name="mp">水印位置</param>
+        public static void AddTextWatermarkAsJPG(Stream inputStream, string text, string saveFilePath, MarkPosition mp)
+        {
+            Image image = Image.FromStream(inputStream);
+            var b = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
+            Graphics g = Graphics.FromImage(b);
+            g.Clear(System.Drawing.Color.White);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.InterpolationMode = InterpolationMode.High;
+            g.DrawImage(image, 0, 0, image.Width, image.Height);
+
+            AddWatermarkText(g, text, mp, image.Width, image.Height);
+
+            try
+            {
+                CompressAsJPG(b, saveFilePath, 80);
+            }
+            catch
+            {
+                ;
+            }
+            finally
+            {
+                b.Dispose();
+                image.Dispose();
+            }
+        }
+
+        /// <summary>
+        ///     给图片添加文字水印
+        /// </summary>
+        /// <param name="sourcePath">源图片的存储地址</param>
+        /// <param name="text">水印文字</param>
+        /// <param name="saveFilePath">目标图片的存储地址</param>
+        /// <param name="mp">水印位置</param>
+        public static void AddTextWatermarkAsJPG(string sourcePath, string text, string saveFilePath, MarkPosition mp)
+        {
+            if (System.IO.File.Exists(sourcePath))
+            {
+                using (var sr = new StreamReader(sourcePath))
+                {
+                    AddTextWatermarkAsJPG(sr.BaseStream, text, saveFilePath, mp);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     添加文字水印
+        /// </summary>
+        /// <param name="picture">要加水印的原图像</param>
+        /// <param name="text">水印文字</param>
+        /// <param name="mp">添加的位置</param>
+        /// <param name="width">原图像的宽度</param>
+        /// <param name="height">原图像的高度</param>
+        private static void AddWatermarkText(Graphics picture, string text, MarkPosition mp, int width, int height)
+        {
+            int[] sizes = {16, 14, 12, 10, 8, 6, 4};
+            Font crFont = null;
+            var crSize = new SizeF();
+            for (int i = 0; i < 7; i++)
+            {
+                crFont = new Font("Arial", sizes[i], FontStyle.Bold);
+                crSize = picture.MeasureString(text, crFont);
+
+                if ((ushort) crSize.Width < (ushort) width)
+                    break;
+            }
+
+            float xpos = 0;
+            float ypos = 0;
+
+            switch (mp)
+            {
+                case MarkPosition.MP_Left_Top:
+                    xpos = (width*(float) .01) + (crSize.Width/2);
+                    ypos = height*(float) .01;
+                    break;
+                case MarkPosition.MP_Right_Top:
+                    xpos = (width*(float) .99) - (crSize.Width/2);
+                    ypos = height*(float) .01;
+                    break;
+                case MarkPosition.MP_Right_Bottom:
+                    xpos = (width*(float) .99) - (crSize.Width/2);
+                    ypos = (height*(float) .99) - crSize.Height;
+                    break;
+                case MarkPosition.MP_Left_Bottom:
+                    xpos = (width*(float) .01) + (crSize.Width/2);
+                    ypos = (height*(float) .99) - crSize.Height;
+                    break;
+            }
+
+            var StrFormat = new StringFormat();
+            StrFormat.Alignment = StringAlignment.Center;
+
+            var semiTransBrush2 = new SolidBrush(System.Drawing.Color.FromArgb(153, 0, 0, 0));
+            picture.DrawString(text, crFont, semiTransBrush2, xpos + 1, ypos + 1, StrFormat);
+
+            var semiTransBrush = new SolidBrush(System.Drawing.Color.FromArgb(153, 255, 255, 255));
+            picture.DrawString(text, crFont, semiTransBrush, xpos, ypos, StrFormat);
+
+            semiTransBrush2.Dispose();
+            semiTransBrush.Dispose();
+        }
+
+        /// <summary>
+        ///     添加图片水印
+        /// </summary>
+        /// <param name="picture">要加水印的原图像</param>
+        /// <param name="waterMarkPath">水印文件的物理地址</param>
+        /// <param name="mp">添加的位置</param>
+        /// <param name="width">原图像的宽度</param>
+        /// <param name="height">原图像的高度</param>
+        private static void AddWatermarkImage(Graphics picture, string waterMarkPath, MarkPosition mp, int width, int height)
+        {
+            Image watermark = new Bitmap(waterMarkPath);
+
+            var imageAttributes = new ImageAttributes();
+            var colorMap = new ColorMap();
+
+            colorMap.OldColor = System.Drawing.Color.FromArgb(255, 0, 255, 0);
+            colorMap.NewColor = System.Drawing.Color.FromArgb(0, 0, 0, 0);
+            ColorMap[] remapTable = {colorMap};
+
+            imageAttributes.SetRemapTable(remapTable, ColorAdjustType.Bitmap);
+
+            float[][] colorMatrixElements =
+            {
+                new[] {1.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+                new[] {0.0f, 1.0f, 0.0f, 0.0f, 0.0f},
+                new[] {0.0f, 0.0f, 1.0f, 0.0f, 0.0f},
+                new[] {0.0f, 0.0f, 0.0f, 0.3f, 0.0f},
+                new[] {0.0f, 0.0f, 0.0f, 0.0f, 1.0f}
+            };
+
+            var colorMatrix = new ColorMatrix(colorMatrixElements);
+
+            imageAttributes.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            int xpos = 0;
+            int ypos = 0;
+            int WatermarkWidth = 0;
+            int WatermarkHeight = 0;
+            double bl = 1d;
+            if ((width > watermark.Width*4) && (height > watermark.Height*4))
+            {
+                bl = 1;
+            }
+            else if ((width > watermark.Width*4) && (height < watermark.Height*4))
+            {
+                bl = Convert.ToDouble(height/4)/Convert.ToDouble(watermark.Height);
+            }
+            else if ((width < watermark.Width*4) && (height > watermark.Height*4))
+            {
+                bl = Convert.ToDouble(width/4)/Convert.ToDouble(watermark.Width);
             }
             else
             {
-                return false;
+                if ((width*watermark.Height) > (height*watermark.Width))
+                {
+                    bl = Convert.ToDouble(height/4)/Convert.ToDouble(watermark.Height);
+                }
+                else
+                {
+                    bl = Convert.ToDouble(width/4)/Convert.ToDouble(watermark.Width);
+                }
             }
+
+            WatermarkWidth = Convert.ToInt32(watermark.Width*bl);
+            WatermarkHeight = Convert.ToInt32(watermark.Height*bl);
+
+
+            switch (mp)
+            {
+                case MarkPosition.MP_Left_Top:
+                    xpos = 10;
+                    ypos = 10;
+                    break;
+                case MarkPosition.MP_Right_Top:
+                    xpos = width - WatermarkWidth - 10;
+                    ypos = 10;
+                    break;
+                case MarkPosition.MP_Right_Bottom:
+                    xpos = width - WatermarkWidth - 10;
+                    ypos = height - WatermarkHeight - 10;
+                    break;
+                case MarkPosition.MP_Left_Bottom:
+                    xpos = 10;
+                    ypos = height - WatermarkHeight - 10;
+                    break;
+            }
+
+            picture.DrawImage(watermark, new Rectangle(xpos, ypos, WatermarkWidth, WatermarkHeight), 0, 0, watermark.Width, watermark.Height, GraphicsUnit.Pixel,
+                imageAttributes);
+
+
+            watermark.Dispose();
+            imageAttributes.Dispose();
         }
+
+        #endregion
 
         // 图片描边
         //public Form1()
@@ -1536,7 +1551,6 @@ namespace Gean
         //    catch
         //    { }
         //}
-
     }
 }
 

@@ -43,7 +43,7 @@
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.0.0.0\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -77,6 +77,7 @@
     <Compile Include="Base\MultiMachineState.cs" />
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\Triplet.cs" />
+    <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="Collections\Definition.cs" />
     <Compile Include="Collections\DictionaryOrdered.cs" />
     <Compile Include="Collections\IndexCollection.cs" />
@@ -630,11 +631,11 @@
     <Compile Include="Wrapper\API\Secur32.cs" />
     <Compile Include="Wrapper\API\SysDateTime.cs" />
     <Compile Include="Wrapper\Checker.cs" />
-    <Compile Include="Wrapper\Chinese\ChineseIDCardValid.cs" />
-    <Compile Include="Wrapper\Chinese\ChineseRmb.cs" />
-    <Compile Include="Wrapper\Chinese\ChineseSBCAndDBC.cs" />
-    <Compile Include="Wrapper\Chinese\ChineseSpell.cs" />
-    <Compile Include="Wrapper\Chinese\ChineseSpellRandom.cs" />
+    <Compile Include="Chinese\ChineseIDCardValid.cs" />
+    <Compile Include="Chinese\ChineseRmb.cs" />
+    <Compile Include="Chinese\ChineseSBCAndDBC.cs" />
+    <Compile Include="Chinese\ChineseSpell.cs" />
+    <Compile Include="Chinese\ChineseSpellRandom.cs" />
     <Compile Include="Wrapper\Computer.cs" />
     <Compile Include="Wrapper\CPUInfo.cs" />
     <Compile Include="Wrapper\CSVFile.cs" />
