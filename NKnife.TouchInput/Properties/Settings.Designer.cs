@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NKnife.IME.Properties {
+namespace NKnife.TouchInput.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

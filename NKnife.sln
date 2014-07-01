@@ -18,9 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B05220
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Window", "NKnife.Window\NKnife.Window.csproj", "{157C4B57-2692-4D66-973A-A612AB36116B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.IME", "NKnife.IME\NKnife.IME.csproj", "{E0D2F875-E6C2-49DE-86CC-62396EB8D585}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.TouchInput", "NKnife.TouchInput\NKnife.TouchInput.csproj", "{4768FA7C-4377-4026-B4FC-02B06D85B389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.TouchInput", "NKnife.TouchInput\NKnife.TouchInput.csproj", "{E0D2F875-E6C2-49DE-86CC-62396EB8D585}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,10 +46,6 @@ Global
 		{E0D2F875-E6C2-49DE-86CC-62396EB8D585}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0D2F875-E6C2-49DE-86CC-62396EB8D585}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0D2F875-E6C2-49DE-86CC-62396EB8D585}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4768FA7C-4377-4026-B4FC-02B06D85B389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4768FA7C-4377-4026-B4FC-02B06D85B389}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4768FA7C-4377-4026-B4FC-02B06D85B389}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4768FA7C-4377-4026-B4FC-02B06D85B389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
