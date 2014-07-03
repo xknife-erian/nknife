@@ -80,6 +80,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Xaml\HwAlternatesStrip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Xaml\AlternatesStrip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,10 +98,10 @@
     </Page>
     <Compile Include="Common\Recognize\DefaultRecognizer.cs" />
     <Compile Include="Common\Recognize\ICharactorRecognizer.cs" />
-    <Compile Include="Common\Recognize\ImprovedRecognizer.cs" />
+    <Compile Include="Common\Recognize\ConcatenationRecognizer.cs" />
     <Compile Include="Common\PinyinIme\PinyinSpliterCollection.cs" />
     <Compile Include="Common\AlternateCollection.cs" />
-    <Compile Include="Common\TouchInputPanelParams.cs" />
+    <Compile Include="Common\Kernal.cs" />
     <Compile Include="Controls\Keys\CaseSensitiveKey.cs" />
     <Compile Include="Controls\Keys\ChordKey.cs" />
     <Compile Include="Controls\Keys\ILogicalKey.cs" />
@@ -111,6 +115,9 @@
     <Compile Include="Controls\Keys\TogglingModifierKey.cs" />
     <Compile Include="Controls\Keys\VirtualKey.cs" />
     <Compile Include="Ioc\Module.cs" />
+    <Compile Include="Xaml\HwAlternatesStrip.xaml.cs">
+      <DependentUpon>HwAlternatesStrip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xaml\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -162,6 +169,24 @@
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\划过.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\键-功能.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\键-全键盘.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\键-手写.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\键-数字.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\失误.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

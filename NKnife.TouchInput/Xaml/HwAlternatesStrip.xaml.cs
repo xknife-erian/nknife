@@ -13,17 +13,16 @@ using NKnife.Wrapper.API;
 namespace NKnife.TouchInput.Xaml
 {
     /// <summary>
-    ///     AlternatesStrip.xaml 的交互逻辑
+    ///     HwAlternatesStrip.xaml 的交互逻辑
     /// </summary>
-    public partial class AlternatesStrip : Window
+    public partial class HwAlternatesStrip : Window
     {
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
 
-        public AlternatesStrip()
+        public HwAlternatesStrip()
         {
             InitializeComponent();
-            _AlternatesListBox.ItemsSource = DI.Get<AlternateCollection>();
-            _InputCharListBox.ItemsSource = DI.Get<PinyinSpliterCollection>();
+            _HwAlternatesListBox.ItemsSource = DI.Get<AlternateCollection>();
         }
 
         /// <summary>
@@ -47,21 +46,12 @@ namespace NKnife.TouchInput.Xaml
             API.User32.SetWindowLong(handle, GWL_EXSTYLE, 0x8000000);
         }
 
-        private void InputCharListBox_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ShowWordStrip(((TextBlock) sender).Text, e);
-        }
-
         private void AlternatesListBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var word = ((TextBlock) sender).Text;
             ShowWordStrip(word, e);
         }
 
-        private void InputCharListBox_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            HideWordStrip();
-        }
 
         private void AlternatesListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {

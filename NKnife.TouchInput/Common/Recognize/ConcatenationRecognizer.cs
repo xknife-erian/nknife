@@ -6,16 +6,16 @@ using System.Windows.Input;
 namespace NKnife.TouchInput.Common.Recognize
 {
     /// <summary>
-    /// 改进的识别器
+    /// 在识别前将笔迹做一定的连接的识别器，识别率略有提升
     /// </summary>
-    public class ImprovedRecognizer : ICharactorRecognizer
+    public class ConcatenationRecognizer : ICharactorRecognizer
     {
         /// <summary>
         /// Get 识别器名称
         /// </summary>
         public string Name
         {
-            get { return "改进的识别器"; }
+            get { return "连续笔迹识别器"; }
         }
 
         /// <summary>
@@ -26,12 +26,12 @@ namespace NKnife.TouchInput.Common.Recognize
         public string[] Recognize(StrokeCollection strokes)
         {
             if (strokes == null || strokes.Count == 0)
-                return TouchInputPanelParams.EmptyAlternates;
+                return Kernal.EmptyAlternates;
 
             var stroke = GetCombinedStore(strokes);
 
             var analyzer = new InkAnalyzer();
-            analyzer.AddStroke(stroke, TouchInputPanelParams.SimplifiedChineseLanguageId);
+            analyzer.AddStroke(stroke, Kernal.SimplifiedChineseLanguageId);
             analyzer.SetStrokeType(stroke, StrokeType.Writing);
 
             var status = analyzer.Analyze();
@@ -47,7 +47,7 @@ namespace NKnife.TouchInput.Common.Recognize
 
             analyzer.Dispose();
 
-            return TouchInputPanelParams.EmptyAlternates;
+            return Kernal.EmptyAlternates;
         }
 
         private static Stroke GetCombinedStore(IEnumerable<Stroke> strokes)

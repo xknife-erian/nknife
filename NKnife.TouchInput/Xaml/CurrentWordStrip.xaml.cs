@@ -29,8 +29,8 @@ namespace NKnife.TouchInput.Xaml
 
         public void UpdateText(string currentWord)
         {
-            DI.Get<TouchInputPanelParams>().CurrentWord = currentWord;
-            _TextBlock.Text = DI.Get<TouchInputPanelParams>().CurrentWord;
+            DI.Get<Kernal>().CurrentWord = currentWord;
+            _TextBlock.Text = DI.Get<Kernal>().CurrentWord;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

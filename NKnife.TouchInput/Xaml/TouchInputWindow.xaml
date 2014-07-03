@@ -219,7 +219,7 @@
                 <ColumnDefinition Width="600" />
             </Grid.ColumnDefinitions>
             <Viewbox Stretch="Fill" Grid.Row="0" Grid.Column="1" Margin="0,0,19,0">
-                <InkCanvas Name="_InkCanvas" Margin="1,2,2,2" StrokeCollected="InkCanvas_StrokeCollected" >
+                <InkCanvas Name="_InkCanvas" Margin="1,2,2,2" StrokeCollected="InkCanvas_StrokeCollected" MouseUp="InkCanvas_MouseUp">
                     <InkCanvas.Background>
                         <RadialGradientBrush>
                             <GradientStop Color="#FFFDC2C2" Offset="1"/>

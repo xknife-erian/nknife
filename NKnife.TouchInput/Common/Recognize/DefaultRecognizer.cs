@@ -24,10 +24,10 @@ namespace NKnife.TouchInput.Common.Recognize
         public string[] Recognize(StrokeCollection strokes)
         {
             if (strokes == null || strokes.Count == 0)
-                return TouchInputPanelParams.EmptyAlternates;
+                return Kernal.EmptyAlternates;
 
             var analyzer = new InkAnalyzer();
-            analyzer.AddStrokes(strokes, TouchInputPanelParams.SimplifiedChineseLanguageId);
+            analyzer.AddStrokes(strokes, Kernal.SimplifiedChineseLanguageId);
             analyzer.SetStrokesType(strokes, StrokeType.Writing);
 
             var status = analyzer.Analyze();
@@ -41,7 +41,7 @@ namespace NKnife.TouchInput.Common.Recognize
 
             analyzer.Dispose();
 
-            return TouchInputPanelParams.EmptyAlternates;
+            return Kernal.EmptyAlternates;
         }
     }
 }

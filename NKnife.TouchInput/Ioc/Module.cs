@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WindowsInput;
-using NKnife.Ioc;
+﻿using WindowsInput;
+using Ninject.Modules;
 using NKnife.TouchInput.Common;
 using NKnife.TouchInput.Common.PinyinIme;
 using NKnife.TouchInput.Common.Recognize;
@@ -11,16 +7,18 @@ using NKnife.TouchInput.Xaml;
 
 namespace NKnife.TouchInput.Ioc
 {
-    public class Module : Ninject.Modules.NinjectModule
+    public class Module : NinjectModule
     {
         public override void Load()
         {
-            Bind(typeof (AlternateCollection)).To(typeof (AlternateCollection)).InSingletonScope();
-            Bind(typeof (TouchInputPanelParams)).To(typeof (TouchInputPanelParams)).InSingletonScope();
-            Bind(typeof (PinyinSpliterCollection)).To(typeof (PinyinSpliterCollection)).InSingletonScope();
-            Bind(typeof (CurrentWordStrip)).To(typeof (CurrentWordStrip)).InSingletonScope();
-            Bind(typeof (InputSimulator)).To(typeof (InputSimulator)).InSingletonScope();
-            Bind<ICharactorRecognizer>().To<ImprovedRecognizer>().InSingletonScope();
+            Bind<Kernal>().To<Kernal>().InSingletonScope();
+            Bind<AlternateCollection>().To<AlternateCollection>().InSingletonScope();
+            Bind<PinyinSpliterCollection>().To<PinyinSpliterCollection>().InSingletonScope();
+            Bind<AlternatesStrip>().To<AlternatesStrip>().InSingletonScope();
+            Bind<HwAlternatesStrip>().To<HwAlternatesStrip>().InSingletonScope();
+            Bind<CurrentWordStrip>().To<CurrentWordStrip>().InSingletonScope();
+            Bind<InputSimulator>().To<InputSimulator>().InSingletonScope();
+            Bind<ICharactorRecognizer>().To<ConcatenationRecognizer>().InSingletonScope();
         }
     }
 }
