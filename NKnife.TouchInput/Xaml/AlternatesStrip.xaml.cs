@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using WindowsInput;
 using NKnife.Ioc;
 using NKnife.TouchInput.Common;
+using NKnife.TouchInput.Common.PinyinIme;
 using NKnife.Wrapper.API;
 
 namespace NKnife.TouchInput.Xaml
@@ -22,7 +23,7 @@ namespace NKnife.TouchInput.Xaml
         {
             InitializeComponent();
             _AlternatesListBox.ItemsSource = DI.Get<AlternateCollection>();
-            _InputCharListBox.ItemsSource = DI.Get<InputCharCollection>();
+            _InputCharListBox.ItemsSource = DI.Get<PinyinSpliterCollection>();
         }
 
         /// <summary>

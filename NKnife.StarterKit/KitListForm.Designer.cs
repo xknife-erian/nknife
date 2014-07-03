@@ -33,11 +33,10 @@
             this._MultiLanguageLoPanleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._LogPanelTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._IMEPopwinToolItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.汉字使用频率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.简易拼音输入法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.汉字使用频率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,18 +79,22 @@
             this.iMEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.汉字使用频率ToolStripMenuItem,
             this.toolStripSeparator1,
-            this._IMEPopwinToolItem,
             this.简易拼音输入法ToolStripMenuItem});
             this.iMEToolStripMenuItem.Name = "iMEToolStripMenuItem";
             this.iMEToolStripMenuItem.Size = new System.Drawing.Size(43, 21);
             this.iMEToolStripMenuItem.Text = "IME";
             // 
-            // _IMEPopwinToolItem
+            // 汉字使用频率ToolStripMenuItem
             // 
-            this._IMEPopwinToolItem.Name = "_IMEPopwinToolItem";
-            this._IMEPopwinToolItem.Size = new System.Drawing.Size(160, 22);
-            this._IMEPopwinToolItem.Text = "弹出输入法窗体";
-            this._IMEPopwinToolItem.Click += new System.EventHandler(this._IMEPopwinToolItem_Click);
+            this.汉字使用频率ToolStripMenuItem.Name = "汉字使用频率ToolStripMenuItem";
+            this.汉字使用频率ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.汉字使用频率ToolStripMenuItem.Text = "汉字使用频率";
+            this.汉字使用频率ToolStripMenuItem.Click += new System.EventHandler(this.汉字使用频率ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
             // 
             // 简易拼音输入法ToolStripMenuItem
             // 
@@ -106,18 +109,6 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
-            // 
-            // 汉字使用频率ToolStripMenuItem
-            // 
-            this.汉字使用频率ToolStripMenuItem.Name = "汉字使用频率ToolStripMenuItem";
-            this.汉字使用频率ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.汉字使用频率ToolStripMenuItem.Text = "汉字使用频率";
-            this.汉字使用频率ToolStripMenuItem.Click += new System.EventHandler(this.汉字使用频率ToolStripMenuItem_Click);
             // 
             // KitListForm
             // 
@@ -147,7 +138,6 @@
         private System.Windows.Forms.ToolStripMenuItem _LogPanelTestMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _MultiLanguageLoPanleMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iMEToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem _IMEPopwinToolItem;
         private System.Windows.Forms.ToolStripMenuItem 简易拼音输入法ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 汉字使用频率ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

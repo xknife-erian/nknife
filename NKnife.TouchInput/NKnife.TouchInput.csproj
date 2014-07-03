@@ -95,7 +95,7 @@
     <Compile Include="Common\Recognize\DefaultRecognizer.cs" />
     <Compile Include="Common\Recognize\ICharactorRecognizer.cs" />
     <Compile Include="Common\Recognize\ImprovedRecognizer.cs" />
-    <Compile Include="Common\InputCharCollection.cs" />
+    <Compile Include="Common\PinyinIme\PinyinSpliterCollection.cs" />
     <Compile Include="Common\AlternateCollection.cs" />
     <Compile Include="Common\TouchInputPanelParams.cs" />
     <Compile Include="Controls\Keys\CaseSensitiveKey.cs" />

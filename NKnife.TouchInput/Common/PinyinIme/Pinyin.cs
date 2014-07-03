@@ -26,12 +26,17 @@ namespace NKnife.TouchInput.Common.PinyinIme
             }
             if (sortByFreq)
             {
-                return ListProcess(charArray);
+                return ListFrequencySort(charArray);
             }
             return charArray.ToArray();
         }
 
-        private static char[] ListProcess(List<char> charArray)
+        /// <summary>
+        /// 按汉字的使用频率进行重新排序
+        /// </summary>
+        /// <param name="charArray">需要排序的汉字集合</param>
+        /// <returns></returns>
+        private static char[] ListFrequencySort(List<char> charArray)
         {
             var ilist = new List<int>(charArray.Count);
             var map = new Dictionary<int, char>(charArray.Count);
