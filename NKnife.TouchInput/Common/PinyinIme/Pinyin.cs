@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.International.Converters.PinYinConverter;
 using NKnife.Chinese;
 
-namespace NKnife.TouchInput.Common
+namespace NKnife.TouchInput.Common.PinyinIme
 {
     public class Pinyin
     {

@@ -39,7 +39,8 @@
       <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Ninject">
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
@@ -143,6 +144,7 @@
     <Compile Include="Electronics\Resistance.cs" />
     <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="GUI\Wpf\CircularPanel.cs" />
     <Compile Include="Ioc\DI.cs" />
     <Compile Include="Events\ChangedEventArgs.cs" />
     <Compile Include="Events\EventArgs.cs" />

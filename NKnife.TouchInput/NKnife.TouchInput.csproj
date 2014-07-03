@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\.library\InkAnalyer\IAWinFX.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -73,26 +76,52 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="Xaml\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CandidateWordsStrip.xaml">
+    <Page Include="Xaml\AlternatesStrip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TouchInputWindow.xaml">
+    <Page Include="Xaml\CurrentWordStrip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\TouchInputWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="Common\Recognize\DefaultRecognizer.cs" />
+    <Compile Include="Common\Recognize\ICharactorRecognizer.cs" />
+    <Compile Include="Common\Recognize\ImprovedRecognizer.cs" />
+    <Compile Include="Common\InputCharCollection.cs" />
+    <Compile Include="Common\AlternateCollection.cs" />
+    <Compile Include="Common\TouchInputPanelParams.cs" />
+    <Compile Include="Controls\Keys\CaseSensitiveKey.cs" />
+    <Compile Include="Controls\Keys\ChordKey.cs" />
+    <Compile Include="Controls\Keys\ILogicalKey.cs" />
+    <Compile Include="Controls\Keys\InstantaneousModifierKey.cs" />
+    <Compile Include="Controls\Keys\LogicalKeyBase.cs" />
+    <Compile Include="Controls\Keys\ModifierKeyBase.cs" />
+    <Compile Include="Controls\Keys\MultiCharacterKey.cs" />
+    <Compile Include="Controls\Keys\NumLockSensitiveKey.cs" />
+    <Compile Include="Controls\Keys\ShiftSensitiveKey.cs" />
+    <Compile Include="Controls\Keys\StringKey.cs" />
+    <Compile Include="Controls\Keys\TogglingModifierKey.cs" />
+    <Compile Include="Controls\Keys\VirtualKey.cs" />
+    <Compile Include="Ioc\Module.cs" />
+    <Compile Include="Xaml\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CandidateWordsStrip.xaml.cs">
-      <DependentUpon>CandidateWordsStrip.xaml</DependentUpon>
+    <Compile Include="Xaml\AlternatesStrip.xaml.cs">
+      <DependentUpon>AlternatesStrip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TouchInputWindow.xaml.cs">
+    <Compile Include="Xaml\CurrentWordStrip.xaml.cs">
+      <DependentUpon>CurrentWordStrip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\TouchInputWindow.xaml.cs">
       <DependentUpon>TouchInputWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -102,7 +131,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Pinyin.cs" />
+    <Compile Include="Common\PinyinIme\Pinyin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
