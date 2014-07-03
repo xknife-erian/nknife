@@ -55,5 +55,6 @@ namespace NKnife.TouchInput.Common.PinyinIme
             charArray.AddRange(ilist.Select(i => map[i]));
             return charArray.ToArray();
         }
+
     }
 }
