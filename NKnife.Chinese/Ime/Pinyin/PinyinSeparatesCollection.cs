@@ -31,15 +31,22 @@ namespace NKnife.Chinese.Ime.Pinyin
 
         private void ProcessPinyin()
         {
+            Clear();
+
             var result = _Separator.Separate(_StringBuilder.ToString());
             if (result != null && result.Count > 0)
             {
-                Clear();
                 int i = 0;
                 foreach (var r in result)
                 {
                     Add(r);
                     i = i + r.Length;
+                }
+                int k = _StringBuilder.IndexOf(this[0]);
+                if (k > 0)
+                {
+                    Insert(0, _StringBuilder.ToString(0, k));
+                    i = i + k;
                 }
                 if (i < _StringBuilder.Length)
                 {

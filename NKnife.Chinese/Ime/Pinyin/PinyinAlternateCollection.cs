@@ -9,7 +9,7 @@ namespace NKnife.Chinese.Ime.Pinyin
     /// </summary>
     public class PinyinAlternateCollection : ObservableCollection<string>
     {
-        private const int WORD_COUNT = 14;
+        private const int WORD_COUNT = 12;
 
         public PinyinAlternateCollection()
         {
