@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NKnife.Chinese.Ime.Pinyin;
 using NKnife.Ioc;
-using NKnife.TouchInput.Common.PinyinIme;
 
 namespace NKnife.UnitTests.TouchInput
 {

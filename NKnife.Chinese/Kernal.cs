@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Media;
 
-namespace NKnife.TouchInput.Common
+namespace NKnife.Chinese
 {
     public class Kernal
     {

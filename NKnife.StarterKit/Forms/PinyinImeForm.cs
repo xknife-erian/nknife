@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Windows.Forms;
-using NKnife.TouchInput.Common.PinyinIme;
+using NKnife.Chinese.Ime.Pinyin;
 
 namespace NKnife.StarterKit.Forms
 {
