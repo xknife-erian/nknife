@@ -35,9 +35,16 @@ namespace NKnife.Chinese.Ime.Pinyin
             if (result != null && result.Count > 0)
             {
                 Clear();
+                int i = 0;
                 foreach (var r in result)
                 {
                     Add(r);
+                    i = i + r.Length;
+                }
+                if (i < _StringBuilder.Length)
+                {
+                    var y = _StringBuilder.ToString(i, _StringBuilder.Length - i);
+                    Add(y);
                 }
                 OnHasCompletePinyin(new PinyinCompletedEventArgs(result));
             }

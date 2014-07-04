@@ -51,6 +51,10 @@ namespace NKnife.Chinese.Ime.Pinyin
                     }
                 }
             }
+            if (e.Pinyin.Count ==1 && (_CurrentResult == null || _CurrentResult.Length == 0))
+            {
+                ClearAlternates();
+            }
         }
 
         /// <summary>
