@@ -79,14 +79,14 @@ namespace NKnife.TouchInput.Common.PinyinIme
             }
 
 #if DEBUG
-            for (int x = 0; x < size; x++)
-            {
-                for (int y = 0; y < size; y++)
-                {
-                    Console.WriteLine(mMatrix[x, y] + "|" + pMatrix[x, y] + "  ");
-                }
-                Console.WriteLine("--" + x + "---------");
-            }
+//            for (int x = 0; x < size; x++)
+//            {
+//                for (int y = 0; y < size; y++)
+//                {
+//                    Console.WriteLine(mMatrix[x, y] + "|" + pMatrix[x, y] + "  ");
+//                }
+//                Console.WriteLine("--" + x + "---------");
+//            }
 #endif
 
             var splits = new List<Pair<int, int>>();
