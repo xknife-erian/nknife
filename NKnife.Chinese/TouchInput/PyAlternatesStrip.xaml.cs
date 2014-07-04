@@ -21,7 +21,7 @@ namespace NKnife.Chinese.TouchInput
         public PyAlternatesStrip()
         {
             InitializeComponent();
-            _AlternatesListBox.ItemsSource = DI.Get<PyAlternateCollection>();
+            _AlternatesListBox.ItemsSource = DI.Get<PinyinAlternateCollection>();
             _InputCharListBox.ItemsSource = DI.Get<PinyinSeparatesCollection>();
         }
 

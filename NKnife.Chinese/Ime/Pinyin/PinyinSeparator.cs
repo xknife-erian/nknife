@@ -77,17 +77,6 @@ namespace NKnife.Chinese.Ime.Pinyin
                 }
             }
 
-#if DEBUG
-//            for (int x = 0; x < size; x++)
-//            {
-//                for (int y = 0; y < size; y++)
-//                {
-//                    Console.WriteLine(mMatrix[x, y] + "|" + pMatrix[x, y] + "  ");
-//                }
-//                Console.WriteLine("--" + x + "---------");
-//            }
-#endif
-
             var splits = new List<Pair<int, int>>();
             splits.Add(Pair<int, int>.Build(0, pinyin.Length - 1));
             while (!(splits.Count <= 0))
@@ -95,21 +84,21 @@ namespace NKnife.Chinese.Ime.Pinyin
                 Pair<int, int> span = splits[0];
                 splits.RemoveAt(0);
 
-                int st = span.First;
+                int start = span.First;
                 int end = span.Second;
 
-                string current = pinyin.Substring(st, end + 1 - st);
+                string current = pinyin.Substring(start, end + 1 - start);
 
                 if (_SyllableCollection.Check(current) != 2)
                 {
                     result.Add(current);
                     continue;
                 }
-                int sp = pMatrix[st, end];
+                int sp = pMatrix[start, end];
                 if (sp + 1 < end)
                     splits.Insert(0, Pair<int, int>.Build(sp + 1, end));
-                if (st < sp)
-                    splits.Insert(0, Pair<int, int>.Build(st, sp));
+                if (start < sp)
+                    splits.Insert(0, Pair<int, int>.Build(start, sp));
             }
 
             return result;

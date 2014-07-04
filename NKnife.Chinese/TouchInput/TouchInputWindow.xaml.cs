@@ -186,7 +186,7 @@ namespace NKnife.Chinese.TouchInput
                 _PyStrip.Top = top;
                 _PyStrip.Show();
                 _PyStripEnable = true;
-                DI.Get<PyAlternateCollection>().ClearAlternates();
+                DI.Get<PinyinAlternateCollection>().ClearAlternates();
                 DI.Get<PinyinSeparatesCollection>().ClearInput();
             }
         }
