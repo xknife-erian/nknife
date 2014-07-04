@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using WindowsInput;
 using NKnife.Chinese.Ime.Pinyin;
+using NKnife.Chinese.TouchInput.Common;
 using NKnife.Ioc;
 using NKnife.Wrapper.API;
 
@@ -68,7 +69,7 @@ namespace NKnife.Chinese.TouchInput
             var word = ((TextBlock)sender).Text;
             _Simulator.Keyboard.TextEntry(word);
 
-            Kernal.PlayVoice(Properties.Resources.划过);
+            Params.PlayVoice(Properties.Resources.划过);
             OnAlternateSelected();//候选词选择完成的事件
         }
 

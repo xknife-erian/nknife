@@ -1,8 +1,0 @@
-﻿<Application x:Class="NKnife.TouchInput.Xaml.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Xaml/TouchInputWindow.xaml">
-    <Application.Resources>
-
-    </Application.Resources>
-</Application>

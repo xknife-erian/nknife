@@ -8,6 +8,7 @@ using WindowsInput;
 using WindowsInput.Native;
 using NKnife.Chinese.Ime.HandWritten;
 using NKnife.Chinese.Ime.Pinyin;
+using NKnife.Chinese.TouchInput.Common;
 using NKnife.Ioc;
 using NKnife.Wrapper.API;
 using Button = System.Windows.Controls.Button;
@@ -19,10 +20,10 @@ namespace NKnife.Chinese.TouchInput
     /// </summary>
     public partial class TouchInputWindow : Window
     {
-        private readonly Kernal _PanelParams = DI.Get<Kernal>();
+        private readonly Params _PanelParams = DI.Get<Params>();
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
 
-        private Kernal.InputMode _InputMode = Kernal.InputMode.Pinyin;
+        private Params.InputMode _InputMode = Params.InputMode.Pinyin;
 
         public TouchInputWindow()
         {
@@ -106,12 +107,12 @@ namespace NKnife.Chinese.TouchInput
         {
             var button = (Button) sender;
             _Simulator.Keyboard.TextEntry(button.Content.ToString());
-            Kernal.PlayVoice(Properties.Resources.键_数字);
+            Params.PlayVoice(Properties.Resources.键_数字);
         }
 
         private void KeyboardClick(object sender, RoutedEventArgs e)
         {
-            Kernal.PlayVoice(Properties.Resources.键_功能);
+            Params.PlayVoice(Properties.Resources.键_功能);
         }
 
         private void LetterClick(object sender, RoutedEventArgs e)
@@ -119,23 +120,23 @@ namespace NKnife.Chinese.TouchInput
             ShowPyStrip();
             switch (_InputMode)
             {
-                case Kernal.InputMode.Pinyin:
+                case Params.InputMode.Pinyin:
                     var py = DI.Get<PinyinSeparatesCollection>();
                     py.AddLetter(((Button) sender).Content.ToString());
                     break;
-                case Kernal.InputMode.Letter:
-                case Kernal.InputMode.Number:
-                case Kernal.InputMode.HandWriter:
+                case Params.InputMode.Letter:
+                case Params.InputMode.Number:
+                case Params.InputMode.HandWriter:
                 default:
                     _Simulator.Keyboard.TextEntry(((Button) sender).Content.ToString());
                     break;
             }
-            Kernal.PlayVoice(Properties.Resources.键_全键盘);
+            Params.PlayVoice(Properties.Resources.键_全键盘);
         }
 
         private void SymbolClick(object sender, RoutedEventArgs e)
         {
-            Kernal.PlayVoice(Properties.Resources.键_全键盘);
+            Params.PlayVoice(Properties.Resources.键_全键盘);
         }
 
 
@@ -247,7 +248,7 @@ namespace NKnife.Chinese.TouchInput
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            Kernal.PlayVoice(Properties.Resources.键_功能);
+            Params.PlayVoice(Properties.Resources.键_功能);
             if (_PyStripEnable)
             {
                 _PyStrip.BackSpace();

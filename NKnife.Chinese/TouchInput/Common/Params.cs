@@ -3,9 +3,9 @@ using System.Drawing;
 using System.IO;
 using System.Media;
 
-namespace NKnife.Chinese
+namespace NKnife.Chinese.TouchInput.Common
 {
-    public class Kernal
+    public class Params
     {
         /// <summary>
         /// 输入方式
@@ -18,7 +18,7 @@ namespace NKnife.Chinese
             Number
         }
 
-        public Kernal()
+        public Params()
         {
             WordsStripLocation = new Point(0, 0);
             InputPanelType = InputMode.Pinyin;

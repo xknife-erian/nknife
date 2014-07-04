@@ -106,7 +106,7 @@
     <Compile Include="Ime\HandWritten\ConcatenationRecognizer.cs" />
     <Compile Include="Ime\Pinyin\PinyinSeparatesCollection.cs" />
     <Compile Include="Ime\HandWritten\HwAlternateCollection.cs" />
-    <Compile Include="Kernal.cs" />
+    <Compile Include="TouchInput\Common\Params.cs" />
     <Compile Include="TouchInput\Controls\Keys\CaseSensitiveKey.cs" />
     <Compile Include="TouchInput\Controls\Keys\ChordKey.cs" />
     <Compile Include="TouchInput\Controls\Keys\ILogicalKey.cs" />
@@ -119,7 +119,7 @@
     <Compile Include="TouchInput\Controls\Keys\StringKey.cs" />
     <Compile Include="TouchInput\Controls\Keys\TogglingModifierKey.cs" />
     <Compile Include="TouchInput\Controls\Keys\VirtualKey.cs" />
-    <Compile Include="Module.cs" />
+    <Compile Include="TouchInput\Common\Module.cs" />
     <Compile Include="TouchInput\HwAlternatesStrip.xaml.cs">
       <DependentUpon>HwAlternatesStrip.xaml</DependentUpon>
     </Compile>

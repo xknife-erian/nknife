@@ -2,16 +2,15 @@
 using Ninject.Modules;
 using NKnife.Chinese.Ime.HandWritten;
 using NKnife.Chinese.Ime.Pinyin;
-using NKnife.Chinese.TouchInput;
 
-namespace NKnife.Chinese
+namespace NKnife.Chinese.TouchInput.Common
 {
     public class Module : NinjectModule
     {
         public override void Load()
         {
             Bind<InputSimulator>().To<InputSimulator>().InSingletonScope();
-            Bind<Kernal>().To<Kernal>().InSingletonScope();
+            Bind<Params>().To<Params>().InSingletonScope();
             Bind<HwAlternateCollection>().To<HwAlternateCollection>().InSingletonScope();
             Bind<PinyinSeparatesCollection>().To<PinyinSeparatesCollection>().InSingletonScope();
             Bind<PyAlternatesStrip>().To<PyAlternatesStrip>().InSingletonScope();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interop;
+using NKnife.Chinese.TouchInput.Common;
 using NKnife.Ioc;
 using NKnife.Wrapper.API;
 
@@ -18,8 +19,8 @@ namespace NKnife.Chinese.TouchInput
 
         public void UpdateText(string currentWord)
         {
-            DI.Get<Kernal>().CurrentWord = currentWord;
-            _TextBlock.Text = DI.Get<Kernal>().CurrentWord;
+            DI.Get<Params>().CurrentWord = currentWord;
+            _TextBlock.Text = DI.Get<Params>().CurrentWord;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

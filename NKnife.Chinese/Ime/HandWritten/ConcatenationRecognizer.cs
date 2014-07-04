@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Ink;
 using System.Windows.Input;
+using NKnife.Chinese.TouchInput.Common;
 
 namespace NKnife.Chinese.Ime.HandWritten
 {
@@ -26,12 +27,12 @@ namespace NKnife.Chinese.Ime.HandWritten
         public string[] Recognize(StrokeCollection strokes)
         {
             if (strokes == null || strokes.Count == 0)
-                return Kernal.EmptyAlternates;
+                return Params.EmptyAlternates;
 
             var stroke = GetCombinedStore(strokes);
 
             var analyzer = new InkAnalyzer();
-            analyzer.AddStroke(stroke, Kernal.SimplifiedChineseLanguageId);
+            analyzer.AddStroke(stroke, Params.SimplifiedChineseLanguageId);
             analyzer.SetStrokeType(stroke, StrokeType.Writing);
 
             var status = analyzer.Analyze();
@@ -47,7 +48,7 @@ namespace NKnife.Chinese.Ime.HandWritten
 
             analyzer.Dispose();
 
-            return Kernal.EmptyAlternates;
+            return Params.EmptyAlternates;
         }
 
         private static Stroke GetCombinedStore(IEnumerable<Stroke> strokes)
