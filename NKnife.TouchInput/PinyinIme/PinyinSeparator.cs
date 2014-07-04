@@ -10,7 +10,7 @@ namespace NKnife.TouchInput.Common.PinyinIme
     ///     lukan@xknfie.net
     ///     2014-7-4
     /// </summary>
-    public class PinyinSeparator : ISeparator
+    public class PinyinSeparator : IPinyinSeparator
     {
         /// <summary>
         ///     ºÏ·¨Òô½Ú¿â

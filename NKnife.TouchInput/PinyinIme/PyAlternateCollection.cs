@@ -44,7 +44,10 @@ namespace NKnife.TouchInput.Common
                 }
                 for (int i = 0; i < WORD_COUNT; i++)
                 {
-                    Add(_CurrentResult[CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                    if (i<_CurrentResult.Length)
+                    {
+                        Add(_CurrentResult[CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                    }
                 }
             }
         }

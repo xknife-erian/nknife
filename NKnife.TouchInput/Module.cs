@@ -3,6 +3,7 @@ using Ninject.Modules;
 using NKnife.TouchInput.Common;
 using NKnife.TouchInput.Common.PinyinIme;
 using NKnife.TouchInput.Common.Recognize;
+using NKnife.TouchInput.HandWrittenIme;
 using NKnife.TouchInput.Xaml;
 
 namespace NKnife.TouchInput.Ioc
@@ -20,7 +21,7 @@ namespace NKnife.TouchInput.Ioc
             Bind<InputSimulator>().To<InputSimulator>().InSingletonScope();
             Bind<ICharactorRecognizer>().To<ConcatenationRecognizer>().InSingletonScope();
             Bind<ISyllableCollection>().To<DefaultSyllableCollection>().InSingletonScope();
-            Bind<ISeparator>().To<PinyinSeparator>().InSingletonScope();
+            Bind<IPinyinSeparator>().To<PinyinSeparator>().InSingletonScope();
         }
     }
 }
