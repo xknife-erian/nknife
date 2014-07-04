@@ -34,16 +34,12 @@ namespace NKnife.TouchInput.Common
         /// </summary>
         public static readonly string[] EmptyAlternates = new string[0];
 
-        public static readonly string LetterClickVoice;
-        public static readonly string FuncClickVoice;
-        public static readonly string InkVoice;
-
         public Point InputPanelLocation { get; set; }
         public Point WordsStripLocation { get; set; }
         public InputMode InputPanelType { get; set; }
         public String CurrentWord { get; set; }
 
-        public static void PlayClickVoice(UnmanagedMemoryStream voice)
+        public static void PlayVoice(UnmanagedMemoryStream voice)
         {
             var sndPlayer = new SoundPlayer(voice);
             sndPlayer.Play();

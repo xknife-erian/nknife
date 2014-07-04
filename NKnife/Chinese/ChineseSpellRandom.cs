@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gean.Wrapper.Chinese
+namespace NKnife.Chinese
 {
     /// <summary>
     /// 汉字拼音随机生成器

@@ -14,7 +14,7 @@
     </Window.Resources>
     <Grid Loaded="Grid_Loaded" Margin="0">
         <Grid.Background>
-            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkDarkColorKey}}" Opacity="0.7" />
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkDarkColorKey}}" Opacity="0.6" />
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="700" />
@@ -31,6 +31,33 @@
             <Button Name="_CallHandWriterPanelButton" Click="CallHandWriterPanel_Click" HorizontalAlignment="Left"
                     Height="50" Content="手写" Padding="20,0,20,0" />
         </StackPanel>
+
+        <Grid Name="_HandWriteGrid" Grid.Row="1" Grid.Column="0" Margin="20,3,0,20">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF800303" Offset="1"/>
+                    <GradientStop Color="#FFE25D5D"/>
+                    <GradientStop Color="#FF7E0F0F" Offset="0.517"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="600" />
+            </Grid.ColumnDefinitions>
+            <Viewbox Stretch="Fill" Grid.Row="0" Grid.Column="1" Margin="0,0,19,0">
+                <InkCanvas Name="_InkCanvas" Margin="1,2,2,2" StrokeCollected="InkCanvas_StrokeCollected">
+                    <InkCanvas.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FFFDC2C2" Offset="1"/>
+                            <GradientStop Color="#FFFDD9D9"/>
+                        </RadialGradientBrush>
+                    </InkCanvas.Background>
+                </InkCanvas>
+            </Viewbox>
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="1" VerticalAlignment="Bottom">
+                <Button Content="重写" Padding="0,10,0,10" Margin="0,2" Click="HandWriterClearButton_Click"></Button>
+            </StackPanel>
+        </Grid>
 
         <Grid Name="_PinyinGrid" Grid.Row="1" Grid.Column="0" Margin="20,2,2,20">
             <Grid.ColumnDefinitions>
@@ -63,8 +90,7 @@
             <Button FontSize="20" Content="=" Grid.Row="0" Grid.Column="7" Margin="2" Click="SymbolClick" />
             <Button FontSize="20" Content="，" Grid.Row="0" Grid.Column="8" Margin="2" Click="SymbolClick" />
             <Button FontSize="20" Content="。" Grid.Row="0" Grid.Column="9" Margin="2" Click="SymbolClick" />
-            <Button FontSize="15" Content="删除" Grid.Row="0" Grid.Column="10" Margin="2" Grid.ColumnSpan="2"
-                    Click="KeyboardClick" />
+            <Button FontSize="15" Content="删除" Grid.Row="0" Grid.Column="10" Margin="2" Grid.ColumnSpan="2" Click="DeleteButtonClick" />
             <Button FontSize="15" Content="符号" Grid.Row="1" Grid.Column="0" Margin="2" Click="KeyboardClick" />
             <Button FontSize="20" Content="Q" Grid.Row="1" Grid.Column="1" Margin="2" Click="LetterClick">
                 <Button.Background>
@@ -206,34 +232,7 @@
                     Click="KeyboardClick" />
         </Grid>
 
-        <Grid Name="_HandWriteGrid" Grid.Row="1" Grid.Column="0" Margin="20,3,0,20">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF800303" Offset="1"/>
-                    <GradientStop Color="#FFE25D5D"/>
-                    <GradientStop Color="#FF7E0F0F" Offset="0.517"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="600" />
-            </Grid.ColumnDefinitions>
-            <Viewbox Stretch="Fill" Grid.Row="0" Grid.Column="1" Margin="0,0,19,0">
-                <InkCanvas Name="_InkCanvas" Margin="1,2,2,2" StrokeCollected="InkCanvas_StrokeCollected" MouseUp="InkCanvas_MouseUp">
-                    <InkCanvas.Background>
-                        <RadialGradientBrush>
-                            <GradientStop Color="#FFFDC2C2" Offset="1"/>
-                            <GradientStop Color="#FFFDD9D9"/>
-                        </RadialGradientBrush>
-                    </InkCanvas.Background>
-                </InkCanvas>
-            </Viewbox>
-            <StackPanel Grid.Row="0" Grid.Column="0" Margin="1" VerticalAlignment="Bottom">
-                <Button Content="重写" Padding="0,10,0,10" Margin="0,2" Click="HandWriterClearButton_Click"></Button>
-            </StackPanel>
-        </Grid>
-
-        <Grid Grid.Row="1" Grid.Column="1" Margin="8,2,20,20">
+        <Grid Name="_NumberGrid"  Grid.Row="1" Grid.Column="1" Margin="8,2,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

@@ -84,7 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Xaml\AlternatesStrip.xaml">
+    <Page Include="Xaml\PyAlternatesStrip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -96,11 +96,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Common\PyAlternateCollection.cs" />
+    <Compile Include="Common\PinyinIme\DefaultSyllableCollection.cs" />
+    <Compile Include="Common\PinyinIme\ISyllableCollection.cs" />
+    <Compile Include="Common\PinyinIme\PinyinSeparator.cs" />
+    <Compile Include="Common\PinyinIme\ISeparator.cs" />
     <Compile Include="Common\Recognize\DefaultRecognizer.cs" />
     <Compile Include="Common\Recognize\ICharactorRecognizer.cs" />
     <Compile Include="Common\Recognize\ConcatenationRecognizer.cs" />
-    <Compile Include="Common\PinyinIme\PinyinSpliterCollection.cs" />
-    <Compile Include="Common\AlternateCollection.cs" />
+    <Compile Include="Common\PinyinIme\PinyinSeparatesCollection.cs" />
+    <Compile Include="Common\HwAlternateCollection.cs" />
     <Compile Include="Common\Kernal.cs" />
     <Compile Include="Controls\Keys\CaseSensitiveKey.cs" />
     <Compile Include="Controls\Keys\ChordKey.cs" />
@@ -122,8 +127,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Xaml\AlternatesStrip.xaml.cs">
-      <DependentUpon>AlternatesStrip.xaml</DependentUpon>
+    <Compile Include="Xaml\PyAlternatesStrip.xaml.cs">
+      <DependentUpon>PyAlternatesStrip.xaml</DependentUpon>
     </Compile>
     <Compile Include="Xaml\CurrentWordStrip.xaml.cs">
       <DependentUpon>CurrentWordStrip.xaml</DependentUpon>

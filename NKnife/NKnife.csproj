@@ -78,6 +78,7 @@
     <Compile Include="Base\MultiMachineState.cs" />
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\Triplet.cs" />
+    <Compile Include="Chinese\ChineseIntegerRmb.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="Collections\Definition.cs" />
     <Compile Include="Collections\DictionaryOrdered.cs" />

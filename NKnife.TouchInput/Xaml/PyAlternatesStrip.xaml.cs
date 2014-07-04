@@ -13,17 +13,17 @@ using NKnife.Wrapper.API;
 namespace NKnife.TouchInput.Xaml
 {
     /// <summary>
-    ///     AlternatesStrip.xaml 的交互逻辑
+    ///     PyAlternatesStrip.xaml 的交互逻辑
     /// </summary>
-    public partial class AlternatesStrip : Window
+    public partial class PyAlternatesStrip : Window
     {
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
 
-        public AlternatesStrip()
+        public PyAlternatesStrip()
         {
             InitializeComponent();
-            _AlternatesListBox.ItemsSource = DI.Get<AlternateCollection>();
-            _InputCharListBox.ItemsSource = DI.Get<PinyinSpliterCollection>();
+            _AlternatesListBox.ItemsSource = DI.Get<PyAlternateCollection>();
+            _InputCharListBox.ItemsSource = DI.Get<PinyinSeparatesCollection>();
         }
 
         /// <summary>
@@ -66,9 +66,11 @@ namespace NKnife.TouchInput.Xaml
         private void AlternatesListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {
             HideWordStrip();
+
             var word = ((TextBlock)sender).Text;
             _Simulator.Keyboard.TextEntry(word);
-            Kernal.PlayClickVoice(Properties.Resources.划过);
+
+            Kernal.PlayVoice(Properties.Resources.划过);
             OnAlternateSelected();//候选词选择完成的事件
         }
 
@@ -90,5 +92,12 @@ namespace NKnife.TouchInput.Xaml
             strip.Hide();
             strip.UpdateText("");
         }
+
+        public void BackSpace()
+        {
+            var sc = DI.Get<PinyinSeparatesCollection>();
+            sc.BackSpaceLetter();
+        }
     }
+
 }

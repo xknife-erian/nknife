@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using NKnife.Ioc;
 using NKnife.Utility;
 
 namespace NKnife.TouchInput.Common.PinyinIme
@@ -9,9 +10,10 @@ namespace NKnife.TouchInput.Common.PinyinIme
     /// <summary>
     ///     一个放置输入法或输入控件产生的待选词(字)的集合
     /// </summary>
-    public class PinyinSpliterCollection : ObservableCollection<string>
+    public class PinyinSeparatesCollection : ObservableCollection<string>
     {
         public StringBuilder _StringBuilder = new StringBuilder();
+        public PinyinSeparator _Separator = new PinyinSeparator(DI.Get<ISyllableCollection>());
 
         public void UpdateSource(IEnumerable<string> src)
         {
@@ -24,24 +26,25 @@ namespace NKnife.TouchInput.Common.PinyinIme
 
         public void AddLetter(string letter)
         {
-            _StringBuilder.Append(letter.ToLower());
-            char[] hanzi = Pinyin.GetCharArrayOfPinyin(_StringBuilder.ToString());
-            if (!UtilityCollection.IsNullOrEmpty(hanzi))
+            _StringBuilder.Append(letter.ToLowerInvariant());
+            ProcessPinyin();
+        }
+
+        private void ProcessPinyin()
+        {
+            var result = _Separator.Separate(_StringBuilder.ToString());
+            if (result != null && result.Count > 0)
             {
-                string pinyin = _StringBuilder.ToString();
-                if (Count >= 1 && _StringBuilder.Length > 1)
-                    SetItem(Count - 1, pinyin);
-                else
-                    Add(pinyin);
-                _StringBuilder.Clear();
-                OnHasCompletePinyin(new PinyinCompletedEventArgs(pinyin, hanzi));
+                Clear();
+                foreach (var r in result)
+                {
+                    Add(r);
+                }
+                OnHasCompletePinyin(new PinyinCompletedEventArgs(result));
             }
             else
             {
-                if (Count > 1 && _StringBuilder.Length > 1)
-                    SetItem(Count - 1, _StringBuilder.ToString());
-                else
-                    Add(_StringBuilder.ToString());
+                Add(_StringBuilder.ToString());
             }
         }
 
@@ -59,14 +62,27 @@ namespace NKnife.TouchInput.Common.PinyinIme
         /// </summary>
         public class PinyinCompletedEventArgs : EventArgs
         {
-            public PinyinCompletedEventArgs(string pinyin, char[] hanziArray)
+            public PinyinCompletedEventArgs(List<string> pinyin)
             {
                 Pinyin = pinyin;
-                HanziArray = hanziArray;
             }
 
-            public string Pinyin { get; set; }
-            public char[] HanziArray { get; set; }
+            public List<string> Pinyin { get; set; }
+        }
+
+        public void BackSpaceLetter()
+        {
+            if (_StringBuilder.Length > 0)
+            {
+                _StringBuilder.Remove(_StringBuilder.Length - 1, 1);
+                ProcessPinyin();
+            }
+        }
+
+        public void ClearInput()
+        {
+            _StringBuilder.Clear();
+            Clear();
         }
     }
 }

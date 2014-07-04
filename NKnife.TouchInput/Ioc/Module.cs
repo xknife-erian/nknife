@@ -12,13 +12,15 @@ namespace NKnife.TouchInput.Ioc
         public override void Load()
         {
             Bind<Kernal>().To<Kernal>().InSingletonScope();
-            Bind<AlternateCollection>().To<AlternateCollection>().InSingletonScope();
-            Bind<PinyinSpliterCollection>().To<PinyinSpliterCollection>().InSingletonScope();
-            Bind<AlternatesStrip>().To<AlternatesStrip>().InSingletonScope();
+            Bind<HwAlternateCollection>().To<HwAlternateCollection>().InSingletonScope();
+            Bind<PinyinSeparatesCollection>().To<PinyinSeparatesCollection>().InSingletonScope();
+            Bind<PyAlternatesStrip>().To<PyAlternatesStrip>().InSingletonScope();
             Bind<HwAlternatesStrip>().To<HwAlternatesStrip>().InSingletonScope();
             Bind<CurrentWordStrip>().To<CurrentWordStrip>().InSingletonScope();
             Bind<InputSimulator>().To<InputSimulator>().InSingletonScope();
             Bind<ICharactorRecognizer>().To<ConcatenationRecognizer>().InSingletonScope();
+            Bind<ISyllableCollection>().To<DefaultSyllableCollection>().InSingletonScope();
+            Bind<ISeparator>().To<PinyinSeparator>().InSingletonScope();
         }
     }
 }

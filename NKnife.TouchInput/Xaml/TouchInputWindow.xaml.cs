@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WindowsInput;
+using WindowsInput.Native;
 using NKnife.Ioc;
 using NKnife.TouchInput.Common;
 using NKnife.TouchInput.Common.PinyinIme;
@@ -32,8 +33,8 @@ namespace NKnife.TouchInput.Xaml
             ShowInTaskbar = false;
             _HandWriteGrid.Visibility = Visibility.Hidden;
 
-            _AlternatesStrip.AlternateSelected += Strip_AlternateSelected;
-            _HwAlternatesStrip.AlternateSelected += HwStrip_AlternateSelected;
+            _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
+            _HwStrip.AlternateSelected += HwStrip_AlternateSelected;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -71,35 +72,30 @@ namespace NKnife.TouchInput.Xaml
         {
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _PinyinGrid.Visibility = Visibility.Visible;
-            HideAlternatesStrip();
-            HideHwAlternatesStrip();
+            HidePyStrip();
+            HideHwStrip();
         }
 
         private void CallHandWriterPanel_Click(object sender, RoutedEventArgs e)
         {
             _PinyinGrid.Visibility = Visibility.Hidden;
             _HandWriteGrid.Visibility = Visibility.Visible;
-            HideAlternatesStrip();
-            HideHwAlternatesStrip();
+            HidePyStrip();
+            HideHwStrip();
         }
 
         private void InkCanvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
         {
-            ShowHwAlternatesStrip();
-            DI.Get<AlternateCollection>().Recognize(_InkCanvas.Strokes);
-        }
-
-        private void InkCanvas_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Kernal.PlayClickVoice(Properties.Resources.键_手写);
+            ShowHwStrip();
+            DI.Get<HwAlternateCollection>().Recognize(_InkCanvas.Strokes);
         }
 
         private void HandWriterClearButton_Click(object sender, RoutedEventArgs e)
         {
             _InkCanvas.Strokes.Clear();
-            _HwAlternatesStrip.Hide();
-            _HwAlternatesStripEnable = false;
-            DI.Get<AlternateCollection>().ClearAlternates();
+            _HwStrip.Hide();
+            _HwStripEnable = false;
+            DI.Get<HwAlternateCollection>().ClearAlternates();
         }
 
 
@@ -112,21 +108,21 @@ namespace NKnife.TouchInput.Xaml
         {
             var button = (Button) sender;
             _Simulator.Keyboard.TextEntry(button.Content.ToString());
-            Kernal.PlayClickVoice(Properties.Resources.键_数字);
+            Kernal.PlayVoice(Properties.Resources.键_数字);
         }
 
         private void KeyboardClick(object sender, RoutedEventArgs e)
         {
-            Kernal.PlayClickVoice(Properties.Resources.键_功能);
+            Kernal.PlayVoice(Properties.Resources.键_功能);
         }
 
         private void LetterClick(object sender, RoutedEventArgs e)
         {
-            ShowAlternatesStrip();
+            ShowPyStrip();
             switch (_InputMode)
             {
                 case Kernal.InputMode.Pinyin:
-                    var py = DI.Get<PinyinSpliterCollection>();
+                    var py = DI.Get<PinyinSeparatesCollection>();
                     py.AddLetter(((Button) sender).Content.ToString());
                     break;
                 case Kernal.InputMode.Letter:
@@ -136,95 +132,99 @@ namespace NKnife.TouchInput.Xaml
                     _Simulator.Keyboard.TextEntry(((Button) sender).Content.ToString());
                     break;
             }
-            Kernal.PlayClickVoice(Properties.Resources.键_全键盘);
+            Kernal.PlayVoice(Properties.Resources.键_全键盘);
         }
 
         private void SymbolClick(object sender, RoutedEventArgs e)
         {
-            Kernal.PlayClickVoice(Properties.Resources.键_全键盘);
+            Kernal.PlayVoice(Properties.Resources.键_全键盘);
         }
 
 
         #region Show,Hide
 
-        private readonly AlternatesStrip _AlternatesStrip = DI.Get<AlternatesStrip>();
-        private readonly HwAlternatesStrip _HwAlternatesStrip = DI.Get<HwAlternatesStrip>();
+        private readonly PyAlternatesStrip _PyStrip = DI.Get<PyAlternatesStrip>();
+        private readonly HwAlternatesStrip _HwStrip = DI.Get<HwAlternatesStrip>();
         private readonly CurrentWordStrip _WordPop = DI.Get<CurrentWordStrip>();
 
         /// <summary>
         ///     拼音候选词词框是否可用（显示）
         /// </summary>
-        private bool _AlternatesStripEnable;
+        private bool _PyStripEnable;
 
         /// <summary>
         ///     手写候选词词框是否可用（显示）
         /// </summary>
-        private bool _HwAlternatesStripEnable;
+        private bool _HwStripEnable;
 
-        private void Strip_AlternateSelected(object sender, EventArgs e)
+        private void PyStrip_AlternateSelected(object sender, EventArgs e)
         {
-            HideAlternatesStrip();
+            HidePyStrip();
         }
 
         private void HwStrip_AlternateSelected(object sender, EventArgs e)
         {
-            HideHwAlternatesStrip();
+            HideHwStrip();
         }
 
-        private void ShowAlternatesStrip()
+        private void ShowPyStrip()
         {
-            if (!_AlternatesStripEnable)
+            if (!_PyStripEnable)
             {
                 double left = 0;
                 double top = 0;
                 if (_PanelParams.WordsStripLocation.X == 0 && _PanelParams.WordsStripLocation.Y == 0)
                 {
                     left = Left;
-                    top = Top - _AlternatesStrip.Height - 5;
+                    top = Top - _PyStrip.Height - 5;
                 }
                 else
                 {
                     left = _PanelParams.WordsStripLocation.X;
                     top = _PanelParams.WordsStripLocation.Y;
                 }
-                _AlternatesStrip.Left = left;
-                _AlternatesStrip.Top = top;
-                _AlternatesStrip.Show();
+                _PyStrip.Left = left;
+                _PyStrip.Top = top;
+                _PyStrip.Show();
+                _PyStripEnable = true;
+                DI.Get<PyAlternateCollection>().ClearAlternates();
+                DI.Get<PinyinSeparatesCollection>().ClearInput();
             }
         }
 
-        private void HideAlternatesStrip()
+        private void HidePyStrip()
         {
-            _AlternatesStripEnable = false;
-            _AlternatesStrip.Hide();
+            _PyStripEnable = false;
+            _PyStrip.Hide();
         }
 
-        private void ShowHwAlternatesStrip()
+        private void ShowHwStrip()
         {
-            if (!_HwAlternatesStripEnable)
+            if (!_HwStripEnable)
             {
                 double left = 0;
                 double top = 0;
                 if (_PanelParams.WordsStripLocation.X == 0 && _PanelParams.WordsStripLocation.Y == 0)
                 {
                     left = Left;
-                    top = Top - _HwAlternatesStrip.Height - 5;
+                    top = Top - _HwStrip.Height - 5;
                 }
                 else
                 {
                     left = _PanelParams.WordsStripLocation.X;
                     top = _PanelParams.WordsStripLocation.Y;
                 }
-                _HwAlternatesStrip.Left = left;
-                _HwAlternatesStrip.Top = top;
-                _HwAlternatesStrip.Show();
+                _HwStrip.Left = left;
+                _HwStrip.Top = top;
+                _HwStrip.Show();
+                _HwStripEnable = true;
             }
         }
 
-        private void HideHwAlternatesStrip()
+        private void HideHwStrip()
         {
-            _HwAlternatesStripEnable = false;
-            _HwAlternatesStrip.Hide();
+            _HwStripEnable = false;
+            _HwStrip.Hide();
             _InkCanvas.Strokes.Clear();
         }
 
@@ -247,5 +247,17 @@ namespace NKnife.TouchInput.Xaml
 
         #endregion
 
+        private void DeleteButtonClick(object sender, RoutedEventArgs e)
+        {
+            Kernal.PlayVoice(Properties.Resources.键_功能);
+            if (_PyStripEnable)
+            {
+                _PyStrip.BackSpace();
+            }
+            else
+            {
+                _Simulator.Keyboard.KeyPress(VirtualKeyCode.BACK);
+            }
+        }
     }
 }

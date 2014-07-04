@@ -22,7 +22,7 @@ namespace NKnife.TouchInput.Xaml
         public HwAlternatesStrip()
         {
             InitializeComponent();
-            _HwAlternatesListBox.ItemsSource = DI.Get<AlternateCollection>();
+            _HwAlternatesListBox.ItemsSource = DI.Get<HwAlternateCollection>();
         }
 
         /// <summary>
@@ -52,13 +52,12 @@ namespace NKnife.TouchInput.Xaml
             ShowWordStrip(word, e);
         }
 
-
         private void AlternatesListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {
             HideWordStrip();
             var word = ((TextBlock)sender).Text;
             _Simulator.Keyboard.TextEntry(word);
-            Kernal.PlayClickVoice(Properties.Resources.划过);
+            Kernal.PlayVoice(Properties.Resources.划过);
             OnAlternateSelected();//候选词选择完成的事件
         }
 

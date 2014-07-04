@@ -11,23 +11,8 @@ namespace NKnife.TouchInput.Common
     /// <summary>
     ///     一个放置输入法或输入控件产生的待选词(字)的集合
     /// </summary>
-    public class AlternateCollection : ObservableCollection<string>
+    public class HwAlternateCollection : ObservableCollection<string>
     {
-        public AlternateCollection()
-        {
-            var py = DI.Get<PinyinSpliterCollection>();
-            py.HasCompletePinyin += PinyinSpliter_HasCompletePinyin;
-        }
-
-        private void PinyinSpliter_HasCompletePinyin(object sender, PinyinSpliterCollection.PinyinCompletedEventArgs e)
-        {
-            ClearAlternates();
-            foreach (var hanzi in e.HanziArray)
-            {
-                Add(hanzi.ToString(CultureInfo.InvariantCulture));
-            }
-        }
-
         public void Recognize(StrokeCollection sc)
         {
             string[] alts = DI.Get<ICharactorRecognizer>().Recognize(sc);

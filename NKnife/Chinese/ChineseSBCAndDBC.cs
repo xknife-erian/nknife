@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Text;
 
-namespace Gean.Wrapper.Chinese
+namespace NKnife.Chinese
 {
     /// <summary>实现英文字符间全角半角转换
     /// </summary>
-    public class ChineseSBCAndDBC
+    public class ChineseSbcAndDbc
     {
         #region "常量"
 
