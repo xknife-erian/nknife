@@ -99,6 +99,7 @@
     <Compile Include="Ime\Pinyin\PinyinAlternateCollection.cs" />
     <Compile Include="Ime\Pinyin\DefaultSyllableCollection.cs" />
     <Compile Include="Ime\Pinyin\ISyllableCollection.cs" />
+    <Compile Include="Ime\Pinyin\PinyinSeparatedEventArgs.cs" />
     <Compile Include="Ime\Pinyin\PinyinSeparator.cs" />
     <Compile Include="Ime\Pinyin\IPinyinSeparator.cs" />
     <Compile Include="Ime\HandWritten\DefaultRecognizer.cs" />

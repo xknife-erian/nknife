@@ -14,7 +14,7 @@ namespace NKnife.Chinese.Ime.Pinyin
         public PinyinAlternateCollection()
         {
             var separator = DI.Get<PinyinSeparatesCollection>();
-            separator.HasCompletePinyin += SeparatorOnHasCompletePinyin;
+            separator.PinyinSeparated += SeparatorOnHasCompletePinyin;
 
             ResetCurrent();
         }
@@ -32,7 +32,7 @@ namespace NKnife.Chinese.Ime.Pinyin
 
         private char[] _CurrentResult;
 
-        private void SeparatorOnHasCompletePinyin(object sender, PinyinSeparatesCollection.PinyinCompletedEventArgs e)
+        private void SeparatorOnHasCompletePinyin(object sender, PinyinSeparatedEventArgs e)
         {
             var pinyin = e.Pinyin;
             _CurrentResult = Pinyin.GetCharArrayOfPinyin(pinyin[0]);

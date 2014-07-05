@@ -11,8 +11,8 @@ namespace NKnife.Chinese.Ime.Pinyin
     /// </summary>
     public class PinyinSeparatesCollection : ObservableCollection<string>
     {
-        private readonly StringBuilder _StringBuilder = new StringBuilder();
         private readonly PinyinSeparator _Separator = new PinyinSeparator(DI.Get<ISyllableCollection>());
+        private readonly StringBuilder _StringBuilder = new StringBuilder();
 
         public void UpdateSource(IEnumerable<string> src)
         {
@@ -23,17 +23,93 @@ namespace NKnife.Chinese.Ime.Pinyin
             }
         }
 
+        /// <summary>
+        ///     在最后增加一位输入的字母
+        /// </summary>
         public void AddLetter(string letter)
         {
             _StringBuilder.Append(letter.ToLowerInvariant());
-            ProcessPinyin();
+            PinyinSeparating(); //当增加一个字母以后，进行拼音的分割
         }
 
-        private void ProcessPinyin()
+        /// <summary>
+        ///     开始连续拼音字符串的分割
+        /// </summary>
+        private void PinyinSeparating()
         {
-            Clear();
+            Clear(); //
+            string target = _StringBuilder.ToString();
+            List<string> result = _Separator.Separate(target);
+            if (result == null || result.Count <= 0)
+            {
+                Add(target); //如果结果为空，直接将待处理串添入
+            }
+            else
+            {
+                //当结果不为空时
+                var i = 0;
+                foreach (string r in result)
+                {
+                    var index = _StringBuilder.IndexOf(r, i);
+                    if (index > i)
+                    {
+                        Add(_StringBuilder.ToString(i, index - i));
+                        i += index - i;
+                    }
+                    Add(r);
+                    i += r.Length;
+                }
+                if (i < _StringBuilder.Length)
+                {
+                    Add(_StringBuilder.ToString(i, _StringBuilder.Length - i));
+                }
+                OnPinyinSeparated(new PinyinSeparatedEventArgs(result));
+            }
+        }
 
-            var result = _Separator.Separate(_StringBuilder.ToString());
+        /// <summary>
+        ///     回退连续的拼音字符串，即消除字符串中的最后一位
+        /// </summary>
+        public void BackSpaceLetter()
+        {
+            if (_StringBuilder.Length > 0)
+            {
+                _StringBuilder.Remove(_StringBuilder.Length - 1, 1);
+                PinyinSeparating();
+            }
+        }
+
+        /// <summary>
+        ///     完全清除连续的拼音字符串
+        /// </summary>
+        public void ClearInput()
+        {
+            _StringBuilder.Clear();
+            Clear();
+        }
+
+        #region Event
+
+        /// <summary>
+        ///     当连续的拼音字符串分割完成时发生
+        /// </summary>
+        public event EventHandler<PinyinSeparatedEventArgs> PinyinSeparated;
+
+        /// <summary>
+        ///     当连续的拼音字符串分割完成时发生
+        /// </summary>
+        protected virtual void OnPinyinSeparated(PinyinSeparatedEventArgs e)
+        {
+            EventHandler<PinyinSeparatedEventArgs> handler = PinyinSeparated;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        #endregion
+    }
+}
+
+/*
             if (result != null && result.Count > 0)
             {
                 int i = 0;
@@ -59,43 +135,5 @@ namespace NKnife.Chinese.Ime.Pinyin
             {
                 Add(_StringBuilder.ToString());
             }
-        }
 
-        public event EventHandler<PinyinCompletedEventArgs> HasCompletePinyin;
-
-        protected virtual void OnHasCompletePinyin(PinyinCompletedEventArgs e)
-        {
-            EventHandler<PinyinCompletedEventArgs> handler = HasCompletePinyin;
-            if (handler != null)
-                handler(this, e);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public class PinyinCompletedEventArgs : EventArgs
-        {
-            public PinyinCompletedEventArgs(List<string> pinyin)
-            {
-                Pinyin = pinyin;
-            }
-
-            public List<string> Pinyin { get; set; }
-        }
-
-        public void BackSpaceLetter()
-        {
-            if (_StringBuilder.Length > 0)
-            {
-                _StringBuilder.Remove(_StringBuilder.Length - 1, 1);
-                ProcessPinyin();
-            }
-        }
-
-        public void ClearInput()
-        {
-            _StringBuilder.Clear();
-            Clear();
-        }
-    }
-}
+*/
