@@ -37,7 +37,7 @@ namespace NKnife.Chinese.Ime.Pinyin
         /// </summary>
         private void PinyinSeparating()
         {
-            Clear(); //
+            Clear(); 
             string target = _StringBuilder.ToString();
             List<string> result = _Separator.Separate(target);
             if (result == null || result.Count <= 0)
@@ -105,35 +105,16 @@ namespace NKnife.Chinese.Ime.Pinyin
                 handler(this, e);
         }
 
+        public event EventHandler NoInput;
+
+        protected virtual void OnNoInput()
+        {
+            EventHandler handler = NoInput;
+            if (handler != null) 
+                handler(this, EventArgs.Empty);
+        }
+
+
         #endregion
     }
 }
-
-/*
-            if (result != null && result.Count > 0)
-            {
-                int i = 0;
-                foreach (var r in result)
-                {
-                    Add(r);
-                    i = i + r.Length;
-                }
-                int k = _StringBuilder.IndexOf(this[0]);
-                if (k > 0)
-                {
-                    Insert(0, _StringBuilder.ToString(0, k));
-                    i = i + k;
-                }
-                if (i < _StringBuilder.Length)
-                {
-                    var y = _StringBuilder.ToString(i, _StringBuilder.Length - i);
-                    Add(y);
-                }
-                OnHasCompletePinyin(new PinyinCompletedEventArgs(result));
-            }
-            else
-            {
-                Add(_StringBuilder.ToString());
-            }
-
-*/

@@ -57,7 +57,7 @@ namespace NKnife.Chinese.TouchInput
             var word = ((TextBlock)sender).Text;
             _Simulator.Keyboard.TextEntry(word);
             Params.PlayVoice(Properties.Resources.划过);
-            OnAlternateSelected();//候选词选择完成的事件
+            OnAlternateSelected();//候选词选择完成的事件。手写的字被选中后，待选将被清空。
         }
 
         private void ShowWordStrip(String word, MouseButtonEventArgs e)

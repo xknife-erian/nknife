@@ -32,7 +32,7 @@ namespace NKnife.Chinese.TouchInput
             ShowInTaskbar = false;
             _HandWriteGrid.Visibility = Visibility.Hidden;
 
-            _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
+            //_PyStrip.AlternateSelected += PyStrip_AlternateSelected;
             _HwStrip.AlternateSelected += HwStrip_AlternateSelected;
         }
 

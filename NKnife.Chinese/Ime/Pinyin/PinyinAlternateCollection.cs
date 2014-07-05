@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using NKnife.Ioc;
 
@@ -14,7 +15,7 @@ namespace NKnife.Chinese.Ime.Pinyin
         public PinyinAlternateCollection()
         {
             var separator = DI.Get<PinyinSeparatesCollection>();
-            separator.PinyinSeparated += SeparatorOnHasCompletePinyin;
+            separator.PinyinSeparated += SeparatorOnPinyinSeparated;
 
             ResetCurrent();
         }
@@ -32,7 +33,10 @@ namespace NKnife.Chinese.Ime.Pinyin
 
         private char[] _CurrentResult;
 
-        private void SeparatorOnHasCompletePinyin(object sender, PinyinSeparatedEventArgs e)
+        /// <summary>
+        /// 当拼音框中的拼音已经分割好事件的处理
+        /// </summary>
+        private void SeparatorOnPinyinSeparated(object sender, PinyinSeparatedEventArgs e)
         {
             var pinyin = e.Pinyin;
             _CurrentResult = Pinyin.GetCharArrayOfPinyin(pinyin[0]);
