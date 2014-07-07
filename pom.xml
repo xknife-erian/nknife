@@ -24,6 +24,7 @@
         <module>jknife-web</module>
         <module>jknife-data-mongo</module>
         <module>jknife-inject</module>
+        <module>jknife-io</module>
     </modules>
 
     <dependencyManagement>
@@ -128,6 +129,11 @@
                 <groupId>dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>1.6.1</version>
+            </dependency>
+            <dependency><!--配合dom4j-->
+                <groupId>jaxen</groupId>
+                <artifactId>jaxen</artifactId>
+                <version>1.1.6</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
