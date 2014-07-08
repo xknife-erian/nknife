@@ -49,7 +49,7 @@ namespace NKnife.SocketClientTestTool
         {
             try
             {
-                var rec = _QuickSocket.SendTo(__ContentTextbox.Text, true);
+                var rec = _QuickSocket.SendTo(__ContentTextbox.Text, true, true);
                 var r = new List<byte>();
                 foreach (var bytese in rec)
                 {
