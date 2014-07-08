@@ -4,18 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{79763417-52E0-4F46-B2DA-DAF13AC84807}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NKnife.SocketClientTestTool</RootNamespace>
-    <AssemblyName>NKnife.SocketClientTestTool</AssemblyName>
+    <RootNamespace>SocketKnife</RootNamespace>
+    <AssemblyName>NKnife.Socket</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +24,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -37,72 +35,79 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.MSScriptControl">
-      <HintPath>..\NKnife\obj\Debug\Interop.MSScriptControl.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Common\BufferContainer.cs" />
+    <Compile Include="Common\ConnectionStatus.cs" />
+    <Compile Include="Common\Delegates.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\Exceptions.cs" />
+    <Compile Include="Common\ReceiveQueue.cs" />
+    <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
+    <Compile Include="Common\Tcps.cs" />
+    <Compile Include="Config\AliveSocketClientSetting.cs" />
+    <Compile Include="Config\AliveSocketServerSetting.cs" />
+    <Compile Include="Config\LightSocketClientSetting.cs" />
+    <Compile Include="Config\LightSocketServerSetting.cs" />
+    <Compile Include="Config\ProtocolSetting.cs" />
+    <Compile Include="Interfaces\IDatagramCommandParser.cs" />
+    <Compile Include="Interfaces\IDatagramDecoder.cs" />
+    <Compile Include="Interfaces\IDatagramEncoder.cs" />
+    <Compile Include="Interfaces\IProtocol.cs" />
+    <Compile Include="Interfaces\IProtocolContent.cs" />
+    <Compile Include="Interfaces\IProtocolHead.cs" />
+    <Compile Include="Interfaces\IProtocolPackage.cs" />
+    <Compile Include="Interfaces\IProtocolParser.cs" />
+    <Compile Include="Interfaces\IProtocolTail.cs" />
+    <Compile Include="Interfaces\ISocketBase.cs" />
+    <Compile Include="Interfaces\ISocketClient.cs" />
+    <Compile Include="Interfaces\ISocketClientSetting.cs" />
+    <Compile Include="Interfaces\ISocketServer.cs" />
+    <Compile Include="Interfaces\ISocketServerSetting.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <Compile Include="Protocol\AbstractProtocol.cs" />
+    <Compile Include="Protocol\Implementation\Byte4Decoder.cs" />
+    <Compile Include="Protocol\Implementation\Byte4Encoder.cs" />
+    <Compile Include="Protocol\Implementation\DatagramCommandParser.cs" />
+    <Compile Include="Protocol\Implementation\DatagramDecoder.cs" />
+    <Compile Include="Protocol\Implementation\DatagramEncoder.cs" />
+    <Compile Include="Protocol\Implementation\EndMarkDecoder.cs" />
+    <Compile Include="Protocol\Implementation\EndMarkEncoder.cs" />
+    <Compile Include="Protocol\Implementation\ProtocolDataTableDeserializeParser.cs" />
+    <Compile Include="Protocol\Implementation\ProtocolDeserializeParser.cs" />
+    <Compile Include="Protocol\Implementation\ProtocolHead.cs" />
+    <Compile Include="Protocol\Implementation\ProtocolTail.cs" />
+    <Compile Include="Protocol\Implementation\ProtocolXmlPackage.cs" />
+    <Compile Include="Protocol\Implementation\ProtocolXmlParser.cs" />
+    <Compile Include="Protocol\ProtocolContent.cs" />
+    <Compile Include="Protocol\ProtocolFactory.cs" />
+    <Compile Include="Protocol\ProtocolFamily.cs" />
+    <Compile Include="Protocol\ProtocolFamilyType.cs" />
+    <Compile Include="Protocol\Protocols.cs" />
+    <Compile Include="Protocol\ProtocolTools.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\ConfigDemo.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife\NKnife.csproj">
-      <Project>{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}</Project>
+      <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
   </ItemGroup>
