@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Tools.Ele.Resistance
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.SocketClientTestTool", "NKnife.SocketClientTestTool\NKnife.SocketClientTestTool.csproj", "{79763417-52E0-4F46-B2DA-DAF13AC84807}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKinfe.Socket", "NKinfe.Socket\NKinfe.Socket.csproj", "{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Compress", "NKnife.Compress\NKnife.Compress.csproj", "{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +50,14 @@ Global
 		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,8 @@ using Gean.Configuring.Option;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
+using NKnife.Interface;
+using NKnife.Ioc;
 using NKnife.Utility.File;
 using NKnife.Wrapper;
 using NLog;
@@ -52,6 +54,10 @@ namespace NKnife.Configuring.Option
         /// </summary>
         private string _TablePostfix = string.Empty;
 
+        /// <summary>文件压缩器
+        /// </summary>
+        private IFileCompress _FileCompress = DI.Get<IFileCompress>();
+
         /// <summary>本实例总的初始化
         /// </summary>
         private void Initialize()
@@ -80,7 +86,7 @@ namespace NKnife.Configuring.Option
                         if (Directory.Exists(_OptionWorkDirectory)) //如果目录存在，将目录先删除(包括其中的文件)
                             UtilityFile.DeleteDirectory(_OptionWorkDirectory);
                         UtilityFile.CreateDirectory(_OptionWorkDateDirectory);
-                        AblyZip.UnZipFiles(fileInfo.FullName, _OptionWorkDateDirectory); //解压文件到目录
+                        _FileCompress.UnZipFiles(fileInfo.FullName, _OptionWorkDateDirectory); //解压文件到目录
                     }
                     catch (Exception e)
                     {
@@ -216,7 +222,7 @@ namespace NKnife.Configuring.Option
             if (string.IsNullOrWhiteSpace(outpath))
                 throw new FileNotFoundException(outpath);
             string filename = Path.Combine(outpath, OptionServiceCoderSetting.ME.OptionFileName);
-            AblyZip.ZipFiles(Directory.GetFiles(_OptionWorkDateDirectory), filename, _OptionWorkDateDirectory);
+            _FileCompress.ZipFiles(Directory.GetFiles(_OptionWorkDateDirectory), filename, _OptionWorkDateDirectory);
             return filename;
         }
 
@@ -363,7 +369,7 @@ namespace NKnife.Configuring.Option
         public object Backup()
         {
             string filename = string.Format("{0}.{1}", _Setting.OptionFileName, DateTime.Now.ToString("yyyyMMddHHmmss"));
-            AblyZip.ZipFiles(Directory.GetFiles(_OptionWorkDateDirectory), filename, _OptionWorkDateDirectory);
+            _FileCompress.ZipFiles(Directory.GetFiles(_OptionWorkDateDirectory), filename, _OptionWorkDateDirectory);
             return filename;
         }
 

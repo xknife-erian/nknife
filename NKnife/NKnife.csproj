@@ -35,9 +35,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -146,6 +143,7 @@
     <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="GUI\Wpf\CircularPanel.cs" />
+    <Compile Include="Interface\IFileCompress.cs" />
     <Compile Include="Ioc\DI.cs" />
     <Compile Include="Events\ChangedEventArgs.cs" />
     <Compile Include="Events\EventArgs.cs" />
@@ -553,7 +551,6 @@
     <Compile Include="Platform\Win32\Win32Defination.cs" />
     <Compile Include="Platform\Win32\WinMsg.cs" />
     <Compile Include="Platform\Win32\WinMsgUtil.cs" />
-    <Compile Include="Platform\ZipUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ArgumentValidationString.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -626,7 +623,6 @@
     <Compile Include="Utility\UtilitySorter.cs" />
     <Compile Include="Utility\UtilityString.cs" />
     <Compile Include="Utility\UtilityType.cs" />
-    <Compile Include="Wrapper\AblyZip.cs" />
     <Compile Include="Wrapper\API\API.cs" />
     <Compile Include="Wrapper\API\API.IMM32.cs" />
     <Compile Include="Wrapper\API\API.Sounder.cs" />
