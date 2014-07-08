@@ -10,7 +10,7 @@ namespace Gean.Gui.WinForm.IPAddressControl
       {
          get
          {
-            var control = (IPAddressControl)Control;
+            var control = (NKnife.GUI.WinForm.IPAddressControl.IpAddressControl)Control;
 
             if ( control.AutoHeight )
             {
@@ -27,7 +27,7 @@ namespace Gean.Gui.WinForm.IPAddressControl
       {
          get
          {
-            IPAddressControl control = (IPAddressControl)Control;
+            NKnife.GUI.WinForm.IPAddressControl.IpAddressControl control = (NKnife.GUI.WinForm.IPAddressControl.IpAddressControl)Control;
 
             IList snapLines = base.SnapLines;
 

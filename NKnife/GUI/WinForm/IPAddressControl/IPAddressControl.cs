@@ -5,13 +5,12 @@ using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
-using NKnife.GUI.WinForm.IPAddressControl;
-using Action = NKnife.GUI.WinForm.IPAddressControl.Action;
+using Gean.Gui.WinForm.IPAddressControl;
 
-namespace Gean.Gui.WinForm.IPAddressControl
+namespace NKnife.GUI.WinForm.IPAddressControl
 {
-   [DesignerAttribute( typeof( IPAddressControlDesigner ) )]
-   public class IPAddressControl : Control
+   [Designer( typeof( IPAddressControlDesigner ) )]
+   public class IpAddressControl : Control
    {
       #region Public Constants
 
@@ -284,7 +283,7 @@ namespace Gean.Gui.WinForm.IPAddressControl
 
       #region Constructors
 
-      public IPAddressControl()
+      public IpAddressControl()
       {
          BackColor = SystemColors.Window;
 

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using NKnife.Configuring.CoderSetting;
+using NKnife.Ioc;
+using NLog;
 
 
 namespace NKnife.SocketClientTestTool
@@ -17,6 +20,14 @@ namespace NKnife.SocketClientTestTool
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            DI.Initialize();
+            var logger = LogManager.GetCurrentClassLogger();
+            logger.Info("初始化...");
+
+            CoderSettingXmlFile[] fileList = CoderSettingService.GetOptionFiles();
+            CoderSettingService.ME.Initializes(fileList);
+
             Application.Run(new MainForm());
 
         }
