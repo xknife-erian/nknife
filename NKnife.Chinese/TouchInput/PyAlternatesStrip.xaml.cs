@@ -18,6 +18,7 @@ namespace NKnife.Chinese.TouchInput
     {
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
 
+
         public PyAlternatesStrip()
         {
             InitializeComponent();
