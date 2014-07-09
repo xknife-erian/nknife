@@ -24,6 +24,8 @@ namespace NKnife.Chinese.TouchInput
             InitializeComponent();
             _AlternatesListBox.ItemsSource = DI.Get<PinyinAlternateCollection>();
             _InputCharListBox.ItemsSource = DI.Get<PinyinSeparatesCollection>();
+            _HasLastButton.DataContext = DI.Get<PinyinAlternateCollection>();
+            _HasPreviousButton.DataContext = DI.Get<PinyinAlternateCollection>();
         }
 
         /// <summary>
@@ -74,6 +76,16 @@ namespace NKnife.Chinese.TouchInput
             OnAlternateSelected();//候选词选择完成的事件
         }
 
+        private void HasPreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+            DI.Get<PinyinAlternateCollection>().Previous();
+        }
+
+        private void HasLastButton_Click(object sender, RoutedEventArgs e)
+        {
+            DI.Get<PinyinAlternateCollection>().Last();
+        }
+
         private void ShowWordStrip(String word, MouseButtonEventArgs e)
         {
             var strip = DI.Get<CurrentWordStrip>();
@@ -98,6 +110,8 @@ namespace NKnife.Chinese.TouchInput
             var sc = DI.Get<PinyinSeparatesCollection>();
             sc.BackSpaceLetter();
         }
+
+
     }
 
 }

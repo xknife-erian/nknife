@@ -46,8 +46,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="上页" Margin="3,5" Padding="8,0" />
-            <Button Content="下页" Margin="3,5" Padding="8,0" />
+            <Button Name="_HasPreviousButton" Content="上页" Margin="3,5" Padding="8,0" IsEnabled="{Binding HasPrevious}" Click="HasPreviousButton_Click"/>
+            <Button Name="_HasLastButton" Content="下页" Margin="3,5" Padding="8,0" IsEnabled="{Binding HasLast}" Click="HasLastButton_Click"/>
         </VirtualizingStackPanel>
 
     </Grid>

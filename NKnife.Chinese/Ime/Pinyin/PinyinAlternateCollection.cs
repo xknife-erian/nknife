@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using NKnife.Ioc;
 
@@ -22,14 +23,34 @@ namespace NKnife.Chinese.Ime.Pinyin
 
         private void ResetCurrent()
         {
-            CurrentPage = 1;
+            _CurrentPage = 1;
             HasPrevious = false;
             HasLast = false;
         }
 
-        public int CurrentPage { get; set; }
-        public bool HasPrevious { get; set; }
-        public bool HasLast { get; set; }
+        private int _CurrentPage;
+
+        private bool _HasPrevious;
+        public bool HasPrevious
+        {
+            get { return _HasPrevious; }
+            set
+            {
+                _HasPrevious = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("HasPrevious"));
+            }
+        }
+
+        private bool _HasLast;
+        public bool HasLast
+        {
+            get { return _HasLast; }
+            set
+            {
+                _HasLast = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("HasLast"));
+            }
+        }
 
         private char[] _CurrentResult;
 
@@ -51,13 +72,31 @@ namespace NKnife.Chinese.Ime.Pinyin
                 {
                     if (i<_CurrentResult.Length)
                     {
-                        Add(_CurrentResult[CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                        Add(_CurrentResult[_CurrentPage * i].ToString(CultureInfo.InvariantCulture));
                     }
                 }
             }
             if (e.Pinyin.Count ==1 && (_CurrentResult == null || _CurrentResult.Length == 0))
             {
                 ClearAlternates();
+            }
+        }
+
+        public void Previous()
+        {
+
+        }
+
+        public void Last()
+        {
+            Clear();
+            _CurrentPage++;
+            for (int i = 0; i < WORD_COUNT; i++)
+            {
+                if (i < _CurrentResult.Length)
+                {
+                    Add(_CurrentResult[_CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                }
             }
         }
 
