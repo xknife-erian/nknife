@@ -8,7 +8,7 @@ using SocketKnife.Protocol;
 
 namespace SocketKnife.Config
 {
-    public class ProtocolSetting : XmlCoderSetting
+    public abstract class ProtocolSetting : XmlCoderSetting
     {
         private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
 

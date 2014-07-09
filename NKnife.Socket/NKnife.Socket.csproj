@@ -59,10 +59,8 @@
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Common\Tcps.cs" />
-    <Compile Include="Config\AliveSocketClientSetting.cs" />
-    <Compile Include="Config\AliveSocketServerSetting.cs" />
-    <Compile Include="Config\LightSocketClientSetting.cs" />
-    <Compile Include="Config\LightSocketServerSetting.cs" />
+    <Compile Include="Config\ClientSetting.cs" />
+    <Compile Include="Config\ServerSetting.cs" />
     <Compile Include="Config\ProtocolSetting.cs" />
     <Compile Include="Interfaces\IDatagramCommandParser.cs" />
     <Compile Include="Interfaces\IDatagramDecoder.cs" />
