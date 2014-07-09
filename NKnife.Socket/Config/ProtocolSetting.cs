@@ -12,29 +12,6 @@ namespace SocketKnife.Config
     {
         private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
 
-        #region 单件实例
-
-        /// <summary>
-        ///     获得一个本类型的单件实例.
-        /// </summary>
-        /// <value>The instance.</value>
-        public static ProtocolSetting ME
-        {
-            get { return Singleton.Instance; }
-        }
-
-        private class Singleton
-        {
-            internal static readonly ProtocolSetting Instance;
-
-            static Singleton()
-            {
-                Instance = new ProtocolSetting();
-            }
-        }
-
-        #endregion 单件实例
-
         protected ProtocolSetting()
         {
             FamilyMap = new ConcurrentDictionary<string, ProtocolFamily>();

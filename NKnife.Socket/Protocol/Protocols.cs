@@ -1,4 +1,5 @@
 ﻿using System;
+using NKnife.Ioc;
 using NKnife.Utility;
 using NLog;
 using SocketKnife.Config;
@@ -36,7 +37,7 @@ namespace SocketKnife.Protocol
             try
             {
                 ProtocolFamily pfamily;
-                if (!ProtocolSetting.ME.FamilyMap.TryGetValue(family, out pfamily))
+                if (!DI.Get<ProtocolSetting>().FamilyMap.TryGetValue(family, out pfamily))
                 {
                     _Logger.Warn(string.Format("协议族缓存中没有对应的协议族({0})。", family));
                     return null;
@@ -52,7 +53,7 @@ namespace SocketKnife.Protocol
                 //协议的工具集
                 string toolKey = string.Format("{0}{1}", pfamily.Family, command);
                 ProtocolTools tools = null;
-                if (ProtocolSetting.ME.ProtocolToolsMap.TryGetValue(toolKey, out tools))
+                if (DI.Get<ProtocolSetting>().ProtocolToolsMap.TryGetValue(toolKey, out tools))
                     protocol.Tools = tools;
                 protocol.Content = GetBlankContent(family, command);
                 return protocol;
@@ -73,7 +74,7 @@ namespace SocketKnife.Protocol
         public static IProtocolContent GetBlankContent(string family, string command)
         {
             Type type;
-            if (ProtocolSetting.ME.ProtocolContentMap.TryGetValue(family + command, out type))
+            if (DI.Get<ProtocolSetting>().ProtocolContentMap.TryGetValue(family + command, out type))
             {
                 try
                 {
