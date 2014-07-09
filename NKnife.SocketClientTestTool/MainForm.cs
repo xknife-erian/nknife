@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using NKnife.Ioc;
 using NKnife.Logging.LogPanel;
-using NKnife.Net;
 using NKnife.Utility;
 
 namespace NKnife.SocketClientTestTool
@@ -20,7 +19,7 @@ namespace NKnife.SocketClientTestTool
         public MainForm()
         {
             InitializeComponent();
-            Icon = NKnife.SocketClientTestTool.Properties.Resources.MainIcon;
+            Icon = Properties.Resources.MainIcon;
             SetupLogControl();
             _SendButton.Enabled = false;
             _CLoseButton.Enabled = false;
@@ -35,49 +34,17 @@ namespace NKnife.SocketClientTestTool
             _LogTabPage.Controls.Add(_LogViewPanel);
         }
 
-        QuickSocket _QuickSocket;
-
         private void _ConnButton_Click(object sender, EventArgs e)
         {
-            if (_QuickSocket == null)
-            {
-                _QuickSocket = new QuickSocket(_IpAddressControl.Text, (int)_PortNumberBox.Value, 15000);
-                _SendButton.Enabled = true;
-                _ConnButton.Enabled = false;
-                _CLoseButton.Enabled = true;
-            }
         }
 
         private void _CLoseButton_Click(object sender, EventArgs e)
         {
-            if (_QuickSocket != null)
-            {
-                _QuickSocket.Close();
-                _ConnButton.Enabled = true;
-                _SendButton.Enabled = false;
-                _CLoseButton.Enabled = false;
-                _QuickSocket = null;
-            }
         }
 
         private void _SendButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var rec = _QuickSocket.SendTo(__ContentTextbox.Text, true, true);
-                var r = new List<byte>();
-                foreach (var bytese in rec)
-                {
-                    r.AddRange(bytese);
-                }
-                _ReceviedTextBox.Text = Encoding.Default.GetString(r.ToArray());
-            }
-            catch (Exception)
-            {
-                
-            }
         }
-
 
     }
 }
