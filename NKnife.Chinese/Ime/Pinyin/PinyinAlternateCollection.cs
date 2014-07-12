@@ -60,23 +60,25 @@ namespace NKnife.Chinese.Ime.Pinyin
         private void SeparatorOnPinyinSeparated(object sender, PinyinSeparatedEventArgs e)
         {
             var pinyin = e.Pinyin;
-            _CurrentResult = Pinyin.GetCharArrayOfPinyin(pinyin[0]);
-            if (_CurrentResult != null && _CurrentResult.Length > 0)
+            var r = Pinyin.GetCharArrayOfPinyin(pinyin[0]);
+            if (r != null && r.Length > 0)
             {
+                _CurrentResult = new char[r.Length];
+                Array.Copy(r, _CurrentResult, r.Length);
                 ClearAlternates();
-                if (_CurrentResult.Length > WORD_COUNT)
+                if (r.Length > WORD_COUNT)
                 {
                     HasLast = true;
                 }
                 for (int i = 0; i < WORD_COUNT; i++)
                 {
-                    if (i<_CurrentResult.Length)
+                    if (i<r.Length)
                     {
-                        Add(_CurrentResult[_CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                        Add(r[_CurrentPage * i].ToString(CultureInfo.InvariantCulture));
                     }
                 }
             }
-            if (e.Pinyin.Count ==1 && (_CurrentResult == null || _CurrentResult.Length == 0))
+            if (e.Pinyin.Count ==1 && (r == null || r.Length == 0))
             {
                 ClearAlternates();
             }
