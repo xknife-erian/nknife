@@ -35,6 +35,7 @@ namespace NKnife.Chinese.TouchInput
             ShowInTaskbar = false;
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _HwStrip.AlternateSelected += HwStrip_AlternateSelected;
+            _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
         }
 
         #region 当窗体载入后，进行位置的确定
@@ -123,9 +124,12 @@ namespace NKnife.Chinese.TouchInput
         /// </summary>
         private bool _PyStripEnable;
 
-        private void PyStrip_AlternateSelected(object sender, EventArgs e)
+        private void PyStrip_AlternateSelected(object sender, AlternateSelectedEventArgs e)
         {
-            HidePyStrip();
+            if (!e.HasAlternate)
+            {
+                HidePyStrip();
+            }
         }
 
         private void HwStrip_AlternateSelected(object sender, EventArgs e)
