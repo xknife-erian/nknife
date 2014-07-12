@@ -27,7 +27,6 @@ namespace NKnife.Chinese.TouchInput
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
 
         private Params.InputMode _InputMode = Params.InputMode.Pinyin;
-        private bool _IsUpper = false;
 
         public TouchInputWindow()
         {
@@ -46,7 +45,7 @@ namespace NKnife.Chinese.TouchInput
             WindowStartupLocation = WindowStartupLocation.Manual;
 
             int h = Screen.PrimaryScreen.Bounds.Height;
-            Top = h - Height - 40;
+            Top = h - Height - 15;
 
             int w = Screen.PrimaryScreen.Bounds.Width;
             Left = (w - Width)/2;
@@ -244,8 +243,7 @@ namespace NKnife.Chinese.TouchInput
                 case Params.InputMode.Pinyin:
                 {
                     ShowPyStrip();
-                    if (_IsUpper)
-                        KeyboardSwitchCase(1);
+                    KeyboardSwitchCase(1);
                     var py = DI.Get<PinyinSeparatesCollection>();
                     py.AddLetter(((Button) sender).Content.ToString());
                     break;

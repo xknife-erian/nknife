@@ -8,9 +8,9 @@ using System.Windows;
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("NKnife.Chinese")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("xknife工作室面向大屏幕触摸屏开发的屏幕输入法，以及中文相关的类库")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("xknife.net")]
 [assembly: AssemblyProduct("NKnife.Chinese")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
@@ -30,26 +30,10 @@ using System.Windows;
 
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
 
-
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //主题特定资源词典所处位置
-    //(在页面或应用程序资源词典中 
-    // 未找到某个资源的情况下使用)
     ResourceDictionaryLocation.SourceAssembly //常规资源词典所处位置
-    //(在页面、应用程序或任何主题特定资源词典中
-    // 未找到某个资源的情况下使用)
 )]
 
-
-// 程序集的版本信息由下面四个值组成: 
-//
-//      主版本
-//      次版本 
-//      生成号
-//      修订号
-//
-// 可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
-// 方法是按如下所示使用“*”: 
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1407.*")]
-[assembly: AssemblyFileVersion("1.1407.*")]
+[assembly: AssemblyVersion("2.1407.*")]
+[assembly: AssemblyFileVersion("2.14.7.12")]
