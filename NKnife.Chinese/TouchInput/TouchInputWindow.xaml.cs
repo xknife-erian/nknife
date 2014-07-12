@@ -21,6 +21,7 @@ namespace NKnife.Chinese.TouchInput
     public partial class TouchInputWindow : Window
     {
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private const string SYMBOL = "“)^~}、/\\…|：；》《'%?<”>&({]![";
 
         private readonly Params _PanelParams = DI.Get<Params>();
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
@@ -290,7 +291,10 @@ namespace NKnife.Chinese.TouchInput
             Params.PlayVoice(Properties.Resources.键_功能);
             if (_PyStripEnable)
             {
-                _PyStrip.BackSpace();
+                if (!_PyStrip.BackSpace())
+                {
+                    HidePyStrip();
+                }
             }
             else
             {
@@ -306,6 +310,7 @@ namespace NKnife.Chinese.TouchInput
         private void EnterButtonClick(object sender, RoutedEventArgs e)
         {
             _Simulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+            HidePyStrip();
             Params.PlayVoice(Properties.Resources.键_全键盘);
         }
 
@@ -371,7 +376,11 @@ namespace NKnife.Chinese.TouchInput
                 if (button == null)
                     continue;
                 Button btn = button;
-                string c = btn.Content.ToString().ToUpper();
+                if (btn.Tag == null)
+                {
+                    continue;
+                }
+                string c = btn.Tag.ToString().ToUpper();
                 if (ENGLISH.Contains(c))
                 {
                     switch (n)
@@ -383,6 +392,8 @@ namespace NKnife.Chinese.TouchInput
                             btn.Content = c.ToUpper();
                             break;
                         case -1:
+                            int i = ENGLISH.IndexOf(c, StringComparison.Ordinal);
+                            btn.Content = SYMBOL[i];
                             break;
                     }
                 }

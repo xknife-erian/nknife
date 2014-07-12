@@ -93,27 +93,27 @@
 			<Button FontSize="20" Content="。" Grid.Row="0" Grid.Column="9" Margin="2" Click="SymbolClick" />
 			<Button FontSize="15" Content="删除" Grid.Row="0" Grid.Column="10" Margin="2" Grid.ColumnSpan="2" Click="BackFunctionButtonClick" />
 			<Button FontSize="15" Content="符号" Grid.Row="1" Grid.Column="0" Margin="2" Click="JumpToSymbolFunctionButtonClick" />
-			<Button FontSize="20" Content="Q" Grid.Row="1" Grid.Column="1" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="W" Grid.Row="1" Grid.Column="2" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="E" Grid.Row="1" Grid.Column="3" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="R" Grid.Row="1" Grid.Column="4" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="T" Grid.Row="1" Grid.Column="5" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="Y" Grid.Row="1" Grid.Column="6" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="U" Grid.Row="1" Grid.Column="7" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="I" Grid.Row="1" Grid.Column="8" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="O" Grid.Row="1" Grid.Column="9" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="P" Grid.Row="1" Grid.Column="10" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+			<Button FontSize="20" Tag="Q" Content="Q" Grid.Row="1" Grid.Column="1" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="W" Content="W" Grid.Row="1" Grid.Column="2" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="E" Content="E" Grid.Row="1" Grid.Column="3" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="R" Content="R" Grid.Row="1" Grid.Column="4" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="T" Content="T" Grid.Row="1" Grid.Column="5" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="Y" Content="Y" Grid.Row="1" Grid.Column="6" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="U" Content="U" Grid.Row="1" Grid.Column="7" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="I" Content="I" Grid.Row="1" Grid.Column="8" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="O" Content="O" Grid.Row="1" Grid.Column="9" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="P" Content="P" Grid.Row="1" Grid.Column="10" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
 			<Button FontSize="15" Content="换行" Grid.Row="1" Grid.Column="11" Grid.RowSpan="2" Margin="2" Click="EnterButtonClick" />
 			<Button Name="_UpperButton" FontSize="15" Content="大写" Grid.Row="2" Grid.Column="0" Margin="2" Grid.ColumnSpan="2" Click="UpperButtonClick" />
-			<Button FontSize="20" Content="A" Grid.Row="2" Grid.Column="2" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="S" Grid.Row="2" Grid.Column="3" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="D" Grid.Row="2" Grid.Column="4" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="F" Grid.Row="2" Grid.Column="5" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="G" Grid.Row="2" Grid.Column="6" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="H" Grid.Row="2" Grid.Column="7" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="J" Grid.Row="2" Grid.Column="8" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="K" Grid.Row="2" Grid.Column="9" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="L" Grid.Row="2" Grid.Column="10" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="A" Content="A" Grid.Row="2" Grid.Column="2" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="S" Content="S" Grid.Row="2" Grid.Column="3" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="D" Content="D" Grid.Row="2" Grid.Column="4" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="F" Content="F" Grid.Row="2" Grid.Column="5" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="G" Content="G" Grid.Row="2" Grid.Column="6" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="H" Content="H" Grid.Row="2" Grid.Column="7" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="J" Content="J" Grid.Row="2" Grid.Column="8" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="K" Content="K" Grid.Row="2" Grid.Column="9" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="L" Content="L" Grid.Row="2" Grid.Column="10" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
 			<Button Name="_ModeSwitchButton" Grid.Row="3" Grid.Column="0" Margin="2" Grid.ColumnSpan="2" Click="EnglishFunctionClick" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -133,13 +133,13 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button FontSize="20" Content="Z" Grid.Row="3" Grid.Column="2" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="X" Grid.Row="3" Grid.Column="3" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="C" Grid.Row="3" Grid.Column="4" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="V" Grid.Row="3" Grid.Column="5" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="B" Grid.Row="3" Grid.Column="6" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="N" Grid.Row="3" Grid.Column="7" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button FontSize="20" Content="M" Grid.Row="3" Grid.Column="8" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="Z" Content="Z" Grid.Row="3" Grid.Column="2" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="X" Content="X" Grid.Row="3" Grid.Column="3" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="C" Content="C" Grid.Row="3" Grid.Column="4" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="V" Content="V" Grid.Row="3" Grid.Column="5" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="B" Content="B" Grid.Row="3" Grid.Column="6" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="N" Content="N" Grid.Row="3" Grid.Column="7" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
+            <Button FontSize="20" Tag="M" Content="M" Grid.Row="3" Grid.Column="8" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
 			<Button FontSize="15" Content="空格" Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="3" Margin="2" Click="SpaceButtonClick" />
 		</Grid>
 

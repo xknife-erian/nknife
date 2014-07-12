@@ -109,10 +109,10 @@ namespace NKnife.Chinese.TouchInput
             strip.UpdateText("");
         }
 
-        public void BackSpace()
+        public bool BackSpace()
         {
             var sc = DI.Get<PinyinSeparatesCollection>();
-            sc.BackSpaceLetter();
+            return sc.BackSpaceLetter();
         }
     }
 
