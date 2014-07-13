@@ -12,6 +12,7 @@ using NKnife.Chinese.TouchInput.Common;
 using NKnife.Ioc;
 using NKnife.Wrapper.API;
 using Button = System.Windows.Controls.Button;
+using Control = System.Windows.Controls.Control;
 
 namespace NKnife.Chinese.TouchInput
 {
@@ -36,6 +37,28 @@ namespace NKnife.Chinese.TouchInput
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _HwStrip.AlternateSelected += HwStrip_AlternateSelected;
             _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
+        }
+
+        private delegate void ShowHandle();
+
+        public void AsynShow()
+        {
+            if (Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+            {
+                Dispatcher.Invoke(new ShowHandle(AsynShow), this);
+            }
+            Show();
+        }
+
+        private delegate void HideHandle();
+
+        public void AsynHide()
+        {
+            if (Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+            {
+                Dispatcher.Invoke(new HideHandle(AsynHide), this);
+            }
+            Hide();
         }
 
         #region 当窗体载入后，进行位置的确定
