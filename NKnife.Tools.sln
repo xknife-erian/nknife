@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Compress", "NKnife.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Socket\NKnife.Socket.csproj", "{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.SocketClient.StarterKit", "NKnife.SocketClient.StarterKit\NKnife.SocketClient.StarterKit.csproj", "{79763417-52E0-4F46-B2DA-DAF13AC84807}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket.StarterKit", "NKnife.Socket.StarterKit\NKnife.Socket.StarterKit.csproj", "{79763417-52E0-4F46-B2DA-DAF13AC84807}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

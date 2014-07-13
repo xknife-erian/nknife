@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ninject.Modules;
-using NKnife.SocketClient.StarterKit.Base;
+﻿using Ninject.Modules;
+using NKnife.Socket.StarterKit.Base;
 using SocketKnife.Config;
 
-namespace NKnife.SocketClient.StarterKit.Ioc
+namespace NKnife.Socket.StarterKit.Ioc
 {
     public class SocketModule : NinjectModule 
     {

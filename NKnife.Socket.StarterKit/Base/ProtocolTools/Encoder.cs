@@ -2,7 +2,7 @@
 using System.Text;
 using SocketKnife.Interfaces;
 
-namespace NKnife.SocketClient.StarterKit.Base.ProtocolTools
+namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器

@@ -5,10 +5,10 @@ using System.Threading;
 using System.Windows.Forms;
 using NKnife.Ioc;
 using NKnife.Logging.LogPanel;
-using NKnife.SocketClient.StarterKit.Base;
+using NKnife.Socket.StarterKit.Base;
 using SocketKnife.Interfaces;
 
-namespace NKnife.SocketClient.StarterKit
+namespace NKnife.Socket.StarterKit
 {
     public partial class MainForm : Form
     {

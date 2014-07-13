@@ -1,7 +1,7 @@
 ﻿using System;
 using SocketKnife.Config;
 
-namespace NKnife.SocketClient.StarterKit.Base
+namespace NKnife.Socket.StarterKit.Base
 {
     public class SocketOption : ClientSetting
     {

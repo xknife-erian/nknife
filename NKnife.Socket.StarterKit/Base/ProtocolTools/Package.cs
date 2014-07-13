@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using SocketKnife.Interfaces;
 
-namespace NKnife.SocketClient.StarterKit.Base.ProtocolTools
+namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {
     public class Package : IProtocolPackage
     {

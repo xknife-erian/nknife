@@ -1,6 +1,6 @@
 ﻿using SocketKnife.Interfaces;
 
-namespace NKnife.SocketClient.StarterKit.Base.ProtocolTools
+namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {
     public class Tails : IProtocolTail
     {

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using NKnife.Configuring.CoderSetting;
 using NKnife.Ioc;
-using NKnife.SocketClient.StarterKit;
 using NLog;
 
-
-namespace NKnife.SocketClientTestTool
+namespace NKnife.Socket.StarterKit
 {
     static class Program
     {

@@ -4,17 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{79763417-52E0-4F46-B2DA-DAF13AC84807}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocketKnife</RootNamespace>
-    <AssemblyName>SocketKnife</AssemblyName>
+    <RootNamespace>NKnife.Socket.StarterKit</RootNamespace>
+    <AssemblyName>NKnife.Socket.StarterKit</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,6 +35,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\MainIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject">
@@ -44,70 +49,82 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\BufferContainer.cs" />
-    <Compile Include="Common\ConnectionStatus.cs" />
-    <Compile Include="Common\Delegates.cs" />
-    <Compile Include="Common\Enums.cs" />
-    <Compile Include="Common\Exceptions.cs" />
-    <Compile Include="Common\ReceiveQueue.cs" />
-    <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
-    <Compile Include="Common\Tcps.cs" />
-    <Compile Include="Config\ClientSetting.cs" />
-    <Compile Include="Config\ServerSetting.cs" />
-    <Compile Include="Config\ProtocolSetting.cs" />
-    <Compile Include="Interfaces\IDatagramCommandParser.cs" />
-    <Compile Include="Interfaces\IDatagramDecoder.cs" />
-    <Compile Include="Interfaces\IDatagramEncoder.cs" />
-    <Compile Include="Interfaces\IProtocol.cs" />
-    <Compile Include="Interfaces\IProtocolContent.cs" />
-    <Compile Include="Interfaces\IProtocolHead.cs" />
-    <Compile Include="Interfaces\IProtocolPackage.cs" />
-    <Compile Include="Interfaces\IProtocolParser.cs" />
-    <Compile Include="Interfaces\IProtocolTail.cs" />
-    <Compile Include="Interfaces\ISocketBase.cs" />
-    <Compile Include="Interfaces\ISocketClient.cs" />
-    <Compile Include="Interfaces\ISocketClientSetting.cs" />
-    <Compile Include="Interfaces\ISocketServer.cs" />
-    <Compile Include="Interfaces\ISocketServerSetting.cs" />
-    <Compile Include="Client.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="Base\SocketClient.cs" />
+    <Compile Include="Base\SocketOption.cs" />
+    <Compile Include="Base\Params.cs" />
+    <Compile Include="Base\ProtocolTools\Decoder.cs" />
+    <Compile Include="Base\ProtocolTools\Encoder.cs" />
+    <Compile Include="Base\ProtocolTools\Heads.cs" />
+    <Compile Include="Base\ProtocolTools\Package.cs" />
+    <Compile Include="Base\ProtocolTools\Parser.cs" />
+    <Compile Include="Base\ProtocolTools\Tails.cs" />
+    <Compile Include="Base\SocketProtocolSetting.cs" />
+    <Compile Include="Ioc\SocketModule.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol\AbstractProtocol.cs" />
-    <Compile Include="Protocol\Implementation\Byte4Decoder.cs" />
-    <Compile Include="Protocol\Implementation\Byte4Encoder.cs" />
-    <Compile Include="Protocol\Implementation\DatagramCommandParser.cs" />
-    <Compile Include="Protocol\Implementation\DatagramDecoder.cs" />
-    <Compile Include="Protocol\Implementation\DatagramEncoder.cs" />
-    <Compile Include="Protocol\Implementation\EndMarkDecoder.cs" />
-    <Compile Include="Protocol\Implementation\EndMarkEncoder.cs" />
-    <Compile Include="Protocol\Implementation\ProtocolDataTableDeserializeParser.cs" />
-    <Compile Include="Protocol\Implementation\ProtocolDeserializeParser.cs" />
-    <Compile Include="Protocol\Implementation\ProtocolHead.cs" />
-    <Compile Include="Protocol\Implementation\ProtocolTail.cs" />
-    <Compile Include="Protocol\Implementation\ProtocolXmlPackage.cs" />
-    <Compile Include="Protocol\Implementation\ProtocolXmlParser.cs" />
-    <Compile Include="Protocol\ProtocolContent.cs" />
-    <Compile Include="Protocol\ProtocolFactory.cs" />
-    <Compile Include="Protocol\ProtocolFamily.cs" />
-    <Compile Include="Protocol\ProtocolFamilyType.cs" />
-    <Compile Include="Protocol\Protocols.cs" />
-    <Compile Include="Protocol\ProtocolTools.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\ConfigDemo.xml" />
+    <None Include="Resources\MainIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NKnife.Socket\NKnife.Socket.csproj">
+      <Project>{f3299ac1-2d25-4b91-a4d9-f9c1ab6f0825}</Project>
+      <Name>NKnife.Socket</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Config.codersetting">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

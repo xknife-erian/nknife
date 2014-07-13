@@ -3,8 +3,7 @@
     /// <summary>
     ///     协议家族枚举
     /// </summary>
-    public enum
-        ProtocolFamilyType : ushort
+    public enum ProtocolFamilyType : ushort
     {
         /// <summary>
         ///     终端初始化信息

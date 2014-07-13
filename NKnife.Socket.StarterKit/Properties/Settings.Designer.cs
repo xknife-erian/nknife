@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NKnife.SocketClient.StarterKit.Properties {
+namespace NKnife.Socket.StarterKit.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

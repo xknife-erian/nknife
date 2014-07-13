@@ -1,6 +1,6 @@
 ﻿using NKnife.GUI.WinForm.IPAddressControl;
 
-namespace NKnife.SocketClient.StarterKit
+namespace NKnife.Socket.StarterKit
 {
     partial class MainForm
     {

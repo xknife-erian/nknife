@@ -1,4 +1,4 @@
-﻿namespace NKnife.SocketClient.StarterKit.Base
+﻿namespace NKnife.Socket.StarterKit.Base
 {
     public class Params
     {

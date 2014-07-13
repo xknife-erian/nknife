@@ -3,7 +3,7 @@ using SocketKnife.Common;
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol;
 
-namespace NKnife.SocketClient.StarterKit.Base
+namespace NKnife.Socket.StarterKit.Base
 {
     public class ClientKit : Client
     {
