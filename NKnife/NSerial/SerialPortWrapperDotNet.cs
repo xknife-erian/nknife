@@ -72,7 +72,7 @@ namespace NKnife.NSerial
             }
             catch (Exception e)
             {
-                _Logger.WarnE("无法打开串口:" + portName, e);
+                _Logger.Warn("无法打开串口:" + portName, e);
                 IsOpen = false;
                 return false;
             }
@@ -96,7 +96,7 @@ namespace NKnife.NSerial
             }
             catch (Exception e)
             {
-                _Logger.WarnE("关闭串口异常:" + _SerialPort.PortName, e);
+                _Logger.Warn("关闭串口异常:" + _SerialPort.PortName, e);
                 return false;
             }
         }

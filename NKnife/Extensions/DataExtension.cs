@@ -105,7 +105,7 @@ namespace System.Data
                         }
                         catch (Exception e)
                         {
-                            _Logger.WarnE(String.Format("属性:{0}赋值失败。{1}", propertyInfo.Name, row.Table.TableName), e);
+                            _Logger.Warn(String.Format("属性:{0}赋值失败。{1}", propertyInfo.Name, row.Table.TableName), e);
                         }
                         hasColumn = true;
                         break;

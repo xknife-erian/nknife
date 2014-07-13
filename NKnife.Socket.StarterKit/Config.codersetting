@@ -4,7 +4,7 @@
   <!--客户端-->
   <option class="NKnife.Socket.StarterKit.Base.SocketOption">
     <!--心跳间隔-->
-    <HeartRange>20000</HeartRange>
+    <HeartRange>10000</HeartRange>
     <!--缓存区大小-->
     <BufferSize>1024</BufferSize>
     <!--同步的发送与接收的超时-->

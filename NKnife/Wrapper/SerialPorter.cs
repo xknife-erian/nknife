@@ -37,7 +37,7 @@ namespace Gean.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.ErrorE(string.Format("串口初始化异常.{0}", _SerialPort.PortName), e);
+                _Logger.Error(string.Format("串口初始化异常.{0}", _SerialPort.PortName), e);
                 return false;
             }
         }
@@ -78,7 +78,7 @@ namespace Gean.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.WarnE(string.Format("打印时向串口写数据异常。{0}", Encoding.Default.GetString(byteArraySrc)), e);
+                _Logger.Warn(string.Format("打印时向串口写数据异常。{0}", Encoding.Default.GetString(byteArraySrc)), e);
                 return 1;
             }
         }
@@ -96,7 +96,7 @@ namespace Gean.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.WarnE(string.Format("从串口读数据异常。"), e);
+                _Logger.Warn(string.Format("从串口读数据异常。"), e);
                 return -1;
             }
         }

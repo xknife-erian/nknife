@@ -75,7 +75,7 @@ namespace SocketKnife.Protocol
                 }
                 catch (Exception e)
                 {
-                    _Logger.WarnE(string.Format("无法从协议中正确获取指定键({0})的值。", key), e);
+                    _Logger.Warn(string.Format("无法从协议中正确获取指定键({0})的值。", key), e);
                     return null;
                 }
             }

@@ -407,7 +407,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _Logger.WarnE("TalkTo接收数据异常。", e);
+                _Logger.Warn("TalkTo接收数据异常。", e);
             }
 
             if (currentOffset < 1)
@@ -435,7 +435,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _Logger.WarnE("接收数据解析异常。", e);
+                _Logger.Warn("接收数据解析异常。", e);
             }
             return replay;
         }
@@ -453,8 +453,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
-                _Logger.DebugE("Socket客户端Shutdown异常。", e);
+                _Logger.Debug("Socket客户端Shutdown异常。", e);
             }
             try
             {
@@ -464,8 +463,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
-                _Logger.WarnE("关闭Socket客户端异常。", e);
+                _Logger.Warn("关闭Socket客户端异常。", e);
                 return false;
             }
         }
@@ -556,7 +554,7 @@ namespace SocketKnife
                 }
                 catch (Exception ex)
                 {
-                    _Logger.ErrorE("当数据解析完成后触发事件异常。", ex);
+                    _Logger.Error("当数据解析完成后触发事件异常。", ex);
                 }
             }
         }
@@ -663,7 +661,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _Logger.ErrorE("客户端异步连接远端时异常.{0}", e);
+                _Logger.Error("客户端异步连接远端时异常.{0}", e);
             }
         }
 
@@ -703,7 +701,7 @@ namespace SocketKnife
                 }
                 catch (Exception ex)
                 {
-                    _Logger.ErrorE("当成功连接时的处理发生异常.", ex);
+                    _Logger.Error("当成功连接时的处理发生异常.", ex);
                 }
             }
             else
@@ -718,7 +716,7 @@ namespace SocketKnife
                 }
                 catch (Exception ex)
                 {
-                    _Logger.ErrorE("当连接未成功时的处理发生异常.", ex);
+                    _Logger.Error("当连接未成功时的处理发生异常.", ex);
                 }
             }
             _ConnectionAutoReset.Set();
@@ -744,7 +742,7 @@ namespace SocketKnife
             }
             catch (Exception ex)
             {
-                _Logger.ErrorE("接收数据时读取Buffer异常。", ex);
+                _Logger.Error("接收数据时读取Buffer异常。", ex);
             }
 
             try
@@ -756,7 +754,7 @@ namespace SocketKnife
             }
             catch (Exception ex)
             {
-                _Logger.ErrorException("继续异步地从服务端 Socket 接收数据异常。", ex);
+                _Logger.Error("继续异步地从服务端 Socket 接收数据异常。", ex);
             }
         }
 

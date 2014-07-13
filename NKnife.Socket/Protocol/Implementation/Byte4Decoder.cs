@@ -52,7 +52,7 @@ namespace SocketKnife.Protocol.Implementation
             }
             catch (Exception e)
             {
-                _Logger.WarnE("解码转换异常", e);
+                _Logger.Warn("解码转换异常", e);
                 return new string[0];
             }
         }
@@ -82,7 +82,7 @@ namespace SocketKnife.Protocol.Implementation
             }
             catch (Exception e)
             {
-                _Logger.ErrorE("解码异常", e);
+                _Logger.Error("解码异常", e);
             }
 
             if (!UtilityCollection.IsNullOrEmpty(protocolBytes))

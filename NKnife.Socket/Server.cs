@@ -698,7 +698,7 @@ namespace SocketKnife
                 }
                 catch (Exception ex)
                 {
-                    _Logger.WarnE(string.Format("协议字符串预处理异常。{0}", dg), ex);
+                    _Logger.Warn(string.Format("协议字符串预处理异常。{0}", dg), ex);
                 }
             }
         }

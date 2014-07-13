@@ -58,7 +58,7 @@ namespace NKnife.Configuring.Controls
             }
             catch (Exception e)
             {
-                _Logger.WarnE("初始化时为所有控件加载事件异常", e);
+                _Logger.Warn("初始化时为所有控件加载事件异常", e);
             }
         }
 

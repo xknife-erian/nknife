@@ -162,7 +162,6 @@
     <Compile Include="Extensions\DateTimes\TimeSpanExtension.cs" />
     <Compile Include="Extensions\CollectionExtension.cs" />
     <Compile Include="Extensions\IntegerExtension.cs" />
-    <Compile Include="Extensions\LoggerExtension.cs" />
     <Compile Include="Extensions\QueryExtension.cs" />
     <Compile Include="Extensions\SocketExtension.cs" />
     <Compile Include="Extensions\StringBuilderExtension.cs" />

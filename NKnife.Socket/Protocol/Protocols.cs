@@ -49,7 +49,7 @@ namespace SocketKnife.Protocol
             }
             catch (Exception e)
             {
-                _Logger.ErrorE("从协议工厂初例协议异常。", e);
+                _Logger.Error("从协议工厂初例协议异常。", e);
                 return protocol;
             }
         }

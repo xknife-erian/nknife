@@ -49,7 +49,7 @@ namespace SocketKnife.Protocol.Implementation
                     }
                     catch (Exception e)
                     {
-                        _Logger.WarnE("协议生成字符流时异常", e);
+                        _Logger.Warn("协议生成字符流时异常", e);
                     }
                     writer.WriteEndElement();
                     writer.Flush();
