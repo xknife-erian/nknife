@@ -6,12 +6,15 @@ using System.Windows.Forms;
 using NKnife.Ioc;
 using NKnife.Logging.LogPanel;
 using NKnife.Socket.StarterKit.Base;
+using NLog;
 using SocketKnife.Interfaces;
 
 namespace NKnife.Socket.StarterKit
 {
     public partial class MainForm : Form
     {
+        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+
         private ISocketClient _Socket;
 
         public MainForm()
@@ -29,6 +32,7 @@ namespace NKnife.Socket.StarterKit
             logPanel.Font = new Font("Tahoma", 8.25F);
             logPanel.Dock = DockStyle.Fill;
             _LogTabPage.Controls.Add(logPanel);
+            _Logger.Info("日志面板安装完成");
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -37,7 +41,7 @@ namespace NKnife.Socket.StarterKit
             if (_Socket != null)
             {
                 _Socket.Close();
-                Thread.Sleep(200);
+                Thread.Sleep(100);
             }
         }
 
@@ -71,6 +75,7 @@ namespace NKnife.Socket.StarterKit
             _Socket = new ClientKit();
             _Socket.ConnectTo(_IpAddressControl.Text, (int)_PortNumberBox.Value);
             OnSocketOpened();
+            _Logger.Info("Socket连接完成:{0}:{1}", _IpAddressControl.Text, _PortNumberBox.Value);
         }
 
         private void _CLoseButton_Click(object sender, EventArgs e)
@@ -78,6 +83,7 @@ namespace NKnife.Socket.StarterKit
             _Socket.Close();
             _Socket = null;
             OnSocketClosed();
+            _Logger.Info("Socket关闭");
         }
 
         private void _SendButton_Click(object sender, EventArgs e)

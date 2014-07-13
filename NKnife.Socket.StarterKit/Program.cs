@@ -22,9 +22,6 @@ namespace NKnife.Socket.StarterKit
             var logger = LogManager.GetCurrentClassLogger();
             logger.Info("初始化...");
 
-            CoderSettingXmlFile[] fileList = CoderSettingService.GetOptionFiles();
-            CoderSettingService.ME.Initializes(fileList);
-
             Application.Run(new MainForm());
 
         }
