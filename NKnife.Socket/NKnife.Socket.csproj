@@ -76,8 +76,8 @@
     <Compile Include="Interfaces\ISocketClientSetting.cs" />
     <Compile Include="Interfaces\ISocketServer.cs" />
     <Compile Include="Interfaces\ISocketServerSetting.cs" />
-    <Compile Include="Client.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="LightClient.cs" />
+    <Compile Include="LightServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\AbstractProtocol.cs" />
     <Compile Include="Protocol\Implementation\Byte4Decoder.cs" />

@@ -15,9 +15,9 @@ using Timer = System.Timers.Timer;
 namespace SocketKnife
 {
     /// <summary>
-    ///     轻量Socket框架客户端。GEAN原创。
+    ///     轻量Socket框架客户端。
     /// </summary>
-    public abstract class Client : ISocketClient, IDisposable
+    public abstract class LightClient : ISocketClient, IDisposable
     {
         #region 成员变量
 
@@ -67,7 +67,7 @@ namespace SocketKnife
 
         #region 构造函数
 
-        protected Client(SocketMode mode, string family)
+        protected LightClient(SocketMode mode, string family)
         {
             Mode = mode;
             FamilyType = family;

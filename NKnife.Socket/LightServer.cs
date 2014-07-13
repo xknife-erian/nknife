@@ -15,7 +15,7 @@ namespace SocketKnife
     /// <summary>
     ///     轻量Socket服务器端。
     /// </summary>
-    public abstract class Server : IDisposable, ISocketServer
+    public abstract class LightServer : IDisposable, ISocketServer
     {
         #region 成员变量
 
@@ -63,10 +63,7 @@ namespace SocketKnife
 
         #region 构造函数
 
-        protected Server(
-            SocketMode mode, string family,
-            string host, int port,
-            int maxConnectCount, int maxBufferSize)
+        protected LightServer(SocketMode mode, string family, string host, int port, int maxConnectCount, int maxBufferSize)
         {
             Mode = mode;
 
@@ -511,8 +508,7 @@ namespace SocketKnife
             }
             else
             {
-                string message = string.Format("Server: >> Client: {0}, Connection Break.",
-                    e.AcceptSocket.RemoteEndPoint);
+                string message = string.Format("Server: >> Client: {0}, Connection Break.", e.AcceptSocket.RemoteEndPoint);
                 _Logger.Info(message);
                 OnConnectionBreak(new ConnectionBreakEventArgs(message));
                 var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
@@ -609,8 +605,7 @@ namespace SocketKnife
 
         #region 数据处理
 
-        private readonly ConcurrentDictionary<EndPoint, DataMonitor> _ReceiveThreadMap =
-            new ConcurrentDictionary<EndPoint, DataMonitor>();
+        private readonly ConcurrentDictionary<EndPoint, DataMonitor> _ReceiveThreadMap = new ConcurrentDictionary<EndPoint, DataMonitor>();
 
         protected virtual void InitializeDataMonitor(KeyValuePair<EndPoint, ReceiveQueue> pair)
         {
@@ -687,7 +682,7 @@ namespace SocketKnife
                 try
                 {
                     string command = CommandParser.GetCommand(dg);
-                    IProtocol protocol = Protocols.Get(FamilyType.ToString(), command);
+                    IProtocol protocol = Protocols.Get(FamilyType, command);
                     _Logger.Trace("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg);
                     if (protocol != null)
                     {
@@ -725,7 +720,7 @@ namespace SocketKnife
             GC.SuppressFinalize(this);
         }
 
-        ~Server()
+        ~LightServer()
         {
             Dispose(false);
         }
