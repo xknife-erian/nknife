@@ -15,7 +15,7 @@ namespace SocketKnife.Interfaces
         ///     协议家族
         /// </summary>
         /// <value>The type of the family.</value>
-        ProtocolFamilyType FamilyType { get; }
+        string FamilyType { get; }
 
         /// <summary>
         ///     接收到的消息的解析器

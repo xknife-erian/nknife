@@ -67,7 +67,7 @@ namespace SocketKnife
 
         #region 构造函数
 
-        protected Client(SocketMode mode, ProtocolFamilyType family)
+        protected Client(SocketMode mode, string family)
         {
             Mode = mode;
             FamilyType = family;
@@ -233,7 +233,7 @@ namespace SocketKnife
         ///     协议家族
         /// </summary>
         /// <value>The type of the family.</value>
-        public ProtocolFamilyType FamilyType { get; private set; }
+        public string FamilyType { get; private set; }
 
         #endregion
 

@@ -19,7 +19,7 @@
 
   <option class="NKnife.Socket.StarterKit.Base.SocketProtocolSetting">
     <protocols>
-      <family name="PanSOMS" namespace="NKnife.Socket.StarterKit.Base.ProtocolTools">
+      <family name="Socket-Client-StarterKit" namespace="NKnife.Socket.StarterKit.Base.ProtocolTools">
         <Content>SocketKnife.Protocol.ProtocolContent</Content>
         <tools namespace="NKnife.Socket.StarterKit.Base.ProtocolTools">
           <IProtocolHead>Heads</IProtocolHead>

@@ -8,7 +8,7 @@ namespace NKnife.Socket.StarterKit.Base
     public class ClientKit : Client
     {
         public ClientKit()
-            : base(SocketMode.AsyncKeepAlive, ProtocolFamilyType.PanSOMS)
+            : base(SocketMode.AsyncKeepAlive, "Socket-Client-StarterKit")
         {
         }
 

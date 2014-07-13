@@ -17,17 +17,6 @@ namespace SocketKnife.Protocol
         /// <summary>
         ///     根据通讯协议的协议族字符串与命令字快速创建协议对象
         /// </summary>
-        /// <param name="family">协议族</param>
-        /// <param name="command">命令字</param>
-        /// <returns></returns>
-        public static IProtocol Factory(ProtocolFamilyType family, string command)
-        {
-            return Factory(family.ToString(), command);
-        }
-
-        /// <summary>
-        ///     根据通讯协议的协议族字符串与命令字快速创建协议对象
-        /// </summary>
         /// <param name="family">协议族字符串</param>
         /// <param name="command">命令字</param>
         /// <returns></returns>

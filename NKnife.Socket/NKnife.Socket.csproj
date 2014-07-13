@@ -96,7 +96,6 @@
     <Compile Include="Protocol\ProtocolContent.cs" />
     <Compile Include="Protocol\ProtocolFactory.cs" />
     <Compile Include="Protocol\ProtocolFamily.cs" />
-    <Compile Include="Protocol\ProtocolFamilyType.cs" />
     <Compile Include="Protocol\Protocols.cs" />
     <Compile Include="Protocol\ProtocolTools.cs" />
   </ItemGroup>

@@ -64,7 +64,7 @@ namespace SocketKnife
         #region 构造函数
 
         protected Server(
-            SocketMode mode, ProtocolFamilyType family,
+            SocketMode mode, string family,
             string host, int port,
             int maxConnectCount, int maxBufferSize)
         {
@@ -109,7 +109,7 @@ namespace SocketKnife
 
         public SocketMode Mode { get; internal set; }
 
-        public ProtocolFamilyType FamilyType { get; internal set; }
+        public string FamilyType { get; internal set; }
 
         /// <summary>
         ///     接收数据队列MAP,Key是客户端,Value是接收到的数据的队列
