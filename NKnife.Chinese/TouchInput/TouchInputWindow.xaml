@@ -114,7 +114,7 @@
             <Button FontSize="20" Tag="J" Content="J" Grid.Row="2" Grid.Column="8" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
             <Button FontSize="20" Tag="K" Content="K" Grid.Row="2" Grid.Column="9" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
             <Button FontSize="20" Tag="L" Content="L" Grid.Row="2" Grid.Column="10" Margin="2" Click="LetterClick" Background="{StaticResource LetterButtonBackgroundBrush}"/>
-			<Button Name="_ModeSwitchButton" Grid.Row="3" Grid.Column="0" Margin="2" Grid.ColumnSpan="2" Click="EnglishFunctionClick" >
+			<Button Name="_ModeSwitchButton" Grid.Row="3" Grid.Column="0" Margin="2" Grid.ColumnSpan="2" Click="ChineseAndEnglishFunctionClick" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFF97171" Offset="1"/>

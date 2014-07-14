@@ -9,17 +9,17 @@ using WindowsInput.Native;
 using NKnife.Chinese.Ime.HandWritten;
 using NKnife.Chinese.Ime.Pinyin;
 using NKnife.Chinese.TouchInput.Common;
+using NKnife.Interface;
 using NKnife.Ioc;
 using NKnife.Wrapper.API;
 using Button = System.Windows.Controls.Button;
-using Control = System.Windows.Controls.Control;
 
 namespace NKnife.Chinese.TouchInput
 {
     /// <summary>
     ///     MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class TouchInputWindow : Window
+    public partial class TouchInputWindow : Window, ITouchInput
     {
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string SYMBOL = "“)^~}、/\\…|：；》《'%?<”>&({]![";
@@ -39,27 +39,41 @@ namespace NKnife.Chinese.TouchInput
             _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
         }
 
-        private delegate void ShowHandle();
+        #region ITouchInput
 
-        public void AsynShow()
+        public void Show(ushort mode, System.Drawing.Point location)
         {
-            if (Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+            Top = location.X;
+            Left = location.Y;
+            //0.拼音;1.手写;2.符号;3.小写英文;4.大写英文;5.数字
+            switch (mode)
             {
-                Dispatcher.Invoke(new ShowHandle(AsynShow), this);
+                case 0://拼音
+                    _InputMode = Params.InputMode.Pinyin;
+                    ChineseAndEnglishFunction(_InputMode);
+                    break;
+                case 1://手写
+                    CallHandWriterPanel_Click(null, null);
+                    break;
+                case 2://符号
+                    _InputMode = Params.InputMode.Letter;
+                    KeyboardSwitchCase(-1);
+                    break;
+                case 4://大写英文
+                    KeyboardSwitchCase(1);
+                    break;
+                case 3://小写英文
+                case 5://数字
+                    _InputMode = Params.InputMode.Letter;
+                    KeyboardSwitchCase(0);
+                    break;
             }
+            HidePyStrip();
+            HideHwStrip();
             Show();
         }
 
-        private delegate void HideHandle();
-
-        public void AsynHide()
-        {
-            if (Dispatcher.Thread != System.Threading.Thread.CurrentThread)
-            {
-                Dispatcher.Invoke(new HideHandle(AsynHide), this);
-            }
-            Hide();
-        }
+        #endregion
 
         #region 当窗体载入后，进行位置的确定
 
@@ -103,6 +117,7 @@ namespace NKnife.Chinese.TouchInput
 
         private void CallPinyinPanelButton_Click(object sender, RoutedEventArgs e)
         {
+            _InputMode = Params.InputMode.Pinyin;
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _KeyboardGrid.Visibility = Visibility.Visible;
             HidePyStrip();
@@ -255,7 +270,7 @@ namespace NKnife.Chinese.TouchInput
         }
 
         /// <summary>
-        ///     字母键
+        ///     当26个英文字母键的点击时
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -360,16 +375,20 @@ namespace NKnife.Chinese.TouchInput
             KeyboardSwitchCase(1);
         }
 
-
         /// <summary>
-        ///     全英文输入
+        ///     中英文切换功能键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EnglishFunctionClick(object sender, RoutedEventArgs e)
+        private void ChineseAndEnglishFunctionClick(object sender, RoutedEventArgs e)
         {
             _InputMode = (_InputMode == Params.InputMode.Pinyin) ? Params.InputMode.Letter : Params.InputMode.Pinyin;
-            switch (_InputMode)
+            ChineseAndEnglishFunction(_InputMode);
+        }
+
+        private void ChineseAndEnglishFunction(Params.InputMode inputMode)
+        {
+            switch (inputMode)
             {
                 case Params.InputMode.Letter:
                     _SwitchMainLabel.Text = "中";
@@ -385,8 +404,9 @@ namespace NKnife.Chinese.TouchInput
             }
         }
 
+
         /// <summary>
-        ///     键盘切换
+        ///     键盘切换（-1:符号; 0:小写; 1:大写）
         /// </summary>
         /// <param name="n">-1:符号; 0:小写; 1:大写</param>
         private void KeyboardSwitchCase(short n)
@@ -422,5 +442,7 @@ namespace NKnife.Chinese.TouchInput
         }
 
         #endregion
+
+
     }
 }
