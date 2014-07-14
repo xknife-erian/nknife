@@ -37,6 +37,14 @@ namespace NKnife.Chinese.TouchInput
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _HwStrip.AlternateSelected += HwStrip_AlternateSelected;
             _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
+
+            StartKernel();
+        }
+
+        private void StartKernel()
+        {
+            var kernel = DI.Get<Kernel>();
+            kernel.Start(this);
         }
 
         #region ITouchInput

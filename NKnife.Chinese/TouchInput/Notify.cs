@@ -12,16 +12,24 @@ namespace NKnife.Chinese.TouchInput
 
         public Notify()
         {
-            _NotifyIcon = new NotifyIcon();
-            _NotifyIcon.Icon = Properties.Resources.Main;
+            var menu = new ContextMenuStrip();
+            menu.Items.Add(_ShowMenuItem);
+            menu.Items.Add(_ExitMenu);
 
-            _NotifyIcon.ContextMenu = new ContextMenu();
-            _NotifyIcon.ContextMenu.MenuItems.Add(this.showDlgMenu);
-            _NotifyIcon.ContextMenu.MenuItems.Add(this.exitMenu);
+            _NotifyIcon = new NotifyIcon();
+            _NotifyIcon.ContextMenuStrip = new ContextMenuStrip();
+            _NotifyIcon.Icon = Properties.Resources.Main;
+            _NotifyIcon.MouseClick += _NotifyIcon_MouseClick;
+
         }
 
-        private MenuItem showDlgMenu = new MenuItem("显示窗体");
-        private MenuItem exitMenu = new MenuItem("退出");
+        void _NotifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            _NotifyIcon.ContextMenuStrip.Show();
+        }
+
+        private readonly ToolStripItem _ShowMenuItem = new ToolStripMenuItem("显示窗体");
+        private readonly ToolStripItem _ExitMenu = new ToolStripMenuItem("退出");
 
         public void Show()
         {

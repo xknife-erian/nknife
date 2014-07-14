@@ -10,6 +10,7 @@ namespace NKnife.Chinese.TouchInput.Common
         public override void Load()
         {
             Bind<Notify>().To<Notify>().InSingletonScope();
+            Bind<Kernel>().To<Kernel>().InSingletonScope();
 
             Bind<InputSimulator>().To<InputSimulator>().InSingletonScope();
             Bind<Params>().To<Params>().InSingletonScope();
