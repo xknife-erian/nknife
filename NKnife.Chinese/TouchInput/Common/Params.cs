@@ -14,8 +14,6 @@ namespace NKnife.Chinese.TouchInput.Common
         {
             Pinyin,
             Letter,
-            HandWriter,
-            Number
         }
 
         public Params()

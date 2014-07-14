@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SocketKnife</RootNamespace>
-    <AssemblyName>NKnife.Socket</AssemblyName>
+    <AssemblyName>SocketKnife</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -59,10 +59,8 @@
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Common\Tcps.cs" />
-    <Compile Include="Config\AliveSocketClientSetting.cs" />
-    <Compile Include="Config\AliveSocketServerSetting.cs" />
-    <Compile Include="Config\LightSocketClientSetting.cs" />
-    <Compile Include="Config\LightSocketServerSetting.cs" />
+    <Compile Include="Config\ClientSetting.cs" />
+    <Compile Include="Config\ServerSetting.cs" />
     <Compile Include="Config\ProtocolSetting.cs" />
     <Compile Include="Interfaces\IDatagramCommandParser.cs" />
     <Compile Include="Interfaces\IDatagramDecoder.cs" />
@@ -78,8 +76,8 @@
     <Compile Include="Interfaces\ISocketClientSetting.cs" />
     <Compile Include="Interfaces\ISocketServer.cs" />
     <Compile Include="Interfaces\ISocketServerSetting.cs" />
-    <Compile Include="Client.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="LightClient.cs" />
+    <Compile Include="LightServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\AbstractProtocol.cs" />
     <Compile Include="Protocol\Implementation\Byte4Decoder.cs" />
@@ -98,7 +96,6 @@
     <Compile Include="Protocol\ProtocolContent.cs" />
     <Compile Include="Protocol\ProtocolFactory.cs" />
     <Compile Include="Protocol\ProtocolFamily.cs" />
-    <Compile Include="Protocol\ProtocolFamilyType.cs" />
     <Compile Include="Protocol\Protocols.cs" />
     <Compile Include="Protocol\ProtocolTools.cs" />
   </ItemGroup>

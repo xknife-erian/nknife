@@ -61,7 +61,7 @@ namespace SocketKnife.Protocol
             }
             catch (Exception e)
             {
-                _Logger.WarnE("从协议工厂实例协议异常。", e);
+                _Logger.Warn("从协议工厂实例协议异常。", e);
                 return protocol;
             }
         }
@@ -85,7 +85,7 @@ namespace SocketKnife.Protocol
                 }
                 catch (Exception e)
                 {
-                    _Logger.WarnE("创建协议内容容器异常。", e);
+                    _Logger.Warn("创建协议内容容器异常。", e);
                     return null;
                 }
             }

@@ -1,7 +1,7 @@
 ﻿using System;
 using SocketKnife.Interfaces;
 
-namespace NKnife.SocketClientTestTool.Base.ProtocolTools
+namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {
     public class Heads : IProtocolHead
     {

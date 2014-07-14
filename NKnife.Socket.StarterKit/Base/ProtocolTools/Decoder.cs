@@ -3,7 +3,7 @@ using NKnife.Utility;
 using NLog;
 using SocketKnife.Interfaces;
 
-namespace NKnife.SocketClientTestTool.Base.ProtocolTools
+namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {
     /// <summary>
     /// 一个最常用的 字符数组 => 字符串 转换器。

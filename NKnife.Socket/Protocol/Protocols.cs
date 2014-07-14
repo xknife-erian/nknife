@@ -1,4 +1,5 @@
 ﻿using System;
+using NKnife.Ioc;
 using NKnife.Utility;
 using NLog;
 using SocketKnife.Config;
@@ -16,17 +17,6 @@ namespace SocketKnife.Protocol
         /// <summary>
         ///     根据通讯协议的协议族字符串与命令字快速创建协议对象
         /// </summary>
-        /// <param name="family">协议族</param>
-        /// <param name="command">命令字</param>
-        /// <returns></returns>
-        public static IProtocol Factory(ProtocolFamilyType family, string command)
-        {
-            return Factory(family.ToString(), command);
-        }
-
-        /// <summary>
-        ///     根据通讯协议的协议族字符串与命令字快速创建协议对象
-        /// </summary>
         /// <param name="family">协议族字符串</param>
         /// <param name="command">命令字</param>
         /// <returns></returns>
@@ -36,7 +26,7 @@ namespace SocketKnife.Protocol
             try
             {
                 ProtocolFamily pfamily;
-                if (!ProtocolSetting.ME.FamilyMap.TryGetValue(family, out pfamily))
+                if (!DI.Get<ProtocolSetting>().FamilyMap.TryGetValue(family, out pfamily))
                 {
                     _Logger.Warn(string.Format("协议族缓存中没有对应的协议族({0})。", family));
                     return null;
@@ -52,14 +42,14 @@ namespace SocketKnife.Protocol
                 //协议的工具集
                 string toolKey = string.Format("{0}{1}", pfamily.Family, command);
                 ProtocolTools tools = null;
-                if (ProtocolSetting.ME.ProtocolToolsMap.TryGetValue(toolKey, out tools))
+                if (DI.Get<ProtocolSetting>().ProtocolToolsMap.TryGetValue(toolKey, out tools))
                     protocol.Tools = tools;
                 protocol.Content = GetBlankContent(family, command);
                 return protocol;
             }
             catch (Exception e)
             {
-                _Logger.ErrorE("从协议工厂初例协议异常。", e);
+                _Logger.Error("从协议工厂初例协议异常。", e);
                 return protocol;
             }
         }
@@ -73,7 +63,7 @@ namespace SocketKnife.Protocol
         public static IProtocolContent GetBlankContent(string family, string command)
         {
             Type type;
-            if (ProtocolSetting.ME.ProtocolContentMap.TryGetValue(family + command, out type))
+            if (DI.Get<ProtocolSetting>().ProtocolContentMap.TryGetValue(family + command, out type))
             {
                 try
                 {

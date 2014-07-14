@@ -60,7 +60,7 @@ namespace SocketKnife.Protocol.Implementation
             }
             catch (Exception e)
             {
-                _Logger.WarnE("非XML协议数据:" + data, e);
+                _Logger.Warn("非XML协议数据:" + data, e);
             }
             try
             {
@@ -81,7 +81,7 @@ namespace SocketKnife.Protocol.Implementation
             }
             catch (Exception e)
             {
-                _Logger.WarnE("解析协议数据异常。", e);
+                _Logger.Warn("解析协议数据异常。", e);
             }
         }
 

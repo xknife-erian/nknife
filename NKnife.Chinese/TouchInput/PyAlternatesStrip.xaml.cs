@@ -22,21 +22,26 @@ namespace NKnife.Chinese.TouchInput
         public PyAlternatesStrip()
         {
             InitializeComponent();
+
             _AlternatesListBox.ItemsSource = DI.Get<PinyinAlternateCollection>();
             _InputCharListBox.ItemsSource = DI.Get<PinyinSeparatesCollection>();
+
+            _HasLastButton.DataContext = DI.Get<PinyinAlternateCollection>();
+            _HasPreviousButton.DataContext = DI.Get<PinyinAlternateCollection>();
         }
 
         /// <summary>
-        /// 当有候选词选择完成后发生
+        ///     当有候选词选择完成后发生
         /// </summary>
-        public event EventHandler AlternateSelected;
+        public event EventHandler<AlternateSelectedEventArgs> AlternateSelected;
 
-        protected virtual void OnAlternateSelected()
+        protected virtual void OnAlternateSelected(AlternateSelectedEventArgs e)
         {
-            EventHandler handler = AlternateSelected;
-            if (handler != null) 
-                handler(this, EventArgs.Empty);
+            EventHandler<AlternateSelectedEventArgs> handler = AlternateSelected;
+            if (handler != null)
+                handler(this, e);
         }
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -54,7 +59,7 @@ namespace NKnife.Chinese.TouchInput
 
         private void AlternatesListBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var word = ((TextBlock) sender).Text;
+            string word = ((TextBlock) sender).Text;
             ShowWordStrip(word, e);
         }
 
@@ -67,11 +72,22 @@ namespace NKnife.Chinese.TouchInput
         {
             HideWordStrip();
 
-            var word = ((TextBlock)sender).Text;
+            string word = ((TextBlock) sender).Text;
             _Simulator.Keyboard.TextEntry(word);
 
             Params.PlayVoice(Properties.Resources.划过);
-            OnAlternateSelected();//候选词选择完成的事件
+            var rs = DI.Get<PinyinAlternateCollection>().CallNextAlternateGroup();
+            OnAlternateSelected(new AlternateSelectedEventArgs(rs, word)); //候选词选择完成的事件
+        }
+
+        private void HasPreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+            DI.Get<PinyinAlternateCollection>().Previous();
+        }
+
+        private void HasLastButton_Click(object sender, RoutedEventArgs e)
+        {
+            DI.Get<PinyinAlternateCollection>().Next();
         }
 
         private void ShowWordStrip(String word, MouseButtonEventArgs e)
@@ -93,11 +109,22 @@ namespace NKnife.Chinese.TouchInput
             strip.UpdateText("");
         }
 
-        public void BackSpace()
+        public bool BackSpace()
         {
             var sc = DI.Get<PinyinSeparatesCollection>();
-            sc.BackSpaceLetter();
+            return sc.BackSpaceLetter();
         }
     }
 
+    public class AlternateSelectedEventArgs : EventArgs
+    {
+        public AlternateSelectedEventArgs(bool hasAlternate, string selectedWord)
+        {
+            Word = selectedWord;
+            HasAlternate = hasAlternate;
+        }
+
+        public string Word { get; set; }
+        public bool HasAlternate { get; set; }
+    }
 }

@@ -13,6 +13,7 @@ namespace NKnife.Chinese.TouchInput.Common
             Bind<Params>().To<Params>().InSingletonScope();
             Bind<HwAlternateCollection>().To<HwAlternateCollection>().InSingletonScope();
             Bind<PinyinSeparatesCollection>().To<PinyinSeparatesCollection>().InSingletonScope();
+            Bind<PinyinAlternateCollection>().To<PinyinAlternateCollection>().InSingletonScope();
             Bind<PyAlternatesStrip>().To<PyAlternatesStrip>().InSingletonScope();
             Bind<HwAlternatesStrip>().To<HwAlternatesStrip>().InSingletonScope();
             Bind<CurrentWordStrip>().To<CurrentWordStrip>().InSingletonScope();

@@ -1,6 +1,6 @@
 ﻿using NKnife.GUI.WinForm.IPAddressControl;
 
-namespace NKnife.SocketClientTestTool
+namespace NKnife.Socket.StarterKit
 {
     partial class MainForm
     {
@@ -30,25 +30,31 @@ namespace NKnife.SocketClientTestTool
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this._PortNumberBox = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this._ConnButton = new System.Windows.Forms.Button();
-            this.@__ContentTextbox = new System.Windows.Forms.TextBox();
-            this._SendButton = new System.Windows.Forms.Button();
+            this._RequestTextbox = new System.Windows.Forms.TextBox();
             this._CLoseButton = new System.Windows.Forms.Button();
             this._ReceviedTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this._StatusStrip1 = new System.Windows.Forms.StatusStrip();
+            this._RequestToolStrip = new System.Windows.Forms.ToolStrip();
+            this._SendButton = new System.Windows.Forms.ToolStripButton();
+            this._StatusStrip2 = new System.Windows.Forms.StatusStrip();
+            this._ResponseToolStrip = new System.Windows.Forms.ToolStrip();
             this._IpAddressControl = new NKnife.GUI.WinForm.IPAddressControl.IpAddressControl();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this._TabControl = new System.Windows.Forms.TabControl();
+            this._SocketInfoTabPage = new System.Windows.Forms.TabPage();
             this._LogTabPage = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this._PortNumberBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this._RequestToolStrip.SuspendLayout();
+            this._TabControl.SuspendLayout();
+            this._SocketInfoTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // _PortNumberBox
@@ -87,26 +93,15 @@ namespace NKnife.SocketClientTestTool
             this._ConnButton.UseVisualStyleBackColor = true;
             this._ConnButton.Click += new System.EventHandler(this._ConnButton_Click);
             // 
-            // __ContentTextbox
+            // _RequestTextbox
             // 
-            this.@__ContentTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.@__ContentTextbox.Location = new System.Drawing.Point(0, 0);
-            this.@__ContentTextbox.Multiline = true;
-            this.@__ContentTextbox.Name = "__ContentTextbox";
-            this.@__ContentTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.@__ContentTextbox.Size = new System.Drawing.Size(650, 250);
-            this.@__ContentTextbox.TabIndex = 4;
-            // 
-            // _SendButton
-            // 
-            this._SendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._SendButton.Location = new System.Drawing.Point(615, 14);
-            this._SendButton.Name = "_SendButton";
-            this._SendButton.Size = new System.Drawing.Size(81, 31);
-            this._SendButton.TabIndex = 5;
-            this._SendButton.Text = "发送";
-            this._SendButton.UseVisualStyleBackColor = true;
-            this._SendButton.Click += new System.EventHandler(this._SendButton_Click);
+            this._RequestTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._RequestTextbox.Location = new System.Drawing.Point(0, 25);
+            this._RequestTextbox.Multiline = true;
+            this._RequestTextbox.Name = "_RequestTextbox";
+            this._RequestTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this._RequestTextbox.Size = new System.Drawing.Size(737, 234);
+            this._RequestTextbox.TabIndex = 4;
             // 
             // _CLoseButton
             // 
@@ -121,12 +116,12 @@ namespace NKnife.SocketClientTestTool
             // _ReceviedTextBox
             // 
             this._ReceviedTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._ReceviedTextBox.Location = new System.Drawing.Point(0, 0);
+            this._ReceviedTextBox.Location = new System.Drawing.Point(0, 25);
             this._ReceviedTextBox.Multiline = true;
             this._ReceviedTextBox.Name = "_ReceviedTextBox";
             this._ReceviedTextBox.ReadOnly = true;
             this._ReceviedTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this._ReceviedTextBox.Size = new System.Drawing.Size(650, 265);
+            this._ReceviedTextBox.Size = new System.Drawing.Size(737, 257);
             this._ReceviedTextBox.TabIndex = 7;
             // 
             // splitContainer1
@@ -138,15 +133,62 @@ namespace NKnife.SocketClientTestTool
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.@__ContentTextbox);
+            this.splitContainer1.Panel1.Controls.Add(this._RequestTextbox);
+            this.splitContainer1.Panel1.Controls.Add(this._StatusStrip1);
+            this.splitContainer1.Panel1.Controls.Add(this._RequestToolStrip);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this._ReceviedTextBox);
-            this.splitContainer1.Size = new System.Drawing.Size(650, 525);
-            this.splitContainer1.SplitterDistance = 250;
+            this.splitContainer1.Panel2.Controls.Add(this._StatusStrip2);
+            this.splitContainer1.Panel2.Controls.Add(this._ResponseToolStrip);
+            this.splitContainer1.Size = new System.Drawing.Size(737, 595);
+            this.splitContainer1.SplitterDistance = 281;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 8;
+            // 
+            // _StatusStrip1
+            // 
+            this._StatusStrip1.Location = new System.Drawing.Point(0, 259);
+            this._StatusStrip1.Name = "_StatusStrip1";
+            this._StatusStrip1.Size = new System.Drawing.Size(737, 22);
+            this._StatusStrip1.TabIndex = 10;
+            this._StatusStrip1.Text = "statusStrip1";
+            // 
+            // _RequestToolStrip
+            // 
+            this._RequestToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._SendButton});
+            this._RequestToolStrip.Location = new System.Drawing.Point(0, 0);
+            this._RequestToolStrip.Name = "_RequestToolStrip";
+            this._RequestToolStrip.Size = new System.Drawing.Size(737, 25);
+            this._RequestToolStrip.TabIndex = 9;
+            this._RequestToolStrip.Text = "toolStrip1";
+            // 
+            // _SendButton
+            // 
+            this._SendButton.Image = ((System.Drawing.Image)(resources.GetObject("_SendButton.Image")));
+            this._SendButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._SendButton.Name = "_SendButton";
+            this._SendButton.Size = new System.Drawing.Size(80, 22);
+            this._SendButton.Text = " 协议发送";
+            this._SendButton.Click += new System.EventHandler(this._SendButton_Click);
+            // 
+            // _StatusStrip2
+            // 
+            this._StatusStrip2.Location = new System.Drawing.Point(0, 282);
+            this._StatusStrip2.Name = "_StatusStrip2";
+            this._StatusStrip2.Size = new System.Drawing.Size(737, 22);
+            this._StatusStrip2.TabIndex = 9;
+            this._StatusStrip2.Text = "statusStrip2";
+            // 
+            // _ResponseToolStrip
+            // 
+            this._ResponseToolStrip.Location = new System.Drawing.Point(0, 0);
+            this._ResponseToolStrip.Name = "_ResponseToolStrip";
+            this._ResponseToolStrip.Size = new System.Drawing.Size(737, 25);
+            this._ResponseToolStrip.TabIndex = 8;
+            this._ResponseToolStrip.Text = "toolStrip2";
             // 
             // _IpAddressControl
             // 
@@ -163,35 +205,38 @@ namespace NKnife.SocketClientTestTool
             this._IpAddressControl.TabIndex = 9;
             this._IpAddressControl.Text = "127.0.0.1";
             // 
-            // tabControl1
+            // _TabControl
             // 
-            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Right;
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this._LogTabPage);
-            this.tabControl1.Location = new System.Drawing.Point(12, 46);
-            this.tabControl1.Multiline = true;
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(684, 539);
-            this.tabControl1.TabIndex = 10;
+            this._TabControl.Alignment = System.Windows.Forms.TabAlignment.Right;
+            this._TabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._TabControl.Controls.Add(this._SocketInfoTabPage);
+            this._TabControl.Controls.Add(this._LogTabPage);
+            this._TabControl.Location = new System.Drawing.Point(12, 46);
+            this._TabControl.Multiline = true;
+            this._TabControl.Name = "_TabControl";
+            this._TabControl.SelectedIndex = 0;
+            this._TabControl.Size = new System.Drawing.Size(771, 609);
+            this._TabControl.TabIndex = 10;
             // 
-            // tabPage1
+            // _SocketInfoTabPage
             // 
-            this.tabPage1.Controls.Add(this.splitContainer1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(656, 531);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Socket信息";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this._SocketInfoTabPage.Controls.Add(this.splitContainer1);
+            this._SocketInfoTabPage.Location = new System.Drawing.Point(4, 4);
+            this._SocketInfoTabPage.Name = "_SocketInfoTabPage";
+            this._SocketInfoTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this._SocketInfoTabPage.Size = new System.Drawing.Size(743, 601);
+            this._SocketInfoTabPage.TabIndex = 0;
+            this._SocketInfoTabPage.Text = "Socket信息";
+            this._SocketInfoTabPage.UseVisualStyleBackColor = true;
             // 
             // _LogTabPage
             // 
             this._LogTabPage.Location = new System.Drawing.Point(4, 4);
             this._LogTabPage.Name = "_LogTabPage";
             this._LogTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this._LogTabPage.Size = new System.Drawing.Size(656, 531);
+            this._LogTabPage.Size = new System.Drawing.Size(743, 601);
             this._LogTabPage.TabIndex = 1;
             this._LogTabPage.Text = "程序日志";
             this._LogTabPage.UseVisualStyleBackColor = true;
@@ -200,11 +245,10 @@ namespace NKnife.SocketClientTestTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(708, 597);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(795, 667);
+            this.Controls.Add(this._TabControl);
             this.Controls.Add(this._IpAddressControl);
             this.Controls.Add(this._CLoseButton);
-            this.Controls.Add(this._SendButton);
             this.Controls.Add(this._ConnButton);
             this.Controls.Add(this._PortNumberBox);
             this.Controls.Add(this.label1);
@@ -220,8 +264,10 @@ namespace NKnife.SocketClientTestTool
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this._RequestToolStrip.ResumeLayout(false);
+            this._RequestToolStrip.PerformLayout();
+            this._TabControl.ResumeLayout(false);
+            this._SocketInfoTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,15 +278,19 @@ namespace NKnife.SocketClientTestTool
         private System.Windows.Forms.NumericUpDown _PortNumberBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button _ConnButton;
-        private System.Windows.Forms.TextBox __ContentTextbox;
-        private System.Windows.Forms.Button _SendButton;
+        private System.Windows.Forms.TextBox _RequestTextbox;
         private System.Windows.Forms.Button _CLoseButton;
         private System.Windows.Forms.TextBox _ReceviedTextBox;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private IpAddressControl _IpAddressControl;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl _TabControl;
+        private System.Windows.Forms.TabPage _SocketInfoTabPage;
         private System.Windows.Forms.TabPage _LogTabPage;
+        private System.Windows.Forms.ToolStrip _RequestToolStrip;
+        private System.Windows.Forms.ToolStripButton _SendButton;
+        private System.Windows.Forms.StatusStrip _StatusStrip1;
+        private System.Windows.Forms.StatusStrip _StatusStrip2;
+        private System.Windows.Forms.ToolStrip _ResponseToolStrip;
     }
 }
 

@@ -70,13 +70,15 @@ namespace NKnife.Chinese.Ime.Pinyin
         /// <summary>
         ///     回退连续的拼音字符串，即消除字符串中的最后一位
         /// </summary>
-        public void BackSpaceLetter()
+        public bool BackSpaceLetter()
         {
             if (_StringBuilder.Length > 0)
             {
                 _StringBuilder.Remove(_StringBuilder.Length - 1, 1);
                 PinyinSeparating();
+                return true;
             }
+            return false;
         }
 
         /// <summary>

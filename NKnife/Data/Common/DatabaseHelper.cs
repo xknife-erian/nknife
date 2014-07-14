@@ -92,7 +92,7 @@ namespace NKnife.Data.Common
             }
             catch (Exception ex)
             {
-                _Logger.WarnE(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return -1;
             }
         }
@@ -137,7 +137,7 @@ namespace NKnife.Data.Common
             }
             catch (Exception ex)
             {
-                _Logger.WarnE(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return null;
             }
         }
@@ -163,7 +163,7 @@ namespace NKnife.Data.Common
             }
             catch (Exception ex)
             {
-                _Logger.WarnE(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }
@@ -195,7 +195,7 @@ namespace NKnife.Data.Common
             }
             catch (Exception ex)
             {
-                _Logger.WarnE(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }
@@ -224,7 +224,7 @@ namespace NKnife.Data.Common
             }
             catch (Exception ex)
             {
-                _Logger.WarnE(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }
@@ -259,7 +259,7 @@ namespace NKnife.Data.Common
             }
             catch (Exception ex)
             {
-                _Logger.WarnE(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }

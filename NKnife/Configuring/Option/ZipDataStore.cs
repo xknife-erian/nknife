@@ -90,7 +90,7 @@ namespace NKnife.Configuring.Option
                     }
                     catch (Exception e)
                     {
-                        _Logger.ErrorE("解压选项的持久化文件异常.", e);
+                        _Logger.Error("解压选项的持久化文件异常.", e);
                         return false;
                     }
 
@@ -103,7 +103,7 @@ namespace NKnife.Configuring.Option
                     }
                     catch (Exception e)
                     {
-                        _Logger.ErrorE("载入Option.info文件异常.", e);
+                        _Logger.Error("载入Option.info文件异常.", e);
                         return false;
                     }
                     try
@@ -121,7 +121,7 @@ namespace NKnife.Configuring.Option
                     }
                     catch (Exception e)
                     {
-                        _Logger.ErrorE("DataTable的反序列化过程异常.", e);
+                        _Logger.Error("DataTable的反序列化过程异常.", e);
                         return false;
                     }
                     //激活选项载入后事件
@@ -202,7 +202,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.ErrorE("首次创建新的选项包时异常", e);
+                _Logger.Error("首次创建新的选项包时异常", e);
             }
         }
 
@@ -349,7 +349,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.ErrorE("持久化选项异常", e);
+                _Logger.Error("持久化选项异常", e);
                 return false;
             }
         }

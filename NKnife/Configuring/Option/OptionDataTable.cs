@@ -141,7 +141,7 @@ namespace Gean.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.WarnE("解析DataTable时，获取源字符串异常", e);
+                _Logger.Warn("解析DataTable时，获取源字符串异常", e);
             }
             if (sr != null)
             {
@@ -171,7 +171,7 @@ namespace Gean.Configuring.Option
                 }
                 catch (Exception e)
                 {
-                    _Logger.ErrorE(string.Format("table.ReadXml异常。{0}", filefullname), e);
+                    _Logger.Error(string.Format("table.ReadXml异常。{0}", filefullname), e);
                 }
                 string tablename = Path.GetFileNameWithoutExtension(filefullname);
                 SetOptionTableProperties(store, tablename, table);

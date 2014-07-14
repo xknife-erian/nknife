@@ -187,7 +187,7 @@ namespace NKnife.Configuring.CoderSetting
                 }
                 catch (Exception e)
                 {
-                    _Logger.ErrorE(string.Format("{0} 程序员配置初始化异常。", klass.FullName), e);
+                    _Logger.Error(string.Format("{0} 程序员配置初始化异常。", klass.FullName), e);
                 }
             }
 
@@ -216,7 +216,7 @@ namespace NKnife.Configuring.CoderSetting
                 }
                 catch (Exception e)
                 {
-                    _Logger.ErrorE(string.Format("{0} 程序员配置执行Load方法异常。", option.GetType().FullName), e);
+                    _Logger.Error(string.Format("{0} 程序员配置执行Load方法异常。", option.GetType().FullName), e);
                 }
             }
             return _OptionMap.Count > 0;

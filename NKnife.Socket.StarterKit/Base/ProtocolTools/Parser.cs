@@ -1,6 +1,6 @@
 ﻿using SocketKnife.Protocol.Implementation;
 
-namespace NKnife.SocketClientTestTool.Base.ProtocolTools
+namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {
     public class Parser : ProtocolXmlParser
     {

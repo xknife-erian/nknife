@@ -7,8 +7,8 @@
     <ProjectGuid>{79763417-52E0-4F46-B2DA-DAF13AC84807}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NKnife.SocketClientTestTool</RootNamespace>
-    <AssemblyName>NKnife.SocketClientTestTool</AssemblyName>
+    <RootNamespace>NKnife.Socket.StarterKit</RootNamespace>
+    <AssemblyName>NKnife.Socket.StarterKit</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -62,8 +62,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\PanSomsSocketClient.cs" />
-    <Compile Include="Base\PanSomsSocketOption.cs" />
+    <Compile Include="Base\SocketClient.cs" />
+    <Compile Include="Base\SocketOption.cs" />
     <Compile Include="Base\Params.cs" />
     <Compile Include="Base\ProtocolTools\Decoder.cs" />
     <Compile Include="Base\ProtocolTools\Encoder.cs" />
@@ -71,6 +71,8 @@
     <Compile Include="Base\ProtocolTools\Package.cs" />
     <Compile Include="Base\ProtocolTools\Parser.cs" />
     <Compile Include="Base\ProtocolTools\Tails.cs" />
+    <Compile Include="Base\SocketProtocolSetting.cs" />
+    <Compile Include="Ioc\SocketModule.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,7 +94,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="NLog.config" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,7 +121,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config.codersetting" />
+    <None Include="Config.codersetting">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
+using NKnife.Chinese.TouchInput;
 using NKnife.Ioc;
 
 namespace NKnife.Chinese.Ime.Pinyin
@@ -12,53 +15,138 @@ namespace NKnife.Chinese.Ime.Pinyin
     {
         private const int WORD_COUNT = 12;
 
+        private int _CurrentPage;
+        private char[] _CurrentResult;
+        private List<string> _CurrentPinyinCollection;
+        private int _CurrentPinyinIndex;
+        private bool _HasLast;
+
+        private bool _HasPrevious;
+
         public PinyinAlternateCollection()
         {
             var separator = DI.Get<PinyinSeparatesCollection>();
             separator.PinyinSeparated += SeparatorOnPinyinSeparated;
-
             ResetCurrent();
+        }
+
+        public bool HasPrevious
+        {
+            get { return _HasPrevious; }
+            set
+            {
+                _HasPrevious = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("HasPrevious"));
+            }
+        }
+
+        public bool HasLast
+        {
+            get { return _HasLast; }
+            set
+            {
+                _HasLast = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("HasLast"));
+            }
         }
 
         private void ResetCurrent()
         {
-            CurrentPage = 1;
+            _CurrentPage = 1;
             HasPrevious = false;
             HasLast = false;
         }
 
-        public int CurrentPage { get; set; }
-        public bool HasPrevious { get; set; }
-        public bool HasLast { get; set; }
-
-        private char[] _CurrentResult;
-
-        /// <summary>
-        /// 当拼音框中的拼音已经分割好事件的处理
-        /// </summary>
-        private void SeparatorOnPinyinSeparated(object sender, PinyinSeparatedEventArgs e)
+        public bool CallNextAlternateGroup()
         {
-            var pinyin = e.Pinyin;
-            _CurrentResult = Pinyin.GetCharArrayOfPinyin(pinyin[0]);
-            if (_CurrentResult != null && _CurrentResult.Length > 0)
+            if (_CurrentPinyinCollection.Count <= (_CurrentPinyinIndex + 1))
             {
+                _CurrentPinyinIndex = 0;
+                return false;
+            }
+            _CurrentPinyinIndex++;
+            char[] r = Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
+            if (r != null && r.Length > 0)
+            {
+                _CurrentResult = new char[r.Length];
+                Array.Copy(r, _CurrentResult, r.Length);
                 ClearAlternates();
-                if (_CurrentResult.Length > WORD_COUNT)
+                if (r.Length > WORD_COUNT)
                 {
                     HasLast = true;
                 }
                 for (int i = 0; i < WORD_COUNT; i++)
                 {
-                    if (i<_CurrentResult.Length)
+                    if (i < r.Length)
                     {
-                        Add(_CurrentResult[CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                        Add(r[_CurrentPage * i].ToString(CultureInfo.InvariantCulture));
                     }
                 }
             }
-            if (e.Pinyin.Count ==1 && (_CurrentResult == null || _CurrentResult.Length == 0))
+            if (r == null || r.Length == 0)
             {
                 ClearAlternates();
             }
+            return true;
+        }
+
+        /// <summary>
+        ///     当拼音框中的拼音已经分割好事件的处理
+        /// </summary>
+        private void SeparatorOnPinyinSeparated(object sender, PinyinSeparatedEventArgs e)
+        {
+            _CurrentPinyinCollection = e.Pinyin;
+            _CurrentPinyinIndex = 0;
+            char[] r = Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
+            if (r != null && r.Length > 0)
+            {
+                _CurrentResult = new char[r.Length];
+                Array.Copy(r, _CurrentResult, r.Length);
+                ClearAlternates();
+                if (r.Length > WORD_COUNT)
+                {
+                    HasLast = true;
+                }
+                for (int i = 0; i < WORD_COUNT; i++)
+                {
+                    if (i < r.Length)
+                    {
+                        Add(r[_CurrentPage*i].ToString(CultureInfo.InvariantCulture));
+                    }
+                }
+            }
+            if (_CurrentPinyinCollection.Count == 1 && (r == null || r.Length == 0))
+            {
+                ClearAlternates();
+            }
+        }
+
+        public void Previous()
+        {
+            _CurrentPage--;
+            FillCurrentResult();
+        }
+
+        public void Next()
+        {
+            FillCurrentResult();
+            _CurrentPage++;
+        }
+
+        private void FillCurrentResult()
+        {
+            Clear();
+            for (int i = 0; i < WORD_COUNT; i++)
+            {
+                int index = _CurrentPage*WORD_COUNT + i;
+                if (index < _CurrentResult.Length)
+                {
+                    string c = _CurrentResult[index].ToString();
+                    Add(c);
+                }
+            }
+            HasPrevious = _CurrentPage + 1 > 1;
+            HasLast = (_CurrentPage)*WORD_COUNT < _CurrentResult.Length;
         }
 
         /// <summary>
@@ -69,5 +157,6 @@ namespace NKnife.Chinese.Ime.Pinyin
             Clear();
             ResetCurrent();
         }
+
     }
 }
