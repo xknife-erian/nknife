@@ -3,14 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Height="80" Width="920" WindowStyle="None" ResizeMode="NoResize" Topmost="True" ShowInTaskbar="False"
         AllowsTransparency="True" Loaded="Window_Loaded">
-    <Grid>
+    <Grid Opacity="0.6">
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FFE0E0DE" Offset="0.5" />
-                <GradientStop Color="#FFD4D4D3" Offset="1" />
-                <GradientStop Color="#FFD4D4D3" />
-            </LinearGradientBrush>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}"/>
         </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />

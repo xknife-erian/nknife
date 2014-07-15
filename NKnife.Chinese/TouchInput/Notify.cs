@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace NKnife.Chinese.TouchInput
 {
@@ -33,7 +34,17 @@ namespace NKnife.Chinese.TouchInput
             logger.Click += delegate { };
 
             ToolStripItem exit = new ToolStripMenuItem("退出");
-            exit.Click += delegate { };
+            exit.Click += delegate
+            {
+                try
+                {
+                    Environment.Exit(0);
+                }
+                catch (Exception)
+                {
+                    Application.Exit();
+                }
+            };
 
             var menu = new ContextMenuStrip();
             menu.Items.Add(hide);
