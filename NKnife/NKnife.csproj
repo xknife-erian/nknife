@@ -144,6 +144,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="GUI\Wpf\CircularPanel.cs" />
     <Compile Include="Interface\IFileCompress.cs" />
+    <Compile Include="Interface\ITouchInput.cs" />
     <Compile Include="Ioc\DI.cs" />
     <Compile Include="Events\ChangedEventArgs.cs" />
     <Compile Include="Events\EventArgs.cs" />

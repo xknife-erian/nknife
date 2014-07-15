@@ -12,6 +12,9 @@ namespace NKnife.Chinese.TouchInput
         {
             base.OnStartup(e);
             DI.Initialize();
+
+            var notify = DI.Get<Notify>();
+            notify.Show();
         }
     }
 }
