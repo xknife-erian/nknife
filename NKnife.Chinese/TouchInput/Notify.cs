@@ -35,7 +35,6 @@ namespace NKnife.Chinese.TouchInput
             ToolStripItem exit = new ToolStripMenuItem("退出");
             exit.Click += delegate { };
 
-
             var menu = new ContextMenuStrip();
             menu.Items.Add(hide);
             menu.Items.Add(new ToolStripSeparator());
