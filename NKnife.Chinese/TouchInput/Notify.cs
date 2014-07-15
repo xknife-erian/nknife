@@ -1,4 +1,6 @@
 ﻿using System.Windows.Forms;
+using NKnife.Chinese.TouchInput.Common;
+using NKnife.Logging.Base;
 
 namespace NKnife.Chinese.TouchInput
 {
@@ -30,7 +32,11 @@ namespace NKnife.Chinese.TouchInput
 
 
             ToolStripItem logger = new ToolStripMenuItem("日志");
-            logger.Click += delegate { };
+            logger.Click += delegate
+            {
+                var loggerForm = new LoggerForm();
+                loggerForm.Show();
+            };
 
             ToolStripItem exit = new ToolStripMenuItem("退出");
             exit.Click += delegate { };

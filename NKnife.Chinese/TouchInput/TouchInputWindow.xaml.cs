@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
 using NKnife.Chinese.Ime.HandWritten;
@@ -13,6 +15,7 @@ using NKnife.Interface;
 using NKnife.Ioc;
 using NKnife.Wrapper.API;
 using Button = System.Windows.Controls.Button;
+using Point = System.Drawing.Point;
 
 namespace NKnife.Chinese.TouchInput
 {
@@ -28,6 +31,7 @@ namespace NKnife.Chinese.TouchInput
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
 
         private Params.InputMode _InputMode = Params.InputMode.Pinyin;
+        private Kernel _Kernel;
 
         public TouchInputWindow()
         {
@@ -37,41 +41,60 @@ namespace NKnife.Chinese.TouchInput
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _HwStrip.AlternateSelected += HwStrip_AlternateSelected;
             _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
-
+            Hide();
             StartKernel();
         }
 
         private void StartKernel()
         {
-            var kernel = DI.Get<Kernel>();
-            kernel.Start(this);
+            _Kernel = DI.Get<Kernel>();
+            _Kernel.Start(this);
         }
 
         #region ITouchInput
 
-        public void Show(ushort mode, System.Drawing.Point location)
+        public void ShowInputView(short mode, Point location)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                new Action<short, Point>(delegate
+                {
+                    SyncShowInputView(mode, location);
+                }));
+        }
+
+        public void HideInputView()
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new HideInputViewDelegate(SyncHideInputView));
+        }
+
+        public void Exit()
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ExitDelegate(SyncExit));
+        }
+
+        private void SyncShowInputView(short mode, Point location)
         {
             Top = location.X;
             Left = location.Y;
             //0.拼音;1.手写;2.符号;3.小写英文;4.大写英文;5.数字
             switch (mode)
             {
-                case 0://拼音
+                case 0: //拼音
                     _InputMode = Params.InputMode.Pinyin;
                     ChineseAndEnglishFunction(_InputMode);
                     break;
-                case 1://手写
+                case 1: //手写
                     CallHandWriterPanel_Click(null, null);
                     break;
-                case 2://符号
+                case 2: //符号
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(-1);
                     break;
-                case 4://大写英文
+                case 4: //大写英文
                     KeyboardSwitchCase(1);
                     break;
-                case 3://小写英文
-                case 5://数字
+                case 3: //小写英文
+                case 5: //数字
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(0);
                     break;
@@ -80,6 +103,27 @@ namespace NKnife.Chinese.TouchInput
             HideHwStrip();
             Show();
         }
+
+        private void SyncHideInputView()
+        {
+            Hide();
+        }
+
+        private void SyncExit()
+        {
+            if (_Kernel != null)
+            {
+                _Kernel.Finish();
+                Thread.Sleep(100);
+            }
+            Close();
+        }
+
+        private delegate void ExitDelegate();
+
+        private delegate void HideInputViewDelegate();
+
+        private delegate void ShowInputViewDelegate(short mode, Point location);
 
         #endregion
 
@@ -246,7 +290,7 @@ namespace NKnife.Chinese.TouchInput
 
         private void ShowWordPop(String word, MouseButtonEventArgs e)
         {
-            Point point = e.GetPosition(this);
+            System.Windows.Point point = e.GetPosition(this);
 
             _WordPop.Left = Left + point.X - _WordPop.Width/2;
             _WordPop.Top = Top + point.Y - _WordPop.Height - 40;
@@ -450,7 +494,5 @@ namespace NKnife.Chinese.TouchInput
         }
 
         #endregion
-
-
     }
 }
