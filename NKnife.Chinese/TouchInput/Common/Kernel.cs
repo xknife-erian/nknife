@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using NKnife.Interface;
 using NLog;
@@ -56,21 +61,40 @@ namespace NKnife.Chinese.TouchInput.Common
         private void Listener_ReceivedData(object sender, AsynListener.ReceivedDataEventArgs e)
         {
             _Logger.Info("收到控制:{0}", e.Data.ToLower());
-            string data = e.Data.ToLower().Replace("@", "");
-            string[] command = data.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
-
-            short mode = 0;
-            if (command.Length < 1 || !(short.TryParse(command[0], out mode)))
+            string command = e.Data.ToLower().Replace("@", "");
+            if (!Regex.IsMatch(command, @"\d{16}"))
             {
-                _Logger.Warn("不识别的指令:{0}", e.Data);
+                _Logger.Warn("不识别的指令:{0}", command);
                 return;
             }
+
+            short mode = short.Parse(command[1].ToString(CultureInfo.InvariantCulture));
+
+            int xw = int.Parse(command[3].ToString(CultureInfo.InvariantCulture));
+            int yw = int.Parse(command[5].ToString(CultureInfo.InvariantCulture));
+
+            if (xw > 4 || yw > 4)
+            {
+                _Logger.Warn("不识别的指令:{0}", command);
+                return;
+            }
+
+            string xs = command.Substring(7, xw);
+            string ysc = command.Substring(command.Length - yw, yw);
+            var sb = new StringBuilder(yw);
+            for (int i = ysc.Length - 1; i >= 0; i--)
+            {
+                sb.Append(ysc[i]);
+            }
+
+            string ys = sb.ToString();
+
             int x = 0;
             int y = 0;
             if (command.Length >= 3)
             {
-                int.TryParse(command[1], out x);
-                int.TryParse(command[2], out y);
+                int.TryParse(xs, out x);
+                int.TryParse(ys, out y);
             }
 
             ThreadPool.QueueUserWorkItem(CallTouchInput, Command.Build(mode, x, y));
@@ -79,6 +103,7 @@ namespace NKnife.Chinese.TouchInput.Common
         private void CallTouchInput(object state)
         {
             var command = (Command) state;
+            _Logger.Trace("窗体控制:{0},{1},{2}", command.Mode, command.X, command.Y);
             try
             {
                 //1.拼音;2.手写;3.符号;4.小写英文;5.大写英文;6.数字
