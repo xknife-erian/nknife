@@ -8,14 +8,17 @@ using NLog;
 
 namespace SocketKnife
 {
+    /// <summary>
+    ///     一个应用在较简单场景且压力较小情况下的SocketServer。
+    /// </summary>
     public class AsynListener : Component
     {
         private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ManualResetEvent _AllDone = new ManualResetEvent(false);
         private readonly ManualResetEvent _SendDone = new ManualResetEvent(false);
+        private int _BufferSize = 32;
         private bool _IsWhileListen = true;
-        private int _BufferSize = 2048;
         private Socket _Listener;
         private string _TcpIpServerIp = "";
         private int _TcpIpServerPort = 22033;
@@ -63,7 +66,7 @@ namespace SocketKnife
         #region 开始监听
 
         /// <summary>
-        ///     开始监听访问
+        ///     开启新线程监听访问
         /// </summary>
         public void Listening()
         {
@@ -109,17 +112,18 @@ namespace SocketKnife
         /// <param name="ar"></param>
         private void AcceptCallback(IAsyncResult ar)
         {
-            Socket handler = null;
+            Socket client = null;
             try
             {
                 var listener = (Socket) ar.AsyncState;
-                handler = listener.EndAccept(ar);
-                var state = new StateObject(_BufferSize, handler) {Client = handler};
-                handler.BeginReceive(state.Buffer, 0, _BufferSize, 0, ReadCallback, state);
+                client = listener.EndAccept(ar);
+                _Logger.Info("监听到客户端连接：{0}", client.RemoteEndPoint.ToString());
+                var state = new StateObject(_BufferSize, client) {Client = client};
+                client.BeginReceive(state.Buffer, 0, _BufferSize, 0, ReadCallback, state);
             }
             catch (Exception e)
             {
-                OnHasListenerException(new ListenerExceptionEventArgs(e, handler));
+                OnHasListenerException(new ListenerExceptionEventArgs(e, client));
             }
             finally
             {
@@ -146,9 +150,9 @@ namespace SocketKnife
 
                     if (bytesRead > 0)
                     {
-                        state.StringBuilder.Append(Encoding.Default.GetString(state.Buffer, 0, bytesRead));
-                        String content = state.StringBuilder.ToString();
-                        if (content.IndexOf("@", StringComparison.Ordinal) > -1)
+                        string content;
+                        bool isComplate = ReceivedChecker(state, bytesRead, client, out content);
+                        if (isComplate)
                         {
                             OnReceivedData(new ReceivedDataEventArgs(content, client));
                             state.Reset();
@@ -156,6 +160,10 @@ namespace SocketKnife
                         if (client.Connected)
                         {
                             client.BeginReceive(state.Buffer, 0, state.Buffer.Length, 0, ReadCallback, state);
+                        }
+                        else
+                        {
+                            state.Reset();
                         }
                     }
                     else
@@ -171,14 +179,29 @@ namespace SocketKnife
             }
         }
 
+        /// <summary>
+        ///     子类可重写。当收到数据后的处理(协议的解析)方式及是否收取完成的校验。
+        /// </summary>
+        protected virtual bool ReceivedChecker(StateObject state, int bytesRead, Socket client, out string content)
+        {
+            state.StringBuilder.Append(Encoding.Default.GetString(state.Buffer, 0, bytesRead));
+            content = state.StringBuilder.ToString();
+            return content.IndexOf("@", StringComparison.Ordinal) > -1;
+        }
+
         #endregion
 
         #region 发送
 
-        public void Send(Socket handler, String data)
+        /// <summary>
+        ///     子类可重写。给指定的客户端发送数据。
+        /// </summary>
+        /// <param name="client">指定的客户端</param>
+        /// <param name="data">数据</param>
+        public virtual void Send(Socket client, String data)
         {
             byte[] byteData = Encoding.Default.GetBytes(data);
-            handler.BeginSend(byteData, 0, byteData.Length, 0, SendCallback, handler);
+            client.BeginSend(byteData, 0, byteData.Length, 0, SendCallback, client);
         }
 
         /// <summary>
@@ -309,15 +332,19 @@ namespace SocketKnife
 
         public class ReceivedDataEventArgs : EventArgs
         {
-            private readonly string _Data;
             private readonly Socket _Client;
+            private readonly string _Data;
+
             public ReceivedDataEventArgs(string data, Socket client)
             {
                 _Data = data;
-                this._Client = client;
+                _Client = client;
             }
 
-            public Socket Client { get { return _Client; } }
+            public Socket Client
+            {
+                get { return _Client; }
+            }
 
             public string Data
             {
@@ -325,18 +352,18 @@ namespace SocketKnife
             }
         }
 
-        private class StateObject
+        protected class StateObject
         {
-            public byte[] Buffer { get; private set; }
-
-            public Socket Client { get; set; }
-
             public StateObject(int bufferSize, Socket workSocket)
             {
                 Buffer = new byte[bufferSize];
                 Client = workSocket;
                 StringBuilder = new StringBuilder(bufferSize);
             }
+
+            public byte[] Buffer { get; private set; }
+
+            public Socket Client { get; set; }
 
             public StringBuilder StringBuilder { get; private set; }
 
