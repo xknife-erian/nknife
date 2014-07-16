@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using NKnife.Interface;
 using NLog;
 using SocketKnife;
 
-namespace NKnife.Chinese.TouchInput
+namespace NKnife.Chinese.TouchInput.Common
 {
     public class Kernel
     {
         private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
         private AsynListener _Listener;
         private ITouchInput _TouchInput;
+
+        static Kernel()
+        {
+            ThreadPool.SetMaxThreads(16, 16);
+        }
 
         public bool Start(ITouchInput touchInput)
         {
@@ -53,24 +59,30 @@ namespace NKnife.Chinese.TouchInput
             string data = e.Data.ToLower().Replace("@", "");
             string[] command = data.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
-            short c = 0;
-            if (command.Length < 1 || !(short.TryParse(command[0], out c)))
+            short mode = 0;
+            if (command.Length < 1 || !(short.TryParse(command[0], out mode)))
             {
                 _Logger.Warn("不识别的指令:{0}", e.Data);
                 return;
             }
-            int x = 0, y = 0;
+            int x = 0;
+            int y = 0;
             if (command.Length >= 3)
             {
                 int.TryParse(command[1], out x);
                 int.TryParse(command[2], out y);
             }
 
-            var location = new Point(x, y);
+            ThreadPool.QueueUserWorkItem(CallTouchInput, Command.Build(mode, x, y));
+        }
+
+        private void CallTouchInput(object state)
+        {
+            var command = (Command) state;
             try
             {
                 //1.拼音;2.手写;3.符号;4.小写英文;5.大写英文;6.数字
-                switch (c)
+                switch (command.Mode)
                 {
                     case -1:
                         _TouchInput.Exit();
@@ -78,22 +90,27 @@ namespace NKnife.Chinese.TouchInput
                     case 0:
                         _TouchInput.HideInputView();
                         break;
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                        _TouchInput.ShowInputView(c, location);
-                        break;
                     default:
-                        _Listener.Send(e.Client, e.Data);
+                        _TouchInput.ShowInputView(command.Mode, new Point(command.X, command.Y));
                         break;
                 }
             }
             catch (Exception exception)
             {
                 _Logger.Info(exception.Message, exception);
+            }
+        }
+
+        private class Command
+        {
+            public short Mode { get; private set; }
+            public int X { get; private set; }
+            public int Y { get; private set; }
+
+            public static Command Build(short mode, int x, int y)
+            {
+                var command = new Command {Mode = mode, X = x, Y = y};
+                return command;
             }
         }
     }

@@ -14,6 +14,8 @@ using NKnife.Chinese.TouchInput.Common;
 using NKnife.Interface;
 using NKnife.Ioc;
 using NKnife.Wrapper.API;
+using NLog;
+using Application = System.Windows.Forms.Application;
 using Button = System.Windows.Controls.Button;
 using Point = System.Drawing.Point;
 
@@ -24,6 +26,8 @@ namespace NKnife.Chinese.TouchInput
     /// </summary>
     public partial class TouchInputWindow : Window, ITouchInput
     {
+        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string SYMBOL = "“)^~}、/\\…|：；》《'%?<”>&({]![";
 
@@ -36,12 +40,14 @@ namespace NKnife.Chinese.TouchInput
         public TouchInputWindow()
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.Manual;
             Topmost = true;
             ShowInTaskbar = false;
+            Hide();
+
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _HwStrip.AlternateSelected += HwStrip_AlternateSelected;
             _PyStrip.AlternateSelected += PyStrip_AlternateSelected;
-            Hide();
             StartKernel();
         }
 
@@ -55,11 +61,7 @@ namespace NKnife.Chinese.TouchInput
 
         public void ShowInputView(short mode, Point location)
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                new Action<short, Point>(delegate
-                {
-                    SyncShowInputView(mode, location);
-                }));
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ShowInputViewDelegate(SyncShowInputView), mode, location);
         }
 
         public void HideInputView()
@@ -76,25 +78,25 @@ namespace NKnife.Chinese.TouchInput
         {
             Top = location.X;
             Left = location.Y;
-            //0.拼音;1.手写;2.符号;3.小写英文;4.大写英文;5.数字
+            //1.拼音;2.手写;3.符号;4.小写英文;5.大写英文;6.数字
             switch (mode)
             {
-                case 0: //拼音
+                case 1: //拼音
                     _InputMode = Params.InputMode.Pinyin;
                     ChineseAndEnglishFunction(_InputMode);
                     break;
-                case 1: //手写
+                case 2: //手写
                     CallHandWriterPanel_Click(null, null);
                     break;
-                case 2: //符号
+                case 3: //符号
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(-1);
                     break;
-                case 4: //大写英文
+                case 5: //大写英文
                     KeyboardSwitchCase(1);
                     break;
-                case 3: //小写英文
-                case 5: //数字
+                case 4: //小写英文
+                case 6: //数字
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(0);
                     break;
@@ -117,6 +119,14 @@ namespace NKnife.Chinese.TouchInput
                 Thread.Sleep(100);
             }
             Close();
+            try
+            {
+                Environment.Exit(0);
+            }
+            catch (Exception)
+            {
+                Application.Exit();
+            }
         }
 
         private delegate void ExitDelegate();
@@ -124,21 +134,6 @@ namespace NKnife.Chinese.TouchInput
         private delegate void HideInputViewDelegate();
 
         private delegate void ShowInputViewDelegate(short mode, Point location);
-
-        #endregion
-
-        #region 当窗体载入后，进行位置的确定
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            WindowStartupLocation = WindowStartupLocation.Manual;
-
-            int h = Screen.PrimaryScreen.Bounds.Height;
-            Top = h - Height - 15;
-
-            int w = Screen.PrimaryScreen.Bounds.Width;
-            Left = (w - Width)/2;
-        }
 
         #endregion
 

@@ -140,14 +140,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TouchInput\Kernel.cs" />
-    <Compile Include="TouchInput\Notify.cs" />
+    <Compile Include="TouchInput\Common\Kernel.cs" />
+    <Compile Include="TouchInput\Common\Notify.cs" />
     <Compile Include="TouchInput\PyAlternatesStrip.xaml.cs">
       <DependentUpon>PyAlternatesStrip.xaml</DependentUpon>
     </Compile>
     <Compile Include="TouchInput\CurrentWordStrip.xaml.cs">
       <DependentUpon>CurrentWordStrip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TouchInput\Common\Client.cs" />
     <Compile Include="TouchInput\TouchInputWindow.xaml.cs">
       <DependentUpon>TouchInputWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -4,7 +4,7 @@
         x:Class="NKnife.Chinese.TouchInput.TouchInputWindow"
         Title="MainWindow" Height="330" Width="920"
         AllowsTransparency="True" Background="Transparent"
-        WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
+        WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <LinearGradientBrush x:Key="LetterButtonBackgroundBrush" EndPoint="0,1" StartPoint="0,0">
         	<GradientStop Color="#FFD3D7FF" Offset="0" />

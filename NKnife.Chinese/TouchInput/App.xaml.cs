@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using NKnife.Chinese.TouchInput.Common;
 using NKnife.Ioc;
 
 namespace NKnife.Chinese.TouchInput
