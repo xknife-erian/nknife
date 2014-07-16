@@ -13,7 +13,7 @@ using System.Windows;
 [assembly: AssemblyCompany("xknife.net")]
 [assembly: AssemblyProduct("NKnife.Chinese")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("@xknife.net")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 使此程序集中的类型
@@ -35,5 +35,5 @@ using System.Windows;
     ResourceDictionaryLocation.SourceAssembly //常规资源词典所处位置
 )]
 
-[assembly: AssemblyVersion("2.1407.*")]
-[assembly: AssemblyFileVersion("2.14.7.12")]
+[assembly: AssemblyVersion("1.0.14.07")]
+[assembly: AssemblyFileVersion("1.0.14.07")]
