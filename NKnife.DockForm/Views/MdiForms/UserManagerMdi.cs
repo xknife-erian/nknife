@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using NKnife.Window.Controls;
+using NKnife.DockForm.Controls;
 
-namespace NKnife.Window.Views.MdiForms
+namespace NKnife.DockForm.Views.MdiForms
 {
     public class UserManagerMdi : GridViewDockContent
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using NKnife.Window.Common;
+using NKnife.DockForm.Common;
 
-namespace NKnife.Window.Views.MdiViews
+namespace NKnife.DockForm.Views.MdiViews
 {
     class TodayFlowsGridView : GridViewDockContent
     {

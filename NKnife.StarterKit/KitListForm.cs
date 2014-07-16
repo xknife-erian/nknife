@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using NKnife.DockForm.Views;
 using NKnife.StarterKit.Forms;
 
 namespace NKnife.StarterKit
@@ -48,6 +49,12 @@ namespace NKnife.StarterKit
         {
             var form = new ChineseCharUseFrequency();
             form.MdiParent = this;
+            form.Show();
+        }
+
+        private void 启动DockFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new Workbench();
             form.Show();
         }
 

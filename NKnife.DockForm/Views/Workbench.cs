@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
-using NKnife.Window.Views.MdiForms;
+using NKnife.DockForm.Views.MdiForms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace NKnife.Window.Views
+namespace NKnife.DockForm.Views
 {
     public sealed partial class Workbench : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace NKnife.Window.Views.MdiForms
+﻿namespace NKnife.DockForm.Views.MdiForms
 {
     partial class WelcomeMdi
     {

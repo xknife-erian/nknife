@@ -37,6 +37,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.简易拼音输入法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.dockFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.启动DockFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,7 +46,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loggingToolStripMenuItem,
-            this.iMEToolStripMenuItem});
+            this.iMEToolStripMenuItem,
+            this.dockFormToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(784, 25);
@@ -110,6 +113,21 @@
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
             // 
+            // dockFormToolStripMenuItem
+            // 
+            this.dockFormToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.启动DockFormToolStripMenuItem});
+            this.dockFormToolStripMenuItem.Name = "dockFormToolStripMenuItem";
+            this.dockFormToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
+            this.dockFormToolStripMenuItem.Text = "DockForm";
+            // 
+            // 启动DockFormToolStripMenuItem
+            // 
+            this.启动DockFormToolStripMenuItem.Name = "启动DockFormToolStripMenuItem";
+            this.启动DockFormToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.启动DockFormToolStripMenuItem.Text = "启动DockForm";
+            this.启动DockFormToolStripMenuItem.Click += new System.EventHandler(this.启动DockFormToolStripMenuItem_Click);
+            // 
             // KitListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,6 +159,8 @@
         private System.Windows.Forms.ToolStripMenuItem 简易拼音输入法ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 汉字使用频率ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem dockFormToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 启动DockFormToolStripMenuItem;
     }
 }
 

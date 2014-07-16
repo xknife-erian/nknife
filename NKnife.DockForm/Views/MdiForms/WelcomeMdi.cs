@@ -1,6 +1,6 @@
 ﻿using WeifenLuo.WinFormsUI.Docking;
 
-namespace NKnife.Window.Views.MdiForms
+namespace NKnife.DockForm.Views.MdiForms
 {
     public partial class WelcomeMdi : DockContent
     {

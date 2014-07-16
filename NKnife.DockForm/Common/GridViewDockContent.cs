@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace NKnife.Window.Common
+namespace NKnife.DockForm.Common
 {
     public class GridViewDockContent : DockContent
     {
