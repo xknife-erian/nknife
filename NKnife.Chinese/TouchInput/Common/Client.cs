@@ -64,9 +64,8 @@ namespace NKnife.Chinese.TouchInput.Common
         /// <summary>
         ///     发送命令串并同步返回结果
         /// </summary>
-        public void SendTo(short mode, int x, int y)
+        public void SendTo(string command)
         {
-            string command = string.Format("{0},{1},{2}@", mode, x, y);
             try
             {
                 byte[] bytes = Encoding.Default.GetBytes(command);

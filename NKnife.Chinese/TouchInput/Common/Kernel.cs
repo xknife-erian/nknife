@@ -109,7 +109,7 @@ namespace NKnife.Chinese.TouchInput.Common
                 //1.拼音;2.手写;3.符号;4.小写英文;5.大写英文;6.数字
                 switch (command.Mode)
                 {
-                    case -1:
+                    case 9:
                         _TouchInput.Exit();
                         break;
                     case 0:

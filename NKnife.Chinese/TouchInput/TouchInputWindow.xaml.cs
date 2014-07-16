@@ -82,21 +82,25 @@ namespace NKnife.Chinese.TouchInput
             switch (mode)
             {
                 case 1: //拼音
-                    _InputMode = Params.InputMode.Pinyin;
+                    CallPinyinPanelButton_Click(null, null);
                     ChineseAndEnglishFunction(_InputMode);
                     break;
                 case 2: //手写
                     CallHandWriterPanel_Click(null, null);
                     break;
                 case 3: //符号
+                    CallPinyinPanelButton_Click(null, null);
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(-1);
                     break;
                 case 5: //大写英文
+                    CallPinyinPanelButton_Click(null, null);
+                    _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(1);
                     break;
                 case 4: //小写英文
                 case 6: //数字
+                    CallPinyinPanelButton_Click(null, null);
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(0);
                     break;

@@ -119,6 +119,12 @@
     <Compile Include="Ime\HandWritten\ConcatenationRecognizer.cs" />
     <Compile Include="Ime\Pinyin\PinyinSeparatesCollection.cs" />
     <Compile Include="Ime\HandWritten\HwAlternateCollection.cs" />
+    <Compile Include="TouchInput\Common\LocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TouchInput\Common\LocationForm.Designer.cs">
+      <DependentUpon>LocationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TouchInput\Common\Params.cs" />
     <Compile Include="TouchInput\Controls\Keys\CaseSensitiveKey.cs" />
     <Compile Include="TouchInput\Controls\Keys\ChordKey.cs" />
@@ -176,6 +182,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TouchInput\Common\LocationForm.resx">
+      <DependentUpon>LocationForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="nlog.config">

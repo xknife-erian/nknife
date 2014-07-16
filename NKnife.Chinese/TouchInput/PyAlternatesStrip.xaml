@@ -3,16 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Height="80" Width="920" WindowStyle="None" ResizeMode="NoResize" Topmost="True" ShowInTaskbar="False"
         AllowsTransparency="True" Loaded="Window_Loaded">
-    <Grid Opacity="0.6">
-        <Grid.Background>
-            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}"/>
-        </Grid.Background>
-
+    <Window.Resources>
+        <LinearGradientBrush x:Key="GridBackgroundBrush" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFD3D7FF" Offset="0" />
+            <GradientStop Color="#FFEBEBEB" Offset="0.5" />
+            <GradientStop Color="#FFC5CAFD" Offset="0.5" />
+            <GradientStop Color="#FFA0A9FF" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid Opacity="0.8" Background="{StaticResource GridBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-
         <ListBox Name="_InputCharListBox" Margin="0" BorderThickness="0"
                  Background="{x:Null}" FontSize="24">
             <ListBox.ItemsPanel>
@@ -46,6 +49,5 @@
             <Button Name="_HasPreviousButton" Content="上页" Margin="3,5" Padding="8,0" IsEnabled="{Binding HasPrevious}" Click="HasPreviousButton_Click"/>
             <Button Name="_HasLastButton" Content="下页" Margin="3,5" Padding="8,0" IsEnabled="{Binding HasLast}" Click="HasLastButton_Click"/>
         </VirtualizingStackPanel>
-
     </Grid>
 </Window>
