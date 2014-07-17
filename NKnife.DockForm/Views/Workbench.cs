@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using NKnife.DockForm.Views.MdiForms;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.DockForm.Views
