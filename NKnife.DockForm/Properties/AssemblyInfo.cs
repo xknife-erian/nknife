@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("NKnife.Window")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NKnife.DockForm")]
+[assembly: AssemblyDescription("基于Weifenluo的DockPanel进行封装,便于快速该类型Form的开发")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NKnife.Window")]
+[assembly: AssemblyCompany("xknife.net")]
+[assembly: AssemblyProduct("NKnife.DockForm")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

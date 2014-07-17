@@ -14,11 +14,7 @@ namespace NKnife.DockForm.Views
             WindowState = FormWindowState.Maximized;
             Cursor = Cursors.WaitCursor;
             InitializeDockPanel();
-            InitializeFormCommand();
             Cursor = Cursors.Default;
-
-            var welcome = WelcomeMdi.ME;
-            welcome.Show(_DockPanel);
         }
 
         private void InitializeDockPanel()
@@ -32,10 +28,6 @@ namespace NKnife.DockForm.Views
         public void AddMenuItem(params ToolStripItem[] items)
         {
             _MenuStrip.Items.AddRange(items);
-        }
-
-        private void InitializeFormCommand()
-        {
         }
     }
 }
