@@ -62,6 +62,13 @@ namespace NKnife.Chinese.TouchInput.Common
         {
             _Logger.Info("收到控制:{0}", e.Data.ToLower());
             string command = e.Data.ToLower().Replace("@", "");
+            if (command.IndexOf("keepalivetestfromclient", StringComparison.Ordinal)>=0)
+            {
+                const string RESPONSE = "KeepAliveTestFromServer@";
+                _Listener.Send(e.Client, RESPONSE);
+                _Logger.Trace("心跳回复:{0}", RESPONSE);
+                return;
+            }
             if (!Regex.IsMatch(command, @"\d{16}"))
             {
                 _Logger.Warn("不识别的指令:{0}", command);
@@ -103,6 +110,19 @@ namespace NKnife.Chinese.TouchInput.Common
         private void CallTouchInput(object state)
         {
             var command = (Command) state;
+            command.Y += 123;
+            switch (command.Mode)
+            {
+                case 1:
+                    command.X += 124;
+                    break;
+                case 2:
+                    command.X += 99;
+                    break;
+                default:
+                    command.X += 55;
+                    break;
+            }
             _Logger.Trace("窗体控制:{0},{1},{2}", command.Mode, command.X, command.Y);
             try
             {
@@ -129,8 +149,8 @@ namespace NKnife.Chinese.TouchInput.Common
         private class Command
         {
             public short Mode { get; private set; }
-            public int X { get; private set; }
-            public int Y { get; private set; }
+            public int X { get; set; }
+            public int Y { get; set; }
 
             public static Command Build(short mode, int x, int y)
             {
