@@ -28,5 +28,30 @@ namespace NKnife.DockForm.Views
         {
             _MenuStrip.Items.AddRange(items);
         }
+
+        public void AddStatusItem(params ToolStripItem[] items)
+        {
+            _StatusStrip.Items.AddRange(items);
+        }
+
+        public void AddLeftView(DockContent view)
+        {
+            view.Show(_DockPanel, DockState.DockLeft);
+        }
+
+        public void AddRightView(DockContent view)
+        {
+            view.Show(_DockPanel, DockState.DockRight);
+        }
+
+        public void AddTopView(DockContent view)
+        {
+            view.Show(_DockPanel, DockState.DockTop);
+        }
+
+        public void AddBottomView(DockContent view)
+        {
+            view.Show(_DockPanel, DockState.DockBottom);
+        }
     }
 }
