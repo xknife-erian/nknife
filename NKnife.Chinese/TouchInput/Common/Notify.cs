@@ -7,10 +7,10 @@ namespace NKnife.Chinese.TouchInput.Common
 {
     internal class Notify
     {
-        private readonly NotifyIcon _NotifyIcon;
         private readonly Client _Client;
-        private bool _IsConnection = false;
-        UtilityRandom _Random = new UtilityRandom();
+        private readonly NotifyIcon _NotifyIcon;
+        private readonly UtilityRandom _Random = new UtilityRandom();
+        private bool _IsConnection;
 
 
         public Notify()
@@ -32,7 +32,7 @@ namespace NKnife.Chinese.TouchInput.Common
                     _IsConnection = true;
                     _Client.Connect();
                 }
-                var command = GetCommand(0);
+                string command = GetCommand(0);
                 _Client.SendTo(command);
             };
 
@@ -124,14 +124,16 @@ namespace NKnife.Chinese.TouchInput.Common
                 {
                     _Client.SendTo(f.Command);
                 }
-            }; 
-            
+            };
+
             ToolStripItem logger = new ToolStripMenuItem("日志");
             logger.Click += delegate
             {
                 var loggerForm = new LoggerForm();
                 loggerForm.Show();
             };
+
+            ToolStripItem version = new ToolStripLabel("Version: " + About.AssemblyVersion);
 
             ToolStripItem exit = new ToolStripMenuItem("退出");
             exit.Click += delegate
@@ -156,6 +158,7 @@ namespace NKnife.Chinese.TouchInput.Common
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(logger);
             menu.Items.Add(new ToolStripSeparator());
+            menu.Items.Add(version);
             menu.Items.Add(exit);
             return menu;
         }
@@ -174,7 +177,7 @@ namespace NKnife.Chinese.TouchInput.Common
             sb.Append(_Random.Next(10000, 99999));
             sb.Append(_Random.Next(10000, 99999));
             sb.Append("@");
-            var command = sb.ToString();
+            string command = sb.ToString();
             return command;
         }
 

@@ -118,6 +118,7 @@
     <Compile Include="Ime\HandWritten\ConcatenationRecognizer.cs" />
     <Compile Include="Ime\Pinyin\PinyinSeparatesCollection.cs" />
     <Compile Include="Ime\HandWritten\HwAlternateCollection.cs" />
+    <Compile Include="TouchInput\Common\About.cs" />
     <Compile Include="TouchInput\Common\LocationForm.cs">
       <SubType>Form</SubType>
     </Compile>
