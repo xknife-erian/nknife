@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\ProtocolTools\response.cs" />
     <Compile Include="Base\SocketClient.cs" />
     <Compile Include="Base\SocketOption.cs" />
     <Compile Include="Base\Params.cs" />

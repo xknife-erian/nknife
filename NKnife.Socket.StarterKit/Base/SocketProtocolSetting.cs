@@ -1,4 +1,5 @@
-﻿using SocketKnife.Config;
+﻿using NKnife.Ioc;
+using SocketKnife.Config;
 
 namespace NKnife.Socket.StarterKit.Base
 {
@@ -6,7 +7,7 @@ namespace NKnife.Socket.StarterKit.Base
     {
         #region 单件实例
 
-        private SocketProtocolSetting()
+        public SocketProtocolSetting()
         {
         }
 
@@ -16,17 +17,7 @@ namespace NKnife.Socket.StarterKit.Base
         /// <value>The instance.</value>
         public static SocketProtocolSetting ME
         {
-            get { return Singleton.Instance; }
-        }
-
-        private class Singleton
-        {
-            internal static readonly SocketProtocolSetting Instance;
-
-            static Singleton()
-            {
-                Instance = new SocketProtocolSetting();
-            }
+            get { return (SocketProtocolSetting) DI.Get<ProtocolSetting>(); }
         }
 
         #endregion

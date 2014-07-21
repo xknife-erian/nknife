@@ -19,11 +19,6 @@ namespace NKnife.Socket.StarterKit.Base
             get { return false; }
         }
 
-        public override ProtocolFactory Protocols
-        {
-            get { return null; }
-        }
-
         public override ISocketClientSetting Option
         {
             get { return SocketOption.ME; }

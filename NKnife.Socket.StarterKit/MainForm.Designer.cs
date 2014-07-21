@@ -69,7 +69,7 @@ namespace NKnife.Socket.StarterKit
             this._PortNumberBox.Size = new System.Drawing.Size(64, 21);
             this._PortNumberBox.TabIndex = 1;
             this._PortNumberBox.Value = new decimal(new int[] {
-            22020,
+            22044,
             0,
             0,
             0});

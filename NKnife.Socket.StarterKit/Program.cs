@@ -18,9 +18,13 @@ namespace NKnife.Socket.StarterKit
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DI.Initialize();
             var logger = LogManager.GetCurrentClassLogger();
             logger.Info("初始化...");
+            DI.Initialize();
+            logger.Info("Ioc完成...");
+
+            CoderSettingXmlFile[] fileList = CoderSettingService.GetOptionFiles();
+            CoderSettingService.ME.Initializes(fileList);
 
             Application.Run(new MainForm());
 

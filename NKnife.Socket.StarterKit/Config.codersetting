@@ -6,7 +6,7 @@
     <!--心跳间隔-->
     <HeartRange>10000</HeartRange>
     <!--缓存区大小-->
-    <BufferSize>1024</BufferSize>
+    <BufferSize>2048</BufferSize>
     <!--同步的发送与接收的超时-->
     <Timeout>2000</Timeout>
     <!--命令字提取工具-->
@@ -28,9 +28,7 @@
           <IProtocolParser>Parser</IProtocolParser>
         </tools>
         <impl>
-          <protocol name="COUNTER_STATUS" />
-          <protocol name="CUS_VERIFY" />
-          <protocol name="OPERATION_FLOW" />
+          <protocol name="response" />
         </impl>
       </family>
     </protocols>

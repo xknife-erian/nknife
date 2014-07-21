@@ -36,7 +36,7 @@ namespace SocketKnife.Protocol.Implementation
             }
             //得到将要发送的数据的长度
             byte[] head = BitConverter.GetBytes(reBytes.Length);
-
+            Array.Reverse(head);
             var bs = new byte[head.Length + reBytes.Length];
             Array.Copy(head, bs, head.Length);
             Array.Copy(reBytes, 0, bs, head.Length, reBytes.Length);

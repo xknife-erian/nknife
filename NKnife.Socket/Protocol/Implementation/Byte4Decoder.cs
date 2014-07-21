@@ -15,7 +15,7 @@ namespace SocketKnife.Protocol.Implementation
 
         public virtual bool NeedReverse
         {
-            get { return false; }
+            get { return true; }
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace SocketKnife.Protocol.Implementation
                 Buffer.BlockCopy(data, index, lenArray, 0, 4);
                 if (needReverse)
                     Array.Reverse(lenArray);
-                int protocolLength = BitConverter.ToInt32(lenArray, 0);
+                int protocolLength = BitConverter.ToInt32(lenArray, 0);//返回由字节数组中指定位置的四个字节转换来的 32 位有符号整数。
                 if (index + 4 + protocolLength > data.Length) //这时又出现了半包现象
                 {
                     _Logger.Trace("处理粘包时出现半包:起点:{0},计算得到的长度:{1},源数据长度:{2}", index, protocolLength, data.Length);

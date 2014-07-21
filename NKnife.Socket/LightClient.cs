@@ -90,7 +90,7 @@ namespace SocketKnife
                 {
                     // 初始化当连接断掉后的重连Timer,但未启动
                     int interval = 60000;
-                    if (Option != null)
+                    if (Option != null && Option.HeartRange > 0)
                         interval = Option.HeartRange/3;
                     _ConnectionWhileBreakTimer = new Timer {Interval = interval};
                     _ConnectionWhileBreakTimer.Elapsed += ConnectionWhileBreakTimer;
@@ -162,7 +162,7 @@ namespace SocketKnife
         /// <summary>
         ///     协议的创建工厂
         /// </summary>
-        public abstract ProtocolFactory Protocols { get; }
+        //public abstract ProtocolFactory Protocols { get; }
 
         /// <summary>
         ///     SocketClient选项
@@ -298,7 +298,7 @@ namespace SocketKnife
             if (_Socket != null)
             {
                 isSuceess = _Socket.SendAsync(e);
-                _Logger.Trace(() => string.Format("To: {1},{0}", data, isSuceess));
+                _Logger.Trace(() => string.Format("Send:{0},\r\n{1}", data, isSuceess));
                 if (!isSuceess && IsCustomTryConnectionMode)
                 {
                     //当发送不成功时，启动自动重新连接
@@ -820,7 +820,7 @@ namespace SocketKnife
                 if (string.IsNullOrWhiteSpace(dg))
                     continue;
                 string command = CommandParser.GetCommand(dg);
-                IProtocol protocol = Protocols.Get(FamilyType.ToString(), command);
+                IProtocol protocol = Protocols.Factory(FamilyType, command);
                 string dgByLog = dg;
                 _Logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
                 if (protocol != null)
