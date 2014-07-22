@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -16,8 +15,8 @@ using NKnife.Ioc;
 using NKnife.Wrapper.API;
 using NLog;
 using Application = System.Windows.Forms.Application;
-using Button = System.Windows.Controls.Button;
 using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
 
 namespace NKnife.Chinese.TouchInput
 {
@@ -26,10 +25,9 @@ namespace NKnife.Chinese.TouchInput
     /// </summary>
     public partial class TouchInputWindow : Window, ITouchInput
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
-
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string SYMBOL = "“)^~}、/\\…|：；》《'%?<”>&({]![";
+        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
 
         private readonly Params _PanelParams = DI.Get<Params>();
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
@@ -37,10 +35,17 @@ namespace NKnife.Chinese.TouchInput
         private Params.InputMode _InputMode = Params.InputMode.Pinyin;
         private Kernel _Kernel;
 
+        private Point _OwnLocation;
+        private Size _OwnSize;
+
         public TouchInputWindow()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.Manual;
+            _OwnLocation = new Point((int) Left, (int) Top);
+            _OwnSize = new Size((int) Width, (int) Height);
+            LocationChanged += (sender, e) => { _OwnLocation = new Point((int) Left, (int) Top); };
+            SizeChanged += (s, e) => { _OwnSize = new Size((int) Width, (int) Height); };
             Topmost = true;
             ShowInTaskbar = false;
             Hide();
@@ -72,6 +77,16 @@ namespace NKnife.Chinese.TouchInput
         public void Exit()
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new ExitDelegate(SyncExit));
+        }
+
+        public Size OwnSize
+        {
+            get { return _OwnSize; }
+        }
+
+        public Point OwnLocation
+        {
+            get { return _OwnLocation; }
         }
 
         private void SyncShowInputView(short mode, Point location)
