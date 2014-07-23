@@ -40,6 +40,8 @@ namespace NKnife.Socket.StarterKit
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this._StatusStrip1 = new System.Windows.Forms.StatusStrip();
             this._RequestToolStrip = new System.Windows.Forms.ToolStrip();
+            this._ProtocolButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._SendButton = new System.Windows.Forms.ToolStripButton();
             this._StatusStrip2 = new System.Windows.Forms.StatusStrip();
             this._ResponseToolStrip = new System.Windows.Forms.ToolStrip();
@@ -158,6 +160,8 @@ namespace NKnife.Socket.StarterKit
             // _RequestToolStrip
             // 
             this._RequestToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._ProtocolButton,
+            this.toolStripSeparator1,
             this._SendButton});
             this._RequestToolStrip.Location = new System.Drawing.Point(0, 0);
             this._RequestToolStrip.Name = "_RequestToolStrip";
@@ -165,13 +169,26 @@ namespace NKnife.Socket.StarterKit
             this._RequestToolStrip.TabIndex = 9;
             this._RequestToolStrip.Text = "toolStrip1";
             // 
+            // _ProtocolButton
+            // 
+            this._ProtocolButton.Image = ((System.Drawing.Image)(resources.GetObject("_ProtocolButton.Image")));
+            this._ProtocolButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._ProtocolButton.Name = "_ProtocolButton";
+            this._ProtocolButton.Size = new System.Drawing.Size(61, 22);
+            this._ProtocolButton.Text = "协议";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // _SendButton
             // 
             this._SendButton.Image = ((System.Drawing.Image)(resources.GetObject("_SendButton.Image")));
             this._SendButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._SendButton.Name = "_SendButton";
-            this._SendButton.Size = new System.Drawing.Size(80, 22);
-            this._SendButton.Text = " 协议发送";
+            this._SendButton.Size = new System.Drawing.Size(56, 22);
+            this._SendButton.Text = " 发送";
             this._SendButton.Click += new System.EventHandler(this._SendButton_Click);
             // 
             // _StatusStrip2
@@ -291,6 +308,8 @@ namespace NKnife.Socket.StarterKit
         private System.Windows.Forms.StatusStrip _StatusStrip1;
         private System.Windows.Forms.StatusStrip _StatusStrip2;
         private System.Windows.Forms.ToolStrip _ResponseToolStrip;
+        private System.Windows.Forms.ToolStripDropDownButton _ProtocolButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

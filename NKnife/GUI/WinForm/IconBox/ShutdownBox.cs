@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
 using System.Windows.Forms.PropertyGridInternal;
+using NKnife.ShareResources;
 
 namespace NKnife.GUI.WinForm.IconBox
 {
-    public class ShutdownBox : Gean.Gui.WinForm.IconBox.IconBox
+    public class ShutdownBox : IconBox
     {
         protected override Icon CoreIcon
         {
-            get { return NKnife.Resources.IconBoxResource.Shutdown; }
+            get { return IconBoxResource.Shutdown; }
         }
     }
 }

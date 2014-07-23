@@ -1,12 +1,13 @@
 ﻿using System.Drawing;
+using NKnife.ShareResources;
 
 namespace NKnife.GUI.WinForm.IconBox
 {
-    public class BluetoothBox : Gean.Gui.WinForm.IconBox.IconBox
+    public class BluetoothBox : IconBox
     {
         protected override Icon CoreIcon
         {
-            get { return NKnife.Resources.IconBoxResource.Bluetooth; }
+            get { return IconBoxResource.Bluetooth; }
         }
     }
 }

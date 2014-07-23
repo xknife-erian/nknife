@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using NKnife.Resources;
+using NKnife.ShareResources;
 
 namespace NKnife.Utility
 {

@@ -174,12 +174,12 @@
     <Compile Include="Logging\Base\LoggerForm.Designer.cs">
       <DependentUpon>LoggerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\IconBoxResource.Designer.cs">
+    <Compile Include="ShareResources\IconBoxResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IconBoxResource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\StringResource.Designer.cs">
+    <Compile Include="ShareResources\StringResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResource.resx</DependentUpon>
@@ -498,27 +498,27 @@
     <Compile Include="Platform\Win32\WinMsg.cs" />
     <Compile Include="Platform\Win32\WinMsgUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ArgumentValidationString.Designer.cs">
+    <Compile Include="ShareResources\ArgumentValidationString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ArgumentValidationString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\FilterString.Designer.cs">
+    <Compile Include="ShareResources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FilterString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\GeneralString.Designer.cs">
+    <Compile Include="ShareResources\GeneralString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneralString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\RegexString.Designer.cs">
+    <Compile Include="ShareResources\RegexString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RegexString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\SmartDateString.Designer.cs">
+    <Compile Include="ShareResources\SmartDateString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SmartDateString.resx</DependentUpon>
@@ -677,36 +677,36 @@
     <EmbeddedResource Include="Logging\LogPanel\LogPanel.zh-CN.resx">
       <DependentUpon>LogPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ArgumentValidationString.resx">
+    <EmbeddedResource Include="ShareResources\ArgumentValidationString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ArgumentValidationString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\FilterString.resx">
+    <EmbeddedResource Include="ShareResources\FilterString.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FilterString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\GeneralString.resx">
+    <EmbeddedResource Include="ShareResources\GeneralString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\IconBoxResource.resx">
+    <EmbeddedResource Include="ShareResources\IconBoxResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IconBoxResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\RegexString.resx">
+    <EmbeddedResource Include="ShareResources\RegexString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SmartDateString.resx">
+    <EmbeddedResource Include="ShareResources\SmartDateString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\StringResource.en-US.resx" />
-    <EmbeddedResource Include="Resources\StringResource.resx">
+    <EmbeddedResource Include="ShareResources\StringResource.en-US.resx" />
+    <EmbeddedResource Include="ShareResources\StringResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\StringResource.zh-CN.resx" />
+    <EmbeddedResource Include="ShareResources\StringResource.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -723,22 +723,22 @@
     <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\BaseActionIcon\Add.ico" />
-    <Content Include="Resources\BaseActionIcon\Alert.ico" />
-    <Content Include="Resources\BaseActionIcon\Back.ico" />
-    <Content Include="Resources\BaseActionIcon\Bluetooth.ico" />
-    <Content Include="Resources\BaseActionIcon\Close.ico" />
-    <Content Include="Resources\BaseActionIcon\Delete.ico" />
-    <Content Include="Resources\BaseActionIcon\Download.ico" />
-    <Content Include="Resources\BaseActionIcon\Forward.ico" />
-    <Content Include="Resources\BaseActionIcon\Info.ico" />
-    <Content Include="Resources\BaseActionIcon\LogOff.ico" />
-    <Content Include="Resources\BaseActionIcon\Music.ico" />
-    <Content Include="Resources\BaseActionIcon\Private.ico" />
-    <Content Include="Resources\BaseActionIcon\Public.ico" />
-    <Content Include="Resources\BaseActionIcon\Refresh.ico" />
-    <Content Include="Resources\BaseActionIcon\Restart.ico" />
-    <Content Include="Resources\BaseActionIcon\Shutdown.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Add.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Alert.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Back.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Bluetooth.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Close.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Delete.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Download.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Forward.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Info.ico" />
+    <Content Include="ShareResources\BaseActionIcon\LogOff.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Music.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Private.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Public.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Refresh.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Restart.ico" />
+    <Content Include="ShareResources\BaseActionIcon\Shutdown.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

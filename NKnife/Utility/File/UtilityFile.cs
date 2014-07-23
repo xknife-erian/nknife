@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Gean;
 using Microsoft.Win32;
-using NKnife.Resources;
+using NKnife.ShareResources;
 
 namespace NKnife.Utility.File
 {

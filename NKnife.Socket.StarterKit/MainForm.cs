@@ -21,6 +21,8 @@ namespace NKnife.Socket.StarterKit
         {
             InitializeComponent();
             Icon = Properties.Resources.MainIcon;
+            _ProtocolButton.Image = Properties.Resources.Protocol;
+            _SendButton.Image = Properties.Resources.Sender;
             SetupLogControl();
             OnSocketClosed();
         }
@@ -88,7 +90,8 @@ namespace NKnife.Socket.StarterKit
 
         private void _SendButton_Click(object sender, EventArgs e)
         {
-            _Socket.SendTo(_RequestTextbox.Text);
+            if (!String.IsNullOrWhiteSpace(_RequestTextbox.Text))
+                _Socket.SendTo(_RequestTextbox.Text);
         }
 
 
