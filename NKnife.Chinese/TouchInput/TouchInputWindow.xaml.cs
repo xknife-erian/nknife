@@ -250,7 +250,7 @@ namespace NKnife.Chinese.TouchInput
                 if (_PanelParams.WordsStripLocation.X == 0 && _PanelParams.WordsStripLocation.Y == 0)
                 {
                     left = Left;
-                    top = Top - _PyStrip.Height - 5;
+                    top = Top - _PyStrip.Height - 1;
                 }
                 else
                 {
@@ -281,7 +281,7 @@ namespace NKnife.Chinese.TouchInput
                 if (_PanelParams.WordsStripLocation.X == 0 && _PanelParams.WordsStripLocation.Y == 0)
                 {
                     left = Left;
-                    top = Top - _HwStrip.Height - 5;
+                    top = Top - _HwStrip.Height - 1;
                 }
                 else
                 {

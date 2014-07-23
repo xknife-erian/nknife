@@ -118,17 +118,17 @@ namespace NKnife.Chinese.TouchInput.Common
             switch (command.Mode)
             {
                 case 1:
-                    command.X += 124;
+                    command.X += 118;
                     break;
                 case 2:
-                    command.X += 99;
+                    command.X += 95;
                     break;
                 default:
-                    command.X += 55;
+                    command.X += 50;
                     break;
             }
             var tih = _TouchInput.OwnSize.Height;
-            if ((screenH-command.X-10)<tih)
+            if ((screenH - command.X + 65) < tih)
             {
                 command.X = (int) (x - tih);
             }
