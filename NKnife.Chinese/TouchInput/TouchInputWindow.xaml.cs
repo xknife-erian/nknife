@@ -127,6 +127,8 @@ namespace NKnife.Chinese.TouchInput
 
         private void SyncHideInputView()
         {
+            HidePyStrip();
+            HideHwStrip();
             Hide();
         }
 
