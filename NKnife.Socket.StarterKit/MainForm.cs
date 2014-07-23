@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using NKnife.Ioc;
 using NKnife.Logging.LogPanel;
 using NKnife.Socket.StarterKit.Base;
+using NKnife.Socket.StarterKit.Properties;
 using NLog;
 using SocketKnife.Interfaces;
 
@@ -20,9 +21,9 @@ namespace NKnife.Socket.StarterKit
         public MainForm()
         {
             InitializeComponent();
-            Icon = Properties.Resources.MainIcon;
-            _ProtocolButton.Image = Properties.Resources.Protocol;
-            _SendButton.Image = Properties.Resources.Sender;
+            Icon = Resources.MainIcon;
+            _ProtocolButton.Image = Resources.Protocol;
+            _SendButton.Image = Resources.Sender;
             SetupLogControl();
             OnSocketClosed();
         }
@@ -76,6 +77,12 @@ namespace NKnife.Socket.StarterKit
         {
             _Socket = new ClientKit();
             _Socket.ConnectTo(_IpAddressControl.Text, (int)_PortNumberBox.Value);
+            _Socket.ReceiveDataParsedEvent += (args, point) =>
+            {
+                var p = args.Protocol.ToString();
+                var handler = new ControlExtension.InvokeHandler(delegate { _ReceviedTextBox.Text = p; });
+                _ReceviedTextBox.ThreadSafeInvoke(handler);
+            };
             OnSocketOpened();
             _Logger.Info("Socket连接完成:{0}:{1}", _IpAddressControl.Text, _PortNumberBox.Value);
         }

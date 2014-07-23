@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 using NKnife.Configuring.Interfaces;
+using NKnife.Utility.File;
 
 namespace NKnife.Configuring.UserData
 {
@@ -40,15 +42,15 @@ namespace NKnife.Configuring.UserData
             {
                 if (string.IsNullOrEmpty(_UserApplicationDataPath))
                 {
-                    const Environment.SpecialFolder folder = Environment.SpecialFolder.ApplicationData;
-                    string path = Environment.GetFolderPath(folder);
-                    string namespaceStr = GetType().Namespace;
+                    const Environment.SpecialFolder FOLDER = Environment.SpecialFolder.ApplicationData;
+                    string path = Environment.GetFolderPath(FOLDER);
+                    string namespaceStr = Assembly.GetEntryAssembly().GetName().FullName;
                     if (string.IsNullOrWhiteSpace(namespaceStr))
-                        namespaceStr = "Pansoft.UserData";
+                        namespaceStr = "NKnife.UserData";
                     string subpath = namespaceStr.Replace('.', '\\').Insert(0, "\\");
                     _UserApplicationDataPath = path + subpath;
                     if (!Directory.Exists(_UserApplicationDataPath))
-                        Directory.CreateDirectory(_UserApplicationDataPath);
+                        UtilityFile.CreateDirectory(_UserApplicationDataPath);
                 }
                 return _UserApplicationDataPath;
             }

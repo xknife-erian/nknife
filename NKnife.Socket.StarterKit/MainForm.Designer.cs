@@ -98,6 +98,7 @@ namespace NKnife.Socket.StarterKit
             // _RequestTextbox
             // 
             this._RequestTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._RequestTextbox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._RequestTextbox.Location = new System.Drawing.Point(0, 25);
             this._RequestTextbox.Multiline = true;
             this._RequestTextbox.Name = "_RequestTextbox";
@@ -121,7 +122,6 @@ namespace NKnife.Socket.StarterKit
             this._ReceviedTextBox.Location = new System.Drawing.Point(0, 25);
             this._ReceviedTextBox.Multiline = true;
             this._ReceviedTextBox.Name = "_ReceviedTextBox";
-            this._ReceviedTextBox.ReadOnly = true;
             this._ReceviedTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this._ReceviedTextBox.Size = new System.Drawing.Size(737, 257);
             this._ReceviedTextBox.TabIndex = 7;
