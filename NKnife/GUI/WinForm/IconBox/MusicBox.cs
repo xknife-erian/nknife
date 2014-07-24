@@ -1,12 +1,13 @@
 ﻿using System.Drawing;
+using NKnife.ShareResources;
 
 namespace NKnife.GUI.WinForm.IconBox
 {
-    public class MusicBox : Gean.Gui.WinForm.IconBox.IconBox
+    public class MusicBox : IconBox
     {
         protected override Icon CoreIcon
         {
-            get { return NKnife.Resources.IconBoxResource.Music; }
+            get { return IconBoxResource.Music; }
         }
     }
 }

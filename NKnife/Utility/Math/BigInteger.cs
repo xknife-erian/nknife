@@ -131,6 +131,7 @@
 */
 #endregion
 using System;
+using NKnife.Wrapper;
 
 namespace Gean.Math
 {

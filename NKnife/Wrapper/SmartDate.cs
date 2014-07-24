@@ -1,5 +1,5 @@
 ﻿using System;
-using NKnife.Resources;
+using NKnife.ShareResources;
 
 namespace NKnife.Wrapper
 {

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using NKnife.Ioc;
-using NKnife.Resources;
+using NKnife.ShareResources;
 using NKnife.Utility;
 using NLog;
 

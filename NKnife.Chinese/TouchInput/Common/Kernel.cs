@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows;
+using System.Windows.Forms;
 using NKnife.Interface;
 using NLog;
 using SocketKnife;
+using Point = System.Drawing.Point;
 
 namespace NKnife.Chinese.TouchInput.Common
 {
@@ -110,18 +112,25 @@ namespace NKnife.Chinese.TouchInput.Common
         private void CallTouchInput(object state)
         {
             var command = (Command) state;
-            command.Y += 123;
+            var x = command.X;
+            var screenH = Screen.PrimaryScreen.WorkingArea.Height;
+            command.Y += 54;
             switch (command.Mode)
             {
                 case 1:
-                    command.X += 124;
+                    command.X += 118;
                     break;
                 case 2:
-                    command.X += 99;
+                    command.X += 95;
                     break;
                 default:
-                    command.X += 55;
+                    command.X += 50;
                     break;
+            }
+            var tih = _TouchInput.OwnSize.Height;
+            if ((screenH - command.X + 65) < tih)
+            {
+                command.X = (int) (x - tih);
             }
             _Logger.Trace("窗体控制:{0},{1},{2}", command.Mode, command.X, command.Y);
             try

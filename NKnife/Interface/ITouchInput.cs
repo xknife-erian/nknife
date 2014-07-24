@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using NKnife.GUI.WinForm.IconBox;
 
 namespace NKnife.Interface
 {
@@ -25,6 +26,9 @@ namespace NKnife.Interface
         /// 退出输入界面
         /// </summary>
         void Exit();
+
+        Size OwnSize { get; }
+        Point OwnLocation { get; }
 
     }
 }

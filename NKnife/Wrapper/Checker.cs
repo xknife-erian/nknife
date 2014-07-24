@@ -1,8 +1,7 @@
 ﻿using System;
-using NKnife.Resources;
+using NKnife.ShareResources;
 
-
-namespace Gean
+namespace NKnife.Wrapper
 {
     public class Checker
     {

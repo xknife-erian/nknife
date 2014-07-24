@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Drawing;
 using System.Windows.Forms;
-using NKnife.Resources;
+using NKnife.ShareResources;
 using NKnife.Utility;
 using NLog;
 
