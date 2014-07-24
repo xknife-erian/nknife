@@ -71,6 +71,7 @@
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
     <Compile Include="Base\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />
+    <Compile Include="Base\CommandList.cs" />
     <Compile Include="Base\MultiMachine.cs" />
     <Compile Include="Base\MultiMachineState.cs" />
     <Compile Include="Base\Pair.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="Collections\PairList.cs" />
     <Compile Include="Collections\SerializableMap.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
+    <Compile Include="Interface\ICommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Configuring\CoderSetting\CoderSetting.cs" />
     <Compile Include="Configuring\CoderSetting\CoderSettingChangeEventArgs.cs" />
     <Compile Include="Configuring\CoderSetting\CoderSettingLoadedEventArgs.cs" />
@@ -435,7 +439,6 @@
     <Compile Include="Wrapper\Icons\IconListManager.cs" />
     <Compile Include="Interface\IConverting.cs" />
     <Compile Include="Interface\IGenerator.cs" />
-    <Compile Include="Interface\ICommand.cs" />
     <Compile Include="Interface\IEnvironmentItem.cs" />
     <Compile Include="Interface\IIDGenerator.cs" />
     <Compile Include="Interface\IJson.cs" />
