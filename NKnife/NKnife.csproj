@@ -69,6 +69,7 @@
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="Architecture\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
+    <Compile Include="Base\About.cs" />
     <Compile Include="Base\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />
     <Compile Include="Base\CommandList.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Collections\PairList.cs" />
     <Compile Include="Collections\SerializableMap.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
+    <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Interface\ICommand.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -188,6 +190,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utility\UtilityData.cs" />
     <Compile Include="Utility\UtilityGraph.cs" />
     <Compile Include="GUI\Controls\Container\AppFileNameEditor.cs" />
     <Compile Include="GUI\Controls\Container\WinFormContainer.cs">
@@ -441,11 +444,10 @@
     <Compile Include="Interface\IGenerator.cs" />
     <Compile Include="Interface\IEnvironmentItem.cs" />
     <Compile Include="Interface\IIDGenerator.cs" />
-    <Compile Include="Interface\IJson.cs" />
     <Compile Include="Interface\IRegistry.cs" />
     <Compile Include="Interface\IService.cs" />
     <Compile Include="Interface\IItem.cs" />
-    <Compile Include="Interface\IToXmlElement.cs" />
+    <Compile Include="Interface\IXml.cs" />
     <Compile Include="Interface\IParse.cs" />
     <Compile Include="Interface\ITree.cs" />
     <Compile Include="Logging\Base\NLogDetailForm.cs">

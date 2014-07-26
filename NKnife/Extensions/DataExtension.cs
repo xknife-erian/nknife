@@ -8,6 +8,9 @@ namespace System.Data
 {
     public static class DataExtensions
     {
+
+        private static readonly NLog.Logger _Logger = LogManager.GetCurrentClassLogger();  
+        
         /// <summary>像Linq to DataSet中得到字段值的操作
         /// </summary>
         public static T Field<T>(this IDataRecord record, string fieldName)
@@ -26,8 +29,6 @@ namespace System.Data
             }
             return fieldValue;
         }
-
-        private static readonly NLog.Logger _Logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>使用指定对象的数据填充DataRow
         /// </summary>
@@ -117,35 +118,6 @@ namespace System.Data
                 }
             }
             return newobj;
-        }
-
-        /// <summary>通过<see cref="EntityColumnAttribute"/>定制特性返回该对象持久化为<see cref="DataTable"/>时的表结构
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj">The obj.</param>
-        /// <returns></returns>
-        public static DataTable GetTableSchema<T>(this T obj) where T : class, new()
-        {
-            var table = new DataTable(String.Format("{0}Table", typeof(T).Name));
-            var type = typeof(T);
-            var propertieInfos = type.GetProperties();
-            foreach (var propertyInfo in propertieInfos) //获取所有的属性
-            {
-                object[] pattrs = propertyInfo.GetCustomAttributes(false); //获取所有的定制特性
-                if (pattrs.OfType<EntityColumnAttribute>().Any()) //如果该属性的定制特性包含指定的特性
-                {
-                    DataColumn column;
-                    var pa = pattrs.OfType<EntityColumnAttribute>().FirstOrDefault();
-                    var columnType = propertyInfo.PropertyType == typeof(DateTime?) ? typeof(DateTime) : propertyInfo.PropertyType;
-                    if (pa != null && !String.IsNullOrWhiteSpace(pa.ColumnName))
-                        column = new DataColumn(pa.ColumnName, columnType);
-                    else
-                        column = new DataColumn(propertyInfo.Name, columnType);
-                    if (!table.Columns.Contains(column.ColumnName))
-                        table.Columns.Add(column);
-                }
-            }
-            return table;
         }
 
         /// <summary>将列的数据结构相关属性复制到克隆的对象中，并返回这个克隆的对象。

@@ -145,9 +145,10 @@ namespace SocketKnife.Protocol.Implementation
                         BindingFlags.CreateInstance |
                         (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
                     obj = Activator.CreateInstance(type, bf, null, null, null);
-                    if (obj is IToXmlElement)
+                    var xml = obj as IXml;
+                    if (xml != null)
                     {
-                        ((IToXmlElement) obj).Parse(itemElement);
+                        xml.Parse(itemElement);
                     }
                 }
                 catch (Exception)

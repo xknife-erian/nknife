@@ -34,7 +34,7 @@ namespace NKnife.Base
         ///     添加新命令并执行之
         /// </summary>
         /// <param name="command"></param>
-        public void AddCommand(ICommand command)
+        public ICommand AddCommand(ICommand command)
         {
             var commandNode = new LinkedListNode<ICommand>(command);
             if (CurrentCommand != null)
@@ -46,6 +46,7 @@ namespace NKnife.Base
                 Commands.AddFirst(commandNode);
             }
             CurrentCommand = commandNode;
+            return command;
         }
 
         /// <summary>
