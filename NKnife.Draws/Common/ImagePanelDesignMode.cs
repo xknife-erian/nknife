@@ -14,12 +14,16 @@
         /// </summary>
         Selecting, 
         /// <summary>
+        /// 画板拖动
+        /// </summary>
+        Dragging,
+        /// <summary>
         /// 缩小
         /// </summary>
         Zooming_Shrink,
         /// <summary>
         /// 放大
         /// </summary>
-        Zooming_Enlarge
+        Zooming_Enlarge,
     }
 }

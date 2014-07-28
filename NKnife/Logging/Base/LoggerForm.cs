@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using NKnife.Ioc;
+using NKnife.ShareResources;
 
 namespace NKnife.Logging.Base
 {
@@ -10,7 +12,7 @@ namespace NKnife.Logging.Base
         public LoggerForm()
         {
             InitializeComponent();
-
+            Icon = IconBoxResource.Restart;
             var logPanel = DI.Get<LogPanel.LogPanel>();
             logPanel.Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right;
             logPanel.Font = new Font("Tahoma", 8.25F);
@@ -30,7 +32,13 @@ namespace NKnife.Logging.Base
             Top = h - Height - 40;
 
             int w = Screen.PrimaryScreen.Bounds.Width;
-            Left = w - Width - 5;
+            Left = w - Width - 2;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
         }
     }
 }

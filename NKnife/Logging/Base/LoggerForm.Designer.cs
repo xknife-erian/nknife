@@ -32,11 +32,15 @@
             // 
             // LoggerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(676, 509);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(624, 441);
+            this.Font = new System.Drawing.Font("Verdana", 8.25F);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "LoggerForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "LoggerForm";
             this.ResumeLayout(false);
 
