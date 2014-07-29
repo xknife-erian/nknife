@@ -9,5 +9,6 @@ namespace NKnife.Draws.Common
     public class RectangleList : List<RectangleF>
     {
         public RectangleF Actived { get; set; }
+        public RectangleF Current { get; set; }
     }
 }

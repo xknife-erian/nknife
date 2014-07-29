@@ -140,7 +140,7 @@ namespace NKnife.Logging.Base
                 var info = (LogEventInfo) si.Item.Tag;
                 if (info != null)
                 {
-                    NLogDetailForm.Show(info);
+                    LoggerInfoDetailForm.Show(info);
                 }
             }
         }

@@ -50,6 +50,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Event\BenchClickEventArgs.cs" />
+    <Compile Include="Common\Event\ImageLoadEventArgs.cs" />
+    <Compile Include="Common\Event\RectangleSelectingEventArgs.cs" />
+    <Compile Include="Common\IDesignBenchCore.cs" />
     <Compile Include="Common\ImageClipper.cs" />
     <Compile Include="Common\ImagePanelDesignMode.cs" />
     <Compile Include="Common\RectangleList.cs" />
@@ -67,11 +71,11 @@
     <Compile Include="Controls\HRuler.Designer.cs">
       <DependentUpon>HRuler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common\DragParamsEventArgs.cs" />
+    <Compile Include="Common\Event\DragParamsEventArgs.cs" />
     <Compile Include="ImageDesignPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Common\Modules.cs" />
+    <Compile Include="Ioc\Modules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,7 +96,7 @@
     <Compile Include="Controls\VRuler.Designer.cs">
       <DependentUpon>VRuler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common\RectangleSelectedEventArgs.cs" />
+    <Compile Include="Common\Event\RectangleSelectedEventArgs.cs" />
     <EmbeddedResource Include="DesignBench.resx">
       <DependentUpon>DesignBench.cs</DependentUpon>
     </EmbeddedResource>

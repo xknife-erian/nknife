@@ -31,61 +31,17 @@ namespace NKnife.Draws
         /// </summary>
         private void InitializeComponent()
         {
-            this._StatusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this._StartLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this._EndLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.hRuler1 = new HRuler();
-            this.vRuler1 = new VRuler();
-            this._StatusStrip.SuspendLayout();
+            this.hRuler1 = new NKnife.Draws.Controls.HRuler();
+            this.vRuler1 = new NKnife.Draws.Controls.VRuler();
             this.SuspendLayout();
-            // 
-            // _StatusStrip
-            // 
-            this._StatusStrip.BackColor = System.Drawing.SystemColors.Control;
-            this._StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this._StartLabel,
-            this.toolStripStatusLabel2,
-            this._EndLabel});
-            this._StatusStrip.Location = new System.Drawing.Point(0, 458);
-            this._StatusStrip.Name = "_StatusStrip";
-            this._StatusStrip.Size = new System.Drawing.Size(640, 22);
-            this._StatusStrip.TabIndex = 2;
-            this._StatusStrip.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 17);
-            this.toolStripStatusLabel1.Text = "Start";
-            // 
-            // _StartLabel
-            // 
-            this._StartLabel.AutoSize = false;
-            this._StartLabel.Name = "_StartLabel";
-            this._StartLabel.Size = new System.Drawing.Size(100, 17);
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(30, 17);
-            this.toolStripStatusLabel2.Text = "End";
-            // 
-            // _EndLabel
-            // 
-            this._EndLabel.AutoSize = false;
-            this._EndLabel.Name = "_EndLabel";
-            this._EndLabel.Size = new System.Drawing.Size(100, 17);
             // 
             // hRuler1
             // 
             this.hRuler1.CurrentZoom = 1F;
             this.hRuler1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hRuler1.Location = new System.Drawing.Point(0, 435);
+            this.hRuler1.Location = new System.Drawing.Point(0, 457);
             this.hRuler1.Name = "hRuler1";
-            this.hRuler1.RulerScaleStyle = RulerStyle.Pixel;
+            this.hRuler1.RulerScaleStyle = NKnife.Draws.Common.RulerStyle.Pixel;
             this.hRuler1.Size = new System.Drawing.Size(620, 23);
             this.hRuler1.TabIndex = 0;
             this.hRuler1.Text = "hRuler1";
@@ -95,8 +51,8 @@ namespace NKnife.Draws
             this.vRuler1.Dock = System.Windows.Forms.DockStyle.Right;
             this.vRuler1.Location = new System.Drawing.Point(620, 0);
             this.vRuler1.Name = "vRuler1";
-            this.vRuler1.RulerStyle = RulerStyle.Pixel;
-            this.vRuler1.Size = new System.Drawing.Size(20, 458);
+            this.vRuler1.RulerStyle = NKnife.Draws.Common.RulerStyle.Pixel;
+            this.vRuler1.Size = new System.Drawing.Size(20, 480);
             this.vRuler1.TabIndex = 1;
             this.vRuler1.Text = "vRuler1";
             // 
@@ -107,13 +63,9 @@ namespace NKnife.Draws
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.hRuler1);
             this.Controls.Add(this.vRuler1);
-            this.Controls.Add(this._StatusStrip);
             this.Name = "DesignBench";
             this.Size = new System.Drawing.Size(640, 480);
-            this._StatusStrip.ResumeLayout(false);
-            this._StatusStrip.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -121,11 +73,6 @@ namespace NKnife.Draws
 
         private HRuler hRuler1;
         private VRuler vRuler1;
-        private System.Windows.Forms.StatusStrip _StatusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel _StartLabel;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.ToolStripStatusLabel _EndLabel;
 
     }
 }
