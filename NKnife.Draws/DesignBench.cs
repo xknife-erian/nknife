@@ -61,7 +61,6 @@ namespace NKnife.Draws
             _ImageDesignPanel.Visible = true;
         }
 
-
         private void SetImageDesignPanelLocation()
         {
             int x = (Width - 20 - _ImageDesignPanel.Width)/2;
@@ -73,29 +72,21 @@ namespace NKnife.Draws
 
         #region Event
 
-        public event EventHandler<BenchClickEventArgs> BenchClick;
-        public event EventHandler<BenchClickEventArgs> BenchDoubleClick;
+        public event EventHandler<RectangleClickEventArgs> RectangleDoubleClick;
         public event EventHandler<ImageLoadEventArgs> ImageLoaded;
         public event EventHandler<RectangleSelectingEventArgs> Selecting;
         public event EventHandler<RectangleSelectedEventArgs> Selected;
         public event EventHandler<DragParamsEventArgs> DesignDragging;
         public event EventHandler<DragParamsEventArgs> DesignDragged;
 
-        protected virtual void OnBenchClick(BenchClickEventArgs e)
+        internal virtual void OnRectangleDoubleClick(RectangleClickEventArgs e)
         {
-            EventHandler<BenchClickEventArgs> handler = BenchClick;
+            EventHandler<RectangleClickEventArgs> handler = RectangleDoubleClick;
             if (handler != null) 
                 handler(this, e);
         }
 
-        protected virtual void OnBenchDoubleClick(BenchClickEventArgs e)
-        {
-            EventHandler<BenchClickEventArgs> handler = BenchDoubleClick;
-            if (handler != null) 
-                handler(this, e);
-        }
-
-        protected virtual void OnImageLoaded(ImageLoadEventArgs e)
+        internal virtual void OnImageLoaded(ImageLoadEventArgs e)
         {
             EventHandler<ImageLoadEventArgs> handler = ImageLoaded;
             if (handler != null) 

@@ -50,7 +50,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Event\BenchClickEventArgs.cs" />
+    <Compile Include="Common\Event\RectangleClickEventArgs.cs" />
     <Compile Include="Common\Event\ImageLoadEventArgs.cs" />
     <Compile Include="Common\Event\RectangleSelectingEventArgs.cs" />
     <Compile Include="Common\IDesignBenchCore.cs" />

@@ -58,8 +58,6 @@ namespace NKnife.Draws
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
             ImagePanelDesignMode = ImagePanelDesignMode.Selecting;
-            Click += ImageDesignPanel_Click;
-            DoubleClick += ImageDesignPanel_DoubleClick;
         }
 
         #endregion
@@ -199,21 +197,6 @@ namespace NKnife.Draws
             {
                 new Point(0, 0), new Point(0, Height - 1), new Point(Width - 1, Height - 1), new Point(Width - 1, 0), new Point(0, 0)
             });
-        }
-
-        #endregion
-
-        #region 单击与双击事件(向上层冒泡)
-
-        void ImageDesignPanel_DoubleClick(object sender, EventArgs e)
-        {
-            var me = (MouseEventArgs)e;
-            (sender as Control).Parent.PointToClient((sender as Control).PointToScreen(me.Location)); 
-        }
-
-        void ImageDesignPanel_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
@@ -368,6 +351,28 @@ namespace NKnife.Draws
                 case ImagePanelDesignMode.Selecting:
                 {
                     break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region 鼠标双击事件
+
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            if (e.Button == MouseButtons.Left)
+            {
+                var rl = _Parent.RectangleList;
+                foreach (RectangleF rect in rl)
+                {
+                    var epoint = new Point((int) (e.X/Zoom), (int) (e.Y/Zoom));
+                    if (rect.Contains(epoint))
+                    {
+                        _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, true, rect));
+                        break;
+                    }
                 }
             }
         }
