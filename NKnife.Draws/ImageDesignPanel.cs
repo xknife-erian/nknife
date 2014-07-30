@@ -160,17 +160,18 @@ namespace NKnife.Draws
             var rl = _Parent.RectangleList;
             if (rl.Count > 0)
             {
+                //采用在内存中绘制好新图的方式贴图的方式进行绘制
                 using (Graphics imgG = Graphics.FromImage(_CurrentImage))
                 {
                     imgG.DrawImage(_SourceImage, new Point(0, 0));
                     foreach (RectangleF rect in rl)
                     {
-                        if (rect == rl.Actived)
+                        if (rect == rl.Actived) //选择的矩形
                         {
                             var b = new SolidBrush(Color.FromArgb(80, 255, 255, 0));
                             imgG.FillRectangle(b, rect.X, rect.Y, rect.Width, rect.Height);
                         }
-                        else if (rect == rl.Current)
+                        else if (rect == rl.Current) //鼠标滑过的矩形
                         {
                             var b = new SolidBrush(Color.FromArgb(40, 80, 180, 0));
                             imgG.FillRectangle(b, rect.X, rect.Y, rect.Width, rect.Height);
@@ -186,13 +187,13 @@ namespace NKnife.Draws
                     g.DrawImage(_CurrentImage, ClientRectangle, new Rectangle(0, 0, _CurrentImage.Width, _CurrentImage.Height), GraphicsUnit.Pixel);
                 }
             }
-
+            //画正在拖动的矩形
             if (_IsDesign)
             {
                 var rect = new Rectangle(_End, new Size(Math.Abs(_Current.X - _Start.X), Math.Abs(_Current.Y - _Start.Y)));
                 g.DrawRectangle(border, rect);
             }
-
+            //为了美观，绘制一个矩形外边框
             g.DrawLines(Pens.Black, new[]
             {
                 new Point(0, 0), new Point(0, Height - 1), new Point(Width - 1, Height - 1), new Point(Width - 1, 0), new Point(0, 0)
@@ -317,7 +318,7 @@ namespace NKnife.Draws
             {
                 _End = new Point(_Current.X, _Current.Y);
             }
-            //使控件的整个图面无效,并导致重绘控件,激发OnPaint绘制Design的矩形
+            //使控件的整个图面无效,并导致重绘控件,激发OnPaint绘制Design的整个矩形
             Invalidate();
             OnDesignDragging(new DragParamsEventArgs(_Start, _Current));
         }
