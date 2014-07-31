@@ -61,6 +61,7 @@ namespace NKnife.Draws
             _ImageDesignPanel.Visible = true;
         }
 
+
         private void SetImageDesignPanelLocation()
         {
             int x = (Width - 20 - _ImageDesignPanel.Width)/2;
@@ -72,18 +73,59 @@ namespace NKnife.Draws
 
         #region Event
 
+        public event EventHandler<RectangleListChangedEventArgs> RectangleRemoved;
+        public event EventHandler<RectangleListChangedEventArgs> RectangleCreated;
+        public event EventHandler<RectangleListChangedEventArgs> RectangleUpdated;
         public event EventHandler<RectangleClickEventArgs> RectangleDoubleClick;
+        public event EventHandler<RectangleClickEventArgs> RectangleClick;
         public event EventHandler<ImageLoadEventArgs> ImageLoaded;
         public event EventHandler<RectangleSelectingEventArgs> Selecting;
         public event EventHandler<RectangleSelectedEventArgs> Selected;
         public event EventHandler<DragParamsEventArgs> DesignDragging;
         public event EventHandler<DragParamsEventArgs> DesignDragged;
 
+        public event EventHandler<MouseEventArgs> BenchDoubleClick;
+
+        protected override void OnDoubleClick(EventArgs e)
+        {
+            base.OnDoubleClick(e);
+            EventHandler<MouseEventArgs> handler = BenchDoubleClick;
+            if (handler != null)
+                handler(this, (MouseEventArgs)e);
+        }
+
+        internal virtual void OnRectangleCreated(RectangleListChangedEventArgs e)
+        {
+            EventHandler<RectangleListChangedEventArgs> handler = RectangleCreated;
+            if (handler != null) 
+                handler(this, e);
+        }
+
+        internal virtual void OnRectangleRemoved(RectangleListChangedEventArgs e)
+        {
+            EventHandler<RectangleListChangedEventArgs> handler = RectangleRemoved;
+            if (handler != null) 
+                handler(this, e);
+        }
+
+        internal virtual void OnRectangleUpdated(RectangleListChangedEventArgs e)
+        {
+            EventHandler<RectangleListChangedEventArgs> handler = RectangleUpdated;
+            if (handler != null) 
+                handler(this, e);
+        }
+
         internal virtual void OnRectangleDoubleClick(RectangleClickEventArgs e)
         {
             EventHandler<RectangleClickEventArgs> handler = RectangleDoubleClick;
             if (handler != null) 
                 handler(this, e);
+        }
+
+        internal virtual void OnRectangleClick(RectangleClickEventArgs e)
+        {
+            EventHandler<RectangleClickEventArgs> handler = RectangleClick;
+            if (handler != null) handler(this, e);
         }
 
         internal virtual void OnImageLoaded(ImageLoadEventArgs e)

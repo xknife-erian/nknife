@@ -102,9 +102,11 @@ namespace NKnife.Draws
             get { return _SourceImage; }
             set
             {
+                var old = _SourceImage;
                 _SourceImage = new Bitmap(value);
                 _CurrentImage = new Bitmap(value);
                 BackgroundImage = value;
+                _Parent.OnImageLoaded(new ImageLoadEventArgs(old, value));
             }
         }
 
@@ -247,7 +249,7 @@ namespace NKnife.Draws
                             {
                                 rl.Actived = rect;
                                 Invalidate();
-                                OnSelected(new RectangleSelectedEventArgs(rl.Actived, e));
+                                _Parent.OnSelected(new RectangleSelectedEventArgs(rl.Actived, e));
                                 break;
                             }
                         }
@@ -292,7 +294,7 @@ namespace NKnife.Draws
                     {
                         rl.Current = rect;
                         Invalidate();
-                        OnSelecting(new RectangleSelectingEventArgs(rl.Actived));
+                        _Parent.OnSelecting(new RectangleSelectingEventArgs(rl.Actived));
                         break;
                     }
                 }
@@ -320,7 +322,7 @@ namespace NKnife.Draws
             }
             //使控件的整个图面无效,并导致重绘控件,激发OnPaint绘制Design的整个矩形
             Invalidate();
-            OnDesignDragging(new DragParamsEventArgs(_Start, _Current));
+            _Parent.OnDesignDragging(new DragParamsEventArgs(_Start, _Current));
         }
 
         #endregion
@@ -346,7 +348,9 @@ namespace NKnife.Draws
                     _Parent.RectangleList.Add(rect);
 
                     Invalidate();
-                    OnDesignDragged(new DragParamsEventArgs(_Start, _Current));
+                    const RectangleListChangedEventArgs.RectangleChangedMode MODE = RectangleListChangedEventArgs.RectangleChangedMode.Created;
+                    _Parent.OnDesignDragged(new DragParamsEventArgs(_Start, _Current));
+                    _Parent.OnRectangleCreated(new RectangleListChangedEventArgs(MODE, _Parent.RectangleList, rect));
                     break;
                 }
                 case ImagePanelDesignMode.Selecting:
@@ -378,30 +382,25 @@ namespace NKnife.Draws
             }
         }
 
-        #endregion
-
-        #region Event
-
-        private void OnDesignDragged(DragParamsEventArgs e)
+        protected override void OnMouseClick(MouseEventArgs e)
         {
-            _Parent.OnDesignDragged(e);
-        }
-
-        private void OnDesignDragging(DragParamsEventArgs e)
-        {
-            _Parent.OnDesignDragging(e);
-        }
-
-        private void OnSelected(RectangleSelectedEventArgs e)
-        {
-            _Parent.OnSelected(e);
-        }
-
-        private void OnSelecting(RectangleSelectingEventArgs e)
-        {
-            _Parent.OnSelecting(e);
+            base.OnMouseClick(e);
+            if (e.Button != MouseButtons.None)
+            {
+                var rl = _Parent.RectangleList;
+                foreach (RectangleF rect in rl)
+                {
+                    var epoint = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
+                    if (rect.Contains(epoint))
+                    {
+                        _Parent.OnRectangleClick(new RectangleClickEventArgs(e, true, rect));
+                        break;
+                    }
+                }
+            }
         }
 
         #endregion
+
     }
 }

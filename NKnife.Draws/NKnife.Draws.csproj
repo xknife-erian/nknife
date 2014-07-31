@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Common\Event\RectangleClickEventArgs.cs" />
     <Compile Include="Common\Event\ImageLoadEventArgs.cs" />
+    <Compile Include="Common\Event\RectangleListChangedEventArgs.cs" />
     <Compile Include="Common\Event\RectangleSelectingEventArgs.cs" />
     <Compile Include="Common\IDesignBenchCore.cs" />
     <Compile Include="Common\ImageClipper.cs" />
