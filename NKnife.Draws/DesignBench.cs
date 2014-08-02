@@ -61,6 +61,19 @@ namespace NKnife.Draws
             _ImageDesignPanel.Visible = true;
         }
 
+        public void RespondKeyEvent(Keys key)
+        {
+            switch (key)
+            {
+                case Keys.Delete:
+                    if (_ImageDesignPanel.ImagePanelDesignMode == ImagePanelDesignMode.Selecting)
+                    {
+                        _ImageDesignPanel.RemoveCurrentRectangle();
+                    }
+                    break;
+            }
+        }
+
 
         private void SetImageDesignPanelLocation()
         {
@@ -125,7 +138,11 @@ namespace NKnife.Draws
         internal virtual void OnRectangleClick(RectangleClickEventArgs e)
         {
             EventHandler<RectangleClickEventArgs> handler = RectangleClick;
-            if (handler != null) handler(this, e);
+            if (handler != null)
+            {
+                
+                handler(this, e);
+            }
         }
 
         internal virtual void OnImageLoaded(ImageLoadEventArgs e)

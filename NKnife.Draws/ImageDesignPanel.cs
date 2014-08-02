@@ -206,20 +206,17 @@ namespace NKnife.Draws
 
         #region 键盘响应
 
-        public void KeyEvent(KeyEventArgs e)
+        public void RemoveCurrentRectangle()
         {
-            if (e.KeyCode == Keys.Delete)
+            var rl = DI.Get<RectangleList>();
+            if (rl.Actived != RectangleF.Empty)
             {
-                var rl = DI.Get<RectangleList>();
-                if (rl.Actived != RectangleF.Empty)
+                DialogResult ds = MessageBox.Show(this, "是否删除被选择的矩形设计区？", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (ds == DialogResult.Yes)
                 {
-                    DialogResult ds = MessageBox.Show(this, "是否删除被选择的矩形设计区？", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if (ds == DialogResult.Yes)
+                    if (rl.Remove(rl.Actived))
                     {
-                        if (rl.Remove(rl.Actived))
-                        {
-                            Invalidate();
-                        }
+                        Invalidate();
                     }
                 }
             }
@@ -339,6 +336,8 @@ namespace NKnife.Draws
                     if (e.Button != MouseButtons.Left)
                         return;
                     _IsDesign = false;
+                    if (_End == Point.Empty)//未拖动
+                        return;
 
                     var end = new PointF((float) (_End.X/Zoom), (float) (_End.Y/Zoom));
                     var start = new PointF((float) (_Start.X/Zoom), (float) (_Start.Y/Zoom));
@@ -348,9 +347,10 @@ namespace NKnife.Draws
                     _Parent.RectangleList.Add(rect);
 
                     Invalidate();
-                    const RectangleListChangedEventArgs.RectangleChangedMode MODE = RectangleListChangedEventArgs.RectangleChangedMode.Created;
+                    _End = Point.Empty;
+                    var mode = RectangleListChangedEventArgs.RectangleChangedMode.Created;
                     _Parent.OnDesignDragged(new DragParamsEventArgs(_Start, _Current));
-                    _Parent.OnRectangleCreated(new RectangleListChangedEventArgs(MODE, _Parent.RectangleList, rect));
+                    _Parent.OnRectangleCreated(new RectangleListChangedEventArgs(mode, _Parent.RectangleList, rect));
                     break;
                 }
                 case ImagePanelDesignMode.Selecting:
@@ -375,7 +375,7 @@ namespace NKnife.Draws
                     var epoint = new Point((int) (e.X/Zoom), (int) (e.Y/Zoom));
                     if (rect.Contains(epoint))
                     {
-                        _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, true, rect));
+                        _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, true, rect));
                         break;
                     }
                 }
@@ -393,10 +393,11 @@ namespace NKnife.Draws
                     var epoint = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
                     if (rect.Contains(epoint))
                     {
-                        _Parent.OnRectangleClick(new RectangleClickEventArgs(e, true, rect));
+                        _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, true, rect));
                         break;
                     }
                 }
+                _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, false, Rectangle.Empty));
             }
         }
 

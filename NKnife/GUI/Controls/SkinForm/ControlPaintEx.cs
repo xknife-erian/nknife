@@ -12,50 +12,52 @@ namespace NKnife.GUI.Controls.SkinForm
      * 你可以免费使用或修改以下代码，但请保留版权信息。
      * 具体请查看 CS程序员之窗开源协议（http://www.csharpwin.com/csol.html）。
      */
+
     public sealed class ControlPaintEx
     {
         public static void DrawCheckedFlag(Graphics graphics, Rectangle rect, Color color)
         {
-            PointF[] points = new PointF[3];
+            var points = new PointF[3];
             points[0] = new PointF(
-                rect.X + rect.Width / 4.5f,
-                rect.Y + rect.Height / 2.5f);
+                rect.X + rect.Width/4.5f,
+                rect.Y + rect.Height/2.5f);
             points[1] = new PointF(
-                rect.X + rect.Width / 2.5f,
-                rect.Bottom - rect.Height / 3f);
+                rect.X + rect.Width/2.5f,
+                rect.Bottom - rect.Height/3f);
             points[2] = new PointF(
-                rect.Right - rect.Width / 4.0f,
-                rect.Y + rect.Height / 4.5f);
-            using (Pen pen = new Pen(color, 2F))
+                rect.Right - rect.Width/4.0f,
+                rect.Y + rect.Height/4.5f);
+            using (var pen = new Pen(color, 2F))
             {
                 graphics.DrawLines(pen, points);
             }
         }
 
-        public static void DrawGlass(
-            Graphics g, RectangleF glassRect, int alphaCenter, int alphaSurround)
+        public static void DrawGlass(Graphics g, RectangleF glassRect, int alphaCenter, int alphaSurround)
         {
             DrawGlass(g, glassRect, Color.White, alphaCenter, alphaSurround);
         }
 
         public static void DrawGlass(
-           Graphics g,
+            Graphics g,
             RectangleF glassRect,
             Color glassColor,
             int alphaCenter,
             int alphaSurround)
         {
-            using (GraphicsPath path = new GraphicsPath())
+            using (var path = new GraphicsPath())
             {
                 path.AddEllipse(glassRect);
-                using (PathGradientBrush brush = new PathGradientBrush(path))
+                using (var brush = new PathGradientBrush(path))
                 {
                     brush.CenterColor = Color.FromArgb(alphaCenter, glassColor);
-                    brush.SurroundColors = new Color[] { 
-                        Color.FromArgb(alphaSurround, glassColor) };
+                    brush.SurroundColors = new[]
+                    {
+                        Color.FromArgb(alphaSurround, glassColor)
+                    };
                     brush.CenterPoint = new PointF(
-                        glassRect.X + glassRect.Width / 2,
-                        glassRect.Y + glassRect.Height / 2);
+                        glassRect.X + glassRect.Width/2,
+                        glassRect.Y + glassRect.Height/2);
                     g.FillPath(brush, path);
                 }
             }
@@ -116,12 +118,12 @@ namespace NKnife.GUI.Controls.SkinForm
             }
             if (backgroundImageLayout == ImageLayout.Tile)
             {
-                using (TextureBrush brush = new TextureBrush(backgroundImage, WrapMode.Tile))
+                using (var brush = new TextureBrush(backgroundImage, WrapMode.Tile))
                 {
                     if (scrollOffset != Point.Empty)
                     {
                         Matrix transform = brush.Transform;
-                        transform.Translate((float)scrollOffset.X, (float)scrollOffset.Y);
+                        transform.Translate(scrollOffset.X, scrollOffset.Y);
                         brush.Transform = transform;
                     }
                     g.FillRectangle(brush, clipRect);
@@ -137,7 +139,7 @@ namespace NKnife.GUI.Controls.SkinForm
             {
                 rect.X += clipRect.Width - rect.Width;
             }
-            using (SolidBrush brush2 = new SolidBrush(backColor))
+            using (var brush2 = new SolidBrush(backColor))
             {
                 g.FillRectangle(brush2, clipRect);
             }
@@ -154,7 +156,7 @@ namespace NKnife.GUI.Controls.SkinForm
                     rect.Offset(clipRect.Location);
                     Rectangle destRect = rect;
                     destRect.Intersect(clipRect);
-                    Rectangle rectangle3 = new Rectangle(Point.Empty, destRect.Size);
+                    var rectangle3 = new Rectangle(Point.Empty, destRect.Size);
                     g.DrawImage(
                         backgroundImage,
                         destRect,
@@ -168,7 +170,7 @@ namespace NKnife.GUI.Controls.SkinForm
                 {
                     Rectangle rectangle4 = rect;
                     rectangle4.Intersect(clipRect);
-                    Rectangle rectangle5 = new Rectangle(
+                    var rectangle5 = new Rectangle(
                         new Point(rectangle4.X - rect.X, rectangle4.Y - rect.Y),
                         rectangle4.Size);
                     g.DrawImage(
@@ -183,7 +185,7 @@ namespace NKnife.GUI.Controls.SkinForm
             }
             else
             {
-                ImageAttributes imageAttr = new ImageAttributes();
+                var imageAttr = new ImageAttributes();
                 imageAttr.SetWrapMode(WrapMode.TileFlipXY);
                 g.DrawImage(
                     backgroundImage,
@@ -216,46 +218,46 @@ namespace NKnife.GUI.Controls.SkinForm
                         return rectangle;
 
                     case ImageLayout.Center:
+                    {
+                        rectangle.Size = backgroundImage.Size;
+                        Size size = bounds.Size;
+                        if (size.Width > rectangle.Width)
                         {
-                            rectangle.Size = backgroundImage.Size;
-                            Size size = bounds.Size;
-                            if (size.Width > rectangle.Width)
-                            {
-                                rectangle.X = (size.Width - rectangle.Width) / 2;
-                            }
-                            if (size.Height > rectangle.Height)
-                            {
-                                rectangle.Y = (size.Height - rectangle.Height) / 2;
-                            }
-                            return rectangle;
+                            rectangle.X = (size.Width - rectangle.Width)/2;
                         }
+                        if (size.Height > rectangle.Height)
+                        {
+                            rectangle.Y = (size.Height - rectangle.Height)/2;
+                        }
+                        return rectangle;
+                    }
                     case ImageLayout.Stretch:
                         rectangle.Size = bounds.Size;
                         return rectangle;
 
                     case ImageLayout.Zoom:
+                    {
+                        Size size2 = backgroundImage.Size;
+                        float num = bounds.Width/((float) size2.Width);
+                        float num2 = bounds.Height/((float) size2.Height);
+                        if (num >= num2)
                         {
-                            Size size2 = backgroundImage.Size;
-                            float num = ((float)bounds.Width) / ((float)size2.Width);
-                            float num2 = ((float)bounds.Height) / ((float)size2.Height);
-                            if (num >= num2)
+                            rectangle.Height = bounds.Height;
+                            rectangle.Width = (int) ((size2.Width*num2) + 0.5);
+                            if (bounds.X >= 0)
                             {
-                                rectangle.Height = bounds.Height;
-                                rectangle.Width = (int)((size2.Width * num2) + 0.5);
-                                if (bounds.X >= 0)
-                                {
-                                    rectangle.X = (bounds.Width - rectangle.Width) / 2;
-                                }
-                                return rectangle;
-                            }
-                            rectangle.Width = bounds.Width;
-                            rectangle.Height = (int)((size2.Height * num) + 0.5);
-                            if (bounds.Y >= 0)
-                            {
-                                rectangle.Y = (bounds.Height - rectangle.Height) / 2;
+                                rectangle.X = (bounds.Width - rectangle.Width)/2;
                             }
                             return rectangle;
                         }
+                        rectangle.Width = bounds.Width;
+                        rectangle.Height = (int) ((size2.Height*num) + 0.5);
+                        if (bounds.Y >= 0)
+                        {
+                            rectangle.Y = (bounds.Height - rectangle.Height)/2;
+                        }
+                        return rectangle;
+                    }
                 }
             }
             return rectangle;
