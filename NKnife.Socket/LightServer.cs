@@ -8,6 +8,8 @@ using NKnife.Utility;
 using NLog;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
+using SocketKnife.Interfaces.Sockets;
 using SocketKnife.Protocol;
 
 namespace SocketKnife

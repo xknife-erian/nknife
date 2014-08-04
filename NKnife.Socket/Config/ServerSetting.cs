@@ -2,6 +2,7 @@
 using NKnife.Configuring.CoderSetting;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace SocketKnife.Config
 {

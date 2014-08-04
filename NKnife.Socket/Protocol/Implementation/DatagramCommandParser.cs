@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml;
 using NLog;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace SocketKnife.Protocol.Implementation
 {

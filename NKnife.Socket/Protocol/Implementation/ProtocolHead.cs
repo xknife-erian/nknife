@@ -1,4 +1,5 @@
 ﻿using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
 
 namespace SocketKnife.Protocol.Implementation
 {

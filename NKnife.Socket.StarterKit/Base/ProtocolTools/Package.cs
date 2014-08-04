@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Xml;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
 
 namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace SocketKnife.Protocol.Implementation
 {

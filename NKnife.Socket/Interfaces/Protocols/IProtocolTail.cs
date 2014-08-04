@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Interfaces
+﻿namespace SocketKnife.Interfaces.Protocols
 {
     /// <summary>
     ///     协议的尾部标记

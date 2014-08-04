@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using SocketKnife.Common;
 
-namespace SocketKnife.Interfaces
+namespace SocketKnife.Interfaces.Sockets
 {
     public interface ISocketServer : ISocketBase
     {

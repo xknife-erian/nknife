@@ -4,6 +4,7 @@ using NKnife.Configuring.CoderSetting;
 using NKnife.Configuring.Interfaces;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace SocketKnife.Config
 {

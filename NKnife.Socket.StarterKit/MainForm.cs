@@ -9,6 +9,7 @@ using NKnife.Socket.StarterKit.Base;
 using NKnife.Socket.StarterKit.Properties;
 using NLog;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace NKnife.Socket.StarterKit
 {

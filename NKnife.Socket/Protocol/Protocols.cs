@@ -4,6 +4,7 @@ using NKnife.Utility;
 using NLog;
 using SocketKnife.Config;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
 
 namespace SocketKnife.Protocol
 {

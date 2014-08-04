@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using NLog;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
 
 namespace SocketKnife.Protocol.Implementation
 {

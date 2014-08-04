@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -9,6 +8,8 @@ using NKnife.Utility;
 using NLog;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
+using SocketKnife.Interfaces.Sockets;
 using SocketKnife.Protocol;
 using Timer = System.Timers.Timer;
 
@@ -159,11 +160,10 @@ namespace SocketKnife
             get { return false; }
         }
 
+        //public abstract ProtocolFactory Protocols { get; }
         /// <summary>
         ///     协议的创建工厂
         /// </summary>
-        //public abstract ProtocolFactory Protocols { get; }
-
         /// <summary>
         ///     SocketClient选项
         /// </summary>
@@ -843,6 +843,5 @@ namespace SocketKnife
         }
 
         #endregion
-
     }
 }
