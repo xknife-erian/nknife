@@ -37,7 +37,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\MainIcon.ico</ApplicationIcon>
+    <ApplicationIcon>OwnResources\MainIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject">
@@ -88,14 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -104,6 +99,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -111,7 +111,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MainIcon.ico" />
+    <None Include="OwnResources\MainIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife.Socket\NKnife.Socket.csproj">
@@ -130,8 +130,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Protocol.png" />
-    <Content Include="Resources\Sender.png" />
+    <Content Include="OwnResources\Protocol.png" />
+    <Content Include="OwnResources\Sender.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Protocols\" />
