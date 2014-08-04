@@ -18,12 +18,8 @@
         /// </summary>
         Dragging,
         /// <summary>
-        /// 缩小
+        /// 放大缩小
         /// </summary>
-        Zooming_Shrink,
-        /// <summary>
-        /// 放大
-        /// </summary>
-        Zooming_Enlarge,
+        Zooming,
     }
 }

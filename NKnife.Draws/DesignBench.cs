@@ -1,9 +1,9 @@
 ﻿using System;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Windows.Forms;
 using NKnife.Draws.Common;
 using NKnife.Draws.Common.Event;
+using NKnife.Events;
 
 namespace NKnife.Draws
 {
@@ -21,7 +21,7 @@ namespace NKnife.Draws
         #endregion
 
         #region 构造函数
-        
+
         public DesignBench()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
@@ -33,19 +33,42 @@ namespace NKnife.Draws
 
         #endregion
 
-        #region IDesignBenchCore
+        #region 放大与缩小,及移动设计面板
+
+
+
+
+        #endregion
+
+        #region IDesignBenchCore Method
 
         public RectangleList RectangleList { get; internal set; }
+
+        #region 缩放率
+
+        private double _Zoom;
+
+        /// <summary>
+        ///     当前设计图像的缩放率
+        /// </summary>
+        public double Zoom
+        {
+            get { return _Zoom; }
+            internal set
+            {
+                double old = _Zoom;
+                _Zoom = value;
+                OnZoomChanged(new ChangedEventArgs<double>(old, value));
+            }
+        }
+
+        #endregion
 
         public void SetImagePanelDesignMode(ImagePanelDesignMode mode)
         {
             _ImageDesignPanel.ImagePanelDesignMode = mode;
         }
 
-        /// <summary>
-        /// 设置打算设计的图片
-        /// </summary>
-        /// <param name="image">指定的设计图片</param>
         public void SetSelectedImage(Image image)
         {
             if (image == null)
@@ -66,14 +89,15 @@ namespace NKnife.Draws
             switch (key)
             {
                 case Keys.Delete:
+                {
                     if (_ImageDesignPanel.ImagePanelDesignMode == ImagePanelDesignMode.Selecting)
                     {
                         _ImageDesignPanel.RemoveCurrentRectangle();
                     }
                     break;
+                }
             }
         }
-
 
         private void SetImageDesignPanelLocation()
         {
@@ -84,7 +108,9 @@ namespace NKnife.Draws
 
         #endregion
 
-        #region Event
+        #region IDesignBenchCore Event
+
+        public event EventHandler<ChangedEventArgs<double>> ZoomChanged;
 
         public event EventHandler<RectangleListChangedEventArgs> RectangleRemoved;
         public event EventHandler<RectangleListChangedEventArgs> RectangleCreated;
@@ -104,34 +130,41 @@ namespace NKnife.Draws
             base.OnDoubleClick(e);
             EventHandler<MouseEventArgs> handler = BenchDoubleClick;
             if (handler != null)
-                handler(this, (MouseEventArgs)e);
+                handler(this, (MouseEventArgs) e);
+        }
+
+        protected virtual void OnZoomChanged(ChangedEventArgs<double> e)
+        {
+            EventHandler<ChangedEventArgs<double>> handler = ZoomChanged;
+            if (handler != null)
+                handler(this, e);
         }
 
         internal virtual void OnRectangleCreated(RectangleListChangedEventArgs e)
         {
             EventHandler<RectangleListChangedEventArgs> handler = RectangleCreated;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, e);
         }
 
         internal virtual void OnRectangleRemoved(RectangleListChangedEventArgs e)
         {
             EventHandler<RectangleListChangedEventArgs> handler = RectangleRemoved;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, e);
         }
 
         internal virtual void OnRectangleUpdated(RectangleListChangedEventArgs e)
         {
             EventHandler<RectangleListChangedEventArgs> handler = RectangleUpdated;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, e);
         }
 
         internal virtual void OnRectangleDoubleClick(RectangleClickEventArgs e)
         {
             EventHandler<RectangleClickEventArgs> handler = RectangleDoubleClick;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, e);
         }
 
@@ -140,7 +173,6 @@ namespace NKnife.Draws
             EventHandler<RectangleClickEventArgs> handler = RectangleClick;
             if (handler != null)
             {
-                
                 handler(this, e);
             }
         }
@@ -148,7 +180,7 @@ namespace NKnife.Draws
         internal virtual void OnImageLoaded(ImageLoadEventArgs e)
         {
             EventHandler<ImageLoadEventArgs> handler = ImageLoaded;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, e);
         }
 
@@ -176,10 +208,11 @@ namespace NKnife.Draws
         internal virtual void OnDesignDragged(DragParamsEventArgs e)
         {
             EventHandler<DragParamsEventArgs> handler = DesignDragged;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, e);
         }
-        
+
         #endregion
+
     }
 }

@@ -65,11 +65,6 @@ namespace NKnife.Draws
         #region 属性
 
         /// <summary>
-        ///     当前图像的缩放率
-        /// </summary>
-        public double Zoom { get; set; }
-
-        /// <summary>
         ///     图板当前的工作模式
         /// </summary>
         public ImagePanelDesignMode ImagePanelDesignMode
@@ -89,8 +84,7 @@ namespace NKnife.Draws
                     case ImagePanelDesignMode.Dragging:
                         Cursor = Cursors.Hand;
                         break;
-                    case ImagePanelDesignMode.Zooming_Enlarge:
-                    case ImagePanelDesignMode.Zooming_Shrink:
+                    case ImagePanelDesignMode.Zooming:
                         Cursor = Cursors.Help;
                         break;
                 }
@@ -102,7 +96,7 @@ namespace NKnife.Draws
             get { return _SourceImage; }
             set
             {
-                var old = _SourceImage;
+                Bitmap old = _SourceImage;
                 _SourceImage = new Bitmap(value);
                 _CurrentImage = new Bitmap(value);
                 BackgroundImage = value;
@@ -114,22 +108,25 @@ namespace NKnife.Draws
 
         #region 当Size发生变化时
 
+        private double _Zoom = 0.9;
+
         private void ImageDesignPanel_ParentChanged(object sender, EventArgs e)
         {
             if (Parent != null)
             {
-                Parent.SizeChanged += delegate { SetOwnSize(); };
-                _Parent = (DesignBench)Parent;
+                Parent.SizeChanged += delegate { SetOwnSize(_Zoom); };
+                _Parent = (DesignBench) Parent;
             }
         }
 
         private void ImageDesignPanel_BackgroundImageChanged(object sender, EventArgs e)
         {
-            SetOwnSize();
+            SetOwnSize(_Zoom);
         }
 
-        private void SetOwnSize()
+        public void SetOwnSize(double zoom)
         {
+            _Zoom = zoom;
             if (BackgroundImage == null)
                 return;
             int w = BackgroundImage.Width;
@@ -138,16 +135,32 @@ namespace NKnife.Draws
             int ph = Parent.Size.Height;
             if (w > h)
             {
-                Zoom = (pw*0.9)/w;
-                Width = (int) (pw*0.9);
-                Height = (int) (h*Zoom);
+                _Parent.Zoom = (pw*zoom)/w;
+                Width = (int) (pw*zoom);
+                Height = (int) (h*_Parent.Zoom);
             }
             else
             {
-                Zoom = (ph*0.9)/h;
-                Height = (int) (ph*0.9);
-                Width = (int) (w*Zoom);
+                _Parent.Zoom = (ph*zoom)/h;
+                Height = (int) (ph*zoom);
+                Width = (int) (w*_Parent.Zoom);
             }
+        }
+
+        /// <summary>
+        ///     放大
+        /// </summary>
+        public void EnlargeDesignPanel()
+        {
+            SetOwnSize(_Zoom += 0.2);
+        }
+
+        /// <summary>
+        ///     缩小
+        /// </summary>
+        public void ShrinkDesignPanel()
+        {
+            SetOwnSize(_Zoom -= 0.2);
         }
 
         #endregion
@@ -159,7 +172,7 @@ namespace NKnife.Draws
             base.OnPaint(pe);
             Graphics g = pe.Graphics;
             var border = new Pen(Color.Red, 1) {DashStyle = DashStyle.Dash};
-            var rl = _Parent.RectangleList;
+            RectangleList rl = _Parent.RectangleList;
             if (rl.Count > 0)
             {
                 //采用在内存中绘制好新图的方式贴图的方式进行绘制
@@ -236,10 +249,10 @@ namespace NKnife.Draws
                     _IsDesign = true;
                     break;
                 case ImagePanelDesignMode.Selecting:
-                    var rl = _Parent.RectangleList;
+                    RectangleList rl = _Parent.RectangleList;
                     foreach (RectangleF rect in rl)
                     {
-                        var epoint = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
+                        var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
                         if (rect.Contains(epoint))
                         {
                             if (rect != rl.Actived)
@@ -281,10 +294,10 @@ namespace NKnife.Draws
 
         private void MouseMoveSelecting(MouseEventArgs e)
         {
-            var rl = _Parent.RectangleList;
+            RectangleList rl = _Parent.RectangleList;
             foreach (RectangleF rect in rl)
             {
-                var epoint = new Point((int) (e.X/Zoom), (int) (e.Y/Zoom));
+                var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
                 if (rect.Contains(epoint))
                 {
                     if (rect != rl.Actived && rect != rl.Current)
@@ -336,12 +349,12 @@ namespace NKnife.Draws
                     if (e.Button != MouseButtons.Left)
                         return;
                     _IsDesign = false;
-                    if (_End == Point.Empty)//未拖动
+                    if (_End == Point.Empty) //未拖动
                         return;
 
-                    var end = new PointF((float) (_End.X/Zoom), (float) (_End.Y/Zoom));
-                    var start = new PointF((float) (_Start.X/Zoom), (float) (_Start.Y/Zoom));
-                    var current = new PointF((float) (_Current.X/Zoom), (float) (_Current.Y/Zoom));
+                    var end = new PointF((float) (_End.X/_Parent.Zoom), (float) (_End.Y/_Parent.Zoom));
+                    var start = new PointF((float) (_Start.X/_Parent.Zoom), (float) (_Start.Y/_Parent.Zoom));
+                    var current = new PointF((float) (_Current.X/_Parent.Zoom), (float) (_Current.Y/_Parent.Zoom));
 
                     var rect = new RectangleF(end, new SizeF(Math.Abs(current.X - start.X), Math.Abs(current.Y - start.Y)));
                     _Parent.RectangleList.Add(rect);
@@ -362,23 +375,24 @@ namespace NKnife.Draws
 
         #endregion
 
-        #region 鼠标双击事件
+        #region 鼠标单击双击事件
 
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             base.OnMouseDoubleClick(e);
             if (e.Button == MouseButtons.Left)
             {
-                var rl = _Parent.RectangleList;
+                RectangleList rl = _Parent.RectangleList;
                 foreach (RectangleF rect in rl)
                 {
-                    var epoint = new Point((int) (e.X/Zoom), (int) (e.Y/Zoom));
+                    var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
                     if (rect.Contains(epoint))
                     {
                         _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, true, rect));
                         break;
                     }
                 }
+                _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, false, Rectangle.Empty));
             }
         }
 
@@ -387,21 +401,33 @@ namespace NKnife.Draws
             base.OnMouseClick(e);
             if (e.Button != MouseButtons.None)
             {
-                var rl = _Parent.RectangleList;
-                foreach (RectangleF rect in rl)
+                if (ImagePanelDesignMode == ImagePanelDesignMode.Zooming)
                 {
-                    var epoint = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
-                    if (rect.Contains(epoint))
+                    if (e.Button == MouseButtons.Left && e.Clicks == 1) //左键单击
                     {
-                        _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, true, rect));
-                        break;
+                        if ((ModifierKeys & Keys.Shift) == Keys.Shift) //是否按着Shift键
+                            ShrinkDesignPanel();
+                        else
+                            EnlargeDesignPanel();
                     }
                 }
-                _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, false, Rectangle.Empty));
+                else
+                {
+                    RectangleList rl = _Parent.RectangleList;
+                    foreach (RectangleF rect in rl)
+                    {
+                        var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
+                        if (rect.Contains(epoint))
+                        {
+                            _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, true, rect));
+                            break;
+                        }
+                    }
+                    _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, false, Rectangle.Empty));
+                }
             }
         }
 
         #endregion
-
     }
 }
