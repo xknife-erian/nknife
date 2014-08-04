@@ -81,8 +81,13 @@ namespace NKnife.Socket.StarterKit
             _Socket.ReceiveDataParsedEvent += (args, point) =>
             {
                 var p = args.Protocol.ToString();
-                var handler = new ControlExtension.InvokeHandler(delegate { _ReceviedTextBox.Text = p; });
-                _ReceviedTextBox.ThreadSafeInvoke(handler);
+                _ReceviedTextBox.ThreadSafeInvoke(delegate { _ReceviedTextBox.Text = p; });
+                switch (args.Protocol.Command)
+                {
+                    case "KeepAliveTestFromServer":
+                        _Socket.SendTo("KeepAliveTestFromClient");
+                        break;
+                }
             };
             OnSocketOpened();
             _Logger.Info("Socket连接完成:{0}:{1}", _IpAddressControl.Text, _PortNumberBox.Value);

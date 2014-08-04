@@ -63,7 +63,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\ProtocolTools\response.cs" />
+    <Compile Include="Protocols\KeepAliveTestFromServer.cs" />
+    <Compile Include="Protocols\KeepAlive\Decoder.cs" />
+    <Compile Include="Protocols\KeepAlive\Encoder.cs" />
+    <Compile Include="Protocols\KeepAlive\Heads.cs" />
+    <Compile Include="Protocols\KeepAlive\Package.cs" />
+    <Compile Include="Protocols\KeepAlive\Parser.cs" />
+    <Compile Include="Protocols\KeepAlive\Tails.cs" />
+    <Compile Include="Protocols\response.cs" />
     <Compile Include="Base\SocketClient.cs" />
     <Compile Include="Base\SocketOption.cs" />
     <Compile Include="Base\Params.cs" />
@@ -133,9 +140,7 @@
     <Content Include="OwnResources\Protocol.png" />
     <Content Include="OwnResources\Sender.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Protocols\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

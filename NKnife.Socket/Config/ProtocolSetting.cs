@@ -76,6 +76,11 @@ namespace SocketKnife.Config
         private void ParseProtocol(ProtocolFamily family, XmlNode node, string ns)
         {
             var familyElement = (XmlElement)node;
+            var names = ns;
+            if (familyElement.HasAttribute("namespace"))
+            {
+                names = familyElement.GetAttribute("namespace") + ".";
+            }
             foreach (XmlNode protocolNode in familyElement.ChildNodes)
             {
                 if (protocolNode.NodeType != XmlNodeType.Element)
@@ -83,13 +88,13 @@ namespace SocketKnife.Config
                 var protocol = (XmlElement)protocolNode;
                 string protocolName = protocol.GetAttribute("name");
                 //从程序集中找到该协议的Class
-                string className = string.Format("{0}{1}", ns, protocolName);
+                string className = string.Format("{0}{1}", names, protocolName);
                 //鉴于协议名有可能使用～等特殊符号开头，因此协议名无法做为类名
                 //因此增加下面的节点判断，如果有classname属性则使用该属性做为类名，没有时使用name属性做类名
                 string protocalClassName = protocol.GetAttribute("classname");
                 if (!string.IsNullOrEmpty(protocalClassName))
                 {
-                    className = string.Format("{0}{1}", ns, protocalClassName);
+                    className = string.Format("{0}{1}", names, protocalClassName);
                 }
 
                 Type protocolType = null;
@@ -107,6 +112,7 @@ namespace SocketKnife.Config
                     ParseProtocolTools(family, protocolName, protocol);
                     //将该协议Class添入家族MAP中
                     family.Add(protocolName, protocolType);
+                    _Logger.Trace(string.Format("Family Add:{0}, [{1}], {2}", family.Family, protocolName, protocolType.FullName));
                     //本协议的Content
                     XmlNode contentNode = protocol.SelectSingleNode("Content");
                     Type contentType = family.DefaultContentType;

@@ -27,7 +27,17 @@
           <IProtocolPackage>Package</IProtocolPackage>
           <IProtocolParser>Parser</IProtocolParser>
         </tools>
-        <impl>
+        <impl namespace="NKnife.Socket.StarterKit.Protocols">
+          <protocol name="KeepAliveTestFromServer">
+            <tools namespace="NKnife.Socket.StarterKit.Protocols.KeepAlive">
+              <IProtocolHead>Heads</IProtocolHead>
+              <IProtocolTail>Tails</IProtocolTail>
+              <IProtocolPackage>Package</IProtocolPackage>
+              <IProtocolParser>Parser</IProtocolParser>
+              <IDatagramDecoder>Decoder</IDatagramDecoder>
+              <IDatagramEncoder>Encoder</IDatagramEncoder>
+            </tools>
+          </protocol>
           <protocol name="response" />
         </impl>
       </family>
