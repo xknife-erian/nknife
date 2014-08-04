@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Soc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket.StarterKit", "NKnife.Socket.StarterKit\NKnife.Socket.StarterKit.csproj", "{79763417-52E0-4F46-B2DA-DAF13AC84807}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NKinfe.Lib", "NKinfe.Lib", "{60069790-CB86-4032-BADE-F91EEF49FF72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,5 +51,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF} = {60069790-CB86-4032-BADE-F91EEF49FF72}
+		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 	EndGlobalSection
 EndGlobal
