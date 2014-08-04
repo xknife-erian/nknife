@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Interfaces
+﻿namespace SocketKnife.Interfaces.Sockets
 {
     public interface ISocketClientSetting
     {

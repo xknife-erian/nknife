@@ -2,6 +2,7 @@
 using NKnife.Utility;
 using NLog;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace NKnife.Socket.StarterKit.Base.ProtocolTools
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace SocketKnife.Protocol.Implementation
 {

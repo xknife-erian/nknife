@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Interfaces
+﻿namespace SocketKnife.Interfaces.Sockets
 {
     /// <summary>
     ///     从原生消息体中获取命令字

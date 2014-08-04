@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml;
 using NLog;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 
 namespace SocketKnife.Protocol.Implementation
 {
@@ -16,6 +17,10 @@ namespace SocketKnife.Protocol.Implementation
         public string GetCommand(string protocolString)
         {
             string command = string.Empty;
+            if (protocolString.IndexOf("KeepAliveTestFromServer", System.StringComparison.Ordinal) >= 0)
+            {
+                return "KeepAliveTestFromServer";
+            }
             using (var reader = new XmlTextReader(new StringReader(protocolString)))
             {
                 try

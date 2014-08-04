@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Interfaces
+﻿namespace SocketKnife.Interfaces.Sockets
 {
     /// <summary>
     ///     一个将接收到的消息字节数组转换成字符串的工具接口

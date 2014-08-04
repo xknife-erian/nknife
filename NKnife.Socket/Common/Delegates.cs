@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
 
 namespace SocketKnife.Common
 {

@@ -1,6 +1,6 @@
 ﻿using SocketKnife.Common;
 
-namespace SocketKnife.Interfaces
+namespace SocketKnife.Interfaces.Sockets
 {
     public interface ISocketClient : ISocketBase
     {

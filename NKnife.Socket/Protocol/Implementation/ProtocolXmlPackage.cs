@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using NKnife.Utility;
 using NLog;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Protocols;
 
 namespace SocketKnife.Protocol.Implementation
 {

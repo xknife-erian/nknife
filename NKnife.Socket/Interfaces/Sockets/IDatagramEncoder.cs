@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Interfaces
+﻿namespace SocketKnife.Interfaces.Sockets
 {
     /// <summary>
     ///     一个最常用的 字符串 => 字节数组 转换器。

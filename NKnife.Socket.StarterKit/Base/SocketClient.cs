@@ -1,6 +1,7 @@
 ﻿using SocketKnife;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
+using SocketKnife.Interfaces.Sockets;
 using SocketKnife.Protocol;
 
 namespace NKnife.Socket.StarterKit.Base
