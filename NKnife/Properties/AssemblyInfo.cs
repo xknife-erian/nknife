@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
-[assembly: Guid("177523CB-4145-4c9a-BFB1-16A2B7EE58C9")]
+[assembly: Guid("FF91ADC1-A814-4D02-B97E-36422DE23646")]
 
 // 程序集的版本信息由下面四个值组成:
 //
@@ -23,5 +23,5 @@ using System.Runtime.InteropServices;
 //      修订号
 //
 
-[assembly: AssemblyVersion("14.1.7.23")]
-[assembly: AssemblyFileVersionAttribute("14.1.7.23")]
+[assembly: AssemblyVersion("14.2.0.0804")]
+[assembly: AssemblyFileVersionAttribute("14.2.0.0804")]
