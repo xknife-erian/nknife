@@ -1,5 +1,5 @@
 ﻿using System;
-using Gean.Math;
+using NKnife.Utility.Maths;
 
 namespace NKnife.Chinese
 {

@@ -551,10 +551,10 @@
     <Compile Include="Utility\File\NoDotNetAssemblyFiles.cs" />
     <Compile Include="Utility\File\TextFileEncoding.cs" />
     <Compile Include="Utility\File\UtilityFile.cs" />
-    <Compile Include="Utility\Math\BigInteger.cs" />
-    <Compile Include="Utility\Math\Combinations.cs" />
-    <Compile Include="Utility\Math\Permutations.cs" />
-    <Compile Include="Utility\Math\UtilityMath.cs" />
+    <Compile Include="Utility\Maths\BigInteger.cs" />
+    <Compile Include="Utility\Maths\Combinations.cs" />
+    <Compile Include="Utility\Maths\Permutations.cs" />
+    <Compile Include="Utility\Maths\UtilityMath.cs" />
     <Compile Include="Utility\UtilityByte.cs" />
     <Compile Include="Utility\UtilityClipboard.cs" />
     <Compile Include="Utility\UtilityCollection.cs" />

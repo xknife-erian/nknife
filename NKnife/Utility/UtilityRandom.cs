@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Gean.Math;
+using NKnife.Utility.Maths;
 
 namespace NKnife.Utility
 {

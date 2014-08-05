@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gean;
 using NKnife.Interface;
+using NKnife.Utility.Maths;
 
 namespace NKnife.Wrapper
 {
@@ -49,7 +50,7 @@ namespace NKnife.Wrapper
             const int timeLength = 366 * 24 * 60;
             char[] src = "ABCDEFGHJKLMNPQRSTWXY23456789".ToCharArray();//减除不易识读的：I,O,U,V,Z,0,1
             _TimeFlag = new List<string>(timeLength);
-            var permut = new Gean.Math.Permutations<char>(src, 4);
+            var permut = new Permutations<char>(src, 4);
             int i = 0;
             foreach (char[] charArray in permut)
             {
