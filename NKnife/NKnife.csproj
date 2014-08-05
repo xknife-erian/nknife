@@ -698,7 +698,7 @@
       <LastGenOutput>IconBoxResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\RegexString.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\SmartDateString.resx">
