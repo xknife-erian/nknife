@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Soc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Draws", "NKnife.Draws\NKnife.Draws.csproj", "{48DCFEA4-948A-45F8-8FA5-010A1E095C19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Chesses", "NKnife.Chesses\NKnife.Chesses.csproj", "{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{48DCFEA4-948A-45F8-8FA5-010A1E095C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48DCFEA4-948A-45F8-8FA5-010A1E095C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48DCFEA4-948A-45F8-8FA5-010A1E095C19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
