@@ -12,13 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B05220
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Robot.CubeOctopus", "NKnife.Tools\NKnife.Tools.Robot.CubeOctopus\NKnife.App.Robot.CubeOctopus.csproj", "{45F2128D-547E-457A-A788-7BE662D4B072}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Robot.CubeOctopus", "NKnife.App\NKnife.App.Robot.CubeOctopus\NKnife.App.Robot.CubeOctopus.csproj", "{45F2128D-547E-457A-A788-7BE662D4B072}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Ele.ResistanceValueCombiner", "NKnife.Tools\NKnife.Tools.Ele.ResistanceValueCombiner\NKnife.App.Ele.ResistanceValueCombiner.csproj", "{260137D2-3427-49AC-B4C7-1F040937572A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Ele.ResistanceValueCombiner", "NKnife.App\NKnife.App.Ele.ResistanceValueCombiner\NKnife.App.Ele.ResistanceValueCombiner.csproj", "{260137D2-3427-49AC-B4C7-1F040937572A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Socket\NKnife.Socket.csproj", "{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.SocketKit", "NKnife.Socket.StarterKit\NKnife.App.SocketKit.csproj", "{79763417-52E0-4F46-B2DA-DAF13AC84807}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.SocketKit", "NKnife.App\NKnife.App.SocketKit\NKnife.App.SocketKit.csproj", "{79763417-52E0-4F46-B2DA-DAF13AC84807}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NKinfe.Lib", "NKinfe.Lib", "{60069790-CB86-4032-BADE-F91EEF49FF72}"
 EndProject
@@ -30,7 +30,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Draws", "NKnife.Draw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.UnitTests", "NKnife.UnitTests\NKnife.UnitTests.csproj", "{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Sudoku", "NKnife.Tools\NKnife.Tools.Sudoku\NKnife.App.Sudoku.csproj", "{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Sudoku", "NKnife.App\NKnife.App.Sudoku\NKnife.App.Sudoku.csproj", "{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.StarterKit", "NKnife.StarterKit\NKnife.StarterKit.csproj", "{BFC7CF57-92D4-4950-B926-8606EC571395}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,10 @@ Global
 		{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC7CF57-92D4-4950-B926-8606EC571395}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,5 +95,6 @@ Global
 		{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 		{48DCFEA4-948A-45F8-8FA5-010A1E095C19} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 		{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253} = {60069790-CB86-4032-BADE-F91EEF49FF72}
+		{BFC7CF57-92D4-4950-B926-8606EC571395} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 	EndGlobalSection
 EndGlobal
