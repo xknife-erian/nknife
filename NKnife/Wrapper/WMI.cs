@@ -1,11 +1,154 @@
 ﻿using System;
-using System.Management;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Management;
 using System.Text;
 
-namespace Rainsoft.Management
+namespace NKnife.Wrapper
 {
+    /// <summary>
+    ///     获取系统信息
+    /// </summary>
+    /// <example>
+    /// </example>
+    public sealed class WMI
+    {
+        private readonly ArrayList _Mocs;
+        private readonly StringDictionary _Names; // 用来存储属性名，便于忽略大小写查询正确名称。
+
+        /// <summary>
+        ///     构造函数
+        /// </summary>
+        /// <param name="path"></param>
+        public WMI(string path)
+        {
+            _Names = new StringDictionary();
+            _Mocs = new ArrayList();
+
+            try
+            {
+                var cimobject = new ManagementClass(path);
+                ManagementObjectCollection moc = cimobject.GetInstances();
+
+                bool ok = false;
+                foreach (ManagementObject mo in moc)
+                {
+                    var o = new Hashtable();
+                    _Mocs.Add(o);
+
+                    foreach (PropertyData p in mo.Properties)
+                    {
+                        o.Add(p.Name, p.Value);
+                        if (!ok) _Names.Add(p.Name, p.Name);
+                    }
+
+                    ok = true;
+                    mo.Dispose();
+                }
+                moc.Dispose();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     构造函数
+        /// </summary>
+        /// <param name="path"></param>
+        public WMI(WMIPath path)
+            : this(path.ToString())
+        {
+        }
+
+        /// <summary>
+        ///     信息集合数量
+        /// </summary>
+        public int Count
+        {
+            get { return _Mocs.Count; }
+        }
+
+        /// <summary>
+        ///     获取指定属性值，注意某些结果可能是数组。
+        /// </summary>
+        public object this[int index, string propertyName]
+        {
+            get
+            {
+                try
+                {
+                    string trueName = _Names[propertyName.Trim()]; // 以此可不区分大小写获得正确的属性名称。
+                    var h = (Hashtable) _Mocs[index];
+                    return h[trueName];
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     返回所有属性名称。
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public string[] PropertyNames(int index)
+        {
+            try
+            {
+                var h = (Hashtable) _Mocs[index];
+                var result = new string[h.Keys.Count];
+
+                h.Keys.CopyTo(result, 0);
+
+                Array.Sort(result);
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///     返回测试信息。
+        /// </summary>
+        /// <returns></returns>
+        public string Test()
+        {
+            try
+            {
+                var result = new StringBuilder(1000);
+
+                for (int i = 0; i < Count; i++)
+                {
+                    int j = 0;
+                    foreach (string s in PropertyNames(i))
+                    {
+                        result.Append(string.Format("{0}:{1}={2}\n", ++j, s, this[i, s]));
+
+                        if (this[i, s] is Array)
+                        {
+                            var v1 = this[i, s] as Array;
+                            for (int x = 0; x < v1.Length; x++)
+                            {
+                                result.Append("\t" + v1.GetValue(x) + "\n");
+                            }
+                        }
+                    }
+                    result.Append("======WMI=======\n");
+                }
+                return result.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+    }
 
     #region WMIPath
 
@@ -67,150 +210,6 @@ namespace Rainsoft.Management
 
     #endregion
 
-    /// <summary>
-    /// 获取系统信息
-    /// </summary>
-    /// <example>
-    /// </example>
-    public sealed class WMI
-    {
-        private ArrayList mocs;
-        private StringDictionary names; // 用来存储属性名，便于忽略大小写查询正确名称。
-
-        /// <summary>
-        /// 信息集合数量
-        /// </summary>
-        public int Count
-        {
-            get { return mocs.Count; }
-        }
-
-        /// <summary>
-        /// 获取指定属性值，注意某些结果可能是数组。
-        /// </summary>
-        public object this[int index, string propertyName]
-        {
-            get
-            {
-                try
-                {
-                    string trueName = names[propertyName.Trim()]; // 以此可不区分大小写获得正确的属性名称。
-                    Hashtable h = (Hashtable) mocs[index];
-                    return h[trueName];
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 返回所有属性名称。
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public string[] PropertyNames(int index)
-        {
-            try
-            {
-                Hashtable h = (Hashtable) mocs[index];
-                string[] result = new string[h.Keys.Count];
-
-                h.Keys.CopyTo(result, 0);
-
-                Array.Sort(result);
-                return result;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 返回测试信息。
-        /// </summary>
-        /// <returns></returns>
-        public string Test()
-        {
-            try
-            {
-                StringBuilder result = new StringBuilder(1000);
-
-                for (int i = 0; i < Count; i++)
-                {
-                    int j = 0;
-                    foreach (string s in PropertyNames(i))
-                    {
-                        result.Append(string.Format("{0}:{1}={2}\n", ++j, s, this[i, s]));
-
-                        if (this[i, s] is Array)
-                        {
-                            Array v1 = this[i, s] as Array;
-                            for (int x = 0; x < v1.Length; x++)
-                            {
-                                result.Append("\t" + v1.GetValue(x) + "\n");
-                            }
-                        }
-                    }
-                    result.Append("======WMI=======\n");
-                }
-
-                return result.ToString();
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="path"></param>
-        public WMI(string path)
-        {
-            names = new StringDictionary();
-            mocs = new ArrayList();
-
-            try
-            {
-                ManagementClass cimobject = new ManagementClass(path);
-                ManagementObjectCollection moc = cimobject.GetInstances();
-
-                bool ok = false;
-                foreach (ManagementObject mo in moc)
-                {
-                    Hashtable o = new Hashtable();
-                    mocs.Add(o);
-
-                    foreach (PropertyData p in mo.Properties)
-                    {
-                        o.Add(p.Name, p.Value);
-                        if (!ok) names.Add(p.Name, p.Name);
-                    }
-
-                    ok = true;
-                    mo.Dispose();
-                }
-                moc.Dispose();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="path"></param>
-        public WMI(WMIPath path)
-            : this(path.ToString())
-        {
-        }
-    }
 }
 
 // WMI w = new WMI(WMIPath.Win32_NetworkAdapterConfiguration);

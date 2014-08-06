@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using Gean.Wrapper;
+using NKnife.Base;
+using NKnife.Wrapper;
 
 namespace Gean.Gui.WinForm
 {

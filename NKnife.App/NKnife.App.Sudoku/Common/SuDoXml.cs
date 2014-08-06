@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using Gean.Xml;
 using NKnife.App.Sudoku.Common.Enum;
+using NKnife.XML;
 
 namespace NKnife.App.Sudoku.Common
 {

@@ -1,4 +1,4 @@
-﻿using Gean.Xml;
+﻿using NKnife.XML;
 
 namespace NKnife.Configuring.CoderSetting
 {

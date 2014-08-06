@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,35 +46,39 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Event\RectangleClickEventArgs.cs" />
-    <Compile Include="Common\Event\ImageLoadEventArgs.cs" />
-    <Compile Include="Common\Event\RectangleListChangedEventArgs.cs" />
-    <Compile Include="Common\Event\RectangleSelectingEventArgs.cs" />
-    <Compile Include="Common\IDesignBenchCore.cs" />
-    <Compile Include="Common\ImageClipper.cs" />
-    <Compile Include="Common\ImagePanelDesignMode.cs" />
-    <Compile Include="Common\RectangleList.cs" />
+    <Compile Include="Extensions\RectangleExtension.cs" />
+    <Compile Include="Designs\Event\RectangleClickEventArgs.cs" />
+    <Compile Include="Designs\Event\ImageLoadEventArgs.cs" />
+    <Compile Include="Designs\Event\RectangleListChangedEventArgs.cs" />
+    <Compile Include="Designs\Event\RectangleSelectingEventArgs.cs" />
+    <Compile Include="Designs\Base\IDesignBenchCore.cs" />
+    <Compile Include="ImageClipper.cs" />
+    <Compile Include="Designs\Base\ImagePanelDesignMode.cs" />
+    <Compile Include="Designs\Base\RectangleList.cs" />
     <Compile Include="Common\Redraw.cs" />
-    <Compile Include="DesignBench.cs">
+    <Compile Include="Thumbnail.cs" />
+    <Compile Include="Drawing.cs" />
+    <Compile Include="Designs\DesignBench.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DesignBench.Designer.cs">
+    <Compile Include="Designs\DesignBench.Designer.cs">
       <DependentUpon>DesignBench.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common\G.cs" />
+    <Compile Include="G.cs" />
     <Compile Include="Controls\HRuler.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\HRuler.Designer.cs">
       <DependentUpon>HRuler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common\Event\DragParamsEventArgs.cs" />
-    <Compile Include="ImageDesignPanel.cs">
+    <Compile Include="Designs\Event\DragParamsEventArgs.cs" />
+    <Compile Include="Designs\ImageDesignPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Ioc\Modules.cs" />
@@ -90,15 +95,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Common\RulerStyle.cs" />
+    <Compile Include="Controls\Base\RulerStyle.cs" />
     <Compile Include="Controls\VRuler.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\VRuler.Designer.cs">
       <DependentUpon>VRuler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common\Event\RectangleSelectedEventArgs.cs" />
-    <EmbeddedResource Include="DesignBench.resx">
+    <Compile Include="Designs\Event\RectangleSelectedEventArgs.cs" />
+    <EmbeddedResource Include="Designs\DesignBench.resx">
       <DependentUpon>DesignBench.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

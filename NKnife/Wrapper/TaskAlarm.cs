@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Threading;
 using System.Runtime.InteropServices;
+using System.Threading;
 
-namespace Gean
+namespace NKnife.Wrapper
 {
     /// <summary>
     /// 一个用来提醒任务时间节点的类型，象个小闹钟一样。

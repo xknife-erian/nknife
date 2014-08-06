@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Gean.Xml;
 using NKnife.Configuring;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;

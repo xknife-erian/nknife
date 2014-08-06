@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using NKnife.Wrapper.API;
 
-namespace Gean.Wrapper
+namespace NKnife.Wrapper
 {
     /// <summary>
     /// 系统时间的修改。

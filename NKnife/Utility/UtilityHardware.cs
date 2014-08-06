@@ -4,6 +4,7 @@ using System.Linq;
 using System.Management;
 using Gean.Wrapper;
 using Microsoft.Win32;
+using NKnife.Wrapper;
 
 namespace NKnife.Utility
 {

@@ -3,7 +3,7 @@ using System.IO.Ports;
 using System.Text;
 using NLog;
 
-namespace Gean.Wrapper
+namespace NKnife.Wrapper
 {
     public class SerialPorter
     {

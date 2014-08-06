@@ -86,7 +86,6 @@
     <Compile Include="Collections\PairList.cs" />
     <Compile Include="Collections\SerializableMap.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
-    <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Interface\ICommand.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -539,8 +538,6 @@
     <Compile Include="TSQL\MSSql.cs" />
     <Compile Include="Utility\Converts\Converting.cs" />
     <Compile Include="Utility\Converts\UtilityConvert.cs" />
-    <Compile Include="Utility\Drawing\Thumbnail.cs" />
-    <Compile Include="Utility\Drawing\UtilityDrawing.cs" />
     <Compile Include="Utility\Encrypt\FileMD5.cs" />
     <Compile Include="Utility\Encrypt\RSACryption.cs" />
     <Compile Include="Utility\Encrypt\SoftwareSN.cs" />
@@ -594,8 +591,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
-    <Compile Include="Wrapper\GZip.cs" />
-    <Compile Include="Wrapper\IDCardData.cs" />
+    <Compile Include="Zip\GZip.cs" />
+    <Compile Include="Base\IDCardData.cs" />
     <Compile Include="Wrapper\IDGenerator.cs" />
     <Compile Include="Wrapper\IniFile.cs" />
     <Compile Include="Wrapper\LocalRegistry.cs" />
@@ -604,30 +601,33 @@
     <Compile Include="Wrapper\Logger\IGLoggerWriter.cs" />
     <Compile Include="Wrapper\Logger\LogString.cs" />
     <Compile Include="Wrapper\Mail\MailSender.cs" />
-    <Compile Include="Wrapper\MoreFileZip.cs" />
+    <Compile Include="Zip\GZipCompressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Zip\GZipFileEntry.cs" />
+    <Compile Include="Zip\SimpleCipher.cs" />
     <Compile Include="Wrapper\Mp3\MP3Player.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Wrapper\Mp3\Speech.cs" />
-    <Compile Include="Wrapper\PersonSex.cs" />
+    <Compile Include="Base\PersonSex.cs" />
     <Compile Include="Wrapper\SerialPorter.cs" />
     <Compile Include="Wrapper\SmartDate.cs" />
     <Compile Include="Wrapper\SnipScreen.cs" />
     <Compile Include="Wrapper\SystemDateTime.cs" />
     <Compile Include="Wrapper\TaskAlarm.cs" />
     <Compile Include="Wrapper\WMI.cs" />
-    <Compile Include="Wrapper\Xml\AbstractXmlAttribute.cs" />
-    <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
-    <Compile Include="Wrapper\Xml\AbstractXmlElement.cs" />
-    <Compile Include="Wrapper\Xml\AbstractXmlNode.cs" />
-    <Compile Include="Wrapper\Xml\Linq\AbstractXmlFile.cs" />
-    <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
-    <Compile Include="Wrapper\Xml\XmlFormat.cs" />
-    <Compile Include="Wrapper\Xml\XmlHelper.cs" />
-    <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
+    <Compile Include="XML\AbstractXmlAttribute.cs" />
+    <Compile Include="XML\AbstractXmlDocument.cs" />
+    <Compile Include="XML\AbstractXmlElement.cs" />
+    <Compile Include="XML\AbstractXmlNode.cs" />
+    <Compile Include="XML\XmlDatasetConvert.cs" />
+    <Compile Include="XML\XmlFormat.cs" />
+    <Compile Include="XML\XmlHelper.cs" />
+    <Compile Include="XML\XmlSchemaValidator.cs" />
     <Compile Include="Xaml\XamlHelper.cs" />
-    <Compile Include="XML\SerializableDictionary.cs" />
-    <Compile Include="XML\SerializeUtility.cs" />
     <Compile Include="XML\XmlUtility.cs" />
+    <Compile Include="Zip\GZipFileInfo.cs" />
+    <Compile Include="Zip\GZipResult.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
