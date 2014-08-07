@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Designs\Event\PanelZoomEventArgs.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Designs\Event\RectangleClickEventArgs.cs" />
     <Compile Include="Designs\Event\ImageLoadEventArgs.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="Thumbnail.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="Designs\DesignBench.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Designs\DesignBench.Designer.cs">
       <DependentUpon>DesignBench.cs</DependentUpon>

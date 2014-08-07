@@ -8,6 +8,11 @@ namespace NKnife.Draws.Designs.Base
     /// </summary>
     public class RectangleList : List<RectangleF>
     {
+        public RectangleList()
+        {
+            Selected = new List<RectangleF>();
+        }
+
         /// <summary>
         /// 选中的矩形
         /// </summary>
