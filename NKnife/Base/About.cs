@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 
 namespace NKnife.Base
@@ -22,9 +23,9 @@ namespace NKnife.Base
             }
         }
 
-        public static string AssemblyVersion
+        public static Version AssemblyVersion
         {
-            get { return Assembly.GetEntryAssembly().GetName().Version.ToString(); }
+            get { return Assembly.GetEntryAssembly().GetName().Version; }
         }
 
         public static string AssemblyDescription

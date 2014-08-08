@@ -591,6 +591,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
+    <Compile Include="Wrapper\ServiceForm.cs" />
     <Compile Include="Zip\GZip.cs" />
     <Compile Include="Base\IDCardData.cs" />
     <Compile Include="Wrapper\IDGenerator.cs" />
