@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using NKnife.Draws.Designs.Base;
 using NKnife.Draws.Designs.Event;
 using NKnife.Ioc;
@@ -54,6 +55,7 @@ namespace NKnife.Draws.Designs
         public ImageDesignPanel()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
+            AutoSize = true;
             BackgroundImageChanged += ImageDesignPanel_BackgroundImageChanged;
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
@@ -108,25 +110,30 @@ namespace NKnife.Draws.Designs
 
         #region 当Size发生变化时
 
-        private double _Zoom = 0.9;
+        /// <summary>
+        ///     图像展示的大小，初始默认是父容器的90%，以保证第一次尽可能大的展示整个图片
+        /// </summary>
+        private double _Multiple = 0.9;
 
         private void ImageDesignPanel_ParentChanged(object sender, EventArgs e)
         {
             if (Parent != null)
             {
-                Parent.SizeChanged += delegate { SetOwnSize(_Zoom); };
+                Parent.SizeChanged += delegate { SetOwnSize(_Multiple); };
                 _Parent = (DesignBench) Parent;
             }
         }
 
         private void ImageDesignPanel_BackgroundImageChanged(object sender, EventArgs e)
         {
-            SetOwnSize(_Zoom);
+            SetOwnSize(_Multiple);
         }
 
-        public void SetOwnSize(double zoom)
+        public void SetOwnSize(double multiple)
         {
-            _Zoom = zoom;
+            var srcSize = Size;
+            var srcMultiple = _Multiple;
+            _Multiple = multiple;
             if (BackgroundImage == null)
                 return;
             int w = BackgroundImage.Width;
@@ -135,16 +142,30 @@ namespace NKnife.Draws.Designs
             int ph = Parent.Size.Height;
             if (w > h)
             {
-                _Parent.Zoom = (pw*zoom)/w;
-                Width = (int) (pw*zoom);
-                Height = (int) (h*_Parent.Zoom);
+                var z = (pw*multiple)/w;
+                Size = new Size((int) (pw*multiple), (int) (h*z));
+                //当控件尺寸更新完毕后，再更新父容器，以触发事件
+                _Parent.Zoom = z;
             }
             else
             {
-                _Parent.Zoom = (ph*zoom)/h;
-                Height = (int) (ph*zoom);
-                Width = (int) (w*_Parent.Zoom);
+                var z = (ph*multiple)/h;
+                Size = new Size((int) (w*z), (int) (ph*multiple));
+                _Parent.Zoom = z;
             }
+            OnPanelZoomed(new PanelZoomEventArgs(srcSize, PointToClient(MousePosition), srcMultiple, multiple));
+        }
+
+        /// <summary>
+        /// 当设计图板的大小发生变化后
+        /// </summary>
+        public event EventHandler<PanelZoomEventArgs> PanelZoomed;
+
+        private void OnPanelZoomed(PanelZoomEventArgs e)
+        {
+            EventHandler<PanelZoomEventArgs> handler = PanelZoomed;
+            if (handler != null) 
+                handler(this, e);
         }
 
         /// <summary>
@@ -152,7 +173,7 @@ namespace NKnife.Draws.Designs
         /// </summary>
         public void EnlargeDesignPanel()
         {
-            SetOwnSize(_Zoom += 0.2);
+            SetOwnSize(_Multiple += 0.2);
         }
 
         /// <summary>
@@ -160,7 +181,7 @@ namespace NKnife.Draws.Designs
         /// </summary>
         public void ShrinkDesignPanel()
         {
-            SetOwnSize(_Zoom -= 0.2);
+            SetOwnSize(_Multiple -= 0.2);
         }
 
         #endregion

@@ -8,7 +8,7 @@ using NKnife.Events;
 
 namespace NKnife.Draws.Designs
 {
-    public partial class DesignBench : UserControl, IDesignBenchCore
+    public partial class DesignBench : Panel, IDesignBenchCore
     {
         #region 成员变量
 
@@ -26,18 +26,27 @@ namespace NKnife.Draws.Designs
         public DesignBench()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
-            _ImageDesignPanel = new ImageDesignPanel {Visible = false};
-            InitializeComponent();
             Rectangles = new RectangleList();
+            InitializeComponent();
+            BorderStyle = BorderStyle.Fixed3D;
+            _ImageDesignPanel = new ImageDesignPanel {Visible = false};
             Controls.Add(_ImageDesignPanel);
+            _ImageDesignPanel.PanelZoomed += _ImageDesignPanel_PanelZoomed;
+
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
+            HorizontalScroll.Enabled = true;
+            HorizontalScroll.Visible = true;
+            VerticalScroll.Enabled = true;
+            VerticalScroll.Visible = true;
+            Scroll += DesignBench_Scroll;
         }
 
-        #endregion
-
-        #region 放大与缩小,及移动设计面板
-
-
-
+        void DesignBench_Scroll(object sender, ScrollEventArgs e)
+        {
+            HorizontalScroll.Value = e.NewValue;
+        }
 
         #endregion
 
@@ -98,6 +107,22 @@ namespace NKnife.Draws.Designs
                     break;
                 }
             }
+        }
+
+        private void _ImageDesignPanel_PanelZoomed(object sender, PanelZoomEventArgs e)
+        {
+            
+            var p = this.ScrollToControl(this.ImageDesignPanel);
+            Console.WriteLine(p);
+
+//            if (e.CurrentMultiple > 1)
+//            {
+//                var srcSize = e.SourceSize;
+//                var mouse = e.MouseClickedLocation;
+//                AutoScroll = true;
+//                this.HScroll = true;
+//                this.VScroll = true;
+//            }
         }
 
         private void SetImageDesignPanelLocation()
