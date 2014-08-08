@@ -1,8 +1,8 @@
 using System;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
-namespace Gean.Utility.Encrypt
+namespace NKnife.Utility.Encrypt
 {
     public class TripleDESHelper
     {

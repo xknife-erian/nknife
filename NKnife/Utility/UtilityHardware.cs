@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-using Gean.Wrapper;
 using Microsoft.Win32;
-using NKnife.Wrapper;
+using NKnife.Entities;
 
 namespace NKnife.Utility
 {

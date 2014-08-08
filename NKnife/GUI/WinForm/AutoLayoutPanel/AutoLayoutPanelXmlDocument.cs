@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using System.Diagnostics;
+using System.Xml;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.AutoLayoutPanel
 {
     public class AutoLayoutPanelXmlDocument : XmlDocument
     {

@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     public class SelectGroup : Control
     {

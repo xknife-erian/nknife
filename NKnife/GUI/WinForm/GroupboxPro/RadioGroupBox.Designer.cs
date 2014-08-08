@@ -1,4 +1,4 @@
-namespace Gean.Gui.WinForm.GroupboxPro
+namespace NKnife.GUI.WinForm.GroupboxPro
 {
 	partial class RadioGroupBox
 	{

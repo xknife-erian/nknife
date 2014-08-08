@@ -1,7 +1,7 @@
 
 using System;
 
-namespace Gean.Gui.WinForm.IPAddressControl
+namespace NKnife.GUI.WinForm.IPAddressControl
 {
    public class FieldChangedEventArgs : EventArgs
    {

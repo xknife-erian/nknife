@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Configuring.Option;
 using NKnife.Configuring.CoderSetting;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;

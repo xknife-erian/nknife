@@ -12,7 +12,6 @@ using NKnife.Chinese.Ime.Pinyin;
 using NKnife.Chinese.TouchInput.Common;
 using NKnife.Interface;
 using NKnife.Ioc;
-using NKnife.Wrapper.API;
 using NLog;
 using Application = System.Windows.Forms.Application;
 using Point = System.Drawing.Point;
@@ -166,7 +165,7 @@ namespace NKnife.Chinese.TouchInput
             //通过WinAPI的调用控制窗体不再获取焦点
             const int GWL_EXSTYLE = (-20);
             IntPtr handle = new WindowInteropHelper(this).Handle;
-            API.User32.SetWindowLong(handle, GWL_EXSTYLE, 0x8000000);
+            API.API.User32.SetWindowLong(handle, GWL_EXSTYLE, 0x8000000);
         }
 
         #endregion

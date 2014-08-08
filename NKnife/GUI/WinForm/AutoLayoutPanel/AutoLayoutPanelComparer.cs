@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Reflection;
-using System;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.AutoLayoutPanel
 {
     //internal class AutoLayoutPanelAttPairComparer : IComparer<AutoAttributeData>
     //{

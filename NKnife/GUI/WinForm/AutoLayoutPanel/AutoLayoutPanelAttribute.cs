@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-using System.Windows.Forms;
-using System.Reflection;
 using System.Drawing;
-using Gean.Gui.WinForm.Common;
+using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
+using NKnife.GUI.WinForm.Common;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.AutoLayoutPanel
 {
     [global::System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
     public class AutoLayoutPanelAttribute : Attribute

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm.DataSelector
+namespace NKnife.GUI.WinForm.DataSelector
 {
     public abstract partial class DataItemSelector<T> : UserControl
         where T : class

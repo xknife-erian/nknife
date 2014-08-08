@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.CloudsControl
 {
 
     public class CloudCollection : IList<CloudLabel>

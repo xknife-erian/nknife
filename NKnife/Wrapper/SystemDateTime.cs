@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using NKnife.Wrapper.API;
+using NKnife.API;
 
 namespace NKnife.Wrapper
 {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     /// <summary>
     /// 显示在ToolStrip上的一个表示网络速度的控件

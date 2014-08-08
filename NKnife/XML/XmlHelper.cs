@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Schema;
-using Gean;
 using NKnife.Base;
 using NKnife.Utility;
 

@@ -1,10 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using Gean.Wrapper;
-using NKnife.Base;
-using NKnife.Wrapper;
+using NKnife.Entities;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     public class SexSelector : UserControl
     {

@@ -10,12 +10,12 @@ namespace NKnife.Wrapper
     /// </summary>
     public class TaskAlarm : IDisposable
     {
-        ManualResetEvent ClockAliveEvent = new ManualResetEvent(false);
+        readonly ManualResetEvent _ClockAliveEvent = new ManualResetEvent(false);
         
-        private bool _IsRunnig = false;
+        private readonly bool _IsRunnig = false;
         private bool _IsTiming = false;
         private long _StartTime, _StopTime;
-        private long _Freq;
+        private readonly long _Freq;
         private double _MilSecondCount = 0;
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace NKnife.Wrapper
                 throw new Win32Exception();
             }
             _IsRunnig = true;
-            Thread TimingThread = new Thread(new ThreadStart(this.WaitAWaken));
-            TimingThread.IsBackground = true;
-            TimingThread.Start();
+            var timingThread = new Thread(new ThreadStart(this.WaitAWaken));
+            timingThread.IsBackground = true;
+            timingThread.Start();
         }
 
         public void Dispose()
@@ -48,7 +48,7 @@ namespace NKnife.Wrapper
         /// <summary>
         /// 设置闹钟xx毫秒后发出提醒
         /// </summary>
-        /// <param name="secondCount"></param>
+        /// <param name="milSecondCount"></param>
         public void SetAlarmAfter(double milSecondCount)
         {
             if (milSecondCount <= 10)
@@ -87,23 +87,22 @@ namespace NKnife.Wrapper
 
         private void AWake()
         {
-            ClockAliveEvent.Set();
+            _ClockAliveEvent.Set();
         }
 
         private void Block()
         {
-            ClockAliveEvent.Reset();
+            _ClockAliveEvent.Reset();
         }
 
         /// <summary>
         /// 开始计时
         /// </summary>
-        /// <param name="secondCount"></param>
         private void StartTiming()
         {
             try
             {
-                ClockAliveEvent.WaitOne();
+                _ClockAliveEvent.WaitOne();
                 while (_Duration < _MilSecondCount)
                 {
                     Thread.Sleep(10);

@@ -1,4 +1,4 @@
-namespace Gean.Gui.WinForm.Common
+namespace NKnife.GUI.WinForm.Common
 {
     /// <summary>
     /// 文件选择控件样式枚举

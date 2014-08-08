@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Gean;
 using NKnife.Interface;
 using NKnife.Utility.Maths;
 

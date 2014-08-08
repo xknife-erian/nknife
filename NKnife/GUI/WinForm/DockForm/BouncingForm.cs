@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Text;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Security.Permissions;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.DockForm
 {
     /// <summary>
     /// This form class restricts the form to stay within the bounds of the monitor as well as bounce off of the edges.

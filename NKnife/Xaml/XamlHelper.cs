@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Windows.Documents;
-using System.Windows;
 using System.IO;
-using System.Xml;
+using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Markup;
+using System.Xml;
 
-namespace Gean.Xaml
+namespace NKnife.Xaml
 {
 
     /// <summary>

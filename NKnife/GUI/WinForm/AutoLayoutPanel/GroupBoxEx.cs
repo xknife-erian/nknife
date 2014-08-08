@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Reflection;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.AutoLayoutPanel
 {
     /// <summary>
     /// 一个Group对应于一组值(一组ValueControl)

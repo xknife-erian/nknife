@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.ComponentModel;
+using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     public class SimpleForm : Form
     {
         public SimpleForm()
         {
-            this.components = new System.ComponentModel.Container();
+            this._Components = new System.ComponentModel.Container();
 
             this.SuspendLayout();
             this.AutoScaleMode = AutoScaleMode.Font;
@@ -27,7 +24,7 @@ namespace Gean.Gui.WinForm
         /// <summary>
         /// 必需的设计器变量。
         /// </summary>
-        private IContainer components = null;
+        private readonly IContainer _Components = null;
 
         /// <summary>
         /// 清理所有正在使用的资源。
@@ -35,9 +32,9 @@ namespace Gean.Gui.WinForm
         /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (_Components != null))
             {
-                components.Dispose();
+                _Components.Dispose();
             }
             base.Dispose(disposing);
         }

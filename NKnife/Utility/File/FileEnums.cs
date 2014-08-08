@@ -1,4 +1,4 @@
-﻿namespace Gean
+﻿namespace NKnife.Utility.File
 {
     public enum FileErrorPolicy
     {

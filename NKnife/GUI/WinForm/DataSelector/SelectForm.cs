@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm.DataSelector
+namespace NKnife.GUI.WinForm.DataSelector
 {
     internal class SelectForm<T> : SimpleForm where T : class
     {
@@ -81,7 +81,7 @@ namespace Gean.Gui.WinForm.DataSelector
         /// </summary>
         private void InitializeComponent()
         {
-            this.ListView = new Gean.Gui.WinForm.SingleRowCheckedListView();
+            this.ListView = new SingleRowCheckedListView();
             this._NameHeader = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this._FindBtn = new System.Windows.Forms.Button();
             this._OkBtn = new System.Windows.Forms.Button();

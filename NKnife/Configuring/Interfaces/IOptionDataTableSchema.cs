@@ -1,4 +1,4 @@
-using Gean.Configuring.Option;
+using NKnife.Configuring.Option;
 
 namespace NKnife.Configuring.Interfaces
 {

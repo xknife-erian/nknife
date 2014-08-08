@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using NKnife.Chinese;
+using NKnife.Chinese.Common;
 
 namespace NKnife.StarterKit.Forms
 {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     /// <summary>
     /// TaskbarNotifier allows to display MSN style/Skinned instant messaging popups

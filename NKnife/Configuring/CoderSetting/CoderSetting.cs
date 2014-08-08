@@ -1,4 +1,3 @@
-using Gean.Configuring;
 using NKnife.Configuring.Interfaces;
 
 namespace NKnife.Configuring.CoderSetting

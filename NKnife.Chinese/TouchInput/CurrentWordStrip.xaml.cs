@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Interop;
 using NKnife.Chinese.TouchInput.Common;
 using NKnife.Ioc;
-using NKnife.Wrapper.API;
 
 namespace NKnife.Chinese.TouchInput
 {
@@ -29,7 +28,7 @@ namespace NKnife.Chinese.TouchInput
             //通过WinAPI的调用控制窗体不再获取焦点
             const int GWL_EXSTYLE = (-20);
             IntPtr handle = new WindowInteropHelper(this).Handle;
-            API.User32.SetWindowLong(handle, GWL_EXSTYLE, 0x8000000);
+            API.API.User32.SetWindowLong(handle, GWL_EXSTYLE, 0x8000000);
         }
     }
 }

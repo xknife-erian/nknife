@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.International.Converters.PinYinConverter;
+using NKnife.Chinese.Common;
 
 namespace NKnife.Chinese.Ime.Pinyin
 {

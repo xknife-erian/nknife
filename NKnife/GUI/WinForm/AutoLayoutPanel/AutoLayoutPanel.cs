@@ -5,10 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Drawing;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.AutoLayoutPanel
 {
     public partial class AutoLayoutPanel : FlowLayoutPanel
     {

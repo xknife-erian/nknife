@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.IO;
+using System.Text;
 
-namespace Gean
+namespace NKnife.Utility.File
 {
     /// <summary>
     /// 用于取得一个文本文件的编码方式(Encoding)。

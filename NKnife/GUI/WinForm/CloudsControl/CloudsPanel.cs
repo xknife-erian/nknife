@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing.Text;
+using System.Windows.Forms;
 using NKnife.Interface;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.CloudsControl
 {
     /// <summary>
     /// 来自显示国际棋谱形成的需求。

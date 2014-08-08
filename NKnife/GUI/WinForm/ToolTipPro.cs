@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     public class ToolTipPro : NativeWindow

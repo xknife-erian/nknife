@@ -1,8 +1,8 @@
 using System;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
-namespace Gean.Encrypt
+namespace NKnife.Utility.Encrypt
 {
     /// <summary> 
     /// RSA加密解密及RSA签名和验证

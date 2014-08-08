@@ -2,7 +2,7 @@ using System.Collections;
 using System.Windows.Forms.Design;
 using System.Windows.Forms.Design.Behavior;
 
-namespace Gean.Gui.WinForm.IPAddressControl
+namespace NKnife.GUI.WinForm.IPAddressControl
 {
    class IPAddressControlDesigner : ControlDesigner
    {

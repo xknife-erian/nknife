@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gean.Gui.WinForm.Common
+﻿namespace NKnife.GUI.WinForm.DockForm.Common
 {
     public delegate void FormAsyncUpdateDelegate();
 }

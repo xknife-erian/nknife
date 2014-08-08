@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm.GroupboxPro
+namespace NKnife.GUI.WinForm.GroupboxPro
 {
     /// <summary>
     /// This class oversees the checkin/unchecking when mixing RadioButton objects with RadioGroupBox objects within the same container.

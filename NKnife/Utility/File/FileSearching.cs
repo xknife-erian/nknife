@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gean
+﻿namespace NKnife.Utility.File
 {
     /// <summary>
     /// .Net/C# 实现磁盘目录文件搜索的工具类 (搜索事件)

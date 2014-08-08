@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     /// <summary>
     /// A control that acts like a LED displayer
@@ -1592,7 +1589,7 @@ namespace Gean.Gui.WinForm
         [System.ComponentModel.Browsable(true),
         System.ComponentModel.Category("Appearance"),
         System.ComponentModel.Description("Set the alignment of the text"),
-        System.ComponentModel.DefaultValue(typeof(Gean.Gui.WinForm.LxLedControl.Alignment), "Left")]
+        System.ComponentModel.DefaultValue(typeof(LxLedControl.Alignment), "Left")]
         public Alignment TextAlignment
         {
             get

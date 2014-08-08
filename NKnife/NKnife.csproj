@@ -69,16 +69,24 @@
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="Architecture\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
-    <Compile Include="Base\About.cs" />
-    <Compile Include="Base\ApplicationState.cs" />
+    <Compile Include="FTP\FtpFileListStyle.cs" />
+    <Compile Include="FTP\FtpFileStruct.cs" />
+    <Compile Include="FTP\FtpDelegates.cs" />
+    <Compile Include="FTP\FtpException.cs" />
+    <Compile Include="FTP\FtpWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\XmlTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Wrapper\About.cs" />
+    <Compile Include="Entities\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />
-    <Compile Include="Base\CommandList.cs" />
-    <Compile Include="Base\MultiMachine.cs" />
-    <Compile Include="Base\MultiMachineState.cs" />
+    <Compile Include="Entities\CommandList.cs" />
+    <Compile Include="Entities\MultiMachine.cs" />
+    <Compile Include="Entities\MultiMachineState.cs" />
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\Triplet.cs" />
-    <Compile Include="Chinese\ChineseIntegerRmb.cs" />
-    <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="Collections\Definition.cs" />
     <Compile Include="Collections\DictionaryOrdered.cs" />
     <Compile Include="Collections\IndexCollection.cs" />
@@ -288,7 +296,7 @@
     <Compile Include="GUI\WinForm\ExceptionUI\InformationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\WinForm\Ex\ListViewEx.cs" />
+    <Compile Include="Extensions\ListViewExtension.cs" />
     <Compile Include="GUI\WinForm\FileSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -436,12 +444,9 @@
     <Compile Include="GUI\WinForm\WeekGroup.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\WinForm\XmlTreeViewEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Utility\UtilityResource.cs" />
-    <Compile Include="Wrapper\Icons\IconHelper.cs" />
-    <Compile Include="Wrapper\Icons\IconListManager.cs" />
+    <Compile Include="Icons\IconHelper.cs" />
+    <Compile Include="Icons\IconListManager.cs" />
     <Compile Include="Interface\IConverting.cs" />
     <Compile Include="Interface\IGenerator.cs" />
     <Compile Include="Interface\IEnvironmentItem.cs" />
@@ -570,47 +575,34 @@
     <Compile Include="Utility\UtilitySorter.cs" />
     <Compile Include="Utility\UtilityString.cs" />
     <Compile Include="Utility\UtilityType.cs" />
-    <Compile Include="Wrapper\API\API.cs" />
-    <Compile Include="Wrapper\API\API.IMM32.cs" />
-    <Compile Include="Wrapper\API\API.Sounder.cs" />
-    <Compile Include="Wrapper\API\API.User32.cs" />
-    <Compile Include="Wrapper\API\Secur32.cs" />
-    <Compile Include="Wrapper\API\SysDateTime.cs" />
+    <Compile Include="API\API.cs" />
+    <Compile Include="API\API.IMM32.cs" />
+    <Compile Include="API\API.Sounder.cs" />
+    <Compile Include="API\API.User32.cs" />
+    <Compile Include="API\Secur32.cs" />
+    <Compile Include="API\SysDateTime.cs" />
     <Compile Include="Wrapper\Checker.cs" />
-    <Compile Include="Chinese\ChineseIDCardValid.cs" />
-    <Compile Include="Chinese\ChineseRmb.cs" />
-    <Compile Include="Chinese\ChineseSBCAndDBC.cs" />
-    <Compile Include="Chinese\ChineseSpell.cs" />
-    <Compile Include="Chinese\ChineseSpellRandom.cs" />
     <Compile Include="Wrapper\Computer.cs" />
-    <Compile Include="Wrapper\CPUInfo.cs" />
+    <Compile Include="Entities\CPUInfo.cs" />
     <Compile Include="Wrapper\CSVFile.cs" />
-    <Compile Include="Wrapper\DateTimes\Time.cs" />
     <Compile Include="Wrapper\Duration.cs" />
-    <Compile Include="Wrapper\FTP\FTP.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
+    <Compile Include="FTP\FtpClient.cs" />
+    <Compile Include="Wrapper\GlobalHotkey.cs" />
     <Compile Include="Wrapper\ServiceForm.cs" />
     <Compile Include="Zip\GZip.cs" />
-    <Compile Include="Base\IDCardData.cs" />
+    <Compile Include="Entities\IDCardData.cs" />
     <Compile Include="Wrapper\IDGenerator.cs" />
     <Compile Include="Wrapper\IniFile.cs" />
     <Compile Include="Wrapper\LocalRegistry.cs" />
-    <Compile Include="Wrapper\Logger\GLoggerLevel.cs" />
-    <Compile Include="Wrapper\Logger\GLoggerWriter.cs" />
-    <Compile Include="Wrapper\Logger\IGLoggerWriter.cs" />
-    <Compile Include="Wrapper\Logger\LogString.cs" />
-    <Compile Include="Wrapper\Mail\MailSender.cs" />
+    <Compile Include="Mail\MailSender.cs" />
     <Compile Include="Zip\GZipCompressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Zip\GZipFileEntry.cs" />
     <Compile Include="Zip\SimpleCipher.cs" />
-    <Compile Include="Wrapper\Mp3\MP3Player.cs" />
-    <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
-    <Compile Include="Wrapper\Mp3\Speech.cs" />
-    <Compile Include="Base\PersonSex.cs" />
+    <Compile Include="Mp3\MP3Player.cs" />
+    <Compile Include="Mp3\Mp3Tag.cs" />
+    <Compile Include="Entities\PersonSex.cs" />
     <Compile Include="Wrapper\SerialPorter.cs" />
     <Compile Include="Wrapper\SmartDate.cs" />
     <Compile Include="Wrapper\SnipScreen.cs" />

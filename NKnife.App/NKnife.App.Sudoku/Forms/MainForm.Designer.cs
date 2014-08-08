@@ -1,5 +1,5 @@
-﻿using Gean.Gui.WinForm;
-using NKnife.App.Sudoku.Controls;
+﻿using NKnife.App.Sudoku.Controls;
+using NKnife.GUI.WinForm;
 
 namespace NKnife.App.Sudoku.Forms
 {

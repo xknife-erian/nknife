@@ -1,4 +1,4 @@
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm.AutoLayoutPanel
 {
     public enum AutoControlType
     {

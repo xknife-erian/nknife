@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
-using Gean;
 using Microsoft.Win32;
 using NKnife.ShareResources;
 

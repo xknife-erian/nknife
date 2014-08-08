@@ -1,8 +1,8 @@
 using System;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     /// <summary>
     /// 一个仿照ForeFox的UI的旋转进度表示控件

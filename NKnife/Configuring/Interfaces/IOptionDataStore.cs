@@ -1,5 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using Gean.Configuring.Option;
+using NKnife.Configuring.Option;
 using NKnife.Configuring.OptionCase;
 
 namespace NKnife.Configuring.Interfaces

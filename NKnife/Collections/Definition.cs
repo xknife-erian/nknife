@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean;
 using NKnife.Events;
 
 namespace NKnife.Collections

@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using NKnife.Base;
 using NKnife.Configuring.Interfaces;
+using NKnife.Entities;
 using NKnife.Utility;
 
 namespace NKnife.Configuring

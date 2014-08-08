@@ -5,15 +5,12 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Gean.Configuring;
-using Gean.Configuring.Option;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Interface;
 using NKnife.Ioc;
 using NKnife.Utility.File;
-using NKnife.Wrapper;
 using NLog;
 
 namespace NKnife.Configuring.Option

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm.ExceptionUI
+namespace NKnife.GUI.WinForm.ExceptionUI
 {
     /// <summary>
     /// Provides a UserControl for displaying information using a Title, Description, and Image. Alternatively providing

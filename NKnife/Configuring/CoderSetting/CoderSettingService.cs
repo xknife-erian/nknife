@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
-using Gean;
 using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
 using NKnife.Utility;

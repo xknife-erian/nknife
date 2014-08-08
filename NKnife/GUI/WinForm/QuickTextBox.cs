@@ -2,16 +2,13 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     /// <summary>
-    /// 一个已设置为多行显示的TextBox，有简单的copy,paste等右键菜单
+    ///     一个已设置为多行显示的TextBox，有简单的copy,paste等右键菜单
     /// </summary>
     public sealed class QuickTextBox : TextBox
     {
-        private readonly ContextMenuStrip _ContextMenuStrip;
-        private readonly ToolStripMenuItem _ToolStripMenuItem;
-
         public QuickTextBox()
         {
             SuspendLayout();
@@ -21,29 +18,29 @@ namespace Gean.Gui.WinForm
             ScrollBars = ScrollBars.Vertical;
             Font = new Font("Tahoma", 8.25F);
 
-            _ContextMenuStrip = new ContextMenuStrip();
-            _ToolStripMenuItem = new ToolStripMenuItem("全选(&A)");
-            _ToolStripMenuItem.Click += SelectAllEx;
-            _ContextMenuStrip.Items.Add(_ToolStripMenuItem);
-            _ToolStripMenuItem = new ToolStripMenuItem("拷贝(&C)");
-            _ToolStripMenuItem.Click += CopyEx;
-            _ContextMenuStrip.Items.Add(_ToolStripMenuItem);
-            _ToolStripMenuItem = new ToolStripMenuItem("粘贴(&P)");
-            _ToolStripMenuItem.Click += PasteEx;
-            _ContextMenuStrip.Items.Add(_ToolStripMenuItem);
-            _ToolStripMenuItem = new ToolStripMenuItem("剪切(&T)");
-            _ToolStripMenuItem.Click += CutEx;
-            _ContextMenuStrip.Items.Add(_ToolStripMenuItem);
+            var contextMenuStrip = new ContextMenuStrip();
+            var toolStripMenuItem = new ToolStripMenuItem("全选(&A)");
+            toolStripMenuItem.Click += SelectAllEx;
+            contextMenuStrip.Items.Add(toolStripMenuItem);
+            toolStripMenuItem = new ToolStripMenuItem("拷贝(&C)");
+            toolStripMenuItem.Click += CopyEx;
+            contextMenuStrip.Items.Add(toolStripMenuItem);
+            toolStripMenuItem = new ToolStripMenuItem("粘贴(&P)");
+            toolStripMenuItem.Click += PasteEx;
+            contextMenuStrip.Items.Add(toolStripMenuItem);
+            toolStripMenuItem = new ToolStripMenuItem("剪切(&T)");
+            toolStripMenuItem.Click += CutEx;
+            contextMenuStrip.Items.Add(toolStripMenuItem);
             var separator = new ToolStripSeparator();
-            _ContextMenuStrip.Items.Add(separator);
-            _ToolStripMenuItem = new ToolStripMenuItem("还原(&F)");
-            _ToolStripMenuItem.Click += ClearEx;
-            _ContextMenuStrip.Items.Add(_ToolStripMenuItem);
-            ContextMenuStrip = _ContextMenuStrip;
+            contextMenuStrip.Items.Add(separator);
+            toolStripMenuItem = new ToolStripMenuItem("还原(&F)");
+            toolStripMenuItem.Click += ClearEx;
+            contextMenuStrip.Items.Add(toolStripMenuItem);
+            ContextMenuStrip = contextMenuStrip;
             ResumeLayout(false);
         }
 
-        public override sealed bool Multiline
+        public override bool Multiline
         {
             get { return base.Multiline; }
             set { base.Multiline = value; }

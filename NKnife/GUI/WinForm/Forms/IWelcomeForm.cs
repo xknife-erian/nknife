@@ -1,4 +1,4 @@
-namespace Gean.Gui.WinForm.Forms
+namespace NKnife.GUI.WinForm.Forms
 {
     /// <summary>程序启动时的欢迎界面
     /// </summary>

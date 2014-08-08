@@ -1,5 +1,4 @@
 ﻿using System;
-using Gean;
 using NKnife.Exceptions;
 using NKnife.Interface;
 

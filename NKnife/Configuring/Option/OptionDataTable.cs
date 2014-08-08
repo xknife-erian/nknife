@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using NKnife.Configuring;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NLog;
 
-namespace Gean.Configuring.Option
+namespace NKnife.Configuring.Option
 {
     [Serializable]
     public class OptionDataTable : DataTable

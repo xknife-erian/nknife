@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
-namespace Gean.Utility.Encrypt
+namespace NKnife.Utility.Encrypt
 {
     public class SoftwareSN
     {
@@ -14,7 +12,7 @@ namespace Gean.Utility.Encrypt
         public static string GetSN(string str)
         {
             string strResult = "";//作为返回的字符串
-            StringBuilder sbTemp = new StringBuilder();
+            var sbTemp = new StringBuilder();
             //生成注册码
             for (int i = 0; i < str.Length; i++)
             {

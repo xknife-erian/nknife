@@ -6,7 +6,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Gean;
 using NKnife.ShareResources;
 using NKnife.Wrapper;
 

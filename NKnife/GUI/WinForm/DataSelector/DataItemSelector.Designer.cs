@@ -1,4 +1,4 @@
-﻿namespace Gean.Gui.WinForm.DataSelector
+﻿namespace NKnife.GUI.WinForm.DataSelector
 {
     partial class DataItemSelector<T>
     {

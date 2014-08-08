@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Gean.Gui.WinForm.IPAddressControl
+namespace NKnife.GUI.WinForm.IPAddressControl
 {
    internal class NativeMethods
    {

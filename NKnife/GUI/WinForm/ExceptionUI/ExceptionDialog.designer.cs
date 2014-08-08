@@ -1,4 +1,4 @@
-namespace Gean.Gui.WinForm.ExceptionUI
+namespace NKnife.GUI.WinForm.ExceptionUI
 {
     sealed partial class ExceptionDialog
 	{

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm.ExceptionUI
+namespace NKnife.GUI.WinForm.ExceptionUI
 {
     /// <summary>
     /// Provides a common dialog for displaying an Exception to the user.

@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Gean.Gui.WinForm.Forms
+namespace NKnife.GUI.WinForm.Forms
 {
     public class WelcomerScreen
     {

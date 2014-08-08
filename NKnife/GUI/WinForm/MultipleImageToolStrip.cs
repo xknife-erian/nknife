@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Windows.Forms;
 using NKnife.Events;
 
-namespace Gean.Gui.WinForm
+namespace NKnife.GUI.WinForm
 {
     /// <summary>
     /// This toolstrip implements the multiple image provider interface and thus
