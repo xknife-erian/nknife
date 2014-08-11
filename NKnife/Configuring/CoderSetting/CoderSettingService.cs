@@ -12,19 +12,23 @@ using NLog;
 
 namespace NKnife.Configuring.CoderSetting
 {
-    /// <summary>CoderSetting（程序员配置）服务管理器
+    /// <summary>
+    ///     CoderSetting（程序员配置）服务管理器
     /// </summary>
     public sealed class CoderSettingService : IService<CoderSettingXmlFile>
     {
-        /// <summary>CoderSetting（程序员配置）定义文件的后缀名
+        /// <summary>
+        ///     CoderSetting（程序员配置）定义文件的后缀名
         /// </summary>
         private const string CODER_SETTING_SUFFIX_NAME = ".codersetting";
 
-        /// <summary>单建实例静态属性的属性名
+        /// <summary>
+        ///     单建实例静态属性的属性名
         /// </summary>
         private const string CTOR = "ME";
 
-        /// <summary>核心载入程序员配置内容的方法名
+        /// <summary>
+        ///     核心载入程序员配置内容的方法名
         /// </summary>
         private const string INITIALIZES = "Initializes";
 
@@ -34,7 +38,13 @@ namespace NKnife.Configuring.CoderSetting
 
         private static readonly CoderSettingMap _OptionMap = new CoderSettingMap();
 
-        /// <summary>应用程序的启动路径
+        public CoderSettingService()
+        {
+            XmlFileMap = new Dictionary<string, CoderSettingXmlFile>();
+        }
+
+        /// <summary>
+        ///     应用程序的启动路径
         /// </summary>
         /// <value>应用程序的启动路径</value>
         public static string ApplicationStartPath
@@ -42,42 +52,16 @@ namespace NKnife.Configuring.CoderSetting
             get { return AppDomain.CurrentDomain.SetupInformation.ApplicationBase; }
         }
 
-        /// <summary>XML file map.它的Key是Option类的完全名，Value是该程序员配置数据所在的XML文件。
+        /// <summary>
+        ///     XML file map.它的Key是Option类的完全名，Value是该程序员配置数据所在的XML文件。
         /// </summary>
         /// <value>The XML file map.</value>
-        public Dictionary<string, CoderSettingXmlFile> XmlFileMap { get; private set; }
-
-        #region 单件实例
-
-        private CoderSettingService()
-        {
-        }
-
-        /// <summary>
-        /// 获得一个本类型的单件实例.
-        /// </summary>
-        /// <value>The instance.</value>
-        public static CoderSettingService ME
-        {
-            get { return Singleton.Instance; }
-        }
-
-        private class Singleton
-        {
-            internal static readonly CoderSettingService Instance;
-
-            static Singleton()
-            {
-                Instance = new CoderSettingService();
-                Instance.XmlFileMap = new Dictionary<string, CoderSettingXmlFile>();
-            }
-        }
-
-        #endregion 单件实例
+        internal Dictionary<string, CoderSettingXmlFile> XmlFileMap { get; private set; }
 
         #region IService<CoderSettingXmlFile> Members
 
-        /// <summary> 初始化
+        /// <summary>
+        ///     初始化
         /// </summary>
         /// <param name="args">传入参数是所有程序员配置的Xml文件的封装类型(OptionXmlFile).</param>
         /// <returns></returns>
@@ -132,26 +116,31 @@ namespace NKnife.Configuring.CoderSetting
             {
                 return false;
             }
-            _Logger.Info(string.Format("找到 {0} 个ICoderSetting类型。", optionTypeArray.Count()));
+
+            var types = optionTypeArray as Type[] ?? optionTypeArray.ToArray();
+            _Logger.Info(string.Format("找到 {0} 个ICoderSetting类型。", types.Count()));
 
             var optionList = new List<ICoderSetting>();
             // 遍历搜索出来的所有的Option进行实例
-            foreach (Type klass in optionTypeArray)
+            foreach (Type klass in types)
             {
                 try
                 {
                     if (klass.IsAbstract)
+                    {
+                        _Logger.Trace(string.Format("Setting OK:{0} 虚类，略过。", klass.FullName));
                         continue;
+                    }
                     if (klass.FullName != null)
                     {
                         if (!parmsInfoMap.ContainsKey(klass.FullName))
                         {
-                            _Logger.Trace(string.Format("{0} 未找到程序员配置的配置信息，该程序员配置将不被启用。", klass.FullName));
+                            _Logger.Trace(string.Format("Setting OK:{0} 未找到程序员配置的配置信息，该程序员配置将不被启用。", klass.FullName));
                             continue;
                         }
                     }
                     //通过单建实例静态属性的属性名创建该程序员配置
-                    var property = klass.GetProperty(CTOR) ?? klass.GetProperty("Instance");
+                    PropertyInfo property = klass.GetProperty(CTOR) ?? klass.GetProperty("Instance");
                     if (property == null)
                     {
                         _Logger.Warn("未找到可用的单建实例的属性：" + klass.FullName);
@@ -222,7 +211,7 @@ namespace NKnife.Configuring.CoderSetting
         }
 
         /// <summary>
-        /// 重新启动服务
+        ///     重新启动服务
         /// </summary>
         /// <param name="args">The args.</param>
         /// <returns></returns>
@@ -245,7 +234,7 @@ namespace NKnife.Configuring.CoderSetting
         }
 
         /// <summary>
-        /// 启动服务
+        ///     启动服务
         /// </summary>
         /// <returns></returns>
         public bool Start()
@@ -254,7 +243,7 @@ namespace NKnife.Configuring.CoderSetting
         }
 
         /// <summary>
-        /// 终止服务
+        ///     终止服务
         /// </summary>
         /// <returns></returns>
         public bool Stop()
@@ -264,7 +253,8 @@ namespace NKnife.Configuring.CoderSetting
 
         #endregion
 
-        /// <summary>从指定的Document中的约定的节点遍历获得所有定义的“设置”的类的全名
+        /// <summary>
+        ///     从指定的Document中的约定的节点遍历获得所有定义的“设置”的类的全名
         /// </summary>
         /// <param name="document">The document.</param>
         /// <returns></returns>
@@ -274,30 +264,14 @@ namespace NKnife.Configuring.CoderSetting
             XmlNodeList nodelist = document.DocumentElement.SelectNodes("option[@class]");
             if (nodelist != null)
             {
-                elements.AddRange(nodelist.OfType<XmlElement>().Where(element => element.Attributes["active"] == null || bool.Parse(element.GetAttribute("active"))));
+                var ele = nodelist.OfType<XmlElement>().Where(element => element.Attributes["active"] == null || bool.Parse(element.GetAttribute("active")));
+                elements.AddRange(ele);
             }
             return elements;
         }
 
-        /// <summary>一个XML的节点，有name属性，其值为定义的接口名；有class属性，其值是实现了该接口的类的全名；
-        /// 通过该方法快速创建该类型。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        public static KeyValuePair<string, T> InterfaceBuilder<T>(XmlNode node)
-        {
-            if (node == null || node.Attributes == null || node.Attributes.Count <= 0)
-            {
-                throw new ArgumentNullException("node", @"参数不能为空");
-            }
-            string name = node.Attributes["name"].Value;
-            Type type = UtilityType.FindType(node.Attributes["class"].Value);
-            object klass = UtilityType.CreateObject(type, typeof (T), true);
-            return new KeyValuePair<string, T>(name, (T) klass);
-        }
-
-        /// <summary>默认获取应用程序所在的目录及子目录下的所有程序员配置数据文件的文件路径
+        /// <summary>
+        ///     默认获取应用程序所在的目录及子目录下的所有程序员配置数据文件的文件路径
         /// </summary>
         /// <returns></returns>
         public static CoderSettingXmlFile[] GetOptionFiles()

@@ -17,8 +17,6 @@ namespace NKnife.Mp3
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] 
         private string _DurLength = "";
 
-        private int _Ilong;
-
         #endregion
 
         /// <summary>
@@ -41,29 +39,19 @@ namespace NKnife.Mp3
             get { return _Mci.iName; }
             set
             {
-                //ASCIIEncoding asc = new ASCIIEncoding(); 
                 try
                 {
                     _TemStr = "";
                     _TemStr = _TemStr.PadLeft(127, Convert.ToChar(" "));
                     _Name = _Name.PadLeft(260, Convert.ToChar(" "));
                     _Mci.iName = value;
-                    _Ilong = APIClass.GetShortPathName(_Mci.iName, _Name, _Name.Length);
+                    APIClass.GetShortPathName(_Mci.iName, _Name, _Name.Length);
                     _Name = GetCurrPath(_Name);
-                    //Name = "open " + Convert.ToChar(34) + Name + Convert.ToChar(34) + " alias media";
                     _Name = "open " + Convert.ToChar(34) + _Name + Convert.ToChar(34) + " alias media";
-                    _Ilong = APIClass.mciSendString("close all", _TemStr, _TemStr.Length, 0);
-                    _Ilong = APIClass.mciSendString(_Name, _TemStr, _TemStr.Length, 0);
-                    _Ilong = APIClass.mciSendString("set media time format milliseconds", _TemStr, _TemStr.Length, 0);
+                    APIClass.mciSendString("close all", _TemStr, _TemStr.Length, 0);
+                    APIClass.mciSendString(_Name, _TemStr, _TemStr.Length, 0);
+                    APIClass.mciSendString("set media time format milliseconds", _TemStr, _TemStr.Length, 0);
                     _Mci.state = State.Stop;
-                }
-                catch
-                {
-                }
-            }
-        }
-
-        /// <summary>
                 }
                 catch
                 {
@@ -120,8 +108,8 @@ namespace NKnife.Mp3
         {
             _TemStr = "";
             _TemStr = _TemStr.PadLeft(128, Convert.ToChar(" "));
-            _Ilong = APIClass.mciSendString("close media", _TemStr, 128, 0);
-            _Ilong = APIClass.mciSendString("close all", _TemStr, 128, 0);
+            APIClass.mciSendString("close media", _TemStr, 128, 0);
+            APIClass.mciSendString("close all", _TemStr, 128, 0);
             _Mci.state = State.Stop;
         }
 
@@ -129,7 +117,7 @@ namespace NKnife.Mp3
         {
             _TemStr = "";
             _TemStr = _TemStr.PadLeft(128, Convert.ToChar(" "));
-            _Ilong = APIClass.mciSendString("pause media", _TemStr, _TemStr.Length, 0);
+            APIClass.mciSendString("pause media", _TemStr, _TemStr.Length, 0);
             _Mci.state = State.Puase;
         }
 

@@ -14,7 +14,6 @@ namespace NKnife.Socket.StarterKit
         [STAThread]
         static void Main()
         {
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -23,11 +22,9 @@ namespace NKnife.Socket.StarterKit
             DI.Initialize();
             logger.Info("Ioc完成...");
 
-            CoderSettingXmlFile[] fileList = CoderSettingService.GetOptionFiles();
-            CoderSettingService.ME.Initializes(fileList);
+            DI.Get<CoderSettingService>().Initializes(CoderSettingService.GetOptionFiles());
 
             Application.Run(new MainForm());
-
         }
     }
 }

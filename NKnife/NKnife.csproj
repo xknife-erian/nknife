@@ -80,6 +80,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="API\API.Shell32.cs" />
+    <Compile Include="Ioc\ConfiguringModule.cs" />
     <Compile Include="Wrapper\About.cs" />
     <Compile Include="Entities\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />

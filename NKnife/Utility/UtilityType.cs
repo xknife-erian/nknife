@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,7 +12,9 @@ namespace NKnife.Utility
 {
     public static class UtilityType
     {
-        private static StringCollection _ApplicationFiles;
+        /// <summary>
+        /// 每次搜索Type是比较耗时的，在这里采用一个字典进行缓存
+        /// </summary>
         private static readonly Dictionary<string, Dictionary<string, Type>> _ApplicationTypes = new Dictionary<string, Dictionary<string, Type>>();
 
         /// <summary>
@@ -126,17 +127,17 @@ namespace NKnife.Utility
         {
             object createdObject = null;
             bool isSueess = false;
-            const string meLower = "Me";
-            const string me = "ME";
-            const string instance = "Instance";
-            PropertyInfo propertyME = type.GetProperty(me);
-            PropertyInfo propertyMeLower = type.GetProperty(meLower);
-            PropertyInfo propertyInstance = type.GetProperty(instance);
-            MethodInfo methodMe = type.GetMethod(me);
-            MethodInfo methodInstance = type.GetMethod(instance);
-            if (propertyME != null)
+            const string ME_LOWER = "Me";
+            const string ME = "ME";
+            const string INSTANCE = "Instance";
+            PropertyInfo propertyMe = type.GetProperty(ME);
+            PropertyInfo propertyMeLower = type.GetProperty(ME_LOWER);
+            PropertyInfo propertyInstance = type.GetProperty(INSTANCE);
+            MethodInfo methodMe = type.GetMethod(ME);
+            MethodInfo methodInstance = type.GetMethod(INSTANCE);
+            if (propertyMe != null)
             {
-                createdObject = propertyME.GetValue(null, null);
+                createdObject = propertyMe.GetValue(null, null);
                 isSueess = true;
             }
             if (!isSueess && propertyInstance != null)
@@ -173,8 +174,8 @@ namespace NKnife.Utility
         {
             try
             {
-                const BindingFlags bindingFlags = BindingFlags.CreateInstance | (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
-                return Activator.CreateInstance(type, bindingFlags, null, parameterValues, null);
+                const BindingFlags BINDING_FLAGS = BindingFlags.CreateInstance | (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
+                return Activator.CreateInstance(type, BINDING_FLAGS, null, parameterValues, null);
             }
             catch (Exception e)
             {

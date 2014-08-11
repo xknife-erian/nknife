@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Xml;
+using NKnife.Interface;
+using NKnife.Ioc;
 using NLog;
 
 namespace NKnife.Configuring.CoderSetting
@@ -32,7 +34,7 @@ namespace NKnife.Configuring.CoderSetting
             try
             {
                 string klass = Element.GetAttribute("class");
-                CoderSettingXmlFile file = CoderSettingService.ME.XmlFileMap[klass];
+                CoderSettingXmlFile file = DI.Get<CoderSettingService>().XmlFileMap[klass];
                 file.Save();
                 _Logger.Info(string.Format("选项数据所在的XmlElement保存成功。{0}", file.FilePath));
                 return true;
