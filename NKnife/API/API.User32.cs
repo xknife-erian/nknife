@@ -1037,6 +1037,15 @@ namespace NKnife.API
             [DllImport("user32.dll")]
             public static extern int ToAscii(int uVirtKey, int uScanCode, byte[] lpbKeyState, byte[] lpwTransKey, int fuState);
 
+            /// <summary>
+            /// Provides access to function required to delete handle. This method is used internally
+            /// and is not required to be called separately.
+            /// </summary>
+            /// <param name="hIcon">Pointer to icon handle.</param>
+            /// <returns>N/A</returns>
+            [DllImport("User32.dll")]
+            public static extern int DestroyIcon(IntPtr hIcon);
+
             [DllImport("user32.dll")]
             public static extern IntPtr LoadCursorFromFile(string fileName);
 

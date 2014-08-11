@@ -31,14 +31,10 @@ namespace NKnife.Draws.Designs
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
-            // DesignBench
-            // 
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Name = "DesignBench";
             this.Size = new System.Drawing.Size(640, 480);
             this.ResumeLayout(false);
-
         }
 
         #endregion

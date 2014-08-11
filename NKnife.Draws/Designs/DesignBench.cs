@@ -8,7 +8,7 @@ using NKnife.Events;
 
 namespace NKnife.Draws.Designs
 {
-    public partial class DesignBench : Panel, IDesignBenchCore
+    public sealed partial class DesignBench : Panel, IDesignBenchCore
     {
         #region 成员变量
 
@@ -25,7 +25,7 @@ namespace NKnife.Draws.Designs
 
         public DesignBench()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
+            //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             Rectangles = new RectangleList();
             InitializeComponent();
             BorderStyle = BorderStyle.Fixed3D;
@@ -35,12 +35,12 @@ namespace NKnife.Draws.Designs
 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.AutoScroll = true;
+            AutoScroll = true;
             HorizontalScroll.Enabled = true;
-            HorizontalScroll.Visible = true;
+//            HorizontalScroll.Visible = true;
             VerticalScroll.Enabled = true;
-            VerticalScroll.Visible = true;
-            Scroll += DesignBench_Scroll;
+//            VerticalScroll.Visible = true;
+//            Scroll += DesignBench_Scroll;
         }
 
         void DesignBench_Scroll(object sender, ScrollEventArgs e)
@@ -159,42 +159,42 @@ namespace NKnife.Draws.Designs
                 handler(this, (MouseEventArgs) e);
         }
 
-        protected virtual void OnZoomChanged(ChangedEventArgs<double> e)
+        private void OnZoomChanged(ChangedEventArgs<double> e)
         {
             EventHandler<ChangedEventArgs<double>> handler = ZoomChanged;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnRectangleCreated(RectangleListChangedEventArgs e)
+        internal void OnRectangleCreated(RectangleListChangedEventArgs e)
         {
             EventHandler<RectangleListChangedEventArgs> handler = RectangleCreated;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnRectangleRemoved(RectangleListChangedEventArgs e)
+        internal void OnRectangleRemoved(RectangleListChangedEventArgs e)
         {
             EventHandler<RectangleListChangedEventArgs> handler = RectangleRemoved;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnRectangleUpdated(RectangleListChangedEventArgs e)
+        internal void OnRectangleUpdated(RectangleListChangedEventArgs e)
         {
             EventHandler<RectangleListChangedEventArgs> handler = RectangleUpdated;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnRectangleDoubleClick(RectangleClickEventArgs e)
+        internal void OnRectangleDoubleClick(RectangleClickEventArgs e)
         {
             EventHandler<RectangleClickEventArgs> handler = RectangleDoubleClick;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnRectangleClick(RectangleClickEventArgs e)
+        internal void OnRectangleClick(RectangleClickEventArgs e)
         {
             EventHandler<RectangleClickEventArgs> handler = RectangleClick;
             if (handler != null)
@@ -203,35 +203,35 @@ namespace NKnife.Draws.Designs
             }
         }
 
-        internal virtual void OnImageLoaded(ImageLoadEventArgs e)
+        internal void OnImageLoaded(ImageLoadEventArgs e)
         {
             EventHandler<ImageLoadEventArgs> handler = ImageLoaded;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnSelecting(RectangleSelectingEventArgs e)
+        internal void OnSelecting(RectangleSelectingEventArgs e)
         {
             EventHandler<RectangleSelectingEventArgs> handler = Selecting;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnSelected(RectangleSelectedEventArgs e)
+        internal void OnSelected(RectangleSelectedEventArgs e)
         {
             EventHandler<RectangleSelectedEventArgs> handler = Selected;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnDesignDragging(DragParamsEventArgs e)
+        internal void OnDesignDragging(DragParamsEventArgs e)
         {
             EventHandler<DragParamsEventArgs> handler = DesignDragging;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal virtual void OnDesignDragged(DragParamsEventArgs e)
+        internal void OnDesignDragged(DragParamsEventArgs e)
         {
             EventHandler<DragParamsEventArgs> handler = DesignDragged;
             if (handler != null)

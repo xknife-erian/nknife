@@ -54,8 +54,7 @@ namespace NKnife.Draws.Designs
 
         public ImageDesignPanel()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
-            AutoSize = true;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw |ControlStyles.UserPaint| ControlStyles.AllPaintingInWmPaint, true);
             BackgroundImageChanged += ImageDesignPanel_BackgroundImageChanged;
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
