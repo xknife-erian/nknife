@@ -18,7 +18,6 @@ namespace SocketKnife.Config
         /// </summary>
         /// <value>The heart range.</value>
         public int HeartRange { get; private set; }
-
         public IDatagramDecoder Decoder { get; private set; }
         public IDatagramEncoder Encoder { get; private set; }
         public IDatagramCommandParser CommandParser { get; private set; }
