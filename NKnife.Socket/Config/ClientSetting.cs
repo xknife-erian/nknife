@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Xml;
-using NKnife.Configuring.CoderSetting;
+using NKnife.Configuring;
 using NKnife.Configuring.Interfaces;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
@@ -8,7 +10,7 @@ using SocketKnife.Interfaces.Sockets;
 
 namespace SocketKnife.Config
 {
-    public abstract class ClientSetting : XmlCoderSetting, ISocketClientSetting
+    public class ClientSetting : CoderSettingModule, ISocketClientSetting
     {
         /// <summary>
         ///     Gets or sets 服务器IP地址
@@ -46,7 +48,12 @@ namespace SocketKnife.Config
         public IDatagramEncoder Encoder { get; protected set; }
         public IDatagramCommandParser CommandParser { get; protected set; }
 
-        protected override void Load(XmlElement source)
+        protected override FileInfo GetSettingFile()
+        {
+            return new FileInfo(Path.Combine(_SettingFileBasePath, "socketclient.codersetting"));
+        }
+
+        protected void Load(XmlElement source)
         {
             var serverElement = (XmlElement)source.SelectSingleNode("Server");
             if (serverElement != null)
@@ -91,5 +98,6 @@ namespace SocketKnife.Config
             Encoder = (IDatagramEncoder)UtilityType.CreateSimpleObject(source.SelectSingleNode("IDatagramEncoder").InnerText);
             CommandParser = (IDatagramCommandParser)UtilityType.CreateSimpleObject(source.SelectSingleNode("IDatagramCommandParser").InnerText);
         }
+
     }
 }

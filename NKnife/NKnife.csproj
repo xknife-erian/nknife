@@ -99,13 +99,7 @@
     <Compile Include="Interface\ICommand.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Configuring\CoderSetting\CoderSetting.cs" />
-    <Compile Include="Configuring\CoderSetting\CoderSettingChangeEventArgs.cs" />
-    <Compile Include="Configuring\CoderSetting\CoderSettingLoadedEventArgs.cs" />
-    <Compile Include="Configuring\CoderSetting\CoderSettingMap.cs" />
-    <Compile Include="Configuring\CoderSetting\CoderSettingService.cs" />
-    <Compile Include="Configuring\CoderSetting\CoderSettingXmlFile.cs" />
-    <Compile Include="Configuring\CoderSetting\XmlCoderSetting.cs" />
+    <Compile Include="Configuring\CoderSettingModule.cs" />
     <Compile Include="Configuring\Common\HasModifiedEventArgs.cs" />
     <Compile Include="Configuring\Common\OptionItemAttribute.cs" />
     <Compile Include="Configuring\Common\OptionLoadEventArgs.cs" />
@@ -117,7 +111,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Configuring\Delegates.cs" />
-    <Compile Include="Configuring\Interfaces\ICoderSetting.cs" />
     <Compile Include="Configuring\Interfaces\IOptionBoxItem.cs" />
     <Compile Include="Configuring\Interfaces\IOptionCaseManager.cs" />
     <Compile Include="Configuring\Interfaces\IOptionControl.cs" />

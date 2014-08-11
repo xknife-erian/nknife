@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using NKnife.Configuring.CoderSetting;
+using NKnife.Configuring;
 using NKnife.Ioc;
 using NLog;
 
@@ -21,8 +21,6 @@ namespace NKnife.Socket.StarterKit
             logger.Info("初始化...");
             DI.Initialize();
             logger.Info("Ioc完成...");
-
-            DI.Get<CoderSettingService>().Initializes(CoderSettingService.GetOptionFiles());
 
             Application.Run(new MainForm());
         }

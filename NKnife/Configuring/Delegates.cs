@@ -1,13 +1,8 @@
 ﻿using System;
-using NKnife.Configuring.CoderSetting;
 using NKnife.Configuring.Common;
 
 namespace NKnife.Configuring
 {
-    public delegate void CoderSettingChangedEventHandler(object sender, CoderSettingChangeEventArgs e);
-    public delegate void CoderSettingChangingEventHandler(object sender, CoderSettingChangeEventArgs e);
-    public delegate void CoderSettingLoadedEventHandler(object sender, CoderSettingLoadedEventArgs e);
-
     public delegate void OptionManagerInitializedEventHandler(EventArgs e);
     public delegate void OptionLoadingEventHandler(object sender, OptionLoadEventArgs e);
     public delegate void OptionLoadedEventHandler(object sender, OptionLoadEventArgs e);

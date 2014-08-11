@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NKnife.Configuring.CoderSetting;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
@@ -281,7 +280,7 @@ namespace NKnife.Configuring.Option
             IEnumerable<Type> types = null;
             try
             {
-                string path = CoderSettingService.ApplicationStartPath;
+                string path = AppDomain.CurrentDomain.BaseDirectory;
                 types = UtilityType.FindTypesByDirectory(path, typeof (IOptionDataTableSchema));
             }
             catch (Exception e)

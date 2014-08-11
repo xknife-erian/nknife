@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Xml;
-using NKnife.Configuring.CoderSetting;
+using NKnife.Configuring;
 using NKnife.Utility;
 using NLog;
 using SocketKnife.Protocol;
 
 namespace SocketKnife.Config
 {
-    public abstract class ProtocolSetting : XmlCoderSetting
+    public abstract class ProtocolSetting : CoderSettingModule
     {
         private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+
+        protected override FileInfo GetSettingFile()
+        {
+            return new FileInfo(Path.Combine(_SettingFileBasePath, "Protocol.codersetting"));
+        }
 
         protected ProtocolSetting()
         {
@@ -23,7 +29,7 @@ namespace SocketKnife.Config
         protected internal ConcurrentDictionary<string, Type> ProtocolContentMap { get; set; }
         protected internal ConcurrentDictionary<string, ProtocolTools> ProtocolToolsMap { get; set; }
 
-        protected override void Load(XmlElement source)
+        protected void Load(XmlElement source)
         {
             _Logger.Trace("ProtocolSetting初始化");
             ParseProtocolFamily((XmlElement)source.SelectSingleNode("protocols"));
@@ -146,5 +152,6 @@ namespace SocketKnife.Config
                 ProtocolToolsMap.TryAdd(key, tools);
             }
         }
+
     }
 }
