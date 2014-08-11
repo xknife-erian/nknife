@@ -14,17 +14,25 @@ namespace SocketKnife.Interfaces.Sockets
         /// </summary>
         /// <value>The command parser.</value>
         ConcurrentDictionary<EndPoint, ReceiveQueue> ReceiveQueueMap { get; }
-
         int ReceiveTimeout { get; set; }
         int SendTimeout { get; set; }
-        int MaxBufferSize { get; }
-        int MaxConnectCount { get; }
+        int MaxBufferSize { get; set; }
+        int MaxConnectCount { get; set; }
         bool NoDelay { get; set; }
-        event ListenToClientEventHandler ListenToClient;
 
+        /// <summary>
+        ///     IP
+        /// </summary>
+        string Host { get; set; }
+
+        /// <summary>
+        ///     端口
+        /// </summary>
+        int Port { get; set; }
+
+        event ListenToClientEventHandler ListenToClient;
         bool Open();
         void Disconnect(Socket socket);
-
         void StartAccept();
         void StopAccept();
 

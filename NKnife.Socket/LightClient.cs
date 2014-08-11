@@ -191,7 +191,7 @@ namespace SocketKnife
         ///     Sokcet的工作模式
         /// </summary>
         /// <value>The mode.</value>
-        public SocketMode Mode { get; private set; }
+        public SocketMode Mode { get; set; }
 
         /// <summary>
         ///     接收到的消息的解析器
@@ -233,7 +233,7 @@ namespace SocketKnife
         ///     协议家族
         /// </summary>
         /// <value>The type of the family.</value>
-        public string FamilyType { get; private set; }
+        public string FamilyType { get; set; }
 
         #endregion
 

@@ -8,13 +8,13 @@ namespace SocketKnife.Interfaces.Sockets
         ///     Sokcet的工作模式
         /// </summary>
         /// <value>The mode.</value>
-        SocketMode Mode { get; }
+        SocketMode Mode { get; set; }
 
         /// <summary>
         ///     协议家族
         /// </summary>
         /// <value>The type of the family.</value>
-        string FamilyType { get; }
+        string FamilyType { get; set; }
 
         /// <summary>
         ///     接收到的消息的解析器

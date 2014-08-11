@@ -34,12 +34,12 @@ namespace SocketKnife
         /// <summary>
         ///     IP
         /// </summary>
-        private readonly string _Host;
+        public string Host { get; set; }
 
         /// <summary>
         ///     端口
         /// </summary>
-        private readonly int _Port;
+        public int Port { get; set; }
 
         private readonly ConcurrentDictionary<EndPoint, ReceiveQueue> _ReceiveQueueMap =
             new ConcurrentDictionary<EndPoint, ReceiveQueue>();
@@ -65,29 +65,12 @@ namespace SocketKnife
 
         #region 构造函数
 
-        protected LightServer(SocketMode mode, string family, string host, int port, int maxConnectCount, int maxBufferSize)
+        protected LightServer()
         {
-            Mode = mode;
-
-            FamilyType = family;
-            MaxBufferSize = maxBufferSize;
-            MaxConnectCount = maxConnectCount;
-
-            _Port = port;
-            _Host = host;
             _ClientMap = new ConcurrentDictionary<string, Socket>();
 
             _AutoReset = new AutoResetEvent[1];
             _AutoReset[0] = new AutoResetEvent(false);
-
-            try
-            {
-                Run();
-            }
-            catch (Exception e)
-            {
-                _Logger.Warn(string.Format(string.Format("服务器启动时异常。{0}", e.Message), e));
-            }
         }
 
         #endregion
@@ -106,9 +89,9 @@ namespace SocketKnife
 
         public abstract ISocketServerSetting Option { get; }
 
-        public SocketMode Mode { get; internal set; }
+        public SocketMode Mode { get; set; }
 
-        public string FamilyType { get; internal set; }
+        public string FamilyType { get; set; }
 
         /// <summary>
         ///     接收数据队列MAP,Key是客户端,Value是接收到的数据的队列
@@ -122,12 +105,12 @@ namespace SocketKnife
         /// <summary>
         ///     接收包大小
         /// </summary>
-        public int MaxBufferSize { get; private set; }
+        public int MaxBufferSize { get; set; }
 
         /// <summary>
         ///     最大用户连接数
         /// </summary>
-        public int MaxConnectCount { get; private set; }
+        public int MaxConnectCount { get; set; }
 
         /// <summary>
         ///     是否关闭SOCKET Delay算法
@@ -366,24 +349,24 @@ namespace SocketKnife
             if (_IsDisposed)
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
 
-            var ipEndPoint = new IPEndPoint(IPAddress.Any, _Port);
-            if (!_Host.Equals("any", StringComparison.CurrentCultureIgnoreCase))
+            var ipEndPoint = new IPEndPoint(IPAddress.Any, Port);
+            if (!Host.Equals("any", StringComparison.CurrentCultureIgnoreCase))
             {
-                if (!String.IsNullOrWhiteSpace(_Host))
+                if (!String.IsNullOrWhiteSpace(Host))
                 {
                     IPHostEntry p = Dns.GetHostEntry(Dns.GetHostName());
                     foreach (IPAddress ipaddress in p.AddressList)
                     {
                         if (!ipaddress.IsIPv6LinkLocal)
-                            ipEndPoint = new IPEndPoint(ipaddress, _Port);
+                            ipEndPoint = new IPEndPoint(ipaddress, Port);
                     }
                 }
                 else
                 {
                     try
                     {
-                        if (_Host != null)
-                            ipEndPoint = new IPEndPoint(IPAddress.Parse(_Host), _Port);
+                        if (Host != null)
+                            ipEndPoint = new IPEndPoint(IPAddress.Parse(Host), Port);
                     }
                     catch (FormatException)
                     {
@@ -391,7 +374,7 @@ namespace SocketKnife
                         foreach (IPAddress ipaddress in p.AddressList)
                         {
                             if (!ipaddress.IsIPv6LinkLocal)
-                                ipEndPoint = new IPEndPoint(ipaddress, _Port);
+                                ipEndPoint = new IPEndPoint(ipaddress, Port);
                         }
                     }
                 }
@@ -428,7 +411,7 @@ namespace SocketKnife
             _IsClose = false;
             Accept();
 
-            _Logger.Info("== {0} 已启动。端口:{1}", GetType().Name, _Port);
+            _Logger.Info("== {0} 已启动。端口:{1}", GetType().Name, Port);
             _Logger.Info("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout);
             _Logger.Info("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout);
             _Logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", MaxConnectCount));
@@ -625,32 +608,32 @@ namespace SocketKnife
             var pair = (KeyValuePair<EndPoint, ReceiveQueue>) obj;
             _Logger.Debug(() => string.Format("启动基于{0}的ReceiveQueue队列的监听。", pair.Key));
             ReceiveQueue receiveQueue = pair.Value;
-            var noDone = new byte[] {};
+            var undone = new byte[] {};
             while (_ReceiveThreadMap[pair.Key].IsMonitor)
             {
                 if (receiveQueue.Count > 0)
                 {
                     byte[] data = receiveQueue.Dequeue();
-                    if (!UtilityCollection.IsNullOrEmpty(noDone))
+                    if (!UtilityCollection.IsNullOrEmpty(undone))
                     {
                         // 当有半包数据时，进行接包操作
                         int srcLen = data.Length;
-                        var list = new List<byte>(data.Length + noDone.Length);
-                        list.AddRange(noDone);
+                        var list = new List<byte>(data.Length + undone.Length);
+                        list.AddRange(undone);
                         list.AddRange(data);
                         data = list.ToArray();
-                        int length = noDone.Length;
+                        int length = undone.Length;
                         _Logger.Trace(() => string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", length, srcLen, data.Length));
-                        noDone = new byte[] {};
+                        undone = new byte[] {};
                     }
                     int done;
                     DataProcessBase(pair.Key, data, out done);
                     if (data.Length > done)
                     {
                         // 暂存半包数据，留待下条队列数据接包使用
-                        noDone = new byte[data.Length - done];
-                        Buffer.BlockCopy(data, done, noDone, 0, noDone.Length);
-                        int length = noDone.Length;
+                        undone = new byte[data.Length - done];
+                        Buffer.BlockCopy(data, done, undone, 0, undone.Length);
+                        int length = undone.Length;
                         _Logger.Trace(() => string.Format("半包数据暂存,数据长度:{0}", length));
                     }
                 }

@@ -64,6 +64,14 @@ namespace NKnife.Mp3
         }
 
         /// <summary>
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        /// <summary>
         ///     总时间
         /// </summary>
         public int Duration
