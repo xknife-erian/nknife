@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Xml;
+using Ninject;
 using NKnife.Configuring;
 using NKnife.Configuring.Interfaces;
 using NKnife.Utility;
@@ -42,6 +43,8 @@ namespace SocketKnife.Config
         /// <summary>
         ///     同步的发送与接收的超时
         /// </summary>
+        [Inject]
+        [Named("Timeout")]
         public virtual int Timeout { get; protected set; }
 
         public IDatagramDecoder Decoder { get; protected set; }
