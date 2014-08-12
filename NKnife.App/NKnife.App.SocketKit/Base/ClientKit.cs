@@ -10,7 +10,7 @@ namespace NKnife.Socket.StarterKit.Base
     public class ClientKit : LightClient
     {
         public ClientKit()
-            : base(SocketMode.AsyncKeepAlive, "Socket-Client-StarterKit")
+            : base(SocketMode.Talk, "Socket-Client-StarterKit")
         {
         }
 
