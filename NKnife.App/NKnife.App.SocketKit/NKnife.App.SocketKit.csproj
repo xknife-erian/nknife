@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\SocketOption.cs" />
     <Compile Include="Protocols\KeepAliveTestFromServer.cs" />
     <Compile Include="Protocols\KeepAlive\Decoder.cs" />
     <Compile Include="Protocols\KeepAlive\Encoder.cs" />
@@ -70,8 +71,8 @@
     <Compile Include="Protocols\KeepAlive\Package.cs" />
     <Compile Include="Protocols\KeepAlive\Parser.cs" />
     <Compile Include="Protocols\KeepAlive\Tails.cs" />
-    <Compile Include="Base\SocketClient.cs" />
-    <Compile Include="Base\SocketOption.cs" />
+    <Compile Include="Base\ClientKit.cs" />
+    <Compile Include="Ioc\ClientKitSettingModule.cs" />
     <Compile Include="Base\Params.cs" />
     <Compile Include="Base\ProtocolTools\Decoder.cs" />
     <Compile Include="Base\ProtocolTools\Encoder.cs" />
@@ -131,7 +132,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config.codersetting">
+    <None Include="socketclient.codersetting">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
@@ -139,6 +140,7 @@
   <ItemGroup>
     <Content Include="OwnResources\Protocol.png" />
     <Content Include="OwnResources\Sender.png" />
+    <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

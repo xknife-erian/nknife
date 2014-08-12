@@ -13,7 +13,7 @@ namespace NKnife.Configuring
     public abstract class CoderSettingModule : NinjectModule
     {
         private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
-        protected readonly string _SettingFileBasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Configs\");
+        protected readonly string _SettingFileBasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"");//Configs\");
 
         protected CoderSettingModule()
         {
@@ -34,9 +34,12 @@ namespace NKnife.Configuring
             PutSettingMap();
             foreach (var pair in SettingMap)
             {
-                Bind().ToConstant(pair.Key).Named(pair.Value);
+                var type = GetBindType();
+                Bind(typeof(string)).ToConstant(pair.Value).Named(pair.Key);
             }
         }
+
+        protected abstract Type GetBindType();
 
         protected virtual void PutSettingMap()
         {

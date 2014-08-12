@@ -18,13 +18,13 @@
         /// </summary>
         int Timeout { get; }
 
-        string IPAddress { get; set; }
-        int Port { get; set; }
+        string IPAddress { get; }
+        int Port { get; }
         int TalkOneLength { get; }
 
         /// <summary>
         ///     尝试 Ping 服务器，以判断网络状态
         /// </summary>
-        bool EnablePingServer { get; set; }
+        bool EnablePingServer { get; }
     }
 }

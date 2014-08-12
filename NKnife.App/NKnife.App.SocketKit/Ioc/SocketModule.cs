@@ -8,6 +8,7 @@ namespace NKnife.Socket.StarterKit.Ioc
     {
         public override void Load()
         {
+            Bind<SocketOption>().ToSelf().InSingletonScope();
             Bind<ProtocolSetting>().To<SocketProtocolSetting>().InSingletonScope();
         }
     }

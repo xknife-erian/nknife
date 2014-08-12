@@ -13,8 +13,8 @@ namespace NKnife.Ioc
 {
     public static class DI
     {
-        private static bool _IsInitialized;
-        private static CoreKernel _CoreKernel;
+        private static bool _isInitialized;
+        private static CoreKernel _coreKernel;
 
         private class CoreKernel : StandardKernel
         {
@@ -29,21 +29,21 @@ namespace NKnife.Ioc
 
         public static void Initialize()
         {
-            if (_IsInitialized) 
+            if (_isInitialized) 
                 return;
 
             var assems = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
-            _CoreKernel = new CoreKernel();
-            _CoreKernel.Load(assems);
+            _coreKernel = new CoreKernel();
+            _coreKernel.Load(assems);
 
-            _IsInitialized = true;
+            _isInitialized = true;
         }
 
         public static void AddModule(NinjectModule module)
         {
             Initialize();
-            _CoreKernel.Load(module);
+            _coreKernel.Load(module);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace NKnife.Ioc
         public static T Get<T>(params IParameter[] parameters)
         {
             Initialize(); 
-            return _CoreKernel.Get<T>(parameters);
+            return _coreKernel.Get<T>(parameters);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace NKnife.Ioc
         public static T Get<T>(string name, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(name, parameters);
+            return _coreKernel.Get<T>(name, parameters);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace NKnife.Ioc
         public static T Get<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(constraint, parameters);
+            return _coreKernel.Get<T>(constraint, parameters);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace NKnife.Ioc
         public static T TryGet<T>(params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(parameters);
+            return _coreKernel.Get<T>(parameters);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace NKnife.Ioc
         public static T TryGet<T>(string name, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(name, parameters);
+            return _coreKernel.Get<T>(name, parameters);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace NKnife.Ioc
         public static T TryGet<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(constraint, parameters);
+            return _coreKernel.Get<T>(constraint, parameters);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace NKnife.Ioc
         public static T TryGetAndThrowOnInvalidBinding<T>(params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(parameters);
+            return _coreKernel.Get<T>(parameters);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace NKnife.Ioc
         public static T TryGetAndThrowOnInvalidBinding<T>(string name, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(name, parameters);
+            return _coreKernel.Get<T>(name, parameters);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace NKnife.Ioc
         public static T TryGetAndThrowOnInvalidBinding<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.Get<T>(constraint, parameters);
+            return _coreKernel.Get<T>(constraint, parameters);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace NKnife.Ioc
         public static IEnumerable<T> GetAll<T>(params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.GetAll<T>(parameters);
+            return _coreKernel.GetAll<T>(parameters);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace NKnife.Ioc
         public static IEnumerable<T> GetAll<T>(string name, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.GetAll<T>(name, parameters);
+            return _coreKernel.GetAll<T>(name, parameters);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace NKnife.Ioc
         public static IEnumerable<T> GetAll<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
         {
             Initialize();
-            return _CoreKernel.GetAll<T>(constraint, parameters);
+            return _coreKernel.GetAll<T>(constraint, parameters);
         }
 
     }
