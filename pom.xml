@@ -14,17 +14,17 @@
 
     <groupId>net.xknife</groupId>
     <artifactId>jknife-parent</artifactId>
-    <version>1.1.140509</version>
+    <version>1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>jknife-lang</module>
         <module>jknife-data</module>
         <module>jknife-json</module>
-        <module>jknife-web</module>
-        <module>jknife-data-mongo</module>
         <module>jknife-inject</module>
         <module>jknife-io</module>
+        <module>jknife-web</module>
+        <module>jknife-data-mongo</module>
     </modules>
 
     <dependencyManagement>
