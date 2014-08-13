@@ -124,8 +124,8 @@ public class CommonsLang3Demo
         System.out.println(date);
 
         System.out.println("返回类本身的toString()方法结果,对象为null时，返回0长度字符串.");
-        System.out.println(ObjectUtils.toString(date));
-        System.out.println(ObjectUtils.toString(null));
+//        System.out.println(ObjectUtils.toString(date));
+//        System.out.println(ObjectUtils.toString(null));
         System.out.println(date);
     }
 
@@ -252,7 +252,7 @@ public class CommonsLang3Demo
         System.out.println(StringUtils.difference("aaabcde", "aaaccde"));
 
         System.out.println("截去字符串为以指定字符串结尾的部分.");
-        System.out.println(StringUtils.chomp("aaabcde", "de"));
+        System.out.println(StringUtils.removeEnd("aaabcde", "de"));
 
         System.out.println("检查一字符串是否为另一字符串的子集.");
         System.out.println(StringUtils.containsOnly("aad", "aadd"));
