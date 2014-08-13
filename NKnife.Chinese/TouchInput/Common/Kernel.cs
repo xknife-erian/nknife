@@ -33,7 +33,7 @@ namespace NKnife.Chinese.TouchInput.Common
                 _Logger.Info("屏幕输入法窗体实例成功.");
                 _Listener = new AsynListener();
                 _Listener.ReceivedData += Listener_ReceivedData;
-                _Listener.Listening();
+                _Listener.StartListening();
                 _Logger.Info("屏幕输入法控制监听器启动完成.");
                 return true;
             }
@@ -48,7 +48,7 @@ namespace NKnife.Chinese.TouchInput.Common
         {
             try
             {
-                _Listener.Abort();
+                _Listener.FinishListening();
                 _Logger.Info("屏幕输入法控制监听器关闭完成.");
 
                 return true;

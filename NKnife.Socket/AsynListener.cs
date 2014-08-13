@@ -17,17 +17,15 @@ namespace SocketKnife
 
         private readonly ManualResetEvent _AllDone = new ManualResetEvent(false);
         private readonly ManualResetEvent _SendDone = new ManualResetEvent(false);
-        private int _BufferSize = 32;
+        private int _BufferSize = 128;
         private bool _IsWhileListen = true;
-        private Socket _Listener;
         private string _TcpIpServerIp = "";
         private int _TcpIpServerPort = 22033;
-        private Thread _Thread;
 
         #region 属性
 
         /// <summary>
-        ///     得到或设置服务器IP地址
+        ///     获取或设置服务器IP地址
         /// </summary>
         public string IpAddress
         {
@@ -36,7 +34,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        ///     得到或设置服务器所使用的端口
+        ///     获取或设置服务器所使用的端口
         /// </summary>
         public int Port
         {
@@ -45,7 +43,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        ///     得到或设置服务端缓冲器大小
+        ///     获取或设置服务端缓冲器大小
         /// </summary>
         public int BufferSize
         {
@@ -54,7 +52,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        ///     得到当前连接状态 false为断开 true为连接
+        ///     获取当前连接状态：false为断开 true为连接
         /// </summary>
         public bool Active
         {
@@ -63,21 +61,24 @@ namespace SocketKnife
 
         #endregion
 
-        #region 开始监听
+        #region 开始、关闭监听
+
+        private Thread _Thread;
+        private Socket _Listener;
 
         /// <summary>
         ///     开启新线程监听访问
         /// </summary>
-        public void Listening()
+        public void StartListening()
         {
-            _Thread = new Thread(StartListening) {IsBackground = true, Name = "AsynListener-Listening"};
+            _Thread = new Thread(StartListeningThreadStart) {IsBackground = true, Name = "AsynListener-Listening"};
             _Thread.Start();
         }
 
         /// <summary>
         ///     开始监听
         /// </summary>
-        private void StartListening()
+        private void StartListeningThreadStart()
         {
             try
             {
@@ -87,7 +88,7 @@ namespace SocketKnife
                 var localEndPoint = new IPEndPoint(ipAddress, _TcpIpServerPort);
 
                 _Listener.Bind(localEndPoint);
-                _Listener.Listen(8);
+                _Listener.Listen(16);
 
                 while (_IsWhileListen)
                 {
@@ -99,6 +100,22 @@ namespace SocketKnife
             catch (Exception e)
             {
                 OnHasListenerException(new ListenerExceptionEventArgs(e, _Listener));
+            }
+        }
+
+        public void FinishListening()
+        {
+            try
+            {
+                _AllDone.Close();
+                _SendDone.Close();
+                _Listener.Close(1);
+                _IsWhileListen = false;
+                _Thread.Abort();
+            }
+            catch (Exception e)
+            {
+                _Logger.Warn(string.Format("Listen关闭时有导常"), e);
             }
         }
 
@@ -127,7 +144,8 @@ namespace SocketKnife
             }
             finally
             {
-                _AllDone.Set();
+                if (_IsWhileListen)
+                    _AllDone.Set();
             }
         }
 
@@ -254,22 +272,8 @@ namespace SocketKnife
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            Abort();
+            FinishListening();
         }
-
-        /// <summary>
-        ///     中止服务
-        /// </summary>
-        public void Abort()
-        {
-            if (_Thread != null)
-            {
-                _IsWhileListen = false;
-                _Listener.Close();
-                _Thread.Abort();
-            }
-        }
-
         private void InitializeComponent()
         {
         }
