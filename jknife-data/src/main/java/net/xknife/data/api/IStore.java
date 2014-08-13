@@ -3,7 +3,7 @@ package net.xknife.data.api;
 import java.util.Iterator;
 import java.util.List;
 
-public interface IStore<TEntity, ID, Where, Cursor extends Iterator<TEntity>>
+public interface IStore<TEntity, ID, Where, Update, Cursor extends Iterator<TEntity>>
 {
 	/**
 	 * 添加一个实体到数据库
@@ -60,6 +60,8 @@ public interface IStore<TEntity, ID, Where, Cursor extends Iterator<TEntity>>
 	 * @return
 	 */
 	List<ID> update(Where where, TEntity data);
+
+    List<ID> updateSet(Where where, Update builder);
 
 	/**
 	 * 根据唯一标识查找实体

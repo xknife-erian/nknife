@@ -1,29 +1,27 @@
 package net.xknife.data.mongo;
 
-import java.io.File;
-import java.util.List;
-import java.util.regex.Pattern;
-
+import com.google.common.collect.Lists;
+import com.mongodb.ServerAddress;
+import de.bwaldvogel.mongo.MongoServer;
+import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
 import net.xknife.data.mongo.IMongo.MongoBase;
 import net.xknife.lang.widgets.OS;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;
 import org.mongojack.DBQuery.Query;
+import org.mongojack.DBUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
+import java.io.File;
+import java.net.InetSocketAddress;
+import java.util.List;
+import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * 
@@ -71,8 +69,18 @@ public class MongoBaseTest
 		boolean isSuccess = _BikeMongo.add(bigBike);
 		assertTrue(isSuccess);
 
-		BigBike finded = _BikeMongo.find(bigBike.getId());
-		assertEquals(bigBike.getName(), finded.getName());
+//        DBCursor<BigBike> query = _BikeMongo.query();
+//        assertEquals(1, query.count());
+//        for (BigBike bike : query)
+//        {
+//            String findId = bigBike.getId();
+//            BigBike findT = _BikeMongo.find(findId);
+//            assertEquals(bigBike.getName(), findT.getName());
+//        }
+
+        String findId = bigBike.getId();
+        BigBike findT = _BikeMongo.find(findId);
+        assertEquals(bigBike.getName(), findT.getName());
 	}
 
 	/**
@@ -351,7 +359,7 @@ public class MongoBaseTest
 		assertEquals(100, findedBikes);
 
 		BigBike willUpdateBigBike = new BigBike();
-		willUpdateBigBike.setName("0000_newBigBike");
+		willUpdateBigBike.setName("$0000_newBigBike");
 		List<String> findedNewBigBikes = _BikeMongo.update(notExistWhere, willUpdateBigBike);
 		assertEquals(0, findedNewBigBikes.size());
 	}
@@ -366,6 +374,7 @@ public class MongoBaseTest
 
 		Query oldWhere = DBQuery.is("name", "vyyvyy");
 		long oldFindedCount = _BikeMongo.count(oldWhere);
+        assertEquals(0, oldFindedCount);
 
 		List<BigBike> bigBikes = Lists.newArrayList();
 		for (int i = 0; i < 100; i++)
@@ -374,12 +383,13 @@ public class MongoBaseTest
 		}
 		_BikeMongo.add(bigBikes);
 
-		BigBike willUpdateBike = new BigBike();
-		willUpdateBike.setName("vyy");
+        long newFindedCount = _BikeMongo.count(oldWhere);
+        assertEquals(100, newFindedCount);
 
-		List<String> updated = _BikeMongo.update(oldWhere, willUpdateBike);
+        DBUpdate.Builder builder = DBUpdate.set("name", "vyy");
+		List<String> updated = _BikeMongo.updateSet(oldWhere, builder);
 
-		assertEquals(100 + oldFindedCount, updated.size());
+		assertEquals(100, updated.size());
 
 	}
 
@@ -619,16 +629,22 @@ public class MongoBaseTest
 	{
 		Logger _Logger = LoggerFactory.getLogger(MockBikeMongo.class);
 
-		/**
+        private ServerAddress _ServerAddress;
+        /**
 		 * 用一个模拟的Mongo服务器进行测试。第三方专用的Mongo测试框架。
 		 */
-		// @Override
-		// protected ServerAddress getServer()
-		// {
-		// MongoServer server = new MongoServer(new MemoryBackend());
-		// InetSocketAddress address = server.bind();
-		// return new ServerAddress(address);
-		// }
+		@Override
+		protected ServerAddress getServer()
+		{
+            if(_ServerAddress == null)
+            {
+                MongoServer server = new MongoServer(new MemoryBackend());
+                InetSocketAddress address = server.bind();
+                _ServerAddress = new ServerAddress(address);
+            }
+
+            return _ServerAddress;
+		}
 
 		@Override
 		protected String getDbName()

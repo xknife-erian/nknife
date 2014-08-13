@@ -1,23 +1,18 @@
 package net.xknife.data.mongo;
 
-import java.net.UnknownHostException;
-import java.util.List;
-
-import net.xknife.data.api.IStore;
-
-import org.mongojack.DBCursor;
-import org.mongojack.DBQuery;
-import org.mongojack.DBQuery.Query;
-import org.mongojack.JacksonDBCollection;
-import org.mongojack.WriteResult;
-
 import com.google.common.base.Strings;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.ServerAddress;
+import net.xknife.data.api.IStore;
+import org.mongojack.*;
+import org.mongojack.DBQuery.Query;
 
-public interface IMongo<T> extends IStore<T, String, DBQuery.Query, DBCursor<T>>
+import java.net.UnknownHostException;
+import java.util.List;
+
+public interface IMongo<T> extends IStore<T, String, DBQuery.Query, DBUpdate.Builder, DBCursor<T>>
 {
 	public static abstract class MongoBase<T> implements IMongo<T>
 	{
@@ -143,9 +138,16 @@ public interface IMongo<T> extends IStore<T, String, DBQuery.Query, DBCursor<T>>
 		@Override
 		public List<String> update(final Query where, final T data)
 		{
-			WriteResult<T, String> result = collection().update(where, data, false, true);
+			WriteResult<T, String> result = collection().update(where, data, false, false);
 			return result.getSavedIds();
 		}
+
+        @Override
+        public List<String> updateSet(final Query where, final DBUpdate.Builder builder)
+        {
+            WriteResult<T, String> result = collection().update(where, builder, false, true);
+            return result.getSavedIds();
+        }
 
 		@Override
 		public T find(final String id)
