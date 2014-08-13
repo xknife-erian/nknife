@@ -14,7 +14,7 @@ import java.util.Properties;
  *
  * 【继续维护中......】
  *
- * Created by yangjuntao@p-an.com on 2014-07-24.
+ * Created by yangjuntao@xknife.net on 2014-07-24.
  */
 public class XProperties
 {

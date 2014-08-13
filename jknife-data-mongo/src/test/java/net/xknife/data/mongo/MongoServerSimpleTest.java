@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * mongo-java-server官方提供的一个简单测试，可以读懂基本的思想，与jknife框架无关。
  *
- * Created by yangjuntao@p-an.com on 2014-08-13.
+ * Created by yangjuntao@xknife.net on 2014-08-13.
  */
 public class MongoServerSimpleTest
 {
