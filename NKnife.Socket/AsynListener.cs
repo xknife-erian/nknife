@@ -169,7 +169,7 @@ namespace SocketKnife
                     if (bytesRead > 0)
                     {
                         string content;
-                        bool isComplate = ReceivedChecker(state, bytesRead, client, out content);
+                        bool isComplate = ReceivedChecker(state, bytesRead, out content);
                         if (isComplate)
                         {
                             OnReceivedData(new ReceivedDataEventArgs(content, client));
@@ -200,7 +200,7 @@ namespace SocketKnife
         /// <summary>
         ///     子类可重写。当收到数据后的处理(协议的解析)方式及是否收取完成的校验。
         /// </summary>
-        protected virtual bool ReceivedChecker(StateObject state, int bytesRead, Socket client, out string content)
+        protected virtual bool ReceivedChecker(StateObject state, int bytesRead, out string content)
         {
             state.StringBuilder.Append(Encoding.Default.GetString(state.Buffer, 0, bytesRead));
             content = state.StringBuilder.ToString();
@@ -216,11 +216,18 @@ namespace SocketKnife
         /// </summary>
         /// <param name="client">指定的客户端</param>
         /// <param name="data">数据</param>
-        public virtual void Send(Socket client, String data)
+        public virtual void Send(Socket client, string data)
         {
+            _Logger.Trace(string.Format("Send:{0}", data));
             byte[] byteData = Encoding.Default.GetBytes(data);
             client.BeginSend(byteData, 0, byteData.Length, 0, SendCallback, client);
         }
+
+        public virtual void Send(Socket client, byte[] data)
+        {
+            client.BeginSend(data, 0, data.Length, 0, SendCallback, client);
+        }
+
 
         /// <summary>
         ///     发送回调内容
@@ -232,7 +239,7 @@ namespace SocketKnife
             try
             {
                 int bytesSent = client.EndSend(ar);
-                _Logger.Info("Sent {0} bytes to client.", bytesSent);
+                _Logger.Debug("Sent {0} bytes to client.", bytesSent);
             }
             catch (Exception e)
             {
