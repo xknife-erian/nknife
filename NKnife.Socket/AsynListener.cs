@@ -63,22 +63,23 @@ namespace SocketKnife
 
         #region 开始、关闭监听
 
-        private Thread _Thread;
         private Socket _Listener;
+        private Thread _Thread;
 
         /// <summary>
         ///     开启新线程监听访问
         /// </summary>
-        public void StartListening()
+        public void BeginListening()
         {
-            _Thread = new Thread(StartListeningThreadStart) {IsBackground = true, Name = "AsynListener-Listening"};
+            var id = Guid.NewGuid().ToString("N").Substring(0, 6);
+            _Thread = new Thread(BeginListeningThreadStart) {IsBackground = true, Name = string.Format("AsynListener-Listening-{0}", id)};
             _Thread.Start();
         }
 
         /// <summary>
         ///     开始监听
         /// </summary>
-        private void StartListeningThreadStart()
+        private void BeginListeningThreadStart()
         {
             try
             {
@@ -102,8 +103,7 @@ namespace SocketKnife
                 OnHasListenerException(new ListenerExceptionEventArgs(e, _Listener));
             }
         }
-
-        public void FinishListening()
+        public void EndListening()
         {
             try
             {
@@ -134,7 +134,7 @@ namespace SocketKnife
             {
                 var listener = (Socket) ar.AsyncState;
                 client = listener.EndAccept(ar);
-                _Logger.Info("监听到客户端连接：{0}", client.RemoteEndPoint.ToString());
+                _Logger.Trace("监听到客户端连接：{0}", client.RemoteEndPoint.ToString());
                 var state = new StateObject(_BufferSize, client) {Client = client};
                 client.BeginReceive(state.Buffer, 0, _BufferSize, 0, ReadCallback, state);
             }
@@ -279,8 +279,9 @@ namespace SocketKnife
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            FinishListening();
+            EndListening();
         }
+
         private void InitializeComponent()
         {
         }
