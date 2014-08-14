@@ -143,10 +143,10 @@ public interface IMongo<T> extends IStore<T, String, DBQuery.Query, DBUpdate.Bui
 		}
 
         @Override
-        public List<String> updateSet(final Query where, final DBUpdate.Builder builder)
+        public int updateSet(final Query where, final DBUpdate.Builder builder)
         {
             WriteResult<T, String> result = collection().update(where, builder, false, true);
-            return result.getSavedIds();
+            return result.getN();
         }
 
 		@Override

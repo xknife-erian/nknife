@@ -61,7 +61,7 @@ public interface IStore<TEntity, ID, Where, Update, Cursor extends Iterator<TEnt
 	 */
 	List<ID> update(Where where, TEntity data);
 
-    List<ID> updateSet(Where where, Update builder);
+    int updateSet(Where where, Update builder);
 
 	/**
 	 * 根据唯一标识查找实体

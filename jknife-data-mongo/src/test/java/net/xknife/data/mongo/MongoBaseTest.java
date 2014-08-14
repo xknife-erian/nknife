@@ -387,9 +387,9 @@ public class MongoBaseTest
         assertEquals(100, newFindedCount);
 
         DBUpdate.Builder builder = DBUpdate.set("name", "vyy");
-		List<String> updated = _BikeMongo.updateSet(oldWhere, builder);
+		int updateSize = _BikeMongo.updateSet(oldWhere, builder);
 
-		assertEquals(100, updated.size());
+		assertEquals(100, updateSize);
 
 	}
 
