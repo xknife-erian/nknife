@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using NKnife.Draws.Designs.Base;
 using NKnife.Draws.Designs.Event;
 using NKnife.Ioc;
@@ -54,7 +53,8 @@ namespace NKnife.Draws.Designs
 
         public ImageDesignPanel()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw |ControlStyles.UserPaint| ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint,
+                true);
             BackgroundImageChanged += ImageDesignPanel_BackgroundImageChanged;
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
@@ -130,8 +130,8 @@ namespace NKnife.Draws.Designs
 
         public void SetOwnSize(double multiple)
         {
-            var srcSize = Size;
-            var srcMultiple = _Multiple;
+            Size srcSize = Size;
+            double srcMultiple = _Multiple;
             _Multiple = multiple;
             if (BackgroundImage == null)
                 return;
@@ -141,14 +141,14 @@ namespace NKnife.Draws.Designs
             int ph = Parent.Size.Height;
             if (w > h)
             {
-                var z = (pw*multiple)/w;
+                double z = (pw*multiple)/w;
                 Size = new Size((int) (pw*multiple), (int) (h*z));
                 //当控件尺寸更新完毕后，再更新父容器，以触发事件
                 _Parent.Zoom = z;
             }
             else
             {
-                var z = (ph*multiple)/h;
+                double z = (ph*multiple)/h;
                 Size = new Size((int) (w*z), (int) (ph*multiple));
                 _Parent.Zoom = z;
             }
@@ -156,14 +156,14 @@ namespace NKnife.Draws.Designs
         }
 
         /// <summary>
-        /// 当设计图板的大小发生变化后
+        ///     当设计图板的大小发生变化后
         /// </summary>
         public event EventHandler<PanelZoomEventArgs> PanelZoomed;
 
         private void OnPanelZoomed(PanelZoomEventArgs e)
         {
             EventHandler<PanelZoomEventArgs> handler = PanelZoomed;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, e);
         }
 
@@ -223,7 +223,7 @@ namespace NKnife.Draws.Designs
                 //将画好的新图贴到当前控件的工作区
                 g.DrawImage(_CurrentImage, ClientRectangle, new Rectangle(0, 0, _CurrentImage.Width, _CurrentImage.Height), GraphicsUnit.Pixel);
             }
-            
+
             //画正在拖动的矩形
             if (_IsDesign)
             {
@@ -249,7 +249,7 @@ namespace NKnife.Draws.Designs
                 DialogResult ds = MessageBox.Show(this, "是否删除被选择的矩形设计区？", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (ds == DialogResult.Yes)
                 {
-                    foreach (var rect in rl.Selected)
+                    foreach (RectangleF rect in rl.Selected)
                     {
                         rl.Remove(rect);
                     }
@@ -295,6 +295,15 @@ namespace NKnife.Draws.Designs
 
         #region 移动鼠标发生的事件
 
+        public event EventHandler<PanelDraggingEventArgs> PanelDragging;
+
+        private void OnPanelDragging(PanelDraggingEventArgs e)
+        {
+            EventHandler<PanelDraggingEventArgs> handler = PanelDragging;
+            if (handler != null) 
+                handler(this, e);
+        }
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -310,6 +319,13 @@ namespace NKnife.Draws.Designs
                 case ImagePanelDesignMode.Selecting:
                 {
                     MouseMoveSelecting(e);
+                    break;
+                }
+                case  ImagePanelDesignMode.Dragging:
+                {
+                    if (e.Button != MouseButtons.Left)
+                        return;
+                    OnPanelDragging(new PanelDraggingEventArgs(e.Location));
                     break;
                 }
             }

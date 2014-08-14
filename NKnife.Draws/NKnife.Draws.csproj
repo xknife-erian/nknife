@@ -53,6 +53,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Designs\Event\PanelDraggingEventArgs.cs" />
     <Compile Include="Designs\Event\PanelZoomEventArgs.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Designs\Event\RectangleClickEventArgs.cs" />

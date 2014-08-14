@@ -8,11 +8,13 @@ using NKnife.Events;
 
 namespace NKnife.Draws.Designs
 {
-    public sealed partial class DesignBench : Panel, IDesignBenchCore
+    public sealed partial class DesignBench : Control, IDesignBenchCore
     {
         #region 成员变量
 
         private readonly ImageDesignPanel _ImageDesignPanel;
+        private HScrollBar _HScrollBar = new HScrollBar();
+        private VScrollBar _VScrollBar = new VScrollBar();
 
         internal ImageDesignPanel ImageDesignPanel
         {
@@ -25,27 +27,53 @@ namespace NKnife.Draws.Designs
 
         public DesignBench()
         {
-            //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             Rectangles = new RectangleList();
             InitializeComponent();
-            BorderStyle = BorderStyle.Fixed3D;
-            _ImageDesignPanel = new ImageDesignPanel {Visible = false};
-            Controls.Add(_ImageDesignPanel);
-            _ImageDesignPanel.PanelZoomed += _ImageDesignPanel_PanelZoomed;
 
-            //this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            AutoScroll = true;
-            HorizontalScroll.Enabled = true;
-//            HorizontalScroll.Visible = true;
-            VerticalScroll.Enabled = true;
-//            VerticalScroll.Visible = true;
-//            Scroll += DesignBench_Scroll;
+            _HScrollBar.Dock = DockStyle.Bottom;
+            _HScrollBar.Enabled = false;
+            _HScrollBar.Scroll += _HScrollBar_Scroll;
+            _VScrollBar.Dock = DockStyle.Right;
+            _VScrollBar.Enabled = false;
+            _VScrollBar.Scroll += _VScrollBar_Scroll;
+            _ImageDesignPanel = new ImageDesignPanel {Visible = false};
+            _ImageDesignPanel.SizeChanged += _ImageDesignPanel_SizeChanged;
+            _ImageDesignPanel.PanelDragging += _ImageDesignPanel_PanelDragging;
+
+            Controls.Add(_VScrollBar);
+            Controls.Add(_HScrollBar);
+            Controls.Add(_ImageDesignPanel);
         }
 
-        void DesignBench_Scroll(object sender, ScrollEventArgs e)
+        private void _ImageDesignPanel_PanelDragging(object sender, PanelDraggingEventArgs e)
         {
-            HorizontalScroll.Value = e.NewValue;
+            var screenPoint = _ImageDesignPanel.PointToScreen(e.MousePoint);
+            var ownPoint = PointToClient(screenPoint);
+            // TODO: 2014年8月15日，拖拽图片，下方的SizeChanged好象不对，放大后应该用一个事件来触发，以控制滚动条的位置
+        }
+
+        private void _VScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            _ImageDesignPanel.Top = -e.NewValue;
+        }
+
+        private void _HScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            _ImageDesignPanel.Left = -e.NewValue;
+        }
+
+        private void _ImageDesignPanel_SizeChanged(object sender, EventArgs e)
+        {
+            if (_ImageDesignPanel.Width > Width)
+            {
+                _HScrollBar.Enabled = true;
+                _HScrollBar.Maximum = _ImageDesignPanel.Width - Width;
+            }
+            if (_ImageDesignPanel.Height > Height)
+            {
+                _VScrollBar.Enabled = true;
+                _VScrollBar.Maximum = _ImageDesignPanel.Height - Height;
+            }
         }
 
         #endregion
@@ -107,22 +135,6 @@ namespace NKnife.Draws.Designs
                     break;
                 }
             }
-        }
-
-        private void _ImageDesignPanel_PanelZoomed(object sender, PanelZoomEventArgs e)
-        {
-            
-            var p = this.ScrollToControl(this.ImageDesignPanel);
-            Console.WriteLine(p);
-
-//            if (e.CurrentMultiple > 1)
-//            {
-//                var srcSize = e.SourceSize;
-//                var mouse = e.MouseClickedLocation;
-//                AutoScroll = true;
-//                this.HScroll = true;
-//                this.VScroll = true;
-//            }
         }
 
         private void SetImageDesignPanelLocation()
