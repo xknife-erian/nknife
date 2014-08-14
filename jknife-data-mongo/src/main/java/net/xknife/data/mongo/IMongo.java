@@ -78,7 +78,6 @@ public interface IMongo<T> extends IStore<T, String, DBQuery.Query, DBUpdate.Bui
 			}
 			catch (MongoException e)
 			{
-				e.printStackTrace();
 				_Logger.warn("添加实体失败，有可能是重复记录或者实体Id处理问题：" + data.toString(), e);
 				return false;
 			}
