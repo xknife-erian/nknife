@@ -135,8 +135,9 @@ namespace NKnife.Draws.Controls.Frames
 
         public void SetOwnSize(double multiple)
         {
-            Size srcSize = Size;
-            double srcMultiple = _Multiple;
+            var mousePosition = PointToClient(MousePosition);//记录未缩放时鼠标点击的位置
+            Size oldSize = Size;
+            double oldMultiple = _Multiple;
             _Multiple = multiple;
             if (BackgroundImage == null)
                 return;
@@ -157,7 +158,7 @@ namespace NKnife.Draws.Controls.Frames
                 Size = new Size((int) (w*z), (int) (ph*multiple));
                 _Parent.Zoom = z;
             }
-            OnZoomed(new BoardZoomEventArgs(srcSize, PointToClient(MousePosition), srcMultiple, multiple));
+            OnZoomed(new BoardZoomEventArgs(oldSize, mousePosition, oldMultiple, multiple));
         }
 
         /// <summary>

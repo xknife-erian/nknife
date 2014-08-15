@@ -15,6 +15,17 @@ namespace NKnife.Draws.Controls.Frames
         private readonly HScrollBar _HScrollBar = new HScrollBar();
         private readonly VScrollBar _VScrollBar = new VScrollBar();
 
+        private int _Blankness = 20;
+
+        /// <summary>
+        ///     画板与画框之间留出的空白区域。
+        /// </summary>
+        public int Blankness
+        {
+            get { return _Blankness; }
+            set { _Blankness = value; }
+        }
+
         #endregion
 
         #region 构造函数
@@ -39,9 +50,23 @@ namespace NKnife.Draws.Controls.Frames
             Controls.Add(_DrawingBoard);
         }
 
-        void _DrawingBoard_PanelZoomed(object sender, BoardZoomEventArgs e)
+        private void _DrawingBoard_PanelZoomed(object sender, BoardZoomEventArgs e)
         {
-            throw new NotImplementedException();
+            //TODO:单点放大实在想不太清楚了，这是一个什么样的几何呀……，左与上的边距有了，为什么下与右的边距没有呢？
+            if (_DrawingBoard.Width > Width)
+            {
+                _HScrollBar.Enabled = true;
+                _HScrollBar.Minimum = -_Blankness;
+                _HScrollBar.Maximum = _DrawingBoard.Width - Width + _Blankness;
+                //_HScrollBar.Value = (int)(e.MouseClickedLocation.X*(_HScrollBar.Maximum/_DrawingBoard.Width));
+            }
+            if (_DrawingBoard.Height > Height)
+            {
+                _VScrollBar.Enabled = true;
+                _VScrollBar.Minimum = -_Blankness;
+                _VScrollBar.Maximum = _DrawingBoard.Height - Height + _Blankness;
+                //_VScrollBar.Value = (int)(e.MouseClickedLocation.Y*(_VScrollBar.Maximum/_DrawingBoard.Height));
+            }
         }
 
         private void _DrawingBoard_PanelDragging(object sender, BoardDraggingEventArgs e)
@@ -49,16 +74,16 @@ namespace NKnife.Draws.Controls.Frames
             if (_DrawingBoard.Width <= Width && _DrawingBoard.Height <= Height)
                 return;
             //根据拖动的起点和当前点之间的距离，触发滚动条的Value发生变化，再间接触发画板的移动
-            var current = PointToClient(_DrawingBoard.PointToScreen(e.CurrentPoint));
-            var start = PointToClient(_DrawingBoard.PointToScreen(e.StartPoint));
+            Point current = PointToClient(_DrawingBoard.PointToScreen(e.CurrentPoint));
+            Point start = PointToClient(_DrawingBoard.PointToScreen(e.StartPoint));
 
-            var x = (current.X - start.X)/3;
-            var y = (current.Y - start.Y)/3;
+            int x = (current.X - start.X)/3;
+            int y = (current.Y - start.Y)/3;
 
-            var offsetX = _HScrollBar.Value - x;
+            int offsetX = _HScrollBar.Value - x;
             if (offsetX > _HScrollBar.Minimum && offsetX < _HScrollBar.Maximum)
                 _HScrollBar.Value = offsetX;
-            var offsetY = _VScrollBar.Value - y;
+            int offsetY = _VScrollBar.Value - y;
             if (offsetY > _VScrollBar.Minimum && offsetY < _VScrollBar.Maximum)
                 _VScrollBar.Value = _VScrollBar.Value - y;
         }
@@ -73,46 +98,11 @@ namespace NKnife.Draws.Controls.Frames
             _DrawingBoard.Left = -_HScrollBar.Value;
         }
 
-        private void _DrawingBoard_SizeChanged(object sender, EventArgs e)
-        {
-            // TODO: SizeChanged好象不对，放大后应该用一个事件来触发，以控制滚动条的位置
-            if (_DrawingBoard.Width > Width)
-            {
-                _HScrollBar.Enabled = true;
-                _HScrollBar.Maximum = _DrawingBoard.Width - Width;
-            }
-            if (_DrawingBoard.Height > Height)
-            {
-                _VScrollBar.Enabled = true;
-                _VScrollBar.Maximum = _DrawingBoard.Height - Height;
-            }
-        }
-
         #endregion
 
         #region IDesignBenchCore Method
 
         public RectangleList Rectangles { get; internal set; }
-
-        #region 缩放率
-
-        private double _Zoom;
-
-        /// <summary>
-        ///     当前设计图像的缩放率
-        /// </summary>
-        public double Zoom
-        {
-            get { return _Zoom; }
-            internal set
-            {
-                double old = _Zoom;
-                _Zoom = value;
-                OnZoomChanged(new ChangedEventArgs<double>(old, value));
-            }
-        }
-
-        #endregion
 
         public void SetDrawingBoardDesignMode(DrawingBoardDesignMode mode)
         {
@@ -149,10 +139,30 @@ namespace NKnife.Draws.Controls.Frames
             }
         }
 
+        #region 缩放率
+
+        private double _Zoom;
+
+        /// <summary>
+        ///     当前设计图像的缩放率
+        /// </summary>
+        public double Zoom
+        {
+            get { return _Zoom; }
+            internal set
+            {
+                double old = _Zoom;
+                _Zoom = value;
+                OnZoomChanged(new ChangedEventArgs<double>(old, value));
+            }
+        }
+
+        #endregion
+
         private void SetImageDesignPanelLocation()
         {
-            int x = (Width - 20 - _DrawingBoard.Width)/2;
-            int y = (Height - 20 - _DrawingBoard.Height)/2;
+            int x = (Width - _Blankness - _DrawingBoard.Width)/2;
+            int y = (Height - _Blankness - _DrawingBoard.Height)/2;
             _DrawingBoard.Location = new Point(x, y);
         }
 
@@ -263,6 +273,5 @@ namespace NKnife.Draws.Controls.Frames
         }
 
         #endregion
-
     }
 }
