@@ -1,78 +1,90 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using NKnife.Draws.Controls;
-using NKnife.Draws.Designs.Base;
-using NKnife.Draws.Designs.Event;
+using NKnife.Draws.Controls.Frames.Base;
+using NKnife.Draws.Controls.Frames.Event;
 using NKnife.Events;
 
-namespace NKnife.Draws.Designs
+namespace NKnife.Draws.Controls.Frames
 {
-    public sealed partial class DesignBench : Control, IDesignBenchCore
+    public sealed partial class PictureFrame : Control, IPictureFrame
     {
         #region 成员变量
 
-        private readonly ImageDesignPanel _ImageDesignPanel;
-        private HScrollBar _HScrollBar = new HScrollBar();
-        private VScrollBar _VScrollBar = new VScrollBar();
-
-        internal ImageDesignPanel ImageDesignPanel
-        {
-            get { return _ImageDesignPanel; }
-        }
+        private readonly DrawingBoard _DrawingBoard;
+        private readonly HScrollBar _HScrollBar = new HScrollBar();
+        private readonly VScrollBar _VScrollBar = new VScrollBar();
 
         #endregion
 
         #region 构造函数
 
-        public DesignBench()
+        public PictureFrame()
         {
             Rectangles = new RectangleList();
             InitializeComponent();
 
             _HScrollBar.Dock = DockStyle.Bottom;
             _HScrollBar.Enabled = false;
-            _HScrollBar.Scroll += _HScrollBar_Scroll;
+            _HScrollBar.ValueChanged += _HScrollBar_ValueChanged;
             _VScrollBar.Dock = DockStyle.Right;
             _VScrollBar.Enabled = false;
-            _VScrollBar.Scroll += _VScrollBar_Scroll;
-            _ImageDesignPanel = new ImageDesignPanel {Visible = false};
-            _ImageDesignPanel.SizeChanged += _ImageDesignPanel_SizeChanged;
-            _ImageDesignPanel.PanelDragging += _ImageDesignPanel_PanelDragging;
+            _VScrollBar.ValueChanged += _VScrollBar_ValueChanged;
+            _DrawingBoard = new DrawingBoard {Visible = false};
+            _DrawingBoard.BoardDragging += _DrawingBoard_PanelDragging;
+            _DrawingBoard.Zoomed += _DrawingBoard_PanelZoomed;
 
             Controls.Add(_VScrollBar);
             Controls.Add(_HScrollBar);
-            Controls.Add(_ImageDesignPanel);
+            Controls.Add(_DrawingBoard);
         }
 
-        private void _ImageDesignPanel_PanelDragging(object sender, PanelDraggingEventArgs e)
+        void _DrawingBoard_PanelZoomed(object sender, BoardZoomEventArgs e)
         {
-            var screenPoint = _ImageDesignPanel.PointToScreen(e.MousePoint);
-            var ownPoint = PointToClient(screenPoint);
-            // TODO: 2014年8月15日，拖拽图片，下方的SizeChanged好象不对，放大后应该用一个事件来触发，以控制滚动条的位置
+            throw new NotImplementedException();
         }
 
-        private void _VScrollBar_Scroll(object sender, ScrollEventArgs e)
+        private void _DrawingBoard_PanelDragging(object sender, BoardDraggingEventArgs e)
         {
-            _ImageDesignPanel.Top = -e.NewValue;
+            if (_DrawingBoard.Width <= Width && _DrawingBoard.Height <= Height)
+                return;
+            //根据拖动的起点和当前点之间的距离，触发滚动条的Value发生变化，再间接触发画板的移动
+            var current = PointToClient(_DrawingBoard.PointToScreen(e.CurrentPoint));
+            var start = PointToClient(_DrawingBoard.PointToScreen(e.StartPoint));
+
+            var x = (current.X - start.X)/3;
+            var y = (current.Y - start.Y)/3;
+
+            var offsetX = _HScrollBar.Value - x;
+            if (offsetX > _HScrollBar.Minimum && offsetX < _HScrollBar.Maximum)
+                _HScrollBar.Value = offsetX;
+            var offsetY = _VScrollBar.Value - y;
+            if (offsetY > _VScrollBar.Minimum && offsetY < _VScrollBar.Maximum)
+                _VScrollBar.Value = _VScrollBar.Value - y;
         }
 
-        private void _HScrollBar_Scroll(object sender, ScrollEventArgs e)
+        private void _VScrollBar_ValueChanged(object sender, EventArgs e)
         {
-            _ImageDesignPanel.Left = -e.NewValue;
+            _DrawingBoard.Top = -_VScrollBar.Value;
         }
 
-        private void _ImageDesignPanel_SizeChanged(object sender, EventArgs e)
+        private void _HScrollBar_ValueChanged(object sender, EventArgs e)
         {
-            if (_ImageDesignPanel.Width > Width)
+            _DrawingBoard.Left = -_HScrollBar.Value;
+        }
+
+        private void _DrawingBoard_SizeChanged(object sender, EventArgs e)
+        {
+            // TODO: SizeChanged好象不对，放大后应该用一个事件来触发，以控制滚动条的位置
+            if (_DrawingBoard.Width > Width)
             {
                 _HScrollBar.Enabled = true;
-                _HScrollBar.Maximum = _ImageDesignPanel.Width - Width;
+                _HScrollBar.Maximum = _DrawingBoard.Width - Width;
             }
-            if (_ImageDesignPanel.Height > Height)
+            if (_DrawingBoard.Height > Height)
             {
                 _VScrollBar.Enabled = true;
-                _VScrollBar.Maximum = _ImageDesignPanel.Height - Height;
+                _VScrollBar.Maximum = _DrawingBoard.Height - Height;
             }
         }
 
@@ -102,9 +114,9 @@ namespace NKnife.Draws.Designs
 
         #endregion
 
-        public void SetImagePanelDesignMode(ImagePanelDesignMode mode)
+        public void SetDrawingBoardDesignMode(DrawingBoardDesignMode mode)
         {
-            _ImageDesignPanel.ImagePanelDesignMode = mode;
+            _DrawingBoard.ImagePanelDesignMode = mode;
         }
 
         public void SetSelectedImage(Image image)
@@ -113,13 +125,13 @@ namespace NKnife.Draws.Designs
             {
                 throw new ArgumentNullException("指定的设计图片image不应为Null");
             }
-            _ImageDesignPanel.Image = image;
+            _DrawingBoard.Image = image;
 
-            _ImageDesignPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-            _ImageDesignPanel.SizeChanged += delegate { SetImageDesignPanelLocation(); };
+            _DrawingBoard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+            _DrawingBoard.SizeChanged += delegate { SetImageDesignPanelLocation(); };
 
             SetImageDesignPanelLocation();
-            _ImageDesignPanel.Visible = true;
+            _DrawingBoard.Visible = true;
         }
 
         public void RespondKeyEvent(Keys key)
@@ -128,9 +140,9 @@ namespace NKnife.Draws.Designs
             {
                 case Keys.Delete:
                 {
-                    if (_ImageDesignPanel.ImagePanelDesignMode == ImagePanelDesignMode.Selecting)
+                    if (_DrawingBoard.ImagePanelDesignMode == DrawingBoardDesignMode.Selecting)
                     {
-                        _ImageDesignPanel.RemoveSelectedRectangle();
+                        _DrawingBoard.RemoveSelectedRectangle();
                     }
                     break;
                 }
@@ -139,9 +151,9 @@ namespace NKnife.Draws.Designs
 
         private void SetImageDesignPanelLocation()
         {
-            int x = (Width - 20 - _ImageDesignPanel.Width)/2;
-            int y = (Height - 20 - _ImageDesignPanel.Height)/2;
-            _ImageDesignPanel.Location = new Point(x, y);
+            int x = (Width - 20 - _DrawingBoard.Width)/2;
+            int y = (Height - 20 - _DrawingBoard.Height)/2;
+            _DrawingBoard.Location = new Point(x, y);
         }
 
         #endregion
@@ -158,8 +170,8 @@ namespace NKnife.Draws.Designs
         public event EventHandler<ImageLoadEventArgs> ImageLoaded;
         public event EventHandler<RectangleSelectingEventArgs> Selecting;
         public event EventHandler<RectangleSelectedEventArgs> Selected;
-        public event EventHandler<DragParamsEventArgs> DesignDragging;
-        public event EventHandler<DragParamsEventArgs> DesignDragged;
+        public event EventHandler<BoardDesignDragParamsEventArgs> DesignDragging;
+        public event EventHandler<BoardDesignDragParamsEventArgs> DesignDragged;
 
         public event EventHandler<MouseEventArgs> BenchDoubleClick;
 
@@ -236,16 +248,16 @@ namespace NKnife.Draws.Designs
                 handler(this, e);
         }
 
-        internal void OnDesignDragging(DragParamsEventArgs e)
+        internal void OnDesignDragging(BoardDesignDragParamsEventArgs e)
         {
-            EventHandler<DragParamsEventArgs> handler = DesignDragging;
+            EventHandler<BoardDesignDragParamsEventArgs> handler = DesignDragging;
             if (handler != null)
                 handler(this, e);
         }
 
-        internal void OnDesignDragged(DragParamsEventArgs e)
+        internal void OnDesignDragged(BoardDesignDragParamsEventArgs e)
         {
-            EventHandler<DragParamsEventArgs> handler = DesignDragged;
+            EventHandler<BoardDesignDragParamsEventArgs> handler = DesignDragged;
             if (handler != null)
                 handler(this, e);
         }

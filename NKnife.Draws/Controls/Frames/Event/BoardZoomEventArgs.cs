@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 
-namespace NKnife.Draws.Designs.Event
+namespace NKnife.Draws.Controls.Frames.Event
 {
-    public class PanelZoomEventArgs : EventArgs
+    public class BoardZoomEventArgs : EventArgs
     {
         public SizeF SourceSize { get; private set; }
         public PointF MouseClickedLocation { get; private set; }
         public double SourceMultiple { get; private set; }
         public double CurrentMultiple { get; private set; }
 
-        public PanelZoomEventArgs(SizeF sourceSize, PointF mouseClickedLocation, double srcMultiple, double currMultiple)
+        public BoardZoomEventArgs(SizeF sourceSize, PointF mouseClickedLocation, double srcMultiple, double currMultiple)
         {
             SourceSize = sourceSize;
             MouseClickedLocation = mouseClickedLocation;

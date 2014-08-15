@@ -1,8 +1,6 @@
-﻿using NKnife.Draws.Controls;
-
-namespace NKnife.Draws.Designs
+﻿namespace NKnife.Draws.Controls.Frames
 {
-    partial class DesignBench
+    partial class PictureFrame
     {
         /// <summary> 
         /// 必需的设计器变量。

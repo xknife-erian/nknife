@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using NKnife.Events;
 
-namespace NKnife.Draws.Designs.Event
+namespace NKnife.Draws.Controls.Frames.Event
 {
     public class ImageLoadEventArgs : ChangedEventArgs<Image>
     {

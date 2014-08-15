@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using NKnife.Draws.Common;
-using NKnife.Draws.Designs.Base;
+using NKnife.Draws.Controls.Frames.Base;
 
-namespace NKnife.Draws.Designs.Event
+namespace NKnife.Draws.Controls.Frames.Event
 {
     public class RectangleClickEventArgs : EventArgs
     {
-        public RectangleClickEventArgs(MouseEventArgs e, ImagePanelDesignMode mode, bool inRect = false)
+        public RectangleClickEventArgs(MouseEventArgs e, DrawingBoardDesignMode mode, bool inRect = false)
             : this(e, mode, inRect, RectangleF.Empty)
         {
         }
 
-        public RectangleClickEventArgs(MouseEventArgs e, ImagePanelDesignMode mode, bool inRect, RectangleF rect)
+        public RectangleClickEventArgs(MouseEventArgs e, DrawingBoardDesignMode mode, bool inRect, RectangleF rect)
         {
             Mode = mode;
             Button = e.Button;
@@ -26,7 +25,7 @@ namespace NKnife.Draws.Designs.Event
 
         public RectangleF Rectange { get; private set; }
 
-        public ImagePanelDesignMode Mode { get; private set; }
+        public DrawingBoardDesignMode Mode { get; private set; }
 
         /// <summary>
         ///     Gets which mouse button was pressed.
