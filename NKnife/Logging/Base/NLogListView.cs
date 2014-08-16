@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using NKnife.ShareResources;
@@ -82,50 +84,59 @@ namespace NKnife.Logging.Base
         /// <param name="logEvent">The log event.</param>
         private void AddLogMethod(LogEventInfo logEvent)
         {
-            if (Items.Count > MaxRowCount)
+            try
             {
-                for (int i = Items.Count - 1; i > MaxRowCount*0.9; i--)
-                    Items.RemoveAt(i);
-            }
-            string logDatetime = logEvent.TimeStamp.ToString("HH:mm:ss fff");
-            string logLoggerName = logEvent.LoggerName.LastIndexOf('.') > 0 ? logEvent.LoggerName.Substring(logEvent.LoggerName.LastIndexOf('.') + 1) : logEvent.LoggerName;
-            string logMsg = logEvent.FormattedMessage;
-            if (logEvent.HasStackTrace)
-                logMsg += logEvent.StackTrace.ToString();
+                if (Items.Count > MaxRowCount)
+                {
+                    for (int i = Items.Count - 1; i > MaxRowCount*0.9; i--)
+                        Items.RemoveAt(i);
+                }
+                string logDatetime = logEvent.TimeStamp.ToString("HH:mm:ss fff");
+                string logLoggerName = logEvent.LoggerName.LastIndexOf('.') > 0
+                    ? logEvent.LoggerName.Substring(logEvent.LoggerName.LastIndexOf('.') + 1)
+                    : logEvent.LoggerName;
+                string logMsg = logEvent.FormattedMessage;
+                if (logEvent.HasStackTrace)
+                    logMsg += logEvent.StackTrace.ToString();
 
-            var viewItem = new ListViewItem();
-            viewItem.Tag = logEvent;
-            //TODO:日志分组导致出现一些无法理解的异常，暂时未处理
+                var viewItem = new ListViewItem();
+                viewItem.Tag = logEvent;
+                //TODO:日志分组导致出现一些无法理解的异常，暂时未处理
 //            ListViewGroup group;
 //            _LevelGroups.TryGetValue(logEvent.Level.Name, out group);
 //            if (group != null)
 //                viewItem.Group = group;
-            viewItem.Text = logDatetime;
-            viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, logMsg));
-            viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, logLoggerName));
+                viewItem.Text = logDatetime;
+                viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, logMsg));
+                viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, logLoggerName));
 
-            switch (logEvent.Level.Name)
-            {
-                case "Trace":
-                    viewItem.ForeColor = Color.FromArgb(128, 64, 64);
-                    break;
-                case "Debug":
-                    viewItem.ForeColor = Color.FromArgb(64, 0, 0);
-                    break;
-                case "Info":
-                    break;
-                case "Warn":
-                    viewItem.BackColor = Color.Yellow;
-                    break;
-                case "Error":
-                    viewItem.BackColor = Color.Orange;
-                    break;
-                case "Fatal":
-                    viewItem.ForeColor = Color.Yellow;
-                    viewItem.BackColor = Color.DarkRed;
-                    break;
+                switch (logEvent.Level.Name)
+                {
+                    case "Trace":
+                        viewItem.ForeColor = Color.FromArgb(128, 64, 64);
+                        break;
+                    case "Debug":
+                        viewItem.ForeColor = Color.FromArgb(64, 0, 0);
+                        break;
+                    case "Info":
+                        break;
+                    case "Warn":
+                        viewItem.BackColor = Color.Yellow;
+                        break;
+                    case "Error":
+                        viewItem.BackColor = Color.Orange;
+                        break;
+                    case "Fatal":
+                        viewItem.ForeColor = Color.Yellow;
+                        viewItem.BackColor = Color.DarkRed;
+                        break;
+                }
+                Items.Insert(0, viewItem);
             }
-            Items.Insert(0, viewItem);
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         /// <summary>双击一条日志弹出详细窗口
