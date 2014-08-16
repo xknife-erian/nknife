@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using NKnife.Compress;
 using NKnife.Utility;
 using NLog;
 using SocketKnife.Interfaces;
@@ -28,7 +29,7 @@ namespace SocketKnife.Protocol.Implementation
             if (isCompress)
             {
                 byte[] src = Encoding.UTF8.GetBytes(replay);
-                reBytes = UtilityCompression.Compress(src);
+                reBytes = CompressHelper.Compress(src);
                 _Logger.Trace("发送字符串压缩:原始:{0},压缩后:{1}", src.Length, reBytes.Length);
             }
             else

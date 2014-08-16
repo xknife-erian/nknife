@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NKnife.Compress;
 using NKnife.Utility;
 using NLog;
 using SocketKnife.Interfaces;
@@ -98,9 +99,9 @@ namespace SocketKnife.Protocol.Implementation
 
         protected virtual string TidyString(byte[] protocol)
         {
-            if (UtilityCompression.IsCompressed(protocol)) //采用Gzip进行了压缩
+            if (CompressHelper.IsCompressed(protocol)) //采用Gzip进行了压缩
             {
-                byte[] decompress = UtilityCompression.Decompress(protocol);
+                byte[] decompress = CompressHelper.Decompress(protocol);
                 return UtilityString.TidyUTF8(decompress);
             }
             return UtilityString.TidyUTF8(protocol);

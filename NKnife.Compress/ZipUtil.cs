@@ -10,9 +10,9 @@ namespace NKnife.Compress
         public static void ZipFiles(string inputFolderPath, string outputPathAndFile, string password)
         {
             ArrayList ar = GenerateFileList(inputFolderPath); // generate file list
-            int TrimLength = (Directory.GetParent(inputFolderPath)).ToString().Length;
+            int trimLength = (Directory.GetParent(inputFolderPath)).ToString().Length;
             // find number of chars to remove     // from orginal file path
-            TrimLength += 1; //remove '\'
+            trimLength += 1; //remove '\'
             FileStream ostream;
             byte[] obuffer;
             string outPath = outputPathAndFile;
@@ -23,7 +23,7 @@ namespace NKnife.Compress
             ZipEntry oZipEntry;
             foreach (string Fil in ar) // for each file, generate a zipentry
             {
-                oZipEntry = new ZipEntry(Fil.Remove(0, TrimLength));
+                oZipEntry = new ZipEntry(Fil.Remove(0, trimLength));
                 oZipEntry.Size = new FileInfo(Fil).Length;
                 oZipEntry.IsUnicodeText = true;
                 oZipStream.PutNextEntry(oZipEntry);

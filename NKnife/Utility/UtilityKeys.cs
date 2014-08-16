@@ -20,11 +20,10 @@ namespace NKnife.Utility
                 return System.Windows.Forms.Keys.None;
             }
 
-            System.Windows.Forms.Keys key = System.Windows.Forms.Keys.None;
+            var key = System.Windows.Forms.Keys.None;
             string[] strs = shortcutChar.Split('+');
             foreach (string str in strs)
             {
-                string firstchar;
                 string output;
 
                 //用Switch处理一部份可能会简写的键
@@ -40,7 +39,7 @@ namespace NKnife.Utility
                         output = "Delete";
                         break;
                     default:
-                        firstchar = str.Substring(0, 1).ToUpperInvariant();
+                        string firstchar = str.Substring(0, 1).ToUpperInvariant();
                         output = firstchar + str.ToLowerInvariant().Substring(1);
                         break;
                 }

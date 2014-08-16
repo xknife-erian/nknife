@@ -542,7 +542,6 @@
     <Compile Include="Utility\UtilityByte.cs" />
     <Compile Include="Utility\UtilityClipboard.cs" />
     <Compile Include="Utility\UtilityCollection.cs" />
-    <Compile Include="Utility\UtilityCompression.cs" />
     <Compile Include="Utility\UtilityDateTime.cs" />
     <Compile Include="Utility\UtilityEnums.cs" />
     <Compile Include="Utility\UtilityEquals.cs" />

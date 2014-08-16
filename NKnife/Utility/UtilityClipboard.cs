@@ -63,26 +63,25 @@ namespace NKnife.Utility
 
         // Code duplication: TextAreaClipboardHandler.cs also has SafeSetClipboard
         [ThreadStatic]
-        static int SafeSetClipboardDataVersion;
+        static int _safeSetClipboardDataVersion;
 
         static void SafeSetClipboard(object dataObject)
         {
             // Work around ExternalException bug. (SD2-426)
             // Best reproducable inside Virtual PC.
-            int version = unchecked(++SafeSetClipboardDataVersion);
+            int version = unchecked(++_safeSetClipboardDataVersion);
             try
             {
                 Clipboard.SetDataObject(dataObject, true);
             }
             catch (ExternalException)
             {
-                Timer timer = new Timer();
-                timer.Interval = 100;
+                var timer = new Timer {Interval = 100};
                 timer.Tick += delegate
                 {
                     timer.Stop();
                     timer.Dispose();
-                    if (SafeSetClipboardDataVersion == version)
+                    if (_safeSetClipboardDataVersion == version)
                     {
                         try
                         {

@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="AblyZip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RAR.cs" />
+    <Compile Include="CompressHelper.cs" />
     <Compile Include="ZipUtil.cs" />
   </ItemGroup>
   <ItemGroup>

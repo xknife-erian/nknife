@@ -9,6 +9,9 @@ using System.Web;
 
 namespace NKnife.Draws
 {
+    /// <summary>
+    ///     一些关于Image操作的帮助方法
+    /// </summary>
     public static class Drawing
     {
         /// <summary>
@@ -20,7 +23,7 @@ namespace NKnife.Draws
         public static Region BitmapToRegion(Bitmap bitmap, Color transparencyColor)
         {
             if (bitmap == null)
-                throw new ArgumentNullException("Bitmap", "Bitmap cannot be null!");
+                throw new ArgumentNullException("bitmap", "Bitmap cannot be null!");
 
             int height = bitmap.Height;
             int width = bitmap.Width;
@@ -50,7 +53,8 @@ namespace NKnife.Draws
         public static bool Invert(Bitmap bitmap)
         {
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
-            BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmpData.Stride;
             IntPtr scan = bmpData.Scan0;
@@ -100,7 +104,8 @@ namespace NKnife.Draws
                 source = pimage;
             }
 
-            BitmapData sourceData = source.LockBits(new Rectangle(0, 0, source.Width, source.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData sourceData = source.LockBits(new Rectangle(0, 0, source.Width, source.Height),
+                ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
             int imageSize = sourceData.Stride*sourceData.Height;
             var sourceBuffer = new byte[imageSize];
@@ -112,7 +117,8 @@ namespace NKnife.Draws
             var destination = new Bitmap(source.Width, source.Height, PixelFormat.Format1bppIndexed);
 
             // Lock destination bitmap in memory
-            BitmapData destinationData = destination.LockBits(new Rectangle(0, 0, destination.Width, destination.Height), ImageLockMode.WriteOnly,
+            BitmapData destinationData = destination.LockBits(
+                new Rectangle(0, 0, destination.Width, destination.Height), ImageLockMode.WriteOnly,
                 PixelFormat.Format1bppIndexed);
 
             // Create destination buffer
@@ -135,7 +141,8 @@ namespace NKnife.Draws
                 for (int x = 0; x < width; x++)
                 {
                     // Compute pixel brightness (i.e. total of Red, Green, and Blue values)
-                    int pixelTotal = sourceBuffer[sourceIndex + 1] + sourceBuffer[sourceIndex + 2] + sourceBuffer[sourceIndex + 3];
+                    int pixelTotal = sourceBuffer[sourceIndex + 1] + sourceBuffer[sourceIndex + 2] +
+                                     sourceBuffer[sourceIndex + 3];
                     if (pixelTotal > threshold)
                     {
                         destinationValue += (byte) pixelValue;
@@ -178,7 +185,8 @@ namespace NKnife.Draws
         public static bool GrayScale(Bitmap bmp)
         {
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
-            BitmapData bmData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite,
+                PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
             IntPtr ptr = bmData.Scan0;
@@ -217,7 +225,8 @@ namespace NKnife.Draws
                 return false;
 
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite,
+                PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
             IntPtr scan = bmData.Scan0;
@@ -271,7 +280,8 @@ namespace NKnife.Draws
             int red, green, blue;
 
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite,
+                PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
             IntPtr Scan0 = bmData.Scan0;
@@ -346,7 +356,8 @@ namespace NKnife.Draws
             }
 
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite,
+                PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
             IntPtr Scan0 = bmData.Scan0;
@@ -383,7 +394,8 @@ namespace NKnife.Draws
             if (blue < -255 || blue > 255) return false;
 
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite,
+                PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
             IntPtr Scan0 = bmData.Scan0;
@@ -446,7 +458,7 @@ namespace NKnife.Draws
         /// <param name="bmp">源bitmap对象</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
         /// <param name="quality">压缩质量，越大照片越清晰，推荐80</param>
-        public static void CompressAsJPG(Bitmap bmp, string saveFilePath, int quality)
+        public static void CompressAsJpg(Bitmap bmp, string saveFilePath, int quality)
         {
             var p = new EncoderParameter(Encoder.Quality, quality);
             ;
@@ -462,10 +474,10 @@ namespace NKnife.Draws
         /// <param name="inputStream">源Stream对象</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
         /// <param name="quality">压缩质量，越大照片越清晰，推荐80</param>
-        public static void CompressAsJPG(Stream inputStream, string saveFilePath, int quality)
+        public static void CompressAsJpg(Stream inputStream, string saveFilePath, int quality)
         {
             Bitmap bmp = GetBitmapFromStream(inputStream);
-            CompressAsJPG(bmp, saveFilePath, quality);
+            CompressAsJpg(bmp, saveFilePath, quality);
         }
 
         /// <summary>
@@ -477,14 +489,14 @@ namespace NKnife.Draws
         /// <param name="y">开始坐标y，单位：像素</param>
         /// <param name="width">宽度：像素</param>
         /// <param name="height">高度：像素</param>
-        public static void CutAsJPG(Bitmap bmp, string saveFilePath, int x, int y, int width, int height)
+        public static void CutAsJpg(Bitmap bmp, string saveFilePath, int x, int y, int width, int height)
         {
             int bmpW = bmp.Width;
             int bmpH = bmp.Height;
 
             if (x >= bmpW || y >= bmpH)
             {
-                CompressAsJPG(bmp, saveFilePath, 80);
+                CompressAsJpg(bmp, saveFilePath, 80);
                 return;
             }
 
@@ -503,7 +515,7 @@ namespace NKnife.Draws
             g.DrawImage(bmp, new Rectangle(0, 0, width, height), new Rectangle(x, y, width, height), GraphicsUnit.Pixel);
             g.Dispose();
             bmp.Dispose();
-            CompressAsJPG(bmpOut, saveFilePath, 80);
+            CompressAsJpg(bmpOut, saveFilePath, 80);
         }
 
         /// <summary>
@@ -515,19 +527,17 @@ namespace NKnife.Draws
         /// <param name="y">开始坐标y，单位：像素</param>
         /// <param name="width">宽度：像素</param>
         /// <param name="height">高度：像素</param>
-        public static void CutAsJPG(Stream inputStream, string saveFilePath, int x, int y, int width, int height)
+        public static void CutAsJpg(Stream inputStream, string saveFilePath, int x, int y, int width, int height)
         {
             Bitmap bmp = GetBitmapFromStream(inputStream);
-            CutAsJPG(bmp, saveFilePath, x, y, width, height);
+            CutAsJpg(bmp, saveFilePath, x, y, width, height);
         }
 
         /// <summary>
         ///     获取图片中的各帧
         /// </summary>
-        /// <param name="pPath">
-        ///     <param name="pPath">图片路径</param>
-        ///     <param name="pSavePath">
-        ///         <param name="pSavePath">保存路径</param>
+        /// <param name="pPath">图片路径</param>
+        /// <param name="pSavedPath">保存路径</param>
         public static void GetGifFrames(string pPath, string pSavedPath)
         {
             Image gif = Image.FromFile(pPath);
@@ -548,23 +558,25 @@ namespace NKnife.Draws
         ///     获取图片指定部分
         /// </summary>
         /// <param name="pPath">图片路径</param>
-        /// <param name="pSavePath">保存路径</param>
+        /// <param name="pSavedPath"></param>
         /// <param name="pPartStartPointX">目标图片开始绘制处的坐标X值(通常为)</param>
         /// <param name="pPartStartPointY">目标图片开始绘制处的坐标Y值(通常为)</param>
         /// <param name="pPartWidth">目标图片的宽度</param>
         /// <param name="pPartHeight">目标图片的高度</param>
         /// <param name="pOrigStartPointX">原始图片开始截取处的坐标X值</param>
         /// <param name="pOrigStartPointY">原始图片开始截取处的坐标Y值</param>
-        /// <param name="pFormat">保存格式，通常可以是jpeg</param>
-        public static void GetPart(string pPath, string pSavedPath, int pPartStartPointX, int pPartStartPointY, int pPartWidth, int pPartHeight,
+        public static void GetPart(string pPath, string pSavedPath, int pPartStartPointX, int pPartStartPointY,
+            int pPartWidth, int pPartHeight,
             int pOrigStartPointX, int pOrigStartPointY)
         {
             Image originalImg = Image.FromFile(pPath);
 
             var partImg = new Bitmap(pPartWidth, pPartHeight);
             Graphics graphics = Graphics.FromImage(partImg);
-            var destRect = new Rectangle(new Point(pPartStartPointX, pPartStartPointY), new Size(pPartWidth, pPartHeight)); //目标位置  
-            var origRect = new Rectangle(new Point(pOrigStartPointX, pOrigStartPointY), new Size(pPartWidth, pPartHeight)); //原图位置（默认从原图中截取的图片大小等于目标图片的大小）  
+            var destRect = new Rectangle(new Point(pPartStartPointX, pPartStartPointY),
+                new Size(pPartWidth, pPartHeight)); //目标位置  
+            var origRect = new Rectangle(new Point(pOrigStartPointX, pOrigStartPointY),
+                new Size(pPartWidth, pPartHeight)); //原图位置（默认从原图中截取的图片大小等于目标图片的大小）  
 
             graphics.DrawImage(originalImg, destRect, origRect, GraphicsUnit.Pixel);
             partImg.Save(pSavedPath + "\\part.jpg", ImageFormat.Jpeg);
@@ -578,12 +590,111 @@ namespace NKnife.Draws
         /// <returns></returns>
         public static bool IsWebImage(string contentType)
         {
-            if (contentType == "image/pjpeg" || contentType == "image/jpeg" || contentType == "image/gif" || contentType == "image/bmp" ||
+            if (contentType == "image/pjpeg" || contentType == "image/jpeg" || contentType == "image/gif" ||
+                contentType == "image/bmp" ||
                 contentType == "image/png")
             {
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        ///     图片描边
+        /// </summary>
+        public static void MiaoBian1(Image image)
+        {
+            var Bmp = new Bitmap(image);
+            var GP = new GraphicsPath();
+            Color C = System.Drawing.Color.FromArgb(0, 0, 0, 0);
+
+            for (int i = 0; i < Bmp.Width; i++)
+                for (int j = 0; j < Bmp.Height; j++)
+                    // 这点不透明而且左右上下四点至少有一点是透明的，那这点就是边缘
+                    if (Bmp.GetPixel(i, j) != C
+                        && (i > 0 && Bmp.GetPixel(i - 1, j) == C
+                            || i < Bmp.Width - 1 && Bmp.GetPixel(i + 1, j) == C
+                            || j > 0 && Bmp.GetPixel(i, j - 1) == C
+                            || j < Bmp.Height - 1 && Bmp.GetPixel(i, j + 1) == C))
+                        GP.AddRectangle(new Rectangle(new Point(i, j), new Size(1, 1)));
+
+            using (Graphics G = Graphics.FromImage(Bmp))
+                G.DrawPath(Pens.Black, GP);
+
+            image = Bmp;
+        }
+
+        /// <summary>
+        ///     描边函数，效果自然
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="image"></param>
+        /// <param name="size"></param>
+        /// <param name="font"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="str"></param>
+        public static void MiaoBian(Graphics g, Image image, Size size, Font font, Color foreColor, string str)
+        {
+            g.FillRectangle(Brushes.LimeGreen, 0, 0, image.Width, image.Height);
+            try
+            {
+                int COUNT = 10; //每个字阴影绘制次数
+                var path = new GraphicsPath();
+                g.SmoothingMode = SmoothingMode.HighQuality; //高质量绘图
+                // 各种参数
+                var brush = new SolidBrush(foreColor);
+                FontFamily family = font.FontFamily;
+                var fontStyle = (int) font.Style;
+                var emSize = (int) font.Size;
+                var origin = new PointF(-emSize, 3); //(0, -emSize);//为了第一个字符在Y轴向上紧靠边上
+                StringFormat format = StringFormat.GenericDefault; //默认字符串部分格式
+                // 重点：初始化Pen组,描边渐变.
+                var penArray = new Pen[COUNT];
+                for (int i = 0; i < COUNT; i++)
+                {
+                    penArray[i] = new Pen(System.Drawing.Color.FromArgb(5*i, 5*i, 5*i), (float) (i*0.5));
+                }
+                // 分割字符串，每个绘制一次
+                var singleText = new string[str.Length];
+                for (int i = 0; i < str.Length; i++)
+                {
+                    singleText[i] = str.Substring(i, 1);
+                }
+
+                // 绘制多个字符
+                foreach (string single in singleText)
+                {
+                    //让origin在Y轴上每次偏移一个字体大小呵
+                    origin.X += emSize;
+                    //绘制多次边框
+                    for (int i = 0; i < COUNT; i++)
+                    {
+                        path.AddString(single,
+                            family,
+                            fontStyle,
+                            emSize,
+                            origin,
+                            format);
+                        g.DrawPath(penArray[i], path);
+                    }
+                    //填充主色调,其在后是覆盖为了描边时描到的内侧区域
+                    path.AddString(single,
+                        family,
+                        fontStyle,
+                        emSize,
+                        origin,
+                        format
+                        );
+                    g.FillPath(brush, path);
+                }
+                //g.Save();
+                g.DrawImage(image, new Point(0, 0));
+                g.Flush();
+                g.Dispose();
+            }
+            catch
+            {
+            }
         }
 
         #region 正方型裁剪并缩放
@@ -677,7 +788,8 @@ namespace NKnife.Draws
                 //用指定背景色清空画布
                 resultG.Clear(System.Drawing.Color.White);
                 //绘制缩略图
-                resultG.DrawImage(initImage, new Rectangle(0, 0, side, side), new Rectangle(0, 0, initWidth, initHeight), GraphicsUnit.Pixel);
+                resultG.DrawImage(initImage, new Rectangle(0, 0, side, side), new Rectangle(0, 0, initWidth, initHeight),
+                    GraphicsUnit.Pixel);
 
                 //关键质量控制
                 //获取系统编码类型数组,包含了jpeg,bmp,png,gif,tiff
@@ -685,7 +797,8 @@ namespace NKnife.Draws
                 ImageCodecInfo ici = null;
                 foreach (ImageCodecInfo i in icis)
                 {
-                    if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmp" || i.MimeType == "image/png" || i.MimeType == "image/gif")
+                    if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmp" || i.MimeType == "image/png" ||
+                        i.MimeType == "image/gif")
                     {
                         ici = i;
                     }
@@ -713,7 +826,6 @@ namespace NKnife.Draws
         ///     以图片中心为轴心，截取正方型，然后等比缩放
         ///     用于头像处理
         /// </summary>
-        /// <remarks>吴剑 2010-11-23</remarks>
         /// <param name="fromFile">原图HttpPostedFile对象</param>
         /// <param name="fileSaveUrl">缩略图存放地址</param>
         /// <param name="side">指定的边长（正方型）</param>
@@ -797,7 +909,8 @@ namespace NKnife.Draws
                 //用指定背景色清空画布
                 resultG.Clear(System.Drawing.Color.White);
                 //绘制缩略图
-                resultG.DrawImage(initImage, new Rectangle(0, 0, side, side), new Rectangle(0, 0, initWidth, initHeight), GraphicsUnit.Pixel);
+                resultG.DrawImage(initImage, new Rectangle(0, 0, side, side), new Rectangle(0, 0, initWidth, initHeight),
+                    GraphicsUnit.Pixel);
 
                 //关键质量控制
                 //获取系统编码类型数组,包含了jpeg,bmp,png,gif,tiff
@@ -805,7 +918,8 @@ namespace NKnife.Draws
                 ImageCodecInfo ici = null;
                 foreach (ImageCodecInfo i in icis)
                 {
-                    if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmp" || i.MimeType == "image/png" || i.MimeType == "image/gif")
+                    if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmp" || i.MimeType == "image/png" ||
+                        i.MimeType == "image/gif")
                     {
                         ici = i;
                     }
@@ -842,7 +956,8 @@ namespace NKnife.Draws
         /// <param name="maxWidth">最大宽(单位:px)</param>
         /// <param name="maxHeight">最大高(单位:px)</param>
         /// <param name="quality">质量（范围0-100）</param>
-        public static void CutForCustom(HttpPostedFile postedFile, string fileSaveUrl, int maxWidth, int maxHeight, int quality)
+        public static void CutForCustom(HttpPostedFile postedFile, string fileSaveUrl, int maxWidth, int maxHeight,
+            int quality)
         {
             //从文件获取原始图片，并使用流中嵌入的颜色管理信息
             Image initImage = Image.FromStream(postedFile.InputStream, true);
@@ -868,7 +983,8 @@ namespace NKnife.Draws
                     templateG.InterpolationMode = InterpolationMode.High;
                     templateG.SmoothingMode = SmoothingMode.HighQuality;
                     templateG.Clear(System.Drawing.Color.White);
-                    templateG.DrawImage(initImage, new Rectangle(0, 0, maxWidth, maxHeight), new Rectangle(0, 0, initImage.Width, initImage.Height),
+                    templateG.DrawImage(initImage, new Rectangle(0, 0, maxWidth, maxHeight),
+                        new Rectangle(0, 0, initImage.Width, initImage.Height),
                         GraphicsUnit.Pixel);
                     templateImage.Save(fileSaveUrl, ImageFormat.Jpeg);
                 }
@@ -932,7 +1048,8 @@ namespace NKnife.Draws
                     templateG.InterpolationMode = InterpolationMode.High;
                     templateG.SmoothingMode = SmoothingMode.HighQuality;
                     templateG.Clear(System.Drawing.Color.White);
-                    templateG.DrawImage(pickedImage, new Rectangle(0, 0, maxWidth, maxHeight), new Rectangle(0, 0, pickedImage.Width, pickedImage.Height),
+                    templateG.DrawImage(pickedImage, new Rectangle(0, 0, maxWidth, maxHeight),
+                        new Rectangle(0, 0, pickedImage.Width, pickedImage.Height),
                         GraphicsUnit.Pixel);
 
                     // 关键质量控制
@@ -941,7 +1058,8 @@ namespace NKnife.Draws
                     ImageCodecInfo ici = null;
                     foreach (ImageCodecInfo i in icis)
                     {
-                        if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmp" || i.MimeType == "image/png" || i.MimeType == "image/gif")
+                        if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmp" || i.MimeType == "image/png" ||
+                            i.MimeType == "image/gif")
                         {
                             ici = i;
                         }
@@ -980,7 +1098,8 @@ namespace NKnife.Draws
         /// <param name="targetHeight">指定的最大高度</param>
         /// <param name="watermarkText">水印文字(为""表示不使用水印)</param>
         /// <param name="watermarkImage">水印图片路径(为""表示不使用水印)</param>
-        public static void ZoomAuto(HttpPostedFile postedFile, string savePath, Double targetWidth, Double targetHeight, string watermarkText,
+        public static void ZoomAuto(HttpPostedFile postedFile, string savePath, Double targetWidth, Double targetHeight,
+            string watermarkText,
             string watermarkImage)
         {
             //创建目录
@@ -1009,7 +1128,7 @@ namespace NKnife.Draws
                 //透明图片水印
                 if (watermarkImage != "")
                 {
-                    if (System.IO.File.Exists(watermarkImage))
+                    if (File.Exists(watermarkImage))
                     {
                         //获取水印图片
                         using (Image wrImage = Image.FromFile(watermarkImage))
@@ -1037,9 +1156,11 @@ namespace NKnife.Draws
                                 };
 
                                 var wmColorMatrix = new ColorMatrix(colorMatrixElements);
-                                imgAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                                imgAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default,
+                                    ColorAdjustType.Bitmap);
                                 gWater.DrawImage(wrImage,
-                                    new Rectangle(initImage.Width - wrImage.Width, initImage.Height - wrImage.Height, wrImage.Width, wrImage.Height), 0, 0,
+                                    new Rectangle(initImage.Width - wrImage.Width, initImage.Height - wrImage.Height,
+                                        wrImage.Width, wrImage.Height), 0, 0,
                                     wrImage.Width, wrImage.Height, GraphicsUnit.Pixel, imgAttributes);
 
                                 gWater.Dispose();
@@ -1094,7 +1215,8 @@ namespace NKnife.Draws
                 //置背景色
                 newG.Clear(System.Drawing.Color.White);
                 //画图
-                newG.DrawImage(initImage, new Rectangle(0, 0, newImage.Width, newImage.Height), new Rectangle(0, 0, initImage.Width, initImage.Height),
+                newG.DrawImage(initImage, new Rectangle(0, 0, newImage.Width, newImage.Height),
+                    new Rectangle(0, 0, initImage.Width, initImage.Height),
                     GraphicsUnit.Pixel);
 
                 //文字水印
@@ -1112,7 +1234,7 @@ namespace NKnife.Draws
                 //透明图片水印
                 if (watermarkImage != "")
                 {
-                    if (System.IO.File.Exists(watermarkImage))
+                    if (File.Exists(watermarkImage))
                     {
                         //获取水印图片
                         using (Image wrImage = Image.FromFile(watermarkImage))
@@ -1140,9 +1262,11 @@ namespace NKnife.Draws
                                 };
 
                                 var wmColorMatrix = new ColorMatrix(colorMatrixElements);
-                                imgAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                                imgAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default,
+                                    ColorAdjustType.Bitmap);
                                 gWater.DrawImage(wrImage,
-                                    new Rectangle(newImage.Width - wrImage.Width, newImage.Height - wrImage.Height, wrImage.Width, wrImage.Height), 0, 0,
+                                    new Rectangle(newImage.Width - wrImage.Width, newImage.Height - wrImage.Height,
+                                        wrImage.Width, wrImage.Height), 0, 0,
                                     wrImage.Width, wrImage.Height, GraphicsUnit.Pixel, imgAttributes);
                                 gWater.Dispose();
                             }
@@ -1198,7 +1322,8 @@ namespace NKnife.Draws
         /// <param name="watermarkPath">水印图片的物理地址</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
         /// <param name="mp">水印位置</param>
-        public static void AddPicWatermarkAsJPG(Stream inputStream, string watermarkPath, string saveFilePath, MarkPosition mp)
+        public static void AddPicWatermarkAsJPG(Stream inputStream, string watermarkPath, string saveFilePath,
+            MarkPosition mp)
         {
             Image image = Image.FromStream(inputStream);
             var b = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
@@ -1212,7 +1337,7 @@ namespace NKnife.Draws
 
             try
             {
-                CompressAsJPG(b, saveFilePath, 80);
+                CompressAsJpg(b, saveFilePath, 80);
             }
             catch
             {
@@ -1232,9 +1357,10 @@ namespace NKnife.Draws
         /// <param name="watermarkPath">水印图片的物理地址</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
         /// <param name="mp">水印位置</param>
-        public static void AddPicWatermarkAsJPG(string sourcePath, string watermarkPath, string saveFilePath, MarkPosition mp)
+        public static void AddPicWatermarkAsJPG(string sourcePath, string watermarkPath, string saveFilePath,
+            MarkPosition mp)
         {
-            if (System.IO.File.Exists(sourcePath))
+            if (File.Exists(sourcePath))
             {
                 using (var sr = new StreamReader(sourcePath))
                 {
@@ -1250,7 +1376,7 @@ namespace NKnife.Draws
         /// <param name="text">水印文字</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
         /// <param name="mp">水印位置</param>
-        public static void AddTextWatermarkAsJPG(Stream inputStream, string text, string saveFilePath, MarkPosition mp)
+        public static void AddTextWatermarkAsJpg(Stream inputStream, string text, string saveFilePath, MarkPosition mp)
         {
             Image image = Image.FromStream(inputStream);
             var b = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
@@ -1264,7 +1390,7 @@ namespace NKnife.Draws
 
             try
             {
-                CompressAsJPG(b, saveFilePath, 80);
+                CompressAsJpg(b, saveFilePath, 80);
             }
             catch
             {
@@ -1284,13 +1410,13 @@ namespace NKnife.Draws
         /// <param name="text">水印文字</param>
         /// <param name="saveFilePath">目标图片的存储地址</param>
         /// <param name="mp">水印位置</param>
-        public static void AddTextWatermarkAsJPG(string sourcePath, string text, string saveFilePath, MarkPosition mp)
+        public static void AddTextWatermarkAsJpg(string sourcePath, string text, string saveFilePath, MarkPosition mp)
         {
-            if (System.IO.File.Exists(sourcePath))
+            if (File.Exists(sourcePath))
             {
                 using (var sr = new StreamReader(sourcePath))
                 {
-                    AddTextWatermarkAsJPG(sr.BaseStream, text, saveFilePath, mp);
+                    AddTextWatermarkAsJpg(sr.BaseStream, text, saveFilePath, mp);
                 }
             }
         }
@@ -1361,7 +1487,8 @@ namespace NKnife.Draws
         /// <param name="mp">添加的位置</param>
         /// <param name="width">原图像的宽度</param>
         /// <param name="height">原图像的高度</param>
-        private static void AddWatermarkImage(Graphics picture, string waterMarkPath, MarkPosition mp, int width, int height)
+        private static void AddWatermarkImage(Graphics picture, string waterMarkPath, MarkPosition mp, int width,
+            int height)
         {
             Image watermark = new Bitmap(waterMarkPath);
 
@@ -1440,7 +1567,8 @@ namespace NKnife.Draws
                     break;
             }
 
-            picture.DrawImage(watermark, new Rectangle(xpos, ypos, WatermarkWidth, WatermarkHeight), 0, 0, watermark.Width, watermark.Height, GraphicsUnit.Pixel,
+            picture.DrawImage(watermark, new Rectangle(xpos, ypos, WatermarkWidth, WatermarkHeight), 0, 0,
+                watermark.Width, watermark.Height, GraphicsUnit.Pixel,
                 imageAttributes);
 
 
@@ -1450,105 +1578,522 @@ namespace NKnife.Draws
 
         #endregion
 
-        // 图片描边
-        //public Form1()
-        //{
-        //    PictureBox PB = new PictureBox();
-        //    PB.Parent = this;
-        //    PB.Dock = DockStyle.Fill;
-        //    PB.Load(@"c:\pic.png");
-
-        //    Bitmap Bmp = new Bitmap(PB.Image);
-        //    GraphicsPath GP = new GraphicsPath();
-        //    Color C = System.Drawing.Color.FromArgb(0, 0, 0, 0);
-
-        //    for (int i = 0; i < Bmp.Width; i++)
-        //        for (int j = 0; j < Bmp.Height; j++)
-        //            // 这点不透明而且左右上下四点至少有一点是透明的，那这点就是边缘
-        //            if (Bmp.GetPixel(i, j) != C 
-        //                && (i > 0 && Bmp.GetPixel(i - 1, j) == C
-        //                || i < Bmp.Width - 1 && Bmp.GetPixel(i + 1, j) == C
-        //                || j > 0 && Bmp.GetPixel(i, j - 1) == C
-        //                || j < Bmp.Height - 1 && Bmp.GetPixel(i, j + 1) == C))
-        //                GP.AddRectangle(new Rectangle(new Point(i, j), new Size(1, 1)));
-
-        //    using (Graphics G = Graphics.FromImage(Bmp))
-        //        G.DrawPath(Pens.Black, GP);
-
-        //    PB.Image = Bmp;
-        //}
+        #region 在图片上添加透明水印文字
 
         /// <summary>
-        /// 描边函数，效果自然
+        ///     ASP.NET图片加水印：在图片上添加透明水印文字
         /// </summary>
-        /// <param name="size"></param>
-        /// <param name="font"></param>
-        /// <param name="foreColor"></param>
-        /// <param name="str"></param>
-        /// <param name="bitmap"></param>
-        //private void MiaoBian(Size size, Font font, Color foreColor, string str)
-        //{
-        //    Graphics g = Graphics.FromImage(TicketNumberImage);//获得bitmap的句柄
-        //    g.FillRectangle(Brushes.LimeGreen, 0, 0, TicketNumberImage.Width, TicketNumberImage.Height);
-        //    try
-        //    {
-        //        int COUNT = 10;//每个字阴影绘制次数
-        //        GraphicsPath path = new GraphicsPath();
-        //        g.SmoothingMode = SmoothingMode.HighQuality;//高质量绘图
-        //        // 各种参数
-        //        SolidBrush brush = new SolidBrush(foreColor);
-        //        FontFamily family = font.FontFamily;
-        //        int fontStyle = (int)font.Style;
-        //        int emSize = (int)font.Size;
-        //        PointF origin = new PointF(-emSize, 3);//(0, -emSize);//为了第一个字符在Y轴向上紧靠边上
-        //        StringFormat format = StringFormat.GenericDefault;//默认字符串部分格式
-        //        // 重点：初始化Pen组,描边渐变.
-        //        Pen[] penArray = new Pen[COUNT];
-        //        for (int i = 0; i < COUNT; i++)
-        //        {
-        //            penArray[i] = new Pen(System.Drawing.Color.FromArgb(5 * i, 5 * i, 5 * i), (float)(i * 0.5));
-        //        }
-        //        // 分割字符串，每个绘制一次
-        //        string[] singleText = new string[str.Length];
-        //        for (int i = 0; i < str.Length; i++)
-        //        {
-        //            singleText[i] = str.Substring(i, 1);
-        //        }
+        /// <param name="imgPhoto">原来图片地址(路径+文件名)</param>
+        /// <param name="waterWords">需要添加到图片上的文字</param>
+        /// <param name="alpha">透明度(0.1~1.0之间)</param>
+        /// <param name="position">文字显示的位置</param>
+        public static bool DrawWords(ref Image imgPhoto, string waterWords, float alpha, float angle,
+            ImagePosition position)
+        {
+            Graphics grPhoto = null;
+            try
+            {
+                //获取图片的宽和高 
+                int phWidth = imgPhoto.Width;
+                int phHeight = imgPhoto.Height;
 
-        //        // 绘制多个字符
-        //        foreach (string single in singleText)
-        //        {
-        //            //让origin在Y轴上每次偏移一个字体大小呵
-        //            origin.X += emSize;
-        //            //绘制多次边框
-        //            for (int i = 0; i < COUNT; i++)
-        //            {
-        //                path.AddString(single,
-        //                                family,
-        //                                fontStyle,
-        //                                emSize,
-        //                                origin,
-        //                                format);
-        //                g.DrawPath(penArray[i], path);
-        //            }
-        //            //填充主色调,其在后是覆盖为了描边时描到的内侧区域
-        //            path.AddString(single,
-        //                            family,
-        //                            fontStyle,
-        //                            emSize,
-        //                            origin,
-        //                            format
-        //                            );
-        //            g.FillPath(brush, path);
-        //        }
-        //        //g.Save();
-        //        g.DrawImage(TicketNumberImage, new Point(0, 0));
-        //        g.Flush();
-        //        g.Dispose();
-        //    }
-        //    catch
-        //    { }
-        //}
+                //***********************************************************************************************************
+                //创建添加水印图片复本
+                ////建立一个bitmap，和我们需要加水印的图片一样大小 
+                //bmPhoto = new Bitmap(phWidth, phHeight, PixelFormat.Format24bppRgb);
+
+                ////SetResolution：设置此 Bitmap 的分辨率 
+                ////这里直接将我们需要添加水印的图片的分辨率赋给了bitmap 
+                //bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
+
+                ////Graphics：封装一个 GDI+ 绘图图面。 
+                //grPhoto = Graphics.FromImage(bmPhoto);
+                //***********************************************************************************************************
+
+                //Graphics：封装一个 GDI+ 绘图图面。 
+                grPhoto = Graphics.FromImage(imgPhoto);
+
+                //设置图形的品质 
+                grPhoto.SmoothingMode = SmoothingMode.AntiAlias;
+
+                //将我们要添加水印的图片按照原始大小描绘（复制）到图形中 
+                grPhoto.DrawImage(
+                    imgPhoto, //   要添加水印的图片 
+                    new Rectangle(0, 0, phWidth, phHeight), // 根据要添加的水印图片的宽和高 
+                    0, // X方向从0点开始描绘 
+                    0, // Y方向   
+                    phWidth, // X方向描绘长度 
+                    phHeight, // Y方向描绘长度 
+                    GraphicsUnit.Pixel); // 描绘的单位，这里用的是像素
+
+                //根据图片的大小我们来确定添加上去的文字的大小 
+                //在这里我们定义一个数组来确定 
+                int[] sizes = {48, 36, 28, 24, 16, 14, 12, 10};
+
+                //字体 
+                Font crFont = null;
+                //矩形的宽度和高度，SizeF有三个属性，分别为Height高，width宽，IsEmpty是否为空 
+                var crSize = new SizeF();
+
+                //利用一个循环语句来选择我们要添加文字的型号
+                //直到它的长度比图片的宽度小
+                for (int i = 0; i < sizes.Length; i++)
+                {
+                    crFont = new Font("arial", sizes[i], FontStyle.Bold);
+
+                    //测量用指定的 Font 对象绘制并用指定的 StringFormat 对象格式化的指定字符串。 
+                    crSize = grPhoto.MeasureString(waterWords, crFont);
+
+                    // ushort 关键字表示一种整数数据类型 
+                    if ((ushort) crSize.Width < (ushort) phWidth)
+                        break;
+                }
+
+                //截边5%的距离，定义文字显示(由于不同的图片显示的高和宽不同，所以按百分比截取) 
+                var yPixlesFromBottom = (int) (phHeight*.05);
+
+                //定义在图片上文字的位置 
+                float wmHeight = crSize.Height;
+                float wmWidth = crSize.Width;
+
+                float xPosOfWm;
+                float yPosOfWm;
+
+                //设置水印的位置 
+                switch (position)
+                {
+                    case ImagePosition.BottomMiddle:
+                        xPosOfWm = phWidth/2;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                    case ImagePosition.Center:
+                        xPosOfWm = phWidth/2;
+                        yPosOfWm = phHeight/2;
+                        break;
+                    case ImagePosition.LeftMiddle:
+                        xPosOfWm = 20;
+                        yPosOfWm = phHeight/2;
+                        break;
+                    case ImagePosition.LeftBottom:
+                        xPosOfWm = wmWidth/2;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                    case ImagePosition.LeftTop:
+                        xPosOfWm = wmWidth/2;
+                        yPosOfWm = wmHeight/2;
+                        break;
+                    case ImagePosition.RightTop:
+                        xPosOfWm = phWidth - wmWidth - 10;
+                        yPosOfWm = wmHeight;
+                        break;
+                    case ImagePosition.RigthBottom:
+                        xPosOfWm = phWidth - wmWidth - 10;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                    case ImagePosition.TopMiddle:
+                        xPosOfWm = phWidth/2;
+                        yPosOfWm = wmWidth;
+                        break;
+                    default:
+                        xPosOfWm = wmWidth;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                }
+                //封装文本布局信息（如对齐、文字方向和 Tab 停靠位），显示操作（如省略号插入和国家标准 (National) 数字替换）和 OpenType 功能。 
+                var StrFormat = new StringFormat();
+
+                //定义需要印的文字居中对齐 
+                StrFormat.Alignment = StringAlignment.Center;
+
+                //SolidBrush:定义单色画笔。画笔用于填充图形形状，如矩形、椭圆、扇形、多边形和封闭路径。 
+                //这个画笔为描绘阴影的画笔，呈灰色 
+                int m_alpha = Convert.ToInt32(256*alpha);
+                var semiTransBrush2 = new SolidBrush(System.Drawing.Color.FromArgb(m_alpha, 200, 200, 200));
+
+                //描绘文字信息，这个图层向右和向下偏移一个像素，表示阴影效果 
+                //DrawString 在指定矩形并且用指定的 Brush 和 Font 对象绘制指定的文本字符串。 
+                grPhoto.RotateTransform(angle);
+                grPhoto.DrawString(waterWords, //string of text 
+                    crFont, //font 
+                    semiTransBrush2, //Brush 
+                    new PointF(xPosOfWm + 1, yPosOfWm + 1), //Position 
+                    StrFormat);
+
+                //从四个 ARGB 分量（alpha、红色、绿色和蓝色）值创建 Color 结构，这里设置透明度为153 
+                //这个画笔为描绘正式文字的笔刷，呈白色 
+                //SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(153, 255, 255, 255));
+
+                ////第二次绘制这个图形，建立在第一次描绘的基础上 
+                //grPhoto.DrawString(waterWords,                 //string of text 
+                //                           crFont,                                   //font 
+                //                           semiTransBrush,                           //Brush 
+                //                           new PointF(xPosOfWm, yPosOfWm), //Position 
+                //                           StrFormat);
+                //释放资源，将定义的Graphics实例grPhoto释放，grPhoto功德圆满 
+                grPhoto.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                if (grPhoto != null)
+                    grPhoto.Dispose();
+            }
+        }
+
+        #endregion
+
+        #region 在图片上添加透明水印图片
+
+        /// <summary>
+        ///     图片加水印：在图片上添加透明水印文字
+        /// </summary>
+        /// <param name="srcImg">
+        ///     原来图片地址(路径+文件名)
+        /// </param>
+        /// <param name="subImg">
+        ///     需要添加到图片上的图片
+        /// </param>
+        /// <param name="alpha">
+        ///     透明度(0.1~1.0之间)
+        /// </param>
+        /// <param name="imgPosition"></param>
+        /// <param name="rewrite">
+        ///     是否覆盖原图片(如果不覆盖，那么将在同目录下生成一个文件名带0607的文件)
+        /// </param>
+        /// <param name="errMsg"></param>
+        public static bool DrawImages(string srcImg, string subImg, float alpha, ImagePosition imgPosition,
+            bool rewrite, out string errMsg)
+        {
+            errMsg = string.Empty;
+            if (!File.Exists(srcImg))
+            {
+                errMsg = "文件不存在！";
+                return false;
+            }
+            string fileExtension = Path.GetExtension(srcImg).ToLower();
+            if (fileExtension != ".gif" && fileExtension != ".jpg" && fileExtension != ".png" && fileExtension != ".bmp")
+            {
+                errMsg = "不是图片文件！";
+                return false;
+            }
+
+            Image imgPhoto = null;
+            Image copyImage = null;
+            Graphics grPhoto = null;
+            MemoryStream ms_s = null;
+            MemoryStream ms_i = null;
+            try
+            {
+                //创建一个图片对象用来装载要被添加水印的图片 
+                //将图片读成文件流 
+                var fs_s = new FileStream(srcImg, FileMode.Open);
+                var bt_s = new byte[int.Parse(fs_s.Length.ToString())];
+                //将文件流字节码放进数组 
+                fs_s.Read(bt_s, 0, int.Parse(fs_s.Length.ToString()));
+                fs_s.Close();
+                fs_s.Dispose();
+                ms_s = new MemoryStream(bt_s);
+                imgPhoto = Image.FromStream(ms_s);
+
+                //获取图片的宽和高 
+                int phWidth = imgPhoto.Width;
+                int phHeight = imgPhoto.Height;
+
+                //Graphics：封装一个 GDI+ 绘图图面。 
+                grPhoto = Graphics.FromImage(imgPhoto);
+
+                //设置图形的品质 
+                grPhoto.SmoothingMode = SmoothingMode.AntiAlias;
+
+                //将我们要添加水印的图片按照原始大小描绘（复制）到图形中 
+                grPhoto.DrawImage(
+                    imgPhoto, //   要添加水印的图片 
+                    new Rectangle(0, 0, phWidth, phHeight), // 根据要添加的水印图片的宽和高 
+                    0, // X方向从0点开始描绘 
+                    0, // Y方向   
+                    phWidth, // X方向描绘长度 
+                    phHeight, // Y方向描绘长度 
+                    GraphicsUnit.Pixel); // 描绘的单位，这里用的是像素
+
+                //限制水印图片的大小为要添加水印的图片的十分之一
+                //将图片读成文件流 
+                var fs_i = new FileStream(subImg, FileMode.Open);
+                var bt_i = new byte[int.Parse(fs_i.Length.ToString())];
+                //将文件流字节码放进数组 
+                fs_i.Read(bt_i, 0, int.Parse(fs_i.Length.ToString()));
+                fs_i.Close();
+                fs_i.Dispose();
+                ms_i = new MemoryStream(bt_i);
+                copyImage = Image.FromStream(ms_i);
+
+                int wmHeight = copyImage.Height;
+                int wmWidth = copyImage.Width;
+                int rate = copyImage.Width/(phWidth/10);
+                if (rate == 0 || rate == 1)
+                {
+                    wmHeight = copyImage.Height;
+                    wmWidth = copyImage.Width;
+                }
+                else
+                {
+                    wmWidth = phWidth/10;
+                    wmHeight = phHeight/(rate + 2);
+                }
+                //控制水印图片的位置
+                int xPosOfWm;
+                int yPosOfWm;
+                switch (imgPosition)
+                {
+                    case ImagePosition.BottomMiddle:
+                        xPosOfWm = phWidth/2;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                    case ImagePosition.Center:
+                        xPosOfWm = phWidth/2;
+                        yPosOfWm = phHeight/2;
+                        break;
+                    case ImagePosition.LeftBottom:
+                        xPosOfWm = wmWidth;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                    case ImagePosition.LeftTop:
+                        xPosOfWm = wmWidth/2;
+                        yPosOfWm = wmHeight/2;
+                        break;
+                    case ImagePosition.RightTop:
+                        xPosOfWm = phWidth - wmWidth - 10;
+                        yPosOfWm = wmHeight;
+                        break;
+                    case ImagePosition.RigthBottom:
+                        xPosOfWm = phWidth - wmWidth - 10;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                    case ImagePosition.TopMiddle:
+                        xPosOfWm = phWidth/2;
+                        yPosOfWm = wmWidth;
+                        break;
+                    default:
+                        xPosOfWm = wmWidth;
+                        yPosOfWm = phHeight - wmHeight - 10;
+                        break;
+                }
+
+                //控制水印图片的透明度
+                var imageAttributes = new ImageAttributes();
+                var colorMap = new ColorMap();
+
+                colorMap.OldColor = System.Drawing.Color.FromArgb(255, 0, 255, 0);
+                colorMap.NewColor = System.Drawing.Color.FromArgb(0, 0, 0, 0);
+                ColorMap[] remapTable = {colorMap};
+
+                imageAttributes.SetRemapTable(remapTable, ColorAdjustType.Bitmap);
+
+                float[][] colorMatrixElements =
+                {
+                    new[] {1.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+                    new[] {0.0f, 1.0f, 0.0f, 0.0f, 0.0f},
+                    new[] {0.0f, 0.0f, 1.0f, 0.0f, 0.0f},
+                    new[] {0.0f, 0.0f, 0.0f, alpha, 0.0f},
+                    new[] {0.0f, 0.0f, 0.0f, 0.0f, 1.0f}
+                };
+
+                var wmColorMatrix = new ColorMatrix(colorMatrixElements);
+
+                imageAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                //复制水印图片到原图片上
+
+                grPhoto.DrawImage(copyImage, new Rectangle(xPosOfWm, yPosOfWm, wmWidth, wmHeight), 0, 0, copyImage.Width,
+                    copyImage.Height, GraphicsUnit.Pixel, imageAttributes);
+
+                //释放资源，将定义的Graphics实例grPhoto释放，grPhoto功德圆满 
+                grPhoto.Dispose();
+
+                //将grPhoto保存 
+                if (rewrite)
+                {
+                    //if (File.Exists(sourcePicture))
+                    //{
+                    //    File.Delete(sourcePicture);
+                    //}
+                    imgPhoto.Save(srcImg.Replace(Path.GetExtension(srcImg), "") + fileExtension);
+                }
+                else
+                {
+                    // 目标图片名称及全路径 
+                    string targetImage = srcImg.Replace(Path.GetExtension(srcImg), "") + "_new" +
+                                         fileExtension;
+                    imgPhoto.Save(targetImage);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+                return false;
+            }
+            finally
+            {
+                if (ms_s != null)
+                {
+                    ms_s.Close();
+                    ms_s.Dispose();
+                }
+                if (ms_i != null)
+                {
+                    ms_i.Close();
+                    ms_i.Dispose();
+                }
+                if (imgPhoto != null)
+                    imgPhoto.Dispose();
+                if (grPhoto != null)
+                    grPhoto.Dispose();
+            }
+        }
+
+        #endregion
+
+        #region 添加水印位置
+
+        /// <summary>
+        ///     添加水印位置
+        /// </summary>
+        public enum ImagePosition
+        {
+            /// <summary>
+            ///     左上
+            /// </summary>
+            LeftTop,
+
+            /// <summary>
+            ///     左下
+            /// </summary>
+            LeftBottom,
+
+            /// <summary>
+            ///     右上
+            /// </summary>
+            RightTop,
+
+            /// <summary>
+            ///     右下
+            /// </summary>
+            RigthBottom,
+
+            /// <summary>
+            ///     顶部居中
+            /// </summary>
+            TopMiddle,
+
+            /// <summary>
+            ///     底部居中
+            /// </summary>
+            BottomMiddle,
+
+            /// <summary>
+            ///     中心
+            /// </summary>
+            Center,
+            LeftMiddle,
+        }
+
+        #endregion
+
+        #region 获取缩略图
+
+        /// <SUMMARY>
+        ///     图片缩放
+        /// </SUMMARY>
+        /// <PARAM name="sourceFile">图片源路径</PARAM>
+        /// <PARAM name="destFile">缩放后图片输出路径</PARAM>
+        /// <PARAM name="destHeight">缩放后图片高度</PARAM>
+        /// <PARAM name="destWidth">缩放后图片宽度</PARAM>
+        /// <RETURNS></RETURNS>
+        public static bool GetThumbnail(string sourceFile, string destFile, int destHeight, int destWidth)
+        {
+            Image imgSource = Image.FromFile(sourceFile);
+            ImageFormat thisFormat = imgSource.RawFormat;
+            int sW = 0, sH = 0;
+            // 按比例缩放
+            int sWidth = imgSource.Width;
+            int sHeight = imgSource.Height;
+
+            if (sHeight > destHeight || sWidth > destWidth)
+            {
+                if ((sWidth*destHeight) > (sHeight*destWidth))
+                {
+                    sW = destWidth;
+                    sH = (destWidth*sHeight)/sWidth;
+                }
+                else
+                {
+                    sH = destHeight;
+                    sW = (sWidth*destHeight)/sHeight;
+                }
+            }
+            else
+            {
+                sW = sWidth;
+                sH = sHeight;
+            }
+
+            var outBmp = new Bitmap(destWidth, destHeight);
+            Graphics g = Graphics.FromImage(outBmp);
+            g.Clear(System.Drawing.Color.WhiteSmoke);
+
+            // 设置画布的描绘质量
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            //可以在这里设置填充背景颜色
+            //g.Clear(System.Drawing.Color.White);
+
+            g.DrawImage(imgSource, new Rectangle((destWidth - sW)/2, (destHeight - sH)/2, sW, sH), 0, 0, imgSource.Width,
+                imgSource.Height,
+                GraphicsUnit.Pixel);
+            g.Dispose();
+
+            // 以下代码为保存图片时，设置压缩质量
+            var encoderParams = new EncoderParameters();
+            var quality = new long[1];
+            quality[0] = 100;
+
+            var encoderParam = new EncoderParameter(Encoder.Quality, quality);
+            encoderParams.Param[0] = encoderParam;
+
+            try
+            {
+                //获得包含有关内置图像编码解码器的信息的ImageCodecInfo 对象。
+                ImageCodecInfo[] arrayIci = ImageCodecInfo.GetImageEncoders();
+                ImageCodecInfo jpegIci = arrayIci.FirstOrDefault(t => t.FormatDescription.Equals("JPEG"));
+
+                if (jpegIci != null)
+                {
+                    outBmp.Save(destFile, jpegIci, encoderParams);
+                }
+                else
+                {
+                    outBmp.Save(destFile, thisFormat);
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                imgSource.Dispose();
+                outBmp.Dispose();
+            }
+        }
+
+        #endregion
     }
 }
 

@@ -173,7 +173,7 @@ namespace NKnife.Draws.Controls
             }
             else
             {
-                G.Invalidate(this, 0, (int) StartPos + CurrentPosition, 0, 1, Height - 1);
+                //G.Invalidate(this, 0, (int) StartPos + CurrentPosition, 0, 1, Height - 1);
             }
         }
 
@@ -207,7 +207,7 @@ namespace NKnife.Draws.Controls
         /// <param name="g"></param>
         private void DrawRulerPercentLine(Graphics g)
         {
-            G.Invalidate(this, 0, (int) StartPos + CurrentPosition, 0, 1, Height - 1);
+            //G.Invalidate(this, 0, (int) StartPos + CurrentPosition, 0, 1, Height - 1);
         }
 
         /// <summary>
