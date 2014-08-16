@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using NKnife.Utility.File;
 
-namespace NKnife.Icons
+namespace NKnife.Draws.Icons
 {
     /// <summary>Provides static methods to read system icons for both folders and files.
     /// </summary>

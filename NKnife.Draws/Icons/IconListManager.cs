@@ -2,7 +2,7 @@ using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 
-namespace NKnife.Icons
+namespace NKnife.Draws.Icons
 {
     /// <summary>Maintains a list of currently added file extensions
     /// </summary>

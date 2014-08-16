@@ -196,7 +196,6 @@
       <DependentUpon>StringResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\UtilityData.cs" />
-    <Compile Include="Utility\UtilityGraph.cs" />
     <Compile Include="GUI\Controls\Container\AppFileNameEditor.cs" />
     <Compile Include="GUI\Controls\Container\WinFormContainer.cs">
       <SubType>Component</SubType>
@@ -440,8 +439,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Utility\UtilityResource.cs" />
-    <Compile Include="Icons\IconHelper.cs" />
-    <Compile Include="Icons\IconListManager.cs" />
     <Compile Include="Interface\IConverting.cs" />
     <Compile Include="Interface\IGenerator.cs" />
     <Compile Include="Interface\IEnvironmentItem.cs" />

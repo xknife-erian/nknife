@@ -61,6 +61,9 @@
     <Compile Include="Controls\Frames\Event\RectangleListChangedEventArgs.cs" />
     <Compile Include="Controls\Frames\Event\RectangleSelectingEventArgs.cs" />
     <Compile Include="Controls\Frames\Base\IPictureFrame.cs" />
+    <Compile Include="GdiPlus.cs" />
+    <Compile Include="Icons\IconHelper.cs" />
+    <Compile Include="Icons\IconListManager.cs" />
     <Compile Include="ImageClipper.cs" />
     <Compile Include="Controls\Frames\Base\DrawingBoardDesignMode.cs" />
     <Compile Include="Controls\Frames\Base\RectangleList.cs" />
@@ -106,6 +109,7 @@
       <DependentUpon>VRuler.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Frames\Event\RectangleSelectedEventArgs.cs" />
+    <Compile Include="UtilityGraph.cs" />
     <EmbeddedResource Include="Controls\Frames\PictureFrame.resx">
       <DependentUpon>PictureFrame.cs</DependentUpon>
     </EmbeddedResource>
