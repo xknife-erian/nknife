@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace NKnife.Draws.Designs.Base
+namespace NKnife.Draws.Controls.Frames.Base
 {
     /// <summary>
-    /// 图片设计图板,当设计时,绘制的矩形的集合
+    /// 当在图板上设计(绘制矩形)时,绘制的矩形的集合
     /// </summary>
     public class RectangleList : List<RectangleF>
     {

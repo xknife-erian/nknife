@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using NKnife.Draws.Common;
-using NKnife.Draws.Designs.Event;
+using NKnife.Draws.Controls.Frames.Event;
 using NKnife.Events;
 
-namespace NKnife.Draws.Designs.Base
+namespace NKnife.Draws.Controls.Frames.Base
 {
     /// <summary>
-    ///     描述一个设计面板的核心功能
+    ///     描述一个画框的核心功能
     /// </summary>
-    public interface IDesignBenchCore
+    public interface IPictureFrame
     {
         /// <summary>
         ///     设计面板中已设计的矩形列表
@@ -26,7 +25,7 @@ namespace NKnife.Draws.Designs.Base
         ///     设计面板的工作模式
         /// </summary>
         /// <param name="mode">工作模式枚举</param>
-        void SetImagePanelDesignMode(ImagePanelDesignMode mode);
+        void SetDrawingBoardDesignMode(DrawingBoardDesignMode mode);
 
         /// <summary>
         ///     设置打算设计的图片
@@ -88,12 +87,12 @@ namespace NKnife.Draws.Designs.Base
         /// <summary>
         ///     当设计（矩形拖动时）时发生
         /// </summary>
-        event EventHandler<DragParamsEventArgs> DesignDragging;
+        event EventHandler<BoardDesignDragParamsEventArgs> DesignDragging;
 
         /// <summary>
         ///     当设计（拖动矩形完成时）完成时发生
         /// </summary>
-        event EventHandler<DragParamsEventArgs> DesignDragged;
+        event EventHandler<BoardDesignDragParamsEventArgs> DesignDragged;
 
         /// <summary>
         ///     当设计面板被双击后发生

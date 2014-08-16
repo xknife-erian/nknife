@@ -2,31 +2,35 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using NKnife.Draws.Designs.Base;
-using NKnife.Draws.Designs.Event;
+using NKnife.Draws.Controls.Frames.Base;
+using NKnife.Draws.Controls.Frames.Event;
 using NKnife.Ioc;
 
-namespace NKnife.Draws.Designs
+namespace NKnife.Draws.Controls.Frames
 {
-    internal sealed class ImageDesignPanel : Control
+    internal sealed class DrawingBoard : Control
     {
         #region 类成员变量，当设计时鼠标拖动时的一些需计算的坐标点
 
         /// <summary>
         ///     定义移动鼠标时的坐标点
         /// </summary>
-        private Point _Current;
+        private Point _CurrentDesign;
 
         /// <summary>
         ///     定义松开鼠标时的坐标点
         /// </summary>
-        private Point _End;
+        private Point _EndDesign;
 
         /// <summary>
         ///     定义鼠标按下时的坐标点
         /// </summary>
-        private Point _Start;
+        private Point _StartDesign;
+
+        /// <summary>
+        ///     定义当拖动状态时，鼠标按下时的坐标点
+        /// </summary>
+        private Point _StartDragging;
 
         #endregion
 
@@ -39,26 +43,27 @@ namespace NKnife.Draws.Designs
 
         #region 类成员变量：工作状态，父控件
 
-        private ImagePanelDesignMode _ImagePanelDesignMode = ImagePanelDesignMode.Selecting;
+        private DrawingBoardDesignMode _ImagePanelDesignMode = DrawingBoardDesignMode.Selecting;
 
         /// <summary>
         ///     当前是否在设计期间。主要是指是否正在用鼠标进行工作。
         /// </summary>
         private bool _IsDesign;
 
-        private DesignBench _Parent;
+        private PictureFrame _Parent;
 
         #endregion
 
         #region 构造函数
 
-        public ImageDesignPanel()
+        public DrawingBoard()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw |ControlStyles.UserPaint| ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint,
+                true);
             BackgroundImageChanged += ImageDesignPanel_BackgroundImageChanged;
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
-            ImagePanelDesignMode = ImagePanelDesignMode.Selecting;
+            ImagePanelDesignMode = DrawingBoardDesignMode.Selecting;
         }
 
         #endregion
@@ -68,7 +73,7 @@ namespace NKnife.Draws.Designs
         /// <summary>
         ///     图板当前的工作模式
         /// </summary>
-        public ImagePanelDesignMode ImagePanelDesignMode
+        public DrawingBoardDesignMode ImagePanelDesignMode
         {
             get { return _ImagePanelDesignMode; }
             set
@@ -76,16 +81,16 @@ namespace NKnife.Draws.Designs
                 _ImagePanelDesignMode = value;
                 switch (value)
                 {
-                    case ImagePanelDesignMode.Selecting:
+                    case DrawingBoardDesignMode.Selecting:
                         Cursor = Cursors.Arrow;
                         break;
-                    case ImagePanelDesignMode.Designing:
+                    case DrawingBoardDesignMode.Designing:
                         Cursor = Cursors.Cross;
                         break;
-                    case ImagePanelDesignMode.Dragging:
+                    case DrawingBoardDesignMode.Dragging:
                         Cursor = Cursors.Hand;
                         break;
-                    case ImagePanelDesignMode.Zooming:
+                    case DrawingBoardDesignMode.Zooming:
                         Cursor = Cursors.Help;
                         break;
                 }
@@ -119,7 +124,7 @@ namespace NKnife.Draws.Designs
             if (Parent != null)
             {
                 Parent.SizeChanged += delegate { SetOwnSize(_Multiple); };
-                _Parent = (DesignBench) Parent;
+                _Parent = (PictureFrame) Parent;
             }
         }
 
@@ -130,8 +135,9 @@ namespace NKnife.Draws.Designs
 
         public void SetOwnSize(double multiple)
         {
-            var srcSize = Size;
-            var srcMultiple = _Multiple;
+            var mousePosition = PointToClient(MousePosition);//记录未缩放时鼠标点击的位置
+            Size oldSize = Size;
+            double oldMultiple = _Multiple;
             _Multiple = multiple;
             if (BackgroundImage == null)
                 return;
@@ -141,29 +147,29 @@ namespace NKnife.Draws.Designs
             int ph = Parent.Size.Height;
             if (w > h)
             {
-                var z = (pw*multiple)/w;
+                double z = (pw*multiple)/w;
                 Size = new Size((int) (pw*multiple), (int) (h*z));
                 //当控件尺寸更新完毕后，再更新父容器，以触发事件
                 _Parent.Zoom = z;
             }
             else
             {
-                var z = (ph*multiple)/h;
+                double z = (ph*multiple)/h;
                 Size = new Size((int) (w*z), (int) (ph*multiple));
                 _Parent.Zoom = z;
             }
-            OnPanelZoomed(new PanelZoomEventArgs(srcSize, PointToClient(MousePosition), srcMultiple, multiple));
+            OnZoomed(new BoardZoomEventArgs(oldSize, mousePosition, oldMultiple, multiple));
         }
 
         /// <summary>
-        /// 当设计图板的大小发生变化后
+        ///     当设计图板的大小发生变化后
         /// </summary>
-        public event EventHandler<PanelZoomEventArgs> PanelZoomed;
+        public event EventHandler<BoardZoomEventArgs> Zoomed;
 
-        private void OnPanelZoomed(PanelZoomEventArgs e)
+        private void OnZoomed(BoardZoomEventArgs e)
         {
-            EventHandler<PanelZoomEventArgs> handler = PanelZoomed;
-            if (handler != null) 
+            EventHandler<BoardZoomEventArgs> handler = Zoomed;
+            if (handler != null)
                 handler(this, e);
         }
 
@@ -223,11 +229,11 @@ namespace NKnife.Draws.Designs
                 //将画好的新图贴到当前控件的工作区
                 g.DrawImage(_CurrentImage, ClientRectangle, new Rectangle(0, 0, _CurrentImage.Width, _CurrentImage.Height), GraphicsUnit.Pixel);
             }
-            
+
             //画正在拖动的矩形
             if (_IsDesign)
             {
-                var rect = new Rectangle(_End, new Size(Math.Abs(_Current.X - _Start.X), Math.Abs(_Current.Y - _Start.Y)));
+                var rect = new Rectangle(_EndDesign, new Size(Math.Abs(_CurrentDesign.X - _StartDesign.X), Math.Abs(_CurrentDesign.Y - _StartDesign.Y)));
                 g.DrawRectangle(border, rect);
             }
             //为了美观，绘制一个矩形外边框
@@ -249,7 +255,7 @@ namespace NKnife.Draws.Designs
                 DialogResult ds = MessageBox.Show(this, "是否删除被选择的矩形设计区？", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (ds == DialogResult.Yes)
                 {
-                    foreach (var rect in rl.Selected)
+                    foreach (RectangleF rect in rl.Selected)
                     {
                         rl.Remove(rect);
                     }
@@ -267,11 +273,14 @@ namespace NKnife.Draws.Designs
             base.OnMouseDown(e);
             switch (ImagePanelDesignMode)
             {
-                case ImagePanelDesignMode.Designing:
-                    _Start = new Point(e.X, e.Y);
+                case DrawingBoardDesignMode.Designing:
+                {
+                    _StartDesign = new Point(e.X, e.Y);
                     _IsDesign = true;
                     break;
-                case ImagePanelDesignMode.Selecting:
+                }
+                case DrawingBoardDesignMode.Selecting:
+                {
                     RectangleList rl = _Parent.Rectangles;
                     foreach (RectangleF rect in rl)
                     {
@@ -288,6 +297,12 @@ namespace NKnife.Draws.Designs
                         }
                     }
                     break;
+                }
+                case DrawingBoardDesignMode.Dragging:
+                {
+                    _StartDragging = e.Location;
+                    break;
+                }
             }
         }
 
@@ -295,21 +310,37 @@ namespace NKnife.Draws.Designs
 
         #region 移动鼠标发生的事件
 
+        public event EventHandler<BoardDraggingEventArgs> BoardDragging;
+
+        private void OnBoardDragging(BoardDraggingEventArgs e)
+        {
+            EventHandler<BoardDraggingEventArgs> handler = BoardDragging;
+            if (handler != null) 
+                handler(this, e);
+        }
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
             switch (ImagePanelDesignMode)
             {
-                case ImagePanelDesignMode.Designing:
+                case DrawingBoardDesignMode.Designing:
                 {
                     if (!_IsDesign || e.Button != MouseButtons.Left)
                         return;
                     MouseMoveDesigning(e.X, e.Y);
                     break;
                 }
-                case ImagePanelDesignMode.Selecting:
+                case DrawingBoardDesignMode.Selecting:
                 {
                     MouseMoveSelecting(e);
+                    break;
+                }
+                case  DrawingBoardDesignMode.Dragging:
+                {
+                    if (e.Button != MouseButtons.Left)
+                        return;
+                    OnBoardDragging(new BoardDraggingEventArgs(_StartDragging, e.Location));
                     break;
                 }
             }
@@ -336,26 +367,26 @@ namespace NKnife.Draws.Designs
 
         private void MouseMoveDesigning(int x, int y)
         {
-            _Current = new Point(x, y);
-            if ((_Current.X - _Start.X) > 0 && (_Current.Y - _Start.Y) > 0) //当鼠标从左上角向开始移动时
+            _CurrentDesign = new Point(x, y);
+            if ((_CurrentDesign.X - _StartDesign.X) > 0 && (_CurrentDesign.Y - _StartDesign.Y) > 0) //当鼠标从左上角向开始移动时
             {
-                _End = new Point(_Start.X, _Start.Y);
+                _EndDesign = new Point(_StartDesign.X, _StartDesign.Y);
             }
-            if ((_Current.X - _Start.X) < 0 && (_Current.Y - _Start.Y) > 0) //当鼠标从右上角向左下方向开始移动
+            if ((_CurrentDesign.X - _StartDesign.X) < 0 && (_CurrentDesign.Y - _StartDesign.Y) > 0) //当鼠标从右上角向左下方向开始移动
             {
-                _End = new Point(_Current.X, _Start.Y);
+                _EndDesign = new Point(_CurrentDesign.X, _StartDesign.Y);
             }
-            if ((_Current.X - _Start.X) > 0 && (_Current.Y - _Start.Y) < 0) //当鼠标从左下角向上开始移动时
+            if ((_CurrentDesign.X - _StartDesign.X) > 0 && (_CurrentDesign.Y - _StartDesign.Y) < 0) //当鼠标从左下角向上开始移动时
             {
-                _End = new Point(_Start.X, _Current.Y);
+                _EndDesign = new Point(_StartDesign.X, _CurrentDesign.Y);
             }
-            if ((_Current.X - _Start.X) < 0 && (_Current.Y - _Start.Y) < 0) //当鼠标从右下角向左方向上开始移动时
+            if ((_CurrentDesign.X - _StartDesign.X) < 0 && (_CurrentDesign.Y - _StartDesign.Y) < 0) //当鼠标从右下角向左方向上开始移动时
             {
-                _End = new Point(_Current.X, _Current.Y);
+                _EndDesign = new Point(_CurrentDesign.X, _CurrentDesign.Y);
             }
             //使控件的整个图面无效,并导致重绘控件,激发OnPaint绘制Design的整个矩形
             Invalidate();
-            _Parent.OnDesignDragging(new DragParamsEventArgs(_Start, _Current));
+            _Parent.OnDesignDragging(new BoardDesignDragParamsEventArgs(_StartDesign, _CurrentDesign));
         }
 
         #endregion
@@ -367,29 +398,29 @@ namespace NKnife.Draws.Designs
             base.OnMouseUp(e);
             switch (ImagePanelDesignMode)
             {
-                case ImagePanelDesignMode.Designing:
+                case DrawingBoardDesignMode.Designing:
                 {
                     if (e.Button != MouseButtons.Left)
                         return;
                     _IsDesign = false;
-                    if (_End == Point.Empty) //未拖动
+                    if (_EndDesign == Point.Empty) //未拖动
                         return;
 
-                    var end = new PointF((float) (_End.X/_Parent.Zoom), (float) (_End.Y/_Parent.Zoom));
-                    var start = new PointF((float) (_Start.X/_Parent.Zoom), (float) (_Start.Y/_Parent.Zoom));
-                    var current = new PointF((float) (_Current.X/_Parent.Zoom), (float) (_Current.Y/_Parent.Zoom));
+                    var end = new PointF((float) (_EndDesign.X/_Parent.Zoom), (float) (_EndDesign.Y/_Parent.Zoom));
+                    var start = new PointF((float) (_StartDesign.X/_Parent.Zoom), (float) (_StartDesign.Y/_Parent.Zoom));
+                    var current = new PointF((float) (_CurrentDesign.X/_Parent.Zoom), (float) (_CurrentDesign.Y/_Parent.Zoom));
 
                     var rect = new RectangleF(end, new SizeF(Math.Abs(current.X - start.X), Math.Abs(current.Y - start.Y)));
                     _Parent.Rectangles.Add(rect);
 
                     Invalidate();
-                    _End = Point.Empty;
+                    _EndDesign = Point.Empty;
                     var mode = RectangleListChangedEventArgs.RectangleChangedMode.Created;
-                    _Parent.OnDesignDragged(new DragParamsEventArgs(_Start, _Current));
+                    _Parent.OnDesignDragged(new BoardDesignDragParamsEventArgs(_StartDesign, _CurrentDesign));
                     _Parent.OnRectangleCreated(new RectangleListChangedEventArgs(mode, rect));
                     break;
                 }
-                case ImagePanelDesignMode.Selecting:
+                case DrawingBoardDesignMode.Selecting:
                 {
                     break;
                 }
@@ -424,7 +455,7 @@ namespace NKnife.Draws.Designs
             base.OnMouseClick(e);
             if (e.Button != MouseButtons.None)
             {
-                if (ImagePanelDesignMode == ImagePanelDesignMode.Zooming)
+                if (ImagePanelDesignMode == DrawingBoardDesignMode.Zooming)
                 {
                     if (e.Button == MouseButtons.Left && e.Clicks == 1) //左键单击
                     {

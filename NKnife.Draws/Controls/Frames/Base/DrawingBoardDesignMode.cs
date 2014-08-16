@@ -1,9 +1,9 @@
-﻿namespace NKnife.Draws.Designs.Base
+﻿namespace NKnife.Draws.Controls.Frames.Base
 {
     /// <summary>
-    /// 图板的设计模式
+    /// 画板的设计模式
     /// </summary>
-    public enum ImagePanelDesignMode
+    public enum DrawingBoardDesignMode
     {
         /// <summary>
         /// 设计，画图

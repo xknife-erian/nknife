@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
 
-namespace NKnife.Draws.Designs.Event
+namespace NKnife.Draws.Controls.Frames.Event
 {
-    public class DragParamsEventArgs : EventArgs
+    public class BoardDesignDragParamsEventArgs : EventArgs
     {
         public Point Start { get; set; }
         public Point End { get; set; }
 
-        public DragParamsEventArgs(Point start, Point end)
+        public BoardDesignDragParamsEventArgs(Point start, Point end)
         {
             Start = start;
             End = end;

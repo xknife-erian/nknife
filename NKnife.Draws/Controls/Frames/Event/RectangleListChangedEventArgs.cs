@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace NKnife.Draws.Designs.Event
+namespace NKnife.Draws.Controls.Frames.Event
 {
     public class RectangleListChangedEventArgs : EventArgs
     {

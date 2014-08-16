@@ -53,25 +53,25 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Designs\Event\PanelZoomEventArgs.cs" />
+    <Compile Include="Controls\Frames\Event\BoardDraggingEventArgs.cs" />
+    <Compile Include="Controls\Frames\Event\BoardZoomEventArgs.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
-    <Compile Include="Designs\Event\RectangleClickEventArgs.cs" />
-    <Compile Include="Designs\Event\ImageLoadEventArgs.cs" />
-    <Compile Include="Designs\Event\RectangleListChangedEventArgs.cs" />
-    <Compile Include="Designs\Event\RectangleSelectingEventArgs.cs" />
-    <Compile Include="Designs\Base\IDesignBenchCore.cs" />
-    <Compile Include="GdiPlus.cs" />
+    <Compile Include="Controls\Frames\Event\RectangleClickEventArgs.cs" />
+    <Compile Include="Controls\Frames\Event\ImageLoadEventArgs.cs" />
+    <Compile Include="Controls\Frames\Event\RectangleListChangedEventArgs.cs" />
+    <Compile Include="Controls\Frames\Event\RectangleSelectingEventArgs.cs" />
+    <Compile Include="Controls\Frames\Base\IPictureFrame.cs" />
     <Compile Include="ImageClipper.cs" />
-    <Compile Include="Designs\Base\ImagePanelDesignMode.cs" />
-    <Compile Include="Designs\Base\RectangleList.cs" />
+    <Compile Include="Controls\Frames\Base\DrawingBoardDesignMode.cs" />
+    <Compile Include="Controls\Frames\Base\RectangleList.cs" />
     <Compile Include="Common\Redraw.cs" />
     <Compile Include="Thumbnail.cs" />
     <Compile Include="Drawing.cs" />
-    <Compile Include="Designs\DesignBench.cs">
+    <Compile Include="Controls\Frames\PictureFrame.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Designs\DesignBench.Designer.cs">
-      <DependentUpon>DesignBench.cs</DependentUpon>
+    <Compile Include="Controls\Frames\PictureFrame.Designer.cs">
+      <DependentUpon>PictureFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="G.cs" />
     <Compile Include="Controls\HRuler.cs">
@@ -80,8 +80,8 @@
     <Compile Include="Controls\HRuler.Designer.cs">
       <DependentUpon>HRuler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Designs\Event\DragParamsEventArgs.cs" />
-    <Compile Include="Designs\ImageDesignPanel.cs">
+    <Compile Include="Controls\Frames\Event\BoardDesignDragParamsEventArgs.cs" />
+    <Compile Include="Controls\Frames\DrawingBoard.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Ioc\Modules.cs" />
@@ -105,9 +105,9 @@
     <Compile Include="Controls\VRuler.Designer.cs">
       <DependentUpon>VRuler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Designs\Event\RectangleSelectedEventArgs.cs" />
-    <EmbeddedResource Include="Designs\DesignBench.resx">
-      <DependentUpon>DesignBench.cs</DependentUpon>
+    <Compile Include="Controls\Frames\Event\RectangleSelectedEventArgs.cs" />
+    <EmbeddedResource Include="Controls\Frames\PictureFrame.resx">
+      <DependentUpon>PictureFrame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
