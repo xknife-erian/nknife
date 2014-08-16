@@ -60,6 +60,7 @@
     <Compile Include="Designs\Event\RectangleListChangedEventArgs.cs" />
     <Compile Include="Designs\Event\RectangleSelectingEventArgs.cs" />
     <Compile Include="Designs\Base\IDesignBenchCore.cs" />
+    <Compile Include="GdiPlus.cs" />
     <Compile Include="ImageClipper.cs" />
     <Compile Include="Designs\Base\ImagePanelDesignMode.cs" />
     <Compile Include="Designs\Base\RectangleList.cs" />
