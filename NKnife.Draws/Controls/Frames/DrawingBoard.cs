@@ -58,8 +58,7 @@ namespace NKnife.Draws.Controls.Frames
 
         public DrawingBoard()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint,
-                true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             BackgroundImageChanged += ImageDesignPanel_BackgroundImageChanged;
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
@@ -123,28 +122,29 @@ namespace NKnife.Draws.Controls.Frames
         {
             if (Parent != null)
             {
-                Parent.SizeChanged += delegate { SetOwnSize(_Multiple); };
+                Parent.SizeChanged += delegate { SetOwnSize(_Multiple, Point.Empty); };
                 _Parent = (PictureFrame) Parent;
             }
         }
 
         private void ImageDesignPanel_BackgroundImageChanged(object sender, EventArgs e)
         {
-            SetOwnSize(_Multiple);
+            SetOwnSize(_Multiple, Point.Empty);
         }
 
-        public void SetOwnSize(double multiple)
+        private void SetOwnSize(double multiple, Point mousePoint)
         {
-            var mousePosition = PointToClient(MousePosition);//记录未缩放时鼠标点击的位置
-            Size oldSize = Size;
-            double oldMultiple = _Multiple;
+            double oldZoom = _Parent.Zoom;
             _Multiple = multiple;
+
             if (BackgroundImage == null)
                 return;
+
             int w = BackgroundImage.Width;
             int h = BackgroundImage.Height;
             int pw = Parent.Size.Width;
             int ph = Parent.Size.Height;
+
             if (w > h)
             {
                 double z = (pw*multiple)/w;
@@ -158,7 +158,11 @@ namespace NKnife.Draws.Controls.Frames
                 Size = new Size((int) (w*z), (int) (ph*multiple));
                 _Parent.Zoom = z;
             }
-            OnZoomed(new BoardZoomEventArgs(oldSize, mousePosition, oldMultiple, multiple));
+            if (mousePoint != Point.Empty)
+            {
+                //当缩放事件触发时，虽然尺寸已变化，但画板在画框中的位置还没有发生变化
+                OnZoomed(new BoardZoomEventArgs(mousePoint, oldZoom));
+            }
         }
 
         /// <summary>
@@ -176,17 +180,19 @@ namespace NKnife.Draws.Controls.Frames
         /// <summary>
         ///     放大
         /// </summary>
-        public void EnlargeDesignPanel()
+        public void EnlargeDesignPanel(Point mousePoint)
         {
-            SetOwnSize(_Multiple += 0.2);
+            var m = _Multiple + 0.3;
+            SetOwnSize(m, mousePoint);
         }
 
         /// <summary>
         ///     缩小
         /// </summary>
-        public void ShrinkDesignPanel()
+        public void ShrinkDesignPanel(Point mousePoint)
         {
-            SetOwnSize(_Multiple -= 0.2);
+            var m = _Multiple - 0.3;
+            SetOwnSize(m, mousePoint);
         }
 
         #endregion
@@ -460,9 +466,9 @@ namespace NKnife.Draws.Controls.Frames
                     if (e.Button == MouseButtons.Left && e.Clicks == 1) //左键单击
                     {
                         if ((ModifierKeys & Keys.Shift) == Keys.Shift) //是否按着Shift键
-                            ShrinkDesignPanel();
+                            ShrinkDesignPanel(e.Location);
                         else
-                            EnlargeDesignPanel();
+                            EnlargeDesignPanel(e.Location);
                     }
                 }
                 else
@@ -483,5 +489,19 @@ namespace NKnife.Draws.Controls.Frames
         }
 
         #endregion
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            //TODO:为何不响应滚轮呢？
+            if (ModifierKeys.HasFlag(Keys.ShiftKey))
+            {
+                Console.WriteLine(e.Delta);
+            }
+            else
+            {
+                Console.WriteLine(e.Delta);
+            }
+        }
+
     }
 }

@@ -15,6 +15,9 @@ namespace NKnife.Draws.Controls.Frames
         private readonly HScrollBar _HScrollBar = new HScrollBar();
         private readonly VScrollBar _VScrollBar = new VScrollBar();
 
+        /// <summary>
+        ///     画板与画框之间留出的空白区域。
+        /// </summary>
         private int _Blankness = 20;
 
         /// <summary>
@@ -50,23 +53,43 @@ namespace NKnife.Draws.Controls.Frames
             Controls.Add(_DrawingBoard);
         }
 
+        #endregion
+
+        #region 缩放，滚动条, 鼠标滚轮
+
+
         private void _DrawingBoard_PanelZoomed(object sender, BoardZoomEventArgs e)
         {
-            //TODO:单点放大实在想不太清楚了，这是一个什么样的几何呀……，左与上的边距有了，为什么下与右的边距没有呢？
+            var mpoint = PointToClient(MousePosition);
             if (_DrawingBoard.Width > Width)
             {
                 _HScrollBar.Enabled = true;
                 _HScrollBar.Minimum = -_Blankness;
                 _HScrollBar.Maximum = _DrawingBoard.Width - Width + _Blankness;
-                //_HScrollBar.Value = (int)(e.MouseClickedLocation.X*(_HScrollBar.Maximum/_DrawingBoard.Width));
+
+                var acu = e.MouseClickedLocation.X / e.OldZoom;
+                var now = acu * Zoom;
+                _HScrollBar.Value = -(int)(mpoint.X - now);
+            }
+            else
+            {
+                _HScrollBar.Enabled = false;
             }
             if (_DrawingBoard.Height > Height)
             {
                 _VScrollBar.Enabled = true;
                 _VScrollBar.Minimum = -_Blankness;
                 _VScrollBar.Maximum = _DrawingBoard.Height - Height + _Blankness;
-                //_VScrollBar.Value = (int)(e.MouseClickedLocation.Y*(_VScrollBar.Maximum/_DrawingBoard.Height));
+
+                var acu = e.MouseClickedLocation.Y / e.OldZoom;
+                var now = acu * Zoom;
+                _VScrollBar.Value = -(int)(mpoint.Y - now);
             }
+            else
+            {
+                _VScrollBar.Enabled = false;
+            }
+            Refresh();
         }
 
         private void _DrawingBoard_PanelDragging(object sender, BoardDraggingEventArgs e)
@@ -77,8 +100,8 @@ namespace NKnife.Draws.Controls.Frames
             Point current = PointToClient(_DrawingBoard.PointToScreen(e.CurrentPoint));
             Point start = PointToClient(_DrawingBoard.PointToScreen(e.StartPoint));
 
-            int x = (current.X - start.X)/3;
-            int y = (current.Y - start.Y)/3;
+            int x = (current.X - start.X) / 3;
+            int y = (current.Y - start.Y) / 3;
 
             int offsetX = _HScrollBar.Value - x;
             if (offsetX > _HScrollBar.Minimum && offsetX < _HScrollBar.Maximum)
@@ -86,6 +109,7 @@ namespace NKnife.Draws.Controls.Frames
             int offsetY = _VScrollBar.Value - y;
             if (offsetY > _VScrollBar.Minimum && offsetY < _VScrollBar.Maximum)
                 _VScrollBar.Value = _VScrollBar.Value - y;
+            //TODO:左与上的边距有了，为什么下与右的边距没有呢？
         }
 
         private void _VScrollBar_ValueChanged(object sender, EventArgs e)
@@ -118,9 +142,9 @@ namespace NKnife.Draws.Controls.Frames
             _DrawingBoard.Image = image;
 
             _DrawingBoard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-            _DrawingBoard.SizeChanged += delegate { SetImageDesignPanelLocation(); };
+            _DrawingBoard.SizeChanged += delegate { SetImageDesignPanelLocationOnLoaded(); };
 
-            SetImageDesignPanelLocation();
+            SetImageDesignPanelLocationOnLoaded();
             _DrawingBoard.Visible = true;
         }
 
@@ -159,7 +183,10 @@ namespace NKnife.Draws.Controls.Frames
 
         #endregion
 
-        private void SetImageDesignPanelLocation()
+        /// <summary>
+        /// 首次载入图片时设置图板的位置
+        /// </summary>
+        private void SetImageDesignPanelLocationOnLoaded()
         {
             int x = (Width - _Blankness - _DrawingBoard.Width)/2;
             int y = (Height - _Blankness - _DrawingBoard.Height)/2;
