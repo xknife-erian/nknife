@@ -8,7 +8,7 @@ namespace NKnife.Entities
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
 // ReSharper disable InconsistentNaming
-    public struct IDCardData : IEquatable<IDCardData>
+    public struct IDCardData : IEquatable<IDCardData>, ICloneable
 // ReSharper restore InconsistentNaming
     {
         /// <summary>
@@ -89,6 +89,23 @@ namespace NKnife.Entities
             sb.AppendLine(Reserved);
             sb.AppendLine(PhotoFileName);
             return sb.ToString();
+        }
+
+        public object Clone()
+        {
+            var data = new IDCardData();
+            data.Address = Address;
+            data.Born = Born;
+            data.GrantDept = GrantDept;
+            data.IDCardNo = IDCardNo;
+            data.Name = Name;
+            data.Nation = Nation;
+            data.PhotoFileName = PhotoFileName;
+            data.Reserved = Reserved;
+            data.Sex = Sex;
+            data.UserLifeBegin = UserLifeBegin;
+            data.UserLifeEnd = UserLifeEnd;
+            return data;
         }
 
         /// <summary>
