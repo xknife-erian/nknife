@@ -184,6 +184,7 @@ namespace NKnife.NSerial
             {
                 Buffer.BlockCopy(readedBuffer, 0, _Buffer, _CurrReadLength, recvCount);
                 _CurrReadLength += recvCount;
+                //TODO 结束符要做成活的，不能使用固定的0xFF
                 if (readedBuffer[recvCount - 1] == 0xFF) //校验指令结束符FF
                 {
                     _Reset.Set();
