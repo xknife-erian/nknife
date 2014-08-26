@@ -126,7 +126,12 @@ namespace NKnife.Draws.Controls.Frames
 
         #region IDesignBenchCore Method
 
-        public RectangleList Rectangles { get; internal set; }
+        public RectangleList Rectangles { get; private set; }
+
+        public void UpdateRectangleList(RectangleList rectangleList)
+        {
+            Rectangles = rectangleList;
+        }
 
         public void SetDrawingBoardDesignMode(DrawingBoardDesignMode mode)
         {

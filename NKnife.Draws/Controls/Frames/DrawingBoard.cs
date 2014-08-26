@@ -255,7 +255,7 @@ namespace NKnife.Draws.Controls.Frames
 
         public void RemoveSelectedRectangle()
         {
-            var rl = DI.Get<RectangleList>();
+            RectangleList rl = _Parent.Rectangles;
             if (rl.Selected.Count > 0)
             {
                 DialogResult ds = MessageBox.Show(this, "是否删除被选择的矩形设计区？", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information);

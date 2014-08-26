@@ -53,6 +53,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Rectangles.cs" />
     <Compile Include="Controls\Frames\Event\BoardDraggingEventArgs.cs" />
     <Compile Include="Controls\Frames\Event\BoardZoomEventArgs.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
