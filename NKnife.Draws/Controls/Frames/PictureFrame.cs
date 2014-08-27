@@ -142,7 +142,7 @@ namespace NKnife.Draws.Controls.Frames
         {
             if (image == null)
             {
-                throw new ArgumentNullException("指定的设计图片image不应为Null");
+                throw new ArgumentNullException("image", "指定的设计图片image不应为Null");
             }
             _DrawingBoard.Image = image;
 

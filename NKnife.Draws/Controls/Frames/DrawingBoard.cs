@@ -8,6 +8,10 @@ using NKnife.Ioc;
 
 namespace NKnife.Draws.Controls.Frames
 {
+    /// <summary>
+    /// 镶嵌在画框中的设计面板，该面板一般用来载入一幅图片，而后以该图片为背景进行一些设计工作。
+    /// lukan@xknife.net 2014-8-26
+    /// </summary>
     internal sealed class DrawingBoard : Control
     {
         #region 类成员变量，当设计时鼠标拖动时的一些需计算的坐标点
@@ -50,6 +54,9 @@ namespace NKnife.Draws.Controls.Frames
         /// </summary>
         private bool _IsDesign;
 
+        /// <summary>
+        /// 父控件。一般来讲仅使用画框做为本类型的承载。
+        /// </summary>
         private PictureFrame _Parent;
 
         #endregion
@@ -213,7 +220,7 @@ namespace NKnife.Draws.Controls.Frames
                     imgG.DrawImage(_SourceImage, new Point(0, 0));
                     foreach (RectangleF rect in rl)
                     {
-                        if (rl.Selected.Contains(rect)) //选中的矩形
+                        if (rl.Current.Contains(rect)) //选中的矩形
                         {
                             var b = new SolidBrush(Color.FromArgb(80, 255, 255, 0));
                             imgG.FillRectangle(b, rect.X, rect.Y, rect.Width, rect.Height);
@@ -256,12 +263,12 @@ namespace NKnife.Draws.Controls.Frames
         public void RemoveSelectedRectangle()
         {
             RectangleList rl = _Parent.Rectangles;
-            if (rl.Selected.Count > 0)
+            if (rl.Current.Count > 0)
             {
                 DialogResult ds = MessageBox.Show(this, "是否删除被选择的矩形设计区？", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (ds == DialogResult.Yes)
                 {
-                    foreach (RectangleF rect in rl.Selected)
+                    foreach (RectangleF rect in rl.Current)
                     {
                         rl.Remove(rect);
                     }
@@ -293,13 +300,17 @@ namespace NKnife.Draws.Controls.Frames
                         var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
                         if (rect.Contains(epoint))
                         {
-                            if (!rl.Selected.Contains(rect))
+                            if (!rl.Current.Contains(rect))
                             {
-                                rl.Selected.Add(rect);
-                                Invalidate();
+                                rl.Current.Add(rect);
                                 _Parent.OnSelected(new RectangleSelectedEventArgs(rect, e));
-                                break;
                             }
+                            else
+                            {
+                                rl.Current.Remove(rect);//如果是已选的，置为未选择状态
+                            }
+                            Invalidate();
+                            break;
                         }
                     }
                     break;
@@ -360,7 +371,7 @@ namespace NKnife.Draws.Controls.Frames
                 var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
                 if (rect.Contains(epoint))
                 {
-                    if (!rl.Selected.Contains(rect) && rect != rl.Hover)
+                    if (!rl.Current.Contains(rect) && rect != rl.Hover)
                     {
                         rl.Hover = rect;
                         Invalidate();
@@ -448,11 +459,10 @@ namespace NKnife.Draws.Controls.Frames
                     var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
                     if (rect.Contains(epoint))
                     {
-                        _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, true, rect));
+                        _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, rect));
                         break;
                     }
                 }
-                _Parent.OnRectangleDoubleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, false, Rectangle.Empty));
             }
         }
 
@@ -479,21 +489,21 @@ namespace NKnife.Draws.Controls.Frames
                         var epoint = new Point((int) (e.X/_Parent.Zoom), (int) (e.Y/_Parent.Zoom));
                         if (rect.Contains(epoint))
                         {
-                            _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, true, rect));
+                            _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, rect));
                             break;
                         }
                     }
-                    _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, false, Rectangle.Empty));
                 }
             }
         }
 
         #endregion
 
+        //TODO:为何不能够响应滚轮呢？Bug出在何处？
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            //TODO:为何不响应滚轮呢？
-            if (ModifierKeys.HasFlag(Keys.ShiftKey))
+
+            if ((ModifierKeys & Keys.Shift) == Keys.Shift)
             {
                 Console.WriteLine(e.Delta);
             }

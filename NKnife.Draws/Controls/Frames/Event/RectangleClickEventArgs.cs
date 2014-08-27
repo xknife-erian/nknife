@@ -7,25 +7,16 @@ namespace NKnife.Draws.Controls.Frames.Event
 {
     public class RectangleClickEventArgs : EventArgs
     {
-        public RectangleClickEventArgs(MouseEventArgs e, DrawingBoardDesignMode mode, bool inRect = false)
-            : this(e, mode, inRect, RectangleF.Empty)
-        {
-        }
-
-        public RectangleClickEventArgs(MouseEventArgs e, DrawingBoardDesignMode mode, bool inRect, RectangleF rect)
+        public RectangleClickEventArgs(MouseEventArgs e, DrawingBoardDesignMode mode, RectangleF rect)
         {
             Mode = mode;
             Button = e.Button;
             Clicks = e.Clicks;
-            InRectange = inRect;
-            Rectange = rect;
+            Rectangle = rect;
         }
-
-        public bool InRectange { get; private set; }
-
-        public RectangleF Rectange { get; private set; }
-
         public DrawingBoardDesignMode Mode { get; private set; }
+
+        public RectangleF Rectangle { get; private set; }
 
         /// <summary>
         ///     Gets which mouse button was pressed.
