@@ -490,9 +490,10 @@ namespace NKnife.Draws.Controls.Frames
                         if (rect.Contains(epoint))
                         {
                             _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, rect));
-                            break;
+                            return;
                         }
                     }
+                    _Parent.OnRectangleClick(new RectangleClickEventArgs(e, ImagePanelDesignMode, Rectangle.Empty));
                 }
             }
         }

@@ -57,7 +57,6 @@ namespace NKnife.Draws.Controls.Frames
 
         #region 缩放，滚动条, 鼠标滚轮
 
-
         private void _DrawingBoard_PanelZoomed(object sender, BoardZoomEventArgs e)
         {
             var mpoint = PointToClient(MousePosition);
@@ -153,19 +152,16 @@ namespace NKnife.Draws.Controls.Frames
             _DrawingBoard.Visible = true;
         }
 
-        public void RespondKeyEvent(Keys key)
+        public void DeleteSelected()
         {
-            switch (key)
+            if (_DrawingBoard.ImagePanelDesignMode == DrawingBoardDesignMode.Selecting)
             {
-                case Keys.Delete:
-                {
-                    if (_DrawingBoard.ImagePanelDesignMode == DrawingBoardDesignMode.Selecting)
-                    {
-                        _DrawingBoard.RemoveSelectedRectangle();
-                    }
-                    break;
-                }
+                _DrawingBoard.RemoveSelectedRectangle();
             }
+        }
+
+        public void SelectAll()
+        {
         }
 
         #region 缩放率
@@ -188,8 +184,7 @@ namespace NKnife.Draws.Controls.Frames
 
         #endregion
 
-        /// <summary>
-        /// 首次载入图片时设置图板的位置
+        /// <summary>首次载入图片时设置图板的位置
         /// </summary>
         private void SetImageDesignPanelLocationOnLoaded()
         {
@@ -305,5 +300,6 @@ namespace NKnife.Draws.Controls.Frames
         }
 
         #endregion
+
     }
 }

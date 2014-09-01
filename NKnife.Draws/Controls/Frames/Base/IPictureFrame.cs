@@ -34,12 +34,6 @@ namespace NKnife.Draws.Controls.Frames.Base
         void SetSelectedImage(Image image);
 
         /// <summary>
-        ///     响应键盘事件（快捷键）
-        /// </summary>
-        /// <param name="key"></param>
-        void RespondKeyEvent(Keys key);
-
-        /// <summary>
         ///     当图片的放大（缩小）率发生改变后发生
         /// </summary>
         event EventHandler<ChangedEventArgs<double>> ZoomChanged;
@@ -98,5 +92,9 @@ namespace NKnife.Draws.Controls.Frames.Base
         ///     当设计面板被双击后发生
         /// </summary>
         event EventHandler<MouseEventArgs> BenchDoubleClick;
+
+        void UpdateRectangleList(RectangleList rectangleList);
+        void DeleteSelected();
+        void SelectAll();
     }
 }

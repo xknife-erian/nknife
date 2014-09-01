@@ -3,21 +3,24 @@
     /// <summary>
     /// 一个描述应用程序服务的接口
     /// </summary>
-    public interface IService<in T>
+    public interface IService
     {
+        /// <summary>
+        /// 设置服务参数
+        /// </summary>
+        /// <param name="objects">初始化服务携带的参数.</param>
+        void SetServiceParams(params object[] objects);
+
         /// <summary>
         /// 初始化服务
         /// </summary>
-        /// <param name="args">初始化服务携带的参数.</param>
         /// <returns></returns>
-        bool Initializes(params T[] args);
+        bool Initializes();
 
         /// <summary>
         /// 重新启动服务。先初始化，再执行Start.
         /// </summary>
-        /// <param name="args">初始化服务携带的参数.</param>
-        /// <returns></returns>
-        bool ReStart(params T[] args);
+        bool ReStart();
 
         /// <summary>
         /// 启动服务
