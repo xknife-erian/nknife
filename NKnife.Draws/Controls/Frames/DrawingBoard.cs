@@ -510,23 +510,107 @@ namespace NKnife.Draws.Controls.Frames
             }
             Invalidate();//
         }
+        /*--------------------------------*/
         private void ArrowDown()
         {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count < 1)
+                return;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, rect.Y + 1, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
         }
         private void ArrowIn()
         {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count < 1)
+                return;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                RectangleF newRect;
+                if (rect.Width - 1 > 0 && rect.Height - 1 > 0)
+                    newRect = new RectangleF(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
+                else
+                    newRect = rect;
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
         }
         private void ArrowLeft()
         {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count < 1)
+                return;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X-1, rect.Y, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
         }
         private void ArrowOut()
         {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count < 1)
+                return;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, rect.Y, rect.Width+1, rect.Height+1);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
         }
         private void ArrowRight()
         {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count < 1)
+                return;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X+1, rect.Y, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+
         }
         private void ArrowUp()
         {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count < 1)
+                return;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, rect.Y-1, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
         }
 
         #endregion
