@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using NKnife.Draws.Controls.Base;
 using NKnife.Draws.Controls.Frames.Base;
 using NKnife.Draws.Controls.Frames.Event;
 using NKnife.Ioc;
@@ -258,7 +259,7 @@ namespace NKnife.Draws.Controls.Frames
 
         #endregion
 
-        #region 键盘响应
+        #region 响应:删除矩形,选择全部,矩形操作
 
         public void RemoveSelectedRectangle()
         {
@@ -276,6 +277,259 @@ namespace NKnife.Draws.Controls.Frames
                 }
             }
         }
+
+        public void SelectAllRectangles()
+        {
+            _Parent.Rectangles.Current.Clear();
+            foreach (var rectangle in _Parent.Rectangles)
+            {
+                _Parent.Rectangles.Current.Add(rectangle);
+            }
+            Invalidate();
+        }
+
+        /// <summary>根据指定的操作模式对矩形进行操作
+        /// </summary>
+        /// <param name="ro">指定的操作模式</param>
+        public void RectangleOperating(RectangleOperation ro)
+        {
+            switch (ro)
+            {
+                #region case
+                case RectangleOperation.AlignBottom:
+                    AlignBottom();
+                    break;
+                case RectangleOperation.AlignCenter:
+                    AlignCenter();
+                    break;
+                case RectangleOperation.AlignHeight:
+                    AlignHeight();
+                    break;
+                case RectangleOperation.AlignLeft:
+                    AlignLeft();
+                    break;
+                case RectangleOperation.AlignMiddle:
+                    AlignMiddle();
+                    break;
+                case RectangleOperation.AlignRight:
+                    AlignRight();
+                    break;
+                case RectangleOperation.AlignSame:
+                    AlignSame();
+                    break;
+                case RectangleOperation.AlignTop:
+                    AlignTop();
+                    break;
+                case RectangleOperation.AlignWidth:
+                    AlignWidth();
+                    break;
+                case RectangleOperation.ArrowDown:
+                    ArrowDown();
+                    break;
+                case RectangleOperation.ArrowIn:
+                    ArrowIn();
+                    break;
+                case RectangleOperation.ArrowLeft:
+                    ArrowLeft();
+                    break;
+                case RectangleOperation.ArrowOut:
+                    ArrowOut();
+                    break;
+                case RectangleOperation.ArrowRight:
+                    ArrowRight();
+                    break;
+                case RectangleOperation.ArrowUp:
+                    ArrowUp();
+                    break;
+                #endregion
+            }
+        }
+
+        #region 矩形操作
+
+        private void AlignBottom()
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点
+            var baseY = current[0].Y + current[0].Height;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, baseY - rect.Height, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+        }
+        private void AlignCenter()//(纵向居中)
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点(纵向居中)
+            var baseX = current[0].X + current[0].Width/2;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(baseX - rect.Width/2, rect.Y, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+        }
+        private void AlignHeight()
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点
+            var baseH = current[0].Height;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, rect.Y, rect.Width, baseH);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+        }
+        private void AlignLeft()
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点
+            var baseX = current[0].X;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(baseX, rect.Y, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+        }
+        private void AlignMiddle()//(横向居中)
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点(横向居中)
+            var baseY = current[0].Y + current[0].Height/2;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, baseY - rect.Height/2, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();
+        }
+        private void AlignRight()
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点
+            var baseX = current[0].X + current[0].Width;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(baseX - rect.Width, rect.Y, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+        }
+        private void AlignSame()
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点
+            var baseH = current[0].Height;
+            var baseW = current[0].Width;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, rect.Y, baseW, baseH);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+        }
+        private void AlignTop()
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点
+            var baseY = current[0].Y;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, baseY, rect.Width, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();
+        }
+        private void AlignWidth()
+        {
+            var current = _Parent.Rectangles.Current;
+            if (current.Count <= 1)
+                return;
+            //基准点
+            var baseW = current[0].Width;
+            var clone = (RectangleList.Selected)current.Clone();
+            current.Clear();
+            foreach (var rect in clone)
+            {
+                var newRect = new RectangleF(rect.X, rect.Y, baseW, rect.Height);
+                var index = _Parent.Rectangles.IndexOf(rect);
+                _Parent.Rectangles[index] = newRect;
+                current.Add(newRect);
+            }
+            Invalidate();//
+        }
+        private void ArrowDown()
+        {
+        }
+        private void ArrowIn()
+        {
+        }
+        private void ArrowLeft()
+        {
+        }
+        private void ArrowOut()
+        {
+        }
+        private void ArrowRight()
+        {
+        }
+        private void ArrowUp()
+        {
+        }
+
+        #endregion
 
         #endregion
 

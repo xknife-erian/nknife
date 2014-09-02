@@ -25,6 +25,9 @@ namespace NKnife.Draws.Controls.Frames.Base
         /// </summary>
         public RectangleF Hover { get; set; }
 
+        /// <summary>
+        /// 已选择的矩形的列表
+        /// </summary>
         public Selected Current { get; set; }
 
         #region Event
@@ -157,7 +160,10 @@ namespace NKnife.Draws.Controls.Frames.Base
 
         #region Class
 
-        public class Selected : IList<RectangleF>
+        /// <summary>
+        /// 描述一个已选择的矩形的列表的集合类，该类添加了集合发生变化时的事件
+        /// </summary>
+        public class Selected : IList<RectangleF>, ICloneable
         {
             private readonly List<RectangleF> _List = new List<RectangleF>();
 
@@ -252,6 +258,16 @@ namespace NKnife.Draws.Controls.Frames.Base
                 EventHandler handler = CollectionChanged;
                 if (handler != null)
                     handler(this, EventArgs.Empty);
+            }
+
+            public object Clone()
+            {
+                var list = new Selected();
+                foreach (var rect in this)
+                {
+                    list.Add(rect);
+                }
+                return list;
             }
         }
 

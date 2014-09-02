@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using NKnife.Draws.Controls.Base;
 using NKnife.Draws.Controls.Frames.Event;
 using NKnife.Events;
 
@@ -96,5 +97,11 @@ namespace NKnife.Draws.Controls.Frames.Base
         void UpdateRectangleList(RectangleList rectangleList);
         void DeleteSelected();
         void SelectAll();
+
+        /// <summary>
+        /// 根据指定的操作模式对矩形进行操作
+        /// </summary>
+        /// <param name="ro">指定的操作模式</param>
+        void RectangleOperating(RectangleOperation ro);
     }
 }
