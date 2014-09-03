@@ -177,4 +177,80 @@ public class HttpRequest
             e.printStackTrace();
         }
     }
+
+    /**
+     * @param actionUrl 上传地址
+     * @param FileName  上传文件路径
+     * @return
+     * @throws IOException
+     */
+    public String upload(String actionUrl, String FileName) throws IOException
+    {
+        // 产生随机分隔内容
+        String BOUNDARY = java.util.UUID.randomUUID().toString();
+
+        String PREFIX = "--", LINE = "\r\n";
+        String MULTIPART_FROM_DATA = "multipart/form-data";
+        String CHARSET = "UTF-8";
+
+        // 定义URL实例
+        URL uri = new URL(actionUrl);
+        HttpURLConnection conn = (HttpURLConnection) uri.openConnection();
+        // 设置从主机读取数据超时
+        conn.setReadTimeout(10 * 1000);
+        setDoIO(conn);
+        conn.setUseCaches(false);
+        conn.setRequestMethod("POST");
+        // 维持长连接
+        conn.setRequestProperty("connection", "keep-alive");
+        conn.setRequestProperty("Charset", "UTF-8");
+        // 设置文件类型
+        conn.setRequestProperty("Content-Type", MULTIPART_FROM_DATA + ";boundary=" + BOUNDARY);
+
+        // 创建一个新的数据输出流，将数据写入指定基础输出流
+        DataOutputStream outStream = new DataOutputStream(conn.getOutputStream());
+        // 发送文件数据
+        if (FileName != null)
+        {
+            // 构建发送字符串数据
+            StringBuilder sb1 = new StringBuilder();
+            sb1.append(PREFIX);
+            sb1.append(BOUNDARY);
+            sb1.append(LINE);
+            sb1.append("Content-Disposition: form-data; name=\"file\"; filename=\"" + FileName + "\"" + LINE);
+            sb1.append("Content-Type: application/octet-stream;chartset=" + CHARSET + LINE);
+            sb1.append(LINE);
+            // 写入到输出流中
+            outStream.write(sb1.toString().getBytes());
+            // 将文件读入输入流中
+            InputStream is = new FileInputStream(FileName);
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            // 写入输出流
+            while ((len = is.read(buffer)) != -1)
+            {
+                outStream.write(buffer, 0, len);
+            }
+            is.close();
+            // 添加换行标志
+            outStream.write(LINE.getBytes());
+        }
+        // 请求结束标志
+        byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE).getBytes();
+        outStream.write(end_data);
+        // 刷新发送数据
+        outStream.flush();
+
+        String result = "";
+
+        // 得到响应码
+        int res = conn.getResponseCode();
+        if (res == 200)
+        {
+            InputStream in = conn.getInputStream();
+            result = read(in);
+        }
+        _Logger.info(String.format("上传结果状态码 %d (返回 %s)", res, result));
+        return result;
+    }
 }
