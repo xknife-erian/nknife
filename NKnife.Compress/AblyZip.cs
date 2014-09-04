@@ -186,14 +186,18 @@ namespace NKnife.Compress
                 if (!File.Exists(file) || file.EndsWith(@"/")) //如果文件不存在，或者表达的是目录
                     continue;
                 string newfilename = null;
-                if (inpath == null)
+                if (string.IsNullOrEmpty(inpath))
                 {
-                    newfilename = file.Contains("\\") ? file.Substring(file.LastIndexOf('\\')) : file;
+                    newfilename = file.Contains("\\") ? file.Substring(file.LastIndexOf('\\') + 1) : file;
                 }
                 else
                 {
                     if (file.Contains(inpath))
+                    {
                         newfilename = file.Replace(inpath, "");
+                        if (newfilename.StartsWith(@"\"))
+                            newfilename = newfilename.TrimStart('\\');
+                    }
                 }
                 var oZipEntry = new ZipEntry(newfilename)
                                     {

@@ -11,30 +11,107 @@ namespace NKnife.Wrapper
     /// <summary>
     ///     面向Java的Servlet的Web请求操作
     /// </summary>
-    public class QuickWebs
+    public class JWebs
     {
         private JWebClient _WebClient;
+        private const string BOUNDARY = "~~#######~~";
 
         /// <summary>
         ///     上传文件
         /// </summary>
         /// <param name="file">指定的文件</param>
         /// <param name="servlet">指定的Servlet地址</param>
-        public static void Upload(FileInfo file, string servlet)
+        public string UploadFile(FileInfo file, string servlet)
         {
-            var webrequest = (HttpWebRequest) WebRequest.Create(servlet);
-            webrequest.Method = "POST";
-            var fileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
-            webrequest.ContentLength = fileStream.Length;
-            Stream requestStream = webrequest.GetRequestStream();
+//            _WebClient = new JWebClient();
+//            _WebClient.Headers.Add("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
+//
+//            _WebClient.Timeout = 5000;
+//
+//            byte[] data = File.ReadAllBytes(file.FullName);
+            string responseContent; 
 
-            var buffer = new Byte[(int) fileStream.Length];
-            int bytesRead = 0;
+            var webRequest = (HttpWebRequest)WebRequest.Create(servlet);
+            webRequest.Method = "POST";
+            webRequest.Timeout = 1000*120;
+//            webRequest("Charset", "UTF-8");
+            webRequest.ContentType = "multipart/form-data; boundary=" + BOUNDARY; 
+
+            var memStream = new MemoryStream();
+            var fileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+            // 边界符  
+            var beginBoundary = Encoding.ASCII.GetBytes("--" + BOUNDARY + "\r\n");
+            var endBoundary = Encoding.ASCII.GetBytes("\r\n--" + BOUNDARY + "--\r\n");
+            // 写入文件  
+            const string FILE_PART_HEADER = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n" +
+                 "Content-Type: application/octet-stream\r\n\r\n";
+            var fileSimpleName = file.Name.Substring(0,file.Name.LastIndexOf('.'));
+            var header = string.Format(FILE_PART_HEADER, fileSimpleName, file.Name);
+            var headerbytes = Encoding.UTF8.GetBytes(header);
+
+            memStream.Write(beginBoundary, 0, beginBoundary.Length);
+            memStream.Write(headerbytes, 0, headerbytes.Length);
+
+            var buffer = new byte[512];
+            int bytesRead; // =0  
+
             while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
             {
-                requestStream.Write(buffer, 0, bytesRead);
+                memStream.Write(buffer, 0, bytesRead);
             }
-            requestStream.Close();
+
+            // 写入最后的结束边界符  
+            memStream.Write(endBoundary, 0, endBoundary.Length);
+
+            webRequest.ContentLength = memStream.Length;
+
+            var requestStream = webRequest.GetRequestStream();
+
+            memStream.Position = 0;
+            var tempBuffer = new byte[memStream.Length];
+            memStream.Read(tempBuffer, 0, tempBuffer.Length);
+            memStream.Close();
+
+            requestStream.Write(tempBuffer, 0, tempBuffer.Length);
+            //requestStream.Close();
+
+            var httpWebResponse = (HttpWebResponse)webRequest.GetResponse();
+
+            using (var httpStreamReader = new StreamReader(httpWebResponse.GetResponseStream(), Encoding.GetEncoding("utf-8")))
+            {
+                responseContent = httpStreamReader.ReadToEnd();
+            }
+
+            fileStream.Close();
+            httpWebResponse.Close();
+            //webRequest.Abort();
+
+            return responseContent;
+
+
+//            byte[] head = Encoding.GetEncoding("ISO-8859-1").GetBytes("boundary=");
+//            var d = new byte[data.Length + head.Length];
+//            Array.Copy(head,d,head.Length);
+//            Array.Copy(data,0,d,head.Length,data.Length);
+//            
+//            byte[] replay = _WebClient.UploadData(servlet, "POST", data);
+//
+//            return Encoding.UTF8.GetString(replay);
+//
+//            var webrequest = (HttpWebRequest) WebRequest.Create(servlet);
+//            webrequest.Method = "POST";
+//            var fileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+//            webrequest.ContentLength = fileStream.Length;
+//            Stream requestStream = webrequest.GetRequestStream();
+//            
+//
+//            var buffer = new byte[(int) fileStream.Length];
+//            int bytesRead = 0;
+//            while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+//            {
+//                requestStream.Write(buffer, 0, bytesRead);
+//            }
+//            requestStream.Close();
         }
 
         /// <summary>
@@ -66,6 +143,7 @@ namespace NKnife.Wrapper
 
             byte[] data = Encoding.UTF8.GetBytes(ConvertNameValueToString(postVars));
             byte[] replay = _WebClient.UploadData(url, "POST", data);
+            
 
             return encoding.GetString(replay);
         }
