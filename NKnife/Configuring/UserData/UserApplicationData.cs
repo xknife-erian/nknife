@@ -44,7 +44,7 @@ namespace NKnife.Configuring.UserData
                 {
                     const Environment.SpecialFolder FOLDER = Environment.SpecialFolder.ApplicationData;
                     string path = Environment.GetFolderPath(FOLDER);
-                    string namespaceStr = Assembly.GetEntryAssembly().GetName().FullName;
+                    string namespaceStr = Assembly.GetEntryAssembly().GetName().Name;
                     if (string.IsNullOrWhiteSpace(namespaceStr))
                         namespaceStr = "NKnife.UserData";
                     string subpath = namespaceStr.Replace('.', '\\').Insert(0, "\\");

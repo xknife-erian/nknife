@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Ninject.Modules;
 using NKnife.Configuring;
+using NKnife.Configuring.Interfaces;
+using NKnife.Configuring.UserData;
 using NKnife.Interface;
 
 namespace NKnife.Ioc
@@ -12,7 +14,7 @@ namespace NKnife.Ioc
     {
         public override void Load()
         {
-            Bind<CoderSettingModule>().To<CoderSettingModule>().InSingletonScope();
+            Bind<IUserApplicationData>().To<UserApplicationData>().InSingletonScope();
         }
     }
 }
