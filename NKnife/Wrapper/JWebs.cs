@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 using NKnife.ShareResources;
+using NLog;
 
 namespace NKnife.Wrapper
 {
@@ -13,105 +14,103 @@ namespace NKnife.Wrapper
     /// </summary>
     public class JWebs
     {
+        private const string BOUNDARY = "~~~##^##~~~";
+        private const string CONTENT_TYPE = "multipart/form-data; boundary=" + BOUNDARY;
+
+        private const string FILE_PART_HEADER = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n" +
+                                                "Content-Type: application/octet-stream\r\n\r\n";
+
+        private const string BEGIN_BOUNDARY = "--" + BOUNDARY + "\r\n";
+        private const string END_BOUNDARY = "\r\n--" + BOUNDARY + "--\r\n";
+
+        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+
         private JWebClient _WebClient;
-        private const string BOUNDARY = "~~#######~~";
 
         /// <summary>
         ///     上传文件
         /// </summary>
         /// <param name="file">指定的文件</param>
         /// <param name="servlet">指定的Servlet地址</param>
-        public string UploadFile(FileInfo file, string servlet)
+        /// <param name="timeout">超时，默认30秒</param>
+        public string UploadFile(FileInfo file, string servlet, int timeout = 1000*30)
         {
-//            _WebClient = new JWebClient();
-//            _WebClient.Headers.Add("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
-//
-//            _WebClient.Timeout = 5000;
-//
-//            byte[] data = File.ReadAllBytes(file.FullName);
-            string responseContent; 
+            string responseContent = string.Empty;
 
-            var webRequest = (HttpWebRequest)WebRequest.Create(servlet);
-            webRequest.Method = "POST";
-            webRequest.Timeout = 1000*120;
-//            webRequest("Charset", "UTF-8");
-            webRequest.ContentType = "multipart/form-data; boundary=" + BOUNDARY; 
+            var rootRequest = (HttpWebRequest) WebRequest.Create(servlet);
+            rootRequest.Method = "POST";
+            rootRequest.Timeout = timeout;
+            rootRequest.ContentType = CONTENT_TYPE;
 
-            var memStream = new MemoryStream();
-            var fileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
-            // 边界符  
-            var beginBoundary = Encoding.ASCII.GetBytes("--" + BOUNDARY + "\r\n");
-            var endBoundary = Encoding.ASCII.GetBytes("\r\n--" + BOUNDARY + "--\r\n");
-            // 写入文件  
-            const string FILE_PART_HEADER = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n" +
-                 "Content-Type: application/octet-stream\r\n\r\n";
-            var fileSimpleName = file.Name.Substring(0,file.Name.LastIndexOf('.'));
-            var header = string.Format(FILE_PART_HEADER, fileSimpleName, file.Name);
-            var headerbytes = Encoding.UTF8.GetBytes(header);
+            byte[] beginBoundary = Encoding.ASCII.GetBytes(BEGIN_BOUNDARY);
+            byte[] endBoundary = Encoding.ASCII.GetBytes(END_BOUNDARY);
 
-            memStream.Write(beginBoundary, 0, beginBoundary.Length);
-            memStream.Write(headerbytes, 0, headerbytes.Length);
+            string fileSimpleName = file.Name.Substring(0, file.Name.LastIndexOf('.'));
+            string header = string.Format(FILE_PART_HEADER, fileSimpleName, file.Name);
 
-            var buffer = new byte[512];
-            int bytesRead; // =0  
-
-            while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+            using (var memStream = new MemoryStream())
             {
-                memStream.Write(buffer, 0, bytesRead);
+                // 根据W3C的相关协议(http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4)进行组包，以下是文件块，
+                // 用临时的内存流先进行临时组包
+                // 1.写入文件块开始时的边界符
+                memStream.Write(beginBoundary, 0, beginBoundary.Length);
+
+                // 2.写入文件块的文件头（即文件描述信息）
+                byte[] headerbytes = Encoding.ASCII.GetBytes(header);
+                memStream.Write(headerbytes, 0, headerbytes.Length);
+
+                // 3.读取实际的磁盘中的文件并写入
+                var buffer = new byte[512];
+                using (var fileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
+                {
+                    int bytesRead = 0;
+                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                    {
+                        memStream.Write(buffer, 0, bytesRead);
+                    }
+                    fileStream.Close();
+                }
+
+                // 4.写入文件块最后的结束边界符  
+                memStream.Write(endBoundary, 0, endBoundary.Length);
+
+                // 设置发送信息的长度
+                rootRequest.ContentLength = memStream.Length;
+
+                // 将已组成的协议写入请求中
+                Stream requestStream = rootRequest.GetRequestStream();
+                memStream.Position = 0;
+                var tempBuffer = new byte[memStream.Length];
+                memStream.Read(tempBuffer, 0, tempBuffer.Length);
+
+                requestStream.Write(tempBuffer, 0, tempBuffer.Length);
+                requestStream.Close();
+
+                memStream.Close();
             }
 
-            // 写入最后的结束边界符  
-            memStream.Write(endBoundary, 0, endBoundary.Length);
-
-            webRequest.ContentLength = memStream.Length;
-
-            var requestStream = webRequest.GetRequestStream();
-
-            memStream.Position = 0;
-            var tempBuffer = new byte[memStream.Length];
-            memStream.Read(tempBuffer, 0, tempBuffer.Length);
-            memStream.Close();
-
-            requestStream.Write(tempBuffer, 0, tempBuffer.Length);
-            //requestStream.Close();
-
-            var httpWebResponse = (HttpWebResponse)webRequest.GetResponse();
-
-            using (var httpStreamReader = new StreamReader(httpWebResponse.GetResponseStream(), Encoding.GetEncoding("utf-8")))
+            try
             {
-                responseContent = httpStreamReader.ReadToEnd();
+                // 获取回复
+                using (var httpWebResponse = (HttpWebResponse) rootRequest.GetResponse())
+                {
+                    Stream replayStream = httpWebResponse.GetResponseStream();
+                    if (replayStream != null)
+                    {
+                        using (var reader = new StreamReader(replayStream, Encoding.UTF8))
+                            responseContent = reader.ReadToEnd();
+                    }
+                    httpWebResponse.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                _Logger.Warn("获取回复异常", e);
             }
 
-            fileStream.Close();
-            httpWebResponse.Close();
-            //webRequest.Abort();
+            rootRequest.Abort();
 
             return responseContent;
-
-
-//            byte[] head = Encoding.GetEncoding("ISO-8859-1").GetBytes("boundary=");
-//            var d = new byte[data.Length + head.Length];
-//            Array.Copy(head,d,head.Length);
-//            Array.Copy(data,0,d,head.Length,data.Length);
-//            
-//            byte[] replay = _WebClient.UploadData(servlet, "POST", data);
-//
-//            return Encoding.UTF8.GetString(replay);
-//
-//            var webrequest = (HttpWebRequest) WebRequest.Create(servlet);
-//            webrequest.Method = "POST";
-//            var fileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
-//            webrequest.ContentLength = fileStream.Length;
-//            Stream requestStream = webrequest.GetRequestStream();
-//            
-//
-//            var buffer = new byte[(int) fileStream.Length];
-//            int bytesRead = 0;
-//            while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
-//            {
-//                requestStream.Write(buffer, 0, bytesRead);
-//            }
-//            requestStream.Close();
         }
 
         /// <summary>
@@ -143,7 +142,7 @@ namespace NKnife.Wrapper
 
             byte[] data = Encoding.UTF8.GetBytes(ConvertNameValueToString(postVars));
             byte[] replay = _WebClient.UploadData(url, "POST", data);
-            
+
 
             return encoding.GetString(replay);
         }
