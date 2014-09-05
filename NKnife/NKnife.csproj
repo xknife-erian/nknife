@@ -569,6 +569,7 @@
     <Compile Include="Wrapper\Duration.cs" />
     <Compile Include="FTP\FtpClient.cs" />
     <Compile Include="Wrapper\GlobalHotkey.cs" />
+    <Compile Include="Interface\IAbout.cs" />
     <Compile Include="Wrapper\JWebs.cs" />
     <Compile Include="Wrapper\ServiceForm.cs" />
     <Compile Include="Zip\GZip.cs" />

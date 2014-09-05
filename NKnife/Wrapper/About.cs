@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using NKnife.Interface;
 
 namespace NKnife.Wrapper
 {
-    public static class About
+    public class About : IAbout
     {
-        public static string AssemblyTitle
+        public string AssemblyTitle
         {
             get
             {
@@ -23,12 +24,12 @@ namespace NKnife.Wrapper
             }
         }
 
-        public static Version AssemblyVersion
+        public Version AssemblyVersion
         {
             get { return Assembly.GetEntryAssembly().GetName().Version; }
         }
 
-        public static string AssemblyDescription
+        public string AssemblyDescription
         {
             get
             {
@@ -41,7 +42,7 @@ namespace NKnife.Wrapper
             }
         }
 
-        public static string AssemblyProduct
+        public string AssemblyProduct
         {
             get
             {
@@ -54,7 +55,7 @@ namespace NKnife.Wrapper
             }
         }
 
-        public static string AssemblyCopyright
+        public string AssemblyCopyright
         {
             get
             {
@@ -67,7 +68,7 @@ namespace NKnife.Wrapper
             }
         }
 
-        public static string AssemblyCompany
+        public string AssemblyCompany
         {
             get
             {
