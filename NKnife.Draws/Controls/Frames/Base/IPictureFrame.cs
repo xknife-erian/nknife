@@ -103,5 +103,7 @@ namespace NKnife.Draws.Controls.Frames.Base
         /// </summary>
         /// <param name="ro">指定的操作模式</param>
         void RectangleOperating(RectangleOperation ro);
+
+        void PressShiftKey(bool isKeyDown);
     }
 }

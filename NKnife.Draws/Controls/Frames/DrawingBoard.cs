@@ -71,6 +71,12 @@ namespace NKnife.Draws.Controls.Frames
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
             ImagePanelDesignMode = DrawingBoardDesignMode.Selecting;
+            KeyDown += DrawingBoard_KeyDown;
+        }
+
+        void DrawingBoard_KeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine(e.KeyCode);
         }
 
         #endregion
@@ -98,10 +104,31 @@ namespace NKnife.Draws.Controls.Frames
                         Cursor = Cursors.Hand;
                         break;
                     case DrawingBoardDesignMode.Zooming:
-                        Cursor = Cursors.Help;
+                        SetCursor(true, new Point(0,0));
                         break;
                 }
             }
+        }
+
+        public void SetZoomMode(bool isKeyDown)
+        {
+            SetCursor(!isKeyDown, new Point(0, 0));
+        }
+
+        //系统没有通常缩放的放大镜图标，该函数从资源载入一个PNG图片做为图标
+        private void SetCursor(bool isPlus, Point hotPoint)
+        {
+            Bitmap src = isPlus ? OwnResources.cursor_zoom_plus : OwnResources.cursor_zoom_minus;
+
+            var cursorBitmap = new Bitmap(src.Width * 2 - hotPoint.X, src.Height * 2 - hotPoint.Y);
+            Graphics g = Graphics.FromImage(cursorBitmap);
+            g.Clear(Color.FromArgb(0, 0, 0, 0));
+            g.DrawImage(src, src.Width - hotPoint.X, src.Height - hotPoint.Y, src.Width, src.Height);
+
+            Cursor = new Cursor(cursorBitmap.GetHicon());
+
+            g.Dispose();
+            cursorBitmap.Dispose();
         }
 
         public Image Image

@@ -175,6 +175,12 @@ namespace NKnife.Draws.Controls.Frames
             _DrawingBoard.RectangleOperating(ro);
         }
 
+        public void PressShiftKey(bool isKeyDown)
+        {
+            if (_DrawingBoard.ImagePanelDesignMode == DrawingBoardDesignMode.Zooming)
+                _DrawingBoard.SetZoomMode(isKeyDown);
+        }
+
         #region 缩放率
 
         private double _Zoom;
