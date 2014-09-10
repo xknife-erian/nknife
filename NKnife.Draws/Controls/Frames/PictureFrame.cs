@@ -144,6 +144,8 @@ namespace NKnife.Draws.Controls.Frames
             {
                 throw new ArgumentNullException("image", "指定的设计图片image不应为Null");
             }
+            if(_DrawingBoard.Image != null)
+                Rectangles.Clear();
             _DrawingBoard.Image = image;
 
             _DrawingBoard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
@@ -151,6 +153,26 @@ namespace NKnife.Draws.Controls.Frames
 
             SetImageDesignPanelLocationOnLoaded();
             _DrawingBoard.Visible = true;
+        }
+
+        /// <summary>
+        /// 设置当前被选择的矩形的下一步操作模式
+        /// </summary>
+        /// <param name="selectedMode"></param>
+        public void SetSelectedMode(RectangleList.SelectedMode selectedMode)
+        {
+            Rectangles.Current.SelectedMode = selectedMode;
+        }
+
+        /// <summary>
+        /// 将当前已克隆的进行粘贴
+        /// </summary>
+        /// <param name="screenPoint"></param>
+        public void PasteSelected(Point screenPoint)
+        {
+            if (_DrawingBoard.ImagePanelDesignMode != DrawingBoardDesignMode.Selecting)
+                return;
+            _DrawingBoard.PasteSelectedRectangle(screenPoint);
         }
 
         public void DeleteSelected()

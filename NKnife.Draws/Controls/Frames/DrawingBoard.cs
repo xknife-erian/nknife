@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -71,12 +73,6 @@ namespace NKnife.Draws.Controls.Frames
             ParentChanged += ImageDesignPanel_ParentChanged;
             BackgroundImageLayout = ImageLayout.Zoom;
             ImagePanelDesignMode = DrawingBoardDesignMode.Selecting;
-            KeyDown += DrawingBoard_KeyDown;
-        }
-
-        void DrawingBoard_KeyDown(object sender, KeyEventArgs e)
-        {
-            Console.WriteLine(e.KeyCode);
         }
 
         #endregion
@@ -286,7 +282,7 @@ namespace NKnife.Draws.Controls.Frames
 
         #endregion
 
-        #region 响应:删除矩形,选择全部,矩形操作
+        #region 响应:删除矩形,选择全部,粘贴已选择的矩形,矩形操作
 
         public void RemoveSelectedRectangle()
         {
@@ -300,9 +296,55 @@ namespace NKnife.Draws.Controls.Frames
                     {
                         rl.Remove(rect);
                     }
+                    rl.Current.Clear();
                     Invalidate();
                 }
             }
+        }
+
+        public void PasteSelectedRectangle(Point screenPoint)
+        {
+            var rects = _Parent.Rectangles;
+            if (rects.Count <= 0 || rects.Current.Count <= 0 ||
+                rects.Current.SelectedMode == RectangleList.SelectedMode.None)
+            {
+                Debug.Fail("未做有效判断,即开始粘贴.");
+                return;
+            }
+            PointF first = rects.Current[0].Location;
+            if (screenPoint != Point.Empty)
+            {
+                var c = PointToClient(screenPoint);
+                first = new PointF((float) (c.X*_Parent.Zoom), (float) (c.Y*_Parent.Zoom));
+            }
+
+            float offsetX = 15;
+            float offsetY = 15;
+            if (first != rects.Current[0].Location)
+            {
+                var lct = rects.Current[0].Location;
+                offsetX = first.X - lct.X;
+                offsetY = first.Y - lct.Y;
+            }
+            var newList = new List<RectangleF>(rects.Current.Count);
+            foreach (var rect in rects.Current)
+            {
+                var newRect = new RectangleF(rect.X + offsetX, rect.Y + offsetY, rect.Width, rect.Height);
+                newList.Add(newRect);
+
+                switch (rects.Current.SelectedMode)
+                {
+                    case RectangleList.SelectedMode.Cut:
+                        rects.Remove(rect);
+                        break;
+                }
+            }
+            rects.AddRange(newList);
+
+            rects.Current.Clear();
+            rects.Current.AddRange(newList);
+            rects.Current.SelectedMode = RectangleList.SelectedMode.None;
+            Invalidate();
         }
 
         public void SelectAllRectangles()
@@ -672,7 +714,8 @@ namespace NKnife.Draws.Controls.Frames
                             }
                             else
                             {
-                                rl.Current.Remove(rect);//如果是已选的，置为未选择状态
+                                if (e.Button == MouseButtons.Left)
+                                    rl.Current.Remove(rect); //如果是已选的，置为未选择状态
                             }
                             Invalidate();
                             break;

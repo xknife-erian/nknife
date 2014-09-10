@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
 using NKnife.Draws.Common;
+using NKnife.Events;
 using NKnife.Interface;
 
 namespace NKnife.Draws.Controls.Frames.Base
@@ -64,9 +65,16 @@ namespace NKnife.Draws.Controls.Frames.Base
             OnCollectionChanged();
         }
 
+        public void AddRange(IEnumerable<RectangleF> rects)
+        {
+            _List.AddRange(rects);
+            OnCollectionChanged();
+        }
+
         public void Clear()
         {
             _List.Clear();
+            Current.Clear();
             OnCollectionChanged();
         }
 
@@ -166,6 +174,29 @@ namespace NKnife.Draws.Controls.Frames.Base
         public class Selected : IList<RectangleF>, ICloneable
         {
             private readonly List<RectangleF> _List = new List<RectangleF>();
+            private SelectedMode _SelectedMode = SelectedMode.None;
+
+            public Selected()
+            {
+                CollectionChanged += (s, e) =>
+                {
+                    SelectedMode = SelectedMode.None;
+                };
+            }
+
+            /// <summary>
+            /// 当前被选择的矩形集合的下一步工作模式
+            /// </summary>
+            public SelectedMode SelectedMode
+            {
+                get { return _SelectedMode; }
+                set
+                {
+                    var old = _SelectedMode;
+                    _SelectedMode = value;
+                    OnSelectedModeChanged(new ChangedEventArgs<SelectedMode>(old, value));
+                }
+            }
 
             #region IList
 
@@ -182,6 +213,12 @@ namespace NKnife.Draws.Controls.Frames.Base
             public void Add(RectangleF item)
             {
                 _List.Add(item);
+                OnCollectionChanged();
+            }
+
+            public void AddRange(IEnumerable<RectangleF> rects)
+            {
+                _List.AddRange(rects);
                 OnCollectionChanged();
             }
 
@@ -248,6 +285,15 @@ namespace NKnife.Draws.Controls.Frames.Base
 
             #endregion
 
+            public event EventHandler<ChangedEventArgs<SelectedMode>> SelectedModeChanged;
+
+            protected virtual void OnSelectedModeChanged(ChangedEventArgs<SelectedMode> e)
+            {
+                EventHandler<ChangedEventArgs<SelectedMode>> handler = SelectedModeChanged;
+                if (handler != null) 
+                    handler(this, e);
+            }
+
             /// <summary>
             ///     当集合内部发生变化时发生
             /// </summary>
@@ -269,6 +315,25 @@ namespace NKnife.Draws.Controls.Frames.Base
                 }
                 return list;
             }
+        }
+
+        /// <summary>
+        /// 当前被选择的矩形集合的下一步工作模式
+        /// </summary>
+        public enum SelectedMode
+        {
+            /// <summary>
+            /// 下一步无动作
+            /// </summary>
+            None,
+            /// <summary>
+            /// 即将被剪切
+            /// </summary>
+            Cut,
+            /// <summary>
+            /// 即将被拷贝
+            /// </summary>
+            Copy            
         }
 
         #endregion
