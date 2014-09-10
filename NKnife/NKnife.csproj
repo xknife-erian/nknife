@@ -154,8 +154,8 @@
     <Compile Include="Interface\IFileCompress.cs" />
     <Compile Include="Interface\ITouchInput.cs" />
     <Compile Include="Ioc\DI.cs" />
-    <Compile Include="Events\ChangedEventArgs.cs" />
-    <Compile Include="Events\EventArgs.cs" />
+    <Compile Include="Events\ChangedEventArgs`.cs" />
+    <Compile Include="Events\EventArgs`.cs" />
     <Compile Include="Exceptions\NKnifeException.cs" />
     <Compile Include="Exceptions\TypeConvertingException.cs" />
     <Compile Include="Extensions\ArrayExtension.cs" />
