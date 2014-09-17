@@ -37,8 +37,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Common\Res\Main.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -117,7 +116,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>OwnResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="NLog.config">
+    <None Include="nllog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

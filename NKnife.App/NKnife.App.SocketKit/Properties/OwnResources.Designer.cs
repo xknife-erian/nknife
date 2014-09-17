@@ -63,9 +63,9 @@ namespace NKnife.Socket.StarterKit.Properties {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon MainIcon {
+        internal static System.Drawing.Icon Main {
             get {
-                object obj = ResourceManager.GetObject("MainIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("Main", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

@@ -22,7 +22,7 @@ namespace NKnife.Socket.StarterKit
             DI.Initialize();
             logger.Info("Ioc完成...");
 
-            Application.Run(new MainForm());
+            Application.Run(new DoorForm());
         }
     }
 }
