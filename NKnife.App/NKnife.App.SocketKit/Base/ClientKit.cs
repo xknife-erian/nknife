@@ -7,7 +7,7 @@ using SocketKnife.Protocol;
 
 namespace NKnife.Socket.StarterKit.Base
 {
-    public class ClientKit : LightClient
+    public class ClientKit : ClientKnife
     {
         public ClientKit()
             : base(SocketMode.Talk, "Socket-Client-StarterKit")
