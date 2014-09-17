@@ -26,12 +26,35 @@
 			<RowDefinition Height="220" />
 		</Grid.RowDefinitions>
 
-		<StackPanel Grid.Row="0" Grid.Column="0" Margin="5,5,1,0" Orientation="Horizontal">
-			<Button x:Name="_CallPinyinPanelButton" Click="CallPinyinPanelButton_Click" HorizontalAlignment="Left"
-				Height="50" Content="拼音" Padding="20,0,20,0" />
-			<Button x:Name="_CallHandWriterPanelButton" Click="CallHandWriterPanel_Click" HorizontalAlignment="Left"
-				Height="50" Content="手写" Padding="20,0,20,0" />
-		</StackPanel>
+		<DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,5,-3">
+			<Button DockPanel.Dock="Left" x:Name="_CallPinyinPanelButton" Click="CallPinyinPanelButton_Click" Width="50"
+				Height="50" Content="拼音" Padding="10,0,10,0" />
+            <Button DockPanel.Dock="Left" x:Name="_CallHandWriterPanelButton" Click="CallHandWriterPanel_Click" Width="50"
+				Height="50" Content="手写" Padding="10,0,10,0" />
+            <StackPanel Height="50" Margin="4,4,2,3">
+                <Grid Margin="0" Height="50">
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FFFBCDC9" Offset="0.5"/>
+                            <GradientStop Color="#FFFDBAB3" Offset="1"/>
+                            <GradientStop Color="#FFFDBCB5"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <ListBox Name="_HwAlternatesListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22" BorderThickness="0" Background="{x:Null}" >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="0" Padding="15,0,15,0" MouseDown="AlternatesListBox_MouseDown" MouseUp="AlternatesListBox_MouseUp"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </StackPanel>
+		</DockPanel>
         
 		<Grid x:Name="_KeyboardGrid" Grid.Row="1" Grid.Column="0" Margin="5,2,2,5">
 			<Grid.ColumnDefinitions>

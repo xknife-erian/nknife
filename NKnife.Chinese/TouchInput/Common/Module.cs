@@ -17,8 +17,6 @@ namespace NKnife.Chinese.TouchInput.Common
             Bind<HwAlternateCollection>().To<HwAlternateCollection>().InSingletonScope();
             Bind<PinyinSeparatesCollection>().To<PinyinSeparatesCollection>().InSingletonScope();
             Bind<PinyinAlternateCollection>().To<PinyinAlternateCollection>().InSingletonScope();
-            Bind<PyAlternatesStrip>().To<PyAlternatesStrip>().InSingletonScope();
-            Bind<HwAlternatesStrip>().To<HwAlternatesStrip>().InSingletonScope();
             Bind<CurrentWordStrip>().To<CurrentWordStrip>().InSingletonScope();
             Bind<ICharactorRecognizer>().To<ConcatenationRecognizer>().InSingletonScope();
             Bind<ISyllableCollection>().To<DefaultSyllableCollection>().InSingletonScope();

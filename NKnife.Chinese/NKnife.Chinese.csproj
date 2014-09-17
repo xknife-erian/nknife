@@ -91,10 +91,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="TouchInput\HwAlternatesStrip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="TouchInput\PyAlternatesStrip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -146,9 +142,6 @@
     <Compile Include="TouchInput\Controls\Keys\TogglingModifierKey.cs" />
     <Compile Include="TouchInput\Controls\Keys\VirtualKey.cs" />
     <Compile Include="TouchInput\Common\Module.cs" />
-    <Compile Include="TouchInput\HwAlternatesStrip.xaml.cs">
-      <DependentUpon>HwAlternatesStrip.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TouchInput\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
