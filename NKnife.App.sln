@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csproj", "{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}"
 EndProject
@@ -17,8 +17,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Ele.ResistanceValueCombiner", "NKnife.App\NKnife.App.Ele.ResistanceValueCombiner\NKnife.App.Ele.ResistanceValueCombiner.csproj", "{260137D2-3427-49AC-B4C7-1F040937572A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Socket\NKnife.Socket.csproj", "{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.SocketKit", "NKnife.App\NKnife.App.SocketKit\NKnife.App.SocketKit.csproj", "{79763417-52E0-4F46-B2DA-DAF13AC84807}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NKinfe.Lib", "NKinfe.Lib", "{60069790-CB86-4032-BADE-F91EEF49FF72}"
 EndProject
@@ -45,6 +43,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Chess", "NKnife.App\NKnife.App.Chess\NKnife.App.Chess.csproj", "{07B908E1-79FE-4418-9646-58D5D245415E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.UpdateAssemblyInfo", "NKnife.App\NKnife.App.UpdateAssemblyInfo\NKnife.App.UpdateAssemblyInfo.csproj", "{8417C17C-9272-4AB2-95BC-EF816A491C46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.SocketKit", "NKnife.App\NKnife.App.SocketKit\NKnife.App.SocketKit.csproj", "{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,16 +96,6 @@ Global
 		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|x86.ActiveCfg = Release|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{79763417-52E0-4F46-B2DA-DAF13AC84807}.Release|x86.ActiveCfg = Release|Any CPU
 		{E0D2F875-E6C2-49DE-86CC-62396EB8D585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0D2F875-E6C2-49DE-86CC-62396EB8D585}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0D2F875-E6C2-49DE-86CC-62396EB8D585}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -226,13 +216,23 @@ Global
 		{8417C17C-9272-4AB2-95BC-EF816A491C46}.Release|Mixed Platforms.Build.0 = Release|x86
 		{8417C17C-9272-4AB2-95BC-EF816A491C46}.Release|x86.ActiveCfg = Release|x86
 		{8417C17C-9272-4AB2-95BC-EF816A491C46}.Release|x86.Build.0 = Release|x86
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF} = {60069790-CB86-4032-BADE-F91EEF49FF72}
+		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 		{E0D2F875-E6C2-49DE-86CC-62396EB8D585} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 		{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8} = {60069790-CB86-4032-BADE-F91EEF49FF72}
 		{48DCFEA4-948A-45F8-8FA5-010A1E095C19} = {60069790-CB86-4032-BADE-F91EEF49FF72}
