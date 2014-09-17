@@ -73,7 +73,7 @@ namespace NKnife.Chinese.TouchInput.Common
             }
             catch (Exception e)
             {
-                _Logger.Warn("发送数据异常:{0}", command);
+                _Logger.Warn(string.Format("发送数据异常:{0}", command), e);
             }
         }
     }

@@ -51,6 +51,7 @@ namespace NKnife.Chinese.TouchInput
             Hide();
 
             _HwAlternatesListBox.ItemsSource = DI.Get<HwAlternateCollection>();
+            //_HwAlternatesListBox.Visibility = Visibility.Hidden;
 
             _HandWriteGrid.Visibility = Visibility.Hidden;
             StartKernel();
@@ -73,26 +74,26 @@ namespace NKnife.Chinese.TouchInput
             HideWordStrip();
             var word = ((TextBlock)sender).Text;
             _Simulator.Keyboard.TextEntry(word);
-            Params.PlayVoice(Properties.Resources.划过);
+            _PanelParams.PlayVoice(Properties.Resources.划过);
+            DI.Get<HwAlternateCollection>().ClearAlternates();
+            _InkCanvas.Strokes.Clear();
         }
 
         private void ShowWordStrip(String word, MouseButtonEventArgs e)
         {
-            var strip = DI.Get<CurrentWordStrip>();
             System.Windows.Point point = e.GetPosition(this);
 
-            strip.Left = Left + point.X - strip.Width / 2;
-            strip.Top = Top + point.Y - strip.Height - 40;
+            _WordPop.Left = Left + point.X - _WordPop.Width / 2;
+            _WordPop.Top = Top + point.Y - _WordPop.Height - 40;
 
-            strip.UpdateText(word);
-            strip.Show();
+            _WordPop.UpdateText(word);
+            _WordPop.Show();
         }
 
         private void HideWordStrip()
         {
-            var strip = DI.Get<CurrentWordStrip>();
-            strip.Hide();
-            strip.UpdateText("");
+            _WordPop.Hide();
+            _WordPop.UpdateText("");
         }
 
         #region ITouchInput
@@ -247,7 +248,7 @@ namespace NKnife.Chinese.TouchInput
         {
             var button = (Button) sender;
             _Simulator.Keyboard.TextEntry(button.Content.ToString());
-            Params.PlayVoice(Properties.Resources.键_数字);
+            _PanelParams.PlayVoice(Properties.Resources.键_数字);
         }
 
         /// <summary>
@@ -272,7 +273,7 @@ namespace NKnife.Chinese.TouchInput
                     break;
                 }
             }
-            Params.PlayVoice(Properties.Resources.键_全键盘);
+            _PanelParams.PlayVoice(Properties.Resources.键_全键盘);
         }
 
         /// <summary>
@@ -283,7 +284,7 @@ namespace NKnife.Chinese.TouchInput
         private void SpaceButtonClick(object sender, RoutedEventArgs e)
         {
             _Simulator.Keyboard.KeyPress(VirtualKeyCode.SPACE);
-            Params.PlayVoice(Properties.Resources.键_全键盘);
+            _PanelParams.PlayVoice(Properties.Resources.键_全键盘);
         }
 
         /// <summary>
@@ -294,7 +295,7 @@ namespace NKnife.Chinese.TouchInput
         private void SymbolClick(object sender, RoutedEventArgs e)
         {
             _Simulator.Keyboard.TextEntry(((Button) sender).Content.ToString());
-            Params.PlayVoice(Properties.Resources.键_全键盘);
+            _PanelParams.PlayVoice(Properties.Resources.键_全键盘);
         }
 
         /// <summary>
@@ -304,7 +305,7 @@ namespace NKnife.Chinese.TouchInput
         /// <param name="e"></param>
         private void BackFunctionButtonClick(object sender, RoutedEventArgs e)
         {
-            Params.PlayVoice(Properties.Resources.键_功能);
+            _PanelParams.PlayVoice(Properties.Resources.键_功能);
 //            if (_PyStripEnable)
 //            {
 //                if (!_PyStrip.BackSpace())
@@ -326,7 +327,7 @@ namespace NKnife.Chinese.TouchInput
         private void EnterButtonClick(object sender, RoutedEventArgs e)
         {
             _Simulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
-            Params.PlayVoice(Properties.Resources.键_全键盘);
+            _PanelParams.PlayVoice(Properties.Resources.键_全键盘);
         }
 
         /// <summary>

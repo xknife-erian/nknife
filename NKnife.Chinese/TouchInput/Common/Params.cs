@@ -37,7 +37,7 @@ namespace NKnife.Chinese.TouchInput.Common
         public InputMode InputPanelType { get; set; }
         public String CurrentWord { get; set; }
 
-        public static void PlayVoice(UnmanagedMemoryStream voice)
+        public void PlayVoice(UnmanagedMemoryStream voice)
         {
             var sndPlayer = new SoundPlayer(voice);
             sndPlayer.Play();

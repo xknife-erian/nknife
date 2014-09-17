@@ -35,12 +35,13 @@
                 <Grid Margin="0" Height="50">
                     <Grid.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="#FFFBCDC9" Offset="0.5"/>
-                            <GradientStop Color="#FFFDBAB3" Offset="1"/>
-                            <GradientStop Color="#FFFDBCB5"/>
+                            <GradientStop Color="#FFD1D1D1" Offset="0.5"/>
+                            <GradientStop Color="#FFA1A1A1" Offset="1"/>
+                            <GradientStop Color="#FFA1A1A1" Offset="0.01"/>
                         </LinearGradientBrush>
                     </Grid.Background>
-                    <ListBox Name="_HwAlternatesListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22" BorderThickness="0" Background="{x:Null}" >
+                    <ListBox Name="_HwAlternatesListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22" BorderThickness="0" Background="{x:Null}" 
+                             Visibility="{Binding HasAlternates}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel Orientation="Horizontal" />

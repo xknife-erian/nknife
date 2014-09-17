@@ -74,7 +74,7 @@ namespace NKnife.Chinese.TouchInput
             string word = ((TextBlock) sender).Text;
             _Simulator.Keyboard.TextEntry(word);
 
-            Params.PlayVoice(Properties.Resources.划过);
+            DI.Get<Params>().PlayVoice(Properties.Resources.划过);
             var rs = DI.Get<PinyinAlternateCollection>().CallNextAlternateGroup();
             OnAlternateSelected(new AlternateSelectedEventArgs(rs, word)); //候选词选择完成的事件
         }
