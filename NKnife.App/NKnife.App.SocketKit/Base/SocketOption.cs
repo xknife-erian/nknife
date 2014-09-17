@@ -9,7 +9,7 @@ namespace NKnife.Socket.StarterKit.Base
         private readonly string _BufferSize;
         private readonly string _EnablePingServer;
         private readonly string _HeartRange;
-        private readonly string _IPAddress;
+        private readonly string _IpAddress;
         private readonly string _Port;
         private readonly string _TalkOneLength;
         private readonly string _Timeout;
@@ -27,7 +27,7 @@ namespace NKnife.Socket.StarterKit.Base
             _BufferSize = buffersize;
             _EnablePingServer = enablePingServer;
             _HeartRange = heartRange;
-            _IPAddress = ipAddress;
+            _IpAddress = ipAddress;
             _Port = port;
             _TalkOneLength = talkOneLength;
             _Timeout = timeout;
@@ -41,9 +41,9 @@ namespace NKnife.Socket.StarterKit.Base
         ///     Gets or sets 服务器IP地址
         /// </summary>
         /// <value>The IP address.</value>
-        public virtual string IPAddress
+        public virtual string IpAddress
         {
-            get { return _IPAddress; }
+            get { return _IpAddress; }
         }
 
         /// <summary>

@@ -22,9 +22,9 @@ namespace NKnife.Socket.StarterKit
         public MainForm()
         {
             InitializeComponent();
-            Icon = Resources.MainIcon;
-            _ProtocolButton.Image = Resources.Protocol;
-            _SendButton.Image = Resources.Sender;
+            Icon = OwnResources.MainIcon;
+            _ProtocolButton.Image = OwnResources.Protocol;
+            _SendButton.Image = OwnResources.Sender;
             SetupLogControl();
             OnSocketClosed();
         }

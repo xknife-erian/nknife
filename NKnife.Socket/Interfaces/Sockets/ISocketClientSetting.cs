@@ -3,7 +3,9 @@
     public interface ISocketClientSetting
     {
         IDatagramCommandParser CommandParser { get; }
+
         IDatagramDecoder Decoder { get; }
+
         IDatagramEncoder Encoder { get; }
 
         int HeartRange { get; }
@@ -18,8 +20,10 @@
         /// </summary>
         int Timeout { get; }
 
-        string IPAddress { get; }
+        string IpAddress { get; }
+
         int Port { get; }
+
         int TalkOneLength { get; }
 
         /// <summary>
