@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace NKnife.App.UpdateAssemblyInfo
 {
-    public partial class Form1 : Form
+    public partial class DoorForm : Form
     {
-        public Form1()
+        public DoorForm()
         {
             InitializeComponent();
         }
