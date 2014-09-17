@@ -15,7 +15,7 @@ namespace NKnife.Utility
         /// <summary>获取系统串口数量
         /// </summary>
         /// <returns></returns>
-        public static string[] GetCommList()
+        public static string[] GetSerialCommList()
         {
             RegistryKey keyCom = Registry.LocalMachine.OpenSubKey("Hardware\\DeviceMap\\SerialComm");
             if (keyCom != null)

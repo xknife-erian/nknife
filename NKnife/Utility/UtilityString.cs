@@ -40,7 +40,7 @@ namespace NKnife.Utility
         /// <summary>
         /// 根据对象的属性与属性值生成字符串
         /// </summary>
-        public static string ToString(Object o)
+        public static string ToString(object o)
         {
             var sb = new StringBuilder();
             Type t = o.GetType();
@@ -92,7 +92,7 @@ namespace NKnife.Utility
             string[] kv = msg.Split('&');
             foreach (string item in kv)
             {
-                if (string.IsNullOrEmpty(item))
+                if (String.IsNullOrEmpty(item))
                 {
                     continue;
                 }
@@ -110,7 +110,7 @@ namespace NKnife.Utility
                     var rab = new StringBuilder();
                     for (int i = 1; i < ab.Length; i++)
                     {
-                        if (string.IsNullOrEmpty(ab[i]))
+                        if (String.IsNullOrEmpty(ab[i]))
                             continue;
                         rab.Append(ab[i]).Append("#");
                     }
@@ -172,6 +172,46 @@ namespace NKnife.Utility
         }
 
         /// <summary>
+        /// 将全角数字转换为数字
+        /// </summary>
+        /// <param name="SBCCase">全角数字</param>
+        /// <returns></returns>
+        public static string SBCCaseToNumberic(string SBCCase)
+        {
+            char[] c = SBCCase.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                byte[] b = Encoding.Unicode.GetBytes(c, i, 1);
+                if (b.Length == 2)
+                {
+                    if (b[1] == 255)
+                    {
+                        b[0] = (byte)(b[0] + 32);
+                        b[1] = 0;
+                        c[i] = Encoding.Unicode.GetChars(b)[0];
+                    }
+                }
+            }
+            return new string(c);
+        }
+
+        /// <summary>
+        /// 转换为简体中文
+        /// </summary>
+        public static string ToSimplifiedChinese(string str)
+        {
+            return Strings.StrConv(str, VbStrConv.SimplifiedChinese, 0);
+        }
+
+        /// <summary>
+        /// 转换为繁体中文
+        /// </summary>
+        public static string ToTraditionalChinese(string str)
+        {
+            return Strings.StrConv(str, VbStrConv.TraditionalChinese, 0);
+        }
+
+        /// <summary>
         /// 清除字符串数组中的重复项
         /// </summary>
         /// <param name="strArray">字符串数组</param>
@@ -206,145 +246,6 @@ namespace NKnife.Utility
         public static string[] DistinctStringArray(string[] strArray)
         {
             return DistinctStringArray(strArray, 0);
-        }
-
-        /// <summary>
-        /// 判断指定字符串在指定字符串数组中的位置
-        /// </summary>
-        /// <param name="strSearch">字符串</param>
-        /// <param name="stringArray">字符串数组</param>
-        /// <param name="caseInsensetive">是否不区分大小写, true为不区分, false为区分</param>
-        /// <returns>字符串在指定字符串数组中的位置, 如不存在则返回-1</returns>
-        public static int GetInArrayID(string strSearch, string[] stringArray, bool caseInsensetive)
-        {
-            for (int i = 0; i < stringArray.Length; i++)
-            {
-                if (caseInsensetive)
-                {
-                    if (strSearch.ToLower() == stringArray[i].ToLower())
-                    {
-                        return i;
-                    }
-                }
-                else
-                {
-                    if (strSearch == stringArray[i])
-                    {
-                        return i;
-                    }
-                }
-            }
-            return -1;
-        }
-
-        /// <summary>
-        /// 判断指定字符串在指定字符串数组中的位置
-        /// </summary>
-        /// <param name="strSearch">字符串</param>
-        /// <param name="stringArray">字符串数组</param>
-        /// <returns>字符串在指定字符串数组中的位置, 如不存在则返回-1</returns>
-        public static int GetInArrayID(string strSearch, string[] stringArray)
-        {
-            return GetInArrayID(strSearch, stringArray, true);
-        }
-
-        /// <summary>
-        /// 判断指定字符串是否属于指定字符串数组中的一个元素
-        /// </summary>
-        /// <param name="strSearch">字符串</param>
-        /// <param name="stringArray">字符串数组</param>
-        /// <param name="caseInsensetive">是否不区分大小写, true为不区分, false为区分</param>
-        /// <returns>判断结果</returns>
-        public static bool InArray(string strSearch, string[] stringArray, bool caseInsensetive)
-        {
-            return GetInArrayID(strSearch, stringArray, caseInsensetive) >= 0;
-        }
-
-        /// <summary>
-        /// 判断指定字符串是否属于指定字符串数组中的一个元素
-        /// </summary>
-        /// <param name="str">字符串</param>
-        /// <param name="stringarray">字符串数组</param>
-        /// <returns>判断结果</returns>
-        public static bool InArray(string str, string[] stringarray)
-        {
-            return InArray(str, stringarray, false);
-        }
-
-        /// <summary>
-        /// 删除字符串尾部的回车/换行/空格
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static string RTrim(this string str)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return string.Empty;
-            }
-            for (int i = str.Length; i >= 0; i--)
-            {
-                if (str[i].Equals(" ") || str[i].Equals("\r") || str[i].Equals("\n"))
-                {
-                    str.Remove(i, 1);
-                }
-            }
-            return str;
-        }
-
-        /// <summary>
-        /// 清除给定字符串中的回车及换行符
-        /// </summary>
-        /// <param name="str">要清除的字符串</param>
-        /// <returns>清除后返回的字符串</returns>
-        public static string ClearBR(this string str)
-        {
-            Match m = null;
-            for (m = UtilityRegex.Br.Match(str); m.Success; m = m.NextMatch())
-            {
-                str = str.Replace(m.Groups[0].ToString(), "");
-            }
-            return str;
-        }
-
-        /// <summary>
-        /// 将全角数字转换为数字
-        /// </summary>
-        /// <param name="SBCCase">全角数字</param>
-        /// <returns></returns>
-        public static string SBCCaseToNumberic(this string SBCCase)
-        {
-            char[] c = SBCCase.ToCharArray();
-            for (int i = 0; i < c.Length; i++)
-            {
-                byte[] b = Encoding.Unicode.GetBytes(c, i, 1);
-                if (b.Length == 2)
-                {
-                    if (b[1] == 255)
-                    {
-                        b[0] = (byte) (b[0] + 32);
-                        b[1] = 0;
-                        c[i] = Encoding.Unicode.GetChars(b)[0];
-                    }
-                }
-            }
-            return new string(c);
-        }
-
-        /// <summary>
-        /// 转换为简体中文
-        /// </summary>
-        public static string ToSimplifiedChinese(this string str)
-        {
-            return Strings.StrConv(str, VbStrConv.SimplifiedChinese, 0);
-        }
-
-        /// <summary>
-        /// 转换为繁体中文
-        /// </summary>
-        public static string ToTraditionalChinese(this string str)
-        {
-            return Strings.StrConv(str, VbStrConv.TraditionalChinese, 0);
         }
 
         /// <summary>
@@ -428,129 +329,6 @@ namespace NKnife.Utility
                 } //if
             } //if (length >= 0)
             return myResult;
-        }
-
-        // ~~ 判断字符是否为中文 ~~~~~~~
-
-        /// <summary>
-        /// 给定一个字符串，判断其是否是中文字符串
-        /// </summary>
-        /// <param name="src">The SRC.</param>
-        /// <returns>
-        /// 	<c>true</c> if [is chinese letter] [the specified SRC]; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsChineseLetter(this string src)
-        {
-            for (int i = 0; i < src.Length; i++)
-            {
-                // \u4e00-\u9fa5 汉字的范围。
-                // ^[\u4e00-\u9fa5]$ 汉字的范围的正则
-                var rx = new Regex("^[\u4e00-\u9fa5]$");
-                if (rx.IsMatch(src.Substring(i, 1)))
-                    return true;
-                else
-                    return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// 给定一个字符串，判断其是否仅仅包含有汉字
-        /// </summary>
-        public static bool IsOnlyContainsChinese(this string srcStr)
-        {
-            char[] words = srcStr.ToCharArray();
-            foreach (char word in words)
-            {
-                if (IsGBCode(word.ToString()) || IsGBKCode(word.ToString())) // it is a GB2312 or GBK chinese word
-                {
-                    continue;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// 判断一个word是否为GB2312编码的汉字
-        /// </summary>
-        public static bool IsGBCode(this string word)
-        {
-            byte[] bytes = Encoding.GetEncoding("GB2312").GetBytes(word);
-            if (bytes.Length <= 1) // if there is only one byte, it is ASCII code or other code
-            {
-                return false;
-            }
-            else
-            {
-                byte byte1 = bytes[0];
-                byte byte2 = bytes[1];
-                if (byte1 >= 176 && byte1 <= 247 && byte2 >= 160 && byte2 <= 254) //判断是否是GB2312
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 判断一个word是否为GBK编码的汉字
-        /// </summary>
-        /// <param ></param>
-        /// <returns></returns>
-        public static bool IsGBKCode(this string word)
-        {
-            byte[] bytes = Encoding.GetEncoding("GBK").GetBytes(word);
-            if (bytes.Length <= 1) // if there is only one byte, it is ASCII code
-            {
-                return false;
-            }
-            else
-            {
-                byte byte1 = bytes[0];
-                byte byte2 = bytes[1];
-                if (byte1 >= 129 && byte1 <= 254 && byte2 >= 64 && byte2 <= 254) //判断是否是GBK编码
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 判断一个word是否为Big5编码的汉字
-        /// </summary>
-        /// <param name="word"></param>
-        /// <returns></returns>
-        public static bool IsBig5Code(this string word)
-        {
-            byte[] bytes = Encoding.GetEncoding("Big5").GetBytes(word);
-            if (bytes.Length <= 1) // if there is only one byte, it is ASCII code
-            {
-                return false;
-            }
-            else
-            {
-                byte byte1 = bytes[0];
-                byte byte2 = bytes[1];
-                if ((byte1 >= 129 && byte1 <= 254) && ((byte2 >= 64 && byte2 <= 126) || (byte2 >= 161 && byte2 <= 254))) //判断是否是Big5编码
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
         }
     }
 }

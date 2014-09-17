@@ -67,6 +67,7 @@
     <Compile Include="Algrithm\BubbleSort.cs" />
     <Compile Include="Algrithm\IAsyncOperation.cs" />
     <Compile Include="Algrithm\OperationResult.cs" />
+    <Compile Include="API\API.Kernel32.cs" />
     <Compile Include="Architecture\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
     <Compile Include="FTP\FtpFileListStyle.cs" />
@@ -81,6 +82,11 @@
     </Compile>
     <Compile Include="API\API.Shell32.cs" />
     <Compile Include="Ioc\ConfiguringModule.cs" />
+    <Compile Include="API\WinMsg.cs" />
+    <Compile Include="API\WinMsgUtil.cs" />
+    <Compile Include="Utility\UtilityReflection.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Wrapper\About.cs" />
     <Compile Include="Entities\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />

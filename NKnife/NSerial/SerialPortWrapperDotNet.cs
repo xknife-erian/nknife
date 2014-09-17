@@ -25,7 +25,6 @@ namespace NKnife.NSerial
         /// </summary>
         protected SerialPort _SerialPort;
 
-        //protected byte[] _TempBuffer = new byte[64];
         protected int _TimeOut = 150;
 
         #region ISerialPortWrapper Members
@@ -170,7 +169,6 @@ namespace NKnife.NSerial
             try
             {
                 recvCount = _SerialPort.Read(readedBuffer, 0, readedBuffer.Length);
-                //_SerialPort.DiscardInBuffer();
             }
             catch (TimeoutException ex)
             {
