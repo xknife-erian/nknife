@@ -70,6 +70,12 @@
     <Compile Include="API\API.Kernel32.cs" />
     <Compile Include="Architecture\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
+    <Compile Include="Chinese\IdCardChecker.cs" />
+    <Compile Include="Chinese\Rmb.cs" />
+    <Compile Include="Chinese\SbcAndDbc.cs" />
+    <Compile Include="Chinese\Spell.cs" />
+    <Compile Include="Chinese\SpellRandom.cs" />
+    <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="FTP\FtpFileListStyle.cs" />
     <Compile Include="FTP\FtpFileStruct.cs" />
     <Compile Include="FTP\FtpDelegates.cs" />
