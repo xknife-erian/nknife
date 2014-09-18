@@ -103,13 +103,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Common\ChineseIDCardValid.cs" />
-    <Compile Include="Common\ChineseIntegerRmb.cs" />
-    <Compile Include="Common\ChineseRmb.cs" />
-    <Compile Include="Common\ChineseSBCAndDBC.cs" />
-    <Compile Include="Common\ChineseSpell.cs" />
-    <Compile Include="Common\ChineseSpellRandom.cs" />
-    <Compile Include="Common\SimplifyChineseChar.cs" />
     <Compile Include="Ime\Pinyin\PinyinAlternateCollection.cs" />
     <Compile Include="Ime\Pinyin\DefaultSyllableCollection.cs" />
     <Compile Include="Ime\Pinyin\ISyllableCollection.cs" />
