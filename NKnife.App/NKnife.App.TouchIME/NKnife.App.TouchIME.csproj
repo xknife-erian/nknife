@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NKnife.App.TouchIme</RootNamespace>
-    <AssemblyName>TouchImeKnife</AssemblyName>
+    <AssemblyName>TouchKnife</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -46,27 +46,27 @@
     <ApplicationIcon>Resources\Main.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChnCharInfo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=18f031bd02e5e291, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\.library\Simplified Chinese Pin-Yin Conversion Library\ChnCharInfo.dll</HintPath>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\..\.library\Simplified Chinese Pin-Yin Conversion Library\ChnCharInfo.dll</HintPath>
     </Reference>
-    <Reference Include="IACore, Version=1.7.6223.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\.library\InkAnalyer\IACore.dll</HintPath>
+    <Reference Include="IACore">
+      <HintPath>..\..\.library\InkAnalyer\IACore.dll</HintPath>
     </Reference>
-    <Reference Include="IALoader, Version=1.7.6223.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\.library\InkAnalyer\IALoader.dll</HintPath>
+    <Reference Include="IALoader">
+      <HintPath>..\..\.library\InkAnalyer\IALoader.dll</HintPath>
     </Reference>
-    <Reference Include="IAWinFX, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+    <Reference Include="IAWinFX">
+      <HintPath>..\..\.library\InkAnalyer\IAWinFX.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\.library\InkAnalyer\IAWinFX.dll</HintPath>
+      <HintPath>..\..\..\..\2014.Pansoft\q-qms-csharp\library\Json6\Bin\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -83,7 +83,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsInput">
-      <HintPath>..\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
+      <HintPath>..\..\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -178,10 +178,10 @@
     <None Include="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\划过.wav" />
   </ItemGroup>
   <ItemGroup>
