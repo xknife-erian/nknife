@@ -22,6 +22,7 @@ namespace NKnife.App.SocketKit
         public MainWindow()
         {
             InitializeComponent();
+            _DockingManager.
         }
     }
 }
