@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using NKnife.Ioc;
 
 namespace NKnife.App.SocketKit
 {
@@ -12,5 +13,9 @@ namespace NKnife.App.SocketKit
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            DI.Initialize();
+        }
     }
 }

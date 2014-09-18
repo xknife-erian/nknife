@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -11,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NKnife.App.SocketKit.Common;
+using NKnife.Ioc;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NKnife.App.SocketKit
 {
@@ -22,7 +26,14 @@ namespace NKnife.App.SocketKit
         public MainWindow()
         {
             InitializeComponent();
-            _DockingManager.
+            MessageDocumentCollection = DI.Get<ObservableCollection<LayoutDocument>>();
+
+            var doc = new LayoutDocument();
+            doc.Title = "第一个文档";
+            MessageDocumentCollection.Add(doc);
         }
+
+        public ObservableCollection<LayoutDocument> MessageDocumentCollection { get; set; }
+
     }
 }

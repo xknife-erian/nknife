@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Width="Auto">
-            <MenuItem Padding="11,7,11,0" Height="30" VerticalAlignment="Center" Header="文件">
+            <MenuItem Name="_FileMenu" Padding="11,7,11,0" Height="30" VerticalAlignment="Center" Header="文件">
                 <MenuItem Header="新建服务器" Padding="8,2,0,0"/>
                 <MenuItem Header="新建客户端" Padding="8,2,0,0"/>
                 <Separator Padding="0" Margin="0"/>
@@ -31,7 +31,7 @@
         <StatusBar Grid.Row="2" Height="Auto" Width="Auto">
             <StatusBarItem Content="1.0.11.2345"></StatusBarItem>
         </StatusBar>
-        <xcad:DockingManager Grid.Row="1" x:Name="_DockingManager">
+        <xcad:DockingManager Grid.Row="1" x:Name="_DockingManager" DocumentsSource="{Binding Path=(MessageDocumentCollection)}">
             <xcad:DockingManager.Theme>
                 <xcad:VS2010Theme />
                 <!--<xcad:AeroTheme/>-->
@@ -56,6 +56,9 @@
                 </xcad:LayoutRoot.RightSide>
                 <xcad:LayoutPanel>
                     <xcad:LayoutDocumentPane>
+                        <xcad:LayoutDocument Title="主动文档">
+                            <TextBlock Width="Auto" Height="Auto"></TextBlock>
+                        </xcad:LayoutDocument>
                     </xcad:LayoutDocumentPane>
                 </xcad:LayoutPanel>
             </xcad:LayoutRoot>
