@@ -90,6 +90,7 @@
     <Compile Include="Ioc\ConfiguringModule.cs" />
     <Compile Include="API\WinMsg.cs" />
     <Compile Include="API\WinMsgUtil.cs" />
+    <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Utility\UtilityReflection.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,7 +109,7 @@
     <Compile Include="Collections\PairList.cs" />
     <Compile Include="Collections\SerializableMap.cs" />
     <Compile Include="Collections\SyncQueue.cs" />
-    <Compile Include="Interface\ICommand.cs">
+    <Compile Include="Interface\Patterns\ICommandPattern.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Configuring\CoderSettingModule.cs" />
@@ -474,10 +475,8 @@
       <DependentUpon>LogPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Logging\LogPanel\ShowLogPanelTarget.cs" />
-    <Compile Include="MvvmBase\FormCommand.cs" />
-    <Compile Include="MvvmBase\Interfaces\IFormCommand.cs" />
-    <Compile Include="MvvmBase\NotificationObject.cs" />
-    <Compile Include="MvvmBase\PropertyInfoHelper.cs" />
+    <Compile Include="Mvvm\NotificationObject.cs" />
+    <Compile Include="Mvvm\PropertyInfoHelper.cs" />
     <Compile Include="NSerial\Base\DataRecvEventArgs.cs" />
     <Compile Include="NSerial\Base\ISerialCommunication.cs" />
     <Compile Include="NSerial\Base\ISerialCommunicationManager.cs" />

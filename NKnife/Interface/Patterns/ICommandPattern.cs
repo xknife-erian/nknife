@@ -1,4 +1,6 @@
-﻿namespace NKnife.Interface
+﻿using System.Windows.Input;
+
+namespace NKnife.Interface.Patterns
 {
     /// <summary>
     /// 面向设计模式中的命令模式的命令接口。
@@ -8,28 +10,20 @@
     /// 3.可以很方便的将每个执行记录日志。
     /// 4.最重要的就是将发起者与实现者分离。
     /// </summary>
-    public interface ICommand
+    public interface ICommandPattern : ICommand
     {
-        /// <summary>
-        /// 执行操作
-        /// </summary>
-        void Execute();
-
         /// <summary>
         /// 取消操作
         /// </summary>
-        void Cancel();
-
-        /// <summary>
-        /// 是否允许执行操作
-        /// </summary>
-        /// <returns></returns>
-        bool CanExecute();
+        /// <param name="parameter">此命令使用的数据。如果此命令不需要传递数据，则该对象可以设置为 null。</param>
+        void Cancel(object parameter);
 
         /// <summary>
         /// 是否允许取消操作
         /// </summary>
-        /// <returns></returns>
-        bool CanCancel();
+        /// <returns>
+        /// 如果可以执行此命令，则为 true；否则为 false。
+        /// </returns>
+        bool CanCancel(object parameter);
     }
 }

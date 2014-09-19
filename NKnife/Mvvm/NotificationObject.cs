@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
-namespace NKnife.MvvmBase
+namespace NKnife.Mvvm
 {
     /// <summary>
     /// Base class for items that support property notification.

@@ -1,21 +1,21 @@
 using System.Collections.Generic;
-using NKnife.Interface;
+using NKnife.Interface.Patterns;
 
 namespace NKnife.Entities
 {
     /// <summary>
-    /// 命令模式中命令接口的集合类
+    ///     命令模式中命令接口的集合类
     /// </summary>
     public class CommandList
     {
         #region 属性成员定义
 
-        public LinkedList<ICommand> Commands { get; set; }
+        public LinkedList<ICommandPattern> Commands { get; set; }
 
         /// <summary>
         ///     当前命令,待撤销之操作
         /// </summary>
-        public LinkedListNode<ICommand> CurrentCommand { get; set; }
+        public LinkedListNode<ICommandPattern> CurrentCommand { get; set; }
 
         #endregion
 
@@ -23,7 +23,7 @@ namespace NKnife.Entities
 
         public CommandList()
         {
-            Commands = new LinkedList<ICommand>();
+            Commands = new LinkedList<ICommandPattern>();
         }
 
         #endregion
@@ -34,9 +34,9 @@ namespace NKnife.Entities
         ///     添加新命令并执行之
         /// </summary>
         /// <param name="command"></param>
-        public ICommand AddCommand(ICommand command)
+        public ICommandPattern AddCommand(ICommandPattern command)
         {
-            var commandNode = new LinkedListNode<ICommand>(command);
+            var commandNode = new LinkedListNode<ICommandPattern>(command);
             if (CurrentCommand != null)
             {
                 Commands.AddAfter(CurrentCommand, commandNode);
@@ -52,14 +52,16 @@ namespace NKnife.Entities
         /// <summary>
         ///     重做命令
         /// </summary>
-        public void Execute()
+        public void Execute(object parameter)
         {
             if (CanExecute())
             {
-                var reDoCommandNode = CurrentCommand == null ? Commands.First : CurrentCommand.Next;
+                LinkedListNode<ICommandPattern> reDoCommandNode = CurrentCommand == null
+                    ? Commands.First
+                    : CurrentCommand.Next;
                 if (reDoCommandNode != null) //执行重做命令
                 {
-                    reDoCommandNode.Value.Execute();
+                    reDoCommandNode.Value.Execute(parameter);
                     CurrentCommand = reDoCommandNode;
                 }
             }
@@ -68,11 +70,11 @@ namespace NKnife.Entities
         /// <summary>
         ///     撤销命令
         /// </summary>
-        public void Cancel()
+        public void Cancel(object parameter)
         {
             if (CanCancel())
             {
-                CurrentCommand.Value.Cancel();
+                CurrentCommand.Value.Cancel(parameter);
                 CurrentCommand = CurrentCommand.Previous;
             }
         }

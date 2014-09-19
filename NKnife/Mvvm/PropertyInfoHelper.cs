@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace NKnife.MvvmBase
+namespace NKnife.Mvvm
 {
     ///<summary>
     /// Provides support for extracting property information based on a property expression.
