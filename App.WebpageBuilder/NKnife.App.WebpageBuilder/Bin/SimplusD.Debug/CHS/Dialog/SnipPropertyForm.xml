@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resourceText>
+  <form text="页面片属性" />
+  <control name="buttonEnter" text="确定" />
+  <control name="buttonExit" text="取消" />
+</resourceText>

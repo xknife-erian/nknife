@@ -1,0 +1,7 @@
+
+使用此组件应该遵守的一些约定：
+
+1.	不允许直接调用OleDbConnection或OleDbCommand等.NET自身提供的ADO.NET对象。(便于从OleDb与SQL Client或Oricle的切换)
+2.	不推荐在DataAccess的静态方法中执行insert,udpate,delete，只应该select。（便于多个方法通过Transaction串连）
+3.	写公用方法(这里的公用方法通常指非*.aspx.cs文件中的方法)时如果需要rollback事务时，
+	请在rollback之后抛出异常（可以写成throw new Exception(msg);如果是在catch里面应该直接“throw;”）。

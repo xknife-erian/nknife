@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="其它" />
+  <item value="2" text="国内政府资金" />
+  <item value="3" text="商业融资" />
+  <item value="4" text="外国政府贷款" />
+  <item value="5" text="世界银行贷款" />
+  <item value="6" text="亚洲开发银行" />
+  <item value="7" text="日元贷款" />
+  <item value="8" text="非洲开发银行贷款" />
+  <item value="9" text="欧洲复兴与开发银行贷款" />
+</items>

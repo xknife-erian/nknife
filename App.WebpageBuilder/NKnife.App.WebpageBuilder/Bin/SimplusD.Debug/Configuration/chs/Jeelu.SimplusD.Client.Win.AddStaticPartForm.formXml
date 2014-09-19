@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.AddStaticPartForm" ObjectName="Jeelu.SimplusD.Client.Win.AddStaticPartForm">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.SimplusD.Client.Win.AddStaticPartForm" Name="AddStaticPartForm" />
+  <Control Type="System.Windows.Forms.Button" Name="btnOK">
+    <Text>确定</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="btnExit">
+    <Text>取消</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Control" Name="designerBox" />
+  <Control Type="System.Windows.Forms.Panel" Name="htmlPanel" />
+  <Control Type="System.Windows.Forms.WebBrowser" Name="designWebBrowser" />
+  <Control Type="Jeelu.SimplusD.Client.Win.HTMLToolStrip" Name="tsMain" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="DesignToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="SplitToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="HtmlToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripSeparator" Name="" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="tableToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="imageToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="flashToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="audioToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="mediaToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripSeparator" Name="" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="emailToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="linkToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="dateToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="hrToolStripButton">
+    <Text>线</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripSeparator" Name="" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="signToolStripButton" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripDropDownButton" Name="" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="br" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="nbsp">
+    <Text>不换行空格</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="L_quotation">
+    <Text>左引号</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="R_quotation">
+    <Text>右引号</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="desh">
+    <Text>破折号</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripSeparator" Name="" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="pound">
+    <Text>英镑符号</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="Eurocurrency">
+    <Text>欧元符号</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="yen">
+    <Text>日元符号</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripSeparator" Name="" />
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="copyright">
+    <Text>版权</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="reg_trad_mark">
+    <Text>注册商标</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="brand">
+    <Text>商标</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripMenuItem" Name="osign">
+    <Text>其他符号</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripLabel" Name="titleToolStripLabel">
+    <Text>标题:</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripTextBox" Name="titleToolStripTextBox">
+    <Text>无标题文档</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="propertyToolStripTextBox" />
+  <Control Type="System.Windows.Forms.Control" Name="btnBox" />
+</Resources>

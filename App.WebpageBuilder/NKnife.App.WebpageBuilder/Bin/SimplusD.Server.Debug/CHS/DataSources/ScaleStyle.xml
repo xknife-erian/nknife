@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="pix" text="像素" />
+  <item value="ft" text="英尺" />
+  <item value="cm" text="厘米" />
+  <item value="mm" text="毫米" />
+  <item value="percent" text="百分比" />
+</items>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<!-- 通用 -->
+  <!-- 单位I-->
+  <item name="partUnit">
+    <subitem value="px" text="像素(px)"/>
+    <subitem value="%" text="%"/>
+  </item>
+  <item name="unit">
+    <subitem value="px" text="像素(px)"/>
+    <subitem value="pt" text="点数(pt)"/>
+    <subitem value="in" text="英寸"/>
+    <subitem value="cm" text="厘米(cm)"/>
+    <subitem value="mm" text="毫米(mm)"/>
+    <subitem value="pc" text="12pt字(pc)"/>
+    <subitem value="em" text="字体高(em)"/>
+    <subitem value="ex" text="字母x的高(ex)"/>
+    <subitem value="%" text="%"/>
+  </item>
+  <!-- 单位II-->
+  <item name="lineHeightUnit">
+    <subitem value="px" text="像素(px)"/>
+    <subitem value="pt" text="点数(pt)"/>
+    <subitem value="in" text="英寸"/>
+    <subitem value="cm" text="厘米(cm)"/>
+    <subitem value="mm" text="毫米(mm)"/>
+    <subitem value="pc" text="12pt字(pc)"/>
+    <subitem value="em" text="字体高(em)"/>
+    <subitem value="ex" text="字母x的高(ex)"/>
+    <subitem value="%" text="%"/>
+    <subitem value="" text="倍行高"/>
+  </item>
+  <!-- 单位III-->
+  <item name="wordSpaceUnit">
+    <subitem value="px" text="像素(px)"/>
+    <subitem value="pt" text="点数(pt)"/>
+    <subitem value="in" text="英寸"/>
+    <subitem value="cm" text="厘米(cm)"/>
+    <subitem value="mm" text="毫米(mm)"/>
+    <subitem value="pc" text="12pt字(pc)"/>
+    <subitem value="em" text="字体高(em)"/>
+    <subitem value="ex" text="字母x的高(ex)"/>
+    <subitem value="" text=""/>
+  </item>
+  <!-- 单位IIII-->
+  <item name="letterSpaceUnit">
+    <subitem value="px" text="像素(px)"/>
+    <subitem value="pt" text="点数(pt)"/>
+    <subitem value="in" text="英寸"/>
+    <subitem value="cm" text="厘米(cm)"/>
+    <subitem value="mm" text="毫米(mm)"/>
+    <subitem value="pc" text="12pt字(pc)"/>
+    <subitem value="em" text="字体高(em)"/>
+    <subitem value="ex" text="字母x的高(ex)"/>
+  </item>
+  <!-- 单位IIIII-->
+  <item name="verticalUnit">
+    <subitem value="%" text="%"/>
+  </item>
+  <item name="normal">
+    <subitem value="normal" text="正常"/>
+    <subitem value="(值)" text="(值)"/>
+  </item>
+  <item name="auto">
+    <subitem value="auto" text="自动" />
+    <subitem value="(值)" text="(值)" />
+  </item>
+  <item name="value">
+    <subitem value="(值)" text="(值)" />
+  </item>
+  
+  
+<!--类型 -->
+  <!-- 粗细-->
+  <item name="font-weight">
+    <subitem value="normal" text="正常"/>
+    <subitem value="bold" text="粗体"/>
+    <subitem value="bolder" text="特粗"/>
+    <subitem value="lighter" text="细体"/>
+    <subitem value="100" text="100"/>
+    <subitem value="200" text="200"/>
+    <subitem value="300" text="300"/>
+    <subitem value="400" text="400"/>
+    <subitem value="500" text="500"/>
+    <subitem value="600" text="600"/>
+    <subitem value="700" text="700"/>
+    <subitem value="800" text="800"/>
+    <subitem value="900" text="900"/>
+  </item>
+  <!-- 样式-->
+  <item name="font-style">
+    <subitem value="normal" text="正常"/>
+    <subitem value="italic" text="斜体"/>
+    <subitem value="oblique" text="偏斜体"/>
+  </item>
+  <!--变体-->
+  <item name="font-variant">
+    <subitem value="normal" text="正常"/>
+    <subitem value="small-caps" text="小型大写字母"/>
+  </item>
+  <!-- 大小写-->
+  <item name="text-transform">
+    <subitem value="capitalize" text="首字母大写"/>
+    <subitem value="uppercase" text="大写"/>
+    <subitem value="lowercase" text="小写"/>
+    <subitem value="none" text="无"/>
+  </item>
+  <!-- 大小-->
+  <item name="font-size">
+    <subitem value="9" text="9"/>
+    <subitem value="10" text="10"/>
+    <subitem value="12" text="12"/>
+    <subitem value="14" text="14"/>
+    <subitem value="16" text="16"/>
+    <subitem value="18" text="18"/>
+    <subitem value="24" text="24"/>
+    <subitem value="36" text="36"/>
+    <subitem value="xx-small" text="极小"/>
+    <subitem value="x-small" text="特小"/>
+    <subitem value="small" text="小"/>
+    <subitem value="medium" text="中"/>
+    <subitem value="large" text="大"/>
+    <subitem value="x-large" text="特大"/>
+    <subitem value="xx-large" text="极大"/>
+    <subitem value="smaller" text="较小"/>
+    <subitem value="larger" text="较大"/>
+  </item>
+  
+  
+<!--背景 -->
+  <!-- 重复-->
+  <item name="background-repeat">
+    <subitem value="no-repeat" text="不重复"/>
+    <subitem value="repeat" text="重复"/>
+    <subitem value="repeat-x" text="横向重复"/>
+    <subitem value="repeat-y" text="纵向重复"/>
+  </item>
+  <!-- 附件-->
+  <item name="background-attachment">
+    <subitem value="fixed" text="固定"/>
+    <subitem value="scroll" text="滚动"/>
+  </item>
+  <!-- 水平位置-->
+  <item name="levelPostion">
+    <subitem value="left" text="左对齐"/>
+    <subitem value="right" text="右对齐"/>
+    <subitem value="center" text="居中"/>
+    <subitem value="(值)" text="(值)"/>
+  </item>
+  <!-- 垂直位置-->
+  <item name="verticalPostion">
+    <subitem value="top" text="顶部"/>
+    <subitem value="center" text="居中"/>
+    <subitem value="bottom" text="底部"/>
+    <subitem value="(值)" text="(值)"/>
+  </item>
+  <!-- 背景图像-->
+  <item name="background-image">
+    <subitem value="(URL)" text="(URL)"/>
+    <subitem value="none" text="无"/>
+  </item>
+  
+
+<!--区块 -->
+  <!-- 垂直对齐-->
+  <item name="vertical-align">
+    <subitem value="baseline" text="基线"/>
+    <subitem value="sub" text="下标"/>
+    <subitem value="super" text="上标"/>
+    <subitem value="top" text="顶部"/>
+    <subitem value="text-top" text="文本顶对齐"/>
+    <subitem value="middle" text="中线对齐"/>
+    <subitem value="bottom" text="底部"/>
+    <subitem value="text-bottom" text="文本底对齐"/>
+    <subitem value="(值)" text="(值)"/>
+  </item>
+  <!-- 文本对齐-->
+  <item name="text-align">
+    <subitem value="left" text="左对齐"/>
+    <subitem value="right" text="右对齐"/>
+    <subitem value="center" text="居中对齐"/>
+    <subitem value="justify" text="两端对齐"/>
+  </item>
+  <!-- 空格-->
+  <item name="white-space">
+    <subitem value="normal" text="正常"/>
+    <subitem value="pre" text="保留"/>
+    <subitem value="nowrap" text="不换行"/>
+  </item>
+  <!-- 显示-->
+  <item name="display">
+    <subitem value="none" text="无"/>
+    <subitem value="inline" text="内嵌"/>
+    <subitem value="block" text="块"/>
+    <subitem value="list-item" text="列表项"/>
+    <subitem value="run-in" text="追加部分"/>
+    <subitem value="inline-block" text="内联块"/>
+    <subitem value="compact" text="紧凑"/>
+    <subitem value="marker" text="标记"/>
+    <subitem value="table" text="表格"/>
+    <subitem value="inline-table" text="内嵌表格"/>
+    <subitem value="table-column-group" text="表格行组"/>
+    <subitem value="table-header-group" text="表格标题组"/>
+    <subitem value="table-footer-group" text="表格注脚组"/>
+    <subitem value="table-column" text="表格行"/>
+    <subitem value="table-column-group" text="表格列组"/>
+    <subitem value="table-column" text="表格列"/>
+    <subitem value="table-cell" text="表格单元格"/>
+    <subitem value="table-caption" text="表格标题"/>
+    <subitem value="inherit" text="继承"/>
+  </item>
+  
+
+<!--方框 -->
+  <!-- 浮动-->
+  <item name="float">
+    <subitem value="left" text="左对齐"/>
+    <subitem value="right" text="右对齐"/>
+    <subitem value="none" text="无"/>
+  </item>
+  <!-- 清除-->
+  <item name="clear">
+    <subitem value="left" text="左对齐"/>
+    <subitem value="right" text="右对齐"/>
+    <subitem value="both" text="两者"/>
+    <subitem value="none" text="无"/>
+  </item>
+
+
+<!--边框 -->
+  <!-- 样式-->
+  <item name="borderStyle">
+    <subitem value="none" text="无"/>
+    <subitem value="dotted" text="点划线"/>
+    <subitem value="dashed" text="虚线"/>
+    <subitem value="solid" text="实线"/>
+    <subitem value="double" text="双线"/>
+    <subitem value="groove" text="槽状"/>
+    <subitem value="ridge" text="脊状"/>
+    <subitem value="inset" text="凹陷"/>
+    <subitem value="outset" text="凸出"/>
+  </item>
+  <!-- 宽度-->
+  <item name="borderWidth">
+    <subitem value="thin" text="细"/>
+    <subitem value="medium" text="中"/>
+    <subitem value="thick" text="粗"/>
+    <subitem value="(值)" text="(值)"/>
+  </item>
+
+
+<!--列表 -->
+  <!-- 类型-->
+  <item name="list-style-type">
+    <subitem value="disc" text="圆点" />
+    <subitem value="circle" text="圆圈" />
+    <subitem value="square" text="方块" />
+    <subitem value="decimal" text="数字" />
+    <subitem value="lower-roman" text="小写罗马数字" />
+    <subitem value="upper-roman" text="大写罗马数字" />
+    <subitem value="lower-alpha" text="小写字母" />
+    <subitem value="upper-alpha" text="大写字母" />
+    <subitem value="none" text="无" />
+  </item>
+  <!-- 位置-->
+  <item name="list-style-position">
+    <subitem value="inside" text="内" />
+    <subitem value="outside" text="外" />
+  </item>
+  <!-- 项目符号图像-->
+  <item name="list-style-image">
+    <subitem value="(URL)" text="(URL)"/>
+    <subitem value="none" text="无"/>
+  </item>
+  
+
+  <!--定位 -->
+  <!--类型 -->
+  <item name="position">
+    <subitem value="absolute" text="绝对"/>
+    <subitem value="fixed" text="固定"/>
+    <subitem value="relation" text="相对"/>
+    <subitem value="static" text="静态"/>
+  </item>
+  <!-- 显示-->
+  <item name="visibility">
+    <subitem value="inherit" text="继承"/>
+    <subitem value="visible" text="可见"/>
+    <subitem value="hidden" text="隐藏"/>
+  </item>
+  <!--溢出 -->
+  <item name="overflow">
+    <subitem value="visible" text="可见"/>
+    <subitem value="hidden" text="隐藏"/>
+    <subitem value="scroll" text="滚动"/>
+    <subitem value="auto" text="自动"/>
+  </item>
+  <!-- Z轴 -->
+  <item name="z-index">
+    <subitem value="auto" text="自动" />
+    <subitem value="(值)" text="(值)" />
+  </item>
+  
+  
+<!--扩展 -->
+  <!-- 之前-->
+  <item name="page-break-before">
+    <subitem value="auto" text="自动" />
+    <subitem value="always" text="总是" />
+    <subitem value="left" text="左对齐" />
+    <subitem value="right" text="右对齐" />
+  </item>
+  <!-- 之后-->
+  <item name="page-break-after">
+    <subitem value="auto" text="自动" />
+    <subitem value="always" text="总是" />
+    <subitem value="left" text="左对齐" />
+    <subitem value="right" text="右对齐" />
+  </item>
+  <!-- 光标-->
+  <item name="cursor">
+    <subitem value="crosshair" text="crosshair" />
+    <subitem value="text" text="text" />
+    <subitem value="wait" text="wait" />
+    <subitem value="default" text="default" />
+    <subitem value="help" text="help" />
+    <subitem value="e-resize" text="e-resize" />
+    <subitem value="ne-resize" text="ne-resize" />
+    <subitem value="n-resize" text="n-resize" />
+    <subitem value="nw-resize" text="nw-resize" />
+    <subitem value="w-resize" text="w-resize" />
+    <subitem value="sw-resize" text="sw-resize" />
+    <subitem value="s-resize" text="s-resize" />
+    <subitem value="se-resize" text="se-resize" />
+    <subitem value="auto" text="auto" />
+  </item>
+  <!-- 过滤器-->
+  <item name="filter">
+    <subitem value="FlipH" text="FlipH" />
+    <subitem value="FlipV" text="FlipV" />
+    <subitem value="Gray" text="Gray" />
+    <subitem value="Invert" text="Invert" />
+    <subitem value="Light" text="Light" />
+    <subitem value="Xray" text="Xray" />
+    <subitem value="Alpha(Opacity=?, FinishOpacity=?, Style=?, StartX=?, StartY=?, FinishX=?, FinishY=?)" text="Alpha(Opacity=?, FinishOpacity=?, Style=?, StartX=?, StartY=?, FinishX=?, FinishY=?)"/>
+    <subitem value="BlendTrans(Duration=?)" text="BlendTrans(Duration=?)"/>
+    <subitem value="Blur(Add=?, Direction=?, Strength=?)" text="Blur(Add=?, Direction=?, Strength=?)"/>
+    <subitem value="Chroma(Color=?)" text="Chroma(Color=?)"/>
+    <subitem value="DropShadow(Color=?, OffX=?, OffY=?, Positive=?)" text="DropShadow(Color=?, OffX=?, OffY=?, Positive=?)"/>
+    <subitem value="Glow(Color=?, Strength=?)" text="Glow(Color=?, Strength=?)"/>
+    <subitem value="Mask(Color=?)" text="Mask(Color=?)"/>
+    <subitem value="RevealTrans(Duration=?, Transition=?)" text="RevealTrans(Duration=?, Transition=?)"/>
+    <subitem value="Shadow(Color=?, Direction=?)" text="Shadow(Color=?, Direction=?)"/>
+    <subitem value="Wave(Add=?, Freq=?, LightStrength=?, Phase=?, Strength=?)" text="Wave(Add=?, Freq=?, LightStrength=?, Phase=?, Strength=?)"/>
+  </item>
+</root>

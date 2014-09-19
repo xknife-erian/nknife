@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item value="1" text="98/9/8" />
+  <item value="2" text="1998年9月8日" />
+  <item value="3" text="09/08/1998" />
+  <item value="4" text="9/9/98"/>
+  <item value="5" text="1998-09-08" />
+  <item value="6" text="8/9/98" />
+  <item value="7" text="8/09/98" />
+  <item value="8" text="08.09.1998" />
+  <item value="9" text="08.09.98" />
+  <item value="10" text="8-09-1998" />
+</items>

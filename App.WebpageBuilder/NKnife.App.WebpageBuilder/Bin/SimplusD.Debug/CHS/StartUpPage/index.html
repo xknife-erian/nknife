@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Simplus D首页</title>
+<style>
+/* 全局样式 */
+*{ margin:0; padding:0;}
+body{ width:100%; margin:0 auto; background:#CCE1F6; font-family:"宋体",Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+h1{ width:52px; height:60px; float:left; position:absolute; top:17px; left:31px;}
+h2{ width:224px; height:23px; float:left; position:absolute; top:51px; left:89px;}
+h3{ width:100%; color:#333; float:left; font-size:12px; line-height:22px; height:23px; background:url(images/titleBj.gif) repeat-x;}
+h3 span{ padding-left:35px; background:url(images/sdIcon.gif) no-repeat 10px 5px; height:23px; float:left;}
+li{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+/* 清除样式 */
+.clear{ clear:both; height:3px; font-size:0; width:100%; background:#fff; float:left;}
+.pd{ padding-bottom:15px;}
+
+/* 头部样式 */
+#hd{ width:100%; background:url(images/tu.jpg) repeat-x; height:90px; position:relative;}
+#search{ width:222px; height:29px; background:url(images/searchBj.gif) no-repeat; position:absolute; top:50px; right:5px;}
+#search img{ margin:10px; float:left;}
+#search .inputTxt{ width:120px; float:left; height:16px; margin:5px 0; background:#ffffff; border:1px solid #DCDCDC; font-size:12px; padding:1px; line-height:16px;}
+#search .inputBtn{ width:21px; height:21px; float:left; margin:3px 0 0 8px;}
+
+/* 内容部分 */
+#bd{ width:98%; padding:3px 1% 0 1%; margin-top:3px;}
+
+/* 左边内容 */
+#bd_left{ width:235px; position:absolute; left:10px;}
+
+/* 网站 */
+.hot{ width:235px; float:left; border:1px solid #B8CAD8; background:#ffffff;}
+.hot ul { width:203px; float:left; list-style:none;}
+.hot ul li { font-size:12px; line-height:22px;}
+#lastProj ul{ margin-bottom:5px;}
+#lastProj li{ width:175px; padding-left:25px}
+#lastProj li a img{border:0; float:left;}
+#lastProj li a span{float:left; line-height:16px;text-overflow:ellipsis;overflow:hidden; text-indent:5px; cursor:pointer;}
+#lastProj li a{ text-decoration:none; color:#000000;}
+#lastProj li a:hover span{ background-color:#E4F4FA;}
+#lastProj p{ width:175px; float:left; text-indent:50px; background:url(images/openStyle.gif) no-repeat 28px 2px; line-height:22px;}
+#lastProj p a{ color:#000000; text-decoration:none;}
+#hotBj{ width:203px; float:left; padding:10px 0 10px 15px;}
+#hotTop,#hotIn,#hotBottom{ float:left; width:203px;}
+#hotTop{ height:5px; font-size:0; background:url(images/onTop.gif) no-repeat;}
+#hotIn{ background:url(images/onIn.gif) repeat-y; padding:5px 0;}
+#hotBottom{ height:8px; font-size:0; background:url(images/onBottom.gif) no-repeat;}
+#case p{ text-align:center; color:#ff0000; line-height:16px;}
+#case p img{ margin:10px 0;}
+#project{ margin-bottom:10px; float:left; width:100%;}
+
+/* 右边内容 */
+#bd_right{margin-left:245px; border:1px solid #B8CAD8; background:#ffffff;}
+
+/* 内容 */
+#main { width:97%; background:#FFFFFF; padding:0 0 20px 3%;}
+#main h4{ color:#BA060D; font-size:12px; width:96%; line-height:35px;}
+#main p{ font-size:12px; width:96%; text-indent:25px; line-height:20px;}
+</style>
+<script type="text/javascript">
+//初始化最近项目列表
+function loadProjList(){
+    if(window.external){
+        try{
+            var sData = window.external.LatestProject(),
+				arrData = sData.split(","),
+				oList = document.getElementById("lastProjList"),
+				sList = "";
+			//当列表不为空时，先清空列表
+			if(oList.innerHTML != "") oList.innerHTML = "";
+            //alert(sData);
+            if(!sData){  //无数据时不做操作
+                return false;
+            }else{ 
+                for(var i=0; i<arrData.length; i++){
+                    if(arrData[i].indexOf(".") != -1){
+                        var reFileName = /.+\\(.+)\..+/;  //匹配文件名
+                        reFileName.test(arrData[i].replace("\\","\\\\"));
+                        sList += "<li><a href=\"#\" onmouseout=\"return showProjPath('')\" onmouseover=\"return showProjPath(this.urn)\" onclick=\"return openWeb(this.urn)\" urn=\""+arrData[i]+"\"><img src=\"images/openType.gif\"><span>"+RegExp.$1+"</span></a></li>";    
+                    }
+                }
+                //alert(sList);
+                oList.innerHTML = sList;  //填充列表数据
+            }
+        }catch(e){}
+    }
+}
+
+//显示项目路径
+function showProjPath(path){
+    if(window.external){
+        try{
+            //alert(path);
+            window.external.MouseOverProject(path);
+        }catch(e){}
+    }
+    return true;
+}
+
+//打开项目
+function openWeb(path){
+    if(window.external){
+        try{
+            //alert(path);
+            window.external.OpenProject(path);
+        }catch(e){}
+    }
+    return false;
+}
+
+//创建项目
+function createWeb(){
+    if(window.external){
+        try{
+            window.external.CreateProject();
+        }catch(e){}
+    }
+    return false;
+}
+</script>
+</head>
+<body onload="loadProjList()">
+<!-- 头部 -->
+<div id="hd">
+	<h1><img src="images/logo.gif" width="52" height="60" alt="sd" title="sd" /></h1>
+	<h2><img src="images/note.gif" width="224" height="23" alt="说明" title="说明" /></h2>
+	<div id="search">
+		<img src="images/search.gif" width="37" height="10" />
+		<input class="inputTxt" />
+		<input class="inputBtn" type="image" src="images/go.gif" />
+	</div>
+</div>
+<!-- 头部结束 -->
+<div class="clear"></div>
+<!-- 内容 -->
+<div id="bd">
+	<!--左边内容-->
+	<div id="bd_left">
+		<!--网站位置-->
+		<div class="hot" id="lastProj">
+			<h3><span>最近的项目</span></h3>
+			<div id="hotBj">
+				<div id="hotTop"></div>
+				<div id="hotIn">
+					<ul id="lastProjList">
+						<!--li>捷路集汇网站</li>
+						<li>SimplusD官网</li>
+						<li>捷路公司网站</li-->
+					</ul>
+					<p><a href="#" onclick="return openWeb('')">打开网站</a></p>
+					<p><a href="#" onclick="return createWeb()">创建网站</a></p>
+				</div>
+				<div id="hotBottom"></div>
+			</div>
+		</div>
+		<!--帮助-->
+		<div id="project" class="hot" style="margin-top:10px;">
+			<h3><span>帮助</span></h3>
+			<iframe frameborder=0 marginwidth=0 marginheight=0 scrolling=no width=235 height=150 src="http://www.jeelu.com/sd/help.html"></iframe>
+		</div>
+	</div>
+	<!--内容-->
+	<div id="bd_right">
+		<!--内容标题-->
+		<h3><span>相关新闻</span></h3>
+		<iframe frameborder=0 marginwidth=0 marginheight=0 scrolling=no height=450 width=100% src="http://www.jeelu.com/sd/content.html"></iframe>
+	</div>
+</div>
+<!-- 内容结束 -->
+</body>
+</html>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <form text="导航块编辑" />
+  <control name="labelSelectChannel" text="选择栏目" />
+  <control name="usedSeparator" text="使用间隔符" />
+  <control name="buttonEnter" text="确 定" />
+  <control name="buttonCancel" text="取 消" />
+</resourceText>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+ 
+  <form text="ChannelManager" />
+  <control name="btnCancel" text="取消" />
+  <control name="btnOK" text="确定" />
+
+  <object Name="newLangToolStripButton" Text="新建语言(&amp;L)" />
+  <object Name="newToolStripButton" Text="新建(&amp;N)" />
+  <object Name="modifyToolStripButton" Text="修改(&amp;M)" />
+  <object Name="deleteToolStripButton" Text="删除(&amp;E)" />
+  <object Name="revertToolStripButton" Text="还原(&amp;R)" />
+  <object Name="outDeleteStripButton" Text="彻底删除(&amp;O)" />
+  <object Name="cleanRecycleToolStripButton" Text="清空回收站(&amp;C)" />
+  <object Name="cutToolStripButton" Text="剪切(&amp;X)" />
+  <object Name="copyToolStripButton" Text="拷贝(&amp;Y)" />
+  <object Name="pasteToolStripButton" Text="粘贴(&amp;P)" />
+  <object Name="upToolStripButton" Text="顺序上移(&amp;A)" />
+  <object Name="downToolStripButton" Text="顺序下移(&amp;S)" />
+  <object Name="indentToolStripButton" Text="升级(&amp;W)" />
+  <object Name="outdentToolStripButton" Text="降级(&amp;D)" />
+  <object Name="expandToolStripButton" Text="展开节点(&amp;H)" />
+  <object Name="collapseToolStripButton" Text="折叠节点(&amp;J)" />
+  
+</resourceText>

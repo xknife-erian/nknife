@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item value="1" text="[不要星期]" />
+  <item value="2" text="星期五," />
+  <item value="3" text="星期五" />
+  <item value="4" text="Friday," />
+  <item value="5" text="Fri" />
+</items>

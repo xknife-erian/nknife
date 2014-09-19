@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.Win.BlockCssControl" ObjectName="Jeelu.Win.BlockCssControl">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.Win.BlockCssControl" Name="BlockCssControl" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_TextSimilar" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_Show" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_Space" />
+  <Control Type="System.Windows.Forms.Label" Name="label7">
+    <Text>显示(&amp;D):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label4">
+    <Text>文本对齐(&amp;T):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label6">
+    <Text>空格(&amp;W):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label5">
+    <Text>文字缩进(&amp;I):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label3">
+    <Text>垂直对齐(&amp;V):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label2">
+    <Text>字母间距(&amp;L):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label1">
+    <Text>单词间距(&amp;S):</Text>
+  </Control>
+</Resources>

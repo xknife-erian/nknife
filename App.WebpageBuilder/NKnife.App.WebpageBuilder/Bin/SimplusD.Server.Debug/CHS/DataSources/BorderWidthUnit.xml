@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<item>
+  <value name="px">像素</value>
+  <value name="pt">点数</value>
+  <value name="in">英寸</value>
+  <value name="cm">厘米</value>
+  <value name="mm">毫米</value>
+  <value name="pc">12pt字</value>
+  <value name="em">字体高</value>
+  <value name="ex">字母x的高</value>
+  <value name="%">%</value>
+</item>

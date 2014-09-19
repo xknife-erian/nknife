@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText>
+  <databind level="1" id="1" file="TagFindType.xml" />
+  <form text="关键字管理" />
+  <object Name="sortListToolStripSplitButton" Text="检索条件(&amp;S)" ></object>
+  <object Name="tagColumnHeader" Text="关键字" ></object>
+  <object Name="allToolStripMenuItem" Text="全局关键字(&amp;A)" ></object>
+  <object Name="channelToolStripMenuItem" Text="频道关键字(&amp;C)" ></object>
+  <object Name="productToolStripMenuItem" Text="产品关键字(&amp;P)" ></object>
+  <object Name="hrToolStripMenuItem" Text="招聘关键字(&amp;H)" ></object>
+  <object Name="biddingToolStripMenuItem" Text="招标关键字(&amp;B)" ></object>
+  <object Name="nothingToolStripMenuItem" Text="未使用关键字(&amp;N)" ></object>
+  <object Name="newTagToolStripMenuItem" Text="新建关键字(&amp;N)" ></object>
+  <object Name="modifyTagToolStripMenuItem" Text="修改关键字(&amp;M)" ></object>
+  <object Name="delTagToolStripMenuItem" Text="删除关键字(&amp;D)" ></object>
+  <object Name="toGlobalToolStripMenuItem" Text="设置为全局(&amp;G)" ></object>
+  <object Name="toChannelToolStripMenuItem" Text="设置为频道(&amp;C)" ></object>
+  <object Name="toContentOfChannelToolStripMenuItem" Text="设置所有文章(&amp;T)" ></object>
+  <object Name="refreshToolStripButton" Text="刷新" ></object>
+  
+  <control name="btnOK" text="确定" />
+  <control name="btnCancel" text="取消" />
+  <control name="btnSearch" text="查找(&amp;F)" ></control>
+  <control name="searchGroupBox" text="查找" ></control>
+  <control name="decriptionGroupBox" text="关键字属性" ></control>
+  <control name="lblTag" text="关键字:" ></control>
+  <control name="lblFrequency" text="使用次数:" ></control>
+  <control name="lblTagId" text="关键字ID:" ></control>
+  <control name="lblTagTotal" text="共有关键字个数:" ></control>
+  <control name="tagFindTypeComboBox" databindid="1" ></control>  
+</resourceText>

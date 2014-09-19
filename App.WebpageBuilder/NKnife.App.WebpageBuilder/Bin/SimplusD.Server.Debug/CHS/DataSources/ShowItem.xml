@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="纯文本" />
+  <item value="2" text="选定的文本" />
+  <item value="3" text="非活动的选定文本" />
+  <item value="4" text="行号" />
+  <item value="5" text="可见空白" />
+  <item value="6" text="HTML元素名称" />
+  <item value="7" text="HTML实体" />
+  <item value="8" text="HTML属性值" />
+  <item value="9" text="HTML属性名称" />
+  <item value="10" text="HTML操作符" />
+  <item value="11" text="HTML服务端脚本" />
+  <item value="12" text="HTML标记分隔符" />
+  <item value="13" text="HTML注释" />
+</items>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <!--<databind level="1" id="1" file="XXXXXX.xml" />
+  
+  <form text="ChannelManager" />
+  <control name="btnCancel" text="取消" />
+  <control name="btnOK" text="确定" />
+  
+  <control name="lblName" text="模板" />  
+  
+  <object Name="refreshToolStripButton" Text="刷新" />-->
+  <form>
+    <condition name="Action" dynamic="true">
+      <if value="Add" text="喂马, 劈柴, 周游世界">
+      </if>
+      <if value="Delete" text="从明天起, 关心粮食和蔬菜">
+      </if>
+      <else  text="我只愿面朝大海, 春暖花开">
+      </else>
+    </condition>
+  </form>
+
+  <control name="textBox1" validate="TestABCD" />
+  <resource file="dialog.img.resources" key="img.340x60.dialog.top"></resource>
+  
+  <text name="abc" value="从明天起\r\n做一个幸福的人\r\n喂马, 劈柴, 周游世界\r\n\r\n从明天起, 关心粮食和蔬菜\r\n我有一所房子, 面朝大海, 春暖花开\r\n\r\n从明天起, 和每一个亲人通信\r\n告诉他们我的幸福\r\n那幸福的闪电告诉我的\r\n我将告诉每一个人\r\n\r\n给每一条河每一座山取一个温暖的名字\r\n陌生人, 我也为你祝福\r\n愿你有一个灿烂的前程\r\n愿你有情人终成眷属\r\n愿你在尘世获得幸福\r\n\r\n我只愿面朝大海, 春暖花开"></text>
+</resourceText>

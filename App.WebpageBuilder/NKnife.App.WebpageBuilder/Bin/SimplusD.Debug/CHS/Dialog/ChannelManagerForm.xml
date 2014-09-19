@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <!--<databind level="1" id="1" file="XXXXXX.xml" />-->
+  <databind level="1" id="1" file="ChannelType.xml" />
+  <databind level="2" id="2" file="ChannelType.xml" />
+  <databind level="1" id="3" file="ContentSortItem.xml" />
+  
+  <form text="频道管理" />
+  <control name="btnNew" >
+    <condition name="SelectNodeLevel" dynamic="true">
+      <if value="0" text="新建语言(&amp;N)"></if>
+      <else text="新建(&amp;N)"></else>
+    </condition>
+  </control>
+  <control name="btnModify" text="修改(&amp;M)" ></control>
+  <control name="btnCompletion" text="完成(&amp;C)" ></control>
+  <control name="btnSubCancel" text="取消(&amp;E)" ></control>
+  <control name="lblName" text="频道名称:" ></control>
+  <control name="lblChannelType" text="频道类型:"></control>
+  <control name="lblchannelSubType" text="频道类型:"></control>
+  <control name="channelTypeCheckBox" databindid="1" ></control>
+  <control name="channelSubTypeCheckBox" databindid="2" selectControl="channelTypeCheckBox" ></control>
+  <control name="lblLangGroup" text="语言配置组:" ></control>
+  <control name="lblSummary" text="设计摘要:" ></control>
+  <control name="channelInfoGroup" text="频道基本信息" ></control>
+  <control name="contentSortGroup" text="频道内容排序" ></control>
+  <control name="lblSortItem" text="排序项:" ></control>
+  <control name="lblSortType" text="排序方法:" ></control>
+  <control name="mulitLangCheckBox" text="网站各语言子站均使用相同的频道设置" ></control>
+  <control name="sortItemComboBox" databindid="3" ></control>
+  <control name="orderRadioBtn" text="正序" ></control>
+  <control name="unOrderRadioBtn" text="倒序" ></control>
+  <control name="randOrderRadioBtn" text="随机" ></control>
+  <control name="channelStateGroupBox" text="频道状态" ></control>
+  <control name="isEnabelCheckBox" text="发布"></control>
+  <control name="isDeleteCheckBox" text="删除"></control>
+  
+  <object Name="newLangToolStripButton" Text="新建语言(&amp;L)" />
+  <object Name="newToolStripButton" Text="新建(&amp;N)" />
+  <object Name="modifyToolStripButton" Text="修改(&amp;M)" />
+  <object Name="deleteToolStripButton" Text="删除(&amp;E)" />
+  <object Name="revertToolStripButton" Text="还原(&amp;R)" />
+  <object Name="outDeleteStripButton" Text="彻底删除(&amp;O)" />
+  <object Name="cleanRecycleToolStripButton" Text="清空回收站(&amp;C)" />
+  <object Name="cutToolStripButton" Text="剪切(&amp;X)" />
+  <object Name="copyToolStripButton" Text="拷贝(&amp;Y)" />
+  <object Name="pasteToolStripButton" Text="粘贴(&amp;P)" />
+  <object Name="upToolStripButton" Text="顺序上移(&amp;A)" />
+  <object Name="downToolStripButton" Text="顺序下移(&amp;S)" />
+  <object Name="indentToolStripButton" Text="升级(&amp;W)" />
+  <object Name="outdentToolStripButton" Text="降级(&amp;D)" />
+  <object Name="expandToolStripButton" Text="展开节点(&amp;H)" />
+  <object Name="collapseToolStripButton" Text="折叠节点(&amp;J)" />
+  
+  <object Name="totalLangToolStripStatusLabel" Text="1" />
+  <object Name="langToolStripStatusLabel" Text="语言" />
+  <object Name="totalChannelToolStripStatusLabel" Text="1" />
+  <object Name="channelToolStripStatusLabel" Text="频道已创建" />
+
+  <text name="langGroupTip" value="语言组不能为空"></text>
+  <text name="quiteDelFirstTip" value="您确定您真得要删除此频道吗？"></text>
+  <text name="quiteDelSecTip" value="此删除不仅仅只删除当前频道，同时也会删除掉其子目录及其下N次方篇文章？"></text>
+</resourceText>

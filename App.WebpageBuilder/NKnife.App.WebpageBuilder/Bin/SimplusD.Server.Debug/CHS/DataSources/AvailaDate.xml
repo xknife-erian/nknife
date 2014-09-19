@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="一周" />
+  <item value="2" text="两周" />
+  <item value="3" text="一个月" />
+  <item value="4" text="两个月" />
+  <item value="5" text="三个月" />
+  <item value="6" text="不限" />
+</items>

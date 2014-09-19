@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="邮寄" />
+  <item value="2" text="传真" />
+  <item value="3" text="自取" />
+  <item value="4" text="电子邮件" />
+  <item value="5" text="网上下载" />
+</items>

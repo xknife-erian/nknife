@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.Win.PositionCssControl" ObjectName="Jeelu.Win.PositionCssControl">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.Win.PositionCssControl" Name="PositionCssControl" />
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxHeightAuto">
+    <Text>自动</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxWidthAuto">
+    <Text>自动</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbOverflow">
+    <Text>自动</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label8">
+    <Text>溢出：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbZindex" />
+  <Control Type="System.Windows.Forms.Label" Name="label7">
+    <Text>Z轴：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbVisibility" />
+  <Control Type="System.Windows.Forms.Label" Name="label6">
+    <Text>显示：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBox1">
+    <Text>剪辑</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label2">
+    <Text>左：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label3">
+    <Text>下：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label4">
+    <Text>右：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label5">
+    <Text>上：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBoxWidth">
+    <Text>定位</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderLeft">
+    <Text>左：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderDown">
+    <Text>下：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderRight">
+    <Text>右：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderUp">
+    <Text>上：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbPosition" />
+  <Control Type="System.Windows.Forms.Label" Name="label1">
+    <Text>类型：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbClear">
+    <Text>左对齐</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbFloat">
+    <Text>无</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labClear">
+    <Text>清除：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labFloat">
+    <Text>浮动：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labHeight">
+    <Text>高：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labWidth">
+    <Text>宽：</Text>
+  </Control>
+</Resources>

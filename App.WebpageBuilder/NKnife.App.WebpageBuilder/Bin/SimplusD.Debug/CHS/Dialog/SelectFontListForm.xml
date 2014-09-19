@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText>
+  <form text="选择字体列表" />
+  <control name="btnOk" text="确定" />
+  <control name="btnCancel" text="取消" />
+</resourceText>

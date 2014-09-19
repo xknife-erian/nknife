@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--菜单栏字符 ｜｜｜text菜单名称，hotkey热键shortcut快捷键enabled初始值是否可用,isToolbar是否有相应的工具栏显示toolbarOwer工具栏类型ico图标路径-->
+<ToolbarList>
+  <standard text="标准" defaultWorkspace="All">
+  </standard>
+  <site text="网站" defaultWorkspace="All" />
+  <!--<page text="页面" defaultWorkspace="All" />
+  <tmplts text="模板" defaultWorkspace="All" />-->
+  <!--<report text="报告" defaultWorkspace="All" />-->
+  <user text="用户" defaultWorkspace="All" />
+  <!--<community text="社区" defaultWorkspace="All" />-->
+  <help text="帮助" defaultWorkspace="All" />
+</ToolbarList>

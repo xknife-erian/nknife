@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.WordSeg", "..\WordSeg\Jeelu.WordSeg.csproj", "{BB978ADB-E63C-420B-AABB-6E86B137CB6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentQuickDemo", "SegmentQuickDemo\SegmentQuickDemo.csproj", "{EAEE11CE-75BC-4869-9EEA-49C6F9105134}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 3
+		SccProjectUniqueName0 = ..\\WordSeg\\Jeelu.WordSeg.csproj
+		SccProjectName0 = \u0022$/Jeelu.KeywordResonator/WordSeg\u0022,\u0020HYKAAAAA
+		SccLocalPath0 = ..\\WordSeg
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = SegmentQuickDemo\\SegmentQuickDemo.csproj
+		SccLocalPath2 = .
+		SccProjectFilePathRelativizedFromConnection2 = SegmentQuickDemo\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

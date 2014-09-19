@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>  
+  <item value ="DrawLine" text ="画笔"  name ="pen" imageurl ="icon\画笔.ico" tool_tip_text ="画线工具 (B)" />
+  <item value ="MouseDeleteLine" text ="删除"  name ="deleteLine" imageurl ="icon\删除线.ico" tool_tip_text ="删除线段 (E)"  />
+  <separator />
+  <item value ="MouseSelect" text ="选择"  name ="choose" imageurl ="icon\选择.ico" tool_tip_text ="选择工具 (V)" />
+  <item value ="MouseSelectRect" text ="选择矩形"  name ="chooseRect" imageurl ="icon\选择矩形.ico" tool_tip_text ="选择页面片 (R)"/>
+  <item value ="MouseSelectLine" text ="选择线段"  name ="chooseLine" imageurl ="icon\选择线段.ico" tool_tip_text ="选择线段 (L)"  />
+  <separator />
+  <item value ="PanelMove" text ="抓手"  name ="hand" imageurl ="icon\拖动.ico" tool_tip_text ="抓手工具 (D)"/>
+  <item value ="ZoomBigger" text ="缩放"  name ="zoom" imageurl ="icon\缩放.ico" tool_tip_text ="缩放工具 (Z)" />
+</items>

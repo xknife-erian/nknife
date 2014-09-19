@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <!--<databind level="1" id="1" file="XXXXXX.xml" />-->
+  
+  <form text="编辑字体列表" />
+  <control name="btnCancel" text="取消" />
+  <control name="btnOK" text="确定" />
+
+  <control name="lblFontList" text="字体族列表" />
+  <control name="lblEnabledFont" text="可用字体:" />
+  <control name="lblCheckedFont" text="选择字体:" />
+
+  <text name="ShowWords" value="（在以下列表中添加字体）" />
+
+</resourceText>

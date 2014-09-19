@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<item>
+  <value name="auto">自动</value>
+  <value name="thin">粗</value>
+  <value name="medium">中</value>
+  <value name="thick">细</value>
+</item>

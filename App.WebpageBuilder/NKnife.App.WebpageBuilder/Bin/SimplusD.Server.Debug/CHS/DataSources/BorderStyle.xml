@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<item>
+  <value name="none">无</value>
+  <value name="dotted">点划线</value>
+  <value name="dashed">虚线</value>
+  <value name="solid">实线</value>
+  <value name="double">双线</value>
+  <value name="groove">槽状</value>
+  <value name="ridge">脊状</value>
+  <value name="inset">凹陷</value>
+  <value name="outset">凸出</value>
+</item>

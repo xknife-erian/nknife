@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.AddChannelPartForm" ObjectName="Jeelu.SimplusD.Client.Win.AddChannelPartForm">
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.SimplusD.Client.Win.AddChannelPartForm" Name="EditChannelPartForm">
+    <Text>编辑导航链接</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxWidth">
+    <Text>选中的频道宽度相同</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonCancel">
+    <Text>取 消</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEnter">
+    <Text>确 定</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxUsedSeparator">
+    <Text>使用间隔符</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxSeparator">
+    <Text>|</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelSelectChannel">
+    <Text>选择频道</Text>
+  </Control>
+  <Text Key="treeViewToolTipText">双击设计显示内容/外观</Text>
+</Resources>

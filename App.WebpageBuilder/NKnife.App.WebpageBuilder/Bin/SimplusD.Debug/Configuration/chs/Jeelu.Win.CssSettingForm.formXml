@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.Win.CssSettingForm" ObjectName="Jeelu.Win.CssSettingForm">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.Win.CssSettingForm" Name="CssSettingForm">
+    <Text>CSS 设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="btnCancel">
+    <Text>取消</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="btnOK">
+    <Text>确定</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.SplitContainer" Name="splitContainerMain" />
+  <Control Type="System.Windows.Forms.SplitContainer" Name="splitContainerUI" />
+  <Control Type="System.Windows.Forms.ListBox" Name="listBoxLeftType">
+    <Text>类型</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TextBox" Name="txtCssText" />
+  <Control Type="System.Windows.Forms.ToolStrip" Name="toolStrip">
+    <Text>toolStrip1</Text>
+  </Control>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="sbtnDesign">
+    <Text>设计</Text>
+  </ToolStripItem>
+  <ToolStripItem Type="System.Windows.Forms.ToolStripButton" Name="sbtnCode">
+    <Text>代码</Text>
+  </ToolStripItem>
+</Resources>

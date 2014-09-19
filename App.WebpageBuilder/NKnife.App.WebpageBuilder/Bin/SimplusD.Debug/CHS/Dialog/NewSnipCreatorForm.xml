@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText>
+  <form text="创建新的页面片" />
+  <databind level="1" id="1" file="SnipType.xml" />
+  <control name="NewSnipGroupBox" text="创建新的页面片" />
+  <control name="okBtn" text="确定" />
+  <control name="cancelBtn" text="取消" />
+  <control name="snipIdLabel" text="页面片ID:" ></control>
+  <control name="snipTypeLabel" text="页面片类型:" ></control>
+  <control name="summaryLabel" text="设计摘要:" ></control>
+  <control name="snipTypeCBox" databindid="1" ></control>
+</resourceText>

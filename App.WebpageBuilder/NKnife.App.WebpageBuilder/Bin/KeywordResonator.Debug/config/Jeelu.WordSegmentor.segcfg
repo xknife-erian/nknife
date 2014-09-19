@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<KTDictSeg>
+  <!--未登录词阈值，当统计超过这个值时，自动将未登录词加入到字典中-->
+  <Item Name="UnknownWordsThreshold" Value="100" />
+  <!--自动插入超过统计阈值的未登录词-->
+  <Item Name="AutoInsertUnknownWords" Value="False" />
+  <!--优先判断词频，如果一个长的单词由多个短的单词组成，而长的单词词频较低则忽略长的单词。如 中央酒店的词频比中央和酒店的词频都要低，则忽略中央酒店。-->
+  <Item Name="FreqFirst" Value="false" />
+  <!--自动统计姓名前后缀，自动统计未登录词，自动统计词频-->
+  <Item Name="AutoStudy" Value="True" />
+  <!--间隔多少秒自动保存最新的字典和统计信息，AutoStudy = true时有效-->
+  <Item Name="AutoSaveInterval" Value="86400" />
+  <!--字典文件所在路径-->
+  <Item Name="DictPath" Value="segdata\" />
+  <!--日志文件名-->
+  <Item Name="LogFileName" Value="Jeelu.WordSegmentor.log" />
+  <!--是否匹配汉语人名-->
+  <Item Name="MatchName" Value="True" />
+  <!--是否过滤停用词-->
+  <Item Name="FilterStopWords" Value="false" />
+</KTDictSeg>

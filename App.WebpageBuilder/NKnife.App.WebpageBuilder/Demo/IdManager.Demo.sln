@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdManager.Demo", "IdManager.Demo\IdManager.Demo.csproj", "{B33FDDD9-CBBC-4ABC-8811-A4E14D72B4F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu", "..\Common\Jeelu.csproj", "{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD", "..\SimplusD\Common\Jeelu.SimplusD.csproj", "{42474834-8525-470E-A26C-24E552123983}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Win", "..\Win\Common\Jeelu.Win.csproj", "{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 5
+		SccProjectUniqueName0 = ..\\Common\\Jeelu.csproj
+		SccProjectName0 = \u0022$/Jeelu/Common\u0022,\u0020YUGAAAAA
+		SccLocalPath0 = ..\\Common
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = IdManager.Demo\\IdManager.Demo.csproj
+		SccLocalPath2 = .
+		SccProjectFilePathRelativizedFromConnection2 = IdManager.Demo\\
+		SccProjectUniqueName3 = ..\\SimplusD\\Common\\Jeelu.SimplusD.csproj
+		SccProjectName3 = \u0022$/Jeelu/SimplusD/Common\u0022,\u0020MPIAAAAA
+		SccLocalPath3 = ..\\SimplusD\\Common
+		SccProjectUniqueName4 = ..\\Win\\Common\\Jeelu.Win.csproj
+		SccProjectName4 = \u0022$/Jeelu/Win/Common\u0022,\u0020YGJAAAAA
+		SccLocalPath4 = ..\\Win\\Common
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B33FDDD9-CBBC-4ABC-8811-A4E14D72B4F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33FDDD9-CBBC-4ABC-8811-A4E14D72B4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33FDDD9-CBBC-4ABC-8811-A4E14D72B4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33FDDD9-CBBC-4ABC-8811-A4E14D72B4F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42474834-8525-470E-A26C-24E552123983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42474834-8525-470E-A26C-24E552123983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42474834-8525-470E-A26C-24E552123983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42474834-8525-470E-A26C-24E552123983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

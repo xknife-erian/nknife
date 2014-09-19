@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText>
+  <form text="选择频道" />
+  <control name="btnOK" text="确 定" />
+  <control name="btnCancel" text="取 消" />
+</resourceText>

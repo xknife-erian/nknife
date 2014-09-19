@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <form text="高级编辑" />
+  <control name="groupBoxSelectDisplayType" text="显示类型" />
+  <control name="radioButtonDefault" text="默认" />
+  <control name="radioButtonTitle" text="显示标题" />
+  <control name="radioButtonPic" text="显示图片" />
+  <control name="radioButtonText" text="显示文本" />
+  <control name="buttonBrowsePic" text="浏 览" />
+  <control name="groupBoxWidth" text="宽度" />
+  <control name="buttonEnter" text="确 定" />
+  <control name="buttonCancel" text="取 消" />
+</resourceText>

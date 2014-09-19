@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.KeywordResonator.Client.AboutForm" ObjectName="Jeelu.KeywordResonator.Client.AboutForm">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.KeywordResonator.Client.AboutForm" Name="AboutForm">
+    <Text>关于 KeywordResonator</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="okButton">
+    <Text>确定(&amp;O)</Text>
+  </Control>
+</Resources>

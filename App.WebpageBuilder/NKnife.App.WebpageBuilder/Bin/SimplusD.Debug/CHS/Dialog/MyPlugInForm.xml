@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <form text="Js插入设置">
+  </form>
+  <text name="SameVarTipMsg" value="不应该有同样的var属性:{0}" />
+  <text name="SameValueTipMsg" value="一组选项:{0}中不应该拥有相同的value属性:{1}。" />
+  <text name="RepeatDefaultTipMsg" value="一组单选框:{0}中不应该拥有多个默认值。" />
+</resourceText>

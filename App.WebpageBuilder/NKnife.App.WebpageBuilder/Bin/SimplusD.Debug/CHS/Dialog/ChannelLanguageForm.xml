@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText>
+  <databind level="1" id ="1" file="Language.xml"/>
+  <control name="languageComboBox" databindid="1" />
+  <form>
+    <condition name="isAdd">
+      <if value="add" text="添加语言" />
+      <if value="modify" text="修改语言" />
+    </condition>
+  </form>
+  <control name="btnCancel" text="取消" />
+  <control name="btnOK" text="确定" />
+  <!--<control name="lblName" text="模板" />-->
+  <control name="lblLanguage" text="语言名称:" />
+  <control name="lblSummary" text="设计摘要:" />
+  <control name="lblCreateTime" text="创建时间:" />
+  <control name="lblCreatedBy" text="最后修改人:" />
+
+</resourceText>

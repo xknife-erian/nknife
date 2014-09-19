@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <form text="频道选择" />
+  <control name="groupBoxSeparator" text="间隔符" ></control>
+  <control name="UsedSeparator" text="使用间隔符"></control>
+  <control name="groupBoxLink" text="频道链接选项"></control>  
+  <control name="labelWidth" text="宽度：" ></control>
+  <control name="enterBtn" text="确 定" ></control>
+  <control name="exitBtn" text="退 出" ></control>
+</resourceText>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="不限" />
+  <item value="2" text="技术部" />
+  <item value="3" text="财务部" />
+  <item value="4" text="行政部" />
+  <item value="5" text="人力资源部" />
+  <item value="6" text="服务部" />
+  <item value="7" text="工程部" />
+  <item value="8" text="主场部" />
+</items>

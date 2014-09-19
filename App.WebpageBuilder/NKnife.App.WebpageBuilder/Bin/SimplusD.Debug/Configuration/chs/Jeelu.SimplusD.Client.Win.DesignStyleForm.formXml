@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.DesignStyleForm" ObjectName="Jeelu.SimplusD.Client.Win.DesignStyleForm">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.SimplusD.Client.Win.DesignStyleForm" Name="DesignStyleForm">
+    <Text>编辑样式</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonDelete">
+    <Text>删 除</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelSelectStyle">
+    <Text>选择/新建样式：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonCancel">
+    <Text>取 消</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonOK">
+    <Text>确 定</Text>
+  </Control>
+  <Text Key="newName">新样式</Text>
+  <Text Key="nodeToolTipText">双击添加对应的块</Text>
+  <Text Key="genaralNodeText">通用</Text>
+  <Text Key="specialNodeText">专有</Text>
+  <Text Key="staticNodeText">静态型块</Text>
+  <Text Key="boxNodeText">容器型块</Text>
+</Resources>

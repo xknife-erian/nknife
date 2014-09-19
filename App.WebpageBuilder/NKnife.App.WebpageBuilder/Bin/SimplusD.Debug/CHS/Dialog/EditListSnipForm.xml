@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText >
+  <form text="编辑列表型模块" />
+  <control name="labText" text="条件名称：" />
+  <control name="btnCancel" text="取消" />
+  <control name="btnOK" text="确定" />
+  <control name="btnEditChannels" text="编辑" />
+  <control name="labOption" text="选项" />
+  <control name="labChannels" text="编辑频道组：" />
+  <control name="labSearchType" text="页面类型：" />
+  <control name="labSort" text="排序方式：" />
+  <control name="labNum" text="个数：" />
+  <control name="checkBoxDisplayChannel" text="显示所属频道" />
+</resourceText>

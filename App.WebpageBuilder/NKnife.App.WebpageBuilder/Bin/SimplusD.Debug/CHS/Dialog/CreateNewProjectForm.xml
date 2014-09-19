@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText>
+  <form text="新建网站" />
+  <control name="okBtn" text="确定" />
+  <control name="cancelBtn" text="取消" />
+  <control name="browserBtn" text="浏览(&amp;B)..." />
+  <control name="lblSiteType" text="网站类型:" />
+  <control name="lblSiteSubType" text="详细类型:" />
+  <control name="lblSiteName" text="网站名称:" />
+  <control name="lblSitePath" text="网站路径:" />
+  <control name="isStartupSiteWiz" text="启动网站设置向导" ></control>
+  <text name="largeIconTitle" value="大图标"></text>
+  <text name="smallIconTitle" value="小图标"></text>
+</resourceText>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--此文件是用生成器自动生成，请勿手动更改其代码-->
+  <softwarePath>
+    <directory name="CL_BlankProject_Folder" path="CHS\BlankProject\" />
+    <directory name="CL_DataSources_Folder" path="CHS\DataSources\" />
+    <file name="CL_DS_Age" path="CHS\DataSources\Age.xml" />
+    <file name="CL_DS_Agent" path="CHS\DataSources\Agent.xml" />
+    <file name="CL_DS_AvailaDate" path="CHS\DataSources\AvailaDate.xml" />
+    <file name="CL_DS_BiddingGetMode" path="CHS\DataSources\BiddingGetMode.xml" />
+    <file name="CL_DS_BiddingType" path="CHS\DataSources\BiddingType.xml" />
+    <file name="CL_DS_BiddProjectIsIndustry" path="CHS\DataSources\BiddProjectIsIndustry.xml" />
+    <file name="CL_DS_BiddPubType" path="CHS\DataSources\BiddPubType.xml" />
+    <file name="CL_DS_BiddStyle" path="CHS\DataSources\BiddStyle.xml" />
+    <file name="CL_DS_BidType" path="CHS\DataSources\BidType.xml" />
+    <file name="CL_DS_BorderPart" path="CHS\DataSources\BorderPart.xml" />
+    <file name="CL_DS_BorderStyle" path="CHS\DataSources\BorderStyle.xml" />
+    <file name="CL_DS_BorderWidth" path="CHS\DataSources\BorderWidth.xml" />
+    <file name="CL_DS_BorderWidthUnit" path="CHS\DataSources\BorderWidthUnit.xml" />
+    <file name="CL_DS_ChannelType" path="CHS\DataSources\ChannelType.xml" />
+    <file name="CL_DS_City" path="CHS\DataSources\City.xml" />
+    <file name="CL_DS_ContentSortItem" path="CHS\DataSources\ContentSortItem.xml" />
+    <file name="CL_DS_CredentialType" path="CHS\DataSources\CredentialType.xml" />
+    <file name="CL_DS_Department" path="CHS\DataSources\Department.xml" />
+    <file name="CL_DS_DepartmentFunction" path="CHS\DataSources\DepartmentFunction.xml" />
+    <file name="CL_DS_DetailDate" path="CHS\DataSources\DetailDate.xml" />
+    <file name="CL_DS_DriverLicence" path="CHS\DataSources\DriverLicence.xml" />
+    <file name="CL_DS_EduLevel" path="CHS\DataSources\EduLevel.xml" />
+    <file name="CL_DS_FunctionPlace" path="CHS\DataSources\FunctionPlace.xml" />
+    <file name="CL_DS_FundSourceType" path="CHS\DataSources\FundSourceType.xml" />
+    <file name="CL_DS_Industry" path="CHS\DataSources\Industry.xml" />
+    <file name="CL_DS_IndustrySort" path="CHS\DataSources\IndustrySort.xml" />
+    <file name="CL_DS_ItemType" path="CHS\DataSources\ItemType.xml" />
+    <file name="CL_DS_KnowType" path="CHS\DataSources\KnowType.xml" />
+    <file name="CL_DS_Language" path="CHS\DataSources\Language.xml" />
+    <file name="CL_DS_LanguageDesire" path="CHS\DataSources\LanguageDesire.xml" />
+    <file name="CL_DS_LanguageLevel" path="CHS\DataSources\LanguageLevel.xml" />
+    <file name="CL_DS_ManageExperience" path="CHS\DataSources\ManageExperience.xml" />
+    <file name="CL_DS_OffsetTime" path="CHS\DataSources\OffsetTime.xml" />
+    <file name="CL_DS_OrganationType" path="CHS\DataSources\OrganationType.xml" />
+    <file name="CL_DS_OutGo" path="CHS\DataSources\OutGo.xml" />
+    <file name="CL_DS_PasswordQuestion" path="CHS\DataSources\PasswordQuestion.xml" />
+    <file name="CL_DS_Place" path="CHS\DataSources\Place.xml" />
+    <file name="CL_DS_ProductProperty" path="CHS\DataSources\ProductProperty.xml" />
+    <file name="CL_DS_ProductType" path="CHS\DataSources\ProductType.xml" />
+    <file name="CL_DS_ProductUnitPostion" path="CHS\DataSources\ProductUnitPostion.xml" />
+    <file name="CL_DS_ProjectType" path="CHS\DataSources\ProjectType.xml" />
+    <file name="CL_DS_PublicMode" path="CHS\DataSources\PublicMode.xml" />
+    <file name="CL_DS_ResumeInclude" path="CHS\DataSources\ResumeInclude.xml" />
+    <file name="CL_DS_SalaryDesire" path="CHS\DataSources\SalaryDesire.xml" />
+    <file name="CL_DS_SoftwareOptionEnum" path="CHS\DataSources\SoftwareOptionEnum.xml" />
+    <file name="CL_DS_TagFindType" path="CHS\DataSources\TagFindType.xml" />
+    <file name="CL_DS_ShowItem" path="CHS\DataSources\ShowItem.xml" />
+    <file name="CL_DS_WorkExperience" path="CHS\DataSources\WorkExperience.xml" />
+    <file name="CL_DS_WorkPlace" path="CHS\DataSources\WorkPlace.xml" />
+    <file name="CL_DS_WorkProperty" path="CHS\DataSources\WorkProperty.xml" />
+    <file name="CL_DS_TmpltType" path="CHS\DataSources\TmpltType.xml" />
+    <file name="CL_DS_SnipType" path="CHS\DataSources\SnipType.xml" />
+    <file name="CL_DS_Sex" path="CHS\DataSources\Sex.xml" />
+    <directory name="CL_Dialog_Folder" path="CHS\Dialog\" />
+    <directory name="CL_Resources_Folder" path="CHS\Resources\" />
+    <directory name="CL_SegData_Folder" path="CHS\SegData\" />
+    <directory name="CL_StartupPage_Folder" path="CHS\StartupPage\" />
+    <file name="CL_DrawToolsBox" path="CHS\DrawToolsBox.xml" />
+    <file name="CL_MainFormResourcesConfig" path="CHS\MainFormResourcesConfig.xml" />
+    <file name="CL_Menu" path="CHS\Menu.xml" />
+    <file name="CL_ResourceText" path="CHS\ResourceText.xml" />
+    <file name="CL_SiteType" path="CHS\SiteType.xml" />
+    <file name="CL_swfobject" path="CHS\swfobject.js" />
+    <file name="CL_ToolbarList" path="CHS\ToolbarList.xml" />
+    <file name="CL_ToolsBoxItems" path="CHS\ToolsBoxItems.xml" />
+    <file name="CL_Validate" path="CHS\Validate.xml" />
+    <file name="CL_SoftOption" path="CHS\SoftOption.xml" />
+    <directory name="CHS_Folder" path="CHS\" />
+    <file name="Config_Config" path="Config\Config.xml" />
+    <file name="Config_FontList" path="Config\FontList.xml" />
+    <file name="Config_GlobalSetting" path="Config\GlobalSetting.xml" />
+    <file name="Config_HistoryInputRecord" path="Config\HistoryInputRecord.xml" />
+    <file name="Config_LayoutConfig" path="Config\LayoutConfig.xml" />
+    <file name="Config_PadLayout" path="Config\PadLayout.xml" />
+    <file name="Config_RecentFiles" path="Config\RecentFiles.xml" />
+    <file name="Config_RecordInfo" path="Config\RecordInfo.xml" />
+    <directory name="Config_Folder" path="Config\" />
+    <directory name="DtdData_Folder" path="DtdData\" />
+    <directory name="Help_Folder" path="Help\" />
+    <directory name="HtmlPlugIns_Folder" path="HtmlPlugIns\" />
+    <directory name="Icon_Folder" path="Icon\" />
+    <directory name="JsPlugIns_Folder" path="JsPlugIns\" />
+    <directory name="TempForUpdate_Folder" path="TempForUpdate\" />
+    <directory name="USER_Folder" path="USER\" />
+    <file name="Xslt_Channelimg" path="Xslt\Channelimg.xsl" />
+    <file name="Xslt_ContentSort" path="Xslt\ContentSort.xsl" />
+    <file name="Xslt_ContentTitleList" path="Xslt\ContentTitleList.xsl" />
+    <file name="Xslt_PageID" path="Xslt\PageID.xsl" />
+    <file name="Xslt_Pub2Svr" path="Xslt\Pub2Svr.xsl" />
+    <file name="Xslt_Text" path="Xslt\Text.xsl" />
+    <directory name="Xslt_Folder" path="Xslt\" />
+  </softwarePath>
+  <sitePath>
+    <directory name="Site_Temp_Folder" path="Temp\" />
+    <directory name="Site_PrevPublishFilesBak_Folder" path="PrevPublishFilesBak\" />
+    <directory name="Site_Root_Folder" path="Root\" />
+    <directory name="Site_Root_Resources_Folder" path="Root\Resources\" />
+  </sitePath>
+  <userPath>
+  </userPath>
+</root>

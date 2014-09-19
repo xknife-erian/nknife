@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <form text="新建模板" />
+  <control name="labTitle" text="模板名称:" />
+  <control name="checkBoxChooseImage" text="使用背景图:" />
+  <control name="labelWidth" text="宽度:" />
+  <control name="labelHeight" text="高度:" />
+  <control name="btnSaveAndOpen" text="确定" />
+  <control name="btnCancel" text="取消" />
+  
+</resourceText>

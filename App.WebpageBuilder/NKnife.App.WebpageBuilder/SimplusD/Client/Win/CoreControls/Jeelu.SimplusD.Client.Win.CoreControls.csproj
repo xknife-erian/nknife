@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8EF3AA7B-2B98-42AF-A4E4-3D7447ADFF65}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jeelu.SimplusD.Client.Win</RootNamespace>
+    <AssemblyName>Jeelu.SimplusD.Client.Win.CoreControls</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ManagedZLib, Version=1.1.1.0, Culture=neutral" />
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Properties\GloablAssemblyInfo.cs">
+      <Link>Properties\GloablAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DesignStyleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DesignStyleForm.Designer.cs">
+      <DependentUpon>DesignStyleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDesign\Commands\BaseCommand.cs" />
+    <Compile Include="DrawDesign\Commands\CommandList.cs" />
+    <Compile Include="DrawDesign\Commands\DDConcreteCommand.cs" />
+    <Compile Include="DrawDesign\Common\CommonFuns.cs" />
+    <Compile Include="DrawDesign\Common\SDLinkedList.cs" />
+    <Compile Include="DrawDesign\Common\SDList.cs" />
+    <Compile Include="DrawDesign\Controls\DesignPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\DesignPanel.Designer.cs">
+      <DependentUpon>DesignPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\DirectionLineCtl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\DirectionLineCtl.Designer.cs">
+      <DependentUpon>DirectionLineCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\DrawFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\DrawFrame.Designer.cs">
+      <DependentUpon>DrawFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\DrawPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\DrawPanel.Designer.cs">
+      <DependentUpon>DrawPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\HRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\HRuler.Designer.cs">
+      <DependentUpon>HRuler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\VRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DrawDesign\Controls\VRuler.Designer.cs">
+      <DependentUpon>VRuler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDesign\DataStruct\Find\FindLine.cs" />
+    <Compile Include="DrawDesign\DataStruct\Find\FindRect.cs" />
+    <Compile Include="DrawDesign\DataStruct\LineList.cs" />
+    <Compile Include="DrawDesign\DataStruct\NeighbourRect.cs" />
+    <Compile Include="DrawDesign\DataStruct\PartitionLine.cs" />
+    <Compile Include="DrawDesign\DataStruct\Rect.cs" />
+    <Compile Include="DrawDesign\DataStruct\RectLayer.cs" />
+    <Compile Include="DrawDesign\DataStruct\RectList.cs" />
+    <Compile Include="DrawDesign\DataStruct\Sort\SortLineCompare.cs" />
+    <Compile Include="DrawDesign\DataStruct\Sort\SortRectCompare.cs" />
+    <Compile Include="DrawDesign\DataStruct\ZoomData.cs" />
+    <Compile Include="HTMLCode\ContentProperty\PagePropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\ContentProperty\PagePropertyForm.Designer.cs">
+      <DependentUpon>PagePropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\GeneralClass\General.cs" />
+    <Compile Include="HTMLCode\GeneralClass\GeneralForEleBehavior.cs" />
+    <Compile Include="HTMLCode\GeneralClass\GetCHSText.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\Audio.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\Email.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\Flash.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\FlashInfo.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\image.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\Link.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\Video.cs" />
+    <Compile Include="HTMLCode\GenerateMediaCode\Table.cs" />
+    <Compile Include="HTMLDesignControl\BaseUserControl\MergeCellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertMedia\InsertAudioCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertDatetimeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertDatetimeForm.Designer.cs">
+      <DependentUpon>InsertDatetimeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertEmailCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertEmailCodeForm.Designer.cs">
+      <DependentUpon>InsertEmailCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertLinkCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertLinkCodeForm.Designer.cs">
+      <DependentUpon>InsertLinkCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertOtherForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertOtherForm.Designer.cs">
+      <DependentUpon>InsertOtherForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertPicCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertPicCodeForm.Designer.cs">
+      <DependentUpon>InsertPicCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertTableCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertTableCodeForm.designer.cs">
+      <DependentUpon>InsertTableCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertMedia\BaseMediaCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertMedia\BaseMediaCodeForm.Designer.cs">
+      <DependentUpon>BaseMediaCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertMedia\InsertFlashCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\InsertForm\InsertMedia\InsertVideoCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\NewWinOptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLCode\NewWinOptionForm.Designer.cs">
+      <DependentUpon>NewWinOptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\BaseUserControl\ContextPopMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\BaseUserControl\ContextPopMenu.Designer.cs">
+      <DependentUpon>ContextPopMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\BaseUserControl\DesignPopMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\BaseUserControl\DesignPopMenu.Designer.cs">
+      <DependentUpon>DesignPopMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\BaseUserControl\HTMLToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\BaseUserControl\HTMLToolStrip.Designer.cs">
+      <DependentUpon>HTMLToolStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\BaseUserControl\HTMLDesignControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\HTMLGeneral\GeneralInterfaces.cs" />
+    <Compile Include="HTMLDesignControl\HTMLGeneral\GeneralMethods.cs" />
+    <Compile Include="HTMLDesignControl\HTMLGeneral\GeneralMethodsForDesign.cs" />
+    <Compile Include="HTMLDesignControl\HTMLGeneral\InsertElementHelper.cs" />
+    <Compile Include="HTMLDesignControl\ProPanel\propertyClass\ImageProperty.cs" />
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\MediaUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\MediaUserControl.Designer.cs">
+      <DependentUpon>MediaUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\imgUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\imgUserControl.Designer.cs">
+      <DependentUpon>imgUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\lineUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\lineUserControl.Designer.cs">
+      <DependentUpon>lineUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\PropertyPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\tableUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\tableUserControl.Designer.cs">
+      <DependentUpon>tableUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\textUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\UserControl\textUserControl.Designer.cs">
+      <DependentUpon>textUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignControl\ProPanel\propertyClass\TextProperty.cs" />
+    <Compile Include="HTMLDesignControl\ProPanel\propertyClass\LineProperty.cs" />
+    <Compile Include="HTMLDesignControl\ProPanel\propertyClass\TableProperty.cs" />
+    <Compile Include="HTMLDesignControl\ProPanel\propertyClass\MediaProperty.cs" />
+    <Compile Include="HTMLDesignerEx\HTMLDesignerEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignerEx\HTMLDesignerEx.Designer.cs">
+      <DependentUpon>HTMLDesignerEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTMLDesignerEx\PagePropertyHelper.cs" />
+    <Compile Include="HTMLDesignerEx\PagePropertyPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HTMLDesignerEx\PagePropertyPanel.Designer.cs">
+      <DependentUpon>PagePropertyPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\ClassPartContainer.cs" />
+    <Compile Include="SnipPageDesigner\Command\BatchCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\Command.cs" />
+    <Compile Include="SnipPageDesigner\Command\CommandManager.cs" />
+    <Compile Include="SnipPageDesigner\Command\ConcreteCommand\AddPartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\ConcreteCommand\ClearPartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\ConcreteCommand\ClearSelectCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\ConcreteCommand\InsertPartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\ConcreteCommand\RemovePartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\ConcreteCommand\SelectPartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\ConcreteCommand\UnSelectPartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\PartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\SetPropertyDesignerCommand.cs" />
+    <Compile Include="SnipPageDesigner\Command\SetPropertyPartCommand.cs" />
+    <Compile Include="SnipPageDesigner\Component\IPartContainer.cs" />
+    <Compile Include="SnipPageDesigner\Component\SnipPagePartCollection.cs" />
+    <Compile Include="SnipPageDesigner\DesignerPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\ListBoxData.cs" />
+    <Compile Include="SnipPageDesigner\Parts\AttributePart.cs" />
+    <Compile Include="SnipPageDesigner\Parts\ListBoxPart.cs" />
+    <Compile Include="SnipPageDesigner\Parts\ListPart.cs" />
+    <Compile Include="SnipPageDesigner\Parts\NavigationBoxPart.cs" />
+    <Compile Include="SnipPageDesigner\Parts\NavigationPart.cs" />
+    <Compile Include="SnipPageDesigner\Parts\PathPart.cs" />
+    <Compile Include="SnipPageDesigner\Parts\SnipPagePart.cs" />
+    <Compile Include="SnipPageDesigner\Parts\StaticPart.cs" />
+    <Compile Include="SnipPageDesigner\SelectedSnipPagePartCollection.cs" />
+    <Compile Include="SnipPageDesigner\SnipPageDesigner.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\AddListPartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\AddListPartForm.Designer.cs">
+      <DependentUpon>AddListPartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\CasingSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\DrawDropDockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\DrawDropFollowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\AddChannelPartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\AddChannelPartForm.Designer.cs">
+      <DependentUpon>AddChannelPartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\EditListPartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\EditListPartForm.Designer.cs">
+      <DependentUpon>EditListPartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\EditPathPartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\EditPathPartForm.Designer.cs">
+      <DependentUpon>EditPathPartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\HalfOpacityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\PartSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\PartSetupForm.Designer.cs">
+      <DependentUpon>PartSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\EditChannelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\EditChannelForm.Designer.cs">
+      <DependentUpon>EditChannelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\SnipChannelNamesTreeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\SnipChannelNamesTreeForm.Designer.cs">
+      <DependentUpon>SnipChannelNamesTreeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\AddStaticPartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnipPageDesigner\SubForms\AddStaticPartForm.Designer.cs">
+      <DependentUpon>AddStaticPartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Commands\TDConcreteCommand.cs" />
+    <Compile Include="TmpltDesignCtl\Controls\TmpltDesignPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Controls\TmpltDesignPanel.Designer.cs">
+      <DependentUpon>TmpltDesignPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Controls\TmpltDrawFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Controls\TmpltDrawFrame.Designer.cs">
+      <DependentUpon>TmpltDrawFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Controls\TmpltDrawPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Controls\TmpltDrawPanel.Designer.cs">
+      <DependentUpon>TmpltDrawPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Controls\TmpltHRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Controls\TmpltVRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\DataStruct\SnipData.cs" />
+    <Compile Include="TmpltDesignCtl\DataStruct\SnipRect.cs" />
+    <Compile Include="TmpltDesignCtl\Forms\CssSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Forms\CssSetupForm.Designer.cs">
+      <DependentUpon>CssSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Forms\MergeRectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Forms\MergeRectForm.designer.cs">
+      <DependentUpon>MergeRectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Forms\NewSnipSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Forms\NewSnipSetupForm.Designer.cs">
+      <DependentUpon>NewSnipSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Forms\PartRectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TmpltDesignCtl\Forms\PartRectForm.designer.cs">
+      <DependentUpon>PartRectForm.cs</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DesignStyleForm.resx">
+      <DependentUpon>DesignStyleForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrawDesign\Controls\DesignPanel.resx">
+      <DependentUpon>DesignPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrawDesign\Controls\DirectionLineCtl.resx">
+      <DependentUpon>DirectionLineCtl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrawDesign\Controls\DrawFrame.resx">
+      <DependentUpon>DrawFrame.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrawDesign\Controls\DrawPanel.resx">
+      <DependentUpon>DrawPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\ContentProperty\PagePropertyForm.resx">
+      <DependentUpon>PagePropertyForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\InsertForm\InsertDatetimeForm.resx">
+      <DependentUpon>InsertDatetimeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\InsertForm\InsertEmailCodeForm.resx">
+      <DependentUpon>InsertEmailCodeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\InsertForm\InsertLinkCodeForm.resx">
+      <DependentUpon>InsertLinkCodeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\InsertForm\InsertOtherForm.resx">
+      <DependentUpon>InsertOtherForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\InsertForm\InsertPicCodeForm.resx">
+      <DependentUpon>InsertPicCodeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\InsertForm\InsertTableCodeForm.resx">
+      <DependentUpon>InsertTableCodeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\InsertForm\InsertMedia\BaseMediaCodeForm.resx">
+      <DependentUpon>BaseMediaCodeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLCode\NewWinOptionForm.resx">
+      <DependentUpon>NewWinOptionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignControl\BaseUserControl\MergeCellForm.resx">
+      <DependentUpon>MergeCellForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignControl\ProPanel\UserControl\MediaUserControl.resx">
+      <DependentUpon>MediaUserControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignControl\ProPanel\UserControl\imgUserControl.resx">
+      <DependentUpon>imgUserControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignControl\ProPanel\UserControl\lineUserControl.resx">
+      <DependentUpon>lineUserControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignControl\ProPanel\PropertyPanel.resx">
+      <DependentUpon>PropertyPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignControl\ProPanel\UserControl\tableUserControl.resx">
+      <DependentUpon>tableUserControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignControl\ProPanel\UserControl\textUserControl.resx">
+      <DependentUpon>textUserControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignerEx\HTMLDesignerEx.resx">
+      <DependentUpon>HTMLDesignerEx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTMLDesignerEx\PagePropertyPanel.resx">
+      <DependentUpon>PagePropertyPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\AddChannelPartForm.resx">
+      <DependentUpon>AddChannelPartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\AddListPartForm.resx">
+      <DependentUpon>AddListPartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\EditListPartForm.resx">
+      <DependentUpon>EditListPartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\EditPathPartForm.resx">
+      <DependentUpon>EditPathPartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\PartSetupForm.resx">
+      <DependentUpon>PartSetupForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\EditChannelForm.resx">
+      <DependentUpon>EditChannelForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\SnipChannelNamesTreeForm.resx">
+      <DependentUpon>SnipChannelNamesTreeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnipPageDesigner\SubForms\AddStaticPartForm.resx">
+      <DependentUpon>AddStaticPartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TmpltDesignCtl\Forms\CssSetupForm.resx">
+      <DependentUpon>CssSetupForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TmpltDesignCtl\Forms\MergeRectForm.resx">
+      <DependentUpon>MergeRectForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TmpltDesignCtl\Forms\NewSnipSetupForm.resx">
+      <DependentUpon>NewSnipSetupForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TmpltDesignCtl\Forms\PartRectForm.resx">
+      <DependentUpon>PartRectForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HTMLCode\Microsoft.mshtml.dll" />
+    <Content Include="Resources\close.ico" />
+    <None Include="Resources\close1.ico" />
+    <Content Include="Resources\hide.jpg" />
+    <None Include="Resources\hide1.jpg" />
+    <Content Include="Resources\top.gif" />
+    <Content Include="Resources\top1.gif" />
+    <None Include="Resources\top11.gif" />
+    <Content Include="Resources\top2.gif" />
+    <None Include="Resources\top3.gif" />
+    <None Include="Resources\top21.gif" />
+    <Content Include="Resources\xx.gif" />
+    <Content Include="Resources\xx1.gif" />
+    <None Include="Resources\xx2.gif" />
+    <None Include="Resources\xx11.gif" />
+    <Content Include="HTMLCode\ManagedZLib.dll" />
+    <Content Include="Resources\borderLayout.jpg" />
+    <Content Include="Resources\拖动.ico" />
+    <Content Include="Resources\框-布局.jpg" />
+    <Content Include="Resources\选择矩形.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\Jeelu.csproj">
+      <Project>{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}</Project>
+      <Name>Jeelu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\OpenSource\CustomOpenFileDialog\CustomOpenFileDialog.csproj">
+      <Project>{63F16AD6-3C52-43BA-A3D7-981AC870E7CE}</Project>
+      <Name>CustomOpenFileDialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\OpenSource\ICSharpCode.TextEditor\ICSharpCode.TextEditor.csproj">
+      <Project>{2D18BE89-D210-49EB-A9DD-2246FBB3DF6D}</Project>
+      <Name>ICSharpCode.TextEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\OpenSource\TidyNet\TidyNet.csproj">
+      <Project>{C9B7AEFC-11BF-4902-AB1C-055E87479ACE}</Project>
+      <Name>TidyNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Win\Common\Jeelu.Win.csproj">
+      <Project>{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}</Project>
+      <Name>Jeelu.Win</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Jeelu.SimplusD.csproj">
+      <Project>{42474834-8525-470E-A26C-24E552123983}</Project>
+      <Name>Jeelu.SimplusD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Jeelu.SimplusD.Client.Win.csproj">
+      <Project>{6ABF911A-7EF0-41DC-AB7A-720F874107BD}</Project>
+      <Name>Jeelu.SimplusD.Client.Win</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

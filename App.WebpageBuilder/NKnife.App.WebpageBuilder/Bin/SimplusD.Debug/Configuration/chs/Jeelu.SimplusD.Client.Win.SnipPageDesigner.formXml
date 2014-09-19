@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.SnipPageDesigner" ObjectName="Jeelu.SimplusD.Client.Win.SnipPageDesigner">
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Text Key="copyText">复制块</Text>
+  <Text Key="affixText">粘贴块</Text>
+  <Text Key="selectText">选择</Text>
+  <Text Key="unSelectText">取消选择</Text>
+  <Text Key="deleteText">删除块</Text>
+  <Text Key="editText">编辑块</Text>
+  <Text Key="cssSetupText">CSS设置</Text>
+  <Text Key="editLinkText">编辑链接属性</Text>
+</Resources>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <form text="添加页面片" />
+  <control name="labelSnipName"  text="页面片名称：" />
+  <control name="textBoxSnipName"  text="新页面片" />
+  <control name="groupBoxDoWhat"  text="新建/修改" />
+  <control name="radioButtonGenerel"  text="普通页面片" />
+  <control name="radioButtonContent"  text="正文页面片" />
+  <control name="buttonEnter"  text="确 定" />
+  <control name="buttonExit"  text="取 消" />
+</resourceText>
+ 

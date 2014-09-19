@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="0" text="工程招标" >
+    <subitem value="1" text="建筑工程"/>
+    <subitem value="2" text="公路工程"/>
+    <subitem value="3" text="水运工程"/>
+    <subitem value="4" text="铁路工程"/>
+    <subitem value="5" text="水利工程"/>
+    <subitem value="6" text="电信工程"/>
+    <subitem value="7" text="能源工程"/>
+    <subitem value="8" text="网络工程"/>
+    <subitem value="9" text="其他工程"/>
+  </item>
+  <item value="10" text="货物招标" >
+    <subitem value="11" text="建筑材料"/>
+    <subitem value="12" text="家具用品"/>
+    <subitem value="13" text="文体卫生"/>
+    <subitem value="14" text="图书音像"/>
+    <subitem value="15" text="纺织制品"/>
+    <subitem value="16" text="生活用品"/>
+    <subitem value="17" text="能源燃料"/>
+    <subitem value="18" text="农用物资"/>
+    <subitem value="19" text="农业产品"/>
+    <subitem value="20" text="其他货物"/>
+  </item>
+  <item value="21" text="服务招标" >
+  <subitem value="22" text="出版印刷"/>
+  <subitem value="23" text="软件服务"/>
+  <subitem value="24" text="咨询培训"/>
+  <subitem value="25" text="维护清洗"/>
+  <subitem value="26" text="房产物业"/>
+  <subitem value="27" text="物流服务"/>
+  <subitem value="28" text="金融保险"/>
+  <subitem value="29" text="会展服务"/>
+  <subitem value="30" text="代理经营"/>
+  <subitem value="31" text="网络通信"/>
+  <subitem value="32" text="其他服务"/>
+  </item>
+</items>

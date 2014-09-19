@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <form text="选择模板">
+  </form>
+  <control name="btnOk" text="确定" />
+  <control name="btnCancel" text="取消" />
+  <text name="contentTip" value="你好，请选择一个适合的模板，谢谢!" />
+  <text name="captionTip" value="提示" />
+</resourceText>

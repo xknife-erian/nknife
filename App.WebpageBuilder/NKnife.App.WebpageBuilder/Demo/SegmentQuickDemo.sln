@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentQuickDemo", "SegmentQuickDemo\SegmentQuickDemo.csproj", "{EAEE11CE-75BC-4869-9EEA-49C6F9105134}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Billboard", "..\Billboard\Common\Jeelu.Billboard.csproj", "{B250A2F2-FA63-45DF-B262-7CBD5B1A630C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu", "..\Common\Jeelu.csproj", "{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack", "..\OpenSource\HtmlAgilityPack\HtmlAgilityPack.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Data", "..\Data\Jeelu.Data.csproj", "{2345B5BE-424D-4932-8738-6A41435B7074}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.WordSegmentor", "..\WordSegmentor\Jeelu.WordSegmentor.csproj", "{BB978ADB-E63C-420B-AABB-6E86B137CB6E}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 7
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SegmentQuickDemo\\SegmentQuickDemo.csproj
+		SccLocalPath1 = .
+		SccProjectFilePathRelativizedFromConnection1 = SegmentQuickDemo\\
+		SccProjectUniqueName2 = ..\\Billboard\\Common\\Jeelu.Billboard.csproj
+		SccProjectName2 = \u0022$/Jeelu.Billboard/Billboard/Common\u0022,\u0020QBLAAAAA
+		SccLocalPath2 = ..\\Billboard\\Common
+		SccProjectUniqueName3 = ..\\Common\\Jeelu.csproj
+		SccProjectName3 = \u0022$/Jeelu/Common\u0022,\u0020YUGAAAAA
+		SccLocalPath3 = ..\\Common
+		SccProjectUniqueName4 = ..\\OpenSource\\HtmlAgilityPack\\HtmlAgilityPack.csproj
+		SccProjectName4 = \u0022$/Jeelu.KeywordResonator/OpenSource/HtmlAgilityPack\u0022,\u0020XGLAAAAA
+		SccLocalPath4 = ..\\OpenSource\\HtmlAgilityPack
+		SccProjectUniqueName5 = ..\\Data\\Jeelu.Data.csproj
+		SccProjectName5 = \u0022$/Jeelu/Data\u0022,\u0020AXGAAAAA
+		SccLocalPath5 = ..\\Data
+		SccProjectUniqueName6 = ..\\WordSegmentor\\Jeelu.WordSegmentor.csproj
+		SccProjectName6 = \u0022$/Jeelu.Billboard/WordSegmentor\u0022,\u0020ZELAAAAA
+		SccLocalPath6 = ..\\WordSegmentor
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEE11CE-75BC-4869-9EEA-49C6F9105134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B250A2F2-FA63-45DF-B262-7CBD5B1A630C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B250A2F2-FA63-45DF-B262-7CBD5B1A630C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B250A2F2-FA63-45DF-B262-7CBD5B1A630C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B250A2F2-FA63-45DF-B262-7CBD5B1A630C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2345B5BE-424D-4932-8738-6A41435B7074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2345B5BE-424D-4932-8738-6A41435B7074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2345B5BE-424D-4932-8738-6A41435B7074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2345B5BE-424D-4932-8738-6A41435B7074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB978ADB-E63C-420B-AABB-6E86B137CB6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

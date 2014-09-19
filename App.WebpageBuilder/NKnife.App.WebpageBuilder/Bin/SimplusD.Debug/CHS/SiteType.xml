@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+  <item value="1" text="基本类型">
+    <basetype name="emptySite" text="空网站" imageKey="main.newproject.emptyproject" default="true"></basetype>
+  </item>
+  <!--<item value="2" text="扩展主题包">
+  </item>
+  <item value="3" text="详细分类">
+  </item>
+  <item value="4" text="行业分类">
+  </item>
+  <item value="5" text="大小分类">
+  </item>
+  <item value="6" text="我的模板">
+  </item>-->
+</items>

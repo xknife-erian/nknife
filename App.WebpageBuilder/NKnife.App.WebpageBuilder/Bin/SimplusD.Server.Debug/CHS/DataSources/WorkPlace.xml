@@ -1,0 +1,514 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="安徽省">
+    <subitem value="1" text="合肥市" />
+    <subitem text="淮北市" value="2" />
+    <subitem text="淮南市" value="3" />
+    <subitem text="黄山市" value="4" />
+    <subitem text="安庆市" value="5" />
+    <subitem text="蚌埠市" value="6" />
+    <subitem value="7" text="巢湖地区" />
+    <subitem value="8" text="池州地区" />
+    <subitem value="9" text="滁州市" />
+    <subitem value="10" text="六安地区" />
+    <subitem value="11" text="马鞍山市" />
+    <subitem value="12" text="宣城地区" />
+    <subitem value="13" text="宿县地区" />
+    <subitem value="14" text="铜陵市" />
+    <subitem value="15" text="芜湖市" />
+    <subitem value="16" text="阜阳市" />
+    <subitem value="17" text="毫州市" />
+    <subitem value="18" text="其它地区" />
+  </item>
+  <item value="2" text="北京市">
+    <subitem text="东城区" value="1" />
+    <subitem text="西城区" value="2" />
+    <subitem text="崇文区" value="3" />
+    <subitem text="宣武区" value="4" />
+    <subitem text="朝阳区" value="5" />
+    <subitem text="海淀区" value="6" />
+    <subitem text="丰台区" value="7" />
+    <subitem text="石景山区" value="8" />
+    <subitem text="门头沟区" value="9" />
+    <subitem text="房山区" value="10" />
+    <subitem text="通州区" value="11" />
+    <subitem text="顺义区" value="12" />
+    <subitem text="昌平区" value="13" />
+    <subitem text="大兴区" value="14" />
+    <subitem text="怀柔区" value="15" />
+    <subitem text="平谷区" value="16" />
+    <subitem text="密云县" value="17" />
+    <subitem text="延庆县" value="18" />
+    <subitem text="其它地区" value="19" />
+  </item>
+  <item value="3" text="重庆市">
+    <subitem text="渝中区" value="1" />
+    <subitem text="大渡口区" value="2" />
+    <subitem text="江北区" value="3" />
+    <subitem text="沙坪坝区" value="4" />
+    <subitem text="九龙坡区" value="5" />
+    <subitem text="南岸区" value="6" />
+    <subitem text="北碚区" value="7" />
+    <subitem text="万盛区" value="8" />
+    <subitem text="双桥区" value="9" />
+    <subitem text="渝北区" value="10" />
+    <subitem text="巴南区" value="11" />
+    <subitem text="万州区" value="12" />
+    <subitem text="涪陵区" value="13" />
+    <subitem text="黔江区" value="14" />
+    <subitem text="长寿区" value="15" />
+    <subitem text="其它地区" value="16" />
+  </item>
+  <item value="4" text="福建省">
+    <subitem text="福州市" value="1" />
+    <subitem text="龙岩地区" value="2" />
+    <subitem text="南平市" value="3" />
+    <subitem text="宁德地区" value="4" />
+    <subitem text="莆田市" value="5" />
+    <subitem text="泉州市" value="6" />
+    <subitem text="三明市" value="7" />
+    <subitem text="厦门市" value="8" />
+    <subitem text="漳州市" value="9" />
+    <subitem text="其它地区" value="10" />
+  </item>
+  <item value="5" text="甘肃省">
+    <subitem text="兰州市" value="1" />
+    <subitem text="甘南藏族自治州" value="2" />
+    <subitem text="定西地区" value="3" />
+    <subitem text="白银市" value="4" />
+    <subitem text="嘉峪关市" value="5" />
+    <subitem text="金昌市" value="6" />
+    <subitem text="酒泉地区" value="7" />
+    <subitem text="临夏回族自治州" value="8" />
+    <subitem text="陇南地区" value="9" />
+    <subitem text="平凉地区" value="10" />
+    <subitem text="庆阳地区" value="11" />
+    <subitem text="天水市" value="12" />
+    <subitem text="武威地区" value="13" />
+    <subitem text="张掖地区" value="14" />
+    <subitem text="其它地区" value="15" />
+  </item>
+  <item value="6" text="广东省">
+    <subitem text="广州市" value="1" />
+    <subitem text="佛山市" value="2" />
+    <subitem text="惠州市" value="3" />
+    <subitem text="东莞市" value="4" />
+    <subitem text="江门市" value="5" />
+    <subitem text="揭阳市" value="6" />
+    <subitem text="潮州市" value="7" />
+    <subitem text="茂名市" value="8" />
+    <subitem text="梅州市" value="9" />
+    <subitem text="清远市" value="10" />
+    <subitem text="汕头市" value="11" />
+    <subitem text="汕尾市" value="12" />
+    <subitem text="深圳市" value="13" />
+    <subitem text="韶关市" value="14" />
+    <subitem text="阳江市" value="15" />
+    <subitem text="河源市" value="16" />
+    <subitem text="云浮市" value="17" />
+    <subitem text="中山市" value="18" />
+    <subitem text="珠海市" value="19" />
+    <subitem text="湛江市" value="20" />
+    <subitem text="肇庆市" value="21" />
+    <subitem text="其它地区" value="22" />
+  </item>
+  <item value="7" text="广西">
+    <subitem text="南宁市" value="1" />
+    <subitem text="防城港市" value="2" />
+    <subitem text="北海市" value="3" />
+    <subitem text="百色地区" value="4" />
+    <subitem text="桂林地区" value="5" />
+    <subitem text="桂林市" value="6" />
+    <subitem text="柳州地区" value="7" />
+    <subitem text="柳州市" value="8" />
+    <subitem text="南宁地区" value="9" />
+    <subitem text="钦州市" value="10" />
+    <subitem text="梧州地区" value="11" />
+    <subitem text="梧州市" value="12" />
+    <subitem text="河池地区" value="13" />
+    <subitem text="玉林地区" value="14" />
+    <subitem text="贵港市" value="15" />
+    <subitem text="其它地区" value="16" />
+  </item>
+  <item value="8" text="贵州省">
+    <subitem text="贵阳市" value="1" />
+    <subitem text="毕节地区" value="2" />
+    <subitem text="遵义地区" value="3" />
+    <subitem text="安顺地区" value="4" />
+    <subitem text="六盘水市" value="5" />
+    <subitem text="黔东南苗族侗族自治州" value="6" />
+    <subitem text="黔南布依族苗族自治州" value="7" />
+    <subitem text="黔西南布依族苗族自治州" value="8" />
+    <subitem text="铜仁地区" value="9" />
+    <subitem text="其它地区" value="10" />
+  </item>
+  <item value="9" text="海南省">
+    <subitem text="海口市" value="1" />
+    <subitem text="三亚市" value="2" />
+    <subitem text="省直辖县级行政单位" value="3" />
+    <subitem text="其它地区" value="4" />
+  </item>
+  <item value="10" text="河北省">
+    <subitem text="石家庄市" value="1" />
+    <subitem text="邯郸市" value="2" />
+    <subitem text="邢台市" value="3" />
+    <subitem text="保定市" value="4" />
+    <subitem text="张家口市" value="5" />
+    <subitem text="沧州市" value="6" />
+    <subitem text="承德市" value="7" />
+    <subitem text="廊坊市" value="8" />
+    <subitem text="秦皇岛市" value="9" />
+    <subitem text="唐山市" value="10" />
+    <subitem text="衡水市" value="11" />
+    <subitem text="其它地区" value="12" />
+  </item>
+  <item value="11" text="河南省">
+    <subitem text="郑州市" value="1" />
+    <subitem text="开封市" value="2" />
+    <subitem text="驻马店地区" value="3" />
+    <subitem text="安阳市" value="4" />
+    <subitem text="焦作市" value="5" />
+    <subitem text="洛阳市" value="6" />
+    <subitem text="濮阳市" value="7" />
+    <subitem text="漯河市" value="8" />
+    <subitem text="南阳市" value="9" />
+    <subitem text="平顶山市" value="10" />
+    <subitem text="新乡市" value="11" />
+    <subitem text="信阳地区" value="12" />
+    <subitem text="许昌市" value="13" />
+    <subitem text="商丘地区" value="14" />
+    <subitem text="三门峡市" value="15" />
+    <subitem text="鹤壁市" value="16" />
+    <subitem text="周口地区" value="17" />
+    <subitem text="其它地区" value="18" />
+  </item>
+  <item value="12" text="黑龙江省">
+    <subitem text="哈尔滨市" value="1" />
+    <subitem text="大庆市" value="2" />
+    <subitem text="大兴安岭地区" value="3" />
+    <subitem text="鸡西市" value="4" />
+    <subitem text="佳木斯市" value="5" />
+    <subitem text="牡丹江市" value="6" />
+    <subitem text="齐齐哈尔市" value="7" />
+    <subitem text="七台河市" value="8" />
+    <subitem text="双鸭山市" value="9" />
+    <subitem text="绥化地区" value="10" />
+    <subitem text="松花江地区" value="11" />
+    <subitem text="鹤岗市" value="12" />
+    <subitem text="黑河市" value="13" />
+    <subitem text="伊春市" value="14" />
+    <subitem text="其它地区" value="15" />
+  </item>
+  <item value="13" text="湖北省">
+    <subitem text="武汉市" value="1" />
+    <subitem text="黄冈市" value="2" />
+    <subitem text="黄石市" value="3" />
+    <subitem text="恩施土家族苗族自治州" value="4" />
+    <subitem text="鄂州市" value="5" />
+    <subitem text="荆门市" value="6" />
+    <subitem text="荆州市" value="7" />
+    <subitem text="孝感市" value="8" />
+    <subitem text="省直辖县级行政单位" value="9" />
+    <subitem text="十堰市" value="10" />
+    <subitem text="襄樊市" value="11" />
+    <subitem text="咸宁地区" value="12" />
+    <subitem text="宜昌市" value="13" />
+    <subitem text="其它地区" value="14" />
+  </item>
+  <item value="14" text="湖南省">
+    <subitem text="长沙市" value="1" />
+    <subitem text="怀化地区" value="2" />
+    <subitem text="郴州市" value="3" />
+    <subitem text="常德市" value="4" />
+    <subitem text="娄底地区" value="5" />
+    <subitem text="邵阳市" value="6" />
+    <subitem text="湘潭市" value="7" />
+    <subitem text="湘西土家族苗族自治州" value="8" />
+    <subitem text="衡阳市" value="9" />
+    <subitem text="永州市" value="10" />
+    <subitem text="益阳市" value="11" />
+    <subitem text="岳阳市" value="12" />
+    <subitem text="株洲市" value="13" />
+    <subitem text="张家界市" value="14" />
+    <subitem text="其它地区" value="15" />
+  </item>
+  <item value="15" text="江苏省">
+    <subitem text="南京市" value="1" />
+    <subitem text="淮阴市" value="2" />
+    <subitem text="常州市" value="3" />
+    <subitem text="连云港市" value="4" />
+    <subitem text="南通市" value="5" />
+    <subitem text="徐州市" value="6" />
+    <subitem text="苏州市" value="7" />
+    <subitem text="无锡市" value="8" />
+    <subitem text="盐城市" value="9" />
+    <subitem text="扬州市" value="10" />
+    <subitem text="镇江市" value="11" />
+    <subitem text="泰州市" value="12" />
+    <subitem text="宿迁市" value="13" />
+    <subitem text="其它地区" value="14" />
+  </item>
+  <item value="16" text="江西省">
+    <subitem text="南昌市" value="1" />
+    <subitem text="抚州地区" value="2" />
+    <subitem text="赣州地区" value="3" />
+    <subitem text="吉安地区" value="4" />
+    <subitem text="景德镇市" value="5" />
+    <subitem text="九江市" value="6" />
+    <subitem text="萍乡市" value="7" />
+    <subitem text="新余市" value="8" />
+    <subitem text="上饶地区" value="9" />
+    <subitem text="鹰潭市" value="10" />
+    <subitem text="宜春地区" value="11" />
+    <subitem text="其它地区" value="12" />
+  </item>
+  <item value="17" text="吉林省">
+    <subitem text="长春市" value="1" />
+    <subitem text="白城市" value="2" />
+    <subitem text="白山市" value="3" />
+    <subitem text="吉林市" value="4" />
+    <subitem text="辽源市" value="5" />
+    <subitem text="四平市" value="6" />
+    <subitem text="松原市" value="7" />
+    <subitem text="通化市" value="8" />
+    <subitem text="延边朝鲜族自治州" value="9" />
+    <subitem text="其它地区" value="10" />
+  </item>
+  <item value="18" text="辽宁省">
+    <subitem text="沈阳市" value="1" />
+    <subitem text="大连市" value="2" />
+    <subitem text="阜新市" value="3" />
+    <subitem text="抚顺市" value="4" />
+    <subitem text="本溪市" value="5" />
+    <subitem text="鞍山市" value="6" />
+    <subitem text="丹东市" value="7" />
+    <subitem text="锦州市" value="8" />
+    <subitem text="朝阳市" value="9" />
+    <subitem text="辽阳市" value="10" />
+    <subitem text="盘锦市" value="11" />
+    <subitem text="铁岭市" value="12" />
+    <subitem text="营口市" value="13" />
+    <subitem text="锦西市" value="14" />
+    <subitem text="其它地区" value="15" />
+  </item>
+  <item value="19" text="内蒙古">
+    <subitem text="呼和浩特市" value="1" />
+    <subitem text="阿拉善盟" value="2" />
+    <subitem text="巴彦淖尔盟" value="3" />
+    <subitem text="包头市" value="4" />
+    <subitem text="赤峰市" value="5" />
+    <subitem text="兴安盟" value="6" />
+    <subitem text="乌兰察布盟" value="7" />
+    <subitem text="乌海市" value="8" />
+    <subitem text="锡林郭勒盟" value="9" />
+    <subitem text="呼伦贝尔盟" value="10" />
+    <subitem text="鄂尔多斯市" value="11" />
+    <subitem text="哲里木盟" value="12" />
+    <subitem text="其它地区" value="13" />
+  </item>
+  <item value="20" text="宁夏">
+    <subitem text="银川市" value="1" />
+    <subitem text="固原地区" value="2" />
+    <subitem text="石嘴山市" value="3" />
+    <subitem text="银南地区" value="4" />
+    <subitem text="其它地区" value="5" />
+  </item>
+  <item value="21" text="青海省">
+    <subitem text="西宁市" value="1" />
+    <subitem text="海东地区" value="2" />
+    <subitem text="海南藏族自治州" value="3" />
+    <subitem text="海北藏族自治州" value="4" />
+    <subitem text="黄南藏族自治州" value="5" />
+    <subitem text="果洛藏族自治州" value="6" />
+    <subitem text="玉树藏族自治州" value="7" />
+    <subitem text="海西蒙古族藏族自治州" value="8" />
+    <subitem text="其它地区" value="9" />
+  </item>
+  <item value="22" text="上海市">
+    <subitem text="黄浦区" value="1" />
+    <subitem text="卢湾区" value="2" />
+    <subitem text="徐汇区" value="3" />
+    <subitem text="长宁区" value="4" />
+    <subitem text="静安区" value="5" />
+    <subitem text="普陀区" value="6" />
+    <subitem text="闸北区" value="7" />
+    <subitem text="虹口区" value="8" />
+    <subitem text="杨浦区" value="9" />
+    <subitem text="宝山区" value="10" />
+    <subitem text="闵行区" value="11" />
+    <subitem text="嘉定区" value="12" />
+    <subitem text="浦东新区" value="13" />
+    <subitem text="松江区" value="14" />
+    <subitem text="金山区" value="15" />
+    <subitem text="青浦区" value="16" />
+    <subitem text="南汇区" value="17" />
+    <subitem text="奉贤区" value="18" />
+    <subitem text="崇明县" value="19" />
+    <subitem text="其它地区" value="20" />
+  </item>
+  <item value="23" text="山东省">
+    <subitem text="济南市" value="1" />
+    <subitem text="东营市" value="2" />
+    <subitem text="滨州地区" value="3" />
+    <subitem text="淄博市" value="4" />
+    <subitem text="德州市" value="5" />
+    <subitem text="济宁市" value="6" />
+    <subitem text="聊城地区" value="7" />
+    <subitem text="临沂市" value="8" />
+    <subitem text="莱芜市" value="9" />
+    <subitem text="青岛市" value="10" />
+    <subitem text="日照市" value="11" />
+    <subitem text="威海市" value="12" />
+    <subitem text="泰安市" value="13" />
+    <subitem text="潍坊市" value="14" />
+    <subitem text="烟台市" value="15" />
+    <subitem text="菏泽地区" value="16" />
+    <subitem text="枣庄市" value="17" />
+    <subitem text="其它地区" value="18" />
+  </item>
+  <item value="24" text="山西省">
+    <subitem text="太原市" value="1" />
+    <subitem text="大同市" value="2" />
+    <subitem text="晋城市" value="3" />
+    <subitem text="晋中地区" value="4" />
+    <subitem text="长治市" value="5" />
+    <subitem text="临汾地区" value="6" />
+    <subitem text="吕梁地区" value="7" />
+    <subitem text="忻州地区" value="8" />
+    <subitem text="朔州市" value="9" />
+    <subitem text="阳泉市" value="10" />
+    <subitem text="运城地区" value="11" />
+    <subitem text="其它地区" value="12" />
+  </item>
+  <item value="25" text="陕西省">
+    <subitem text="西安市" value="1" />
+    <subitem text="宝鸡市" value="2" />
+    <subitem text="安康地区" value="3" />
+    <subitem text="商洛地区" value="4" />
+    <subitem text="铜川市" value="5" />
+    <subitem text="渭南地区" value="6" />
+    <subitem text="咸阳市" value="7" />
+    <subitem text="延安地区" value="8" />
+    <subitem text="汉中地区" value="9" />
+    <subitem text="榆林地区" value="10" />
+    <subitem text="其它地区" value="11" />
+  </item>
+  <item value="26" text="四川省">
+    <subitem text="成都市" value="1" />
+    <subitem text="达川地区" value="2" />
+    <subitem text="甘孜藏族自治州" value="3" />
+    <subitem text="自贡市" value="4" />
+    <subitem text="阿坝藏族羌族自治州" value="5" />
+    <subitem text="巴中地区" value="6" />
+    <subitem text="德阳市" value="7" />
+    <subitem text="广安地区" value="8" />
+    <subitem text="广元市" value="9" />
+    <subitem text="凉山彝族自治州" value="10" />
+    <subitem text="乐山市" value="11" />
+    <subitem text="攀枝花市" value="12" />
+    <subitem text="南充市" value="13" />
+    <subitem text="内江市" value="14" />
+    <subitem text="泸州市" value="15" />
+    <subitem text="绵阳市" value="16" />
+    <subitem text="遂宁市" value="17" />
+    <subitem text="雅安地区" value="18" />
+    <subitem text="宜宾地区" value="19" />
+    <subitem text="其它地区" value="20" />
+  </item>
+  <item value="27" text="天津市">
+    <subitem text="和平区" value="1" />
+    <subitem text="河东区" value="2" />
+    <subitem text="河西区" value="3" />
+    <subitem text="南开区" value="4" />
+    <subitem text="河北区" value="5" />
+    <subitem text="红桥区" value="6" />
+    <subitem text="塘沽区" value="7" />
+    <subitem text="汉沽区" value="8" />
+    <subitem text="大港区" value="9" />
+    <subitem text="东丽区" value="10" />
+    <subitem text="西青区" value="11" />
+    <subitem text="北辰区" value="12" />
+    <subitem text="津南区" value="13" />
+    <subitem text="武清区" value="14" />
+    <subitem text="宝坻区" value="15" />
+    <subitem text="其它地区" value="16" />
+  </item>
+  <item value="28" text="新疆">
+    <subitem text="乌鲁木齐市" value="1" />
+    <subitem text="喀什地区" value="2" />
+    <subitem text="克孜勒苏柯尔克孜自治州" value="3" />
+    <subitem text="克拉玛依市" value="4" />
+    <subitem text="阿克苏地区" value="5" />
+    <subitem text="阿勒泰地区" value="6" />
+    <subitem text="巴音郭楞蒙古自治州" value="7" />
+    <subitem text="哈密地区" value="8" />
+    <subitem text="博尔塔拉蒙古自治州" value="9" />
+    <subitem text="昌吉回族自治州" value="10" />
+    <subitem text="塔城地区" value="11" />
+    <subitem text="吐鲁番地区" value="12" />
+    <subitem text="和田地区" value="13" />
+    <subitem text="伊犁地区" value="14" />
+    <subitem text="伊犁哈萨克自治州" value="15" />
+    <subitem text="石河子市" value="16" />
+    <subitem text="其它地区" value="17" />
+  </item>
+  <item value="29" text="西藏">
+    <subitem text="拉萨市" value="1" />
+    <subitem text="阿里地区" value="2" />
+    <subitem text="昌都地区" value="3" />
+    <subitem text="林芝地区" value="4" />
+    <subitem text="那曲地区" value="5" />
+    <subitem text="山南地区" value="6" />
+    <subitem text="日喀则地区" value="7" />
+    <subitem text="其它地区" value="8" />
+  </item>
+  <item value="30" text="云南省">
+    <subitem text="昆明市" value="1" />
+    <subitem text="大理白族自治州" value="2" />
+    <subitem text="东川市" value="3" />
+    <subitem text="保山地区" value="4" />
+    <subitem text="德宏傣族景颇族自治州" value="5" />
+    <subitem text="迪庆藏族自治州区" value="6" />
+    <subitem text="楚雄彝族自治州" value="7" />
+    <subitem text="临沧地区" value="8" />
+    <subitem text="丽江地区" value="9" />
+    <subitem text="怒江傈僳族自治州" value="10" />
+    <subitem text="曲靖地区" value="11" />
+    <subitem text="思茅地区" value="12" />
+    <subitem text="西双版纳傣族自治州" value="13" />
+    <subitem text="文山壮族苗族自治州" value="14" />
+    <subitem text="红河哈尼族彝族自治州" value="15" />
+    <subitem text="玉溪地区" value="16" />
+    <subitem text="昭通地区" value="17" />
+    <subitem text="其它地区" value="18" />
+  </item>
+  <item value="31" text="浙江省">
+    <subitem text="杭州市" value="1" />
+    <subitem text="嘉兴市" value="2" />
+    <subitem text="金华市" value="3" />
+    <subitem text="衢州市" value="4" />
+    <subitem text="丽水地区" value="5" />
+    <subitem text="宁波市" value="6" />
+    <subitem text="绍兴市" value="7" />
+    <subitem text="台州市" value="8" />
+    <subitem text="温州市" value="9" />
+    <subitem text="湖州市" value="10" />
+    <subitem text="舟山市" value="11" />
+    <subitem text="其它地区" value="12" />
+  </item>
+  <item value="32" text="香港">
+    <subitem value="320" text="香港" />
+  </item>
+  <item value="33" text="澳门">
+    <subitem value="330" text="澳门" />
+  </item>
+  <item value="34" text="台湾">
+    <subitem value="340" text="台湾" />
+  </item>
+  <item value="35" text="新疆生产建设兵团">
+    <subitem value="350" text="新疆生产建设兵团" />
+  </item>
+  <item value="36" text="国外">
+    <subitem value="360" text="国外" />
+  </item>
+</items>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="不限" />
+  <item value="2" text="在读学生" />
+  <item value="3" text="应届毕业生" />
+  <item value="4" text="一年以上" />
+  <item value="5" text="二年以上" />
+  <item value="6" text="三年以上" />
+  <item value="7" text="五年以上" />
+  <item value="8" text="八年以上" />
+  <item value="9" text="十年以上" />
+</items>

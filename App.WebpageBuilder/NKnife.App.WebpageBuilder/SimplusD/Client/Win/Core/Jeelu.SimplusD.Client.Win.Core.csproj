@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7D47B960-6735-4125-8670-0BBDBEE28208}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jeelu.SimplusD.Client.Win</RootNamespace>
+    <AssemblyName>Jeelu.SimplusD.Client.Win.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Properties\GloablAssemblyInfo.cs">
+      <Link>Properties\GloablAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AutoLayoutPanelEx\AutoLayoutPanelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AutoLayoutPanelEx\ValueControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Enums.cs" />
+    <Compile Include="Forms\FindAndReplace\FindAndReplaceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FindAndReplace\FindAndReplaceForm.Designer.cs">
+      <DependentUpon>FindAndReplaceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IBaseViewContent.cs" />
+    <Compile Include="IViewContent.cs" />
+    <Compile Include="IWorkbenchLayout.cs" />
+    <Compile Include="IWorkbenchWindow.cs" />
+    <Compile Include="Menus\MenuStateManager.cs" />
+    <Compile Include="Menus\MenuStripManager.cs" />
+    <Compile Include="Pads\IPadContent.cs" />
+    <Compile Include="Pads\PadContent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\PreviewPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\PropertyPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\ResultsPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\TmpltViewPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\ToolsBoxPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pads\TreePad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Publish\ProgressStateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Publish\ProgressStateForm.Designer.cs">
+      <DependentUpon>ProgressStateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Publish\DisposeAnyFile.cs" />
+    <Compile Include="Publish\ModifyPublish.cs" />
+    <Compile Include="Publish\Publish.cs" />
+    <Compile Include="Publish\SendFileCore.cs" />
+    <Compile Include="Publish\SinglePagePublish.cs" />
+    <Compile Include="Publish\SocketServer.cs">
+    </Compile>
+    <Compile Include="Forms\SoftwareOption\OptionXmlDocument.cs" />
+    <Compile Include="Forms\SoftwareOption\SoftwareOptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiForm\MdiCssDesignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatusBars\StatusBarManager.cs" />
+    <Compile Include="Toolbars\MyToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Toolbars\ToolbarManager.cs" />
+    <Compile Include="Toolbars\ToolbarType.cs" />
+    <Compile Include="Views\BaseEditViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BaseViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiBaseEditViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiBaseListViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiBaseViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiForm\MdiHomePageDesignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiForm\MdiHtmlDesignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiForm\MdiSnipDesignerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiForm\MdiTmpltDesignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MdiForm\MdiWebBrowserViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SiteProperty\SitePropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\StartupPage\DataForScriptInStartup.cs" />
+    <Compile Include="Views\StartupPage\WelComePageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\StartupPage\WelComePageForm.Designer.cs">
+      <DependentUpon>WelComePageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserOption\DataForScriptInUserOption.cs" />
+    <Compile Include="Views\UserOption\UserGeneralForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\UserOption\UserLogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\UserOption\UserLogForm.Designer.cs">
+      <DependentUpon>UserLogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserOption\UserPropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\UserOption\UserPropertyForm.Designer.cs">
+      <DependentUpon>UserPropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserOption\UserRegForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\UserOption\UserRegForm.Designer.cs">
+      <DependentUpon>UserRegForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Workbench\Layouts\LayoutConfiguration.cs" />
+    <Compile Include="Workbench\TabNavigationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Workbench\TabNavigationForm.Designer.cs">
+      <DependentUpon>TabNavigationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Workbench\ViewContentEventHandler.cs" />
+    <Compile Include="Workbench\WorkbenchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Workbench\WorkbenchForm.Initialize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Workbench\WorkbenchForm.PropertyAndVariable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Workbench\WorkspaceTypeEventArgs.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\FindAndReplace\FindAndReplaceForm.resx">
+      <DependentUpon>FindAndReplaceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Publish\ProgressStateForm.resx">
+      <DependentUpon>ProgressStateForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SoftwareOption\SoftwareOptionForm.resx">
+      <DependentUpon>SoftwareOptionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StartupPage\WelComePageForm.resx">
+      <DependentUpon>WelComePageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserOption\UserLogForm.resx">
+      <DependentUpon>UserLogForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserOption\UserPropertyForm.resx">
+      <DependentUpon>UserPropertyForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserOption\UserRegForm.resx">
+      <DependentUpon>UserRegForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Workbench\TabNavigationForm.resx">
+      <DependentUpon>TabNavigationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Workbench\WorkbenchForm.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\Jeelu.csproj">
+      <Project>{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}</Project>
+      <Name>Jeelu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\OpenSource\CustomOpenFileDialog\CustomOpenFileDialog.csproj">
+      <Project>{63F16AD6-3C52-43BA-A3D7-981AC870E7CE}</Project>
+      <Name>CustomOpenFileDialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\OpenSource\ICSharpCode.TextEditor\ICSharpCode.TextEditor.csproj">
+      <Project>{2D18BE89-D210-49EB-A9DD-2246FBB3DF6D}</Project>
+      <Name>ICSharpCode.TextEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\OpenSource\VS2005ToolBox\VS2005ToolBox.csproj">
+      <Project>{63591A7A-794D-407E-9D3F-2B2C525420F9}</Project>
+      <Name>VS2005ToolBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\OpenSource\WinFormsUI\WinFormsUI.csproj">
+      <Project>{C75532C4-765B-418E-B09B-46D36B2ABDB1}</Project>
+      <Name>WinFormsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Win\Common\Jeelu.Win.csproj">
+      <Project>{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}</Project>
+      <Name>Jeelu.Win</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Jeelu.SimplusD.csproj">
+      <Project>{42474834-8525-470E-A26C-24E552123983}</Project>
+      <Name>Jeelu.SimplusD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Jeelu.SimplusD.Client.Win.csproj">
+      <Project>{6ABF911A-7EF0-41DC-AB7A-720F874107BD}</Project>
+      <Name>Jeelu.SimplusD.Client.Win</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoreControls\Jeelu.SimplusD.Client.Win.CoreControls.csproj">
+      <Project>{8EF3AA7B-2B98-42AF-A4E4-3D7447ADFF65}</Project>
+      <Name>Jeelu.SimplusD.Client.Win.CoreControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

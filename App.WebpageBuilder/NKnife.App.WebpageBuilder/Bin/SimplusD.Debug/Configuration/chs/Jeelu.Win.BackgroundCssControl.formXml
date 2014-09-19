@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.Win.BackgroundCssControl" ObjectName="Jeelu.Win.BackgroundCssControl">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.Win.BackgroundCssControl" Name="BackgroundCssControl" />
+  <Control Type="System.Windows.Forms.Button" Name="btnBrowse">
+    <Text>浏览...</Text>
+  </Control>
+  <Control Type="Jeelu.Win.ColorTextBoxButton" Name="ColorBtnBackground" />
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxColor" />
+  <Control Type="Jeelu.Win.ColorGeneralButton" Name="btnColor" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cbxAttachment" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cbxRepeat" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cbxBkImage" />
+  <Control Type="System.Windows.Forms.Label" Name="lblVerticalPostion">
+    <Text>垂直位置(&amp;V):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="lblLevelPostion">
+    <Text>水平位置(&amp;Z):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="lblAttachment">
+    <Text>附件(&amp;T):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="lblRepeat">
+    <Text>重复(&amp;R):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="lblBgImage">
+    <Text>背景图像(&amp;I):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="lblBgColor">
+    <Text>背景颜色(&amp;C):</Text>
+  </Control>
+</Resources>

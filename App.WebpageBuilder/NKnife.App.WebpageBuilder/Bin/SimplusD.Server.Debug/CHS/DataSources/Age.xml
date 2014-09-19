@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="不限" />
+  <item value="2" text="18 - 25" />
+  <item value="3" text="20 - 28" />
+  <item value="4" text="22 - 30" />
+  <item value="5" text="25 - 40" />
+</items>

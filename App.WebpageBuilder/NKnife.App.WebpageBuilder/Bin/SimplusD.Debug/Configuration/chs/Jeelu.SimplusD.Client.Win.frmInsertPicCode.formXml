@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.frmInsertPicCode" ObjectName="Jeelu.SimplusD.Client.Win.frmInsertPicCode">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.SimplusD.Client.Win.frmInsertPicCode" Name="frmInsertPicCode">
+    <Text>图像</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="cancelBtn">
+    <Text>取消</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="okBtn">
+    <Text>确定</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TabControl" Name="tabControl1" />
+  <Control Type="System.Windows.Forms.TabPage" Name="tabPage1">
+    <Text>通常</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="picLinkBtn">
+    <Text>链接(&amp;L)</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TextBox" Name="linkTextBox" />
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBox2">
+    <Text> 位置信息</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="picAlignComboBox">
+    <Text>默认值</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.NumericUpDown" Name="picBorderNumericUpDown">
+    <Text>0</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.NumericUpDown" Name="picHspaceNumericUpDown">
+    <Text>0</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.NumericUpDown" Name="picVspaceNumericUpDown">
+    <Text>0</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label31">
+    <Text>像素</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label21">
+    <Text>像素</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label1">
+    <Text>像素</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.PictureBox" Name="pictureBox1" />
+  <Control Type="System.Windows.Forms.Label" Name="Label6">
+    <Text>框线粗细:</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="Label5">
+    <Text>垂直间距:</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="Label4">
+    <Text>水平间距:</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="Label3">
+    <Text>对齐:</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBox1">
+    <Text> 图像大小</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="heightUnitComboBox">
+    <Text>像素</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="widthUnitComBox">
+    <Text>像素</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.NumericUpDown" Name="PicHeightNumericUpDown">
+    <Text>0</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.NumericUpDown" Name="PicWidthNumericUpDown">
+    <Text>0</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="resizeButton">
+    <Text>恢复原始大小</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="limitCheckBox">
+    <Text>限制比例</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="heightCheckBox">
+    <Text>高度(&amp;H):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="widthCheckBox">
+    <Text>宽度(&amp;W):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="picPathBtn" />
+  <Control Type="System.Windows.Forms.TextBox" Name="replaceWordTextBox" />
+  <Control Type="System.Windows.Forms.Label" Name="Label2">
+    <Text>替代文字:</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TextBox" Name="picPathTextBox" />
+  <Control Type="System.Windows.Forms.Label" Name="Label11">
+    <Text>图像路径:</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TabPage" Name="tabPage2">
+    <Text>替换</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="Label9">
+    <Text>info</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.PictureBox" Name="pictureBox2" />
+  <Control Type="System.Windows.Forms.Button" Name="pic2PathBtn" />
+  <Control Type="System.Windows.Forms.TextBox" Name="picNameTextBox" />
+  <Control Type="System.Windows.Forms.Label" Name="Label7">
+    <Text>名称属性:</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TextBox" Name="pic2PathTextBox" />
+  <Control Type="System.Windows.Forms.Label" Name="Label8">
+    <Text>图像路径:</Text>
+  </Control>
+</Resources>

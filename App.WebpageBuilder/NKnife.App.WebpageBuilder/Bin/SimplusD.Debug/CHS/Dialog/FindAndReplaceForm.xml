@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resourceText >
+  <form text="查找和替换" />
+  
+  <control name="labelSearchContent" text="查找内容(&amp;N):" />
+  <control name="labelReplaceContent" text="替换为(&amp;P):" />
+  <control name="labelSearchScope" text="查找范围(&amp;L):" />
+  <control name="labelSearchTarget" text="目标类型(&amp;T):" />
+  <control name="groupBoxSearchOption" text="    查找选项(&amp;O):" />
+  <control name="labelSearchOption" text="查找选项(&amp;O):" />
+  <control name="checkBoxMatchCase" text="大小写匹配(&amp;C):" />
+  <control name="checkBoxMatchWholeWord" text="全字匹配(&amp;W):" />
+  <control name="checkBoxUpWard" text="向上搜索(&amp;U):" />
+  <control name="checkBoxUsing" text="使用(&amp;E):" />
+  <control name="buttonSearchNext" text="查找下一个(&amp;F)" />
+  <control name="buttonReplace" text="替换(&amp;R)" />
+  <control name="buttonReplaceAll" text="全部替换(&amp;A)" />
+  <control name="buttonSearchAll" text="查找全部(&amp;A)" />
+  <!--<control name ="toolStripButtonReplace" text="快速替换" />
+  <control name="toolStripButtonSearch" text="快速查找" />
+  -->
+</resourceText>

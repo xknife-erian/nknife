@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="信息技术和互联网(计算机软硬件,通讯)">
+    <subitem value="11" text="计算机软硬件,通讯">
+      <subitem value="111" text="软硬件通讯" />
+      <subitem value="112" text="软硬件" />
+    </subitem>
+    <subitem value="12" text="计算机软硬件">
+      <subitem value="121" text="软件通讯" />
+      <subitem value="122" text="硬件通讯" />
+    </subitem>
+    <subitem value="13" text="通讯">
+      <subitem value="131" text="通讯软硬件" />
+      <subitem value="132" text="通讯软硬件" />
+    </subitem>
+  </item>
+  <item value="2" text="电子技术">
+    <subitem value="22" text="技术">
+      <subitem value="221" text="技术1" />
+      <subitem value="222" text="技术2" />
+    </subitem>
+    <subitem value="23" text="电子">
+      <subitem value="230" text="电子技术1" />
+      <subitem value="231" text="电子技术2" />
+    </subitem>
+  </item>
+  
+  
+  
+</items>

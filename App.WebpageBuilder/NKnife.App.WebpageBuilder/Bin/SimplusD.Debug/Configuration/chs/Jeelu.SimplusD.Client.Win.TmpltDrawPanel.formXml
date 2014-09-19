@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.TmpltDrawPanel" ObjectName="Jeelu.SimplusD.Client.Win.TmpltDrawPanel">
+  <Text Key="tmpltCssItem">编辑整个模板的Css</Text>
+  <Text Key="curRectProperty">选定部分Css属性</Text>
+  <Text Key="cutCurrentBackImg">截取当前背景图片</Text>
+  <Text Key="zoomIn">放大</Text>
+  <Text Key="zoomOut">缩小</Text>
+  <Text Key="initZoom">实际大小</Text>
+  <Text Key="undo">撤消</Text>
+  <Text Key="redo">重做</Text>
+  <Text Key="deleteLine">删除选定线</Text>
+  <Text Key="mergeRect">合并矩形</Text>
+  <Text Key="partRect">分割矩形</Text>
+  <Text Key="lockRect">锁定矩形</Text>
+  <Text Key="disLockRect">解开锁定</Text>
+  <Text Key="hideRuler">隐藏标尺</Text>
+  <Text Key="copySnipData">复制页面片</Text>
+  <Text Key="pasteSnipData">粘贴页面片</Text>
+  <Text Key="snipPerperty">编辑/添加页面片</Text>
+  <Text Key="deleteSnip">删除页面片</Text>
+  <Image Key="selectedImage"><![CDATA[iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAHRJREFUOE+1U0EOwCAIY/9/MofJQoIES1SmxAMSK7TAw8xUNgGXjcrIr2QPfqlfzffBkOkcWD72CcWHx/JjzrD+UZ0L4EzFiWBacMZW4ynnjC1sWOR8F/yr7CVwIAmnFYxnkNS0HeNgE+qt2trQc/u8lVYeN+Gj3oYHh5JCAAAAAElFTkSuQmCC]]></Image>
+  <Image Key="lockedImage"><![CDATA[iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAABGdBTUEAALGPC/xhBQAAAG5JREFUOE/NUlsKACAM6v6XrmAQZm4tiCj62EOZK0v549SqdXj1CU2gka6BGNJBeDvCaHuy1IbkSPzaIyGWZk+gJdrZenLVrPhXZO+fUD/FvDmudEG2Zzv94FTd22sQyAkHY9HMnp8OTJY142NcA45/i3VuT+neAAAAAElFTkSuQmCC]]></Image>
+  <Image Key="hasSnipImage"><![CDATA[iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAHRJREFUOE+9k9ENwCAIRO1M7r+BOyHGhFTQU4gt8U8edwnHQ0QpXAyHK4XJZlngkvPhEwQp8yzsawKv9O0gDQM1+zXAW5+q4TPYGnEo/wirZfiU37CQYAXzhCmgx2YfEu5YSaGQSCpBntGqvOd56Z69stxfAQ9lF1ZkHfMCAAAAAElFTkSuQmCC]]></Image>
+  <Image Key="hasContentSnipImage"><![CDATA[iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAHBJREFUOE/Fk0sOwCAIROn9D42kpoYqM1LSpoSV+Eb5HaoqZTO4bMJIoVH78mfwWQ+ifo/Z1ck7792JRcLha9Hh63CYavblFQZlw8X0QB3G3doNyYM+TwPR24stkTOWWOAxTIlfXDBiqMRm6fiq/wc3VhAdHb46yBIAAAAASUVORK5CYII=]]></Image>
+</Resources>

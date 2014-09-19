@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.Win.BoxCssControl" ObjectName="Jeelu.Win.BoxCssControl">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.Win.BoxCssControl" Name="BoxCssControl" />
+  <Control Type="System.Windows.Forms.TabControl" Name="tabBox" />
+  <Control Type="System.Windows.Forms.TabPage" Name="tabPagePadding">
+    <Text>填 充</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label5">
+    <Text>左：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label6">
+    <Text>下：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label7">
+    <Text>右：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label8">
+    <Text>上：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxPadding">
+    <Text>全部相同</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TabPage" Name="tabPageMargin">
+    <Text>边 界</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label1">
+    <Text>左：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label2">
+    <Text>下：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label3">
+    <Text>右：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label4">
+    <Text>上：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxMargin">
+    <Text>全部相同</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TabPage" Name="tabPageBorder">
+    <Text>边 框</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBoxColor">
+    <Text>颜色</Text>
+  </Control>
+  <Control Type="Jeelu.Win.ColorTextBoxButton" Name="cssBorderColorLeft" />
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxColor" />
+  <Control Type="Jeelu.Win.ColorGeneralButton" Name="btnColor" />
+  <Control Type="Jeelu.Win.ColorTextBoxButton" Name="cssBorderColorDown" />
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxColor" />
+  <Control Type="Jeelu.Win.ColorGeneralButton" Name="btnColor" />
+  <Control Type="Jeelu.Win.ColorTextBoxButton" Name="cssBorderColorRight" />
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxColor" />
+  <Control Type="Jeelu.Win.ColorGeneralButton" Name="btnColor" />
+  <Control Type="Jeelu.Win.ColorTextBoxButton" Name="cssBorderColorUp" />
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxColor" />
+  <Control Type="Jeelu.Win.ColorGeneralButton" Name="btnColor" />
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxBorderColor">
+    <Text>全部相同</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBoxWidth">
+    <Text>宽度</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxBorderWidth">
+    <Text>全部相同</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupStyle">
+    <Text>样式</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbStyleLeft" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbStyleDown" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbStyleRight" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbStyleUp" />
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxBoderStyle">
+    <Text>全部相同</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderLeft">
+    <Text>左：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderDown">
+    <Text>下：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderRight">
+    <Text>右：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labBorderUp">
+    <Text>上：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.PictureBox" Name="borderPicBox" />
+</Resources>

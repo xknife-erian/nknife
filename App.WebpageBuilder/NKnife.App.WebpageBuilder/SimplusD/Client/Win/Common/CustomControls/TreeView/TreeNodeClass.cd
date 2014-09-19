@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Jeelu.SimplusD.Client.Win.DataNode" Collapsed="true">
+    <Position X="14" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAABAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.BaseTreeNode" Collapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAAQACgAJgAQEIEAAAACRAAAAAAAAAAQAAAREAIFABA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.ElementNode" Collapsed="true">
+    <Position X="12.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.ResourceFileNode" Collapsed="true">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAACAAAAAQEACAAAgABAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFileElementInherit\ResourceFileNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.BaseFolderElementNode" Collapsed="true">
+    <Position X="14.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.FavoriteRootNode" Collapsed="true">
+    <Position X="18.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAQEAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\FavoriteRootNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.SiteManagerNode" Collapsed="true">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAACAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\SiteManagerNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.PageNode" Collapsed="true">
+    <Position X="6.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFileElementInherit\PageNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.TmpltNode" Collapsed="true">
+    <Position X="8.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFileElementInherit\TmpltNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.ChannelNode" Collapsed="true">
+    <Position X="12.75" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAQEAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementInherit\ChannelFolderInherit\ChannelNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.BaseFileElementNode" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFileElementNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.ResourceFolderNode" Collapsed="true">
+    <Position X="10.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementInherit\ResourceFolderNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.ChannelFolderNode" Collapsed="true">
+    <Position X="12.75" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ECAAACAAAAAQEIAAAQgAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementInherit\ChannelFolderNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.TmpltFolderNode" Collapsed="true">
+    <Position X="15.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementInherit\TmpltFolderNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.ResourceRootNode" Collapsed="true">
+    <Position X="10.25" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAQEAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementInherit\ResourceRootNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.RootChannelNode" Collapsed="true">
+    <Position X="12.75" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAACCAAAAAQEAAAAAgAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementInherit\ChannelFolderInherit\ChannelInherit\RootChannelNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.TmpltRootNode" Collapsed="true">
+    <Position X="15.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAQEAAAAAgBAQBAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\BaseFolderElementInherit\TmpltRootNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.LinkNode" Collapsed="true">
+    <Position X="11.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAYEAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\ElementInherit\LinkNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.OutsideNode" Collapsed="true">
+    <Position X="19.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\OutsideNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.FolderOutsideNode" Collapsed="true">
+    <Position X="17.5" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\OutsideInherit\FolderOutSiteNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.SimplusD.Client.Win.FileOutsideNode" Collapsed="true">
+    <Position X="20.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\TreeView\TreeNode\BaseTreeInherit\DataInherit\OutsideInherit\FileOutSiteNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

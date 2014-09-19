@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <databind file="PasswordQuestion.xml" id="1" level="1" />
+  <control name="mainInfoTitleLabel" text="注册Jeelu通行证，捷路将为您提供至诚服务" />
+  <control name="userNameLabel" text="用户名：" />
+  <control name="pwdLabel" text="密码：" />
+  <control name="cPwdLabel" text="密码确认：" />
+  <control name="pwdQuestionLabel" text="密码问题：" />
+  <control name="questResultLabel" text="密码问题答案：" />
+  <control name="emailLabel" text="电子邮件：" />
+  <control name="UserNameTBox" validate="NotNull&amp;UserName" helptip="输入您预想的用户名(可使用英文，数字，下划线和圆点)" group="UserReg" />
+  <control name="PwdTBox" validate="NotNull&amp;Password" helptip="密码最短4位，最长16位" group="UserReg" />
+  <control name="QuestionCombox" databindid="1" />
+  <control name="licenseCheckBox" text="同意用户注册协议" />
+  <control name="succeedTitleLabel" text="祝贺你的捷路通行证注册成功！" />
+  <control name="succeedTipLabel" text="捷路将不断地追求卓越，凭借专业化的高品质服务，\r\n让世界上的每个企业在任何时候、任何地方，都能轻\r\n松享受IT高科技的最新成果，都能轻易地开展电子商\r\n务﹑实现信息化，将商机和梦想延伸到世界各地！" />
+  <control name="moreServiceGroup" text="更多捷路平台服务" />
+  <control name="moreServiceLabel" text="更多捷路平台服务" />
+  <control name="skipCheckBox" text="跳过用户详细信息注册" />
+  <control name="visitBtn" text="Jeelu.com" />
+</resourceText>

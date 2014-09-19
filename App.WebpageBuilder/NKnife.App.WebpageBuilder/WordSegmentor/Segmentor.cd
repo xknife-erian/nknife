@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Jeelu.WordSegmentor.T_DictFile" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\Dict.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.T_DictStruct" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAEAAAAAAAAAICAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\Dict.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.Dict" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAQAAACACAAAAAIAACAAAAAAA=</HashCode>
+      <FileName>Base\Dict.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.PosTraffic" Collapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAACAAAAAAAIAAAAAAAAAAgAAAAAAAEIEAAA=</HashCode>
+      <FileName>Base\PosTraffic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.SearchWordResult" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAQEAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\DictManage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.DictMgr" Collapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMAAAABAAAAAAAAAAAAUQAAAAAEAAAAAAAAACAgwgA=</HashCode>
+      <FileName>Base\DictManage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.T_POSBin" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAYIAAAAAQAAAAAAAAAAAAAAAAAAAIAAAAAACA=</HashCode>
+      <FileName>Base\Pos.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CPOS" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAIUhAAAAAAAEgBAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\Pos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.PosBinRule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAEAgAAAAQAAAAIAAAAAAAAAAAAAAAAAAAAAEEAAAA=</HashCode>
+      <FileName>Base\Rule\PosBinRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.T_ChsNameWordTraffic" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAA=</HashCode>
+      <FileName>Base\Rule\MatchNameRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.T_ChsNameTraffic" Collapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAgAEA=</HashCode>
+      <FileName>Base\Rule\MatchNameRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CChsNameTraffic" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgIAAQAAAAFAAAAAAAAAAAAAAAgAAAAAAAADAAEA=</HashCode>
+      <FileName>Base\Rule\MatchNameRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.MatchName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACIAAAIgAQEAAAAAAAIAAIAAIIECgABAAAEgAAIBAI=</HashCode>
+      <FileName>Base\Rule\MatchNameRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.MergeNumRule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\Rule\MergeNumRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CException" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIIIAAAgAEACAAgAgADooQAAUAAABAA=</HashCode>
+      <FileName>Base\FTAlgorithm\CException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CGetCurrentDir" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQEAAAEAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\CFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CDir" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAQAAAAAAAAAAAAAAABAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Base\FTAlgorithm\CFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CFile" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAAQIAAAIAAAAAJAgAgAAAAQgECAMAAAABCIBEAAIA=</HashCode>
+      <FileName>Base\FTAlgorithm\CFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CFileException" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\CFileException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CRegex" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIAAAAAAAAAEAAAAAAAgAAAEAAAQAAAAAAAABCA=</HashCode>
+      <FileName>Base\FTAlgorithm\CRegex.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CSerialization" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAQAAAAAAEAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\CSerialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CStream" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAgAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\CStream.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.T_DfaUnit" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAgAIAAAAAAAAAAAQACACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\Dfa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.T_InnerInfo" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\Dfa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CWordDfa" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAAAAACAAAAAAAUAAAAQAAAAECAAAABAAAAEAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\Dfa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.T_WordInfo" Collapsed="true">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBAAAAAAAgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\ExtractWords.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.CExtractWords" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>qAAAAAIAAAAAAAAQlEgAQAAAAAQABBAAAAAAAAAAKAA=</HashCode>
+      <FileName>Base\FTAlgorithm\ExtractWords.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.WordSegmentor.WordSegmentor" Collapsed="true">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAgcVAAAAQAAECIjBOUAwFiAgcKiBjZAAlII0AUYCAQ=</HashCode>
+      <FileName>WordSegmentor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Jeelu.WordSegmentor.IRule" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\IRule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Jeelu.WordSegmentor.T_INNER_POS" Collapsed="true">
+    <Position X="8.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAQgAABACS33bjPQAAAAAAAIA=</HashCode>
+      <FileName>Base\Pos.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Jeelu.WordSegmentor.T_POS" Collapsed="true">
+    <Position X="10" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAQgAABACS33bjPQAAAAAAAIA=</HashCode>
+      <FileName>Base\Pos.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Jeelu.WordSegmentor.ExceptionType" Collapsed="true">
+    <Position X="4.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAEAAAAAAAAAAAAAAAQAAAAAI=</HashCode>
+      <FileName>Base\FTAlgorithm\CException.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Jeelu.WordSegmentor.ExceptionCode" Collapsed="true">
+    <Position X="3" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAogAAAEAAACAAQAAABIECBAUAAAAAAAAAAAAg=</HashCode>
+      <FileName>Base\FTAlgorithm\CException.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Jeelu.WordSegmentor.T_Direction" Collapsed="true">
+    <Position X="6.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\ExtractWords.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Jeelu.WordSegmentor.CompareByPosFunc" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAIAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\ExtractWords.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Jeelu.WordSegmentor.SelectByFreqFunc" Collapsed="true">
+    <Position X="4.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAIAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\FTAlgorithm\ExtractWords.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

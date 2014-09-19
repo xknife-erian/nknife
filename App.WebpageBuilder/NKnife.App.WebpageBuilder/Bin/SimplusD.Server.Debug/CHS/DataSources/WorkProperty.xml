@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="全职" />
+  <item value="2" text="兼职" />
+  <item value="3" text="实习" />
+  <item value="4" text="全/兼职" />
+</items>

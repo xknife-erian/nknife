@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="不限" />
+  <item value="2" text="初中" />
+  <item value="3" text="高中" />
+  <item value="4" text="中技" />
+  <item value="5" text="中专" />
+  <item value="6" text="大专" />
+  <item value="7" text="本科" />
+  <item value="8" text="硕士" />
+  <item value="9" text="博士" />
+  <item value="10" text="其它" />
+</items>

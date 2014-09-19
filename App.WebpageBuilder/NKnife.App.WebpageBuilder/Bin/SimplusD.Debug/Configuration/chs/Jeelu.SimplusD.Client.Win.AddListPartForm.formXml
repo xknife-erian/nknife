@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.AddListPartForm" ObjectName="Jeelu.SimplusD.Client.Win.AddListPartForm">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.SimplusD.Client.Win.AddListPartForm" Name="AddListPartForm">
+    <Text>AddListPartForm</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxKeyWords" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cmbSortType" />
+  <Control Type="System.Windows.Forms.Label" Name="labelSort">
+    <Text>排序方式：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonCancel">
+    <Text>取 消</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEnter">
+    <Text>确 定</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBoxSelectPageType">
+    <Text>选择/编辑页面类型</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Panel" Name="panelPreview" />
+  <Control Type="System.Windows.Forms.Label" Name="labelProject">
+    <Text>频道   标题     摘要</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelInviteBidding">
+    <Text>频道   标题     摘要</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelHr">
+    <Text>频道   标题     摘要</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelKnowledge">
+    <Text>频道   标题     摘要</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelProduct">
+    <Text>频道   标题     摘要</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelGeneral">
+    <Text>频道   标题     摘要</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelHome">
+    <Text>频道   标题     摘要</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEditProject">
+    <Text>详细设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEditInviteBidding">
+    <Text>详细设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEditHr">
+    <Text>详细设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEditKnowledge">
+    <Text>详细设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxGeneral">
+    <Text>普通型页面</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxProject">
+    <Text>项目型页面</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxHr">
+    <Text>招聘型页面</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxInviteBidding">
+    <Text>招标型页面</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxProduct">
+    <Text>产品型页面</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxKnowledge">
+    <Text>知识型页面</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEditProduct">
+    <Text>详细设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEditGeneral">
+    <Text>详细设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="buttonEditHome">
+    <Text>详细设置</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="checkBoxHomePage">
+    <Text>主页型页面</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelSelectChannels">
+    <Text>选择目标频道/栏目</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelAmount">
+    <Text>显示条数：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TreeView" Name="treeViewChannels" />
+  <Text Key="editStyleText">编辑/修改样式</Text>
+  
+</Resources>

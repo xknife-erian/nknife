@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <toolsBox name="_snipToolsBox" text="页面片">
+    <item name="_insertBoxItem" text="布局容器" image="icon\mytoolsPadItemDefaultImg.png" />
+    <item name="_insertTextItem" text="静态" image="icon\mytoolsPadItemDefaultImg.png" />
+    <item name="_insertChannelItem" text="导航" image="icon\mytoolsPadItemDefaultImg.png" />
+    <item name="_insertListItem" text="列表" image="icon\mytoolsPadItemDefaultImg.png" />
+    <!--<item name="_insertNavigationItem" text="导航(成批)" image="icon\mytoolsPadItemDefaultImg.png" />-->
+    
+    <item name="_insertPathItem" text="面包屑" image="icon\mytoolsPadItemDefaultImg.png" />
+  </toolsBox>
+</root>

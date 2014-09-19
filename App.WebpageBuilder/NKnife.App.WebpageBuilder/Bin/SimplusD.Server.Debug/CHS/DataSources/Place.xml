@@ -1,0 +1,3098 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="安徽">
+    <subitem value="43" text="合肥">
+      <subitem value="47" text="合肥市" />
+      <subitem value="44" text="长丰县" />
+      <subitem value="45" text="肥东县" />
+      <subitem value="46" text="肥西县" />
+    </subitem>
+    <subitem value="2" text="安庆">
+      <subitem value="3" text="安庆市" />
+      <subitem value="8" text="桐城市" />
+      <subitem value="4" text="怀宁县" />
+      <subitem value="11" text="枞阳县" />
+      <subitem value="5" text="潜山县" />
+      <subitem value="7" text="太湖县" />
+      <subitem value="6" text="宿松县" />
+      <subitem value="9" text="望江县" />
+      <subitem value="10" text="岳西县" />
+    </subitem>
+    <subitem value="12" text="蚌埠">
+      <subitem value="13" text="蚌埠市" />
+      <subitem value="15" text="怀远县" />
+      <subitem value="16" text="五河县" />
+      <subitem value="14" text="固镇县" />
+    </subitem>
+    <subitem value="17" text="巢湖">
+      <subitem value="18" text="巢湖市" />
+      <subitem value="21" text="庐江县" />
+      <subitem value="22" text="无为县" />
+      <subitem value="19" text="含山县" />
+      <subitem value="20" text="和县" />
+    </subitem>
+    <subitem value="23" text="池州">
+      <subitem value="24" text="池州市" />
+      <subitem value="25" text="东至县" />
+      <subitem value="27" text="石台县" />
+      <subitem value="26" text="青阳县" />
+    </subitem>
+    <subitem value="28" text="滁州">
+      <subitem value="29" text="滁州市" />
+      <subitem value="35" text="天长市" />
+      <subitem value="33" text="明光市" />
+      <subitem value="32" text="来安县" />
+      <subitem value="34" text="全椒县" />
+      <subitem value="30" text="定远县" />
+      <subitem value="31" text="凤阳县" />
+    </subitem>
+    <subitem value="36" text="阜阳">
+      <subitem value="38" text="阜阳市" />
+      <subitem value="39" text="界首市" />
+      <subitem value="40" text="临泉县" />
+      <subitem value="41" text="太和县" />
+      <subitem value="37" text="阜南县" />
+      <subitem value="42" text="颖上县" />
+    </subitem>
+    <subitem value="48" text="淮北">
+      <subitem value="49" text="淮北市" />
+      <subitem value="50" text="濉溪县" />
+    </subitem>
+    <subitem value="51" text="淮南">
+      <subitem value="53" text="淮南市" />
+      <subitem value="52" text="凤台县" />
+    </subitem>
+    <subitem value="54" text="黄山">
+      <subitem value="55" text="黄山市" />
+      <subitem value="58" text="歙县" />
+      <subitem value="57" text="休宁县" />
+      <subitem value="59" text="黟县" />
+      <subitem value="56" text="祁门县" />
+    </subitem>
+    <subitem value="60" text="六安">
+      <subitem value="64" text="六安市" />
+      <subitem value="65" text="寿县" />
+      <subitem value="61" text="霍邱县" />
+      <subitem value="66" text="舒城县" />
+      <subitem value="63" text="金寨县" />
+      <subitem value="62" text="霍山县" />
+    </subitem>
+    <subitem value="67" text="马鞍山">
+      <subitem value="69" text="马鞍山市" />
+      <subitem value="68" text="当涂县" />
+    </subitem>
+    <subitem value="70" text="宿州">
+      <subitem value="72" text="宿州市" />
+      <subitem value="75" text="砀山县" />
+      <subitem value="73" text="萧县" />
+      <subitem value="71" text="灵璧县" />
+      <subitem value="74" text="泗县" />
+    </subitem>
+    <subitem value="76" text="铜陵">
+      <subitem value="77" text="铜陵市" />
+      <subitem value="78" text="铜陵县" />
+    </subitem>
+    <subitem value="79" text="芜湖">
+      <subitem value="82" text="芜湖市" />
+      <subitem value="83" text="芜湖县" />
+      <subitem value="80" text="繁昌县" />
+      <subitem value="81" text="南陵县" />
+    </subitem>
+    <subitem value="84" text="宣城">
+      <subitem value="89" text="宣城市" />
+      <subitem value="88" text="宁国市" />
+      <subitem value="87" text="郎溪县" />
+      <subitem value="85" text="广德县" />
+      <subitem value="90" text="泾县" />
+      <subitem value="86" text="绩溪县" />
+      <subitem value="91" text="旌德县" />
+    </subitem>
+    <subitem value="92" text="亳州">
+      <subitem value="95" text="涡阳县" />
+      <subitem value="94" text="蒙城县" />
+      <subitem value="93" text="利辛县" />
+      <subitem value="96" text="亳州市" />
+    </subitem>
+  </item>
+  <item value="97" text="北京">
+    <subitem value="98" text="北京">
+      <subitem value="99" text="北京市" />
+      <subitem value="100" text="密云县" />
+      <subitem value="101" text="延庆县" />
+    </subitem>
+  </item>
+  <item value="102" text="福建">
+    <subitem value="103" text="福州">
+      <subitem value="106" text="福州市" />
+      <subitem value="105" text="福清市" />
+      <subitem value="104" text="长乐市" />
+      <subitem value="109" text="闽侯县" />
+      <subitem value="107" text="连江县" />
+      <subitem value="108" text="罗源县" />
+      <subitem value="110" text="闽清县" />
+      <subitem value="112" text="永泰县" />
+      <subitem value="111" text="平潭县" />
+    </subitem>
+    <subitem value="113" text="龙岩">
+      <subitem value="116" text="龙岩市" />
+      <subitem value="120" text="漳平市" />
+      <subitem value="114" text="长汀县" />
+      <subitem value="119" text="永定县" />
+      <subitem value="117" text="上杭县" />
+      <subitem value="118" text="武平县" />
+      <subitem value="115" text="连城县" />
+    </subitem>
+    <subitem value="121" text="南平">
+      <subitem value="125" text="南平市" />
+      <subitem value="127" text="邵武市" />
+      <subitem value="130" text="武夷山市" />
+      <subitem value="124" text="建瓯市" />
+      <subitem value="123" text="建阳市" />
+      <subitem value="128" text="顺昌县" />
+      <subitem value="126" text="浦城县" />
+      <subitem value="122" text="光泽县" />
+      <subitem value="129" text="松溪县" />
+      <subitem value="131" text="政和县" />
+    </subitem>
+    <subitem value="132" text="宁德">
+      <subitem value="136" text="宁德市" />
+      <subitem value="133" text="福安市" />
+      <subitem value="134" text="福鼎市" />
+      <subitem value="139" text="霞浦县" />
+      <subitem value="135" text="古田县" />
+      <subitem value="137" text="屏南县" />
+      <subitem value="138" text="寿宁县" />
+      <subitem value="140" text="周宁县" />
+      <subitem value="141" text="柘荣县" />
+    </subitem>
+    <subitem value="142" text="莆田">
+      <subitem value="143" text="莆田市" />
+      <subitem value="144" text="仙游县" />
+    </subitem>
+    <subitem value="145" text="泉州">
+      <subitem value="152" text="泉州市" />
+      <subitem value="153" text="石狮市" />
+      <subitem value="150" text="晋江市" />
+      <subitem value="151" text="南安市" />
+      <subitem value="148" text="惠安县" />
+      <subitem value="146" text="安溪县" />
+      <subitem value="154" text="永春县" />
+      <subitem value="147" text="德化县" />
+      <subitem value="149" text="金门县" />
+    </subitem>
+    <subitem value="155" text="三明">
+      <subitem value="162" text="三明市" />
+      <subitem value="165" text="永安市" />
+      <subitem value="159" text="明溪县" />
+      <subitem value="161" text="清流县" />
+      <subitem value="160" text="宁化县" />
+      <subitem value="156" text="大田县" />
+      <subitem value="166" text="尤溪县" />
+      <subitem value="163" text="沙县" />
+      <subitem value="158" text="将乐县" />
+      <subitem value="164" text="泰宁县" />
+      <subitem value="157" text="建宁县" />
+    </subitem>
+    <subitem value="167" text="厦门">
+      <subitem value="168" text="厦门市" />
+    </subitem>
+    <subitem value="169" text="漳州">
+      <subitem value="178" text="漳州市" />
+      <subitem value="173" text="龙海市" />
+      <subitem value="176" text="云霄县" />
+      <subitem value="177" text="漳浦县" />
+      <subitem value="179" text="诏安县" />
+      <subitem value="170" text="长泰县" />
+      <subitem value="171" text="东山县" />
+      <subitem value="174" text="南靖县" />
+      <subitem value="175" text="平和县" />
+      <subitem value="172" text="华安县" />
+    </subitem>
+  </item>
+  <item value="180" text="甘肃">
+    <subitem value="216" text="兰州">
+      <subitem value="217" text="皋兰县" />
+      <subitem value="218" text="兰州市" />
+      <subitem value="219" text="永登县" />
+      <subitem value="220" text="榆中县" />
+    </subitem>
+    <subitem value="181" text="白银">
+      <subitem value="182" text="白银市" />
+      <subitem value="183" text="会宁县" />
+      <subitem value="184" text="景泰县" />
+      <subitem value="185" text="靖远县" />
+    </subitem>
+    <subitem value="186" text="定西">
+      <subitem value="188" text="临洮县" />
+      <subitem value="189" text="陇西县" />
+      <subitem value="190" text="通渭县" />
+      <subitem value="191" text="渭源县" />
+      <subitem value="192" text="漳县" />
+      <subitem value="193" text="岷县" />
+      <subitem value="4323" text="定西市" />
+    </subitem>
+    <subitem value="194" text="甘南">
+      <subitem value="196" text="合作市" />
+      <subitem value="197" text="临潭县" />
+      <subitem value="202" text="卓尼县" />
+      <subitem value="201" text="舟曲县" />
+      <subitem value="195" text="迭部县" />
+      <subitem value="199" text="玛曲县" />
+      <subitem value="198" text="碌曲县" />
+      <subitem value="200" text="夏河县" />
+    </subitem>
+    <subitem value="203" text="嘉峪关">
+      <subitem value="204" text="嘉峪关市" />
+    </subitem>
+    <subitem value="205" text="金昌">
+      <subitem value="206" text="金昌市" />
+      <subitem value="207" text="永昌县" />
+    </subitem>
+    <subitem value="208" text="酒泉">
+      <subitem value="213" text="酒泉市" />
+      <subitem value="215" text="玉门市" />
+      <subitem value="211" text="敦煌市" />
+      <subitem value="212" text="金塔县" />
+      <subitem value="210" text="瓜州县" />
+      <subitem value="214" text="肃北" />
+      <subitem value="209" text="阿克塞" />
+    </subitem>
+    <subitem value="221" text="临夏">
+      <subitem value="227" text="临夏市" />
+      <subitem value="228" text="临夏县" />
+      <subitem value="226" text="康乐县" />
+      <subitem value="229" text="永靖县" />
+      <subitem value="223" text="广河县" />
+      <subitem value="224" text="和政县" />
+      <subitem value="222" text="东乡族自治县" />
+      <subitem value="225" text="积石山" />
+    </subitem>
+    <subitem value="230" text="陇南">
+      <subitem value="231" text="成县" />
+      <subitem value="232" text="徽县" />
+      <subitem value="233" text="康县" />
+      <subitem value="234" text="礼县" />
+      <subitem value="235" text="两当县" />
+      <subitem value="236" text="文县" />
+      <subitem value="238" text="西和县" />
+      <subitem value="239" text="宕昌县" />
+      <subitem value="4325" text="陇南市" />
+    </subitem>
+    <subitem value="240" text="平凉">
+      <subitem value="241" text="崇信县" />
+      <subitem value="242" text="华亭县" />
+      <subitem value="243" text="静宁县" />
+      <subitem value="244" text="灵台县" />
+      <subitem value="245" text="平凉市" />
+      <subitem value="246" text="庄浪县" />
+      <subitem value="247" text="泾川县" />
+    </subitem>
+    <subitem value="248" text="庆阳">
+      <subitem value="249" text="合水县" />
+      <subitem value="250" text="华池县" />
+      <subitem value="251" text="环县" />
+      <subitem value="252" text="宁县" />
+      <subitem value="253" text="庆城县" />
+      <subitem value="254" text="庆阳市" />
+      <subitem value="255" text="镇原县" />
+      <subitem value="256" text="正宁县" />
+    </subitem>
+    <subitem value="257" text="天水">
+      <subitem value="258" text="甘谷县" />
+      <subitem value="259" text="秦安县" />
+      <subitem value="260" text="清水县" />
+      <subitem value="261" text="天水市" />
+      <subitem value="262" text="武山县" />
+      <subitem value="263" text="张家川" />
+    </subitem>
+    <subitem value="264" text="武威">
+      <subitem value="265" text="古浪县" />
+      <subitem value="266" text="民勤县" />
+      <subitem value="267" text="天祝" />
+      <subitem value="268" text="武威市" />
+    </subitem>
+    <subitem value="269" text="张掖">
+      <subitem value="270" text="高台县" />
+      <subitem value="271" text="临泽县" />
+      <subitem value="272" text="民乐县" />
+      <subitem value="273" text="山丹县" />
+      <subitem value="274" text="肃南" />
+      <subitem value="275" text="张掖市" />
+    </subitem>
+  </item>
+  <item value="276" text="广东">
+    <subitem value="285" text="广州">
+      <subitem value="286" text="从化市" />
+      <subitem value="287" text="广州市" />
+    </subitem>
+    <subitem value="358" text="深圳">
+      <subitem value="359" text="深圳市" />
+    </subitem>
+    <subitem value="277" text="潮州">
+      <subitem value="279" text="潮州市" />
+      <subitem value="278" text="潮安县" />
+      <subitem value="280" text="饶平县" />
+    </subitem>
+    <subitem value="281" text="东莞">
+      <subitem value="282" text="东莞市" />
+    </subitem>
+    <subitem value="283" text="佛山">
+      <subitem value="284" text="佛山市" />
+    </subitem>
+    <subitem value="289" text="河源">
+      <subitem value="290" text="东源县" />
+      <subitem value="291" text="和平县" />
+      <subitem value="292" text="河源市" />
+      <subitem value="293" text="连平县" />
+      <subitem value="294" text="龙川县" />
+      <subitem value="295" text="紫金县" />
+    </subitem>
+    <subitem value="296" text="惠州">
+      <subitem value="300" text="惠州市" />
+      <subitem value="297" text="博罗县" />
+      <subitem value="298" text="惠东县" />
+      <subitem value="301" text="龙门县" />
+    </subitem>
+    <subitem value="302" text="江门">
+      <subitem value="305" text="江门市" />
+      <subitem value="307" text="台山市" />
+      <subitem value="306" text="开平市" />
+      <subitem value="304" text="鹤山市" />
+      <subitem value="303" text="恩平市" />
+    </subitem>
+    <subitem value="308" text="揭阳">
+      <subitem value="312" text="揭阳市" />
+      <subitem value="313" text="普宁市" />
+      <subitem value="310" text="揭东县" />
+      <subitem value="311" text="揭西县" />
+      <subitem value="309" text="惠来县" />
+    </subitem>
+    <subitem value="314" text="茂名">
+      <subitem value="318" text="茂名市" />
+      <subitem value="316" text="高州市" />
+      <subitem value="317" text="化州市" />
+      <subitem value="319" text="信宜市" />
+      <subitem value="315" text="电白县" />
+    </subitem>
+    <subitem value="320" text="梅州">
+      <subitem value="324" text="梅县" />
+      <subitem value="325" text="梅州市" />
+      <subitem value="328" text="兴宁市" />
+      <subitem value="321" text="大埔县" />
+      <subitem value="322" text="丰顺县" />
+      <subitem value="327" text="五华县" />
+      <subitem value="326" text="平远县" />
+      <subitem value="323" text="蕉岭县" />
+    </subitem>
+    <subitem value="329" text="清远">
+      <subitem value="335" text="清远市" />
+      <subitem value="337" text="英德市" />
+      <subitem value="333" text="连州市" />
+      <subitem value="330" text="佛冈县" />
+      <subitem value="336" text="阳山县" />
+      <subitem value="334" text="清新县" />
+      <subitem value="332" text="连山" />
+      <subitem value="331" text="连南" />
+    </subitem>
+    <subitem value="338" text="汕头">
+      <subitem value="341" text="南澳县" />
+      <subitem value="342" text="汕头市" />
+    </subitem>
+    <subitem value="343" text="汕尾">
+      <subitem value="347" text="汕尾市" />
+      <subitem value="345" text="陆丰市" />
+      <subitem value="344" text="海丰县" />
+      <subitem value="346" text="陆河县" />
+    </subitem>
+    <subitem value="348" text="韶关">
+      <subitem value="351" text="曲江县" />
+      <subitem value="354" text="韶关市" />
+      <subitem value="349" text="乐昌市" />
+      <subitem value="350" text="南雄市" />
+      <subitem value="355" text="始兴县" />
+      <subitem value="352" text="仁化县" />
+      <subitem value="356" text="翁源县" />
+      <subitem value="357" text="新丰县" />
+      <subitem value="353" text="乳源" />
+    </subitem>
+    <subitem value="360" text="阳江">
+      <subitem value="363" text="阳江市" />
+      <subitem value="361" text="阳春市" />
+      <subitem value="364" text="阳西县" />
+      <subitem value="362" text="阳东县" />
+    </subitem>
+    <subitem value="365" text="云浮">
+      <subitem value="370" text="云浮市" />
+      <subitem value="366" text="罗定市" />
+      <subitem value="367" text="新兴县" />
+      <subitem value="368" text="郁南县" />
+      <subitem value="369" text="云安县" />
+    </subitem>
+    <subitem value="371" text="湛江">
+      <subitem value="377" text="湛江市" />
+      <subitem value="373" text="廉江市" />
+      <subitem value="372" text="雷州市" />
+      <subitem value="375" text="吴川市" />
+      <subitem value="374" text="遂溪县" />
+      <subitem value="376" text="徐闻县" />
+    </subitem>
+    <subitem value="378" text="肇庆">
+      <subitem value="385" text="肇庆市" />
+      <subitem value="381" text="高要市" />
+      <subitem value="384" text="四会市" />
+      <subitem value="382" text="广宁县" />
+      <subitem value="383" text="怀集县" />
+      <subitem value="380" text="封开县" />
+      <subitem value="379" text="德庆县" />
+    </subitem>
+    <subitem value="386" text="中山">
+      <subitem value="387" text="中山市" />
+    </subitem>
+    <subitem value="388" text="珠海">
+      <subitem value="389" text="珠海市" />
+    </subitem>
+  </item>
+  <item value="390" text="广西">
+    <subitem value="469" text="南宁">
+      <subitem value="474" text="南宁市" />
+      <subitem value="476" text="武鸣县" />
+      <subitem value="472" text="隆安县" />
+      <subitem value="473" text="马山县" />
+      <subitem value="475" text="上林县" />
+      <subitem value="470" text="宾阳县" />
+      <subitem value="471" text="横县" />
+    </subitem>
+    <subitem value="419" text="桂林">
+      <subitem value="422" text="桂林市" />
+      <subitem value="430" text="阳朔县" />
+      <subitem value="424" text="临桂县" />
+      <subitem value="425" text="灵川县" />
+      <subitem value="428" text="全州县" />
+      <subitem value="427" text="平乐县" />
+      <subitem value="429" text="兴安县" />
+      <subitem value="421" text="灌阳县" />
+      <subitem value="423" text="荔浦县" />
+      <subitem value="432" text="资源县" />
+      <subitem value="431" text="永福县" />
+      <subitem value="426" text="龙胜" />
+      <subitem value="420" text="恭城" />
+    </subitem>
+    <subitem value="391" text="百色">
+      <subitem value="392" text="百色市" />
+      <subitem value="396" text="凌云县" />
+      <subitem value="399" text="平果县" />
+      <subitem value="403" text="西林县" />
+      <subitem value="395" text="乐业县" />
+      <subitem value="393" text="德保县" />
+      <subitem value="401" text="田林县" />
+      <subitem value="402" text="田阳县" />
+      <subitem value="394" text="靖西县" />
+      <subitem value="400" text="田东县" />
+      <subitem value="398" text="那坡县" />
+      <subitem value="397" text="隆林" />
+    </subitem>
+    <subitem value="404" text="北海">
+      <subitem value="405" text="北海市" />
+      <subitem value="406" text="合浦县" />
+    </subitem>
+    <subitem value="407" text="崇左">
+      <subitem value="408" text="崇左市" />
+      <subitem value="413" text="凭祥市" />
+      <subitem value="412" text="宁明县" />
+      <subitem value="410" text="扶绥县" />
+      <subitem value="411" text="龙州县" />
+      <subitem value="409" text="大新县" />
+      <subitem value="414" text="天等县" />
+    </subitem>
+    <subitem value="415" text="防城港">
+      <subitem value="417" text="防城港市" />
+      <subitem value="416" text="东兴市" />
+      <subitem value="418" text="上思县" />
+    </subitem>
+    <subitem value="433" text="贵港">
+      <subitem value="435" text="贵港市" />
+      <subitem value="434" text="桂平市" />
+      <subitem value="436" text="平南县" />
+    </subitem>
+    <subitem value="437" text="河池">
+      <subitem value="443" text="河池市" />
+      <subitem value="448" text="宜州市" />
+      <subitem value="447" text="天峨县" />
+      <subitem value="442" text="凤山县" />
+      <subitem value="446" text="南丹县" />
+      <subitem value="440" text="东兰县" />
+      <subitem value="441" text="都安" />
+      <subitem value="445" text="罗城" />
+      <subitem value="438" text="巴马" />
+      <subitem value="444" text="环江" />
+      <subitem value="439" text="大化" />
+    </subitem>
+    <subitem value="449" text="贺州">
+      <subitem value="451" text="贺州市" />
+      <subitem value="453" text="钟山县" />
+      <subitem value="452" text="昭平县" />
+      <subitem value="450" text="富川" />
+    </subitem>
+    <subitem value="454" text="来宾">
+      <subitem value="457" text="来宾市" />
+      <subitem value="455" text="合山市" />
+      <subitem value="459" text="象州县" />
+      <subitem value="458" text="武宣县" />
+      <subitem value="460" text="忻城县" />
+      <subitem value="456" text="金秀" />
+    </subitem>
+    <subitem value="461" text="柳州">
+      <subitem value="464" text="柳州市" />
+      <subitem value="463" text="柳江县" />
+      <subitem value="462" text="柳城县" />
+      <subitem value="465" text="鹿寨县" />
+      <subitem value="466" text="融安县" />
+      <subitem value="467" text="融水" />
+      <subitem value="468" text="三江" />
+    </subitem>
+    <subitem value="478" text="钦州">
+      <subitem value="481" text="钦州市" />
+      <subitem value="479" text="灵山县" />
+      <subitem value="480" text="浦北县" />
+    </subitem>
+    <subitem value="482" text="梧州">
+      <subitem value="486" text="梧州市" />
+      <subitem value="487" text="岑溪市" />
+      <subitem value="483" text="苍梧县" />
+      <subitem value="485" text="藤县" />
+      <subitem value="484" text="蒙山县" />
+    </subitem>
+    <subitem value="488" text="玉林">
+      <subitem value="494" text="玉林市" />
+      <subitem value="489" text="北流市" />
+      <subitem value="492" text="容县" />
+      <subitem value="491" text="陆川县" />
+      <subitem value="490" text="博白县" />
+      <subitem value="493" text="兴业县" />
+    </subitem>
+  </item>
+  <item value="495" text="贵州">
+    <subitem value="512" text="贵阳">
+      <subitem value="513" text="贵阳市" />
+      <subitem value="3773" text="清镇市" />
+      <subitem value="3774" text="开阳县" />
+      <subitem value="3775" text="修文县" />
+      <subitem value="3776" text="息烽县" />
+    </subitem>
+    <subitem value="496" text="安顺">
+      <subitem value="497" text="安顺市" />
+      <subitem value="498" text="关岭" />
+      <subitem value="501" text="镇宁" />
+      <subitem value="502" text="紫云" />
+      <subitem value="499" text="平坝县" />
+      <subitem value="500" text="普定县" />
+    </subitem>
+    <subitem value="503" text="毕节">
+      <subitem value="504" text="毕节市" />
+      <subitem value="505" text="大方县" />
+      <subitem value="509" text="黔西县" />
+      <subitem value="507" text="金沙县" />
+      <subitem value="511" text="织金县" />
+      <subitem value="508" text="纳雍县" />
+      <subitem value="506" text="赫章县" />
+      <subitem value="510" text="威宁" />
+    </subitem>
+    <subitem value="518" text="六盘水">
+      <subitem value="519" text="六盘水市" />
+      <subitem value="520" text="六枝特区" />
+      <subitem value="522" text="水城县" />
+      <subitem value="521" text="盘县" />
+    </subitem>
+    <subitem value="523" text="黔东南">
+      <subitem value="529" text="凯里市" />
+      <subitem value="526" text="黄平县" />
+      <subitem value="534" text="施秉县" />
+      <subitem value="533" text="三穗县" />
+      <subitem value="537" text="镇远县" />
+      <subitem value="538" text="岑巩县" />
+      <subitem value="536" text="天柱县" />
+      <subitem value="528" text="锦屏县" />
+      <subitem value="527" text="剑河县" />
+      <subitem value="535" text="台江县" />
+      <subitem value="531" text="黎平县" />
+      <subitem value="539" text="榕江县" />
+      <subitem value="524" text="从江县" />
+      <subitem value="530" text="雷山县" />
+      <subitem value="532" text="麻江县" />
+      <subitem value="525" text="丹寨县" />
+    </subitem>
+    <subitem value="540" text="黔南">
+      <subitem value="542" text="都匀市" />
+      <subitem value="544" text="福泉市" />
+      <subitem value="547" text="荔波县" />
+      <subitem value="545" text="贵定县" />
+      <subitem value="552" text="瓮安县" />
+      <subitem value="543" text="独山县" />
+      <subitem value="550" text="平塘县" />
+      <subitem value="549" text="罗甸县" />
+      <subitem value="541" text="长顺县" />
+      <subitem value="548" text="龙里县" />
+      <subitem value="546" text="惠水县" />
+      <subitem value="551" text="三都" />
+    </subitem>
+    <subitem value="553" text="黔西南">
+      <subitem value="560" text="兴义市" />
+      <subitem value="559" text="兴仁县" />
+      <subitem value="556" text="普安县" />
+      <subitem value="557" text="晴隆县" />
+      <subitem value="561" text="贞丰县" />
+      <subitem value="558" text="望谟县" />
+      <subitem value="555" text="册亨县" />
+      <subitem value="554" text="安龙县" />
+    </subitem>
+    <subitem value="562" text="铜仁">
+      <subitem value="568" text="铜仁市" />
+      <subitem value="564" text="江口县" />
+      <subitem value="565" text="石阡县" />
+      <subitem value="566" text="思南县" />
+      <subitem value="563" text="德江县" />
+      <subitem value="572" text="玉屏" />
+      <subitem value="571" text="印江" />
+      <subitem value="570" text="沿河" />
+      <subitem value="567" text="松桃" />
+      <subitem value="569" text="万山特区" />
+    </subitem>
+    <subitem value="573" text="遵义">
+      <subitem value="584" text="遵义市" />
+      <subitem value="574" text="赤水市" />
+      <subitem value="577" text="仁怀市" />
+      <subitem value="585" text="遵义县" />
+      <subitem value="579" text="桐梓县" />
+      <subitem value="578" text="绥阳县" />
+      <subitem value="583" text="正安县" />
+      <subitem value="576" text="凤冈县" />
+      <subitem value="586" text="湄潭县" />
+      <subitem value="582" text="余庆县" />
+      <subitem value="581" text="习水县" />
+      <subitem value="575" text="道真" />
+      <subitem value="580" text="务川" />
+    </subitem>
+  </item>
+  <item value="587" text="海南">
+    <subitem value="600" text="海口">
+      <subitem value="601" text="海口市" />
+    </subitem>
+    <subitem value="612" text="三亚">
+      <subitem value="613" text="三亚市" />
+    </subitem>
+    <subitem value="588" text="白沙">
+      <subitem value="589" text="白沙" />
+    </subitem>
+    <subitem value="590" text="保亭">
+      <subitem value="591" text="保亭" />
+    </subitem>
+    <subitem value="592" text="昌江">
+      <subitem value="593" text="昌江" />
+    </subitem>
+    <subitem value="594" text="澄迈县">
+      <subitem value="595" text="澄迈县" />
+    </subitem>
+    <subitem value="596" text="定安县">
+      <subitem value="597" text="定安县" />
+    </subitem>
+    <subitem value="598" text="东方">
+      <subitem value="599" text="东方市" />
+    </subitem>
+    <subitem value="602" text="乐东">
+      <subitem value="603" text="乐东" />
+    </subitem>
+    <subitem value="604" text="临高县">
+      <subitem value="605" text="临高县" />
+    </subitem>
+    <subitem value="606" text="陵水">
+      <subitem value="607" text="陵水" />
+    </subitem>
+    <subitem value="608" text="琼海">
+      <subitem value="609" text="琼海市" />
+    </subitem>
+    <subitem value="610" text="琼中">
+      <subitem value="611" text="琼中" />
+    </subitem>
+    <subitem value="614" text="屯昌县">
+      <subitem value="615" text="屯昌县" />
+    </subitem>
+    <subitem value="616" text="万宁">
+      <subitem value="617" text="万宁市" />
+    </subitem>
+    <subitem value="618" text="文昌">
+      <subitem value="619" text="文昌市" />
+    </subitem>
+    <subitem value="620" text="五指山">
+      <subitem value="621" text="五指山市" />
+    </subitem>
+    <subitem value="622" text="儋州">
+      <subitem value="623" text="儋州市" />
+    </subitem>
+  </item>
+  <item value="624" text="河北">
+    <subitem value="720" text="石家庄">
+      <subitem value="728" text="石家庄市" />
+      <subitem value="730" text="辛集市" />
+      <subitem value="737" text="藁城市" />
+      <subitem value="722" text="晋州市" />
+      <subitem value="731" text="新乐市" />
+      <subitem value="725" text="鹿泉市" />
+      <subitem value="723" text="井陉县" />
+      <subitem value="736" text="正定县" />
+      <subitem value="738" text="栾城县" />
+      <subitem value="732" text="行唐县" />
+      <subitem value="724" text="灵寿县" />
+      <subitem value="721" text="高邑县" />
+      <subitem value="727" text="深泽县" />
+      <subitem value="734" text="赞皇县" />
+      <subitem value="729" text="无极县" />
+      <subitem value="726" text="平山县" />
+      <subitem value="733" text="元氏县" />
+      <subitem value="735" text="赵县" />
+    </subitem>
+    <subitem value="625" text="保定">
+      <subitem value="628" text="保定市" />
+      <subitem value="647" text="涿州市" />
+      <subitem value="631" text="定州市" />
+      <subitem value="626" text="安国市" />
+      <subitem value="633" text="高碑店市" />
+      <subitem value="635" text="满城县" />
+      <subitem value="636" text="清苑县" />
+      <subitem value="645" text="涞水县" />
+      <subitem value="632" text="阜平县" />
+      <subitem value="643" text="徐水县" />
+      <subitem value="630" text="定兴县" />
+      <subitem value="640" text="唐县" />
+      <subitem value="634" text="高阳县" />
+      <subitem value="638" text="容城县" />
+      <subitem value="646" text="涞源县" />
+      <subitem value="641" text="望都县" />
+      <subitem value="627" text="安新县" />
+      <subitem value="644" text="易县" />
+      <subitem value="637" text="曲阳县" />
+      <subitem value="648" text="蠡县" />
+      <subitem value="639" text="顺平县" />
+      <subitem value="629" text="博野县" />
+      <subitem value="642" text="雄县" />
+    </subitem>
+    <subitem value="649" text="沧州">
+      <subitem value="652" text="沧州市" />
+      <subitem value="650" text="泊头市" />
+      <subitem value="660" text="任丘市" />
+      <subitem value="656" text="黄骅市" />
+      <subitem value="655" text="河间市" />
+      <subitem value="651" text="沧县" />
+      <subitem value="659" text="青县" />
+      <subitem value="653" text="东光县" />
+      <subitem value="654" text="海兴县" />
+      <subitem value="664" text="盐山县" />
+      <subitem value="661" text="肃宁县" />
+      <subitem value="658" text="南皮县" />
+      <subitem value="662" text="吴桥县" />
+      <subitem value="663" text="献县" />
+      <subitem value="657" text="孟村" />
+    </subitem>
+    <subitem value="665" text="承德">
+      <subitem value="666" text="承德市" />
+      <subitem value="667" text="承德县" />
+      <subitem value="674" text="兴隆县" />
+      <subitem value="672" text="平泉县" />
+      <subitem value="671" text="滦平县" />
+      <subitem value="670" text="隆化县" />
+      <subitem value="668" text="丰宁" />
+      <subitem value="669" text="宽城" />
+      <subitem value="673" text="围场" />
+    </subitem>
+    <subitem value="675" text="邯郸">
+      <subitem value="682" text="邯郸市" />
+      <subitem value="690" text="武安市" />
+      <subitem value="683" text="邯郸县" />
+      <subitem value="685" text="临漳县" />
+      <subitem value="676" text="成安县" />
+      <subitem value="678" text="大名县" />
+      <subitem value="688" text="涉县" />
+      <subitem value="677" text="磁县" />
+      <subitem value="679" text="肥乡县" />
+      <subitem value="691" text="永年县" />
+      <subitem value="686" text="邱县" />
+      <subitem value="684" text="鸡泽县" />
+      <subitem value="681" text="广平县" />
+      <subitem value="680" text="馆陶县" />
+      <subitem value="689" text="魏县" />
+      <subitem value="687" text="曲周县" />
+    </subitem>
+    <subitem value="692" text="衡水">
+      <subitem value="696" text="衡水市" />
+      <subitem value="697" text="冀州市" />
+      <subitem value="700" text="深州市" />
+      <subitem value="703" text="枣强县" />
+      <subitem value="702" text="武邑县" />
+      <subitem value="701" text="武强县" />
+      <subitem value="699" text="饶阳县" />
+      <subitem value="693" text="安平县" />
+      <subitem value="695" text="故城县" />
+      <subitem value="698" text="景县" />
+      <subitem value="694" text="阜城县" />
+    </subitem>
+    <subitem value="704" text="廊坊">
+      <subitem value="709" text="廊坊市" />
+      <subitem value="705" text="霸州市" />
+      <subitem value="710" text="三河市" />
+      <subitem value="708" text="固安县" />
+      <subitem value="713" text="永清县" />
+      <subitem value="712" text="香河县" />
+      <subitem value="707" text="大城县" />
+      <subitem value="711" text="文安县" />
+      <subitem value="706" text="大厂" />
+    </subitem>
+    <subitem value="714" text="秦皇岛">
+      <subitem value="718" text="秦皇岛市" />
+      <subitem value="715" text="昌黎县" />
+      <subitem value="716" text="抚宁县" />
+      <subitem value="717" text="卢龙县" />
+      <subitem value="719" text="青龙" />
+    </subitem>
+    <subitem value="739" text="唐山">
+      <subitem value="746" text="唐山市" />
+      <subitem value="748" text="遵化市" />
+      <subitem value="743" text="迁安市" />
+      <subitem value="742" text="滦县" />
+      <subitem value="741" text="滦南县" />
+      <subitem value="740" text="乐亭县" />
+      <subitem value="744" text="迁西县" />
+      <subitem value="747" text="玉田县" />
+      <subitem value="745" text="唐海县" />
+    </subitem>
+    <subitem value="749" text="邢台">
+      <subitem value="766" text="邢台市" />
+      <subitem value="756" text="南宫市" />
+      <subitem value="763" text="沙河市" />
+      <subitem value="767" text="邢台县" />
+      <subitem value="753" text="临城县" />
+      <subitem value="758" text="内丘县" />
+      <subitem value="750" text="柏乡县" />
+      <subitem value="755" text="隆尧县" />
+      <subitem value="762" text="任县" />
+      <subitem value="757" text="南和县" />
+      <subitem value="759" text="宁晋县" />
+      <subitem value="752" text="巨鹿县" />
+      <subitem value="765" text="新河县" />
+      <subitem value="751" text="广宗县" />
+      <subitem value="760" text="平乡县" />
+      <subitem value="764" text="威县" />
+      <subitem value="761" text="清河县" />
+      <subitem value="754" text="临西县" />
+    </subitem>
+    <subitem value="768" text="张家口">
+      <subitem value="781" text="张家口市" />
+      <subitem value="778" text="宣化县" />
+      <subitem value="780" text="张北县" />
+      <subitem value="774" text="康保县" />
+      <subitem value="771" text="沽源县" />
+      <subitem value="775" text="尚义县" />
+      <subitem value="777" text="蔚县" />
+      <subitem value="779" text="阳原县" />
+      <subitem value="772" text="怀安县" />
+      <subitem value="776" text="万全县" />
+      <subitem value="773" text="怀来县" />
+      <subitem value="782" text="涿鹿县" />
+      <subitem value="769" text="赤城县" />
+      <subitem value="770" text="崇礼县" />
+    </subitem>
+  </item>
+  <item value="783" text="河南">
+    <subitem value="887" text="郑州">
+      <subitem value="892" text="郑州市" />
+      <subitem value="889" text="巩义市" />
+      <subitem value="894" text="荥阳市" />
+      <subitem value="890" text="新密市" />
+      <subitem value="891" text="新郑市" />
+      <subitem value="888" text="登封市" />
+      <subitem value="893" text="中牟县" />
+    </subitem>
+    <subitem value="812" text="洛阳">
+      <subitem value="814" text="洛阳市" />
+      <subitem value="820" text="偃师市" />
+      <subitem value="815" text="孟津县" />
+      <subitem value="817" text="新安县" />
+      <subitem value="822" text="栾川县" />
+      <subitem value="821" text="嵩县" />
+      <subitem value="816" text="汝阳县" />
+      <subitem value="819" text="宜阳县" />
+      <subitem value="813" text="洛宁县" />
+      <subitem value="818" text="伊川县" />
+    </subitem>
+    <subitem value="805" text="开封">
+      <subitem value="806" text="开封市" />
+      <subitem value="811" text="杞县" />
+      <subitem value="809" text="通许县" />
+      <subitem value="810" text="尉氏县" />
+      <subitem value="807" text="开封县" />
+      <subitem value="808" text="兰考县" />
+    </subitem>
+    <subitem value="784" text="安阳">
+      <subitem value="785" text="安阳市" />
+      <subitem value="788" text="林州市" />
+      <subitem value="786" text="安阳县" />
+      <subitem value="790" text="汤阴县" />
+      <subitem value="787" text="滑县" />
+      <subitem value="789" text="内黄县" />
+    </subitem>
+    <subitem value="791" text="鹤壁">
+      <subitem value="792" text="鹤壁市" />
+      <subitem value="793" text="浚县" />
+      <subitem value="794" text="淇县" />
+    </subitem>
+    <subitem value="795" text="济源">
+      <subitem value="796" text="济源市" />
+    </subitem>
+    <subitem value="797" text="焦作">
+      <subitem value="799" text="焦作市" />
+      <subitem value="801" text="沁阳市" />
+      <subitem value="800" text="孟州市" />
+      <subitem value="804" text="修武县" />
+      <subitem value="798" text="博爱县" />
+      <subitem value="803" text="武陟县" />
+      <subitem value="802" text="温县" />
+    </subitem>
+    <subitem value="823" text="南阳">
+      <subitem value="826" text="南阳市" />
+      <subitem value="824" text="邓州市" />
+      <subitem value="827" text="南召县" />
+      <subitem value="825" text="方城县" />
+      <subitem value="832" text="西峡县" />
+      <subitem value="834" text="镇平县" />
+      <subitem value="828" text="内乡县" />
+      <subitem value="835" text="淅川县" />
+      <subitem value="829" text="社旗县" />
+      <subitem value="830" text="唐河县" />
+      <subitem value="833" text="新野县" />
+      <subitem value="831" text="桐柏县" />
+    </subitem>
+    <subitem value="836" text="平顶山">
+      <subitem value="839" text="平顶山市" />
+      <subitem value="841" text="舞钢市" />
+      <subitem value="840" text="汝州市" />
+      <subitem value="837" text="宝丰县" />
+      <subitem value="842" text="叶县" />
+      <subitem value="838" text="鲁山县" />
+      <subitem value="843" text="郏县" />
+    </subitem>
+    <subitem value="844" text="三门峡">
+      <subitem value="847" text="三门峡市" />
+      <subitem value="849" text="义马市" />
+      <subitem value="845" text="灵宝市" />
+      <subitem value="850" text="渑池县" />
+      <subitem value="848" text="陕县" />
+      <subitem value="846" text="卢氏县" />
+    </subitem>
+    <subitem value="851" text="商丘">
+      <subitem value="854" text="商丘市" />
+      <subitem value="856" text="永城市" />
+      <subitem value="852" text="民权县" />
+      <subitem value="859" text="睢县" />
+      <subitem value="853" text="宁陵县" />
+      <subitem value="857" text="虞城县" />
+      <subitem value="858" text="柘城县" />
+      <subitem value="855" text="夏邑县" />
+    </subitem>
+    <subitem value="860" text="新乡">
+      <subitem value="866" text="新乡市" />
+      <subitem value="865" text="卫辉市" />
+      <subitem value="863" text="辉县市" />
+      <subitem value="867" text="新乡县" />
+      <subitem value="864" text="获嘉县" />
+      <subitem value="869" text="原阳县" />
+      <subitem value="868" text="延津县" />
+      <subitem value="862" text="封丘县" />
+      <subitem value="861" text="长垣县" />
+    </subitem>
+    <subitem value="870" text="信阳">
+      <subitem value="878" text="信阳市" />
+      <subitem value="874" text="罗山县" />
+      <subitem value="872" text="光山县" />
+      <subitem value="877" text="新县" />
+      <subitem value="875" text="商城县" />
+      <subitem value="871" text="固始县" />
+      <subitem value="879" text="潢川县" />
+      <subitem value="873" text="淮滨县" />
+      <subitem value="876" text="息县" />
+    </subitem>
+    <subitem value="880" text="许昌">
+      <subitem value="883" text="许昌市" />
+      <subitem value="885" text="禹州市" />
+      <subitem value="881" text="长葛市" />
+      <subitem value="884" text="许昌县" />
+      <subitem value="886" text="鄢陵县" />
+      <subitem value="882" text="襄城县" />
+    </subitem>
+    <subitem value="895" text="周口">
+      <subitem value="905" text="周口市" />
+      <subitem value="904" text="项城市" />
+      <subitem value="897" text="扶沟县" />
+      <subitem value="903" text="西华县" />
+      <subitem value="900" text="商水县" />
+      <subitem value="901" text="沈丘县" />
+      <subitem value="896" text="郸城县" />
+      <subitem value="898" text="淮阳县" />
+      <subitem value="902" text="太康县" />
+      <subitem value="899" text="鹿邑县" />
+    </subitem>
+    <subitem value="906" text="驻马店">
+      <subitem value="916" text="驻马店市" />
+      <subitem value="913" text="西平县" />
+      <subitem value="911" text="上蔡县" />
+      <subitem value="908" text="平舆县" />
+      <subitem value="915" text="正阳县" />
+      <subitem value="909" text="确山县" />
+      <subitem value="907" text="泌阳县" />
+      <subitem value="910" text="汝南县" />
+      <subitem value="912" text="遂平县" />
+      <subitem value="914" text="新蔡县" />
+    </subitem>
+    <subitem value="917" text="漯河">
+      <subitem value="921" text="漯河市" />
+      <subitem value="919" text="舞阳县" />
+      <subitem value="918" text="临颍县" />
+    </subitem>
+    <subitem value="922" text="濮阳">
+      <subitem value="927" text="濮阳市" />
+      <subitem value="925" text="清丰县" />
+      <subitem value="924" text="南乐县" />
+      <subitem value="923" text="范县" />
+      <subitem value="926" text="台前县" />
+      <subitem value="928" text="濮阳县" />
+    </subitem>
+  </item>
+  <item value="929" text="黑龙江">
+    <subitem value="940" text="哈尔滨">
+      <subitem value="945" text="哈尔滨市" />
+      <subitem value="3732" text="尚志市" />
+      <subitem value="3733" text="双城市" />
+      <subitem value="3734" text="五常市" />
+      <subitem value="3736" text="方正县" />
+      <subitem value="3737" text="宾县" />
+      <subitem value="3738" text="依兰县" />
+      <subitem value="3739" text="巴彦县" />
+      <subitem value="3740" text="通河县" />
+      <subitem value="3741" text="木兰县" />
+      <subitem value="3742" text="延寿县" />
+    </subitem>
+    <subitem value="930" text="大庆">
+      <subitem value="931" text="大庆市" />
+      <subitem value="935" text="肇州县" />
+      <subitem value="934" text="肇源县" />
+      <subitem value="933" text="林甸县" />
+      <subitem value="932" text="杜尔伯特" />
+    </subitem>
+    <subitem value="936" text="大兴安岭">
+      <subitem value="937" text="呼玛县" />
+      <subitem value="938" text="漠河县" />
+      <subitem value="939" text="塔河县" />
+    </subitem>
+    <subitem value="954" text="鹤岗">
+      <subitem value="955" text="鹤岗市" />
+      <subitem value="956" text="萝北县" />
+      <subitem value="957" text="绥滨县" />
+    </subitem>
+    <subitem value="958" text="黑河">
+      <subitem value="960" text="黑河市" />
+      <subitem value="963" text="五大连池市" />
+      <subitem value="959" text="北安市" />
+      <subitem value="961" text="嫩江县" />
+      <subitem value="964" text="逊克县" />
+      <subitem value="962" text="孙吴县" />
+    </subitem>
+    <subitem value="965" text="鸡西">
+      <subitem value="968" text="鸡西市" />
+      <subitem value="966" text="虎林市" />
+      <subitem value="969" text="密山市" />
+      <subitem value="967" text="鸡东县" />
+    </subitem>
+    <subitem value="970" text="佳木斯">
+      <subitem value="973" text="佳木斯市" />
+      <subitem value="975" text="同江市" />
+      <subitem value="972" text="富锦市" />
+      <subitem value="977" text="桦南县" />
+      <subitem value="976" text="桦川县" />
+      <subitem value="974" text="汤原县" />
+      <subitem value="971" text="抚远县" />
+    </subitem>
+    <subitem value="978" text="牡丹江">
+      <subitem value="982" text="牡丹江市" />
+      <subitem value="985" text="绥芬河市" />
+      <subitem value="980" text="海林市" />
+      <subitem value="984" text="宁安市" />
+      <subitem value="983" text="穆棱市" />
+      <subitem value="979" text="东宁县" />
+      <subitem value="981" text="林口县" />
+    </subitem>
+    <subitem value="986" text="七台河">
+      <subitem value="988" text="七台河市" />
+      <subitem value="987" text="勃利县" />
+    </subitem>
+    <subitem value="989" text="齐齐哈尔">
+      <subitem value="996" text="齐齐哈尔市" />
+      <subitem value="999" text="讷河市" />
+      <subitem value="995" text="龙江县" />
+      <subitem value="998" text="依安县" />
+      <subitem value="997" text="泰来县" />
+      <subitem value="992" text="甘南县" />
+      <subitem value="991" text="富裕县" />
+      <subitem value="994" text="克山县" />
+      <subitem value="993" text="克东县" />
+      <subitem value="990" text="拜泉县" />
+    </subitem>
+    <subitem value="1000" text="双鸭山">
+      <subitem value="1004" text="双鸭山市" />
+      <subitem value="1002" text="集贤县" />
+      <subitem value="1005" text="友谊县" />
+      <subitem value="1001" text="宝清县" />
+      <subitem value="1003" text="饶河县" />
+    </subitem>
+    <subitem value="1006" text="绥化">
+      <subitem value="1013" text="绥化市" />
+      <subitem value="1007" text="安达市" />
+      <subitem value="1016" text="肇东市" />
+      <subitem value="1008" text="海伦市" />
+      <subitem value="1015" text="望奎县" />
+      <subitem value="1009" text="兰西县" />
+      <subitem value="1011" text="青冈县" />
+      <subitem value="1012" text="庆安县" />
+      <subitem value="1010" text="明水县" />
+      <subitem value="1014" text="绥棱县" />
+    </subitem>
+    <subitem value="1017" text="伊春">
+      <subitem value="1020" text="伊春市" />
+      <subitem value="1019" text="铁力市" />
+      <subitem value="1018" text="嘉荫县" />
+    </subitem>
+  </item>
+  <item value="1021" text="湖北">
+    <subitem value="1078" text="武汉">
+      <subitem value="1079" text="武汉市" />
+    </subitem>
+    <subitem value="1080" text="仙桃">
+      <subitem value="1081" text="仙桃市" />
+    </subitem>
+    <subitem value="1022" text="鄂州">
+      <subitem value="1023" text="鄂州市" />
+    </subitem>
+    <subitem value="1033" text="黄冈">
+      <subitem value="1035" text="黄冈市" />
+      <subitem value="1038" text="麻城市" />
+      <subitem value="1040" text="武穴市" />
+      <subitem value="1039" text="团风县" />
+      <subitem value="1034" text="红安县" />
+      <subitem value="1037" text="罗田县" />
+      <subitem value="1041" text="英山县" />
+      <subitem value="1043" text="浠水县" />
+      <subitem value="1042" text="蕲春县" />
+      <subitem value="1036" text="黄梅县" />
+    </subitem>
+    <subitem value="1044" text="黄石">
+      <subitem value="1046" text="黄石市" />
+      <subitem value="1045" text="大冶市" />
+      <subitem value="1047" text="阳新县" />
+    </subitem>
+    <subitem value="1048" text="荆门">
+      <subitem value="1049" text="荆门市" />
+      <subitem value="1052" text="钟祥市" />
+      <subitem value="1050" text="京山县" />
+      <subitem value="1051" text="沙洋县" />
+    </subitem>
+    <subitem value="1053" text="荆州">
+      <subitem value="1058" text="荆州市" />
+      <subitem value="1059" text="石首市" />
+      <subitem value="1055" text="洪湖市" />
+      <subitem value="1060" text="松滋市" />
+      <subitem value="1054" text="公安县" />
+      <subitem value="1056" text="监利县" />
+      <subitem value="1057" text="江陵县" />
+    </subitem>
+    <subitem value="1061" text="潜江">
+      <subitem value="1062" text="潜江市" />
+    </subitem>
+    <subitem value="1063" text="神农架林区">
+      <subitem value="1064" text="神农架林区" />
+    </subitem>
+    <subitem value="1065" text="十堰">
+      <subitem value="1068" text="十堰市" />
+      <subitem value="1066" text="丹江口市" />
+      <subitem value="1070" text="郧县" />
+      <subitem value="1069" text="郧西县" />
+      <subitem value="1071" text="竹山县" />
+      <subitem value="1072" text="竹溪县" />
+      <subitem value="1067" text="房县" />
+    </subitem>
+    <subitem value="1073" text="随州">
+      <subitem value="1075" text="随州市" />
+      <subitem value="1074" text="广水市" />
+    </subitem>
+    <subitem value="1076" text="天门">
+      <subitem value="1077" text="天门市" />
+    </subitem>
+    <subitem value="1082" text="咸宁">
+      <subitem value="1088" text="咸宁市" />
+      <subitem value="1083" text="赤壁市" />
+      <subitem value="1085" text="嘉鱼县" />
+      <subitem value="1086" text="通城县" />
+      <subitem value="1084" text="崇阳县" />
+      <subitem value="1087" text="通山县" />
+    </subitem>
+    <subitem value="1089" text="襄樊">
+      <subitem value="1094" text="襄樊市" />
+      <subitem value="1092" text="老河口市" />
+      <subitem value="1096" text="枣阳市" />
+      <subitem value="1095" text="宜城市" />
+      <subitem value="1093" text="南漳县" />
+      <subitem value="1091" text="谷城县" />
+      <subitem value="1090" text="保康县" />
+    </subitem>
+    <subitem value="1097" text="孝感">
+      <subitem value="1102" text="孝感市" />
+      <subitem value="1103" text="应城市" />
+      <subitem value="1098" text="安陆市" />
+      <subitem value="1100" text="汉川市" />
+      <subitem value="1101" text="孝昌县" />
+      <subitem value="1099" text="大悟县" />
+      <subitem value="1104" text="云梦县" />
+    </subitem>
+    <subitem value="1105" text="宜昌">
+      <subitem value="1106" text="长阳" />
+      <subitem value="1108" text="五峰" />
+      <subitem value="1110" text="宜昌市" />
+      <subitem value="1111" text="宜都市" />
+      <subitem value="1107" text="当阳市" />
+      <subitem value="1113" text="枝江市" />
+      <subitem value="1112" text="远安县" />
+      <subitem value="1109" text="兴山县" />
+      <subitem value="1114" text="秭归县" />
+    </subitem>
+    <subitem value="1024" text="恩施">
+      <subitem value="1026" text="恩施市" />
+      <subitem value="1030" text="利川市" />
+      <subitem value="1028" text="建始县" />
+      <subitem value="1025" text="巴东县" />
+      <subitem value="1032" text="宣恩县" />
+      <subitem value="1031" text="咸丰县" />
+      <subitem value="1029" text="来凤县" />
+      <subitem value="1027" text="鹤峰县" />
+    </subitem>
+  </item>
+  <item value="1115" text="湖南">
+    <subitem value="1125" text="长沙">
+      <subitem value="1126" text="长沙市" />
+      <subitem value="1130" text="浏阳市" />
+      <subitem value="1127" text="长沙县" />
+      <subitem value="1129" text="望城县" />
+      <subitem value="1128" text="宁乡县" />
+    </subitem>
+    <subitem value="1220" text="张家界">
+      <subitem value="1223" text="张家界市" />
+      <subitem value="1221" text="慈利县" />
+      <subitem value="1222" text="桑植县" />
+    </subitem>
+    <subitem value="1116" text="常德">
+      <subitem value="1118" text="常德市" />
+      <subitem value="1120" text="津市市" />
+      <subitem value="1117" text="安乡县" />
+      <subitem value="1119" text="汉寿县" />
+      <subitem value="1124" text="澧县" />
+      <subitem value="1121" text="临澧县" />
+      <subitem value="1123" text="桃源县" />
+      <subitem value="1122" text="石门县" />
+    </subitem>
+    <subitem value="1131" text="郴州">
+      <subitem value="1133" text="郴州市" />
+      <subitem value="1141" text="资兴市" />
+      <subitem value="1135" text="桂阳县" />
+      <subitem value="1139" text="宜章县" />
+      <subitem value="1140" text="永兴县" />
+      <subitem value="1136" text="嘉禾县" />
+      <subitem value="1137" text="临武县" />
+      <subitem value="1138" text="汝城县" />
+      <subitem value="1134" text="桂东县" />
+      <subitem value="1132" text="安仁县" />
+    </subitem>
+    <subitem value="1142" text="衡阳">
+      <subitem value="1147" text="衡阳市" />
+      <subitem value="1150" text="耒阳市" />
+      <subitem value="1143" text="常宁市" />
+      <subitem value="1148" text="衡阳县" />
+      <subitem value="1145" text="衡南县" />
+      <subitem value="1146" text="衡山县" />
+      <subitem value="1144" text="衡东县" />
+      <subitem value="1149" text="祁东县" />
+    </subitem>
+    <subitem value="1151" text="怀化">
+      <subitem value="1154" text="怀化市" />
+      <subitem value="1156" text="靖州" />
+      <subitem value="1157" text="麻阳" />
+      <subitem value="1158" text="通道" />
+      <subitem value="1159" text="新晃" />
+      <subitem value="1161" text="芷江" />
+      <subitem value="1162" text="沅陵县" />
+      <subitem value="1152" text="辰溪县" />
+      <subitem value="1163" text="溆浦县" />
+      <subitem value="1160" text="中方县" />
+      <subitem value="1155" text="会同县" />
+      <subitem value="1153" text="洪江市" />
+    </subitem>
+    <subitem value="1164" text="娄底">
+      <subitem value="1167" text="娄底市" />
+      <subitem value="1165" text="冷水江市" />
+      <subitem value="1166" text="涟源市" />
+      <subitem value="1168" text="双峰县" />
+      <subitem value="1169" text="新化县" />
+    </subitem>
+    <subitem value="1170" text="邵阳">
+      <subitem value="1171" text="城步" />
+      <subitem value="1175" text="邵阳市" />
+      <subitem value="1178" text="武冈市" />
+      <subitem value="1174" text="邵东县" />
+      <subitem value="1180" text="新邵县" />
+      <subitem value="1176" text="邵阳县" />
+      <subitem value="1173" text="隆回县" />
+      <subitem value="1172" text="洞口县" />
+      <subitem value="1177" text="绥宁县" />
+      <subitem value="1179" text="新宁县" />
+    </subitem>
+    <subitem value="1181" text="湘潭">
+      <subitem value="1183" text="湘潭市" />
+      <subitem value="1185" text="湘乡市" />
+      <subitem value="1182" text="韶山市" />
+      <subitem value="1184" text="湘潭县" />
+    </subitem>
+    <subitem value="1186" text="湘西">
+      <subitem value="1191" text="吉首市" />
+      <subitem value="1194" text="泸溪县" />
+      <subitem value="1188" text="凤凰县" />
+      <subitem value="1190" text="花垣县" />
+      <subitem value="1187" text="保靖县" />
+      <subitem value="1189" text="古丈县" />
+      <subitem value="1193" text="永顺县" />
+      <subitem value="1192" text="龙山县" />
+    </subitem>
+    <subitem value="1195" text="益阳">
+      <subitem value="1199" text="益阳市" />
+      <subitem value="1200" text="沅江市" />
+      <subitem value="1197" text="南县" />
+      <subitem value="1198" text="桃江县" />
+      <subitem value="1196" text="安化县" />
+    </subitem>
+    <subitem value="1201" text="永州">
+      <subitem value="1204" text="江华" />
+      <subitem value="1211" text="永州市" />
+      <subitem value="1208" text="祁阳县" />
+      <subitem value="1203" text="东安县" />
+      <subitem value="1209" text="双牌县" />
+      <subitem value="1202" text="道县" />
+      <subitem value="1205" text="江永县" />
+      <subitem value="1207" text="宁远县" />
+      <subitem value="1206" text="蓝山县" />
+      <subitem value="1210" text="新田县" />
+    </subitem>
+    <subitem value="1212" text="岳阳">
+      <subitem value="1217" text="岳阳市" />
+      <subitem value="1219" text="汨罗市" />
+      <subitem value="1214" text="临湘市" />
+      <subitem value="1218" text="岳阳县" />
+      <subitem value="1213" text="华容县" />
+      <subitem value="1216" text="湘阴县" />
+      <subitem value="1215" text="平江县" />
+    </subitem>
+    <subitem value="1224" text="株洲">
+      <subitem value="1227" text="株洲市" />
+      <subitem value="1230" text="醴陵市" />
+      <subitem value="1228" text="株洲县" />
+      <subitem value="1229" text="攸县" />
+      <subitem value="1225" text="茶陵县" />
+      <subitem value="1226" text="炎陵县" />
+    </subitem>
+  </item>
+  <item value="1231" text="吉林">
+    <subitem value="1245" text="长春">
+      <subitem value="1246" text="长春市" />
+      <subitem value="1247" text="德惠市" />
+      <subitem value="1248" text="九台市" />
+      <subitem value="1250" text="榆树市" />
+      <subitem value="1249" text="农安县" />
+    </subitem>
+    <subitem value="1251" text="吉林">
+      <subitem value="1252" text="吉林市" />
+      <subitem value="1257" text="蛟河市" />
+      <subitem value="1256" text="桦甸市" />
+      <subitem value="1254" text="舒兰市" />
+      <subitem value="1253" text="磐石市" />
+      <subitem value="1255" text="永吉县" />
+    </subitem>
+    <subitem value="1232" text="白城">
+      <subitem value="1233" text="白城市" />
+      <subitem value="1237" text="洮南市" />
+      <subitem value="1234" text="大安市" />
+      <subitem value="1236" text="镇赉县" />
+      <subitem value="1235" text="通榆县" />
+    </subitem>
+    <subitem value="1238" text="白山">
+      <subitem value="1239" text="白山市" />
+      <subitem value="1240" text="长白" />
+      <subitem value="1244" text="临江市" />
+      <subitem value="1241" text="抚松县" />
+      <subitem value="1243" text="靖宇县" />
+    </subitem>
+    <subitem value="1258" text="辽源">
+      <subitem value="1261" text="辽源市" />
+      <subitem value="1259" text="东丰县" />
+      <subitem value="1260" text="东辽县" />
+    </subitem>
+    <subitem value="1262" text="四平">
+      <subitem value="1266" text="四平市" />
+      <subitem value="1267" text="伊通" />
+      <subitem value="1263" text="公主岭市" />
+      <subitem value="1265" text="双辽市" />
+      <subitem value="1264" text="梨树县" />
+    </subitem>
+    <subitem value="1268" text="松原">
+      <subitem value="1272" text="前郭尔罗斯" />
+      <subitem value="1273" text="松原市" />
+      <subitem value="1269" text="长岭县" />
+      <subitem value="1271" text="乾安县" />
+      <subitem value="1270" text="扶余县" />
+    </subitem>
+    <subitem value="1274" text="通化">
+      <subitem value="1279" text="通化市" />
+      <subitem value="1278" text="梅河口市" />
+      <subitem value="1276" text="集安市" />
+      <subitem value="1280" text="通化县" />
+      <subitem value="1275" text="辉南县" />
+      <subitem value="1277" text="柳河县" />
+    </subitem>
+    <subitem value="1281" text="延边">
+      <subitem value="1288" text="延吉市" />
+      <subitem value="1286" text="图们市" />
+      <subitem value="1283" text="敦化市" />
+      <subitem value="1289" text="珲春市" />
+      <subitem value="1285" text="龙井市" />
+      <subitem value="1284" text="和龙市" />
+      <subitem value="1282" text="安图县" />
+      <subitem value="1287" text="汪清县" />
+    </subitem>
+  </item>
+  <item value="1290" text="江苏">
+    <subitem value="1307" text="南京">
+      <subitem value="1309" text="南京市" />
+      <subitem value="1310" text="溧水县" />
+      <subitem value="1308" text="高淳县" />
+    </subitem>
+    <subitem value="1319" text="苏州">
+      <subitem value="1322" text="苏州市" />
+      <subitem value="1320" text="常熟市" />
+      <subitem value="1325" text="张家港市" />
+      <subitem value="1321" text="昆山市" />
+      <subitem value="1324" text="吴江市" />
+      <subitem value="1323" text="太仓市" />
+    </subitem>
+    <subitem value="1338" text="无锡">
+      <subitem value="1340" text="无锡市" />
+      <subitem value="1339" text="江阴市" />
+      <subitem value="1341" text="宜兴市" />
+    </subitem>
+    <subitem value="1291" text="常州">
+      <subitem value="1292" text="常州市" />
+      <subitem value="1294" text="溧阳市" />
+      <subitem value="1293" text="金坛市" />
+    </subitem>
+    <subitem value="1295" text="淮安">
+      <subitem value="1297" text="淮安市" />
+      <subitem value="1299" text="涟水县" />
+      <subitem value="1296" text="洪泽县" />
+      <subitem value="1300" text="盱眙县" />
+      <subitem value="1298" text="金湖县" />
+    </subitem>
+    <subitem value="1301" text="连云港">
+      <subitem value="1306" text="连云港市" />
+      <subitem value="1303" text="赣榆县" />
+      <subitem value="1302" text="东海县" />
+      <subitem value="1305" text="灌云县" />
+      <subitem value="1304" text="灌南县" />
+    </subitem>
+    <subitem value="1311" text="南通">
+      <subitem value="1314" text="南通市" />
+      <subitem value="1315" text="启东市" />
+      <subitem value="1317" text="如皋市" />
+      <subitem value="1318" text="通州市" />
+      <subitem value="1313" text="海门市" />
+      <subitem value="1312" text="海安县" />
+      <subitem value="1316" text="如东县" />
+    </subitem>
+    <subitem value="1326" text="宿迁">
+      <subitem value="1327" text="宿迁市" />
+      <subitem value="1328" text="宿豫县" />
+      <subitem value="1329" text="沭阳县" />
+      <subitem value="1331" text="泗阳县" />
+      <subitem value="1330" text="泗洪县" />
+    </subitem>
+    <subitem value="1332" text="泰州">
+      <subitem value="1336" text="泰州市" />
+      <subitem value="1337" text="兴化市" />
+      <subitem value="1334" text="靖江市" />
+      <subitem value="1335" text="泰兴市" />
+      <subitem value="1333" text="姜堰市" />
+    </subitem>
+    <subitem value="1342" text="徐州">
+      <subitem value="1347" text="徐州市" />
+      <subitem value="1346" text="新沂市" />
+      <subitem value="1348" text="邳州市" />
+      <subitem value="1343" text="丰县" />
+      <subitem value="1344" text="沛县" />
+      <subitem value="1345" text="铜山县" />
+      <subitem value="1349" text="睢宁县" />
+    </subitem>
+    <subitem value="1350" text="盐城">
+      <subitem value="1358" text="盐城市" />
+      <subitem value="1359" text="盐都县" />
+      <subitem value="1353" text="东台市" />
+      <subitem value="1352" text="大丰市" />
+      <subitem value="1357" text="响水县" />
+      <subitem value="1351" text="滨海县" />
+      <subitem value="1354" text="阜宁县" />
+      <subitem value="1356" text="射阳县" />
+      <subitem value="1355" text="建湖县" />
+    </subitem>
+    <subitem value="1360" text="扬州">
+      <subitem value="1364" text="扬州市" />
+      <subitem value="1365" text="仪征市" />
+      <subitem value="1362" text="高邮市" />
+      <subitem value="1363" text="江都市" />
+      <subitem value="1361" text="宝应县" />
+    </subitem>
+    <subitem value="1366" text="镇江">
+      <subitem value="1370" text="镇江市" />
+      <subitem value="1367" text="丹阳市" />
+      <subitem value="1369" text="扬中市" />
+      <subitem value="1368" text="句容市" />
+    </subitem>
+  </item>
+  <item value="1371" text="江西">
+    <subitem value="1432" text="南昌">
+      <subitem value="1435" text="南昌市" />
+      <subitem value="1436" text="南昌县" />
+      <subitem value="1437" text="新建县" />
+      <subitem value="1433" text="安义县" />
+      <subitem value="1434" text="进贤县" />
+    </subitem>
+    <subitem value="1372" text="抚州">
+      <subitem value="1375" text="抚州市" />
+      <subitem value="1380" text="南城县" />
+      <subitem value="1379" text="黎川县" />
+      <subitem value="1381" text="南丰县" />
+      <subitem value="1373" text="崇仁县" />
+      <subitem value="1378" text="乐安县" />
+      <subitem value="1382" text="宜黄县" />
+      <subitem value="1377" text="金溪县" />
+      <subitem value="1383" text="资溪县" />
+      <subitem value="1374" text="东乡县" />
+      <subitem value="1376" text="广昌县" />
+    </subitem>
+    <subitem value="1384" text="赣州">
+      <subitem value="1390" text="赣州市" />
+      <subitem value="1402" text="于都县" />
+      <subitem value="1396" text="瑞金市" />
+      <subitem value="1393" text="南康市" />
+      <subitem value="1389" text="赣县" />
+      <subitem value="1399" text="信丰县" />
+      <subitem value="1387" text="大余县" />
+      <subitem value="1397" text="上犹县" />
+      <subitem value="1386" text="崇义县" />
+      <subitem value="1385" text="安远县" />
+      <subitem value="1392" text="龙南县" />
+      <subitem value="1388" text="定南县" />
+      <subitem value="1395" text="全南县" />
+      <subitem value="1394" text="宁都县" />
+      <subitem value="1400" text="兴国县" />
+      <subitem value="1391" text="会昌县" />
+      <subitem value="1401" text="寻乌县" />
+      <subitem value="1398" text="石城县" />
+    </subitem>
+    <subitem value="1403" text="吉安">
+      <subitem value="1404" text="安福县" />
+      <subitem value="1405" text="吉安市" />
+      <subitem value="1408" text="井冈山市" />
+      <subitem value="1406" text="吉安县" />
+      <subitem value="1407" text="吉水县" />
+      <subitem value="1412" text="峡江县" />
+      <subitem value="1413" text="新干县" />
+      <subitem value="1414" text="永丰县" />
+      <subitem value="1410" text="泰和县" />
+      <subitem value="1409" text="遂川县" />
+      <subitem value="1411" text="万安县" />
+      <subitem value="1415" text="永新县" />
+    </subitem>
+    <subitem value="1416" text="景德镇">
+      <subitem value="1418" text="景德镇市" />
+      <subitem value="1419" text="乐平市" />
+      <subitem value="1417" text="浮梁县" />
+    </subitem>
+    <subitem value="1420" text="九江">
+      <subitem value="1424" text="九江市" />
+      <subitem value="1427" text="瑞昌市" />
+      <subitem value="1425" text="九江县" />
+      <subitem value="1428" text="武宁县" />
+      <subitem value="1430" text="修水县" />
+      <subitem value="1431" text="永修县" />
+      <subitem value="1421" text="德安县" />
+      <subitem value="1429" text="星子县" />
+      <subitem value="1422" text="都昌县" />
+      <subitem value="1423" text="湖口县" />
+      <subitem value="1426" text="彭泽县" />
+    </subitem>
+    <subitem value="1438" text="萍乡">
+      <subitem value="1441" text="萍乡市" />
+      <subitem value="1439" text="莲花县" />
+      <subitem value="1440" text="芦溪县" />
+      <subitem value="1442" text="上栗县" />
+    </subitem>
+    <subitem value="1443" text="上饶">
+      <subitem value="1449" text="上饶市" />
+      <subitem value="1445" text="德兴市" />
+      <subitem value="1450" text="上饶县" />
+      <subitem value="1446" text="广丰县" />
+      <subitem value="1453" text="玉山县" />
+      <subitem value="1448" text="铅山县" />
+      <subitem value="1447" text="横峰县" />
+      <subitem value="1454" text="弋阳县" />
+      <subitem value="1452" text="余干县" />
+      <subitem value="1444" text="波阳县" />
+      <subitem value="1451" text="万年县" />
+      <subitem value="1455" text="婺源县" />
+    </subitem>
+    <subitem value="1456" text="新余">
+      <subitem value="1458" text="新余市" />
+      <subitem value="1457" text="分宜县" />
+    </subitem>
+    <subitem value="1459" text="宜春">
+      <subitem value="1467" text="宜春市" />
+      <subitem value="1460" text="丰城市" />
+      <subitem value="1469" text="樟树市" />
+      <subitem value="1462" text="高安市" />
+      <subitem value="1461" text="奉新县" />
+      <subitem value="1466" text="万载县" />
+      <subitem value="1464" text="上高县" />
+      <subitem value="1468" text="宜丰县" />
+      <subitem value="1463" text="靖安县" />
+      <subitem value="1465" text="铜鼓县" />
+    </subitem>
+    <subitem value="1470" text="鹰潭">
+      <subitem value="1472" text="鹰潭市" />
+      <subitem value="1471" text="贵溪市" />
+      <subitem value="1473" text="余江县" />
+    </subitem>
+  </item>
+  <item value="1474" text="辽宁">
+    <subitem value="1530" text="沈阳">
+      <subitem value="1534" text="沈阳市" />
+      <subitem value="1535" text="新民市" />
+      <subitem value="1533" text="辽中县" />
+      <subitem value="1532" text="康平县" />
+      <subitem value="1531" text="法库县" />
+    </subitem>
+    <subitem value="1491" text="大连">
+      <subitem value="1493" text="大连市" />
+      <subitem value="1495" text="瓦房店市" />
+      <subitem value="1494" text="普兰店市" />
+      <subitem value="1496" text="庄河市" />
+      <subitem value="1492" text="长海县" />
+    </subitem>
+    <subitem value="1475" text="鞍山">
+      <subitem value="1476" text="鞍山市" />
+      <subitem value="1479" text="岫岩" />
+      <subitem value="1477" text="海城市" />
+      <subitem value="1478" text="台安县" />
+    </subitem>
+    <subitem value="1480" text="本溪">
+      <subitem value="1481" text="本溪" />
+      <subitem value="1482" text="本溪市" />
+      <subitem value="1483" text="桓仁" />
+    </subitem>
+    <subitem value="1484" text="朝阳">
+      <subitem value="1486" text="朝阳市" />
+      <subitem value="1489" text="喀喇沁左翼蒙古族自治县" />
+      <subitem value="1485" text="北票市" />
+      <subitem value="1490" text="凌源市" />
+      <subitem value="1487" text="朝阳县" />
+      <subitem value="1488" text="建平县" />
+    </subitem>
+    <subitem value="1497" text="丹东">
+      <subitem value="1498" text="丹东市" />
+      <subitem value="1501" text="宽甸" />
+      <subitem value="1499" text="东港市" />
+      <subitem value="1500" text="凤城市" />
+    </subitem>
+    <subitem value="1502" text="抚顺">
+      <subitem value="1503" text="抚顺市" />
+      <subitem value="1505" text="清原" />
+      <subitem value="1506" text="新宾" />
+      <subitem value="1504" text="抚顺县" />
+    </subitem>
+    <subitem value="1507" text="阜新">
+      <subitem value="1508" text="阜新" />
+      <subitem value="1509" text="阜新市" />
+      <subitem value="1510" text="彰武县" />
+    </subitem>
+    <subitem value="1511" text="葫芦岛">
+      <subitem value="1512" text="葫芦岛市" />
+      <subitem value="1515" text="兴城市" />
+      <subitem value="1514" text="绥中县" />
+      <subitem value="1513" text="建昌县" />
+    </subitem>
+    <subitem value="1516" text="锦州">
+      <subitem value="1519" text="锦州市" />
+      <subitem value="1520" text="凌海市" />
+      <subitem value="1517" text="北镇市" />
+      <subitem value="1518" text="黑山县" />
+      <subitem value="1521" text="义县" />
+    </subitem>
+    <subitem value="1522" text="辽阳">
+      <subitem value="1524" text="辽阳市" />
+      <subitem value="1523" text="灯塔市" />
+      <subitem value="1525" text="辽阳县" />
+    </subitem>
+    <subitem value="1526" text="盘锦">
+      <subitem value="1528" text="盘锦市" />
+      <subitem value="1527" text="大洼县" />
+      <subitem value="1529" text="盘山县" />
+    </subitem>
+    <subitem value="1536" text="铁岭">
+      <subitem value="1540" text="铁岭市" />
+      <subitem value="1538" text="调兵山市" />
+      <subitem value="1539" text="开原市" />
+      <subitem value="1541" text="铁岭县" />
+      <subitem value="1542" text="西丰县" />
+      <subitem value="1537" text="昌图县" />
+    </subitem>
+    <subitem value="1543" text="营口">
+      <subitem value="1546" text="营口市" />
+      <subitem value="1545" text="盖州市" />
+      <subitem value="1544" text="大石桥市" />
+    </subitem>
+  </item>
+  <item value="1547" text="内蒙古">
+    <subitem value="1585" text="呼和浩特">
+      <subitem value="1587" text="呼和浩特市" />
+      <subitem value="1588" text="清水河县" />
+      <subitem value="1589" text="土默特左旗" />
+      <subitem value="1590" text="托克托县" />
+      <subitem value="1586" text="和林格尔县" />
+      <subitem value="1591" text="武川县" />
+    </subitem>
+    <subitem value="1548" text="阿拉善盟">
+      <subitem value="1550" text="阿拉善左旗" />
+      <subitem value="1549" text="阿拉善右旗" />
+      <subitem value="1551" text="额济纳旗" />
+    </subitem>
+    <subitem value="1552" text="巴彦淖尔盟">
+      <subitem value="4089" text="巴彦淖尔市" />
+      <subitem value="1558" text="五原县" />
+      <subitem value="1559" text="磴口县" />
+      <subitem value="1556" text="乌拉特前旗" />
+      <subitem value="1557" text="乌拉特中旗" />
+      <subitem value="1555" text="乌拉特后旗" />
+      <subitem value="1553" text="杭锦后旗" />
+    </subitem>
+    <subitem value="1560" text="包头">
+      <subitem value="1561" text="包头市" />
+      <subitem value="1564" text="土默特右旗" />
+      <subitem value="1563" text="固阳县" />
+      <subitem value="1562" text="达尔罕茂明安联合旗" />
+    </subitem>
+    <subitem value="1565" text="赤峰">
+      <subitem value="1570" text="赤峰市" />
+      <subitem value="1566" text="阿鲁科尔沁旗" />
+      <subitem value="1569" text="巴林左旗" />
+      <subitem value="1568" text="巴林右旗" />
+      <subitem value="1573" text="林西县" />
+      <subitem value="1572" text="克什克腾旗" />
+      <subitem value="1575" text="翁牛特旗" />
+      <subitem value="1571" text="喀喇沁旗" />
+      <subitem value="1574" text="宁城县" />
+      <subitem value="1567" text="敖汉旗" />
+    </subitem>
+    <subitem value="1576" text="鄂尔多斯">
+      <subitem value="1578" text="鄂尔多斯市" />
+      <subitem value="1577" text="达拉特旗" />
+      <subitem value="1584" text="准格尔旗" />
+      <subitem value="1580" text="鄂托克前旗" />
+      <subitem value="1579" text="鄂托克旗" />
+      <subitem value="1581" text="杭锦旗" />
+      <subitem value="1582" text="乌审旗" />
+      <subitem value="1583" text="伊金霍洛旗" />
+    </subitem>
+    <subitem value="1592" text="呼伦贝尔">
+      <subitem value="1599" text="呼伦贝尔市" />
+      <subitem value="1601" text="莫力达瓦" />
+      <subitem value="1600" text="满洲里市" />
+      <subitem value="1604" text="牙克石市" />
+      <subitem value="1605" text="扎兰屯市" />
+      <subitem value="1595" text="额尔古纳市" />
+      <subitem value="1598" text="根河市" />
+      <subitem value="1593" text="阿荣旗" />
+      <subitem value="1596" text="鄂伦春自治旗" />
+      <subitem value="1597" text="鄂温克族自治旗" />
+      <subitem value="1594" text="陈巴尔虎旗" />
+      <subitem value="1603" text="新巴尔虎左旗" />
+      <subitem value="1602" text="新巴尔虎右旗" />
+    </subitem>
+    <subitem value="1606" text="通辽">
+      <subitem value="1613" text="通辽市" />
+      <subitem value="1607" text="霍林郭勒市" />
+      <subitem value="1610" text="科尔沁左翼中旗" />
+      <subitem value="1609" text="科尔沁左翼后旗" />
+      <subitem value="1608" text="开鲁县" />
+      <subitem value="1611" text="库伦旗" />
+      <subitem value="1612" text="奈曼旗" />
+      <subitem value="1614" text="扎鲁特旗" />
+    </subitem>
+    <subitem value="1615" text="乌海">
+      <subitem value="1616" text="乌海市" />
+    </subitem>
+    <subitem value="1617" text="乌兰察布市">
+      <subitem value="1622" text="化德县" />
+      <subitem value="4091" text="乌兰察布市" />
+      <subitem value="1621" text="丰镇市" />
+      <subitem value="1628" text="卓资县" />
+      <subitem value="1625" text="商都县" />
+      <subitem value="1627" text="兴和县" />
+      <subitem value="1624" text="凉城县" />
+      <subitem value="1619" text="察哈尔右翼前旗" />
+      <subitem value="1620" text="察哈尔右翼中旗" />
+      <subitem value="1618" text="察哈尔右翼后旗" />
+      <subitem value="1626" text="四子王旗" />
+    </subitem>
+    <subitem value="1629" text="锡林郭勒盟">
+      <subitem value="1633" text="二连浩特市" />
+      <subitem value="1638" text="锡林浩特市" />
+      <subitem value="1630" text="阿巴嘎旗" />
+      <subitem value="1635" text="苏尼特左旗" />
+      <subitem value="1634" text="苏尼特右旗" />
+      <subitem value="1631" text="东乌珠穆沁旗" />
+      <subitem value="1637" text="西乌珠穆沁旗" />
+      <subitem value="1636" text="太仆寺旗" />
+      <subitem value="1639" text="镶黄旗" />
+      <subitem value="1641" text="正镶白旗" />
+      <subitem value="1640" text="正蓝旗" />
+      <subitem value="1632" text="多伦县" />
+    </subitem>
+    <subitem value="1642" text="兴安盟">
+      <subitem value="1647" text="乌兰浩特市" />
+      <subitem value="1643" text="阿尔山市" />
+      <subitem value="1644" text="科尔沁右翼前旗" />
+      <subitem value="1645" text="科尔沁右翼中旗" />
+      <subitem value="1648" text="扎赉特旗" />
+      <subitem value="1646" text="突泉县" />
+    </subitem>
+  </item>
+  <item value="1649" text="宁夏">
+    <subitem value="1669" text="银川">
+      <subitem value="1672" text="银川市" />
+      <subitem value="1671" text="灵武市" />
+      <subitem value="1673" text="永宁县" />
+      <subitem value="1670" text="贺兰县" />
+    </subitem>
+    <subitem value="1650" text="固原">
+      <subitem value="1651" text="固原市" />
+      <subitem value="1652" text="海原县" />
+      <subitem value="1655" text="西吉县" />
+      <subitem value="1653" text="隆德县" />
+      <subitem value="1656" text="泾源县" />
+      <subitem value="1654" text="彭阳县" />
+    </subitem>
+    <subitem value="1657" text="石嘴山">
+      <subitem value="1658" text="惠农县" />
+      <subitem value="1660" text="石嘴山市" />
+      <subitem value="1661" text="陶乐县" />
+      <subitem value="1659" text="平罗县" />
+    </subitem>
+    <subitem value="1662" text="吴忠">
+      <subitem value="1665" text="吴忠市" />
+      <subitem value="1668" text="中卫县" />
+      <subitem value="1663" text="青铜峡市" />
+      <subitem value="1667" text="中宁县" />
+      <subitem value="1666" text="盐池县" />
+      <subitem value="1664" text="同心县" />
+    </subitem>
+    <subitem value="4075" text="中卫">
+      <subitem value="4076" text="中卫市" />
+      <subitem value="4078" text="海原县" />
+      <subitem value="4077" text="中宁县" />
+    </subitem>
+  </item>
+  <item value="1674" text="青海">
+    <subitem value="1711" text="西宁">
+      <subitem value="1713" text="西宁市" />
+      <subitem value="1715" text="湟中县" />
+      <subitem value="1714" text="湟源县" />
+      <subitem value="1712" text="大通" />
+    </subitem>
+    <subitem value="1675" text="果洛">
+      <subitem value="1681" text="玛沁县" />
+      <subitem value="1676" text="班玛县" />
+      <subitem value="1678" text="甘德县" />
+      <subitem value="1677" text="达日县" />
+      <subitem value="1679" text="久治县" />
+      <subitem value="1680" text="玛多县" />
+    </subitem>
+    <subitem value="1682" text="海北">
+      <subitem value="1684" text="海晏县" />
+      <subitem value="1686" text="祁连县" />
+      <subitem value="1683" text="刚察县" />
+      <subitem value="1685" text="门源" />
+    </subitem>
+    <subitem value="1687" text="海东">
+      <subitem value="1692" text="平安县" />
+      <subitem value="1690" text="乐都县" />
+      <subitem value="1691" text="民和" />
+      <subitem value="1688" text="互助" />
+      <subitem value="1689" text="化隆" />
+      <subitem value="1693" text="循化" />
+    </subitem>
+    <subitem value="1694" text="海南">
+      <subitem value="1695" text="共和县" />
+      <subitem value="1698" text="同德县" />
+      <subitem value="1696" text="贵德县" />
+      <subitem value="1699" text="兴海县" />
+      <subitem value="1697" text="贵南县" />
+    </subitem>
+    <subitem value="1700" text="海西">
+      <subitem value="1701" text="德令哈市" />
+      <subitem value="1703" text="格尔木市" />
+      <subitem value="1705" text="乌兰县" />
+      <subitem value="1702" text="都兰县" />
+      <subitem value="1704" text="天峻县" />
+    </subitem>
+    <subitem value="1706" text="黄南">
+      <subitem value="1709" text="同仁县" />
+      <subitem value="1708" text="尖扎县" />
+      <subitem value="1710" text="泽库县" />
+      <subitem value="1707" text="河南蒙古族自治县" />
+    </subitem>
+    <subitem value="1716" text="玉树">
+      <subitem value="1720" text="玉树县" />
+      <subitem value="1721" text="杂多县" />
+      <subitem value="1717" text="称多县" />
+      <subitem value="1722" text="治多县" />
+      <subitem value="1718" text="囊谦县" />
+      <subitem value="1719" text="曲麻莱县" />
+    </subitem>
+  </item>
+  <item value="1723" text="山东">
+    <subitem value="1759" text="济南">
+      <subitem value="1760" text="济南市" />
+      <subitem value="1764" text="章丘市" />
+      <subitem value="1762" text="平阴县" />
+      <subitem value="1761" text="济阳县" />
+      <subitem value="1763" text="商河县" />
+    </subitem>
+    <subitem value="1799" text="青岛">
+      <subitem value="1805" text="青岛市" />
+      <subitem value="1802" text="胶州市" />
+      <subitem value="1800" text="即墨市" />
+      <subitem value="1804" text="平度市" />
+      <subitem value="1801" text="胶南市" />
+      <subitem value="1803" text="莱西市" />
+    </subitem>
+    <subitem value="1724" text="滨州">
+      <subitem value="1725" text="滨州市" />
+      <subitem value="1727" text="惠民县" />
+      <subitem value="1729" text="阳信县" />
+      <subitem value="1728" text="无棣县" />
+      <subitem value="1730" text="沾化县" />
+      <subitem value="1726" text="博兴县" />
+      <subitem value="1731" text="邹平县" />
+    </subitem>
+    <subitem value="1732" text="德州">
+      <subitem value="1733" text="德州市" />
+      <subitem value="1736" text="陵县" />
+      <subitem value="1734" text="乐陵市" />
+      <subitem value="1743" text="禹城市" />
+      <subitem value="1737" text="宁津县" />
+      <subitem value="1740" text="庆云县" />
+      <subitem value="1735" text="临邑县" />
+      <subitem value="1739" text="齐河县" />
+      <subitem value="1738" text="平原县" />
+      <subitem value="1742" text="夏津县" />
+      <subitem value="1741" text="武城县" />
+    </subitem>
+    <subitem value="1744" text="东营">
+      <subitem value="1745" text="东营市" />
+      <subitem value="1747" text="垦利县" />
+      <subitem value="1748" text="利津县" />
+      <subitem value="1746" text="广饶县" />
+    </subitem>
+    <subitem value="1749" text="菏泽">
+      <subitem value="1755" text="菏泽市" />
+      <subitem value="1750" text="曹县" />
+      <subitem value="1752" text="单县" />
+      <subitem value="1751" text="成武县" />
+      <subitem value="1756" text="巨野县" />
+      <subitem value="1757" text="郓城县" />
+      <subitem value="1758" text="鄄城县" />
+      <subitem value="1753" text="定陶县" />
+      <subitem value="1754" text="东明县" />
+    </subitem>
+    <subitem value="1765" text="济宁">
+      <subitem value="1766" text="济宁市" />
+      <subitem value="1770" text="曲阜市" />
+      <subitem value="1774" text="兖州市" />
+      <subitem value="1773" text="邹城市" />
+      <subitem value="1771" text="微山县" />
+      <subitem value="1772" text="鱼台县" />
+      <subitem value="1768" text="金乡县" />
+      <subitem value="1767" text="嘉祥县" />
+      <subitem value="1775" text="汶上县" />
+      <subitem value="1776" text="泗水县" />
+      <subitem value="1769" text="梁山县" />
+    </subitem>
+    <subitem value="1777" text="莱芜">
+      <subitem value="1778" text="莱芜市" />
+    </subitem>
+    <subitem value="1779" text="聊城">
+      <subitem value="1783" text="聊城市" />
+      <subitem value="1784" text="临清市" />
+      <subitem value="1785" text="阳谷县" />
+      <subitem value="1787" text="莘县" />
+      <subitem value="1786" text="茌平县" />
+      <subitem value="1780" text="东阿县" />
+      <subitem value="1782" text="冠县" />
+      <subitem value="1781" text="高唐县" />
+    </subitem>
+    <subitem value="1788" text="临沂">
+      <subitem value="1791" text="临沂市" />
+      <subitem value="1795" text="沂南县" />
+      <subitem value="1797" text="郯城县" />
+      <subitem value="1796" text="沂水县" />
+      <subitem value="1789" text="苍山县" />
+      <subitem value="1790" text="费县" />
+      <subitem value="1794" text="平邑县" />
+      <subitem value="1798" text="莒南县" />
+      <subitem value="1793" text="蒙阴县" />
+      <subitem value="1792" text="临沭县" />
+    </subitem>
+    <subitem value="1806" text="日照">
+      <subitem value="1807" text="日照市" />
+      <subitem value="1808" text="五莲县" />
+      <subitem value="1809" text="莒县" />
+    </subitem>
+    <subitem value="1810" text="泰安">
+      <subitem value="1814" text="泰安市" />
+      <subitem value="1815" text="新泰市" />
+      <subitem value="1812" text="肥城市" />
+      <subitem value="1813" text="宁阳县" />
+      <subitem value="1811" text="东平县" />
+    </subitem>
+    <subitem value="1816" text="威海">
+      <subitem value="1817" text="荣成市" />
+      <subitem value="1818" text="乳山市" />
+      <subitem value="1819" text="威海市" />
+      <subitem value="1820" text="文登市" />
+    </subitem>
+    <subitem value="1821" text="潍坊">
+      <subitem value="1829" text="潍坊市" />
+      <subitem value="1827" text="青州市" />
+      <subitem value="1830" text="诸城市" />
+      <subitem value="1828" text="寿光市" />
+      <subitem value="1822" text="安丘市" />
+      <subitem value="1825" text="高密市" />
+      <subitem value="1824" text="昌邑市" />
+      <subitem value="1826" text="临朐县" />
+      <subitem value="1823" text="昌乐县" />
+    </subitem>
+    <subitem value="1831" text="烟台">
+      <subitem value="1839" text="烟台市" />
+      <subitem value="1836" text="龙口市" />
+      <subitem value="1834" text="莱阳市" />
+      <subitem value="1835" text="莱州市" />
+      <subitem value="1837" text="蓬莱市" />
+      <subitem value="1840" text="招远市" />
+      <subitem value="1838" text="栖霞市" />
+      <subitem value="1833" text="海阳市" />
+      <subitem value="1832" text="长岛县" />
+    </subitem>
+    <subitem value="1841" text="枣庄">
+      <subitem value="1842" text="枣庄市" />
+      <subitem value="1843" text="滕州市" />
+    </subitem>
+    <subitem value="1844" text="淄博">
+      <subitem value="1848" text="淄博市" />
+      <subitem value="1846" text="桓台县" />
+      <subitem value="1845" text="高青县" />
+      <subitem value="1847" text="沂源县" />
+    </subitem>
+  </item>
+  <item value="1849" text="山西">
+    <subitem value="1929" text="太原">
+      <subitem value="1933" text="太原市" />
+      <subitem value="1932" text="清徐县" />
+      <subitem value="1934" text="阳曲县" />
+      <subitem value="1931" text="娄烦县" />
+      <subitem value="1930" text="古交市" />
+    </subitem>
+    <subitem value="1850" text="长治">
+      <subitem value="1851" text="长治市" />
+      <subitem value="1858" text="沁县" />
+      <subitem value="1856" text="潞城市" />
+      <subitem value="1852" text="长治县" />
+      <subitem value="1862" text="襄垣县" />
+      <subitem value="1860" text="屯留县" />
+      <subitem value="1857" text="平顺县" />
+      <subitem value="1855" text="黎城县" />
+      <subitem value="1854" text="壶关县" />
+      <subitem value="1853" text="长子县" />
+      <subitem value="1861" text="武乡县" />
+      <subitem value="1859" text="沁源县" />
+    </subitem>
+    <subitem value="1863" text="大同">
+      <subitem value="1864" text="大同市" />
+      <subitem value="1870" text="阳高县" />
+      <subitem value="1869" text="天镇县" />
+      <subitem value="1866" text="广灵县" />
+      <subitem value="1868" text="灵丘县" />
+      <subitem value="1867" text="浑源县" />
+      <subitem value="1871" text="左云县" />
+      <subitem value="1865" text="大同县" />
+    </subitem>
+    <subitem value="1872" text="晋城">
+      <subitem value="1874" text="晋城市" />
+      <subitem value="1873" text="高平市" />
+      <subitem value="1876" text="沁水县" />
+      <subitem value="1877" text="阳城县" />
+      <subitem value="1875" text="陵川县" />
+      <subitem value="1878" text="泽州县" />
+    </subitem>
+    <subitem value="1879" text="晋中">
+      <subitem value="1882" text="晋中市" />
+      <subitem value="1881" text="介休市" />
+      <subitem value="1889" text="榆社县" />
+      <subitem value="1890" text="左权县" />
+      <subitem value="1880" text="和顺县" />
+      <subitem value="1888" text="昔阳县" />
+      <subitem value="1886" text="寿阳县" />
+      <subitem value="1887" text="太谷县" />
+      <subitem value="1885" text="祁县" />
+      <subitem value="1884" text="平遥县" />
+      <subitem value="1883" text="灵石县" />
+    </subitem>
+    <subitem value="1891" text="临汾">
+      <subitem value="1901" text="临汾市" />
+      <subitem value="1898" text="侯马市" />
+      <subitem value="1899" text="霍州市" />
+      <subitem value="1903" text="曲沃县" />
+      <subitem value="1906" text="翼城县" />
+      <subitem value="1904" text="襄汾县" />
+      <subitem value="1897" text="洪洞县" />
+      <subitem value="1900" text="吉县" />
+      <subitem value="1892" text="安泽县" />
+      <subitem value="1895" text="浮山县" />
+      <subitem value="1896" text="古县" />
+      <subitem value="1905" text="乡宁县" />
+      <subitem value="1893" text="大宁县" />
+      <subitem value="1908" text="隰县" />
+      <subitem value="1907" text="永和县" />
+      <subitem value="1902" text="蒲县" />
+      <subitem value="1894" text="汾西县" />
+    </subitem>
+    <subitem value="1909" text="吕梁">
+      <subitem value="1914" text="离石市" />
+      <subitem value="4025" text="吕梁市" />
+      <subitem value="1919" text="孝义市" />
+      <subitem value="1911" text="汾阳市" />
+      <subitem value="1918" text="文水县" />
+      <subitem value="1912" text="交城县" />
+      <subitem value="1920" text="兴县" />
+      <subitem value="1915" text="临县" />
+      <subitem value="1916" text="柳林县" />
+      <subitem value="1917" text="石楼县" />
+      <subitem value="1922" text="岚县" />
+      <subitem value="1910" text="方山县" />
+      <subitem value="1921" text="中阳县" />
+      <subitem value="1913" text="交口县" />
+    </subitem>
+    <subitem value="1923" text="朔州">
+      <subitem value="1926" text="朔州市" />
+      <subitem value="1925" text="山阴县" />
+      <subitem value="1927" text="应县" />
+      <subitem value="1928" text="右玉县" />
+      <subitem value="1924" text="怀仁县" />
+    </subitem>
+    <subitem value="1935" text="忻州">
+      <subitem value="1947" text="忻州市" />
+      <subitem value="1948" text="原平市" />
+      <subitem value="1938" text="定襄县" />
+      <subitem value="1945" text="五台县" />
+      <subitem value="1937" text="代县" />
+      <subitem value="1939" text="繁峙县" />
+      <subitem value="1942" text="宁武县" />
+      <subitem value="1941" text="静乐县" />
+      <subitem value="1944" text="神池县" />
+      <subitem value="1946" text="五寨县" />
+      <subitem value="1949" text="岢岚县" />
+      <subitem value="1940" text="河曲县" />
+      <subitem value="1936" text="保德县" />
+      <subitem value="1943" text="偏关县" />
+    </subitem>
+    <subitem value="1950" text="阳泉">
+      <subitem value="1952" text="阳泉市" />
+      <subitem value="1951" text="平定县" />
+      <subitem value="1953" text="盂县" />
+    </subitem>
+    <subitem value="1954" text="运城">
+      <subitem value="1964" text="运城市" />
+      <subitem value="1962" text="永济市" />
+      <subitem value="1955" text="河津市" />
+      <subitem value="1956" text="临猗县" />
+      <subitem value="1958" text="万荣县" />
+      <subitem value="1959" text="闻喜县" />
+      <subitem value="1967" text="稷山县" />
+      <subitem value="1961" text="新绛县" />
+      <subitem value="1966" text="绛县" />
+      <subitem value="1963" text="垣曲县" />
+      <subitem value="1960" text="夏县" />
+      <subitem value="1957" text="平陆县" />
+      <subitem value="1965" text="芮城县" />
+    </subitem>
+  </item>
+  <item value="1968" text="陕西">
+    <subitem value="2027" text="西安">
+      <subitem value="2031" text="西安市" />
+      <subitem value="2030" text="蓝田县" />
+      <subitem value="2032" text="周至县" />
+      <subitem value="2029" text="户县" />
+      <subitem value="2028" text="高陵县" />
+    </subitem>
+    <subitem value="1969" text="安康">
+      <subitem value="1970" text="安康市" />
+      <subitem value="1972" text="汉阴县" />
+      <subitem value="1975" text="石泉县" />
+      <subitem value="1973" text="宁陕县" />
+      <subitem value="1978" text="紫阳县" />
+      <subitem value="1979" text="岚皋县" />
+      <subitem value="1974" text="平利县" />
+      <subitem value="1977" text="镇坪县" />
+      <subitem value="1976" text="旬阳县" />
+      <subitem value="1971" text="白河县" />
+    </subitem>
+    <subitem value="1980" text="宝鸡">
+      <subitem value="1981" text="宝鸡市" />
+      <subitem value="1984" text="凤翔县" />
+      <subitem value="1990" text="岐山县" />
+      <subitem value="1985" text="扶风县" />
+      <subitem value="1987" text="眉县" />
+      <subitem value="1986" text="陇县" />
+      <subitem value="1988" text="千阳县" />
+      <subitem value="1991" text="麟游县" />
+      <subitem value="1983" text="凤县" />
+      <subitem value="1989" text="太白县" />
+    </subitem>
+    <subitem value="1992" text="汉中">
+      <subitem value="1995" text="汉中市" />
+      <subitem value="1999" text="南郑县" />
+      <subitem value="1993" text="城固县" />
+      <subitem value="2002" text="洋县" />
+      <subitem value="2001" text="西乡县" />
+      <subitem value="1998" text="勉县" />
+      <subitem value="2000" text="宁强县" />
+      <subitem value="1997" text="略阳县" />
+      <subitem value="2003" text="镇巴县" />
+      <subitem value="1996" text="留坝县" />
+      <subitem value="1994" text="佛坪县" />
+    </subitem>
+    <subitem value="2004" text="商洛">
+      <subitem value="2008" text="商洛市" />
+      <subitem value="2006" text="洛南县" />
+      <subitem value="2005" text="丹凤县" />
+      <subitem value="2009" text="商南县" />
+      <subitem value="2007" text="山阳县" />
+      <subitem value="2010" text="镇安县" />
+      <subitem value="2011" text="柞水县" />
+    </subitem>
+    <subitem value="2012" text="铜川">
+      <subitem value="2013" text="铜川市" />
+      <subitem value="2014" text="宜君县" />
+    </subitem>
+    <subitem value="2015" text="渭南">
+      <subitem value="2025" text="渭南市" />
+      <subitem value="2020" text="韩城市" />
+      <subitem value="2023" text="华阴市" />
+      <subitem value="2022" text="华县" />
+      <subitem value="2026" text="潼关县" />
+      <subitem value="2018" text="大荔县" />
+      <subitem value="2021" text="合阳县" />
+      <subitem value="2017" text="澄城县" />
+      <subitem value="2024" text="蒲城县" />
+      <subitem value="2016" text="白水县" />
+      <subitem value="2019" text="富平县" />
+    </subitem>
+    <subitem value="2033" text="咸阳">
+      <subitem value="2041" text="咸阳市" />
+      <subitem value="2042" text="兴平市" />
+      <subitem value="2039" text="三原县" />
+      <subitem value="2045" text="泾阳县" />
+      <subitem value="2038" text="乾县" />
+      <subitem value="2037" text="礼泉县" />
+      <subitem value="2044" text="永寿县" />
+      <subitem value="2034" text="彬县" />
+      <subitem value="2035" text="长武县" />
+      <subitem value="2043" text="旬邑县" />
+      <subitem value="2036" text="淳化县" />
+      <subitem value="2040" text="武功县" />
+    </subitem>
+    <subitem value="2046" text="延安">
+      <subitem value="2053" text="吴起县" />
+      <subitem value="2054" text="延安市" />
+      <subitem value="2055" text="延长县" />
+      <subitem value="2056" text="延川县" />
+      <subitem value="2059" text="子长县" />
+      <subitem value="2047" text="安塞县" />
+      <subitem value="2058" text="志丹县" />
+      <subitem value="2049" text="甘泉县" />
+      <subitem value="2048" text="富县" />
+      <subitem value="2052" text="洛川县" />
+      <subitem value="2057" text="宜川县" />
+      <subitem value="2051" text="黄龙县" />
+      <subitem value="2050" text="黄陵县" />
+    </subitem>
+    <subitem value="2060" text="榆林">
+      <subitem value="2071" text="榆林市" />
+      <subitem value="2068" text="神木县" />
+      <subitem value="2062" text="府谷县" />
+      <subitem value="2063" text="横山县" />
+      <subitem value="2065" text="靖边县" />
+      <subitem value="2061" text="定边县" />
+      <subitem value="2069" text="绥德县" />
+      <subitem value="2066" text="米脂县" />
+      <subitem value="2064" text="佳县" />
+      <subitem value="2070" text="吴堡县" />
+      <subitem value="2067" text="清涧县" />
+      <subitem value="2072" text="子洲县" />
+    </subitem>
+  </item>
+  <item value="2073" text="上海">
+    <subitem value="2074" text="上海">
+      <subitem value="2076" text="上海市" />
+    </subitem>
+  </item>
+  <item value="2077" text="四川">
+    <subitem value="2097" text="成都">
+      <subitem value="2098" text="成都市" />
+      <subitem value="2101" text="都江堰市" />
+      <subitem value="2103" text="彭州市" />
+      <subitem value="2107" text="邛崃市" />
+      <subitem value="2099" text="崇州市" />
+      <subitem value="2102" text="金堂县" />
+      <subitem value="2105" text="双流县" />
+      <subitem value="2108" text="郫县" />
+      <subitem value="2100" text="大邑县" />
+      <subitem value="2104" text="蒲江县" />
+      <subitem value="2106" text="新津县" />
+    </subitem>
+    <subitem value="2189" text="绵阳">
+      <subitem value="2193" text="绵阳市" />
+      <subitem value="2192" text="江油市" />
+      <subitem value="2196" text="盐亭县" />
+      <subitem value="2195" text="三台县" />
+      <subitem value="2194" text="平武县" />
+      <subitem value="2190" text="安县" />
+      <subitem value="2197" text="梓潼县" />
+      <subitem value="2191" text="北川县" />
+    </subitem>
+    <subitem value="2078" text="阿坝">
+      <subitem value="2085" text="马尔康县" />
+      <subitem value="2091" text="汶川县" />
+      <subitem value="2084" text="理县" />
+      <subitem value="2086" text="茂县" />
+      <subitem value="2089" text="松潘县" />
+      <subitem value="2083" text="九寨沟县" />
+      <subitem value="2082" text="金川县" />
+      <subitem value="2090" text="小金县" />
+      <subitem value="2080" text="黑水县" />
+      <subitem value="2087" text="壤塘县" />
+      <subitem value="2079" text="阿坝县" />
+      <subitem value="2088" text="若尔盖县" />
+      <subitem value="2081" text="红原县" />
+    </subitem>
+    <subitem value="2092" text="巴中">
+      <subitem value="2093" text="巴中市" />
+      <subitem value="2096" text="通江县" />
+      <subitem value="2094" text="南江县" />
+      <subitem value="2095" text="平昌县" />
+    </subitem>
+    <subitem value="2109" text="达州">
+      <subitem value="2111" text="达州市" />
+      <subitem value="2115" text="万源市" />
+      <subitem value="2110" text="达县" />
+      <subitem value="2116" text="宣汉县" />
+      <subitem value="2113" text="开江县" />
+      <subitem value="2112" text="大竹县" />
+      <subitem value="2114" text="渠县" />
+    </subitem>
+    <subitem value="2117" text="德阳">
+      <subitem value="2118" text="德阳市" />
+      <subitem value="2119" text="广汉市" />
+      <subitem value="2122" text="什邡市" />
+      <subitem value="2121" text="绵竹市" />
+      <subitem value="2120" text="罗江县" />
+      <subitem value="2123" text="中江县" />
+    </subitem>
+    <subitem value="2124" text="甘孜">
+      <subitem value="2134" text="康定县" />
+      <subitem value="2127" text="丹巴县" />
+      <subitem value="2142" text="泸定县" />
+      <subitem value="2136" text="炉霍县" />
+      <subitem value="2133" text="九龙县" />
+      <subitem value="2132" text="甘孜县" />
+      <subitem value="2141" text="雅江县" />
+      <subitem value="2140" text="新龙县" />
+      <subitem value="2129" text="道孚县" />
+      <subitem value="2126" text="白玉县" />
+      <subitem value="2135" text="理塘县" />
+      <subitem value="2130" text="德格县" />
+      <subitem value="2139" text="乡城县" />
+      <subitem value="2138" text="石渠县" />
+      <subitem value="2128" text="稻城县" />
+      <subitem value="2137" text="色达县" />
+      <subitem value="2125" text="巴塘县" />
+      <subitem value="2131" text="得荣县" />
+    </subitem>
+    <subitem value="2143" text="广安">
+      <subitem value="2144" text="广安市" />
+      <subitem value="2145" text="华蓥市" />
+      <subitem value="2148" text="岳池县" />
+      <subitem value="2147" text="武胜县" />
+      <subitem value="2146" text="邻水县" />
+    </subitem>
+    <subitem value="2149" text="广元">
+      <subitem value="2151" text="广元市" />
+      <subitem value="2154" text="旺苍县" />
+      <subitem value="2153" text="青川县" />
+      <subitem value="2152" text="剑阁县" />
+      <subitem value="2150" text="苍溪县" />
+    </subitem>
+    <subitem value="2155" text="乐山">
+      <subitem value="2157" text="峨眉山市" />
+      <subitem value="2160" text="乐山市" />
+      <subitem value="2163" text="犍为县" />
+      <subitem value="2159" text="井研县" />
+      <subitem value="2158" text="夹江县" />
+      <subitem value="2162" text="沐川县" />
+      <subitem value="2156" text="峨边" />
+      <subitem value="2161" text="马边" />
+    </subitem>
+    <subitem value="2164" text="凉山">
+      <subitem value="2177" text="西昌市" />
+      <subitem value="2179" text="盐源县" />
+      <subitem value="2166" text="德昌县" />
+      <subitem value="2169" text="会理县" />
+      <subitem value="2168" text="会东县" />
+      <subitem value="2175" text="宁南县" />
+      <subitem value="2176" text="普格县" />
+      <subitem value="2165" text="布拖县" />
+      <subitem value="2170" text="金阳县" />
+      <subitem value="2181" text="昭觉县" />
+      <subitem value="2178" text="喜德县" />
+      <subitem value="2173" text="冕宁县" />
+      <subitem value="2180" text="越西县" />
+      <subitem value="2167" text="甘洛县" />
+      <subitem value="2172" text="美姑县" />
+      <subitem value="2171" text="雷波县" />
+      <subitem value="2174" text="木里" />
+    </subitem>
+    <subitem value="2182" text="眉山">
+      <subitem value="2185" text="眉山市" />
+      <subitem value="2188" text="仁寿县" />
+      <subitem value="2186" text="彭山县" />
+      <subitem value="2184" text="洪雅县" />
+      <subitem value="2183" text="丹棱县" />
+      <subitem value="2187" text="青神县" />
+    </subitem>
+    <subitem value="2198" text="南充">
+      <subitem value="2205" text="阆中市" />
+      <subitem value="2199" text="南部县" />
+      <subitem value="2204" text="营山县" />
+      <subitem value="2201" text="蓬安县" />
+      <subitem value="2203" text="仪陇县" />
+      <subitem value="2200" text="南充市" />
+      <subitem value="2202" text="西充县" />
+    </subitem>
+    <subitem value="2206" text="内江">
+      <subitem value="2208" text="内江市" />
+      <subitem value="2209" text="威远县" />
+      <subitem value="2210" text="资中县" />
+      <subitem value="2207" text="隆昌县" />
+    </subitem>
+    <subitem value="2211" text="攀枝花">
+      <subitem value="2213" text="攀枝花市" />
+      <subitem value="2212" text="米易县" />
+      <subitem value="2214" text="盐边县" />
+    </subitem>
+    <subitem value="2215" text="遂宁">
+      <subitem value="2219" text="遂宁市" />
+      <subitem value="2217" text="蓬溪县" />
+      <subitem value="2218" text="射洪县" />
+      <subitem value="2216" text="大英县" />
+    </subitem>
+    <subitem value="2220" text="雅安">
+      <subitem value="2227" text="雅安市" />
+      <subitem value="2224" text="名山县" />
+      <subitem value="2228" text="荥经县" />
+      <subitem value="2222" text="汉源县" />
+      <subitem value="2225" text="石棉县" />
+      <subitem value="2226" text="天全县" />
+      <subitem value="2223" text="芦山县" />
+      <subitem value="2221" text="宝兴县" />
+    </subitem>
+    <subitem value="2229" text="宜宾">
+      <subitem value="2236" text="宜宾市" />
+      <subitem value="2237" text="宜宾县" />
+      <subitem value="2233" text="南溪县" />
+      <subitem value="2232" text="江安县" />
+      <subitem value="2230" text="长宁县" />
+      <subitem value="2231" text="高县" />
+      <subitem value="2238" text="珙县" />
+      <subitem value="2239" text="筠连县" />
+      <subitem value="2235" text="兴文县" />
+      <subitem value="2234" text="屏山县" />
+    </subitem>
+    <subitem value="2240" text="资阳">
+      <subitem value="2244" text="资阳市" />
+      <subitem value="2242" text="简阳市" />
+      <subitem value="2241" text="安岳县" />
+      <subitem value="2243" text="乐至县" />
+    </subitem>
+    <subitem value="2245" text="自贡">
+      <subitem value="2248" text="自贡市" />
+      <subitem value="2247" text="荣县" />
+      <subitem value="2246" text="富顺县" />
+    </subitem>
+    <subitem value="2249" text="泸州">
+      <subitem value="2254" text="泸州市" />
+      <subitem value="2253" text="泸县" />
+      <subitem value="2251" text="合江县" />
+      <subitem value="2252" text="叙永县" />
+      <subitem value="2250" text="古蔺县" />
+    </subitem>
+  </item>
+  <item value="2255" text="天津">
+    <subitem value="2256" text="天津">
+      <subitem value="2260" text="天津市" />
+      <subitem value="2259" text="宁河县" />
+      <subitem value="2258" text="静海县" />
+      <subitem value="2257" text="蓟县" />
+    </subitem>
+  </item>
+  <item value="2261" text="西藏">
+    <subitem value="2282" text="拉萨">
+      <subitem value="2286" text="拉萨市" />
+      <subitem value="2287" text="林周县" />
+      <subitem value="2284" text="当雄县" />
+      <subitem value="2289" text="尼木县" />
+      <subitem value="2290" text="曲水县" />
+      <subitem value="2285" text="堆龙德庆县" />
+      <subitem value="2283" text="达孜县" />
+      <subitem value="2288" text="墨竹工卡县" />
+    </subitem>
+    <subitem value="2262" text="阿里">
+      <subitem value="2264" text="噶尔县" />
+      <subitem value="2267" text="普兰县" />
+      <subitem value="2269" text="札达县" />
+      <subitem value="2268" text="日土县" />
+      <subitem value="2266" text="革吉县" />
+      <subitem value="2265" text="改则县" />
+      <subitem value="2263" text="措勤县" />
+    </subitem>
+    <subitem value="2270" text="昌都">
+      <subitem value="2274" text="昌都县" />
+      <subitem value="2277" text="江达县" />
+      <subitem value="2276" text="贡觉县" />
+      <subitem value="2278" text="类乌齐县" />
+      <subitem value="2275" text="丁青县" />
+      <subitem value="2273" text="察雅县" />
+      <subitem value="2271" text="八宿县" />
+      <subitem value="2281" text="左贡县" />
+      <subitem value="2280" text="芒康县" />
+      <subitem value="2279" text="洛隆县" />
+      <subitem value="2272" text="边坝县" />
+    </subitem>
+    <subitem value="2291" text="林芝">
+      <subitem value="2296" text="林芝县" />
+      <subitem value="2294" text="工布江达县" />
+      <subitem value="2297" text="米林县" />
+      <subitem value="2298" text="墨脱县" />
+      <subitem value="2292" text="波密县" />
+      <subitem value="2293" text="察隅县" />
+      <subitem value="2295" text="朗县" />
+    </subitem>
+    <subitem value="2299" text="那曲">
+      <subitem value="2305" text="那曲县" />
+      <subitem value="2304" text="嘉黎县" />
+      <subitem value="2303" text="比如县" />
+      <subitem value="2307" text="聂荣县" />
+      <subitem value="2300" text="安多县" />
+      <subitem value="2308" text="申扎县" />
+      <subitem value="2309" text="索县" />
+      <subitem value="2302" text="班戈县" />
+      <subitem value="2301" text="巴青县" />
+      <subitem value="2306" text="尼玛县" />
+    </subitem>
+    <subitem value="2310" text="日喀则">
+      <subitem value="2323" text="日喀则市" />
+      <subitem value="2320" text="南木林县" />
+      <subitem value="2317" text="江孜县" />
+      <subitem value="2314" text="定日县" />
+      <subitem value="2325" text="萨迦县" />
+      <subitem value="2319" text="拉孜县" />
+      <subitem value="2311" text="昂仁县" />
+      <subitem value="2326" text="谢通门县" />
+      <subitem value="2312" text="白朗县" />
+      <subitem value="2322" text="仁布县" />
+      <subitem value="2318" text="康马县" />
+      <subitem value="2313" text="定结县" />
+      <subitem value="2328" text="仲巴县" />
+      <subitem value="2327" text="亚东县" />
+      <subitem value="2316" text="吉隆县" />
+      <subitem value="2321" text="聂拉木县" />
+      <subitem value="2324" text="萨嘎县" />
+      <subitem value="2315" text="岗巴县" />
+    </subitem>
+    <subitem value="2329" text="山南">
+      <subitem value="2337" text="乃东县" />
+      <subitem value="2341" text="扎囊县" />
+      <subitem value="2332" text="贡嘎县" />
+      <subitem value="2340" text="桑日县" />
+      <subitem value="2338" text="琼结县" />
+      <subitem value="2339" text="曲松县" />
+      <subitem value="2330" text="措美县" />
+      <subitem value="2336" text="洛扎县" />
+      <subitem value="2333" text="加查县" />
+      <subitem value="2335" text="隆子县" />
+      <subitem value="2331" text="错那县" />
+      <subitem value="2334" text="浪卡子县" />
+    </subitem>
+  </item>
+  <item value="2342" text="新疆">
+    <subitem value="2419" text="乌鲁木齐">
+      <subitem value="2421" text="乌鲁木齐市" />
+      <subitem value="2420" text="乌鲁木齐县" />
+    </subitem>
+    <subitem value="2343" text="阿克苏">
+      <subitem value="2344" text="阿克苏市" />
+      <subitem value="2350" text="温宿县" />
+      <subitem value="2348" text="库车县" />
+      <subitem value="2349" text="沙雅县" />
+      <subitem value="2352" text="新和县" />
+      <subitem value="2346" text="拜城县" />
+      <subitem value="2351" text="乌什县" />
+      <subitem value="2345" text="阿瓦提县" />
+      <subitem value="2347" text="柯坪县" />
+    </subitem>
+    <subitem value="2353" text="阿拉尔">
+      <subitem value="2354" text="阿拉尔市" />
+    </subitem>
+    <subitem value="2355" text="巴音郭楞">
+      <subitem value="2359" text="库尔勒市" />
+      <subitem value="2360" text="轮台县" />
+      <subitem value="2363" text="尉犁县" />
+      <subitem value="2362" text="若羌县" />
+      <subitem value="2361" text="且末县" />
+      <subitem value="2364" text="焉耆" />
+      <subitem value="2357" text="和静县" />
+      <subitem value="2358" text="和硕县" />
+      <subitem value="2356" text="博湖县" />
+    </subitem>
+    <subitem value="2365" text="博尔塔拉">
+      <subitem value="2366" text="博乐市" />
+      <subitem value="2367" text="精河县" />
+      <subitem value="2368" text="温泉县" />
+    </subitem>
+    <subitem value="2369" text="昌吉">
+      <subitem value="2372" text="呼图壁县" />
+      <subitem value="2375" text="米泉市" />
+      <subitem value="2370" text="昌吉市" />
+      <subitem value="2371" text="阜康市" />
+      <subitem value="2374" text="玛纳斯县" />
+      <subitem value="2377" text="奇台县" />
+      <subitem value="2373" text="吉木萨尔县" />
+      <subitem value="2376" text="木垒" />
+    </subitem>
+    <subitem value="2378" text="哈密">
+      <subitem value="2380" text="哈密市" />
+      <subitem value="2381" text="伊吾县" />
+      <subitem value="2379" text="巴里坤" />
+    </subitem>
+    <subitem value="2382" text="和田">
+      <subitem value="2384" text="和田市" />
+      <subitem value="2385" text="和田县" />
+      <subitem value="2388" text="墨玉县" />
+      <subitem value="2389" text="皮山县" />
+      <subitem value="2386" text="洛浦县" />
+      <subitem value="2383" text="策勒县" />
+      <subitem value="2390" text="于田县" />
+      <subitem value="2387" text="民丰县" />
+    </subitem>
+    <subitem value="2391" text="喀什">
+      <subitem value="2393" text="喀什市" />
+      <subitem value="2396" text="疏附县" />
+      <subitem value="2397" text="疏勒县" />
+      <subitem value="2400" text="英吉沙县" />
+      <subitem value="2402" text="泽普县" />
+      <subitem value="2395" text="莎车县" />
+      <subitem value="2399" text="叶城县" />
+      <subitem value="2394" text="麦盖提县" />
+      <subitem value="2401" text="岳普湖县" />
+      <subitem value="2403" text="伽师县" />
+      <subitem value="2392" text="巴楚县" />
+      <subitem value="2398" text="塔什库尔干" />
+    </subitem>
+    <subitem value="2404" text="克拉玛依">
+      <subitem value="2405" text="克拉玛依市" />
+    </subitem>
+    <subitem value="2406" text="克孜勒苏">
+      <subitem value="2409" text="阿图什市" />
+      <subitem value="2408" text="阿克陶县" />
+      <subitem value="2407" text="阿合奇县" />
+      <subitem value="2410" text="乌恰县" />
+    </subitem>
+    <subitem value="2411" text="石河子">
+      <subitem value="2412" text="石河子市" />
+    </subitem>
+    <subitem value="2413" text="图木舒克">
+      <subitem value="2414" text="图木舒克市" />
+    </subitem>
+    <subitem value="2415" text="吐鲁番">
+      <subitem value="2416" text="吐鲁番市" />
+      <subitem value="2418" text="鄯善县" />
+      <subitem value="2417" text="托克逊县" />
+    </subitem>
+    <subitem value="2422" text="五家渠">
+      <subitem value="2423" text="五家渠市" />
+    </subitem>
+    <subitem value="2424" text="伊犁">
+      <subitem value="2425" text="阿勒泰市" />
+      <subitem value="2440" text="塔城市" />
+      <subitem value="2445" text="伊宁市" />
+      <subitem value="2426" text="布尔津县" />
+      <subitem value="2436" text="奎屯市" />
+      <subitem value="2443" text="乌苏市" />
+      <subitem value="2428" text="额敏县" />
+      <subitem value="2430" text="富蕴县" />
+      <subitem value="2446" text="伊宁县" />
+      <subitem value="2429" text="福海县" />
+      <subitem value="2434" text="霍城县" />
+      <subitem value="2439" text="沙湾县" />
+      <subitem value="2431" text="巩留县" />
+      <subitem value="2432" text="哈巴河县" />
+      <subitem value="2442" text="托里县" />
+      <subitem value="2438" text="青河县" />
+      <subitem value="2444" text="新源县" />
+      <subitem value="2447" text="裕民县" />
+      <subitem value="2433" text="和布克赛尔" />
+      <subitem value="2435" text="吉木乃县" />
+      <subitem value="2448" text="昭苏县" />
+      <subitem value="2441" text="特克斯县" />
+      <subitem value="2437" text="尼勒克县" />
+      <subitem value="2427" text="察布查尔" />
+    </subitem>
+  </item>
+  <item value="2449" text="云南">
+    <subitem value="2504" text="昆明">
+      <subitem value="2509" text="昆明市" />
+      <subitem value="2505" text="安宁市" />
+      <subitem value="2506" text="呈贡县" />
+      <subitem value="2508" text="晋宁县" />
+      <subitem value="2507" text="富民县" />
+      <subitem value="2513" text="宜良县" />
+      <subitem value="2514" text="嵩明县" />
+      <subitem value="2511" text="石林县" />
+      <subitem value="2510" text="禄劝" />
+      <subitem value="2512" text="寻甸" />
+    </subitem>
+    <subitem value="2530" text="怒江">
+      <subitem value="2533" text="兰坪" />
+      <subitem value="2534" text="泸水县" />
+      <subitem value="2531" text="福贡县" />
+      <subitem value="2532" text="贡山" />
+    </subitem>
+    <subitem value="2545" text="普洱">
+      <subitem value="2552" text="宁洱" />
+      <subitem value="2553" text="普洱市" />
+      <subitem value="2551" text="墨江" />
+      <subitem value="2547" text="景东" />
+      <subitem value="2548" text="景谷" />
+      <subitem value="2555" text="镇沅" />
+      <subitem value="2546" text="江城" />
+      <subitem value="2550" text="孟连" />
+      <subitem value="2549" text="澜沧" />
+      <subitem value="2554" text="西盟" />
+    </subitem>
+    <subitem value="2515" text="丽江">
+      <subitem value="2517" text="丽江市" />
+      <subitem value="2518" text="宁蒗" />
+      <subitem value="2520" text="玉龙" />
+      <subitem value="2519" text="永胜县" />
+      <subitem value="2516" text="华坪县" />
+    </subitem>
+    <subitem value="2450" text="保山">
+      <subitem value="2451" text="保山市" />
+      <subitem value="2454" text="施甸县" />
+      <subitem value="2455" text="腾冲县" />
+      <subitem value="2453" text="龙陵县" />
+      <subitem value="2452" text="昌宁县" />
+    </subitem>
+    <subitem value="2456" text="楚雄">
+      <subitem value="2457" text="楚雄市" />
+      <subitem value="2462" text="双柏县" />
+      <subitem value="2460" text="牟定县" />
+      <subitem value="2461" text="南华县" />
+      <subitem value="2464" text="姚安县" />
+      <subitem value="2458" text="大姚县" />
+      <subitem value="2465" text="永仁县" />
+      <subitem value="2466" text="元谋县" />
+      <subitem value="2463" text="武定县" />
+      <subitem value="2459" text="禄丰县" />
+    </subitem>
+    <subitem value="2467" text="大理">
+      <subitem value="2469" text="大理市" />
+      <subitem value="2476" text="祥云县" />
+      <subitem value="2468" text="宾川县" />
+      <subitem value="2473" text="弥渡县" />
+      <subitem value="2478" text="永平县" />
+      <subitem value="2479" text="云龙县" />
+      <subitem value="2470" text="洱源县" />
+      <subitem value="2472" text="剑川县" />
+      <subitem value="2471" text="鹤庆县" />
+      <subitem value="2477" text="漾濞" />
+      <subitem value="2474" text="南涧" />
+      <subitem value="2475" text="巍山" />
+    </subitem>
+    <subitem value="2480" text="德宏">
+      <subitem value="2483" text="潞西市" />
+      <subitem value="2484" text="瑞丽市" />
+      <subitem value="2481" text="梁河县" />
+      <subitem value="2485" text="盈江县" />
+      <subitem value="2482" text="陇川县" />
+    </subitem>
+    <subitem value="2486" text="迪庆">
+      <subitem value="2489" text="香格里拉县" />
+      <subitem value="2487" text="德钦县" />
+      <subitem value="2488" text="维西" />
+    </subitem>
+    <subitem value="2490" text="红河">
+      <subitem value="2503" text="泸西县" />
+      <subitem value="2498" text="蒙自县" />
+      <subitem value="2491" text="个旧市" />
+      <subitem value="2496" text="开远市" />
+      <subitem value="2497" text="绿春县" />
+      <subitem value="2494" text="建水县" />
+      <subitem value="2501" text="石屏县" />
+      <subitem value="2499" text="弥勒县" />
+      <subitem value="2502" text="元阳县" />
+      <subitem value="2493" text="红河县" />
+      <subitem value="2495" text="金平" />
+      <subitem value="2492" text="河口" />
+      <subitem value="2500" text="屏边" />
+    </subitem>
+    <subitem value="2521" text="临沧">
+      <subitem value="2525" text="临沧市" />
+      <subitem value="2523" text="凤庆县" />
+      <subitem value="2528" text="云县" />
+      <subitem value="2527" text="永德县" />
+      <subitem value="2529" text="镇康县" />
+      <subitem value="2526" text="双江" />
+      <subitem value="2524" text="耿马" />
+      <subitem value="2522" text="沧源" />
+    </subitem>
+    <subitem value="2535" text="曲靖">
+      <subitem value="2541" text="曲靖市" />
+      <subitem value="2543" text="宣威市" />
+      <subitem value="2540" text="马龙县" />
+      <subitem value="2538" text="陆良县" />
+      <subitem value="2542" text="师宗县" />
+      <subitem value="2539" text="罗平县" />
+      <subitem value="2536" text="富源县" />
+      <subitem value="2537" text="会泽县" />
+      <subitem value="2544" text="沾益县" />
+    </subitem>
+    <subitem value="2556" text="文山">
+      <subitem value="2562" text="文山县" />
+      <subitem value="2564" text="砚山县" />
+      <subitem value="2563" text="西畴县" />
+      <subitem value="2559" text="麻栗坡县" />
+      <subitem value="2560" text="马关县" />
+      <subitem value="2561" text="丘北县" />
+      <subitem value="2558" text="广南县" />
+      <subitem value="2557" text="富宁县" />
+    </subitem>
+    <subitem value="2565" text="西双版纳">
+      <subitem value="2566" text="景洪市" />
+      <subitem value="2567" text="勐海县" />
+      <subitem value="2568" text="勐腊县" />
+    </subitem>
+    <subitem value="2569" text="玉溪">
+      <subitem value="2577" text="玉溪市" />
+      <subitem value="2573" text="江川县" />
+      <subitem value="2570" text="澄江县" />
+      <subitem value="2574" text="通海县" />
+      <subitem value="2572" text="华宁县" />
+      <subitem value="2576" text="易门县" />
+      <subitem value="2571" text="峨山" />
+      <subitem value="2575" text="新平" />
+      <subitem value="2578" text="元江" />
+    </subitem>
+    <subitem value="2579" text="昭通">
+      <subitem value="2589" text="昭通市" />
+      <subitem value="2581" text="鲁甸县" />
+      <subitem value="2582" text="巧家县" />
+      <subitem value="2586" text="盐津县" />
+      <subitem value="2580" text="大关县" />
+      <subitem value="2588" text="永善县" />
+      <subitem value="2584" text="绥江县" />
+      <subitem value="2590" text="镇雄县" />
+      <subitem value="2587" text="彝良县" />
+      <subitem value="2585" text="威信县" />
+      <subitem value="2583" text="水富县" />
+    </subitem>
+  </item>
+  <item value="2591" text="浙江">
+    <subitem value="2592" text="杭州">
+      <subitem value="2595" text="杭州市" />
+      <subitem value="2596" text="建德市" />
+      <subitem value="2594" text="富阳市" />
+      <subitem value="2597" text="临安市" />
+      <subitem value="2598" text="桐庐县" />
+      <subitem value="2593" text="淳安县" />
+    </subitem>
+    <subitem value="2599" text="湖州">
+      <subitem value="2603" text="湖州市" />
+      <subitem value="2602" text="德清县" />
+      <subitem value="2601" text="长兴县" />
+      <subitem value="2600" text="安吉县" />
+    </subitem>
+    <subitem value="2604" text="嘉兴">
+      <subitem value="2608" text="嘉兴市" />
+      <subitem value="2605" text="海宁市" />
+      <subitem value="2607" text="嘉善县" />
+      <subitem value="2609" text="平湖市" />
+      <subitem value="2610" text="桐乡市" />
+      <subitem value="2606" text="海盐县" />
+    </subitem>
+    <subitem value="2611" text="金华">
+      <subitem value="2613" text="金华市" />
+      <subitem value="2614" text="兰溪市" />
+      <subitem value="2618" text="义乌市" />
+      <subitem value="2612" text="东阳市" />
+      <subitem value="2619" text="永康市" />
+      <subitem value="2617" text="武义县" />
+      <subitem value="2616" text="浦江县" />
+      <subitem value="2615" text="磐安县" />
+    </subitem>
+    <subitem value="2620" text="丽水">
+      <subitem value="2622" text="丽水市" />
+      <subitem value="2623" text="龙泉市" />
+      <subitem value="2624" text="青田县" />
+      <subitem value="2629" text="缙云县" />
+      <subitem value="2627" text="遂昌县" />
+      <subitem value="2626" text="松阳县" />
+      <subitem value="2628" text="云和县" />
+      <subitem value="2625" text="庆元县" />
+      <subitem value="2621" text="景宁" />
+    </subitem>
+    <subitem value="2630" text="宁波">
+      <subitem value="2633" text="宁波市" />
+      <subitem value="2636" text="余姚市" />
+      <subitem value="2631" text="慈溪市" />
+      <subitem value="2632" text="奉化市" />
+      <subitem value="2635" text="象山县" />
+      <subitem value="2634" text="宁海县" />
+    </subitem>
+    <subitem value="2637" text="绍兴">
+      <subitem value="2639" text="绍兴市" />
+      <subitem value="2638" text="上虞市" />
+      <subitem value="2643" text="嵊州市" />
+      <subitem value="2640" text="绍兴县" />
+      <subitem value="2641" text="新昌县" />
+      <subitem value="2642" text="诸暨市" />
+    </subitem>
+    <subitem value="2644" text="台州">
+      <subitem value="2647" text="台州市" />
+      <subitem value="2649" text="温岭市" />
+      <subitem value="2645" text="临海市" />
+      <subitem value="2651" text="玉环县" />
+      <subitem value="2646" text="三门县" />
+      <subitem value="2648" text="天台县" />
+      <subitem value="2650" text="仙居县" />
+    </subitem>
+    <subitem value="2652" text="温州">
+      <subitem value="2659" text="温州市" />
+      <subitem value="2657" text="瑞安市" />
+      <subitem value="2655" text="乐清市" />
+      <subitem value="2654" text="洞头县" />
+      <subitem value="2661" text="永嘉县" />
+      <subitem value="2656" text="平阳县" />
+      <subitem value="2653" text="苍南县" />
+      <subitem value="2660" text="文成县" />
+      <subitem value="2658" text="泰顺县" />
+    </subitem>
+    <subitem value="2662" text="舟山">
+      <subitem value="2663" text="舟山市" />
+      <subitem value="2664" text="岱山县" />
+      <subitem value="2665" text="嵊泗县" />
+    </subitem>
+    <subitem value="2666" text="衢州">
+      <subitem value="2671" text="衢州市" />
+      <subitem value="2668" text="江山市" />
+      <subitem value="2667" text="常山县" />
+      <subitem value="2669" text="开化县" />
+      <subitem value="2670" text="龙游县" />
+    </subitem>
+  </item>
+  <item value="2672" text="重庆">
+    <subitem value="2673" text="重庆">
+      <subitem value="2696" text="重庆市" />
+      <subitem value="2699" text="綦江县" />
+      <subitem value="2697" text="潼南县" />
+      <subitem value="2687" text="铜梁县" />
+      <subitem value="2675" text="大足县" />
+      <subitem value="2685" text="荣昌县" />
+      <subitem value="2698" text="璧山县" />
+      <subitem value="2676" text="垫江县" />
+      <subitem value="2690" text="武隆县" />
+      <subitem value="2677" text="丰都县" />
+      <subitem value="2674" text="城口县" />
+      <subitem value="2682" text="梁平县" />
+      <subitem value="2681" text="开县" />
+      <subitem value="2689" text="巫溪县" />
+      <subitem value="2688" text="巫山县" />
+      <subitem value="2678" text="奉节县" />
+      <subitem value="2694" text="云阳县" />
+      <subitem value="2695" text="忠县" />
+      <subitem value="2686" text="石柱" />
+      <subitem value="2684" text="彭水" />
+      <subitem value="2693" text="酉阳" />
+      <subitem value="2691" text="秀山" />
+    </subitem>
+  </item>
+  <item value="4417" text="香港">
+    <subitem value="4418" text="香港">
+      <subitem value="4419" text="香港" />
+    </subitem>
+  </item>
+  <item value="4438" text="澳门">
+    <subitem value="4439" text="澳门">
+      <subitem value="4440" text="澳门" />
+    </subitem>
+  </item>
+  <item value="4456" text="台湾">
+    <subitem value="4457" text="台湾">
+      <subitem value="4458" text="台湾" />
+    </subitem>
+  </item>
+</items>

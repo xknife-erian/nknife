@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item value="11" text="打开主页" />
+  <item value="22" text="加载最近加载的网站" />
+  <item value="33" text="显示新建项目对话框" />
+  <item value="44" text="显示打开项目对话框" />
+  <item value="55" text="显示空环境" />
+  <item value="66" text="显示起始页" />
+</items>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item value="2" text="销售型" />
+  <item value="3" text="生产" />
+  <item value="4" text="设计型" />
+  <item value="5" text="销售+设计型" />
+  <item value="6" text="生产+销售型" />
+  <item value="7" text="设计+生产型" />
+  <item value="8" text="设计+生产+销售(全方位)型" />
+  <item value="9" text="信息服务型" />
+  <item value="10" text="其他" />
+</items>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="全局模板" />
+  <item value="2" text="首页模板" />
+  <item value="3" text="频道模板" />
+  <item value="4" text="内容模板" />
+  <item value="5" text="专题模板" />
+</items>

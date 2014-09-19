@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.SimplusD.Client.Win.SnipAddSingleChannelForm" ObjectName="Jeelu.SimplusD.Client.Win.SnipAddSingleChannelForm">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.SimplusD.Client.Win.SnipAddSingleChannelForm" Name="SnipAddSingleChannelForm">
+    <Text>SnipAddSingleChannelForm</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.TreeView" Name="ChannelNamestreeView" />
+  <Control Type="System.Windows.Forms.Panel" Name="panel1" />
+  <Control Type="System.Windows.Forms.GroupBox" Name="groupBox2">
+    <Text>频道链接选项</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="comboBoxSizeUnit">
+    <Text>px</Text>
+  </Control>
+  <Control Type="Jeelu.Win.ValidateTextBox" Name="textBoxWidth">
+    <Text>60</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="labelWidth">
+    <Text>宽度：</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="exitBtn">
+    <Text>返 回</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Button" Name="enterBtn">
+    <Text>确 定</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Panel" Name="panel3" />
+  <Control Type="System.Windows.Forms.Label" Name="labelChannel">
+    <Text>选择所需的频道：</Text>
+  </Control>
+</Resources>

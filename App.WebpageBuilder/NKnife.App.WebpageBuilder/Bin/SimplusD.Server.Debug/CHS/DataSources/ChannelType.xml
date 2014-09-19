@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+  <item value="1" text="基础频道">
+    <subitems value="1" text="文字内容型频道" />
+    <subitems value="2" text="图片内容型频道" />
+    <subitems value="3" text="文件管理型频道" />
+    <subitems value="4" text="多媒体内容型频道" />
+    <subitems value="5" text="产品展示型频道" />
+  </item>
+  <item value="2" text="扩展频道">
+    <subitems value="1" text="公司简介" />
+    <subitems value="2" text="联系方式" />
+    <subitems value="3" text="采购信息" />
+    <subitems value="4" text="招投标" />
+    <subitems value="5" text="招聘" />
+    <subitems value="6" text="寻求合作" />
+    <subitems value="7" text="企业年鉴" />
+    <subitems value="8" text="头条新闻" />
+    <subitems value="9" text="媒体报道" />
+  </item>
+  <item value="3" text="交互频道">
+    <subitems value="1" text="市场调查" />
+    <subitems value="2" text="留言" />
+    <subitems value="3" text="论坛" />
+  </item>
+</items>

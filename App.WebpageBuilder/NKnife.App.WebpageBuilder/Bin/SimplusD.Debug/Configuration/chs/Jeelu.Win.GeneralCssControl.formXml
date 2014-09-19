@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Type="Jeelu.Win.GeneralCssControl" ObjectName="Jeelu.Win.GeneralCssControl">
+  <Text Key="" />
+  <Image Key="" />
+  <Icon Key="" />
+  <Cursor Key="" />
+  <ByteArray Key="" />
+  <Control Type="Jeelu.Win.GeneralCssControl" Name="GeneralCssControl" />
+  <Control Type="Jeelu.Win.ColorTextBoxButton" Name="colorText_FontClolor" />
+  <Control Type="System.Windows.Forms.TextBox" Name="textBoxColor" />
+  <Control Type="Jeelu.Win.ColorGeneralButton" Name="btnColor" />
+  <Control Type="System.Windows.Forms.CheckBox" Name="chk_None">
+    <Text>无(&amp;N)</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="chk_Ray">
+    <Text>闪烁(&amp;B)</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="chk_Delline">
+    <Text>删除线(&amp;L)</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="chk_Upline">
+    <Text>上划线(&amp;O)</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.CheckBox" Name="chk_Underline">
+    <Text>下划线(&amp;U)</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_CapsLock" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_Anamorphosis" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_FontThick" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_FontMode" />
+  <Control Type="System.Windows.Forms.ComboBox" Name="cb_Font" />
+  <Control Type="System.Windows.Forms.Label" Name="label9">
+    <Text>颜色(&amp;C):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label7">
+    <Text>大小写(&amp;E):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label6">
+    <Text>变体(&amp;V):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label5">
+    <Text>粗细(&amp;W):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label8">
+    <Text>修饰(&amp;D):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label4">
+    <Text>行高(&amp;I):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label3">
+    <Text>样式(&amp;T):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label2">
+    <Text>大小(&amp;S):</Text>
+  </Control>
+  <Control Type="System.Windows.Forms.Label" Name="label1">
+    <Text>字体(&amp;F):</Text>
+  </Control>
+</Resources>

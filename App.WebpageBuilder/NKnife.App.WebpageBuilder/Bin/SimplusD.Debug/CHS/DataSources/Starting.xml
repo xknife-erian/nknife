@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item value="loadRecentSite" text="加载最近加载的网站" />
+  <item value="showNewForm" text="显示新建项目对话框" />
+  <item value="showOpenForm" text="显示打开项目对话框" />
+  <item value="showNothingEnvi" text="显示空环境" />
+  <item value="showStartPage" text="显示起始页" />
+</items>

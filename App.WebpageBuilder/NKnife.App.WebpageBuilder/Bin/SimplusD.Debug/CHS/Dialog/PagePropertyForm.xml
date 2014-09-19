@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resourceText>
+  <!--<databind level="1" id="1" file="XXXXXX.xml" />-->
+  
+  <form text="文章属性" />
+  <control name="btnCancel" text="取消" />
+  <control name="btnOK" text="确定" />
+  <!--
+  <control name="baseInfoTabPage" text="基本属性" />
+  <control name="moreInfoTabPage" text="更多属性" />
+  <control name="btnParseTag" text="智能分析关键词(&amp;P)" />
+  <control name="btnRemoveRepeat" text="去重(&amp;R)"/>
+  -->
+  
+ 
+  <control name="groupBox1" text="文章基本信息" />
+  <control name="groupBox2" text="文章关键字(逗号或空格隔开)" />
+  <control name="lblContentBrief" text="文章简介:" />
+  <control name="lblTitle" text="文章标题:" />
+  <control name="lblTitleAlias" text="标题别名:" />
+  <control name="lblCreateTime" text="创建时间:" />
+  <control name="lblCreatorAlias" text="作者别名:" />
+  <control name="lblModifyBy" text="修改者别名:"/>
+  <control name="lblDesignSummary" text="设计摘要:"/>
+  <control name="lblContentSource" text="文章来源:" />
+  <control name="lblBeginPub" text="开始时间:" />
+  <control name="lblEndPub" text="结束时间:" />
+
+  <control name="btnTrackback" text="引用通告(&amp;T)" />
+  <control name="isAlwaysPubCheckBox" text="本篇文章始终发布" />
+
+  <control name="txtTitle" validate="NotNull&amp;ContentTitle" />
+  <control name="txtSummary" validate="NotNull&amp;Content256" />
+  <control name="txtContentTag" validate="NotNull&amp;" helptip="关键字未输入,可以点击智能获取关键字按钮,也可手动输入,以逗号或空格分隔" />
+  
+  
+ <text name="timeTip" value="你输入的时间不符合逻辑"/>
+ <text name="TagsTip" value="提取关键字有误!" />
+</resourceText>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="2" text="宣传" />
+  <item value="3" text="文化" />
+  <item value="4" text="采购" />
+  <item value="5" text="人事调理" />
+  <item value="6" text="企业" />
+  <item value="7" text="策划" />
+  <item value="8" text="商谈" />
+</items>

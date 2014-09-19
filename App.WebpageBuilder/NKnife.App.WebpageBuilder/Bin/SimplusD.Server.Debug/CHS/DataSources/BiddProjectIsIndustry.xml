@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item value="1" text="交通运输">
+  </item>
+  <item value="2" text="机械电子电器">
+  </item>
+  <item value="3" text="能源化工">
+  </item>
+  <item value="4" text="商业服务">
+  </item>
+  <item value="5" text="其它">
+  </item>
+</items>
