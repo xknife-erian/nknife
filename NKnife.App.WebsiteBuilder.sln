@@ -7,29 +7,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenSource", "OpenSource", "{570FDE63-ED96-4F8D-BFD9-997F6EB9C604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu", "App.WebpageBuilder\NKnife.App.WebpageBuilder\Common\Jeelu.csproj", "{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\Common\Jeelu.csproj", "{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD", "App.WebpageBuilder\NKnife.App.WebpageBuilder\SimplusD\Common\Jeelu.SimplusD.csproj", "{42474834-8525-470E-A26C-24E552123983}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\SimplusD\Common\Jeelu.SimplusD.csproj", "{42474834-8525-470E-A26C-24E552123983}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win", "App.WebpageBuilder\NKnife.App.WebpageBuilder\SimplusD\Client\Win\Common\Jeelu.SimplusD.Client.Win.csproj", "{6ABF911A-7EF0-41DC-AB7A-720F874107BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\SimplusD\Client\Win\Common\Jeelu.SimplusD.Client.Win.csproj", "{6ABF911A-7EF0-41DC-AB7A-720F874107BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomOpenFileDialog", "App.WebpageBuilder\NKnife.App.WebpageBuilder\OpenSource\CustomOpenFileDialog\CustomOpenFileDialog.csproj", "{63F16AD6-3C52-43BA-A3D7-981AC870E7CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomOpenFileDialog", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\OpenSource\CustomOpenFileDialog\CustomOpenFileDialog.csproj", "{63F16AD6-3C52-43BA-A3D7-981AC870E7CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.TextEditor", "App.WebpageBuilder\NKnife.App.WebpageBuilder\OpenSource\ICSharpCode.TextEditor\ICSharpCode.TextEditor.csproj", "{2D18BE89-D210-49EB-A9DD-2246FBB3DF6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.TextEditor", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\OpenSource\ICSharpCode.TextEditor\ICSharpCode.TextEditor.csproj", "{2D18BE89-D210-49EB-A9DD-2246FBB3DF6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TidyNet", "App.WebpageBuilder\NKnife.App.WebpageBuilder\OpenSource\TidyNet\TidyNet.csproj", "{C9B7AEFC-11BF-4902-AB1C-055E87479ACE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TidyNet", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\OpenSource\TidyNet\TidyNet.csproj", "{C9B7AEFC-11BF-4902-AB1C-055E87479ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "App.WebpageBuilder\NKnife.App.WebpageBuilder\OpenSource\WinFormsUI\WinFormsUI.csproj", "{C75532C4-765B-418E-B09B-46D36B2ABDB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\OpenSource\WinFormsUI\WinFormsUI.csproj", "{C75532C4-765B-418E-B09B-46D36B2ABDB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VS2005ToolBox", "App.WebpageBuilder\NKnife.App.WebpageBuilder\OpenSource\VS2005ToolBox\VS2005ToolBox.csproj", "{63591A7A-794D-407E-9D3F-2B2C525420F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VS2005ToolBox", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\OpenSource\VS2005ToolBox\VS2005ToolBox.csproj", "{63591A7A-794D-407E-9D3F-2B2C525420F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.Startup", "App.WebpageBuilder\NKnife.App.WebpageBuilder\SimplusD\Client\Win\Startup\Jeelu.SimplusD.Client.Win.Startup.csproj", "{1EB2D6B5-FA84-4C0D-BB6E-1C9862AB779A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.Startup", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\SimplusD\Client\Win\Startup\Jeelu.SimplusD.Client.Win.Startup.csproj", "{1EB2D6B5-FA84-4C0D-BB6E-1C9862AB779A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Win", "App.WebpageBuilder\NKnife.App.WebpageBuilder\Win\Common\Jeelu.Win.csproj", "{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Win", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\Win\Common\Jeelu.Win.csproj", "{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.CoreControls", "App.WebpageBuilder\NKnife.App.WebpageBuilder\SimplusD\Client\Win\CoreControls\Jeelu.SimplusD.Client.Win.CoreControls.csproj", "{8EF3AA7B-2B98-42AF-A4E4-3D7447ADFF65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.CoreControls", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\SimplusD\Client\Win\CoreControls\Jeelu.SimplusD.Client.Win.CoreControls.csproj", "{8EF3AA7B-2B98-42AF-A4E4-3D7447ADFF65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.Core", "App.WebpageBuilder\NKnife.App.WebpageBuilder\SimplusD\Client\Win\Core\Jeelu.SimplusD.Client.Win.Core.csproj", "{7D47B960-6735-4125-8670-0BBDBEE28208}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.Core", "App.WebsiteBuilder\NKnife.App.WebsiteBuilder\SimplusD\Client\Win\Core\Jeelu.SimplusD.Client.Win.Core.csproj", "{7D47B960-6735-4125-8670-0BBDBEE28208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
