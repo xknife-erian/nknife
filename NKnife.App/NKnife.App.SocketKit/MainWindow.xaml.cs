@@ -37,7 +37,12 @@ namespace NKnife.App.SocketKit
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void ServerCreator_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("新建Socket服务器端");
         }
     }
 }
