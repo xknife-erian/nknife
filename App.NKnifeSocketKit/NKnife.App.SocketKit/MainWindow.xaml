@@ -3,9 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:commands="clr-namespace:NKnife.App.SocketKit.Commands"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         Title="NKnife@Socket测试工具" Height="350" Width="525" WindowState="Maximized" Icon="Common/Res/main_icon.ico">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.ServerCreator}" />
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.ServerCreator}" Executed="ServerCreatorMenuItem_Click"/>
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.ClientCreator}" Executed="ClientCreatorMenuItem_Click" />
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.Option}" Executed="OptionMenuItem_Click" />
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.Exit}" Executed="ExitMenuItem_Click" />
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.ParamsView}" Executed="ParamsViewMenuItem_Click" />
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.PropertiesView}" Executed="PropertiesViewMenuItem_Click" />
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.Logger}" Executed="LoggerMenuItem_Click" />
+        <CommandBinding Command="{x:Static commands:MenuCommandManager.About}" Executed="AboutMenuItem_Click" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -19,26 +28,26 @@
         <Menu Grid.Row="0" Width="Auto">
             <MenuItem Name="_FileMenu" Padding="11,7,11,0" Height="30" VerticalAlignment="Center" Header="文件(_F)">
                 <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.ServerCreator}" Name="_ServerCreator"/>
-                <MenuItem Header="新建客户端(_C)..." Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="F8"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.ClientCreator}" Name="_ClientCreator"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Header="选项(_O)..." Padding="8,2,0,0" Margin="0,0,0,-2"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Option}" Name="_Option"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Header="退出(_X)" Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="Alt+F4" Click="ExitMenuItem_Click"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Exit}" Name="_Exit"/>
             </MenuItem>
             <MenuItem Padding="11,7,11,0" Height="30" Header="视图(_V)">
-                <MenuItem Header="终端参数管理器(_P)" Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="F3"/>
-                <MenuItem Header="终端属性管理器(_A)" Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="F4"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.ParamsView}" Name="_ParamsView"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.PropertiesView}" Name="_PropertiesView"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Header="日志管理器(_L)" Padding="8,2,0,0" Margin="0,0,0,-2"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Logger}" Name="_Logger"/>
             </MenuItem>
             <MenuItem Padding="11,7,11,0" Height="30" Header="帮助(_H)">
-                <MenuItem Header="关于(_A)..." Padding="8,2,0,0" Margin="0,0,0,-2"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.About}" Name="_About"/>
             </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2" Height="Auto" Width="Auto">
             <StatusBarItem Content="1.0.11.2345"></StatusBarItem>
         </StatusBar>
-        <xcad:DockingManager Grid.Row="1" x:Name="_DockingManager" DocumentsSource="{Binding Path=(MessageDocumentCollection)}">
+        <xcad:DockingManager Grid.Row="1" x:Name="_DockingManager" DocumentsSource="{Binding MessageDocumentCollection}">
             <xcad:DockingManager.Theme>
                 <xcad:VS2010Theme />
                 <!--<xcad:AeroTheme/>-->
