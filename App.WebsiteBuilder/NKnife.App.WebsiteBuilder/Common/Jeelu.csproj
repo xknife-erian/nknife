@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Jeelu</RootNamespace>
     <AssemblyName>Jeelu</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -156,11 +156,6 @@
     <Compile Include="Xhtml\Tag\XhtmlTags.RMVB_RM.cs" />
     <Compile Include="Xhtml\Tag\XhtmlTags.AVI.cs" />
     <Compile Include="Xhtml\Tag\XhtmlTags.WMV.cs" />
-    <Compile Include="Xhtml\XhtmlRes.Designer.cs">
-      <DependentUpon>XhtmlRes.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="XmlProjectCreator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,15 +164,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>CssLibResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Xhtml\XhtmlRes.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>XhtmlRes.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CssResources.xml" />
-    <None Include="Xhtml\Xhtml.cd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Xhtml\Base\Resources\attEnum.xml" />

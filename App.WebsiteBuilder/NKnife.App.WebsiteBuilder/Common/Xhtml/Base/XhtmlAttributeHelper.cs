@@ -18,7 +18,7 @@ namespace Jeelu
             {
                 enumStringDic = new Dictionary<string, string>();
                 XmlDocument doc = new XmlDocument();
-                doc.LoadXml(XhtmlRes.attEnum);
+                doc.LoadXml("");//TODO:XhtmlRes.attEnum);
                 XmlNode node = doc.SelectSingleNode(string.Format("//{0}", attributeName));
                 Debug.Assert(node != null);
                 foreach (XmlNode item in node.ChildNodes)

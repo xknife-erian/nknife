@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{180F754D-22FC-4DC0-8D5C-ED7F50D5B6AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenSource", "OpenSource", "{F9AC4338-C994-431D-8983-AA924F0CD9A3}"
@@ -8,6 +10,32 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimplusD", "SimplusD", "{B3B361F1-6DCA-45C4-B58F-9E84D403A543}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win", "Win", "{4B7DED68-B884-45FB-919E-A3A8FC0DFED2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B3AC3ECD-30AD-41A6-9B17-5A77923562FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{5B68E92D-54AF-4CCC-AF8F-A621CE355062}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{E8B9F793-F17A-4490-A985-AB6838107133}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{BC9E645B-4D6C-4497-A091-6BC53A8C819E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win", "Win", "{E697182E-BFCD-4534-9A91-57DEBB90DF28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{88E0C9DE-1C24-47CB-9790-F2AA3DFF1683}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{585BCE72-8B5A-403A-9EFC-616DAFBCFECD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimplusOM", "SimplusOM", "{5734EDFB-251A-4E20-A894-6231354B84F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{62D6F789-95C8-4111-84B9-FD4807C6CB66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{646ADB38-5F66-4332-BFA7-08DE3E7E4EC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{5B0DA55F-A042-49A1-8927-11122544D91E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win", "Win", "{68C096D7-27BE-493F-A375-C40C70CB07D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simplus.AppTools", "Simplus.AppTools", "{6369256B-46A2-4A1C-9A66-02D59C90BEA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu", "Common\Jeelu.csproj", "{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}"
 EndProject
@@ -21,21 +49,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VS2005ToolBox", "OpenSource
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "OpenSource\WinFormsUI\WinFormsUI.csproj", "{C75532C4-765B-418E-B09B-46D36B2ABDB1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B3AC3ECD-30AD-41A6-9B17-5A77923562FA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Win", "Win\Common\Jeelu.Win.csproj", "{14AC1134-719E-497F-9B84-0C0DC5F4AD9E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{5B68E92D-54AF-4CCC-AF8F-A621CE355062}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{E8B9F793-F17A-4490-A985-AB6838107133}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{BC9E645B-4D6C-4497-A091-6BC53A8C819E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD", "SimplusD\Common\Jeelu.SimplusD.csproj", "{42474834-8525-470E-A26C-24E552123983}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win", "Win", "{E697182E-BFCD-4534-9A91-57DEBB90DF28}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{88E0C9DE-1C24-47CB-9790-F2AA3DFF1683}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win", "SimplusD\Client\Win\Common\Jeelu.SimplusD.Client.Win.csproj", "{6ABF911A-7EF0-41DC-AB7A-720F874107BD}"
 EndProject
@@ -45,8 +61,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD.Client.Win.Startup", "SimplusD\Client\Win\Startup\Jeelu.SimplusD.Client.Win.Startup.csproj", "{1EB2D6B5-FA84-4C0D-BB6E-1C9862AB779A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{585BCE72-8B5A-403A-9EFC-616DAFBCFECD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckFileHeaders", "Tools\CheckFileHeaders\CheckFileHeaders.csproj", "{66252D2A-5D13-457C-8A5D-A1FD918A1BBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathServiceFileHelper", "Tools\PathServiceFileHelper\PathServiceFileHelper.csproj", "{2865DDAE-A69A-4558-89BF-BCE08A4CF420}"
@@ -54,20 +68,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropPadTool", "Tools\PropPadTool\PropPadTool.csproj", "{D16BEB02-ED0C-4CF6-9067-F34938775A86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateAssemblyInfo", "Tools\UpdateAssemblyInfo\UpdateAssemblyInfo.csproj", "{605C8CDB-F0AD-4A21-9F4A-959B8DECB0F3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{6086F233-11A5-4153-9172-5865101DB0BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Bin", "Bin\Jeelu.Bin.csproj", "{8EEAF83C-0972-4291-A068-557F30E17D8B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimplusOM", "SimplusOM", "{5734EDFB-251A-4E20-A894-6231354B84F6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{62D6F789-95C8-4111-84B9-FD4807C6CB66}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{646ADB38-5F66-4332-BFA7-08DE3E7E4EC9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{5B0DA55F-A042-49A1-8927-11122544D91E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win", "Win", "{68C096D7-27BE-493F-A375-C40C70CB07D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusOM.Client.Win", "SimplusOM\Client\Win\Common\Jeelu.SimplusOM.Client.Win.csproj", "{3CF63B25-EFC5-4918-B5AF-9522F7A9179D}"
 EndProject
@@ -95,8 +95,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusOM.Agent", "Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Data", "Data\Jeelu.Data.csproj", "{2345B5BE-424D-4932-8738-6A41435B7074}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simplus.AppTools", "Simplus.AppTools", "{6369256B-46A2-4A1C-9A66-02D59C90BEA3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Simplus.AutoUpdater", "Simplus.AppTools\Simplus.AutoUpdater\Jeelu.Simplus.AutoUpdater.csproj", "{2B073564-9D30-4660-AE4B-172DE8DB31BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Simplus.PagePreviewer", "Simplus.AppTools\Simplus.PagePreviewer\Jeelu.Simplus.PagePreviewer.csproj", "{98A37FB1-8C51-4F54-A4CD-2D930BE69C7F}"
@@ -104,141 +102,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplus.UpdateXmlCreator", "Simplus.AppTools\Simplus.UpdateXmlCreator\Simplus.UpdateXmlCreator.csproj", "{661EF7BB-0F8D-4ADC-98BF-A798952BF933}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 34
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Bin\\Jeelu.Bin.csproj
-		SccProjectTopLevelParentUniqueName1 = Jeelu.sln
-		SccLocalPath1 = .
-		SccProjectFilePathRelativizedFromConnection1 = Bin\\
-		SccProjectUniqueName2 = Common\\Jeelu.csproj
-		SccProjectTopLevelParentUniqueName2 = Jeelu.sln
-		SccLocalPath2 = .
-		SccProjectFilePathRelativizedFromConnection2 = Common\\
-		SccProjectUniqueName3 = Data\\Jeelu.Data.csproj
-		SccLocalPath3 = .
-		SccProjectFilePathRelativizedFromConnection3 = Data\\
-		SccProjectUniqueName4 = OpenSource\\CustomOpenFileDialog\\CustomOpenFileDialog.csproj
-		SccProjectTopLevelParentUniqueName4 = Jeelu.sln
-		SccLocalPath4 = .
-		SccProjectFilePathRelativizedFromConnection4 = OpenSource\\CustomOpenFileDialog\\
-		SccProjectUniqueName5 = OpenSource\\ICSharpCode.TextEditor\\ICSharpCode.TextEditor.csproj
-		SccProjectTopLevelParentUniqueName5 = Jeelu.sln
-		SccLocalPath5 = .
-		SccProjectFilePathRelativizedFromConnection5 = OpenSource\\ICSharpCode.TextEditor\\
-		SccProjectUniqueName6 = OpenSource\\TidyNet\\TidyNet.csproj
-		SccProjectTopLevelParentUniqueName6 = Jeelu.sln
-		SccLocalPath6 = .
-		SccProjectFilePathRelativizedFromConnection6 = OpenSource\\TidyNet\\
-		SccProjectUniqueName7 = OpenSource\\VS2005ToolBox\\VS2005ToolBox.csproj
-		SccProjectTopLevelParentUniqueName7 = Jeelu.sln
-		SccLocalPath7 = .
-		SccProjectFilePathRelativizedFromConnection7 = OpenSource\\VS2005ToolBox\\
-		SccProjectUniqueName8 = OpenSource\\WinFormsUI\\WinFormsUI.csproj
-		SccProjectTopLevelParentUniqueName8 = Jeelu.sln
-		SccLocalPath8 = .
-		SccProjectFilePathRelativizedFromConnection8 = OpenSource\\WinFormsUI\\
-		SccProjectUniqueName9 = Simplus.AppTools\\Simplus.AutoUpdater\\Jeelu.Simplus.AutoUpdater.csproj
-		SccProjectTopLevelParentUniqueName9 = Jeelu.sln
-		SccLocalPath9 = .
-		SccProjectFilePathRelativizedFromConnection9 = Simplus.AppTools\\Simplus.AutoUpdater\\
-		SccProjectUniqueName10 = Simplus.AppTools\\Simplus.PagePreviewer\\Jeelu.Simplus.PagePreviewer.csproj
-		SccProjectTopLevelParentUniqueName10 = Jeelu.sln
-		SccLocalPath10 = .
-		SccProjectFilePathRelativizedFromConnection10 = Simplus.AppTools\\Simplus.PagePreviewer\\
-		SccProjectUniqueName11 = Simplus.AppTools\\Simplus.UpdateXmlCreator\\Simplus.UpdateXmlCreator.csproj
-		SccProjectTopLevelParentUniqueName11 = Jeelu.sln
-		SccLocalPath11 = .
-		SccProjectFilePathRelativizedFromConnection11 = Simplus.AppTools\\Simplus.UpdateXmlCreator\\
-		SccProjectUniqueName12 = SimplusD\\Client\\Win\\Common\\Jeelu.SimplusD.Client.Win.csproj
-		SccProjectTopLevelParentUniqueName12 = Jeelu.sln
-		SccLocalPath12 = .
-		SccProjectFilePathRelativizedFromConnection12 = SimplusD\\Client\\Win\\Common\\
-		SccProjectUniqueName13 = SimplusD\\Client\\Win\\Core\\Jeelu.SimplusD.Client.Win.Core.csproj
-		SccProjectTopLevelParentUniqueName13 = Jeelu.sln
-		SccLocalPath13 = .
-		SccProjectFilePathRelativizedFromConnection13 = SimplusD\\Client\\Win\\Core\\
-		SccProjectUniqueName14 = SimplusD\\Client\\Win\\CoreControls\\Jeelu.SimplusD.Client.Win.CoreControls.csproj
-		SccProjectTopLevelParentUniqueName14 = Jeelu.sln
-		SccLocalPath14 = .
-		SccProjectFilePathRelativizedFromConnection14 = SimplusD\\Client\\Win\\CoreControls\\
-		SccProjectUniqueName15 = SimplusD\\Client\\Win\\Startup\\Jeelu.SimplusD.Client.Win.Startup.csproj
-		SccProjectTopLevelParentUniqueName15 = Jeelu.sln
-		SccLocalPath15 = .
-		SccProjectFilePathRelativizedFromConnection15 = SimplusD\\Client\\Win\\Startup\\
-		SccProjectUniqueName16 = SimplusD\\Common\\Jeelu.SimplusD.csproj
-		SccProjectTopLevelParentUniqueName16 = Jeelu.sln
-		SccLocalPath16 = .
-		SccProjectFilePathRelativizedFromConnection16 = SimplusD\\Common\\
-		SccProjectUniqueName17 = SimplusD\\Server\\Common\\Jeelu.SimplusD.Server.csproj
-		SccProjectTopLevelParentUniqueName17 = Jeelu.sln
-		SccLocalPath17 = .
-		SccProjectFilePathRelativizedFromConnection17 = SimplusD\\Server\\Common\\
-		SccProjectUniqueName18 = SimplusD\\Server\\Core\\Jeelu.SimplusD.Server.Core.csproj
-		SccProjectTopLevelParentUniqueName18 = Jeelu.sln
-		SccLocalPath18 = .
-		SccProjectFilePathRelativizedFromConnection18 = SimplusD\\Server\\Core\\
-		SccProjectUniqueName19 = SimplusD\\Server\\Manager\\Jeelu.SimplusD.Server.Manager.csproj
-		SccProjectTopLevelParentUniqueName19 = Jeelu.sln
-		SccLocalPath19 = .
-		SccProjectFilePathRelativizedFromConnection19 = SimplusD\\Server\\Manager\\
-		SccProjectUniqueName20 = SimplusOM\\Agent\\Jeelu.SimplusOM.Agent.csproj
-		SccProjectTopLevelParentUniqueName20 = Jeelu.sln
-		SccLocalPath20 = .
-		SccProjectFilePathRelativizedFromConnection20 = SimplusOM\\Agent\\
-		SccProjectUniqueName21 = SimplusOM\\Client\\Win\\Common\\Jeelu.SimplusOM.Client.Win.csproj
-		SccProjectTopLevelParentUniqueName21 = Jeelu.sln
-		SccLocalPath21 = .
-		SccProjectFilePathRelativizedFromConnection21 = SimplusOM\\Client\\Win\\Common\\
-		SccProjectUniqueName22 = SimplusOM\\Client\\Win\\Core\\Jeelu.SimplusOM.Client.Win.Core.csproj
-		SccProjectTopLevelParentUniqueName22 = Jeelu.sln
-		SccLocalPath22 = .
-		SccProjectFilePathRelativizedFromConnection22 = SimplusOM\\Client\\Win\\Core\\
-		SccProjectUniqueName23 = SimplusOM\\Client\\Win\\Startup\\Jeelu.SimplusOM.Client.Win.Startup.csproj
-		SccProjectTopLevelParentUniqueName23 = Jeelu.sln
-		SccLocalPath23 = .
-		SccProjectFilePathRelativizedFromConnection23 = SimplusOM\\Client\\Win\\Startup\\
-		SccProjectUniqueName24 = SimplusOM\\Common\\Jeelu.SimplusOM.csproj
-		SccProjectTopLevelParentUniqueName24 = Jeelu.sln
-		SccLocalPath24 = .
-		SccProjectFilePathRelativizedFromConnection24 = SimplusOM\\Common\\
-		SccProjectUniqueName25 = SimplusOM\\Server\\Common\\Jeelu.SimplusOM.Server.csproj
-		SccProjectTopLevelParentUniqueName25 = Jeelu.sln
-		SccLocalPath25 = .
-		SccProjectFilePathRelativizedFromConnection25 = SimplusOM\\Server\\Common\\
-		SccProjectUniqueName26 = SimplusOM\\Server\\DataAccess\\Jeelu.SimplusOM.Server.DataAccess.csproj
-		SccProjectTopLevelParentUniqueName26 = Jeelu.sln
-		SccLocalPath26 = .
-		SccProjectFilePathRelativizedFromConnection26 = SimplusOM\\Server\\DataAccess\\
-		SccProjectUniqueName27 = SimplusOM\\Server\\Logic\\Jeelu.SimplusOM.Server.Logic.csproj
-		SccProjectTopLevelParentUniqueName27 = Jeelu.sln
-		SccLocalPath27 = .
-		SccProjectFilePathRelativizedFromConnection27 = SimplusOM\\Server\\Logic\\
-		SccProjectUniqueName28 = SimplusOM\\Server\\Manager\\Jeelu.SimplusOM.Server.Manager.csproj
-		SccProjectTopLevelParentUniqueName28 = Jeelu.sln
-		SccLocalPath28 = .
-		SccProjectFilePathRelativizedFromConnection28 = SimplusOM\\Server\\Manager\\
-		SccProjectUniqueName29 = Tools\\CheckFileHeaders\\CheckFileHeaders.csproj
-		SccProjectTopLevelParentUniqueName29 = Jeelu.sln
-		SccLocalPath29 = .
-		SccProjectFilePathRelativizedFromConnection29 = Tools\\CheckFileHeaders\\
-		SccProjectUniqueName30 = Tools\\PathServiceFileHelper\\PathServiceFileHelper.csproj
-		SccProjectTopLevelParentUniqueName30 = Jeelu.sln
-		SccLocalPath30 = .
-		SccProjectFilePathRelativizedFromConnection30 = Tools\\PathServiceFileHelper\\
-		SccProjectUniqueName31 = Tools\\PropPadTool\\PropPadTool.csproj
-		SccProjectTopLevelParentUniqueName31 = Jeelu.sln
-		SccLocalPath31 = .
-		SccProjectFilePathRelativizedFromConnection31 = Tools\\PropPadTool\\
-		SccProjectUniqueName32 = Tools\\UpdateAssemblyInfo\\UpdateAssemblyInfo.csproj
-		SccProjectTopLevelParentUniqueName32 = Jeelu.sln
-		SccLocalPath32 = .
-		SccProjectFilePathRelativizedFromConnection32 = Tools\\UpdateAssemblyInfo\\
-		SccProjectUniqueName33 = Win\\Common\\Jeelu.Win.csproj
-		SccProjectTopLevelParentUniqueName33 = Jeelu.sln
-		SccLocalPath33 = .
-		SccProjectFilePathRelativizedFromConnection33 = Win\\Common\\
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -308,10 +171,6 @@ Global
 		{605C8CDB-F0AD-4A21-9F4A-959B8DECB0F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{605C8CDB-F0AD-4A21-9F4A-959B8DECB0F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{605C8CDB-F0AD-4A21-9F4A-959B8DECB0F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8EEAF83C-0972-4291-A068-557F30E17D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EEAF83C-0972-4291-A068-557F30E17D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EEAF83C-0972-4291-A068-557F30E17D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EEAF83C-0972-4291-A068-557F30E17D8B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CF63B25-EFC5-4918-B5AF-9522F7A9179D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CF63B25-EFC5-4918-B5AF-9522F7A9179D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CF63B25-EFC5-4918-B5AF-9522F7A9179D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -381,23 +240,24 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{B3AC3ECD-30AD-41A6-9B17-5A77923562FA} = {4B7DED68-B884-45FB-919E-A3A8FC0DFED2}
+		{5B68E92D-54AF-4CCC-AF8F-A621CE355062} = {B3B361F1-6DCA-45C4-B58F-9E84D403A543}
+		{E8B9F793-F17A-4490-A985-AB6838107133} = {B3B361F1-6DCA-45C4-B58F-9E84D403A543}
+		{BC9E645B-4D6C-4497-A091-6BC53A8C819E} = {B3B361F1-6DCA-45C4-B58F-9E84D403A543}
+		{E697182E-BFCD-4534-9A91-57DEBB90DF28} = {E8B9F793-F17A-4490-A985-AB6838107133}
+		{88E0C9DE-1C24-47CB-9790-F2AA3DFF1683} = {E8B9F793-F17A-4490-A985-AB6838107133}
+		{62D6F789-95C8-4111-84B9-FD4807C6CB66} = {5734EDFB-251A-4E20-A894-6231354B84F6}
+		{646ADB38-5F66-4332-BFA7-08DE3E7E4EC9} = {5734EDFB-251A-4E20-A894-6231354B84F6}
+		{5B0DA55F-A042-49A1-8927-11122544D91E} = {5734EDFB-251A-4E20-A894-6231354B84F6}
+		{68C096D7-27BE-493F-A375-C40C70CB07D4} = {646ADB38-5F66-4332-BFA7-08DE3E7E4EC9}
 		{ACF0DFFD-984F-47C1-8AA1-3587B48B2166} = {180F754D-22FC-4DC0-8D5C-ED7F50D5B6AC}
 		{63F16AD6-3C52-43BA-A3D7-981AC870E7CE} = {F9AC4338-C994-431D-8983-AA924F0CD9A3}
 		{2D18BE89-D210-49EB-A9DD-2246FBB3DF6D} = {F9AC4338-C994-431D-8983-AA924F0CD9A3}
 		{C9B7AEFC-11BF-4902-AB1C-055E87479ACE} = {F9AC4338-C994-431D-8983-AA924F0CD9A3}
 		{63591A7A-794D-407E-9D3F-2B2C525420F9} = {F9AC4338-C994-431D-8983-AA924F0CD9A3}
 		{C75532C4-765B-418E-B09B-46D36B2ABDB1} = {F9AC4338-C994-431D-8983-AA924F0CD9A3}
-		{5B68E92D-54AF-4CCC-AF8F-A621CE355062} = {B3B361F1-6DCA-45C4-B58F-9E84D403A543}
-		{E8B9F793-F17A-4490-A985-AB6838107133} = {B3B361F1-6DCA-45C4-B58F-9E84D403A543}
-		{BC9E645B-4D6C-4497-A091-6BC53A8C819E} = {B3B361F1-6DCA-45C4-B58F-9E84D403A543}
-		{B3AC3ECD-30AD-41A6-9B17-5A77923562FA} = {4B7DED68-B884-45FB-919E-A3A8FC0DFED2}
 		{14AC1134-719E-497F-9B84-0C0DC5F4AD9E} = {B3AC3ECD-30AD-41A6-9B17-5A77923562FA}
 		{42474834-8525-470E-A26C-24E552123983} = {5B68E92D-54AF-4CCC-AF8F-A621CE355062}
-		{E697182E-BFCD-4534-9A91-57DEBB90DF28} = {E8B9F793-F17A-4490-A985-AB6838107133}
-		{88E0C9DE-1C24-47CB-9790-F2AA3DFF1683} = {E8B9F793-F17A-4490-A985-AB6838107133}
-		{0C6A880C-9451-4B92-9C7B-1AD5D6862067} = {BC9E645B-4D6C-4497-A091-6BC53A8C819E}
-		{7E2D1B96-4C9B-442F-9858-3ACB2CAE2FD3} = {BC9E645B-4D6C-4497-A091-6BC53A8C819E}
-		{7E63CC49-1CFA-4188-9B97-E1EB8C06FB39} = {BC9E645B-4D6C-4497-A091-6BC53A8C819E}
 		{6ABF911A-7EF0-41DC-AB7A-720F874107BD} = {E697182E-BFCD-4534-9A91-57DEBB90DF28}
 		{7D47B960-6735-4125-8670-0BBDBEE28208} = {E697182E-BFCD-4534-9A91-57DEBB90DF28}
 		{8EF3AA7B-2B98-42AF-A4E4-3D7447ADFF65} = {E697182E-BFCD-4534-9A91-57DEBB90DF28}
@@ -406,20 +266,18 @@ Global
 		{2865DDAE-A69A-4558-89BF-BCE08A4CF420} = {585BCE72-8B5A-403A-9EFC-616DAFBCFECD}
 		{D16BEB02-ED0C-4CF6-9067-F34938775A86} = {585BCE72-8B5A-403A-9EFC-616DAFBCFECD}
 		{605C8CDB-F0AD-4A21-9F4A-959B8DECB0F3} = {585BCE72-8B5A-403A-9EFC-616DAFBCFECD}
-		{8EEAF83C-0972-4291-A068-557F30E17D8B} = {6086F233-11A5-4153-9172-5865101DB0BB}
-		{62D6F789-95C8-4111-84B9-FD4807C6CB66} = {5734EDFB-251A-4E20-A894-6231354B84F6}
-		{646ADB38-5F66-4332-BFA7-08DE3E7E4EC9} = {5734EDFB-251A-4E20-A894-6231354B84F6}
-		{5B0DA55F-A042-49A1-8927-11122544D91E} = {5734EDFB-251A-4E20-A894-6231354B84F6}
-		{489FC4C7-D182-4B6D-BEBF-7D6C457D8F9C} = {62D6F789-95C8-4111-84B9-FD4807C6CB66}
-		{233285A2-3F4F-4FD7-A01B-CA78DE3D0871} = {62D6F789-95C8-4111-84B9-FD4807C6CB66}
-		{68C096D7-27BE-493F-A375-C40C70CB07D4} = {646ADB38-5F66-4332-BFA7-08DE3E7E4EC9}
+		{3CF63B25-EFC5-4918-B5AF-9522F7A9179D} = {68C096D7-27BE-493F-A375-C40C70CB07D4}
+		{4E1E3453-F491-489E-8E5A-E690B1AA8577} = {68C096D7-27BE-493F-A375-C40C70CB07D4}
 		{94B91356-96F4-4C51-AE67-1D3483F637B9} = {5B0DA55F-A042-49A1-8927-11122544D91E}
+		{489FC4C7-D182-4B6D-BEBF-7D6C457D8F9C} = {62D6F789-95C8-4111-84B9-FD4807C6CB66}
+		{0C6A880C-9451-4B92-9C7B-1AD5D6862067} = {BC9E645B-4D6C-4497-A091-6BC53A8C819E}
+		{7E2D1B96-4C9B-442F-9858-3ACB2CAE2FD3} = {BC9E645B-4D6C-4497-A091-6BC53A8C819E}
+		{7E63CC49-1CFA-4188-9B97-E1EB8C06FB39} = {BC9E645B-4D6C-4497-A091-6BC53A8C819E}
 		{F8A186F7-35A9-4262-8EBC-A7EF531FF47F} = {5B0DA55F-A042-49A1-8927-11122544D91E}
 		{FA0FEAC4-1CB4-47AF-9301-A7C8B03686B9} = {5B0DA55F-A042-49A1-8927-11122544D91E}
 		{4EAB8FF0-5A44-49B5-8F61-CEDFF85E49BB} = {5B0DA55F-A042-49A1-8927-11122544D91E}
-		{3CF63B25-EFC5-4918-B5AF-9522F7A9179D} = {68C096D7-27BE-493F-A375-C40C70CB07D4}
-		{4E1E3453-F491-489E-8E5A-E690B1AA8577} = {68C096D7-27BE-493F-A375-C40C70CB07D4}
 		{7C26C1B3-1877-45BF-B27B-6F81F5714F31} = {68C096D7-27BE-493F-A375-C40C70CB07D4}
+		{233285A2-3F4F-4FD7-A01B-CA78DE3D0871} = {62D6F789-95C8-4111-84B9-FD4807C6CB66}
 		{2B073564-9D30-4660-AE4B-172DE8DB31BC} = {6369256B-46A2-4A1C-9A66-02D59C90BEA3}
 		{98A37FB1-8C51-4F54-A4CD-2D930BE69C7F} = {6369256B-46A2-4A1C-9A66-02D59C90BEA3}
 		{661EF7BB-0F8D-4ADC-98BF-A798952BF933} = {6369256B-46A2-4A1C-9A66-02D59C90BEA3}

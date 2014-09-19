@@ -28,7 +28,7 @@ namespace Jeelu
         private void InitializeComponent()
         {
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(XhtmlRes.tagname);
+            doc.LoadXml("");//TODO:XhtmlRes.tagname);
             foreach (XmlNode item in doc.DocumentElement.ChildNodes)
             {
                 if (item.NodeType != XmlNodeType.Element)
