@@ -90,7 +90,6 @@
     <Compile Include="Ioc\ConfiguringModule.cs" />
     <Compile Include="API\WinMsg.cs" />
     <Compile Include="API\WinMsgUtil.cs" />
-    <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Utility\UtilityReflection.cs">
       <SubType>Code</SubType>
     </Compile>
