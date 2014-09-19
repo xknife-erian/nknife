@@ -102,6 +102,7 @@
     <Compile Include="SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
+    <None Include="SimplusD.Debug.zip" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\SimplusD!.ico" />
