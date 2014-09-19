@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu", "Common\Jeelu.csproj", "{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.SimplusD", "SimplusD\Common\Jeelu.SimplusD.csproj", "{42474834-8525-470E-A26C-24E552123983}"
@@ -18,34 +20,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Data", "Data\Jeelu.Data.csproj", "{2345B5BE-424D-4932-8738-6A41435B7074}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 9
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Common\\Jeelu.csproj
-		SccProjectName1 = \u0022$/Jeelu/Common\u0022,\u0020YUGAAAAA
-		SccLocalPath1 = Common
-		SccProjectUniqueName2 = SimplusD\\Common\\Jeelu.SimplusD.csproj
-		SccProjectName2 = \u0022$/Jeelu/SimplusD/Common\u0022,\u0020MPIAAAAA
-		SccLocalPath2 = SimplusD\\Common
-		SccProjectUniqueName3 = Win\\Common\\Jeelu.Win.csproj
-		SccProjectName3 = \u0022$/Jeelu/Win/Common\u0022,\u0020YGJAAAAA
-		SccLocalPath3 = Win\\Common
-		SccProjectUniqueName4 = Bin\\Jeelu.Bin.csproj
-		SccProjectName4 = \u0022$/Jeelu/Bin\u0022,\u0020JJGAAAAA
-		SccLocalPath4 = Bin
-		SccProjectUniqueName5 = SimplusD\\Server\\Common\\Jeelu.SimplusD.Server.csproj
-		SccProjectName5 = \u0022$/Jeelu/SimplusD/Server/Common\u0022,\u0020ATIAAAAA
-		SccLocalPath5 = SimplusD\\Server\\Common
-		SccProjectUniqueName6 = SimplusD\\Server\\Core\\Jeelu.SimplusD.Server.Core.csproj
-		SccProjectName6 = \u0022$/Jeelu/SimplusD/Server/Core\u0022,\u0020NTIAAAAA
-		SccLocalPath6 = SimplusD\\Server\\Core
-		SccProjectUniqueName7 = SimplusD\\Server\\Manager\\Jeelu.SimplusD.Server.Manager.csproj
-		SccProjectName7 = \u0022$/Jeelu/SimplusD/Server/Manager\u0022,\u0020WUIAAAAA
-		SccLocalPath7 = SimplusD\\Server\\Manager
-		SccProjectUniqueName8 = Data\\Jeelu.Data.csproj
-		SccProjectName8 = \u0022$/Jeelu/Data\u0022,\u0020AXGAAAAA
-		SccLocalPath8 = Data
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
