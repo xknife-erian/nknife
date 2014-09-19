@@ -13,19 +13,22 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Width="Auto">
-            <MenuItem Name="_FileMenu" Padding="11,7,11,0" Height="30" VerticalAlignment="Center" Header="文件">
-                <MenuItem Header="新建服务器" Padding="8,2,0,0"/>
-                <MenuItem Header="新建客户端" Padding="8,2,0,0"/>
+            <MenuItem Name="_FileMenu" Padding="11,7,11,0" Height="30" VerticalAlignment="Center" Header="文件(_F)">
+                <MenuItem Header="新建服务器(_S)..." Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="F7"/>
+                <MenuItem Header="新建客户端(_C)..." Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="F8"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Header="退出" Padding="8,2,0,0"/>
-            </MenuItem>
-            <MenuItem Padding="11,7,11,0" Height="30" Header="工具">
-                <MenuItem Header="日志" Padding="8,2,0,0"/>
+                <MenuItem Header="选项(_O)..." Padding="8,2,0,0" Margin="0,0,0,-2"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Header="选项" Padding="8,2,0,0"/>
+                <MenuItem Header="退出(_X)" Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="Alt+F4" Click="ExitMenuItem_Click"/>
             </MenuItem>
-            <MenuItem Padding="11,7,11,0" Height="30" Header="帮助">
-                <MenuItem Header="关于" Padding="8,2,0,0"/>
+            <MenuItem Padding="11,7,11,0" Height="30" Header="视图(_V)">
+                <MenuItem Header="终端参数管理器(_P)" Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="F3"/>
+                <MenuItem Header="终端属性管理器(_A)" Padding="8,2,0,0" Margin="0,0,0,-2" InputGestureText="F4"/>
+                <Separator Padding="0" Margin="0"/>
+                <MenuItem Header="日志管理器(_L)" Padding="8,2,0,0" Margin="0,0,0,-2"/>
+            </MenuItem>
+            <MenuItem Padding="11,7,11,0" Height="30" Header="帮助(_H)">
+                <MenuItem Header="关于(_A)..." Padding="8,2,0,0" Margin="0,0,0,-2"/>
             </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2" Height="Auto" Width="Auto">
@@ -56,9 +59,6 @@
                 </xcad:LayoutRoot.RightSide>
                 <xcad:LayoutPanel>
                     <xcad:LayoutDocumentPane>
-                        <xcad:LayoutDocument Title="主动文档">
-                            <TextBlock Width="Auto" Height="Auto"></TextBlock>
-                        </xcad:LayoutDocument>
                     </xcad:LayoutDocumentPane>
                 </xcad:LayoutPanel>
             </xcad:LayoutRoot>

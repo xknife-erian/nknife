@@ -35,5 +35,9 @@ namespace NKnife.App.SocketKit
 
         public ObservableCollection<LayoutDocument> MessageDocumentCollection { get; set; }
 
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
