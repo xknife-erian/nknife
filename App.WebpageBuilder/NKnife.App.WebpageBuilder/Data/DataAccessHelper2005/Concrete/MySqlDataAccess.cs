@@ -42,7 +42,14 @@ namespace Jeelu.Data
             connCount++;
             if (connCount == 1)
             {
-                _conn.Open();
+                try
+                {
+                    _conn.Open();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 
