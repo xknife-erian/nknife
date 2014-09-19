@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resourceText>
-  <!--object节点是利用反射技术做动态赋值，所以属性名需要大小写严格匹配-->
-  <object Name="btnAdd" Text="添加" />
-  <object Name="btnEdit" Text="修改" />
-  <object Name="btnDelete" Text="删除" />
-</resourceText>

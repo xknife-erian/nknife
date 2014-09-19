@@ -1,9 +1,0 @@
-软件在发布前需要做的事情：
-
-1.SimplusD!.ico与welcome封装到.dll文件中。
-
-2.TempForUpdate与Tools下的自动更新需要完善。
-
-3.CHS文件夹下的BlankProject文件夹需要封装到.dll文件中。
-
-4.

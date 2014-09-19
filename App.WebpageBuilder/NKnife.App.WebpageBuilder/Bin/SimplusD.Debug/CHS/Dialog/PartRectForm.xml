@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resourceText>
-  <form text="分割矩形" />
-  <control name="isRowRadioBtn" text="横向分割" />
-  <control name="isColumnRadioBtn" text="纵向分割" />
-  <control name="labelNum" text="分成矩形数:" />
-  <control name="OKBtn" text="确定" />
-  <control name="cancelBtn" text="取消" />
-</resourceText>

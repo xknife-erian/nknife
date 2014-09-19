@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<resourceText>
-  <form text="选择要保留的区域"></form>
-  <control name="labelSelect"  text="选择要保留的区域(回车确认或点击确定按钮)" />
-  <control name="OKBtn"  text="确 定" />
-  <control name="cancelBtn"  text="取 消" />
-</resourceText>
- 

@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<resourceText>
-  <control name="_btnOK" text="确定" />
-  <control name="_btnCancel" text="取消" />
-  <text name="choseChannel" value="选择频道">  
-  </text>
-  <text name="NotChoseChannel" value="未选择频道"/>
-</resourceText>

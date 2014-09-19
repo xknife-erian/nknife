@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<resourceText>
-<text name="productEdit" value="产品页面" />
-<text name="projectEdit" value="项目页面" />
-<text name="biddingEdit" value="招标页面" />
-<text name="hrEdit" value="招聘页面" />
-<text name="generalEdit" value="普通页面" />
-<text name="knowledgeEdit" value="知识页面" />
- </resourceText> 

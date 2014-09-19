@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<items>
-  <item value="1" text="中文简历" />
-  <item value="2" text="中英文简历" />
-  <item value="3" text="照片" />
-  <item value="4" text="其他证书复印件" />
-  <item value="5" text="学历证书复印件" />
-  <item value="6" text="身份证明复印件" />
-</items>

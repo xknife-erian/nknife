@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<items>
-  <item value="1" text="关键字模糊查找" />
-  <item value="2" text="在频道分类中查找" />
-  <item value="3" text="在文章中查找" />
-  <item value="4" text="在产品中查找" />
-  <item value="5" text="在招标信息中查找" />
-  <item value="6" text="在招聘信息中查找" />
-</items>
