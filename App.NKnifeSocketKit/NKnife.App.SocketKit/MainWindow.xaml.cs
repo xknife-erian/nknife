@@ -38,15 +38,26 @@ namespace NKnife.App.SocketKit
 
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("新建Socket服务器端");
-            var doc = new LayoutDocument();
-            doc.Title = "第一个文档";
-            MessageDocumentCollection.Add(doc);
+            var firstDocumentPane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            if (firstDocumentPane != null)
+            {
+                LayoutDocument doc2 = new LayoutDocument();
+                doc2.Title = "Socket服务器端";
+                doc2.IsActive = true;
+                firstDocumentPane.Children.Add(doc2);
+            }
         }
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("ClientCreatorMenuItem_Click");
+            var firstDocumentPane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            if (firstDocumentPane != null)
+            {
+                LayoutDocument doc2 = new LayoutDocument();
+                doc2.Title = "Socket客户端";
+                doc2.IsActive = true;
+                firstDocumentPane.Children.Add(doc2);
+            }
         }
 
         private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
