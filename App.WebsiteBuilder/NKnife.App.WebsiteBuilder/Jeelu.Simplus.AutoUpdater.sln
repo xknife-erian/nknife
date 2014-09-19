@@ -1,21 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeelu.Simplus.AutoUpdater", "Simplus.AppTools\Simplus.AutoUpdater\Jeelu.Simplus.AutoUpdater.csproj", "{2B073564-9D30-4660-AE4B-172DE8DB31BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplus.UpdateXmlCreator", "Simplus.AppTools\Simplus.UpdateXmlCreator\Simplus.UpdateXmlCreator.csproj", "{661EF7BB-0F8D-4ADC-98BF-A798952BF933}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 3
-		SccProjectUniqueName0 = Simplus.AppTools\\Simplus.AutoUpdater\\Jeelu.Simplus.AutoUpdater.csproj
-		SccProjectName0 = \u0022$/Jeelu/Simplus.AppTools/Simplus.AutoUpdater\u0022,\u0020WNHAAAAA
-		SccLocalPath0 = Simplus.AppTools\\Simplus.AutoUpdater
-		SccProjectUniqueName1 = Simplus.AppTools\\Simplus.UpdateXmlCreator\\Simplus.UpdateXmlCreator.csproj
-		SccProjectName1 = \u0022$/Jeelu/Simplus.AppTools/Simplus.UpdateXmlCreator\u0022,\u0020XPHAAAAA
-		SccLocalPath1 = Simplus.AppTools\\Simplus.UpdateXmlCreator
-		SccLocalPath2 = .
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
