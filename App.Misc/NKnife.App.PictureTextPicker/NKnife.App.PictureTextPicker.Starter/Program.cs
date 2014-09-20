@@ -24,7 +24,7 @@ namespace NKnife.App.PictureTextPicker.Starter
             DI.Initialize();
             logger.Info("Ninject初始化完成.");
 
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }
