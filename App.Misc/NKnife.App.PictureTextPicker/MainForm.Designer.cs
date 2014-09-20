@@ -1,4 +1,4 @@
-﻿namespace NKnife.PictureTextPicker
+﻿namespace NKnife.App.PictureTextPicker
 {
     partial class MainForm
     {
