@@ -30,16 +30,14 @@
         {
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.MainMenuStrip.SuspendLayout();
-            this.MainToolStripContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainMenuStrip
@@ -64,20 +62,6 @@
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
             this.FileToolStripMenuItem.Size = new System.Drawing.Size(58, 21);
             this.FileToolStripMenuItem.Text = "文件(&F)";
-            // 
-            // EditToolStripMenuItem
-            // 
-            this.EditToolStripMenuItem.Name = "EditToolStripMenuItem";
-            this.EditToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
-            this.EditToolStripMenuItem.Text = "编辑(&E)";
-            // 
-            // HelpToolStripMenuItem
-            // 
-            this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AboutToolStripMenuItem});
-            this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
-            this.HelpToolStripMenuItem.Text = "帮助(H)";
             // 
             // OpenFileToolStripMenuItem
             // 
@@ -105,41 +89,40 @@
             this.ExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.ExitToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.ExitToolStripMenuItem.Text = "退出(&X)";
+            this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
+            // 
+            // EditToolStripMenuItem
+            // 
+            this.EditToolStripMenuItem.Name = "EditToolStripMenuItem";
+            this.EditToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
+            this.EditToolStripMenuItem.Text = "编辑(&E)";
+            // 
+            // HelpToolStripMenuItem
+            // 
+            this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AboutToolStripMenuItem});
+            this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
+            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
+            this.HelpToolStripMenuItem.Text = "帮助(H)";
             // 
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.AboutToolStripMenuItem.Text = "关于(&A)";
-            // 
-            // MainToolStripContainer
-            // 
-            // 
-            // MainToolStripContainer.ContentPanel
-            // 
-            this.MainToolStripContainer.ContentPanel.Size = new System.Drawing.Size(566, 410);
-            this.MainToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainToolStripContainer.Location = new System.Drawing.Point(0, 25);
-            this.MainToolStripContainer.Name = "MainToolStripContainer";
-            this.MainToolStripContainer.Size = new System.Drawing.Size(616, 435);
-            this.MainToolStripContainer.TabIndex = 1;
-            this.MainToolStripContainer.Text = "toolStripContainer1";
-            this.MainToolStripContainer.TopToolStripPanelVisible = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(616, 460);
-            this.Controls.Add(this.MainToolStripContainer);
             this.Controls.Add(this.MainMenuStrip);
-            this.MainMenuStrip = this.MainMenuStrip;
+            this.IsMdiContainer = true;
             this.Name = "MainForm";
             this.Text = "图片文本采集器";
+            this.Load += new System.EventHandler(this.MainFormLoad);
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
-            this.MainToolStripContainer.ResumeLayout(false);
-            this.MainToolStripContainer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,7 +139,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripContainer MainToolStripContainer;
     }
 }
 
