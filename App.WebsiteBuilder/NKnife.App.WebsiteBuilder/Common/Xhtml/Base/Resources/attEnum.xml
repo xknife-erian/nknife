@@ -1,0 +1,301 @@
+<att>
+  <target>
+    <e k="_top">_top</e>
+    <e k="_parent">_parent</e>
+    <e k="_self">_self</e>
+    <e k="_blank">_blank</e>
+  </target>
+  <charset>
+    <e k="_iso_8859_1">iso-8859-1</e>
+    <e k="utf_8">utf-8</e>
+    <e k="shift_j_is">shift_jis</e>
+    <e k="euc_jp">euc-jp</e>
+    <e k="big5">big5</e>
+    <e k="gb2312">gb2312</e>
+    <e k="euc_kr">euc-kr</e>
+    <e k="din_66003_kr">din_66003-kr</e>
+    <e k="ns_4551_1_kr">ns_4551-1-kr</e>
+    <e k="sen_850200_b">sen_850200_b</e>
+    <e k="cs_iso2022jp">csISO2022jp</e>
+    <e k="hz_gb_2312">hz-gb-2312</e>
+    <e k="ibm852">ibm852</e>
+    <e k="ibm866">ibm866</e>
+    <e k="irv">irv</e>
+    <e k="_iso_2022_kr">iso-2022-kr</e>
+    <e k="_iso_8859_2">iso-8859-2</e>
+    <e k="_iso_8859_3">iso-8859-3</e>
+    <e k="_iso_8859_4">iso-8859-4</e>
+    <e k="_iso_8859_5">iso-8859-5</e>
+    <e k="_iso_8859_6">iso-8859-6</e>
+    <e k="_iso_8859_7">iso-8859-7</e>
+    <e k="_iso_8859_8">iso-8859-8</e>
+    <e k="_iso_8859_9">iso-8859-9</e>
+    <e k="koi8_r">koi8-r</e>
+    <e k="ks_c_5601">ks_c_5601</e>
+    <e k="windows_1250">windows-1250</e>
+    <e k="windows_1251">windows-1251</e>
+    <e k="windows_1252">windows-1252</e>
+    <e k="windows_1253">windows-1253</e>
+    <e k="windows_1254">windows-1254</e>
+    <e k="windows_1255">windows-1255</e>
+    <e k="windows_1256">windows-1256</e>
+    <e k="windows_1257">windows-1257</e>
+    <e k="windows_1258">windows-1258</e>
+    <e k="windows_874">windows-874</e>
+    <e k="x_euc">x-euc</e>
+    <e k="asmo_708">asmo-708</e>
+    <e k="dos_720">dos-720</e>
+    <e k="dos_862">dos-862</e>
+    <e k="dos_874">dos-874</e>
+    <e k="cp866">cp866</e>
+    <e k="cp1256">cp1256</e>
+  </charset>
+  <dir>
+    <e k="ltr">ltr</e>
+    <e k="rtl">rtl</e>
+  </dir>
+  <lang>
+    <e k="af">af</e>
+    <e k="sq">sq</e>
+    <e k="ar">ar</e>
+    <e k="eu">eu</e>
+    <e k="br">br</e>
+    <e k="bg">bg</e>
+    <e k="be">be</e>
+    <e k="ca">ca</e>
+    <e k="zh">zh</e>
+    <e k="hr">hr</e>
+    <e k="cs">cs</e>
+    <e k="da">da</e>
+    <e k="nl">nl</e>
+    <e k="en">en</e>
+    <e k="et">et</e>
+    <e k="fo">fo</e>
+    <e k="fa">fa</e>
+    <e k="fi">fi</e>
+    <e k="fr">fr</e>
+    <e k="gd">gd</e>
+    <e k="de">de</e>
+    <e k="el">el</e>
+    <e k="he">he</e>
+    <e k="hi">hi</e>
+    <e k="hu">hu</e>
+    <e k="_is">is</e>
+    <e k="id">id</e>
+    <e k="it">it</e>
+    <e k="ja">ja</e>
+    <e k="ko">ko</e>
+    <e k="lv">lv</e>
+    <e k="lt">lt</e>
+    <e k="mk">mk</e>
+    <e k="ms">ms</e>
+    <e k="mt">mt</e>
+    <e k="no">no</e>
+    <e k="pl">pl</e>
+    <e k="pt">pt</e>
+    <e k="rm">rm</e>
+    <e k="ro">ro</e>
+    <e k="ru">ru</e>
+    <e k="sz">sz</e>
+    <e k="sr">sr</e>
+    <e k="tn">tn</e>
+    <e k="sk">sk</e>
+    <e k="sl">sl</e>
+    <e k="es">es</e>
+    <e k="sx">sx</e>
+    <e k="sv">sv</e>
+    <e k="th">th</e>
+    <e k="ts">ts</e>
+    <e k="tr">tr</e>
+    <e k="uk">uk</e>
+    <e k="ur">ur</e>
+    <e k="vi">vi</e>
+    <e k="xh">xh</e>
+    <e k="yi">yi</e>
+    <e k="zu">zu</e>
+  </lang>
+  <noexternaldata>
+    <e k="_true">true</e>
+    <e k="_false">false</e>
+  </noexternaldata>
+  <align>
+    <e k="left">left</e>
+    <e k="right">right</e>
+    <e k="top">top</e>
+    <e k="middle">middle</e>
+    <e k="bottom">bottom</e>
+    <e k="texttop">texttop</e>
+    <e k="absmiddle">absmiddle</e>
+    <e k="baseline">baseline</e>
+    <e k="absbottom">absbottom</e>
+  </align>
+  <size>
+    <e k="_1">1</e>
+    <e k="_2">2</e>
+    <e k="_3">3</e>
+    <e k="_4">4</e>
+    <e k="_5">5</e>
+    <e k="_6">6</e>
+    <e k="_7">7</e>
+  </size>
+  <loop>
+    <e k="_1">-1</e>
+  </loop>
+  <clear>
+    <e k="none">none</e>
+    <e k="left">left</e>
+    <e k="right">right</e>
+    <e k="all">all</e>
+  </clear>
+  <type>
+    <e k="submit">submit</e>
+    <e k="reset">reset</e>
+    <e k="button">button</e>
+  </type>
+  <valign>
+    <e k="top">top</e>
+    <e k="bottom">bottom</e>
+  </valign>
+  <hidden>
+    <e k="_true">True</e>
+    <e k="_false">False</e>
+  </hidden>
+  <autostart>
+    <e k="_false">False</e>
+    <e k="_true">True</e>
+  </autostart>
+  <method>
+    <e k="get">get</e>
+    <e k="post">post</e>
+  </method>
+  <enctype>
+    <e k="application_x_www_form_urlencoded">application/x-www-form-urlencoded</e>
+    <e k="multipart_form_data">multipart/form-data</e>
+    <e k="text_plain">text/plain</e>
+  </enctype>
+  <runat>
+    <e k="server">server</e>
+  </runat>
+  <frameborder>
+    <e k="_1">1</e>
+    <e k="_0">0</e>
+    <e k="yes">Yes</e>
+    <e k="no">No</e>
+  </frameborder>
+  <scrolling>
+    <e k="auto">Auto</e>
+    <e k="yes">Yes</e>
+    <e k="no">No</e>
+  </scrolling>
+  <visibility>
+    <e k="inherit">inherit</e>
+    <e k="show">show</e>
+    <e k="hide">hide</e>
+  </visibility>
+  <start>
+    <e k="fileopen">fileopen</e>
+    <e k="mouseover">mouseover</e>
+  </start>
+  <accept>
+    <e k="text_html">text/html</e>
+    <e k="text_plain">text/plain</e>
+    <e k="application_msword">application/msword</e>
+    <e k="application_msexcel">application/msexcel</e>
+    <e k="application_postscript">application/postscript</e>
+    <e k="application_x_zip_compressed">application/x-zip-compressed</e>
+    <e k="application_pdf">application/pdf</e>
+    <e k="application_rtf">application/rtf</e>
+    <e k="video_x_msvideo">video/x-msvideo</e>
+    <e k="video_quicktime">video/quicktime</e>
+    <e k="video_x_mpeg2">video/x-mpeg2</e>
+    <e k="audio_x_pn_realaudio">audio/x-pn/realaudio</e>
+    <e k="audio_x_mpeg">audio/x-mpeg</e>
+    <e k="audio_x_waw">audio/x-waw</e>
+    <e k="audio_x_aiff">audio/x-aiff</e>
+    <e k="audio_basic">audio/basic</e>
+    <e k="image_tiff">image/tiff</e>
+    <e k="image_jpeg">image/jpeg</e>
+    <e k="image_gif">image/gif</e>
+    <e k="image_x_png">image/x-png</e>
+    <e k="image_x_photo_cd">image/x-photo-cd</e>
+    <e k="image_x_ms_bmp">image/x-MS-bmp</e>
+    <e k="image_x_rgb">image/x-rgb</e>
+    <e k="image_x_portable_pixmap">image/x-portable-pixmap</e>
+    <e k="image_x_portable_greymap">image/x-portable-greymap</e>
+    <e k="image_x_portablebitmap">image/x-portablebitmap</e>
+  </accept>
+  <media>
+    <e k="screen">screen</e>
+    <e k="tty">tty</e>
+    <e k="tv">tv</e>
+    <e k="projection">projection</e>
+    <e k="handheld">handheld</e>
+    <e k="print">print</e>
+    <e k="braille">braille</e>
+    <e k="aural">aural</e>
+    <e k="all">all</e>
+  </media>
+  <behavior>
+    <e k="scroll">scroll</e>
+    <e k="slide">slide</e>
+    <e k="alternate">alternate</e>
+  </behavior>
+  <direction>
+    <e k="left">left</e>
+    <e k="right">right</e>
+    <e k="up">up</e>
+    <e k="down">down</e>
+  </direction>
+  <http-equiv>
+    <e k="content_type">Content-Type</e>
+    <e k="expires">Expires</e>
+    <e k="description">Description</e>
+    <e k="keywords">Keywords</e>
+    <e k="pics_label">PICS-Label</e>
+    <e k="_refresh">Refresh</e>
+    <e k="reply_to">Reply-to</e>
+  </http-equiv>
+  <valuetype>
+    <e k="data">data</e>
+    <e k="_ref">ref</e>
+    <e k="_object">object</e>
+  </valuetype>
+  <language>
+    <e k="javascript">JavaScript</e>
+    <e k="javascript1_1">JavaScript1.1</e>
+    <e k="javascript1_2">JavaScript1.2</e>
+    <e k="javascript1_3">JavaScript1.3</e>
+    <e k="javascript1_4">JavaScript1.4</e>
+    <e k="javascript1_5">JavaScript1.5</e>
+    <e k="jscript">JScript</e>
+    <e k="vbscript">VBScript</e>
+    <e k="php">php</e>
+    <e k="c_sharp">C#</e>
+    <e k="vb">VB</e>
+  </language>
+  <frame>
+    <e k="_void">void</e>
+    <e k="above">above</e>
+    <e k="below">below</e>
+    <e k="hsides">hsides</e>
+    <e k="vsides">vsides</e>
+    <e k="lhs">lhs</e>
+    <e k="rhs">rhs</e>
+    <e k="box">box</e>
+    <e k="border">border</e>
+  </frame>
+  <rules>
+    <e k="none">none</e>
+    <e k="groups">groups</e>
+    <e k="rows">rows</e>
+    <e k="cols">cols</e>
+    <e k="all">all</e>
+  </rules>
+  <wrap>
+    <e k="off">off</e>
+    <e k="soft">soft</e>
+    <e k="hard">hard</e>
+    <e k="_virtual">virtual</e>
+    <e k="physical">physical</e>
+  </wrap>
+</att>

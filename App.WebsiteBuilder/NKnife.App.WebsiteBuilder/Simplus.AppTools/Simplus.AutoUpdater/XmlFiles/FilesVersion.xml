@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<versions lastVersion="1.0" rootUrl="http://update.jeelu.com:8080/sdupdate/">
+  <folder name="CHS">
+    <file name="SoftOption" version="1.0" size="3"/>
+  </folder>
+  <file name="SimplusD!.exe" version="1.0" size="7680"/>
+</versions>

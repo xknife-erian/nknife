@@ -1,0 +1,26 @@
+﻿if (lists == null)
+{
+    lists = new List<KeyValuePair<Type, AutoLayoutPanelAttribute>>();
+    Type[] types = assembly.GetTypes();
+    foreach (Type type in types)
+    {
+        if (type.IsClass)
+        {
+            object[] atts = type.GetCustomAttributes(typeof(Attribute), false);
+            if (atts.Length > 0)
+            {
+                lists.Add(new KeyValuePair<Type, AutoLayoutPanelAttribute>(type, atts[0]));// as SoftOptionClassAttribute));
+            }
+        }
+    }
+}
+
+foreach (KeyValuePair<Type, AutoLayoutPanelAttribute> pair in lists)
+{
+    ///找到了类
+    if (pair.Value.PanelName == panelName)
+    {
+        AutoLayoutPanel autoPanel = new AutoLayoutPanel(new TypeAndInterfaceArr(pair.Key), true);
+        return autoPanel;
+    }
+}

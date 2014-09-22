@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Jeelu.Logger.AbstractLogger" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAEABAAAAgsAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractLogger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Jeelu.Logger.XmlLogger" Collapsed="true">
+    <Position X="1.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAAAgAAAEAAAAAAgAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>XmlLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.ChainLogger" Collapsed="true">
+    <Position X="3.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAABACAAAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChainLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.CompositeLogger" Collapsed="true">
+    <Position X="1.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAABACAAAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompositeLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.ConsoleLogger" Collapsed="true">
+    <Position X="3.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ConsoleLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.EmptyLogger" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EmptyLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.EventLogger" Collapsed="true">
+    <Position X="3.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAACAAAAAAAAEAAAQAAgAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EventLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.FileLogger" Collapsed="true">
+    <Position X="1.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAAAgAAAEAAAAAAgAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>FileLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.Log" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAEEABABIAAmAQAAAAAAAAABAAAAACAAYQAAAiA=</HashCode>
+      <FileName>Log.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Jeelu.Logger.LogException" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LogException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.LogFormatter" Collapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAgAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>LogFormatter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.LoggerConfig" Collapsed="true">
+    <Position X="5.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LoggerConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.LoggerConfigSerializer" Collapsed="true">
+    <Position X="7.5" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAiBBAAIAAIAACAAAQAA=</HashCode>
+      <FileName>LoggerConfigSerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.LoggerFactory" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAAAAAAAAACAAAAJAgIAAAAACAAAAAAAAA=</HashCode>
+      <FileName>LoggerFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.MailLogger" Collapsed="true">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAIAACAAAAAAAAEAAAAAAkAAAABAAAAAAgAAAAI=</HashCode>
+      <FileName>MailLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.SafeLogger" Collapsed="true">
+    <Position X="1.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIAAAACAAEAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SafeLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.StreamLogger" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAEAAAAAAgAAAAAAAQAAAAEAAAA=</HashCode>
+      <FileName>StreamLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.XmlLogFile" Collapsed="true">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XmlLogFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeelu.Logger.XmlLogFileSerializer" Collapsed="true">
+    <Position X="7.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAiBBAAIAAIAACAAAQAA=</HashCode>
+      <FileName>XmlLogFileSerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Jeelu.Logger.ILog" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAEABABAAAiAAAAAAAAAAAAAAAAAAAAYAAAAAA=</HashCode>
+      <FileName>ILog.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Jeelu.Logger.ILogger" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAEAAAAAAAgAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Jeelu.Logger.LogStatus" Collapsed="true">
+    <Position X="5.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAgAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>LogStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Jeelu.Logger.LogType" Collapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAYAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LogType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Jeelu.Logger.OnLogHandler" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>OnLogHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

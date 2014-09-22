@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpCompressionModule", "src\HttpCompressionModule.csproj", "{24B5F8DA-F11C-4B77-8BF9-5D2E4534DDE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "example\Example.csproj", "{621AAC3C-38EC-4F70-80D3-68DE4829AA33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24B5F8DA-F11C-4B77-8BF9-5D2E4534DDE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24B5F8DA-F11C-4B77-8BF9-5D2E4534DDE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24B5F8DA-F11C-4B77-8BF9-5D2E4534DDE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24B5F8DA-F11C-4B77-8BF9-5D2E4534DDE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{621AAC3C-38EC-4F70-80D3-68DE4829AA33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{621AAC3C-38EC-4F70-80D3-68DE4829AA33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{621AAC3C-38EC-4F70-80D3-68DE4829AA33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{621AAC3C-38EC-4F70-80D3-68DE4829AA33}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD Xhtml 1.1//EN" "http://www.w3.org/TR/Xhtml11/DTD/Xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <!--#include virtual="/cgi-bin/GetHtml.cgi?name=_head.inc"-->
+  </head>
+  <body>
+    <div name="tmplt">
+      <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\d85907c111ef44578f697beaf1f5f4ff.inc"-->
+      <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\5b84e4c893bd48a0baa21f723db6ca13.inc"-->
+      <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\6e00aed25d8c480ba160203e0961528d.inc"-->
+      <div>
+        <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\d9f21deebb4b4daabe607a8dabb95744.inc"-->
+        <div>
+          <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\eed1dfae5a294429bfd21b31d46ad3e7.inc"-->
+          <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\5ac25201d35b4f0981d0f1268ef87308.inc"-->
+        </div>
+        <!--#include virtual="/cgi-bin/GetHtml.cgi?name=_content.inc"-->
+        <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\9c2384d3f15943c994974502b55c3aed.inc"-->
+      </div>
+      <!--#include virtual="d:\_abc\myabc\templates\e40643c600a141fe8cd33deb057ece86\d80c3cfce48f4017a148fd4715813b49.inc"-->
+    </div>
+    <h1 style="visibility:hidden;">
+      Power by:<a href="http://www.Jeelu.com" title="广告联播,捷报频传">
+        捷报
+      </a>
+      ,<a href="http://www.Jeelu.com" title="Jeelu">
+        Jeelu
+      </a>
+      ,<a href="http://www.SimplusD.com" title="网站360°">
+        网站360°
+      </a>
+    </h1>
+  </body>
+</html>

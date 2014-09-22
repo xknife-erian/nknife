@@ -106,9 +106,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands\Class1.cs" />
     <Compile Include="Commands\MenuCommandManager.cs" />
-    <Compile Include="Commands\ServerCreatorCommand.cs" />
     <Compile Include="Common\MessageDocumentCollection.cs" />
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="MainWindow.xaml.cs">

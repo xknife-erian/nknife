@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2865DDAE-A69A-4558-89BF-BCE08A4CF420}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jeelu.Tools.PathServiceCreator</RootNamespace>
+    <AssemblyName>PathServiceCreator</AssemblyName>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyText.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyText.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyText.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MyText.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="BuildData\Debug\DtdData\xhtml.dtd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="StaticText.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildData\Debug\CHS\DataSources\Age.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\Agent.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\AvailaDate.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BiddingGetMode.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BiddingType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BiddProjectIsIndustry.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BiddPubType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BiddStyle.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BidType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BorderPart.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BorderStyle.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BorderWidth.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\BorderWidthUnit.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ChannelType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\City.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ContentSortItem.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\CredentialType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\Department.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\DepartmentFunction.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\DetailDate.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\DriverLicence.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\EduLevel.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\FunctionPlace.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\FundSourceType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\Industry.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\IndustrySort.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ItemType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\KnowType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\Language.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\LanguageDesire.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\LanguageLevel.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ManageExperience.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\OffsetTime.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\OrganationType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\OutGo.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\PasswordQuestion.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\Place.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ProductProperty.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ProductType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ProductUnitPostion.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ProjectType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\PublicMode.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ResumeInclude.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\SalaryDesire.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\Sex.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\ShowItem.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\SnipType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\SoftwareOptionEnum.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\TagFindType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\TmpltType.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\WorkExperience.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\WorkPlace.xml" />
+    <Content Include="BuildData\Debug\CHS\DataSources\WorkProperty.xml" />
+    <Content Include="BuildData\Debug\CHS\DrawToolsBox.xml" />
+    <Content Include="BuildData\Debug\CHS\MainFormResourcesConfig.xml" />
+    <Content Include="BuildData\Debug\CHS\Menu.xml" />
+    <Content Include="BuildData\Debug\CHS\ResourceText.xml" />
+    <Content Include="BuildData\Debug\CHS\SiteType.xml" />
+    <Content Include="BuildData\Debug\CHS\SoftOption.xml" />
+    <Content Include="BuildData\Debug\CHS\swfobject.js" />
+    <Content Include="BuildData\Debug\CHS\ToolbarList.xml" />
+    <Content Include="BuildData\Debug\CHS\ToolsBoxItems.xml" />
+    <Content Include="BuildData\Debug\CHS\Validate.xml" />
+    <Content Include="BuildData\Debug\Config\Config.xml" />
+    <Content Include="BuildData\Debug\Config\FontList.xml" />
+    <Content Include="BuildData\Debug\Config\GlobalSetting.xml" />
+    <Content Include="BuildData\Debug\Config\HistoryInputRecord.xml" />
+    <Content Include="BuildData\Debug\Config\LayoutConfig.xml" />
+    <Content Include="BuildData\Debug\Config\PadLayout.xml" />
+    <Content Include="BuildData\Debug\Config\RecentFiles.xml" />
+    <Content Include="BuildData\Debug\Config\RecordInfo.xml" />
+    <Content Include="BuildData\Debug\DtdData\xhtml-lat1.ent" />
+    <Content Include="BuildData\Debug\DtdData\xhtml-special.ent" />
+    <Content Include="BuildData\Debug\DtdData\xhtml-symbol.ent" />
+    <Content Include="BuildData\Debug\Xslt\Channelimg.xsl" />
+    <Content Include="BuildData\Debug\Xslt\ContentSort.xsl" />
+    <Content Include="BuildData\Debug\Xslt\ContentTitleList.xsl" />
+    <Content Include="BuildData\Debug\Xslt\PageID.xsl" />
+    <Content Include="BuildData\Debug\Xslt\Pub2Svr.xsl" />
+    <Content Include="BuildData\Debug\Xslt\Text.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BuildData\Debug\CHS\BlankProject\" />
+    <Folder Include="BuildData\Debug\CHS\Dialog\" />
+    <Folder Include="BuildData\Debug\CHS\Resources\" />
+    <Folder Include="BuildData\Debug\CHS\StartupPage\" />
+    <Folder Include="BuildData\Debug\Help\" />
+    <Folder Include="BuildData\Debug\HtmlPlugIns\" />
+    <Folder Include="BuildData\Debug\Icon\" />
+    <Folder Include="BuildData\Debug\JsPlugIns\" />
+    <Folder Include="BuildData\Debug\TempForUpdate\" />
+    <Folder Include="BuildData\Debug\USER\zhangling\" />
+    <Folder Include="BuildData\Putout\" />
+    <Folder Include="BuildData\shitang_bak\PrevPublishFilesBak\" />
+    <Folder Include="BuildData\shitang_bak\Root\Resources\" />
+    <Folder Include="BuildData\shitang_bak\Temp\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

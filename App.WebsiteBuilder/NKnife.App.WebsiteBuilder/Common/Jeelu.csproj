@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ACF0DFFD-984F-47C1-8AA1-3587B48B2166}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jeelu</RootNamespace>
+    <AssemblyName>Jeelu</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Action.cs" />
+    <Compile Include="AgentInfo.cs" />
+    <Compile Include="CloseAllWindowSaveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CloseAllWindowSaveForm.Designer.cs">
+      <DependentUpon>CloseAllWindowSaveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExceptionRecord.cs" />
+    <Compile Include="GmailSmtp.cs" />
+    <Compile Include="Utility\InsideClass\Const.cs" />
+    <Compile Include="CssLib\CssLibResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CssLibResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CssLib\CssPage.cs" />
+    <Compile Include="CssLib\CssProperty.cs" />
+    <Compile Include="CssLib\CssPropertyCollection.cs" />
+    <Compile Include="CssLib\CssResourceList.cs" />
+    <Compile Include="CssLib\CssResources.cs" />
+    <Compile Include="CssLib\CssSection.cs" />
+    <Compile Include="CssLib\CssSectionCollection.cs" />
+    <Compile Include="CssLib\CssUtility.cs" />
+    <Compile Include="DepartmentData.cs" />
+    <Compile Include="EventArgs.cs" />
+    <Compile Include="MessageProtocol\MessageBag.cs" />
+    <Compile Include="MessageProtocol\MessageHead.cs" />
+    <Compile Include="MessageProtocol\Publish\FirstMessageBag.cs" />
+    <Compile Include="MessageProtocol\Publish\FileMessageBag.cs" />
+    <Compile Include="MessageService.cs" />
+    <Compile Include="MessageProtocol\MessageType.cs" />
+    <Compile Include="ProductImageData.cs" />
+    <Compile Include="ProjectPart.cs" />
+    <Compile Include="ResourcesReader\ResourcesReader.cs" />
+    <Compile Include="ResourcesReader\ResReaderAttribute.cs" />
+    <Compile Include="RichList.cs" />
+    <Compile Include="SiteResourceService.cs" />
+    <Compile Include="StringParserService.cs" />
+    <Compile Include="TypeData.cs" />
+    <Compile Include="Utility\InsideClass\DateTimeString.cs" />
+    <Compile Include="Utility\InsideClass\DllImport.cs" />
+    <Compile Include="Utility\InsideClass\Convert.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\InsideClass\File.cs" />
+    <Compile Include="Utility\InsideClass\Format.cs" />
+    <Compile Include="Utility\InsideClass\Gmail.cs" />
+    <Compile Include="Utility\InsideClass\Guid.cs" />
+    <Compile Include="Utility\InsideClass\Management.cs" />
+    <Compile Include="Utility\InsideClass\Pinyin.cs" />
+    <Compile Include="Utility\InsideClass\Regex.cs" />
+    <Compile Include="Utility\InsideClass\Draw.cs" />
+    <Compile Include="Utility\InsideClass\Form.cs" />
+    <Compile Include="Utility\InsideClass\Stream.cs" />
+    <Compile Include="Utility\InsideClass\Type.cs" />
+    <Compile Include="Utility\InsideClass\Version.cs" />
+    <Compile Include="Utility\InsideClass\Web.cs" />
+    <Compile Include="Utility\Utility.cs" />
+    <Compile Include="WebPage.cs" />
+    <Compile Include="Xhtml\Attribute\XhtmlAtts.Style.cs" />
+    <Compile Include="Xhtml\Base\XhtmlAttribute.cs" />
+    <Compile Include="Xhtml\Base\XhtmlAttributeCollection.cs" />
+    <Compile Include="Xhtml\Base\XhtmlAttributeHelper.cs" />
+    <Compile Include="Xhtml\Base\XhtmlAttributes.cs" />
+    <Compile Include="Xhtml\Base\XhtmlCData.cs" />
+    <Compile Include="Xhtml\Base\XhtmlComment.cs" />
+    <Compile Include="Xhtml\Base\XhtmlElement.cs" />
+    <Compile Include="Xhtml\Base\XhtmlEncoder.cs" />
+    <Compile Include="Xhtml\Base\XhtmlEnum.cs" />
+    <Compile Include="Xhtml\Base\XhtmlPage.cs" />
+    <Compile Include="Xhtml\Base\XhtmlParser.cs" />
+    <Compile Include="Xhtml\Base\XhtmlSection.CreatElement.cs" />
+    <Compile Include="Xhtml\Base\XhtmlSection.cs" />
+    <Compile Include="Xhtml\Base\XhtmlTagElement.cs" />
+    <Compile Include="Xhtml\Base\XhtmlTagNameTabel.cs" />
+    <Compile Include="Xhtml\Base\XhtmlTags.cs" />
+    <Compile Include="Xhtml\Base\XhtmlTCollection.cs" />
+    <Compile Include="Xhtml\Base\XhtmlText.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.A.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.Head.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.Img.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.Flash.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.MP3.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.WMA.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.RMVB_RM.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.AVI.cs" />
+    <Compile Include="Xhtml\Tag\XhtmlTags.WMV.cs" />
+    <Compile Include="XmlProjectCreator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CssLib\CssLibResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>CssLibResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CssResources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Xhtml\Base\Resources\attEnum.xml" />
+    <Content Include="Xhtml\Base\Resources\tagname.xml" />
+    <Content Include="Xhtml\History.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

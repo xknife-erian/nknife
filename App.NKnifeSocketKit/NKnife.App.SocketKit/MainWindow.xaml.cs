@@ -27,10 +27,6 @@ namespace NKnife.App.SocketKit
         {
             InitializeComponent();
             MessageDocumentCollection = DI.Get<ObservableCollection<LayoutDocument>>();
-
-            var doc = new LayoutDocument();
-            doc.Title = "第一个文档";
-            MessageDocumentCollection.Add(doc);
         }
 
         public ObservableCollection<LayoutDocument> MessageDocumentCollection { get; set; }
@@ -40,9 +36,53 @@ namespace NKnife.App.SocketKit
             Close();
         }
 
-        private void ServerCreator_Click(object sender, ExecutedRoutedEventArgs e)
+        private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("新建Socket服务器端");
+            var firstDocumentPane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            if (firstDocumentPane != null)
+            {
+                LayoutDocument doc2 = new LayoutDocument();
+                doc2.Title = "Socket服务器端";
+                doc2.IsActive = true;
+                firstDocumentPane.Children.Add(doc2);
+            }
+        }
+
+        private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            var firstDocumentPane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            if (firstDocumentPane != null)
+            {
+                LayoutDocument doc2 = new LayoutDocument();
+                doc2.Title = "Socket客户端";
+                doc2.IsActive = true;
+                firstDocumentPane.Children.Add(doc2);
+            }
+        }
+
+        private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("OptionMenuItem_Click");
+        }
+
+        private void ParamsViewMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("ParamsViewMenuItem_Click");
+        }
+
+        private void PropertiesViewMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("PropertiesViewMenuItem_Click");
+        }
+
+        private void LoggerMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("LoggerMenuItem_Click");
+        }
+
+        private void AboutMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("AboutMenuItem_Click");
         }
     }
 }

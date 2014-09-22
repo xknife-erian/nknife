@@ -1,0 +1,48 @@
+﻿
+XhtmlClass 1.0 for .net
+=======================
+
+
+Date:	2008.06.10
+Author:	Lukan (Lukan@jeelu.com)
+
+
+INTRODUCTION
+============
+
+    这是一个为SimplusD在生成页面时为更符合Xhtml规范而设计的组件。
+    本组件在设计过程中采用组合的方式，尽可能不公开一些类似XmlDocument的类型，而只公开自定义的类型。
+    本组件在设计过程中参照的XmlNode -> XmlDoucment的设计思路。
+    
+    1. XhtmlElement是取该组件中最基础的类型，XhtmlSection（节点片断）是继承自该类，
+       而XhtmlPage（Xhtml页面）继承自XhtmlSection，Xhtmlpage是类似于XmlDocumnet的一个类型，它针对的是每个Xhtml页面
+       
+    2. XhtmlAttribute类型与XML的有所不同，并没有继承，而是一个独立的类型，并强类型化该类
+    
+    3. XhtmlTagElement类型继承自XhtmlElement，它表示的是Xhtml页面中的每一个节点，根据节点名进行了
+       强类型化，同时它的实例化与XmlDoucment有所类似，也是要通过XhtmlSection或XhtmlPage类型
+       的Create方法创建，以保证各节点的上下文与父类型相同
+       
+    4. XhtmlSection有一个公共方法可以导入非来自同一文档的节点片断：ImportSection
+    
+
+COMMENTS & BUG REPORTS
+======================
+
+
+THANKS
+======
+
+    1.感谢：XhtmlParser移植自HTML PARSER FOR .NET v1.4，Author:Andy Powney (andy@powney.demon.co.uk)
+
+LEGAL
+=====	
+
+    Jeelu公司内部使用，无授权。
+
+VERSION HISTORY
+===============
+
+1.0
+	Initial release
+	移植XhtmlParser，但未完成，暂时不能使用
