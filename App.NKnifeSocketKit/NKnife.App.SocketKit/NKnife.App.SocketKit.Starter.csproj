@@ -39,26 +39,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Interactivity">
-      <HintPath>..\..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject">
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism.NinjectExtension">
-      <HintPath>..\..\packages\Prism.NinjectExtension.3.0.0.1\lib\net40\Prism.NinjectExtension.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism.NinjectExtension.StrongNamed">
-      <HintPath>..\..\packages\Prism.NinjectExtension.3.0.0.1\lib\net40\Prism.NinjectExtension.StrongNamed.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -98,6 +84,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
+      <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TcpClientView.xaml.cs">
+      <DependentUpon>TcpClientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TcpServerView.xaml.cs">
+      <DependentUpon>TcpServerView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Dialogs\NewTcpServerCreatorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -113,6 +112,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\TcpClientView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TcpServerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

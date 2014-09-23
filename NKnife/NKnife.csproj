@@ -93,6 +93,7 @@
     <Compile Include="Utility\UtilityReflection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Workbench\IAddin.cs" />
     <Compile Include="Wrapper\About.cs" />
     <Compile Include="Entities\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />

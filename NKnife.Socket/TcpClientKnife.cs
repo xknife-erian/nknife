@@ -17,7 +17,7 @@ namespace SocketKnife
     /// <summary>
     ///     轻量Socket框架客户端。
     /// </summary>
-    public abstract class ClientKnife : ISocketClient, IDisposable
+    public abstract class TcpClientKnife : ISocketClient, IDisposable
     {
         #region 成员变量
 
@@ -67,7 +67,7 @@ namespace SocketKnife
 
         #region 构造函数
 
-        protected ClientKnife(SocketMode mode, string family)
+        protected TcpClientKnife(SocketMode mode, string family)
         {
             Mode = mode;
             FamilyType = family;

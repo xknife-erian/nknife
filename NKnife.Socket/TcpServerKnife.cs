@@ -16,7 +16,7 @@ namespace SocketKnife
     /// <summary>
     ///     轻量Socket服务器端。
     /// </summary>
-    public abstract class ServerKnife : IDisposable, ISocketServer
+    public abstract class TcpServerKnife : IDisposable, ISocketServer
     {
         #region 成员变量
 
@@ -64,7 +64,7 @@ namespace SocketKnife
 
         #region 构造函数
 
-        protected ServerKnife()
+        protected TcpServerKnife()
         {
             _ClientMap = new ConcurrentDictionary<string, Socket>();
 
@@ -704,7 +704,7 @@ namespace SocketKnife
             GC.SuppressFinalize(this);
         }
 
-        ~ServerKnife()
+        ~TcpServerKnife()
         {
             Dispose(false);
         }

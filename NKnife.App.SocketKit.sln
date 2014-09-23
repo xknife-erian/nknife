@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Socket\NKnife.Socket.csproj", "{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.SocketKit", "App.NKnifeSocketKit\NKnife.App.SocketKit\NKnife.App.SocketKit.csproj", "{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.SocketKit.Starter", "App.NKnifeSocketKit\NKnife.App.SocketKit\NKnife.App.SocketKit.Starter.csproj", "{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NKnife", "NKnife", "{A9A2AA2C-6F24-4CF6-8528-B243096EBADD}"
 EndProject
