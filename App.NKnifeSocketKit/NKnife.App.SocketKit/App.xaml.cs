@@ -13,9 +13,10 @@ namespace NKnife.App.SocketKit
     /// </summary>
     public partial class App : Application
     {
-        public App()
+        protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
             DI.Initialize();
-        }
+        } 
     }
 }
