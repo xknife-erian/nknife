@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -14,7 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NKnife.App.SocketKit.Common;
 using NKnife.Ioc;
+using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
+using Xceed.Wpf.AvalonDock.Themes;
 
 namespace NKnife.App.SocketKit
 {
@@ -26,10 +29,18 @@ namespace NKnife.App.SocketKit
         public MainWindow()
         {
             InitializeComponent();
-            MessageDocumentCollection = DI.Get<ObservableCollection<LayoutDocument>>();
+            var pane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            if (pane != null)
+            {
+                _Documents = pane.Children;
+            }
+            else
+            {
+                Debug.Fail("未找到文档面板。");
+            }
         }
 
-        public ObservableCollection<LayoutDocument> MessageDocumentCollection { get; set; }
+        private ObservableCollection<LayoutContent> _Documents; 
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -38,26 +49,22 @@ namespace NKnife.App.SocketKit
 
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            var firstDocumentPane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
-            if (firstDocumentPane != null)
-            {
-                LayoutDocument doc2 = new LayoutDocument();
-                doc2.Title = "Socket服务器端";
-                doc2.IsActive = true;
-                firstDocumentPane.Children.Add(doc2);
-            }
+            LayoutDocument doc2 = new LayoutDocument();
+            doc2.Title = "Socket服务器端" + _Documents.Count + 1;
+            doc2.IsActive = true;
+            doc2.ContentId = string.Format("{0}", _Documents.Count + 1);
+            doc2.Description = string.Format("{0},{1}", doc2.Title, doc2.ContentId);
+            _Documents.Add(doc2);
         }
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            var firstDocumentPane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
-            if (firstDocumentPane != null)
-            {
-                LayoutDocument doc2 = new LayoutDocument();
-                doc2.Title = "Socket客户端";
-                doc2.IsActive = true;
-                firstDocumentPane.Children.Add(doc2);
-            }
+            LayoutDocument doc2 = new LayoutDocument();
+            doc2.Title = "Socket客户端" + _Documents.Count + 1;
+            doc2.IsActive = true;
+            doc2.ContentId = string.Format("{0}", _Documents.Count + 1);
+            doc2.Description = string.Format("{0},{1}", doc2.Title, doc2.ContentId);
+            _Documents.Add(doc2);
         }
 
         private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
@@ -84,5 +91,45 @@ namespace NKnife.App.SocketKit
         {
             MessageBox.Show("AboutMenuItem_Click");
         }
+
+
+
+        public static void ChangeTheme(DockingManager dockingManager, ThemeStyle themeStyle)
+        {
+            #region 设置控件背景的样式
+
+            Xceed.Wpf.AvalonDock.Themes.Theme theme = null;
+            switch (themeStyle)
+            {
+                case ThemeStyle.Aero:
+                    theme = new AeroTheme();
+                    break;
+                case ThemeStyle.ExpressionDark:
+                    theme = new ExpressionDarkTheme();
+                    break;
+                case ThemeStyle.ExpressionLight:
+                    theme = new ExpressionLightTheme();
+                    break;
+                case ThemeStyle.Metro:
+                    theme = new MetroTheme();
+                    break;
+                case ThemeStyle.Vs2010:
+                default:
+                    theme = new VS2010Theme();
+                    break;
+            }
+            dockingManager.Theme = theme;
+
+            #endregion
+        }
+    }
+
+    public enum ThemeStyle
+    {
+        Aero,
+        ExpressionDark,
+        ExpressionLight,
+        Metro,
+        Vs2010
     }
 }

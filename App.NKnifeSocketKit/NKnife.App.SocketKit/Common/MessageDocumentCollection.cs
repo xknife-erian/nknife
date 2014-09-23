@@ -7,7 +7,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NKnife.App.SocketKit.Common
 {
-    public class MessageDocumentCollection : ObservableCollection<LayoutDocument>
+    public class MessageDocumentCollection : ObservableCollection<LayoutContent>
     {
     }
 }

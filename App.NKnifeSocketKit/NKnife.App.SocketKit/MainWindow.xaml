@@ -47,7 +47,7 @@
         <StatusBar Grid.Row="2" Height="Auto" Width="Auto">
             <StatusBarItem Content="1.0.11.2345"></StatusBarItem>
         </StatusBar>
-        <xcad:DockingManager Grid.Row="1" x:Name="_DockingManager" DocumentsSource="{Binding MessageDocumentCollection}">
+        <xcad:DockingManager Grid.Row="1" x:Name="_DockingManager">
             <xcad:DockingManager.Theme>
                 <xcad:VS2010Theme />
                 <!--<xcad:AeroTheme/>-->
@@ -71,8 +71,7 @@
                     </xcad:LayoutAnchorSide>
                 </xcad:LayoutRoot.RightSide>
                 <xcad:LayoutPanel>
-                    <xcad:LayoutDocumentPane>
-                    </xcad:LayoutDocumentPane>
+                    <xcad:LayoutDocumentPane/>
                 </xcad:LayoutPanel>
             </xcad:LayoutRoot>
         </xcad:DockingManager>
