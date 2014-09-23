@@ -79,8 +79,8 @@
     <Compile Include="Interfaces\Sockets\ISocketServer.cs" />
     <Compile Include="Interfaces\Sockets\ISocketServerSetting.cs" />
     <Compile Include="Interfaces\Sockets\ISocketSession.cs" />
-    <Compile Include="ClientKnife.cs" />
-    <Compile Include="ServerKnife.cs" />
+    <Compile Include="TcpClientKnife.cs" />
+    <Compile Include="TcpServerKnife.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\AbstractProtocol.cs" />
     <Compile Include="Protocol\Implementation\Byte4Decoder.cs" />
