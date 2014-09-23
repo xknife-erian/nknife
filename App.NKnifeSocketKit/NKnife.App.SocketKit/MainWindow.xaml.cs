@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NKnife.App.SocketKit.Common;
+using NKnife.App.SocketKit.Views;
 using NKnife.Ioc;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -49,22 +50,14 @@ namespace NKnife.App.SocketKit
 
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            LayoutDocument doc2 = new LayoutDocument();
-            doc2.Title = "Socket服务器端" + _Documents.Count + 1;
-            doc2.IsActive = true;
-            doc2.ContentId = string.Format("{0}", _Documents.Count + 1);
-            doc2.Description = string.Format("{0},{1}", doc2.Title, doc2.ContentId);
-            _Documents.Add(doc2);
+            var view = new TcpServerView();
+            _Documents.Add(view);
         }
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            LayoutDocument doc2 = new LayoutDocument();
-            doc2.Title = "Socket客户端" + _Documents.Count + 1;
-            doc2.IsActive = true;
-            doc2.ContentId = string.Format("{0}", _Documents.Count + 1);
-            doc2.Description = string.Format("{0},{1}", doc2.Title, doc2.ContentId);
-            _Documents.Add(doc2);
+            var view = new TcpClientView();
+            _Documents.Add(view);
         }
 
         private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
@@ -91,8 +84,6 @@ namespace NKnife.App.SocketKit
         {
             MessageBox.Show("AboutMenuItem_Click");
         }
-
-
 
         public static void ChangeTheme(DockingManager dockingManager, ThemeStyle themeStyle)
         {

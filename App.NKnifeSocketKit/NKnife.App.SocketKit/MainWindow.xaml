@@ -61,7 +61,7 @@
                 <xcad:LayoutRoot.RightSide>
                     <xcad:LayoutAnchorSide>
                         <xcad:LayoutAnchorGroup>
-                            <xcad:LayoutAnchorable Title="参数" AutoHideWidth="180" ContentId="Right1">
+                            <xcad:LayoutAnchorable  Title="参数" AutoHideWidth="180" ContentId="Right1">
                                 <TextBox Width="Auto" />
                             </xcad:LayoutAnchorable>
                             <xcad:LayoutAnchorable Title="属性" AutoHideWidth="180" ContentId="Right2">

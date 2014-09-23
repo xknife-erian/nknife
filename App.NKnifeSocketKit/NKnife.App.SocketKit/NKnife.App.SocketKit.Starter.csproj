@@ -84,6 +84,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
+      <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TcpClientView.xaml.cs">
+      <DependentUpon>TcpClientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TcpServerView.xaml.cs">
+      <DependentUpon>TcpServerView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Dialogs\NewTcpServerCreatorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,6 +112,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\TcpClientView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TcpServerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
