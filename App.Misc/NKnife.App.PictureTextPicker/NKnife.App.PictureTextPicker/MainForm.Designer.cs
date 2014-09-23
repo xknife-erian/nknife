@@ -77,6 +77,7 @@
             this.OpenDirectoryToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.OpenDirectoryToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.OpenDirectoryToolStripMenuItem.Text = "打开目录(&D)...";
+            this.OpenDirectoryToolStripMenuItem.Click += new System.EventHandler(this.OpenDirectoryToolStripMenuItemClick);
             // 
             // toolStripSeparator1
             // 

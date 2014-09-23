@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using NKnife.App.PictureTextPicker.Common.Base;
 using NKnife.App.PictureTextPicker.Views;
 using NKnife.Ioc;
 using NKnife.Logging.Base;
@@ -15,10 +18,12 @@ namespace NKnife.App.PictureTextPicker
 
         private string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
         private readonly DockPanel _DockPanel = new DockPanel();
-        private readonly DockContent _ProjectView = DI.Get<ProjectView>();
+        private readonly DockContent _PictureListView = DI.Get<PictureListView>();
         private readonly DockContent _PropertyGridView = DI.Get<PropertyGridView>();
-        private readonly DockContent _RectangleListView = DI.Get<RectangleListView>();
+        private readonly DockContent _PictureThumbView = DI.Get<PictureThumbView>();
         private readonly DockContent _LogView = DI.Get<LogView>();
+
+        private readonly IPictureList _PictureList = DI.Get<IPictureList>();
 
         public MainForm()
         {
@@ -67,12 +72,12 @@ namespace NKnife.App.PictureTextPicker
 
         private IDockContent GetContentForm(string xml)
         {
-            if (xml == typeof(ProjectView).ToString())
-                return _ProjectView;
+            if (xml == typeof(PictureListView).ToString())
+                return _PictureListView;
             if (xml == typeof(PropertyGridView).ToString())
                 return _PropertyGridView;
-            if (xml == typeof(RectangleListView).ToString())
-                return _RectangleListView;
+            if (xml == typeof(PictureThumbView).ToString())
+                return _PictureThumbView;
             if (xml == typeof (LogView).ToString())
                 return _LogView;
             return null;
@@ -80,8 +85,8 @@ namespace NKnife.App.PictureTextPicker
 
         private void InitializeDefaultViews()
         {
-            _ProjectView.Show(_DockPanel, DockState.DockLeft);
-            _RectangleListView.Show(_DockPanel, DockState.DockRight);
+            _PictureListView.Show(_DockPanel, DockState.DockLeft);
+            _PictureThumbView.Show(_DockPanel, DockState.DockRight);
             _PropertyGridView.Show(_DockPanel, DockState.DockRight);
             _LogView.Show(_DockPanel,DockState.DockBottom);
         }
@@ -91,8 +96,32 @@ namespace NKnife.App.PictureTextPicker
         {
             Close();
         }
-        #endregion
 
+
+        /// <summary>
+        /// 打开目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenDirectoryToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var folderDlg = new FolderBrowserDialog();
+            folderDlg.ShowDialog();
+            var path = folderDlg.SelectedPath;
+            if (!string.IsNullOrEmpty(path))
+            {
+                LoadPicturesInFolders(path);
+            }
+           
+        }
+
+        private void LoadPicturesInFolders(string path)
+        {
+            var di = new DirectoryInfo(path);
+            var lst = di.GetFiles("*.jpg", SearchOption.AllDirectories).Select(file => file.FullName).ToList();
+            _PictureList.AddRange(lst);
+        }
+        #endregion
 
     }
 }

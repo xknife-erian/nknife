@@ -29,6 +29,7 @@ namespace NKnife.App.PictureTextPicker.Views
             this.Controls.Add(this.propertyGrid1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "PropertyGridView";
+            this.Text = "属性";
             this.ResumeLayout(false);
 
         }

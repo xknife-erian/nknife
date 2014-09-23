@@ -68,13 +68,13 @@
     <Compile Include="Views\LogView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ProjectView.cs">
+    <Compile Include="Views\PictureListView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\PropertyGridView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\RectangleListView.cs">
+    <Compile Include="Views\PictureThumbView.cs">
       <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
@@ -93,14 +93,14 @@
     <EmbeddedResource Include="Views\LogView.resx">
       <DependentUpon>LogView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProjectView.resx">
-      <DependentUpon>ProjectView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\PictureListView.resx">
+      <DependentUpon>PictureListView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\PropertyGridView.resx">
       <DependentUpon>PropertyGridView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\RectangleListView.resx">
-      <DependentUpon>RectangleListView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\PictureThumbView.resx">
+      <DependentUpon>PictureThumbView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -118,10 +118,12 @@
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NKnife.App.PictureTextPicker.Common\NKnife.App.PictureTextPicker.Common.csproj">
+      <Project>{E29ED242-DF99-4D00-AE38-1267C6FCAE45}</Project>
+      <Name>NKnife.App.PictureTextPicker.Common</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DockContents\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="license.txt" />
   </ItemGroup>
