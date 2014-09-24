@@ -52,5 +52,19 @@ namespace System
             }
             return new byte[0];
         }
+
+        /// <summary>
+        /// 判断指定整数是否在范围内， 大于min,小于max
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="min">范围下限</param>
+        /// <param name="max">范围上限</param>
+        /// <param name="includeMin">包含下限</param>
+        /// <param name="inclueMax">包含上限</param>
+        /// <returns></returns>
+        public static bool InRange(this int source, int min, int max, bool includeMin = false, bool inclueMax = false)
+        {
+            return ((source > min || (includeMin && source == min) && (source < max || (inclueMax && source == max))));
+        }
     }
 }

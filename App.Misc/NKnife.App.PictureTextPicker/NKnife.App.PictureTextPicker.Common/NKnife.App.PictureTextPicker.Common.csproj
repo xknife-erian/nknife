@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppOption.cs" />
+    <Compile Include="Base\IAppOption.cs" />
     <Compile Include="Base\IPictureList.cs" />
     <Compile Include="PictureList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

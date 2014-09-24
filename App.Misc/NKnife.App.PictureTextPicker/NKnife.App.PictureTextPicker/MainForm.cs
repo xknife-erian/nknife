@@ -118,10 +118,28 @@ namespace NKnife.App.PictureTextPicker
         private void LoadPicturesInFolders(string path)
         {
             var di = new DirectoryInfo(path);
-            var lst = di.GetFiles("*.jpg", SearchOption.AllDirectories).Select(file => file.FullName).ToList();
-            _PictureList.AddRange(lst);
+            var lstAll = new List<string>();
+            var lst = di.EnumerateFiles("*.jpg", SearchOption.AllDirectories).Select(file => file.FullName).ToList();
+            lstAll.AddRange(lst);
+            lst = di.EnumerateFiles("*.png", SearchOption.AllDirectories).Select(file => file.FullName).ToList();
+            lstAll.AddRange(lst);
+
+            _PictureList.AddRange(lstAll);
+        }
+
+        /// <summary>
+        /// 参数设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var optionFrm = new AppOptionSetting();
+            optionFrm.ShowDialog();
         }
         #endregion
+
+
 
     }
 }

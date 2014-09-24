@@ -16,6 +16,7 @@ namespace NKnife.App.PictureTextPicker.Ioc
         {
             Bind<IAbout>().To<About>().InSingletonScope();
             Bind<IPictureList>().To<PictureList>().InSingletonScope();
+            Bind<IAppOption>().To<AppOption>().InSingletonScope();
         }
     }
 }

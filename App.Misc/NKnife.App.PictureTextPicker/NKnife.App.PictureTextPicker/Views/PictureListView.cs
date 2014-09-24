@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace NKnife.App.PictureTextPicker.Views
         {
             InitializeComponent();
 
+            _PictureListFlowLayoutPanel.WrapContents = true;
             _PictureList.PictureListChanged += PictureListChanged;
         }
 
@@ -30,7 +32,7 @@ namespace NKnife.App.PictureTextPicker.Views
                 {
                     ImageLocation = path, 
                     WaitOnLoad = false,
-                    Width = this.Width - 20,
+                    BackColor = Color.Black,
                 };
 
                 _PictureListFlowLayoutPanel.Controls.Add(picBox);
