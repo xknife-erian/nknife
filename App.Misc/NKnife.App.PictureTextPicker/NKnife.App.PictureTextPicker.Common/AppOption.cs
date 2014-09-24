@@ -6,22 +6,14 @@ using NKnife.App.PictureTextPicker.Common.Base;
 
 namespace NKnife.App.PictureTextPicker.Common
 {
-    public class AppOption : IAppOption
+    public class AppOption : BaseAppOption
     {
-        
         public AppOption()
         {
-            
-        }
-
-        public void SetOption<T>(string type, T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T GetOption<T>(string type)
-        {
-            throw new NotImplementedException();
+            SetOption("ThumbWidth",180);
+            SetOption("ThumbHeight",100);
+            SetOption("PictureFileType","jpg");
+            SetOption("FixThumbSize",false);
         }
     }
 }

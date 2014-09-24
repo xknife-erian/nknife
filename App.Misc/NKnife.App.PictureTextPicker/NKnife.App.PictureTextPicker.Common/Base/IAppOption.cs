@@ -7,7 +7,7 @@ namespace NKnife.App.PictureTextPicker.Common.Base
 {
     public interface IAppOption
     {
-        void SetOption<T>(string type, T value);
-        T GetOption<T>(string type);
+        void SetOption<T>(string key, T value);
+        T GetOption<T>(string key) where T : class, new();
     }
 }
