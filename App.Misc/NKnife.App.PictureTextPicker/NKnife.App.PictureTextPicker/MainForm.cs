@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
+using NKnife.App.PictureTextPicker.Common;
 using NKnife.App.PictureTextPicker.Common.Base;
 using NKnife.App.PictureTextPicker.Views;
 using NKnife.Ioc;
@@ -14,9 +16,9 @@ namespace NKnife.App.PictureTextPicker
 {
     public partial class MainForm : Form
     {
-        private Logger _Logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _Logger = LogManager.GetCurrentClassLogger();
 
-        private string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
+        private readonly string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
         private readonly DockPanel _DockPanel = new DockPanel();
         private readonly DockContent _PictureListView = DI.Get<PictureListView>();
         private readonly DockContent _PropertyGridView = DI.Get<PropertyGridView>();
@@ -24,6 +26,7 @@ namespace NKnife.App.PictureTextPicker
         private readonly DockContent _LogView = DI.Get<LogView>();
 
         private readonly IPictureList _PictureList = DI.Get<IPictureList>();
+        private IAppOption _AppOption = DI.Get<IAppOption>();
 
         public MainForm()
         {
@@ -51,7 +54,7 @@ namespace NKnife.App.PictureTextPicker
 
         private void InitializeDockPanel()
         {
-            Controls.Add(_DockPanel);
+            MainToolStripContainer.ContentPanel.Controls.Add(_DockPanel);
             _DockPanel.DocumentStyle = DocumentStyle.DockingMdi;
             _DockPanel.Dock = DockStyle.Fill;
             _DockPanel.BringToFront();
@@ -110,7 +113,7 @@ namespace NKnife.App.PictureTextPicker
             var path = folderDlg.SelectedPath;
             if (!string.IsNullOrEmpty(path))
             {
-                LoadPicturesInFolders(path);
+                
             }
            
         }
@@ -137,7 +140,26 @@ namespace NKnife.App.PictureTextPicker
             var optionFrm = new AppOptionSetting();
             optionFrm.ShowDialog();
         }
+
+        private void CreateThumbNailBackgroundWorkerDoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            string pictureDirectory = _AppOption.GetOption("PictureDirectory","");
+            int thumbNailWidth = _AppOption.GetOption("ThumbWidth", 180);
+            int thumbNailHeight = _AppOption.GetOption("ThumbHeight", 100);
+            string pictureType = _AppOption.GetOption("PictureFileType", "jpg");
+            bool fixThumbSize = _AppOption.GetOption("FixThumbSize", false);
+            string thumbNailDirectory = Path.Combine(Application.StartupPath, "thumbnail");
+
+            ThumbNailHelper.GetSmallPicListMethod(pictureDirectory, thumbNailDirectory, thumbNailWidth, thumbNailHeight, pictureType, fixThumbSize);
+        }
+
+        private void CreateThumbNailBackgroundWorkerRunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            
+        }
         #endregion
+
+
 
 
 

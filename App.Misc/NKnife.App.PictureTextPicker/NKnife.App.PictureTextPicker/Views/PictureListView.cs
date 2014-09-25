@@ -12,53 +12,38 @@ namespace NKnife.App.PictureTextPicker.Views
 {
     public class PictureListView :DockContent
     {
-        private FlowLayoutPanel _PictureListFlowLayoutPanel;
+        private WebBrowser ThumbNailListWebBrowser;
         private IPictureList _PictureList = DI.Get<IPictureList>();
 
         public PictureListView()
         {
             InitializeComponent();
-
-            _PictureListFlowLayoutPanel.WrapContents = true;
             _PictureList.PictureListChanged += PictureListChanged;
         }
 
         private void PictureListChanged(object sender, EventArgs eventArgs)
         {
-            _PictureListFlowLayoutPanel.Controls.Clear();
-            foreach (var path in _PictureList.FilePathList)
-            {
-                var picBox = new PictureBox
-                {
-                    ImageLocation = path, 
-                    WaitOnLoad = false,
-                    BackColor = Color.Black,
-                };
-
-                _PictureListFlowLayoutPanel.Controls.Add(picBox);
-            }
-            
+           
         }
 
         protected void InitializeComponent()
         {
-            this._PictureListFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ThumbNailListWebBrowser = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
-            // PictureListFlowLayoutPanel
+            // ThumbNailListWebBrowser
             // 
-            this._PictureListFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._PictureListFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this._PictureListFlowLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this._PictureListFlowLayoutPanel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this._PictureListFlowLayoutPanel.Name = "_PictureListFlowLayoutPanel";
-            this._PictureListFlowLayoutPanel.Size = new System.Drawing.Size(378, 366);
-            this._PictureListFlowLayoutPanel.TabIndex = 0;
+            this.ThumbNailListWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ThumbNailListWebBrowser.Location = new System.Drawing.Point(0, 0);
+            this.ThumbNailListWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.ThumbNailListWebBrowser.Name = "ThumbNailListWebBrowser";
+            this.ThumbNailListWebBrowser.Size = new System.Drawing.Size(378, 366);
+            this.ThumbNailListWebBrowser.TabIndex = 0;
             // 
             // PictureListView
             // 
             this.ClientSize = new System.Drawing.Size(378, 366);
-            this.Controls.Add(this._PictureListFlowLayoutPanel);
+            this.Controls.Add(this.ThumbNailListWebBrowser);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "PictureListView";
             this.Text = "图片列表";

@@ -9,5 +9,8 @@ namespace NKnife.App.PictureTextPicker.Common.Base
     {
         void SetOption<T>(string key, T value);
         T GetOption<T>(string key) where T : class, new();
+        int GetOption(string key, int defaultValue = 0);
+        string GetOption(string key, string defaultValue = "");
+        bool GetOption(string key, bool defaultValue = false);
     }
 }

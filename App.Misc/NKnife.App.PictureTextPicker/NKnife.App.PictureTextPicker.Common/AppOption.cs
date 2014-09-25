@@ -10,6 +10,7 @@ namespace NKnife.App.PictureTextPicker.Common
     {
         public AppOption()
         {
+            SetOption("PictureDirectory","");
             SetOption("ThumbWidth",180);
             SetOption("ThumbHeight",100);
             SetOption("PictureFileType","jpg");

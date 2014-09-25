@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,7 +39,20 @@
             this.SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateThumbNailBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.MainToolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StatusToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.HolderToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.OperationToolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.MainMenuStrip.SuspendLayout();
+            this.MainToolStripContainer.BottomToolStripPanel.SuspendLayout();
+            this.MainToolStripContainer.TopToolStripPanel.SuspendLayout();
+            this.MainToolStripContainer.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainMenuStrip
@@ -122,18 +136,109 @@
             this.AboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.AboutToolStripMenuItem.Text = "关于(&A)";
             // 
+            // CreateThumbNailBackgroundWorker
+            // 
+            this.CreateThumbNailBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.CreateThumbNailBackgroundWorkerDoWork);
+            this.CreateThumbNailBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.CreateThumbNailBackgroundWorkerRunWorkerCompleted);
+            // 
+            // MainToolStripContainer
+            // 
+            // 
+            // MainToolStripContainer.BottomToolStripPanel
+            // 
+            this.MainToolStripContainer.BottomToolStripPanel.Controls.Add(this.statusStrip1);
+            // 
+            // MainToolStripContainer.ContentPanel
+            // 
+            this.MainToolStripContainer.ContentPanel.Size = new System.Drawing.Size(616, 388);
+            this.MainToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainToolStripContainer.LeftToolStripPanelVisible = false;
+            this.MainToolStripContainer.Location = new System.Drawing.Point(0, 25);
+            this.MainToolStripContainer.Name = "MainToolStripContainer";
+            this.MainToolStripContainer.RightToolStripPanelVisible = false;
+            this.MainToolStripContainer.Size = new System.Drawing.Size(616, 435);
+            this.MainToolStripContainer.TabIndex = 1;
+            this.MainToolStripContainer.Text = "toolStripContainer1";
+            // 
+            // MainToolStripContainer.TopToolStripPanel
+            // 
+            this.MainToolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(33, 25);
+            this.toolStrip1.TabIndex = 0;
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "打开";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusToolStripStatusLabel,
+            this.HolderToolStripStatusLabel,
+            this.OperationToolStripProgressBar});
+            this.statusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(616, 22);
+            this.statusStrip1.TabIndex = 0;
+            // 
+            // StatusToolStripStatusLabel
+            // 
+            this.StatusToolStripStatusLabel.AutoSize = false;
+            this.StatusToolStripStatusLabel.Name = "StatusToolStripStatusLabel";
+            this.StatusToolStripStatusLabel.Size = new System.Drawing.Size(80, 17);
+            this.StatusToolStripStatusLabel.Text = "就绪";
+            this.StatusToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // HolderToolStripStatusLabel
+            // 
+            this.HolderToolStripStatusLabel.Name = "HolderToolStripStatusLabel";
+            this.HolderToolStripStatusLabel.Size = new System.Drawing.Size(40, 17);
+            this.HolderToolStripStatusLabel.Spring = true;
+            this.HolderToolStripStatusLabel.Text = "        ";
+            // 
+            // OperationToolStripProgressBar
+            // 
+            this.OperationToolStripProgressBar.Name = "OperationToolStripProgressBar";
+            this.OperationToolStripProgressBar.Size = new System.Drawing.Size(200, 16);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(616, 460);
+            this.Controls.Add(this.MainToolStripContainer);
             this.Controls.Add(this.MainMenuStrip);
-            this.IsMdiContainer = true;
             this.Name = "MainForm";
             this.Text = "图片文本采集器";
             this.Load += new System.EventHandler(this.MainFormLoad);
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
+            this.MainToolStripContainer.BottomToolStripPanel.ResumeLayout(false);
+            this.MainToolStripContainer.BottomToolStripPanel.PerformLayout();
+            this.MainToolStripContainer.TopToolStripPanel.ResumeLayout(false);
+            this.MainToolStripContainer.TopToolStripPanel.PerformLayout();
+            this.MainToolStripContainer.ResumeLayout(false);
+            this.MainToolStripContainer.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,6 +256,14 @@
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SettingToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker CreateThumbNailBackgroundWorker;
+        private System.Windows.Forms.ToolStripContainer MainToolStripContainer;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel StatusToolStripStatusLabel;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripStatusLabel HolderToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripProgressBar OperationToolStripProgressBar;
     }
 }
 

@@ -76,6 +76,9 @@
     <Compile Include="Views\LogView.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Views\PictureEditView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\PictureListView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +106,9 @@
     </Compile>
     <EmbeddedResource Include="Views\LogView.resx">
       <DependentUpon>LogView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PictureEditView.resx">
+      <DependentUpon>PictureEditView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\PictureListView.resx">
       <DependentUpon>PictureListView.cs</DependentUpon>
