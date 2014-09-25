@@ -16,7 +16,7 @@ namespace SocketKnife
     /// <summary>
     ///     轻量Socket服务器端。
     /// </summary>
-    public abstract class TcpServerKnife : IDisposable, ISocketServer
+    public class TcpServerKnife : IDisposable, ISocketServer
     {
         #region 成员变量
 
@@ -64,12 +64,18 @@ namespace SocketKnife
 
         #region 构造函数
 
-        protected TcpServerKnife()
+        public TcpServerKnife()
         {
             _ClientMap = new ConcurrentDictionary<string, Socket>();
 
             _AutoReset = new AutoResetEvent[1];
             _AutoReset[0] = new AutoResetEvent(false);
+        }
+
+        public TcpServerKnife SetProtocolFactory(ProtocolFactory protocolFactory)
+        {
+            Protocols = protocolFactory;
+            return this;
         }
 
         #endregion
@@ -84,9 +90,9 @@ namespace SocketKnife
         /// <summary>
         ///     协议的创建工厂
         /// </summary>
-        public abstract ProtocolFactory Protocols { get; }
+        public ProtocolFactory Protocols { get; private set; }
 
-        public abstract ISocketServerSetting Option { get; }
+        public ISocketServerSetting Option { get; private set; }
 
         public SocketMode Mode { get; set; }
 
