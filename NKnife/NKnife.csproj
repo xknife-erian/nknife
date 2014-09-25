@@ -76,6 +76,7 @@
     <Compile Include="Chinese\Spell.cs" />
     <Compile Include="Chinese\SpellRandom.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
+    <Compile Include="Extensions\WindowExtension.cs" />
     <Compile Include="FTP\FtpFileListStyle.cs" />
     <Compile Include="FTP\FtpFileStruct.cs" />
     <Compile Include="FTP\FtpDelegates.cs" />
