@@ -81,6 +81,7 @@
     <Compile Include="Interfaces\Sockets\ISocketSession.cs" />
     <Compile Include="TcpClientKnife.cs" />
     <Compile Include="TcpServerKnife.cs" />
+    <Compile Include="TcpServerKnifeOld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\AbstractProtocol.cs" />
     <Compile Include="Protocol\Implementation\Byte4Decoder.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Protocol\ProtocolFamily.cs" />
     <Compile Include="Protocol\Protocols.cs" />
     <Compile Include="Protocol\ProtocolTools.cs" />
+    <Compile Include="TempServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\ConfigDemo.xml" />

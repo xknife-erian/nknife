@@ -20,7 +20,7 @@ namespace NKnife.App.SocketKit.Dialogs
     /// </summary>
     public partial class NewTcpServerCreatorDialog : Window
     {
-        private TcpServerKnife _Server;
+        private TcpServerKnifeOld _Server;
 
         public NewTcpServerCreatorDialog()
         {
@@ -28,7 +28,7 @@ namespace NKnife.App.SocketKit.Dialogs
             _LocalIpBox.Items.Add("192.168.2.123");
             _LocalIpBox.Items.Add("192.168.2.255");
 
-            _Server = new TcpServerKnife();
+            _Server = new TcpServerKnifeOld();
             _Server.SetProtocolFactory(null);//ProtocolFactory);
         }
 

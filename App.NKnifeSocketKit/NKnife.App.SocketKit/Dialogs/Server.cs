@@ -8,7 +8,7 @@ using SocketKnife.Protocol;
 
 namespace NKnife.App.SocketKit.Dialogs
 {
-    class Server :TcpServerKnife
+    class Server :TcpServerKnifeOld
     {
 
     }
