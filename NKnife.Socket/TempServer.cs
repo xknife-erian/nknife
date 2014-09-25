@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SocketKnife.Interfaces.Sockets;
+﻿using NKnife.Socket.Filters;
+using NKnife.Socket.Interfaces;
 
-namespace SocketKnife
+namespace NKnife.Socket
 {
     internal class TempServer
     {
@@ -20,47 +17,5 @@ namespace SocketKnife
             server.ReStart();
             server.Stop();
         }
-    }
-
-    public class LoggingFilter : IFilter
-    {
-    }
-
-    public class ProtocolCodecFilter : IFilter
-    {
-    }
-
-    public class KeepFilter : IFilter
-    {
-        public KeepFilter(bool b)
-        {
-        }
-    }
-
-    public interface ISocketServerKnife
-    {
-        void Bind(string localhost, int port);
-        ISocketConfig GetConfig { get; }
-        IFilterChain GetFilterChain();
-        void Start();
-        void ReStart();
-        void Stop();
-    }
-
-    public interface IFilterChain : IDictionary<string, IFilter>
-    {
-        IFilter AddLast(string key, IFilter filter);
-        IFilter AddFirst(string key, IFilter filter);
-        IFilter Insert(int index, string key, IFilter filter);
-    }
-
-    public interface IFilter
-    {
-    }
-
-    public interface ISocketConfig
-    {
-        void SetReadBufferSize(int size);
-        void SetIdleTime(object bothIdle, int i);
     }
 }

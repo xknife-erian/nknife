@@ -7,7 +7,7 @@
     <ProjectGuid>{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocketKnife</RootNamespace>
+    <RootNamespace>NKnife.Socket</RootNamespace>
     <AssemblyName>SocketKnife</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,6 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IFilter.cs" />
+    <Compile Include="Interfaces\IFilterChain.cs" />
+    <Compile Include="Interfaces\ISocketConfig.cs" />
+    <Compile Include="Interfaces\ISocketServerKnife.cs" />
+    <Compile Include="Filters\KeepFilter.cs" />
+    <Compile Include="Filters\LoggingFilter.cs" />
+    <Compile Include="Filters\ProtocolCodecFilter.cs" />
     <Compile Include="TcpServerKnife.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TempServer.cs" />
