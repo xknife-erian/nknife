@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NKnife.App.SocketKit.Common;
+using NKnife.App.SocketKit.Dialogs;
 using NKnife.App.SocketKit.Views;
 using NKnife.Ioc;
 using Xceed.Wpf.AvalonDock;
@@ -41,7 +42,7 @@ namespace NKnife.App.SocketKit
             }
         }
 
-        private ObservableCollection<LayoutContent> _Documents; 
+        private readonly ObservableCollection<LayoutContent> _Documents; 
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -56,8 +57,13 @@ namespace NKnife.App.SocketKit
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new TcpClientView();
-            _Documents.Add(view);
+            var win = new NewTcpServerCreatorDialog();
+            var showDialog = win.ShowDialog(this);
+            if (showDialog != null && (bool) showDialog)
+            {
+            }
+            //var view = new TcpClientView();
+            //_Documents.Add(view);
         }
 
         private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)

@@ -87,6 +87,7 @@
     <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
       <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Server.cs" />
     <Compile Include="Views\TcpClientView.xaml.cs">
       <DependentUpon>TcpClientView.xaml</DependentUpon>
     </Compile>
@@ -139,6 +140,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.Socket\NKnife.Socket.csproj">
+      <Project>{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}</Project>
+      <Name>NKnife.Socket</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}</Project>
       <Name>NKnife</Name>
