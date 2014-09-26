@@ -7,7 +7,6 @@ using Ninject.Parameters;
 using Ninject.Planning.Bindings;
 using Ninject.Syntax;
 using NKnife.Utility.File;
-using NLog;
 
 namespace NKnife.Ioc
 {

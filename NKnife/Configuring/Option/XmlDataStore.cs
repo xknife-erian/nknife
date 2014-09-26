@@ -7,17 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using NKnife.Adapters;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
+using NKnife.Interface;
 using NKnife.Utility;
-using NLog;
 
 namespace NKnife.Configuring.Option
 {
     public class XmlDataStore : IOptionDataStore
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         #region IOptionDataStore实现
 

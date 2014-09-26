@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
+using NKnife.Adapters;
 using NKnife.Attributes;
-using NLog;
+using NKnife.Interface;
 
 namespace System.Data
 {
     public static class DataExtensions
     {
 
-        private static readonly NLog.Logger _Logger = LogManager.GetCurrentClassLogger();  
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();  
         
         /// <summary>像Linq to DataSet中得到字段值的操作
         /// </summary>

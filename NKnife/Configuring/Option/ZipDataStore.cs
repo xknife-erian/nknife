@@ -5,13 +5,13 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using NKnife.Adapters;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Interface;
 using NKnife.Ioc;
 using NKnife.Utility.File;
-using NLog;
 
 namespace NKnife.Configuring.Option
 {
@@ -20,7 +20,7 @@ namespace NKnife.Configuring.Option
     /// </summary>
     public class ZipDataStore : IOptionDataStore
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>Gean.Configuring框架中Option部份的程序员配置
         /// </summary>

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using NKnife.Adapters;
 using NKnife.Data.Interface;
-using NLog;
+using NKnife.Interface;
 
 namespace NKnife.Data.Common
 {
     public abstract class DatabaseHelper : IDataBaseHelper
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         #region IDataBaseHelper Members
 

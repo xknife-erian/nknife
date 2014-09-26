@@ -6,7 +6,7 @@ namespace NKnife.TSQL
 {
     public class AccessExecute
     {
-        //private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        //private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
         public static string _ConnString;
 
         #region "ExecuteSQL"
