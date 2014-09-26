@@ -3,13 +3,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using NLog;
+using NKnife.Adapters;
+using NKnife.Interface;
 
 namespace NKnife.App.PictureTextPicker.Common
 {
     public class ThumbNailHelper
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         /// 指定目录下的所有图片生成缩略图,缩略图在参数thumbNailDirectory文件夹中(生成后的尺寸以参数按比例缩小)

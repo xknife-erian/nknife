@@ -4,16 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using NKnife.Adapters;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
-using NLog;
+using NKnife.Interface;
 
 namespace NKnife.Configuring.Option
 {
     [Serializable]
     public class OptionDataTable : DataTable
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         public OptionDataTable()
         {

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using NKnife.Adapters;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
+using NKnife.Interface;
 using NKnife.Utility;
-using NLog;
 
 namespace NKnife.Configuring.Option
 {
@@ -14,7 +15,7 @@ namespace NKnife.Configuring.Option
     {
         #region Logger
 
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         #endregion
 

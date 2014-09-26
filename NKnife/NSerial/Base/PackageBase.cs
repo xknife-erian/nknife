@@ -1,5 +1,6 @@
 ﻿using System;
-using NLog;
+using NKnife.Adapters;
+using NKnife.Interface;
 
 namespace NKnife.NSerial.Base
 {
@@ -7,7 +8,7 @@ namespace NKnife.NSerial.Base
     /// </summary>
     public abstract class PackageBase
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         protected PackageBase(ushort port, byte[] dataToSend, SendInterval sendInterval)
         {
@@ -50,7 +51,7 @@ namespace NKnife.NSerial.Base
                 }
                 catch (Exception ex)
                 {
-                    _Logger.WarnException("OnPackageSent:", ex);
+                    _Logger.Warn("OnPackageSent:", ex);
                 }
             }
         }

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using NKnife.Ioc;
 using NKnife.ShareResources;
 
-namespace NKnife.Logging.Base
+namespace NKnife.NLog3.Logging.Base
 {
     public partial class LoggerForm : Form
     {

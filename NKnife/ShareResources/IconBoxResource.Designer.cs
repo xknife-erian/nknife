@@ -22,7 +22,7 @@ namespace NKnife.ShareResources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class IconBoxResource {
+    public class IconBoxResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace NKnife.ShareResources {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NKnife.ShareResources.IconBoxResource", typeof(IconBoxResource).Assembly);
@@ -51,7 +51,7 @@ namespace NKnife.ShareResources {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Add {
+        public static System.Drawing.Icon Add {
             get {
                 object obj = ResourceManager.GetObject("Add", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -73,7 +73,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Alert {
+        public static System.Drawing.Icon Alert {
             get {
                 object obj = ResourceManager.GetObject("Alert", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -83,7 +83,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Back {
+        public static System.Drawing.Icon Back {
             get {
                 object obj = ResourceManager.GetObject("Back", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -93,7 +93,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Bluetooth {
+        public static System.Drawing.Icon Bluetooth {
             get {
                 object obj = ResourceManager.GetObject("Bluetooth", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -103,7 +103,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Close {
+        public static System.Drawing.Icon Close {
             get {
                 object obj = ResourceManager.GetObject("Close", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -113,7 +113,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Delete {
+        public static System.Drawing.Icon Delete {
             get {
                 object obj = ResourceManager.GetObject("Delete", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -123,7 +123,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Download {
+        public static System.Drawing.Icon Download {
             get {
                 object obj = ResourceManager.GetObject("Download", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -133,7 +133,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Forward {
+        public static System.Drawing.Icon Forward {
             get {
                 object obj = ResourceManager.GetObject("Forward", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -143,7 +143,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Info {
+        public static System.Drawing.Icon Info {
             get {
                 object obj = ResourceManager.GetObject("Info", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -153,7 +153,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon LogOff {
+        public static System.Drawing.Icon LogOff {
             get {
                 object obj = ResourceManager.GetObject("LogOff", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -163,7 +163,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Music {
+        public static System.Drawing.Icon Music {
             get {
                 object obj = ResourceManager.GetObject("Music", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -173,7 +173,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Private {
+        public static System.Drawing.Icon Private {
             get {
                 object obj = ResourceManager.GetObject("Private", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -183,7 +183,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Public {
+        public static System.Drawing.Icon Public {
             get {
                 object obj = ResourceManager.GetObject("Public", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -193,7 +193,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Refresh {
+        public static System.Drawing.Icon Refresh {
             get {
                 object obj = ResourceManager.GetObject("Refresh", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -203,7 +203,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Restart {
+        public static System.Drawing.Icon Restart {
             get {
                 object obj = ResourceManager.GetObject("Restart", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -213,7 +213,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon Shutdown {
+        public static System.Drawing.Icon Shutdown {
             get {
                 object obj = ResourceManager.GetObject("Shutdown", resourceCulture);
                 return ((System.Drawing.Icon)(obj));

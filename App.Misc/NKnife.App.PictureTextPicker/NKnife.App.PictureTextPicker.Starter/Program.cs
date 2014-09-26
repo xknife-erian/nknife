@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.Ioc;
-using NLog;
 
 namespace NKnife.App.PictureTextPicker.Starter
 {
@@ -18,11 +19,8 @@ namespace NKnife.App.PictureTextPicker.Starter
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Logger logger = LogManager.GetCurrentClassLogger();
+            ILogger logger = LogFactory.GetCurrentClassLogger();
             logger.Info("NLog日志组志启用成功.");
-
-            DI.Initialize();
-            logger.Info("Ninject初始化完成.");
 
             Application.Run(new MainForm());
         }

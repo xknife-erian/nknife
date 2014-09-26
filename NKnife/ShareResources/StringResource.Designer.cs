@@ -22,7 +22,7 @@ namespace NKnife.ShareResources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class StringResource {
+    public class StringResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace NKnife.ShareResources {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NKnife.ShareResources.StringResource", typeof(StringResource).Assembly);
@@ -51,7 +51,7 @@ namespace NKnife.ShareResources {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似 异常详细信息 的本地化字符串。
         /// </summary>
-        internal static string Exception_TabName_Error {
+        public static string Exception_TabName_Error {
             get {
                 return ResourceManager.GetString("Exception_TabName_Error", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似 详细信息 的本地化字符串。
         /// </summary>
-        internal static string Exception_TabName_Simple {
+        public static string Exception_TabName_Simple {
             get {
                 return ResourceManager.GetString("Exception_TabName_Simple", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似 日志信息 的本地化字符串。
         /// </summary>
-        internal static string LogPanel_Info_Header {
+        public static string LogPanel_Info_Header {
             get {
                 return ResourceManager.GetString("LogPanel_Info_Header", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似 日志源 的本地化字符串。
         /// </summary>
-        internal static string LogPanel_Source_Header {
+        public static string LogPanel_Source_Header {
             get {
                 return ResourceManager.GetString("LogPanel_Source_Header", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace NKnife.ShareResources {
         /// <summary>
         ///   查找类似 发生时间 的本地化字符串。
         /// </summary>
-        internal static string LogPanel_Time_Header {
+        public static string LogPanel_Time_Header {
             get {
                 return ResourceManager.GetString("LogPanel_Time_Header", resourceCulture);
             }

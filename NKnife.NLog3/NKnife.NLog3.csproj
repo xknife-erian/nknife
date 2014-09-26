@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B11EFF6A-EA3F-45B2-8A1E-BE356F3C8182}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{3545A727-147E-40FD-BEC1-E352B4D6ED16}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NKnife.App.PictureTextPicker</RootNamespace>
-    <AssemblyName>NKnife.App.PictureTextPicker</AssemblyName>
+    <RootNamespace>NKnife.NLog3</RootNamespace>
+    <AssemblyName>NKnife.NLog3</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -38,10 +38,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject">
-      <HintPath>..\..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,45 +56,57 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking">
-      <HintPath>..\..\..\packages\DockPanelSuite.2.9.0.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppOptionSetting.cs">
+    <Compile Include="Ioc\LoggingModule.cs" />
+    <Compile Include="Ioc\NLogModules.cs" />
+    <Compile Include="Logging\Base\LoggerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AppOptionSetting.Designer.cs">
-      <DependentUpon>AppOptionSetting.cs</DependentUpon>
+    <Compile Include="Logging\Base\LoggerForm.Designer.cs">
+      <DependentUpon>LoggerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Ioc\Modules.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Logging\Base\LoggerInfoDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Logging\Base\NLogListView.cs">
+      <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Logging\LoggerWPFControl\LoggerWpfControlTarget.cs" />
+    <Compile Include="Logging\LoggerWPFControl\LogMessage.cs" />
+    <Compile Include="Logging\LoggerWPFControl\LogMessageCollection.cs" />
+    <Compile Include="Logging\LogPanel\LogPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Logging\LogPanel\LogPanel.Designer.cs">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logging\LogPanel\ShowLogPanelTarget.cs" />
+    <Compile Include="NLogLoggerFactory.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\LogView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\PictureEditView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\PictureListView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\PropertyGridView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\PictureThumbView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <EmbeddedResource Include="AppOptionSetting.resx">
-      <DependentUpon>AppOptionSetting.cs</DependentUpon>
+    <EmbeddedResource Include="Logging\Base\LoggerForm.resx">
+      <DependentUpon>LoggerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.en-US.resx">
+      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.resx">
+      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.zh-CN.resx">
+      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\LogPanel\LogPanel.en-US.resx">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\LogPanel\LogPanel.resx">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\LogPanel\LogPanel.zh-CN.resx">
+      <DependentUpon>LogPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -98,23 +116,16 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\LogView.resx">
-      <DependentUpon>LogView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PictureEditView.resx">
-      <DependentUpon>PictureEditView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PictureListView.resx">
-      <DependentUpon>PictureListView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PropertyGridView.resx">
-      <DependentUpon>PropertyGridView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PictureThumbView.resx">
-      <DependentUpon>PictureThumbView.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="Logging\NLog.config.template">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -127,22 +138,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\NKnife.NLog3\NKnife.NLog3.csproj">
-      <Project>{3545A727-147E-40FD-BEC1-E352B4D6ED16}</Project>
-      <Name>NKnife.NLog3</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\NKnife\NKnife.csproj">
+    <ProjectReference Include="..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NKnife.App.PictureTextPicker.Common\NKnife.App.PictureTextPicker.Common.csproj">
-      <Project>{E29ED242-DF99-4D00-AE38-1267C6FCAE45}</Project>
-      <Name>NKnife.App.PictureTextPicker.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

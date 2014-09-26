@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
+using NKnife.Adapters;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
-using NLog;
+using NKnife.Interface;
 
 namespace NKnife.Configuring.Controls
 {
     public class OptionControlBase : UserControl, IOptionControl
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         public OptionControlBase()
         {

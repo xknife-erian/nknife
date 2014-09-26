@@ -40,9 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -62,6 +59,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\ILoggerFactory.cs" />
+    <Compile Include="Adapters\LogFactory.cs" />
     <Compile Include="Algrithm\AsyncOperation.cs" />
     <Compile Include="Algrithm\AsyncOperationQueue.cs" />
     <Compile Include="Algrithm\BubbleSort.cs" />
@@ -88,6 +87,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="API\API.Shell32.cs" />
+    <Compile Include="Interface\ILogger.cs" />
     <Compile Include="Ioc\ConfiguringModule.cs" />
     <Compile Include="API\WinMsg.cs" />
     <Compile Include="API\WinMsgUtil.cs" />
@@ -189,16 +189,6 @@
     <Compile Include="Extensions\SocketExtension.cs" />
     <Compile Include="Extensions\StringBuilderExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="Ioc\LoggingModule.cs" />
-    <Compile Include="Logging\Base\LoggerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Logging\Base\LoggerForm.Designer.cs">
-      <DependentUpon>LoggerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Logging\Base\LoggerInfoDetailForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ShareResources\IconBoxResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -463,19 +453,6 @@
     <Compile Include="Interface\IXml.cs" />
     <Compile Include="Interface\IParse.cs" />
     <Compile Include="Interface\ITree.cs" />
-    <Compile Include="Logging\Base\NLogListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Logging\LoggerWPFControl\LoggerWpfControlTarget.cs" />
-    <Compile Include="Logging\LoggerWPFControl\LogMessage.cs" />
-    <Compile Include="Logging\LoggerWPFControl\LogMessageCollection.cs" />
-    <Compile Include="Logging\LogPanel\LogPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Logging\LogPanel\LogPanel.Designer.cs">
-      <DependentUpon>LogPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Logging\LogPanel\ShowLogPanelTarget.cs" />
     <Compile Include="Mvvm\NotificationObject.cs" />
     <Compile Include="Mvvm\PropertyInfoHelper.cs" />
     <Compile Include="NSerial\Base\DataRecvEventArgs.cs" />
@@ -647,28 +624,6 @@
     <EmbeddedResource Include="GUI\WinForm\WeekGroup.resx">
       <DependentUpon>WeekGroup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerForm.resx">
-      <DependentUpon>LoggerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.en-US.resx">
-      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.resx">
-      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.zh-CN.resx">
-      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.en-US.resx">
-      <DependentUpon>LogPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.resx">
-      <DependentUpon>LogPanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.zh-CN.resx">
-      <DependentUpon>LogPanel.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\ArgumentValidationString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ArgumentValidationString.Designer.cs</LastGenOutput>
@@ -682,7 +637,7 @@
       <LastGenOutput>GeneralString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\IconBoxResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IconBoxResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\RegexString.resx">
@@ -695,7 +650,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\StringResource.en-US.resx" />
     <EmbeddedResource Include="ShareResources\StringResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\StringResource.zh-CN.resx" />
@@ -703,9 +658,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Data\Database.template" />
-    <None Include="Logging\NLog.config.template">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

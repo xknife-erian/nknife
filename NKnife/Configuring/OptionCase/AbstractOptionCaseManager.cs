@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using NKnife.Adapters;
 using NKnife.Configuring.Interfaces;
-using NLog;
+using NKnife.Interface;
 
 namespace NKnife.Configuring.OptionCase
 {
@@ -16,7 +17,7 @@ namespace NKnife.Configuring.OptionCase
     /// </summary>
     public abstract class AbstractOptionCaseManager : IOptionCaseManager
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
         private readonly IList<OptionCaseItem> _InnerList = new List<OptionCaseItem>();
         private readonly XmlSerializer _Serializer = new XmlSerializer(typeof (OptionCaseItem));
 

@@ -6,16 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using NKnife.Adapters;
 using NKnife.App.PictureTextPicker.Common.Base;
+using NKnife.Interface;
 using NKnife.Ioc;
-using NLog;
 
 namespace NKnife.App.PictureTextPicker
 {
     public partial class AppOptionSetting : Form
     {
         private IAppOption _AppOption = DI.Get<IAppOption>();
-        private Logger _Logger = LogManager.GetCurrentClassLogger();
+        private ILogger _Logger = LogFactory.GetCurrentClassLogger();
         public AppOptionSetting()
         {
             InitializeComponent();

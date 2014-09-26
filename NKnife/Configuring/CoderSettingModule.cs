@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using Ninject.Modules;
-using NLog;
+using NKnife.Adapters;
+using NKnife.Interface;
 
 namespace NKnife.Configuring
 {
@@ -12,7 +13,7 @@ namespace NKnife.Configuring
     /// </summary>
     public abstract class CoderSettingModule : NinjectModule
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
         protected readonly string _SettingFileBasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"");//Configs\");
 
         protected CoderSettingModule()

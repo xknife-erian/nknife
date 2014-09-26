@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F70100
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog3", "NKnife.NLog3\NKnife.NLog3.csproj", "{3545A727-147E-40FD-BEC1-E352B4D6ED16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{E29ED242-DF99-4D00-AE38-1267C6FCAE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E29ED242-DF99-4D00-AE38-1267C6FCAE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E29ED242-DF99-4D00-AE38-1267C6FCAE45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3545A727-147E-40FD-BEC1-E352B4D6ED16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3545A727-147E-40FD-BEC1-E352B4D6ED16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3545A727-147E-40FD-BEC1-E352B4D6ED16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3545A727-147E-40FD-BEC1-E352B4D6ED16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
