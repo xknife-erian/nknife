@@ -2,7 +2,7 @@
 
 namespace NKnife.Socket.Filters
 {
-    public class ProtocolCodecFilter : IFilter
+    public class CodecFilter : IFilter
     {
     }
 }

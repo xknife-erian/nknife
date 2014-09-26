@@ -11,8 +11,8 @@ namespace NKnife.Socket
             server.Bind("localhost", 11001);
             server.GetConfig.SetReadBufferSize(2048);
             server.GetFilterChain().AddLast("KeepConn", new KeepFilter(true));
-            server.GetFilterChain().AddLast("Codec", new ProtocolCodecFilter());
-            server.GetFilterChain().AddLast("logger", new LoggingFilter());
+            server.GetFilterChain().AddLast("Codec", new CodecFilter());
+            //server.SetMessageHandler(new )
             server.Start();
             server.ReStart();
             server.Stop();
