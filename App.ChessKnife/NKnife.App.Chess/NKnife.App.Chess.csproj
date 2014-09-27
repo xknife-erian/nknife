@@ -131,13 +131,13 @@
     <Content Include="DemoFile\PGN\606822,stepsAll.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NKnife.Chesses\NKnife.Chesses.csproj">
-      <Project>{4e3f8baa-ae96-40ab-bd28-848f1777b5c2}</Project>
-      <Name>NKnife.Chesses</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NKnife.App.Chess.Common\NKnife.App.Chess.Common.csproj">
+      <Project>{4e3f8baa-ae96-40ab-bd28-848f1777b5c2}</Project>
+      <Name>NKnife.App.Chess.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

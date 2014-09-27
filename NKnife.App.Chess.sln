@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Chess", "App.Che
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csproj", "{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Chesses", "App.ChessKnife\NKnife.Chesses\NKnife.Chesses.csproj", "{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Chess.Common", "App.ChessKnife\NKnife.App.Chess.Common\NKnife.App.Chess.Common.csproj", "{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0B5A50A4-9E36-4EFC-803C-B744338E295D}"
 	ProjectSection(SolutionItems) = preProject
