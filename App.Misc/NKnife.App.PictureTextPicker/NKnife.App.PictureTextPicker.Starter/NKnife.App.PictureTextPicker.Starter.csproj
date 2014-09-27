@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\NKnife.NLog3\NKnife.NLog3.csproj">
-      <Project>{3545a727-147e-40fd-bec1-e352b4d6ed16}</Project>
+      <Project>{3d1d08d2-46b0-4c33-a214-a5a76a998102}</Project>
       <Name>NKnife.NLog3</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\NKnife\NKnife.csproj">
