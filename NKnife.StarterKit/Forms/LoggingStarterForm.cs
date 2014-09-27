@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.Ioc;
-using NKnife.Logging.LogPanel;
 using NKnife.Utility;
-using NLog;
 
 namespace NKnife.StarterKit.Forms
 {
     public partial class LoggingStarterForm : Form
     {
-        private readonly Logger _Logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         private Thread _Thread;
         private bool _IsLogger = true;
@@ -24,11 +24,11 @@ namespace NKnife.StarterKit.Forms
         public LoggingStarterForm()
         {
             InitializeComponent();
-
-            var logPanel = DI.Get<LogPanel>();//重点, LogPanel是单例的, 所以LogPanel的初始化是特殊的.
-            logPanel.Dock = DockStyle.Fill;
-            logPanel.Font = new Font("Tahoma", 8.25F);         
-            Controls.Add(logPanel);
+//
+//            var logPanel = DI.Get<LogPanel>();//重点, LogPanel是单例的, 所以LogPanel的初始化是特殊的.
+//            logPanel.Dock = DockStyle.Fill;
+//            logPanel.Font = new Font("Tahoma", 8.25F);         
+//            Controls.Add(logPanel);
         }
 
         protected override void OnShown(EventArgs e)
