@@ -1,4 +1,4 @@
-﻿namespace NKnife.Logging.Base
+﻿namespace NKnife.NLog3.Logging.Base
 {
     partial class LoggerForm
     {

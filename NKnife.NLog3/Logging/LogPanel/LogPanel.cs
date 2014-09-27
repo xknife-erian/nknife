@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using NLog;
 
-namespace NKnife.Logging.LogPanel
+namespace NKnife.NLog3.Logging.LogPanel
 {
     /// <summary>日志显示面板控件，日志等级通过左上角的日志等级列表进行筛选
     /// </summary>

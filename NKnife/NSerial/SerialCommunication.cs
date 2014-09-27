@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.NSerial.Base;
-using NLog;
 
 namespace NKnife.NSerial
 {
@@ -9,7 +10,7 @@ namespace NKnife.NSerial
     /// </summary>
     internal class SerialCommunication : ISerialCommunication
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly bool _EnableDetialLogger;
         private readonly ManualResetEventSlim _QSendWaitEvent = new ManualResetEventSlim(false);
@@ -141,7 +142,7 @@ namespace NKnife.NSerial
             }
             catch (Exception e)
             {
-                _Logger.WarnException("SendProcess异常", e);
+                _Logger.Warn("SendProcess异常", e);
             }
         }
 

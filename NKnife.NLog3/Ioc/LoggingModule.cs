@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NKnife.Logging.Base;
-using NKnife.Logging.LogPanel;
+﻿using NKnife.NLog3.Logging.Base;
+using NKnife.NLog3.Logging.LogPanel;
 
-namespace NKnife.Ioc
+namespace NKnife.NLog3.Ioc
 {
     public class LoggingModule : Ninject.Modules.NinjectModule
     {

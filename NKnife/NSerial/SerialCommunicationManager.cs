@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.NSerial.Base;
-using NLog;
 
 namespace NKnife.NSerial
 {
@@ -9,7 +10,7 @@ namespace NKnife.NSerial
     /// </summary>
     public sealed class SerialCommunicationManager : ISerialCommunicationManager, IDisposable
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
         private bool _EnableDetialLog;
 
         /// <summary>串口管理器字典，以串口号作为键值
@@ -81,7 +82,7 @@ namespace NKnife.NSerial
             }
             catch (Exception ex)
             {
-                _Logger.WarnException("SerialCommunicationManager类UnInitialize异常", ex);
+                _Logger.Warn("SerialCommunicationManager类UnInitialize异常", ex);
                 return false;
             }
         }

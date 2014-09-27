@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NKnife.Ioc;
-using NKnife.Logging.LogPanel;
+using NKnife.NLog3.Logging.LogPanel;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views
 {
     public class LogView : DockContent
     {
-        private Logging.LogPanel.LogPanel _LogPanel;
+        private LogPanel _LogPanel;
 
         public LogView()
         {

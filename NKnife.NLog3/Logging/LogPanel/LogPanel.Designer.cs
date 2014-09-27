@@ -1,6 +1,6 @@
-﻿using NKnife.Logging.Base;
+﻿using NKnife.NLog3.Logging.Base;
 
-namespace NKnife.Logging.LogPanel
+namespace NKnife.NLog3.Logging.LogPanel
 {
     sealed partial class LogPanel
     {

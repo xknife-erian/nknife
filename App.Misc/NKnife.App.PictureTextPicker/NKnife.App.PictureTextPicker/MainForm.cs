@@ -4,19 +4,19 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using NKnife.Adapters;
 using NKnife.App.PictureTextPicker.Common;
 using NKnife.App.PictureTextPicker.Common.Base;
 using NKnife.App.PictureTextPicker.Views;
+using NKnife.Interface;
 using NKnife.Ioc;
-using NKnife.Logging.Base;
-using NLog;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker
 {
     public partial class MainForm : Form
     {
-        private readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
         private readonly DockPanel _DockPanel = new DockPanel();

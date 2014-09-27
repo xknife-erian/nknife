@@ -3,7 +3,7 @@ using NKnife.Ioc;
 using NLog;
 using NLog.Targets;
 
-namespace NKnife.Logging.LogPanel
+namespace NKnife.NLog3.Logging.LogPanel
 {
     /// <summary>
     /// 这是一个基于NLog的自定义的输出目标（Target），这个输出目标是一个ListView控件
@@ -13,10 +13,10 @@ namespace NKnife.Logging.LogPanel
     {
         public ShowLogPanelTarget()
         {
-            LogPanel = DI.Get<LogPanel>();
+            LogPanel = DI.Get<NLog3.Logging.LogPanel.LogPanel>();
         }
 
-        protected LogPanel LogPanel { get; private set; }
+        protected NLog3.Logging.LogPanel.LogPanel LogPanel { get; private set; }
 
         protected override void Write(LogEventInfo logEvent)
         {

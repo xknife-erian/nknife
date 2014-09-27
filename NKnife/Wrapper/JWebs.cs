@@ -4,8 +4,9 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.ShareResources;
-using NLog;
 
 namespace NKnife.Wrapper
 {
@@ -23,7 +24,7 @@ namespace NKnife.Wrapper
         private const string BEGIN_BOUNDARY = "--" + BOUNDARY + "\r\n";
         private const string END_BOUNDARY = "\r\n--" + BOUNDARY + "--\r\n";
 
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         private JWebClient _WebClient;
 
