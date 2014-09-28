@@ -26,7 +26,6 @@ namespace NKnife.App.PictureTextPicker
         private readonly DockContent _PictureListView = DI.Get<PictureListView>();
         private readonly DockContent _PropertyGridView = DI.Get<PropertyGridView>();
         private readonly DockContent _PictureThumbView = DI.Get<PictureThumbView>();
-        private readonly DockContent _PictureDocumentView = DI.Get<PictureDocumentView>();
         private readonly DockContent _LogView = DI.Get<LogView>();
 
         private readonly IPictureList _PictureList = DI.Get<IPictureList>();
@@ -85,8 +84,6 @@ namespace NKnife.App.PictureTextPicker
                 return _PropertyGridView;
             if (xml == typeof(PictureThumbView).ToString())
                 return _PictureThumbView;
-            if (xml == typeof (PictureDocumentView).ToString())
-                return _PictureDocumentView;
             if (xml == typeof (LogView).ToString())
                 return _LogView;
             return null;
@@ -97,7 +94,6 @@ namespace NKnife.App.PictureTextPicker
             _PictureListView.Show(_DockPanel, DockState.DockLeft);
             _PictureThumbView.Show(_DockPanel, DockState.DockRight);
             _PropertyGridView.Show(_DockPanel, DockState.DockRight);
-            _PictureDocumentView.Show(_DockPanel,DockState.Document);
             _LogView.Show(_DockPanel,DockState.DockBottom);
         }
 
@@ -177,13 +173,10 @@ namespace NKnife.App.PictureTextPicker
 
         public void ShowPic(string picName)
         {
-
-            if (_PictureDocumentView.IsDockStateValid(DockState.Document))
-            {
-                _PictureDocumentView.Text = picName;
-                _PictureDocumentView.Show(_DockPanel,DockState.Document);
-                _PictureDocumentView.Activate();
-            }
+            var pictureDocumentView = new PictureDocumentView();
+            pictureDocumentView.Text = picName;
+            pictureDocumentView.Show(_DockPanel,DockState.Document);
+            pictureDocumentView.Activate();
 
             string pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
 

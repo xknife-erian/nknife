@@ -165,6 +165,8 @@ namespace NKnife.Draws.Controls.Frames
 
         private void SetOwnSize(double multiple, Point mousePoint)
         {
+            if (Parent == null) //
+                return;
             double oldZoom = _Parent.Zoom;
             _Multiple = multiple;
 
