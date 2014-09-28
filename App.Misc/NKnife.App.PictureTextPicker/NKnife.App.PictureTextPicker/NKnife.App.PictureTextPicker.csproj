@@ -76,6 +76,9 @@
     <Compile Include="Views\LogView.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Views\PictureDocumentView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\PictureEditView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +110,9 @@
     <EmbeddedResource Include="Views\LogView.resx">
       <DependentUpon>LogView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\PictureDocumentView.resx">
+      <DependentUpon>PictureDocumentView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\PictureEditView.resx">
       <DependentUpon>PictureEditView.cs</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +137,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\NKnife.Draws\NKnife.Draws.csproj">
+      <Project>{48dcfea4-948a-45f8-8fa5-010a1e095c19}</Project>
+      <Name>NKnife.Draws</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\NKnife.NLog3\NKnife.NLog3.csproj">
       <Project>{3D1D08D2-46B0-4C33-A214-A5A76A998102}</Project>
       <Name>NKnife.NLog3</Name>
@@ -155,9 +165,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="HTML\PicList.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="HTML\PicShow.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="license.txt" />

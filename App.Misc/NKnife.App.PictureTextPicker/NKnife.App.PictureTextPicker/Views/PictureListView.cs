@@ -13,8 +13,6 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views
 {
-    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public class PictureListView :DockContent
     {
         private WebBrowser _ThumbNailListWebBrowser;
@@ -33,14 +31,14 @@ namespace NKnife.App.PictureTextPicker.Views
         {
             var picListPath = Path.Combine(Application.StartupPath, @"HTML\PicList.htm");
             _ThumbNailListWebBrowser.Navigate(picListPath);
-            _ThumbNailListWebBrowser.ObjectForScripting = this;
+            _ThumbNailListWebBrowser.ObjectForScripting = this.ParentForm;
         }
 
         private void PictureListChanged(object sender, EventArgs eventArgs)
         {
             GetLocalSmallName();
             string data = JsonConvert.SerializeObject(_jpgsmallNamelist);
-            string thumbNailDirectory = _AppOption.GetOption("ThumbNailDirectory", "");
+            string thumbNailDirectory = _AppOption.GetOption("ThumbNailDirectory", "") + @"\";
             _ThumbNailListWebBrowser.Document.InvokeScript("ShowPicList", new string[] { data, thumbNailDirectory });  
         }
 
