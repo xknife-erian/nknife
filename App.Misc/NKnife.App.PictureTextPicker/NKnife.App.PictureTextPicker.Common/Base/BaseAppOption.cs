@@ -13,8 +13,9 @@ namespace NKnife.App.PictureTextPicker.Common.Base
 
         public void SetOption<T>(string key, T value)
         {
-            _OptionMap.TryAdd(key,value);
+            _OptionMap.AddOrUpdate(key, value, (k,oldvalue)=> value);
         }
+
 
         public T GetOption<T>(string key) where T : class, new()
         {
