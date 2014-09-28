@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SocketKnife.Protocol;
+using NKnife.Socket;
 
 namespace NKnife.App.SocketKit.Dialogs
 {
@@ -19,7 +19,7 @@ namespace NKnife.App.SocketKit.Dialogs
     /// </summary>
     public partial class NewTcpServerCreatorDialog : Window
     {
-        private TcpServerKnifeOld _Server;
+        private TcpServerKnife _Server;
 
         public NewTcpServerCreatorDialog()
         {
@@ -27,8 +27,8 @@ namespace NKnife.App.SocketKit.Dialogs
             _LocalIpBox.Items.Add("192.168.2.123");
             _LocalIpBox.Items.Add("192.168.2.255");
 
-            _Server = new TcpServerKnifeOld();
-            _Server.SetProtocolFactory(null);//ProtocolFactory);
+            _Server = new TcpServerKnife();
+            //_Server.SetProtocolFactory(null);//ProtocolFactory);
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
