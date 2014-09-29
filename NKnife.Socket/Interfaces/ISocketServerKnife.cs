@@ -7,8 +7,8 @@ namespace SocketKnife.Interfaces
         void Bind(IPAddress ipAddress, int port);
         ISocketConfig GetConfig { get; }
         IFilterChain GetFilterChain();
-        void Start();
-        void ReStart();
-        void Stop();
+        bool Start();
+        bool ReStart();
+        bool Stop();
     }
 }
