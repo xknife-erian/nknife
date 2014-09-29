@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NKnife.NLog3
 {
-    class Class1
+    class Class5
     {
     }
 }
