@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using Ninject.Modules;
 using NKnife.App.SocketKit.Common;
+using NKnife.App.SocketKit.Dialogs;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NKnife.App.SocketKit.IoC
 {
-    public class Modules : NinjectModule
+    public class UIModules : NinjectModule
     {
         public override void Load()
         {

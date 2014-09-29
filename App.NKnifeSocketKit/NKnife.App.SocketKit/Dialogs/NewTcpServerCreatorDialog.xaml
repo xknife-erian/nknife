@@ -7,13 +7,13 @@
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
+            <RowDefinition Height="20" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="10" />
+            <RowDefinition Height="15" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" />
@@ -30,16 +30,10 @@
         <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Name="_LocalIpBox"/>
         <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="端口:" Margin="0,0,5,0" />
-        <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" Text="11001"
-                 VerticalAlignment="Center" Width="120" Margin="0" VerticalContentAlignment="Center" FontSize="13" />
-        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center"
-                   Text="通讯模式:" Margin="0,0,5,0" />
-        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
-            <RadioButton Content="同步" VerticalAlignment="Center" Margin="5,0,10,0" />
-            <RadioButton Content="异步" VerticalAlignment="Center" Margin="0,0,10,0" />
-        </StackPanel>
-        <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" TextWrapping="Wrap" 
+        <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="11001"
+                 VerticalAlignment="Center" Width="120" Margin="0" VerticalContentAlignment="Center" FontSize="12" Name="_PortTextBox"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" TextWrapping="Wrap" 
                    Text="协议族:" VerticalAlignment="Center" Margin="0,0,5,0" />
-        <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="240"/>
+        <ComboBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="240"/>
     </Grid>
 </Window>

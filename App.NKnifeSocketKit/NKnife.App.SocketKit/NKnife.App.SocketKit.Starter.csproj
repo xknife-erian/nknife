@@ -88,6 +88,8 @@
       <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\Server.cs" />
+    <Compile Include="IoC\ClientModule.cs" />
+    <Compile Include="IoC\ServerModule.cs" />
     <Compile Include="Views\TcpClientView.xaml.cs">
       <DependentUpon>TcpClientView.xaml</DependentUpon>
     </Compile>
@@ -108,7 +110,7 @@
     </Compile>
     <Compile Include="Commands\MenuCommandManager.cs" />
     <Compile Include="Common\MessageDocumentCollection.cs" />
-    <Compile Include="IoC\Modules.cs" />
+    <Compile Include="IoC\UIModules.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -140,6 +142,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
+      <Project>{3d1d08d2-46b0-4c33-a214-a5a76a998102}</Project>
+      <Name>NKnife.NLog3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife.Socket\NKnife.Socket.csproj">
       <Project>{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}</Project>
       <Name>NKnife.Socket</Name>
