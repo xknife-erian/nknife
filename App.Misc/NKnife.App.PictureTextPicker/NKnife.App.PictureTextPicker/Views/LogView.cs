@@ -38,6 +38,7 @@ namespace NKnife.App.PictureTextPicker.Views
             this.Controls.Add(this._LogPanel);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "LogView";
+            this.Text = "日志";
             this.ResumeLayout(false);
 
         }

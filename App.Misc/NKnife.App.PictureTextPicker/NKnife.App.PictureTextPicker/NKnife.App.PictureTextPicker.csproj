@@ -79,16 +79,13 @@
     <Compile Include="Views\PictureDocumentView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\PictureEditView.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Views\PictureListView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\PropertyGridView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\PictureThumbView.cs">
+    <Compile Include="Views\ProcessResultView.cs">
       <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="AppOptionSetting.resx">
@@ -113,17 +110,14 @@
     <EmbeddedResource Include="Views\PictureDocumentView.resx">
       <DependentUpon>PictureDocumentView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\PictureEditView.resx">
-      <DependentUpon>PictureEditView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\PictureListView.resx">
       <DependentUpon>PictureListView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\PropertyGridView.resx">
       <DependentUpon>PropertyGridView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\PictureThumbView.resx">
-      <DependentUpon>PictureThumbView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\ProcessResultView.resx">
+      <DependentUpon>ProcessResultView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
