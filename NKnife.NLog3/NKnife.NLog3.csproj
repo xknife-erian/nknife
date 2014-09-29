@@ -60,7 +60,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class5.cs" />
     <Compile Include="Ioc\LoggingModule.cs" />
     <Compile Include="Ioc\NLogModules.cs" />
     <Compile Include="Logging\Base\LoggerForm.cs">
