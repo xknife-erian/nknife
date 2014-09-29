@@ -14,37 +14,6 @@ namespace SocketKnife
 {
     public class TcpServerKnife : ISocketServerKnife
     {
-        private IPAddress _IpAddress;
-        private int _Port;
-
-        public void Bind(IPAddress ipAddress, int port)
-        {
-            _IpAddress = ipAddress;
-            _Port = port;
-        }
-
-        public ISocketConfig GetConfig { get; private set; }
-
-        public IFilterChain GetFilterChain()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ReStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Stop()
-        {
-            throw new NotImplementedException();
-        }
-
         #region 成员变量
 
         private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
@@ -57,18 +26,10 @@ namespace SocketKnife
         /// <value>The session.</value>
         private readonly ConcurrentDictionary<string, Socket> _ClientMap;
 
-        /// <summary>
-        ///     IP
-        /// </summary>
-        public string Host { get; set; }
+        private IPAddress _IpAddress;
+        private int _Port;
 
-        /// <summary>
-        ///     端口
-        /// </summary>
-        public int Port { get; set; }
-
-        private readonly ConcurrentDictionary<EndPoint, ReceiveQueue> _ReceiveQueueMap =
-            new ConcurrentDictionary<EndPoint, ReceiveQueue>();
+        private readonly ConcurrentDictionary<EndPoint, ReceiveQueue> _ReceiveQueueMap;
 
         /// <summary>
         ///     数据包管理
@@ -89,14 +50,97 @@ namespace SocketKnife
 
         #endregion
 
+        #region ISocketServerKnife 接口实现
+
+        public void Bind(IPAddress ipAddress, int port)
+        {
+            _IpAddress = ipAddress;
+            _Port = port;
+        }
+
+        public ISocketConfig GetConfig { get; private set; }
+
+        public IFilterChain GetFilterChain()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Start()
+        {
+            try
+            {
+                Run();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _Logger.Error(string.Format("SocketServer打开异常。{0}", e.Message), e);
+                return false;
+            }
+        }
+
+        public void StartAccept()
+        {
+            _AutoReset[0].Set();
+        }
+
+        public bool ReStart()
+        {
+            if (Stop())
+            {
+                return Start();
+            }
+            return false;
+        }
+
+        public bool Stop()
+        {
+            try
+            {
+                _IsClose = true;
+                _MainSocket.Close();
+                foreach (Socket client in _ClientMap.Values)
+                {
+                    if (client.Connected)
+                    {
+                        client.Shutdown(SocketShutdown.Both);
+                    }
+                    client.Close();
+                }
+                foreach (SocketAsyncEventArgs async in _SocketAsynPool)
+                {
+                    if (null == async.AcceptSocket || !async.AcceptSocket.Connected)
+                    {
+                        continue;
+                    }
+                    async.AcceptSocket.Shutdown(SocketShutdown.Both);
+                    async.AcceptSocket.Close();
+                }
+                _SocketAsynPool.Clear();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _Logger.Error(string.Format("SocketServer关闭异常。{0}", e.Message), e);
+                return false;
+            }
+        }
+
+        public void StopAccept()
+        {
+            _AutoReset[0].Reset();
+        }
+
+        #endregion
+
         #region 构造函数，及面向CodeFirst方式的设置方法
 
         public TcpServerKnife()
         {
             _ClientMap = new ConcurrentDictionary<string, Socket>();
-
-//            _AutoReset = new AutoResetEvent[1];
-//            _AutoReset[0] = new AutoResetEvent(false);
+            _ReceiveQueueMap = new ConcurrentDictionary<EndPoint, ReceiveQueue>();
+            _AutoReset = new AutoResetEvent[1];
+            _AutoReset[0] = new AutoResetEvent(false);
         }
 
         #endregion
@@ -107,13 +151,6 @@ namespace SocketKnife
         {
             get { return _ClientMap; }
         }
-
-//        /// <summary>
-//        ///     协议的创建工厂
-//        /// </summary>
-//        public ProtocolFactory Protocols { get; private set; }
-//
-//        public ISocketServerSetting Option { get; private set; }
 
         public SocketMode Mode { get; set; }
 
@@ -196,62 +233,9 @@ namespace SocketKnife
 
         #region 公共方法
 
-        public void StartAccept()
-        {
-            _AutoReset[0].Set();
-        }
 
-        public void StopAccept()
-        {
-            _AutoReset[0].Reset();
-        }
 
-        public bool Close()
-        {
-            try
-            {
-                _IsClose = true;
-                _MainSocket.Close();
-                foreach (Socket client in _ClientMap.Values)
-                {
-                    if (client.Connected)
-                    {
-                        client.Shutdown(SocketShutdown.Both);
-                    }
-                    client.Close();
-                }
-                foreach (SocketAsyncEventArgs async in _SocketAsynPool)
-                {
-                    if (null == async.AcceptSocket || !async.AcceptSocket.Connected)
-                    {
-                        continue;
-                    }
-                    async.AcceptSocket.Shutdown(SocketShutdown.Both);
-                    async.AcceptSocket.Close();
-                }
-                _SocketAsynPool.Clear();
-                return true;
-            }
-            catch (Exception e)
-            {
-                _Logger.Error(string.Format("SocketServer关闭异常。{0}", e.Message), e);
-                return false;
-            }
-        }
 
-        public bool Open()
-        {
-            try
-            {
-                Run();
-                return true;
-            }
-            catch (Exception e)
-            {
-                _Logger.Error(string.Format("SocketServer打开异常。{0}", e.Message), e);
-                return false;
-            }
-        }
 
         /// <summary>
         ///     断开此SOCKET
@@ -375,37 +359,7 @@ namespace SocketKnife
             if (_IsDisposed)
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
 
-            var ipEndPoint = new IPEndPoint(IPAddress.Any, Port);
-            if (!Host.Equals("any", StringComparison.CurrentCultureIgnoreCase))
-            {
-                if (!String.IsNullOrWhiteSpace(Host))
-                {
-                    IPHostEntry p = Dns.GetHostEntry(Dns.GetHostName());
-                    foreach (IPAddress ipaddress in p.AddressList)
-                    {
-                        if (!ipaddress.IsIPv6LinkLocal)
-                            ipEndPoint = new IPEndPoint(ipaddress, Port);
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        if (Host != null)
-                            ipEndPoint = new IPEndPoint(IPAddress.Parse(Host), Port);
-                    }
-                    catch (FormatException)
-                    {
-                        IPHostEntry p = Dns.GetHostEntry(Dns.GetHostName());
-                        foreach (IPAddress ipaddress in p.AddressList)
-                        {
-                            if (!ipaddress.IsIPv6LinkLocal)
-                                ipEndPoint = new IPEndPoint(ipaddress, Port);
-                        }
-                    }
-                }
-            }
-
+            var ipEndPoint = new IPEndPoint(_IpAddress, _Port);
             _MainSocket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _MainSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
             _MainSocket.Bind(ipEndPoint);
@@ -437,7 +391,7 @@ namespace SocketKnife
             _IsClose = false;
             Accept();
 
-            _Logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, Port));
+            _Logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
             _Logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
             _Logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
             _Logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", MaxConnectCount));

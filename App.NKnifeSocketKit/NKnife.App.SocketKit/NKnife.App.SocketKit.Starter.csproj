@@ -110,7 +110,7 @@
     </Compile>
     <Compile Include="Commands\MenuCommandManager.cs" />
     <Compile Include="Common\MessageDocumentCollection.cs" />
-    <Compile Include="IoC\UIModules.cs" />
+    <Compile Include="IoC\UIModule.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
