@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NKnife.App.TouchIme.Properties {
+namespace NKnife.App.TouchKnife.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NKnife.App.TouchIme.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NKnife.App.TouchIme.Properties.OwnResources", typeof(OwnResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NKnife.App.TouchKnife.Properties.OwnResources", typeof(OwnResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -7,7 +7,7 @@
     <ProjectGuid>{E0D2F875-E6C2-49DE-86CC-62396EB8D585}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NKnife.App.TouchIme</RootNamespace>
+    <RootNamespace>NKnife.App.TouchKnife</RootNamespace>
     <AssemblyName>TouchKnife</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

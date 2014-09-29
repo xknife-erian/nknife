@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.TouchIME", "App.TouchKnife\NKnife.App.TouchIME\NKnife.App.TouchIME.csproj", "{E0D2F875-E6C2-49DE-86CC-62396EB8D585}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.TouchKnife", "App.TouchKnife\NKnife.App.TouchKnife\NKnife.App.TouchKnife.csproj", "{E0D2F875-E6C2-49DE-86CC-62396EB8D585}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csproj", "{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}"
 EndProject
