@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using NKnife.Adapters;
 using NKnife.App.PictureTextPicker.Common;
 using NKnife.App.PictureTextPicker.Common.Base;
+using NKnife.App.PictureTextPicker.Common.Entities;
 using NKnife.App.PictureTextPicker.Views;
 using NKnife.Interface;
 using NKnife.Ioc;
@@ -173,14 +174,20 @@ namespace NKnife.App.PictureTextPicker
 
         public void ShowPic(string picName)
         {
-            var pictureDocumentView = new PictureDocumentView();
-            pictureDocumentView.Text = picName;
+            string pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
+            var pictureDocument = new PictureFrameDocument
+            {
+                ImageFileName = Path.Combine(pictureDirectory, picName)
+            };
+
+            var pictureDocumentView = new PictureDocumentView(pictureDocument)
+            {
+                Text = picName
+            };
             pictureDocumentView.Show(_DockPanel,DockState.Document);
             pictureDocumentView.Activate();
 
-            string pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
 
-            pictureDocumentView.SetSelectedPicuture(Path.Combine(pictureDirectory, picName));
         }
     }
 }

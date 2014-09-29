@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NKnife.App.PictureTextPicker.Common.Base;
 
-namespace NKnife.App.PictureTextPicker.Common
+namespace NKnife.App.PictureTextPicker.Common.Entities
 {
     public class PictureList : IPictureList
     {

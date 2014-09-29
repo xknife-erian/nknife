@@ -128,6 +128,10 @@ namespace NKnife.Draws.Controls.Frames
 
         public RectangleList Rectangles { get; private set; }
 
+        /// <summary>
+        /// 更新矩形列表
+        /// </summary>
+        /// <param name="rectangleList"></param>
         public void UpdateRectangleList(RectangleList rectangleList)
         {
             Rectangles = rectangleList;
