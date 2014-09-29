@@ -203,6 +203,10 @@
     <Resource Include="Resources\Main.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
+      <Project>{3D1D08D2-46B0-4C33-A214-A5A76A998102}</Project>
+      <Name>NKnife.NLog3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife.Socket\NKnife.Socket.csproj">
       <Project>{f3299ac1-2d25-4b91-a4d9-f9c1ab6f0825}</Project>
       <Name>NKnife.Socket</Name>

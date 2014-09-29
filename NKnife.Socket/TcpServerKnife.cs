@@ -180,14 +180,14 @@ namespace SocketKnife
 //            get { return Option.Encoder; }
 //        }
 
-        /// <summary>
-        ///     命令字解析器
-        /// </summary>
-        /// <value>The command parser.</value>
-        public IDatagramCommandParser CommandParser
-        {
-            get { return Option.CommandParser; }
-        }
+//        /// <summary>
+//        ///     命令字解析器
+//        /// </summary>
+//        /// <value>The command parser.</value>
+//        public IDatagramCommandParser CommandParser
+//        {
+//            get { return Option.CommandParser; }
+//        }
 
         #endregion
 
@@ -291,7 +291,7 @@ namespace SocketKnife
             Socket socket;
             if (!_ClientMap.TryGetValue(ipaddress, out socket))
             {
-                _Logger.Info("客户端IP地址:({0})不在列表中，列表数:{1}", ipaddress, _ClientMap.Count);
+                _Logger.Info(string.Format("客户端IP地址:({0})不在列表中，列表数:{1}", ipaddress, _ClientMap.Count));
                 return;
             }
             SendTo(socket, data, isCompress);
@@ -305,10 +305,10 @@ namespace SocketKnife
         /// <param name="isCompress">是否将数据压缩后发送</param>
         public void SendTo(Socket socket, string data, bool isCompress = false)
         {
-            byte[] senddata;
+            byte[] senddata = null;
             try
             {
-                senddata = Encoder.Execute(data, isCompress);
+                //senddata = Encoder.Execute(data, isCompress);
             }
             catch (Exception e)
             {
@@ -434,9 +434,9 @@ namespace SocketKnife
             _IsClose = false;
             Accept();
 
-            _Logger.Info("== {0} 已启动。端口:{1}", GetType().Name, Port);
-            _Logger.Info("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout);
-            _Logger.Info("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout);
+            _Logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, Port));
+            _Logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
+            _Logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
             _Logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", MaxConnectCount));
         }
 
@@ -480,7 +480,7 @@ namespace SocketKnife
                         if (!_ClientMap.ContainsKey(ip))
                         {
                             _ClientMap.TryAdd(ip, e.AcceptSocket);
-                            _Logger.Info("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _ClientMap.Count);
+                            _Logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _ClientMap.Count));
                             OnListenToClient(e);
                         }
                     }
@@ -527,13 +527,13 @@ namespace SocketKnife
                     {
                         Socket outSocket;
                         _ClientMap.TryRemove(ip, out outSocket);
-                        _Logger.Info("Server: IP地址:{0}的连接被移出客户端池。{1}", ip, _ClientMap.Count);
+                        _Logger.Info(string.Format("Server: IP地址:{0}的连接被移出客户端池。{1}", ip, _ClientMap.Count));
                     }
                     if (_ReceiveThreadMap.ContainsKey(iep))
                     {
                         _ReceiveThreadMap[iep].IsMonitor = false;
                         _ReceiveThreadMap[iep].ReceiveQueue.AutoResetEvent.Set();
-                        _Logger.Trace("Server: IP地址:{0}的数据池循环开关被关闭。{1}", ip, _ReceiveThreadMap.Count);
+                        _Logger.Trace(string.Format("Server: IP地址:{0}的数据池循环开关被关闭。{1}", ip, _ReceiveThreadMap.Count));
                     }
                 }
                 else
@@ -676,7 +676,8 @@ namespace SocketKnife
 
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
         {
-            string[] datagram = Decoder.Execute(data, out done);
+            done = 0;
+            string[] datagram = null;//Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _Logger.Debug("协议消息无内容。");
@@ -689,15 +690,15 @@ namespace SocketKnife
                     continue;
                 try
                 {
-                    string command = CommandParser.GetCommand(dg);
-                    IProtocol protocol = Protocols.Get(FamilyType, command);
-                    _Logger.Trace("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg);
-                    if (protocol != null)
-                    {
-                        protocol.Parse(dg);
-                        // 触发数据基础解析后发生的数据到达事件
-                        OnReceiveDataParsed(new ReceiveDataParsedEventArgs(protocol), endpoint);
-                    }
+//                    string command = CommandParser.GetCommand(dg);
+//                    IProtocol protocol = Protocols.Get(FamilyType, command);
+//                    _Logger.Trace("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg);
+//                    if (protocol != null)
+//                    {
+//                        protocol.Parse(dg);
+//                        // 触发数据基础解析后发生的数据到达事件
+//                        OnReceiveDataParsed(new ReceiveDataParsedEventArgs(protocol), endpoint);
+//                    }
                 }
                 catch (Exception ex)
                 {

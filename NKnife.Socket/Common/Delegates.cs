@@ -140,12 +140,12 @@ namespace SocketKnife.Common
     /// </summary>
     public class ReceiveDataParsedEventArgs : EventArgs
     {
-        public ReceiveDataParsedEventArgs(IProtocol protocol)
-        {
-            Protocol = protocol;
-        }
-
-        public IProtocol Protocol { get; private set; }
+//        public ReceiveDataParsedEventArgs(IProtocol protocol)
+//        {
+//            Protocol = protocol;
+//        }
+//
+//        public IProtocol Protocol { get; private set; }
     }
 
     #endregion
