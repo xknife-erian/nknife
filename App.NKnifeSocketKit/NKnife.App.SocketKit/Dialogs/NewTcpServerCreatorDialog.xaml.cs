@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using NKnife.Socket;
+using NKnife.Utility;
 using SocketKnife;
 
 namespace NKnife.App.SocketKit.Dialogs
@@ -20,25 +21,34 @@ namespace NKnife.App.SocketKit.Dialogs
     /// </summary>
     public partial class NewTcpServerCreatorDialog : Window
     {
-        private TcpServerKnife _Server;
-
         public NewTcpServerCreatorDialog()
         {
             InitializeComponent();
-            _LocalIpBox.Items.Add("192.168.2.123");
-            _LocalIpBox.Items.Add("192.168.2.255");
-
-            _Server = new TcpServerKnife();
-            //_Server.SetProtocolFactory(null);//ProtocolFactory);
+            var ips = UtilityNet.GetLocalIpv4();
+            foreach (var ipAddress in ips)
+            {
+                _LocalIpBox.Items.Add(ipAddress);
+            }
+            if (ips.Any())
+            {
+                _LocalIpBox.SelectedIndex = 0;
+            }
         }
+
+        public IPAddress IpAddress { get; private set; }
+        public int Port { get; private set; }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
+            IpAddress = (IPAddress) _LocalIpBox.SelectedItem;
+            Port = int.Parse(_PortTextBox.Text);
+            DialogResult = true;
             Close();
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
     }

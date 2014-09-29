@@ -1,10 +1,10 @@
-﻿using SocketKnife.Interfaces;
+﻿using System.Net;
 
-namespace NKnife.Socket.Interfaces
+namespace SocketKnife.Interfaces
 {
     public interface ISocketServerKnife
     {
-        void Bind(string localhost, int port);
+        void Bind(IPAddress ipAddress, int port);
         ISocketConfig GetConfig { get; }
         IFilterChain GetFilterChain();
         void Start();

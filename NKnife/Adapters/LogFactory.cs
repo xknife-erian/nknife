@@ -9,8 +9,16 @@ namespace NKnife.Adapters
     {
         public static ILogger GetLogger(String name)
         {
-            var iLoggerFactory = DI.Get<ILoggerFactory>();
-            return iLoggerFactory == null ? NopLogger.Instance : iLoggerFactory.GetLogger(name);
+            ILoggerFactory factory = null;
+            try
+            {
+                factory = DI.Get<ILoggerFactory>();
+            }
+            catch (Exception e)
+            {
+                Debug.Fail("无法获取工厂(ILoggerFactory)的实例,可能是未引用ILogger适配器项目");
+            }
+            return factory == null ? NopLogger.Instance : factory.GetLogger(name);
         }
 
         public static ILogger GetLogger(Type clazz)
@@ -30,8 +38,7 @@ namespace NKnife.Adapters
             int framesToSkip = 1;
             do
             {
-
-                StackFrame frame = new StackFrame(framesToSkip, false);
+                var frame = new StackFrame(framesToSkip, false);
                 var method = frame.GetMethod();
                 declaringType = method.DeclaringType;
                 if (declaringType == null)
@@ -44,7 +51,8 @@ namespace NKnife.Adapters
                 loggerName = declaringType.FullName;
             } while (declaringType.Module.Name.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase));
 
-            return GetLogger(loggerName);
+            ILogger logger = GetLogger(loggerName);
+            return logger;
         }
 
         /// <summary>

@@ -6,7 +6,6 @@ using System.Net.Sockets;
 using System.Threading;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Socket.Interfaces;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
@@ -15,9 +14,13 @@ namespace SocketKnife
 {
     public class TcpServerKnife : ISocketServerKnife
     {
-        public void Bind(string localhost, int port)
+        private IPAddress _IpAddress;
+        private int _Port;
+
+        public void Bind(IPAddress ipAddress, int port)
         {
-            throw new NotImplementedException();
+            _IpAddress = ipAddress;
+            _Port = port;
         }
 
         public ISocketConfig GetConfig { get; private set; }
@@ -92,8 +95,8 @@ namespace SocketKnife
         {
             _ClientMap = new ConcurrentDictionary<string, Socket>();
 
-            _AutoReset = new AutoResetEvent[1];
-            _AutoReset[0] = new AutoResetEvent(false);
+//            _AutoReset = new AutoResetEvent[1];
+//            _AutoReset[0] = new AutoResetEvent(false);
         }
 
         #endregion

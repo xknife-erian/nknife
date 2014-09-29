@@ -51,19 +51,19 @@ namespace NKnife.App.SocketKit
 
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new TcpServerView();
-            _Documents.Add(view);
+            var win = new NewTcpServerCreatorDialog();
+            var drs = win.ShowDialog(this);
+            if (drs != null && (bool)drs)
+            {
+                var view = new TcpServerView(win.IpAddress, win.Port);
+                _Documents.Add(view);
+            }
         }
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            var win = new NewTcpServerCreatorDialog();
-            var showDialog = win.ShowDialog(this);
-            if (showDialog != null && (bool) showDialog)
-            {
-            }
-            //var view = new TcpClientView();
-            //_Documents.Add(view);
+            var view = new TcpClientView();
+            _Documents.Add(view);
         }
 
         private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
