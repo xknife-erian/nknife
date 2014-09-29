@@ -20,7 +20,7 @@ namespace NKnife.App.PictureTextPicker.Starter
             Application.SetCompatibleTextRenderingDefault(false);
 
             ILogger logger = LogFactory.GetCurrentClassLogger();
-            logger.Info("NLog日志组志启用成功.");
+            logger.Info("NLog日志组志启用成功.......");
 
             Application.Run(new MainForm());
         }
