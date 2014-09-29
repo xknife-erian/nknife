@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NKnife.Socket.Interfaces
+namespace SocketKnife.Interfaces
 {
     public interface IFilterChain : IDictionary<string, IFilter>
     {

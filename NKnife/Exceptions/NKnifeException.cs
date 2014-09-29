@@ -3,13 +3,18 @@
 namespace NKnife.Exceptions
 {
     /// <summary>
-    /// Gean.Library的的基础异常类，所有的异常从本类派生
+    ///     NKnife的的基础异常类，所有的异常从本类派生
     /// </summary>
     [Serializable]
     public class NKnifeException : ApplicationException
     {
         /// <summary>
-        /// 构造函数
+        ///     异常编号
+        /// </summary>
+        protected int _ErrorNo;
+
+        /// <summary>
+        ///     构造函数
         /// </summary>
         public NKnifeException()
             : this(0, null, null)
@@ -17,7 +22,7 @@ namespace NKnife.Exceptions
         }
 
         /// <summary>
-        /// 构造函数
+        ///     构造函数
         /// </summary>
         /// <param name="message">异常消息</param>
         /// <param name="innerException">内部异常</param>
@@ -27,7 +32,7 @@ namespace NKnife.Exceptions
         }
 
         /// <summary>
-        /// 构造函数
+        ///     构造函数
         /// </summary>
         /// <param name="message">异常消息</param>
         public NKnifeException(string message)
@@ -36,7 +41,7 @@ namespace NKnife.Exceptions
         }
 
         /// <summary>
-        /// 构造函数
+        ///     构造函数
         /// </summary>
         /// <param name="errorNo">异常编号</param>
         /// <param name="message">异常消息</param>
@@ -46,7 +51,7 @@ namespace NKnife.Exceptions
         }
 
         /// <summary>
-        /// 构造函数
+        ///     构造函数
         /// </summary>
         /// <param name="errorNo">异常编号</param>
         /// <param name="message">异常消息</param>
@@ -54,24 +59,19 @@ namespace NKnife.Exceptions
         public NKnifeException(int errorNo, string message, Exception innerException)
             : base(message, innerException)
         {
-            this._ErrorNo = errorNo;
+            _ErrorNo = errorNo;
         }
 
         /// <summary>
-        /// 异常编号
-        /// </summary>
-        protected int _ErrorNo;
-
-        /// <summary>
-        /// 异常编号
+        ///     异常编号
         /// </summary>
         public int ErrorNo
         {
-            get { return this._ErrorNo; }
+            get { return _ErrorNo; }
         }
 
         /// <summary>
-        /// 查找原始的异常
+        ///     查找原始的异常
         /// </summary>
         /// <param name="e">异常</param>
         /// <returns>原始的异常</returns>
@@ -87,7 +87,7 @@ namespace NKnife.Exceptions
         }
 
         /// <summary>
-        /// 从异常树种查找指定类型的异常
+        ///     从异常树种查找指定类型的异常
         /// </summary>
         /// <param name="e">异常</param>
         /// <param name="expectedExceptionType">期待的异常类型</param>

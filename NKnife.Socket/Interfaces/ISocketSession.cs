@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NKnife.Socket.Interfaces
+﻿namespace SocketKnife.Interfaces
 {
     public interface ISocketSession
     {
