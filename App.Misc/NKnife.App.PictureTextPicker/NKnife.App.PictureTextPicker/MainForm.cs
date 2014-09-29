@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Permissions;
 using System.Windows.Forms;
 using NKnife.Adapters;
 using NKnife.App.PictureTextPicker.Common;
@@ -14,6 +15,8 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker
 {
+    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class MainForm : Form
     {
         private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
@@ -55,7 +58,7 @@ namespace NKnife.App.PictureTextPicker
         private void InitializeDockPanel()
         {
             MainToolStripContainer.ContentPanel.Controls.Add(_DockPanel);
-            _DockPanel.DocumentStyle = DocumentStyle.DockingMdi;
+            _DockPanel.DocumentStyle = DocumentStyle.DockingWindow;
             _DockPanel.Dock = DockStyle.Fill;
             _DockPanel.BringToFront();
 
@@ -113,18 +116,26 @@ namespace NKnife.App.PictureTextPicker
             var path = folderDlg.SelectedPath;
             if (!string.IsNullOrEmpty(path))
             {
-                
+                _AppOption.SetOption("PictureDirectory", path); //设置图片路径
+                if (!CreateThumbNailBackgroundWorker.IsBusy)
+                {
+                    CreateThumbNailBackgroundWorker.RunWorkerAsync();
+                }
+                else
+                {
+                    MessageBox.Show("系统繁忙，请稍后···");
+                }
             }
            
         }
 
-        private void LoadPicturesInFolders(string path)
+        private void LoadPicturesInFolders()
         {
-            var di = new DirectoryInfo(path);
+            var pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
+            var pictureType = _AppOption.GetOption("PictureFileType", "*.jpg");
+            var di = new DirectoryInfo(pictureDirectory);
             var lstAll = new List<string>();
-            var lst = di.EnumerateFiles("*.jpg", SearchOption.AllDirectories).Select(file => file.FullName).ToList();
-            lstAll.AddRange(lst);
-            lst = di.EnumerateFiles("*.png", SearchOption.AllDirectories).Select(file => file.FullName).ToList();
+            var lst = di.EnumerateFiles(pictureType, SearchOption.AllDirectories).Select(file => file.FullName).ToList();
             lstAll.AddRange(lst);
 
             _PictureList.AddRange(lstAll);
@@ -146,20 +157,31 @@ namespace NKnife.App.PictureTextPicker
             string pictureDirectory = _AppOption.GetOption("PictureDirectory","");
             int thumbNailWidth = _AppOption.GetOption("ThumbWidth", 180);
             int thumbNailHeight = _AppOption.GetOption("ThumbHeight", 100);
-            string pictureType = _AppOption.GetOption("PictureFileType", "jpg");
+            string pictureType = _AppOption.GetOption("PictureFileType", "*.jpg");
             bool fixThumbSize = _AppOption.GetOption("FixThumbSize", false);
-            string thumbNailDirectory = Path.Combine(Application.StartupPath, "thumbnail");
+            string thumbNailDirectory = _AppOption.GetOption("ThumbNailDirectory", "");
 
             ThumbNailHelper.GetSmallPicListMethod(pictureDirectory, thumbNailDirectory, thumbNailWidth, thumbNailHeight, pictureType, fixThumbSize);
         }
 
         private void CreateThumbNailBackgroundWorkerRunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            
+            //加载显示到左侧列表
+            LoadPicturesInFolders();
         }
         #endregion
 
+        public void ShowPic(string picName)
+        {
+            var pictureDocumentView = new PictureDocumentView();
+            pictureDocumentView.Text = picName;
+            pictureDocumentView.Show(_DockPanel,DockState.Document);
+            pictureDocumentView.Activate();
 
+            string pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
+
+            _PictureList.SetSelectedPicuture(Path.Combine(pictureDirectory,picName));
+        }
 
 
 

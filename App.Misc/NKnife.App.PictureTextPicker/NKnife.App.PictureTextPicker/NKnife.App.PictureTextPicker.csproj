@@ -37,6 +37,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
@@ -72,6 +76,9 @@
     <Compile Include="Views\LogView.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Views\PictureDocumentView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\PictureEditView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +110,9 @@
     <EmbeddedResource Include="Views\LogView.resx">
       <DependentUpon>LogView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\PictureDocumentView.resx">
+      <DependentUpon>PictureDocumentView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\PictureEditView.resx">
       <DependentUpon>PictureEditView.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,6 +137,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\NKnife.Draws\NKnife.Draws.csproj">
+      <Project>{48dcfea4-948a-45f8-8fa5-010a1e095c19}</Project>
+      <Name>NKnife.Draws</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\NKnife.NLog3\NKnife.NLog3.csproj">
       <Project>{3D1D08D2-46B0-4C33-A214-A5A76A998102}</Project>
       <Name>NKnife.NLog3</Name>
@@ -140,8 +154,19 @@
       <Name>NKnife.App.PictureTextPicker.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="HTML\images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HTML\JS\jquery-1.7.2.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HTML\JS\json.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HTML\PicList.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

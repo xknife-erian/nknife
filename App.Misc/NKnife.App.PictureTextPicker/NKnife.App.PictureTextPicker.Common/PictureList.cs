@@ -10,6 +10,7 @@ namespace NKnife.App.PictureTextPicker.Common
     {
         public List<string> FilePathList { get; private set; }
         public EventHandler PictureListChanged { get; set; }
+        public EventHandler<PicutureEventArgs> PictureSelected { get; set; }
 
         public PictureList()
         {
@@ -41,6 +42,13 @@ namespace NKnife.App.PictureTextPicker.Common
                 FilePathList.RemoveAt(index);
                 InvokePictureListChanged();
             }
+        }
+
+        public void SetSelectedPicuture(string path)
+        {
+            var handler = PictureSelected;
+            if (handler != null)
+                handler.Invoke(this, new PicutureEventArgs(path));
         }
 
         private void InvokePictureListChanged()

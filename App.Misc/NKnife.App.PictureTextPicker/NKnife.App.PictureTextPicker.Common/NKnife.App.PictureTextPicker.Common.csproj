@@ -50,6 +50,7 @@
     <Compile Include="Base\BaseAppOption.cs" />
     <Compile Include="Base\IAppOption.cs" />
     <Compile Include="Base\IPictureList.cs" />
+    <Compile Include="Base\PicutureEventArgs.cs" />
     <Compile Include="ThumbNailHelper.cs" />
     <Compile Include="PictureList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
