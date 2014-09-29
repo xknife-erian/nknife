@@ -82,6 +82,9 @@
     <Compile Include="FTP\FtpWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\WinForm\ImagesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\WinForm\XmlTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
