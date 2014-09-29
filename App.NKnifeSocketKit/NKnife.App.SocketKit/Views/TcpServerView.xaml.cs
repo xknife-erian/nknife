@@ -25,8 +25,8 @@ namespace NKnife.App.SocketKit.Views
     /// </summary>
     public partial class TcpServerView
     {
-        private ServerList _ServerList = DI.Get<ServerList>();
-        private Server _Server;
+        private readonly ServerList _ServerList = DI.Get<ServerList>();
+        private readonly ISocketServerKnife _Server;
 
         public TcpServerView(IPAddress ipAddress, int port)
         {
@@ -36,7 +36,7 @@ namespace NKnife.App.SocketKit.Views
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
             if (!_ServerList.ContainsKey(key))
             {
-                _Server = new Server();
+                _Server = DI.Get<ISocketServerKnife>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
                 _Server.Bind(ipAddress, port);
                 _ServerList.Add(key, _Server);
@@ -47,5 +47,24 @@ namespace NKnife.App.SocketKit.Views
             }
         }
 
+        private void Start(object sender, RoutedEventArgs e)
+        {
+            _Server.Start();
+        }
+
+        private void Pause(object sender, RoutedEventArgs e)
+        {
+            _Server.Start();
+        }
+
+        private void Restart(object sender, RoutedEventArgs e)
+        {
+            _Server.ReStart();
+        }
+
+        private void Stop(object sender, RoutedEventArgs e)
+        {
+            _Server.Stop();
+        }
     }
 }

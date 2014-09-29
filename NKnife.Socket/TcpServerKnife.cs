@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.Ioc;
@@ -59,6 +60,7 @@ namespace SocketKnife
             _Port = port;
         }
 
+        [Inject]
         public ISocketServerConfig Config { get; private set; }
 
         public IFilterChain GetFilterChain()
@@ -138,7 +140,6 @@ namespace SocketKnife
 
         public TcpServerKnife()
         {
-            Config = DI.Get<ISocketServerConfig>();
             _ClientMap = new ConcurrentDictionary<string, Socket>();
             _ReceiveQueueMap = new ConcurrentDictionary<EndPoint, ReceiveQueue>();
             _AutoReset = new AutoResetEvent[1];
