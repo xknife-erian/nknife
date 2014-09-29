@@ -105,12 +105,12 @@ namespace SocketKnife
             get { return _ClientMap; }
         }
 
-        /// <summary>
-        ///     协议的创建工厂
-        /// </summary>
-        public ProtocolFactory Protocols { get; private set; }
-
-        public ISocketServerSetting Option { get; private set; }
+//        /// <summary>
+//        ///     协议的创建工厂
+//        /// </summary>
+//        public ProtocolFactory Protocols { get; private set; }
+//
+//        public ISocketServerSetting Option { get; private set; }
 
         public SocketMode Mode { get; set; }
 
