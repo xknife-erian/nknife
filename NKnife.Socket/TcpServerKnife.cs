@@ -162,23 +162,23 @@ namespace SocketKnife
             set { _MainSocket.SendTimeout = value; }
         }
 
-        /// <summary>
-        ///     接收到的数据的解析器
-        /// </summary>
-        /// <value>The decoder.</value>
-        public IDatagramDecoder Decoder
-        {
-            get { return Option.Decoder; }
-        }
-
-        /// <summary>
-        ///     字符 向 字节数组的转换器
-        /// </summary>
-        /// <value>The encoder.</value>
-        public IDatagramEncoder Encoder
-        {
-            get { return Option.Encoder; }
-        }
+//        /// <summary>
+//        ///     接收到的数据的解析器
+//        /// </summary>
+//        /// <value>The decoder.</value>
+//        public IDatagramDecoder Decoder
+//        {
+//            get { return Option.Decoder; }
+//        }
+//
+//        /// <summary>
+//        ///     字符 向 字节数组的转换器
+//        /// </summary>
+//        /// <value>The encoder.</value>
+//        public IDatagramEncoder Encoder
+//        {
+//            get { return Option.Encoder; }
+//        }
 
         /// <summary>
         ///     命令字解析器
