@@ -11,7 +11,7 @@ namespace NKnife.NLog3
         public static void Main(string[] args)
         {
             Logger logger = LogManager.GetCurrentClassLogger();
-            logger.Info("测试原生NLog日志记录..（看到本条日志，表示成功）");
+            logger.Info("测试原生NLog日志记录（看到本条日志，表示成功）");
             Console.ReadLine();
         }
     }
