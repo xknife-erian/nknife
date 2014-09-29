@@ -10,5 +10,10 @@ namespace SocketKnife.Common
     [Serializable]
     public class SocketClientDisOpenedException : NKnifeException
     {
+        public SocketClientDisOpenedException(string message) 
+            : base(message)
+        {
+
+        }
     }
 }

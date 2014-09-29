@@ -18,7 +18,7 @@ namespace NKnife.App.TouchIme.TouchInput.Common
         /// <summary>
         ///     与服务器的连接
         /// </summary>
-        protected Socket _Socket;
+        protected System.Net.Sockets.Socket _Socket;
 
         public Client()
         {
@@ -48,10 +48,10 @@ namespace NKnife.App.TouchIme.TouchInput.Common
             _Logger.Info("连接{0}:{1}成功", HOST, PORT);
         }
 
-        private static Socket BuildSocket(int timeout = 0)
+        private static System.Net.Sockets.Socket BuildSocket(int timeout = 0)
         {
             int t = (timeout <= 0) ? TIMEOUT : timeout;
-            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+            var socket = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
             {
                 SendTimeout = t,
                 ReceiveTimeout = t,

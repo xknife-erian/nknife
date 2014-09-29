@@ -4,7 +4,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using NLog;
+using NKnife.Adapters;
+using NKnife.Interface;
 
 namespace SocketKnife
 {
@@ -13,7 +14,7 @@ namespace SocketKnife
     /// </summary>
     public class AsynListener : Component
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly ManualResetEvent _AllDone = new ManualResetEvent(false);
         private readonly ManualResetEvent _SendDone = new ManualResetEvent(false);
@@ -134,7 +135,7 @@ namespace SocketKnife
             {
                 var listener = (Socket) ar.AsyncState;
                 client = listener.EndAccept(ar);
-                _Logger.Trace("监听到客户端连接：{0}", client.RemoteEndPoint.ToString());
+                _Logger.Trace(string.Format("监听到客户端连接：{0}", client.RemoteEndPoint.ToString()));
                 var state = new StateObject(_BufferSize, client) {Client = client};
                 client.BeginReceive(state.Buffer, 0, _BufferSize, 0, ReadCallback, state);
             }
@@ -239,7 +240,7 @@ namespace SocketKnife
             try
             {
                 int bytesSent = client.EndSend(ar);
-                _Logger.Debug("Sent {0} bytes to client.", bytesSent);
+                _Logger.Debug(string.Format("Sent {0} bytes to client.", bytesSent));
             }
             catch (Exception e)
             {

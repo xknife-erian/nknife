@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Windows.Forms;
-using NKnife.App.TouchIme.Properties;
-using NKnife.Logging.Base;
+using NKnife.App.TouchKnife.Properties;
+using NKnife.NLog3.Logging.Base;
 using NKnife.Utility;
 
 namespace NKnife.App.TouchIme.TouchInput.Common

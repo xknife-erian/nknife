@@ -5,8 +5,8 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using WindowsInput;
 using NKnife.App.TouchIme.Ime.Pinyin;
-using NKnife.App.TouchIme.Properties;
 using NKnife.App.TouchIme.TouchInput.Common;
+using NKnife.App.TouchKnife.Properties;
 using NKnife.Ioc;
 
 namespace NKnife.App.TouchIme.TouchInput

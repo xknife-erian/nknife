@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsynListener.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\BufferContainer.cs" />
     <Compile Include="Common\ConnectionStatus.cs" />
     <Compile Include="Common\Delegates.cs" />
