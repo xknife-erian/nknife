@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.Base;
 using NKnife.Ioc;
+using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Views
 {
@@ -31,15 +33,19 @@ namespace NKnife.App.SocketKit.Views
             InitializeComponent();
             Title = "SocketKnife服务端";
 
-            _Server = new Server();
-            _Server.Bind(ipAddress, port);
-//            _Server.GetConfig.SetReadBufferSize(2048);
-//            _Server.Start();
-//            _Server.ReStart();
-//            _Server.Stop();
-            _ServerList.Add(Pair<IPAddress, int>.Build(ipAddress, port), _Server);
+            var key = Pair<IPAddress, int>.Build(ipAddress, port);
+            if (!_ServerList.ContainsKey(key))
+            {
+                _Server = new Server();
+                _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
+                _Server.Bind(ipAddress, port);
+                _ServerList.Add(key, _Server);
+            }
+            else
+            {
+                Debug.Fail("不应出现相同IP与端口的服务器请求。");
+            }
         }
-
 
     }
 }

@@ -56,15 +56,17 @@
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Common\Tcps.cs" />
+    <Compile Include="Default\DefaultSocketServerConfig.cs" />
     <Compile Include="Interfaces\IFilter.cs" />
     <Compile Include="Interfaces\IFilterChain.cs" />
     <Compile Include="Interfaces\IMessageHandler.cs" />
     <Compile Include="Interfaces\ISessionHandler.cs" />
-    <Compile Include="Interfaces\ISocketConfig.cs" />
+    <Compile Include="Interfaces\ISocketServerConfig.cs" />
     <Compile Include="Interfaces\ISocketServerKnife.cs" />
     <Compile Include="Filters\KeepFilter.cs" />
     <Compile Include="Filters\CodecFilter.cs" />
     <Compile Include="Interfaces\ISocketSession.cs" />
+    <Compile Include="IoC\DefaultModules.cs" />
     <Compile Include="TcpServerKnife.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
