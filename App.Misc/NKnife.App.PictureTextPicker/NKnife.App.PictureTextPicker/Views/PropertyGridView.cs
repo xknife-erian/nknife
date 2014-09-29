@@ -9,7 +9,12 @@ namespace NKnife.App.PictureTextPicker.Views
     public class PropertyGridView : DockContent
     {
         private System.Windows.Forms.PropertyGrid propertyGrid1;
-    
+
+        public PropertyGridView()
+        {
+            InitializeComponent();
+        }
+
         private void InitializeComponent()
         {
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();

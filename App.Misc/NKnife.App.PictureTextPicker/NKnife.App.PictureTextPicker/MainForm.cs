@@ -26,7 +26,7 @@ namespace NKnife.App.PictureTextPicker
         private readonly DockPanel _DockPanel = new DockPanel();
         private readonly DockContent _PictureListView = DI.Get<PictureListView>();
         private readonly DockContent _PropertyGridView = DI.Get<PropertyGridView>();
-        private readonly DockContent _PictureThumbView = DI.Get<PictureThumbView>();
+        private readonly DockContent _ProcessResultView = DI.Get<ProcessResultView>();
         private readonly DockContent _LogView = DI.Get<LogView>();
 
         private readonly IPictureList _PictureList = DI.Get<IPictureList>();
@@ -83,8 +83,8 @@ namespace NKnife.App.PictureTextPicker
                 return _PictureListView;
             if (xml == typeof(PropertyGridView).ToString())
                 return _PropertyGridView;
-            if (xml == typeof(PictureThumbView).ToString())
-                return _PictureThumbView;
+            if (xml == typeof(ProcessResultView).ToString())
+                return _ProcessResultView;
             if (xml == typeof (LogView).ToString())
                 return _LogView;
             return null;
@@ -93,7 +93,7 @@ namespace NKnife.App.PictureTextPicker
         private void InitializeDefaultViews()
         {
             _PictureListView.Show(_DockPanel, DockState.DockLeft);
-            _PictureThumbView.Show(_DockPanel, DockState.DockRight);
+            _ProcessResultView.Show(_DockPanel, DockState.DockRight);
             _PropertyGridView.Show(_DockPanel, DockState.DockRight);
             _LogView.Show(_DockPanel,DockState.DockBottom);
         }
