@@ -18,6 +18,7 @@ namespace NKnife.App.PictureTextPicker.Views
         private readonly IPictureList _PictureList = DI.Get<IPictureList>();
         private ToolStripContainer PicutureDocumentToolStripContainer;
         private PictureFrame _PictureFrame;
+        private ToolStrip toolStrip1;
         private bool _ImageLoaded;
         public PictureDocumentView()
         {
@@ -67,7 +68,9 @@ namespace NKnife.App.PictureTextPicker.Views
         {
             this.PicutureDocumentToolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this._PictureFrame = new NKnife.Draws.Controls.Frames.PictureFrame();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.PicutureDocumentToolStripContainer.ContentPanel.SuspendLayout();
+            this.PicutureDocumentToolStripContainer.TopToolStripPanel.SuspendLayout();
             this.PicutureDocumentToolStripContainer.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,6 +91,10 @@ namespace NKnife.App.PictureTextPicker.Views
             this.PicutureDocumentToolStripContainer.TabIndex = 0;
             this.PicutureDocumentToolStripContainer.Text = "toolStripContainer1";
             // 
+            // PicutureDocumentToolStripContainer.TopToolStripPanel
+            // 
+            this.PicutureDocumentToolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
             // _PictureFrame
             // 
             this._PictureFrame.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -99,6 +106,14 @@ namespace NKnife.App.PictureTextPicker.Views
             this._PictureFrame.TabIndex = 0;
             this._PictureFrame.Text = "pictureFrame1";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(109, 25);
+            this.toolStrip1.TabIndex = 0;
+            // 
             // PictureDocumentView
             // 
             this.ClientSize = new System.Drawing.Size(426, 349);
@@ -106,6 +121,8 @@ namespace NKnife.App.PictureTextPicker.Views
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "PictureDocumentView";
             this.PicutureDocumentToolStripContainer.ContentPanel.ResumeLayout(false);
+            this.PicutureDocumentToolStripContainer.TopToolStripPanel.ResumeLayout(false);
+            this.PicutureDocumentToolStripContainer.TopToolStripPanel.PerformLayout();
             this.PicutureDocumentToolStripContainer.ResumeLayout(false);
             this.PicutureDocumentToolStripContainer.PerformLayout();
             this.ResumeLayout(false);
