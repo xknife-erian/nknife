@@ -182,8 +182,5 @@ namespace NKnife.App.PictureTextPicker
 
             pictureDocumentView.SetSelectedPicuture(Path.Combine(pictureDirectory, picName));
         }
-
-
-
     }
 }
