@@ -1,7 +1,8 @@
-﻿using NKnife.Socket.Filters;
+﻿using NKnife.Socket;
 using NKnife.Socket.Interfaces;
+using SocketKnife.Filters;
 
-namespace NKnife.Socket
+namespace SocketKnife
 {
     internal class TempServer
     {

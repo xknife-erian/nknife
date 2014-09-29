@@ -1,6 +1,7 @@
 ﻿using NKnife.Socket.Interfaces;
+using SocketKnife.Interfaces;
 
-namespace NKnife.Socket.Filters
+namespace SocketKnife.Filters
 {
     public class KeepFilter : IFilter
     {

@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using NKnife.Socket;
+using SocketKnife;
 
 namespace NKnife.App.SocketKit.Dialogs
 {

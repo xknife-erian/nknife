@@ -1,4 +1,6 @@
-﻿namespace NKnife.Socket.Interfaces
+﻿using SocketKnife.Interfaces;
+
+namespace NKnife.Socket.Interfaces
 {
     public interface ISocketServerKnife
     {
