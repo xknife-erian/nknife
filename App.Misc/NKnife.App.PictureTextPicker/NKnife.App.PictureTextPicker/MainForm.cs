@@ -180,7 +180,7 @@ namespace NKnife.App.PictureTextPicker
 
             string pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
 
-            _PictureList.SetSelectedPicuture(Path.Combine(pictureDirectory,picName));
+            pictureDocumentView.SetSelectedPicuture(Path.Combine(pictureDirectory, picName));
         }
 
 

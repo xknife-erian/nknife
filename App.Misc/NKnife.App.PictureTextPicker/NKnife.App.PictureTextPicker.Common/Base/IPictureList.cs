@@ -8,7 +8,6 @@ namespace NKnife.App.PictureTextPicker.Common.Base
     {
         List<string> FilePathList { get;}
         EventHandler PictureListChanged { get; set; }
-        EventHandler<PicutureEventArgs> PictureSelected { get; set; }
 
         void Clear();
 
@@ -17,6 +16,5 @@ namespace NKnife.App.PictureTextPicker.Common.Base
         void AddRange(List<string> paths);
 
         void RemoveAt(int index);
-        void SetSelectedPicuture(string picName);
     }
 }

@@ -22,12 +22,10 @@ namespace NKnife.App.PictureTextPicker.Views
         public PictureDocumentView()
         {
             InitializeComponent();
-            _PictureList.PictureSelected += PictureSelected;
         }
 
-        private void PictureSelected(object sender, PicutureEventArgs picutureEventArgs)
+        public void SetSelectedPicuture(string imageFileName)
         {
-            var imageFileName = picutureEventArgs.PictureName;
             LoadImage(imageFileName);
         }
 
