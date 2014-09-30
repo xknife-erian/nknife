@@ -40,21 +40,57 @@ namespace NKnife.GUI.WinForm
             BoxMargin = 10;
         }
 
+        /// <summary>
+        /// 图片描述文字的字体
+        /// </summary>
+        [Category("定制")]
+        [Description("图片描述文字的字体")]
         public Font ImageBoxLabelFont { get; set; }
 
+        /// <summary>
+        /// 图片描述文字的背景色
+        /// </summary>
+        [Category("定制")]
+        [Description("图片描述文字的背景色")]
         public Color ImageBoxLabelColor { get; set; }
 
+        /// <summary>
+        /// 图片的背景色
+        /// </summary>
+        [Category("定制")]
+        [Description("图片的背景色")]
         public Color ImageBoxColor { get; set; }
 
+        /// <summary>
+        /// 显示的图片的大小
+        /// </summary>
+        [Category("定制")]
+        [Description("显示的图片的大小")]
         public ImageBoxSize BoxSize { get; set; }
 
+        /// <summary>
+        /// 图片与图片之间的间距
+        /// </summary>
+        [Category("定制")]
+        [Description("图片与图片之间的间距")]
         public int BoxMargin { get; set; }
 
+        /// <summary>
+        /// 选中图片的描述文字
+        /// </summary>
+        [Category("定制")]
+        [Description("选中图片的描述文字")]
         public Func<string, string> BuildLabelText { get; set; } 
 
+        /// <summary>
+        /// 被选中的图片文件
+        /// </summary>
         [Browsable(false)]
         public string SelectedImageFile { get; set; }
 
+        /// <summary>
+        /// 当有图片被选中时发生
+        /// </summary>
         public event EventHandler<EventArgs<string>> SelectedImage;
 
         private void OnSelectedImage(EventArgs<string> e)
@@ -81,8 +117,8 @@ namespace NKnife.GUI.WinForm
             {
                 try
                 {
-                    byte[] b = File.ReadAllBytes(currImageFile);
-                    var mem = new MemoryStream(b);
+                    byte[] bs = File.ReadAllBytes(currImageFile);
+                    var mem = new MemoryStream(bs);
                     mem.Position = 0;
                     Image image = Image.FromStream(mem);
 
@@ -90,30 +126,31 @@ namespace NKnife.GUI.WinForm
                     var w = 80;
                     var h = 80/3*4;
                     int p = w/2 - w/20;
+                    int b = 1;
                     switch (BoxSize)
                     {
                         case ImageBoxSize.XLarge:
-                            imagebox.Size = new Size(w*5, h*5);
-                            p = w*5/2 - w*5/20;
+                            b = 5;
                             break;
                         case ImageBoxSize.Large:
-                            imagebox.Size = new Size(w*4, h*4);
-                            p = w*5/2 - w*5/20;
+                            b = 4;
                             break;
                         case ImageBoxSize.Medium:
-                            imagebox.Size = new Size(w*3, h*3);
-                            p = w*5/2 - w*5/20;
+                            b = 3;
                             break;
                         case ImageBoxSize.Small:
-                            imagebox.Size = new Size(w*2, h*2);
-                            p = w*5/2 - w*5/20;
+                            b = 2;
                             break;
                         case ImageBoxSize.XSmall:
-                            imagebox.Size = new Size(w*1, h*1);
-                            p = w*5/2 - w*5/20;
+                            b = 1;
                             break;
                     }
-                    Padding = new Padding(p,0,p,0);
+                    w = w*b;
+                    h = h*b;
+                    imagebox.Size = new Size(w, h);
+                    p = w / 2 - w / 10;
+
+                    Padding = new Padding(p,0,0,0);//控制图片尽可能的居中
                     imagebox.Margin = new Padding(BoxMargin, BoxMargin, BoxMargin, BoxMargin);
                     var label = currImageFile;
                     if (BuildLabelText != null)
@@ -121,7 +158,19 @@ namespace NKnife.GUI.WinForm
                         label = BuildLabelText.Invoke(currImageFile);
                     }
                     imagebox.SetImage(image, label);
-
+                    string file = currImageFile;
+                    imagebox.PictureClicked += (s, e) =>
+                    {
+                        if (e.Item)
+                        {
+                            SelectedImageFile = file;
+                            OnSelectedImage(new EventArgs<string>(file));
+                        }
+                        else if(SelectedImageFile == file)
+                        {
+                            SelectedImageFile = string.Empty;
+                        }
+                    };
                     this.ThreadSafeInvoke(() => Controls.Add(imagebox));
                 }
                 catch (Exception)
@@ -185,8 +234,18 @@ namespace NKnife.GUI.WinForm
             private void _PictureBox_MouseClick(object sender, MouseEventArgs e)
             {
                 _Label.Font = new Font(DefaultFont.FontFamily, DefaultFont.Size, FontStyle.Bold);
-                _IsSelected = true;
-                Refresh();
+                _IsSelected = !_IsSelected;
+                Invalidate();
+                OnPictureClicked(new EventArgs<bool>(_IsSelected));
+            }
+
+            public event EventHandler<EventArgs<bool>> PictureClicked;
+
+            private void OnPictureClicked(EventArgs<bool> e)
+            {
+                EventHandler<EventArgs<bool>> handler = PictureClicked;
+                if (handler != null) 
+                    handler(this, e);
             }
 
             protected override void OnAutoSizeChanged(EventArgs e)
