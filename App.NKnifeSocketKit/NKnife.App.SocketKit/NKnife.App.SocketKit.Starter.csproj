@@ -96,6 +96,7 @@
     <Compile Include="Views\TcpServerView.xaml.cs">
       <DependentUpon>TcpServerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TcpServerViewVm.cs" />
     <Page Include="Dialogs\NewTcpServerCreatorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -160,9 +161,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Common\Res\pause.png" />
-    <Resource Include="Common\Res\restart.png" />
     <Resource Include="Common\Res\start.png" />
     <Resource Include="Common\Res\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Common\Res\pause-e.png" />
+    <Resource Include="Common\Res\start-e.png" />
+    <Resource Include="Common\Res\stop-e.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

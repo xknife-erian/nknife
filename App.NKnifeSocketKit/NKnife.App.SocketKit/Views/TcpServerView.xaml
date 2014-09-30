@@ -4,14 +4,14 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-                     xmlns:resx="clr-namespace:NKnife.App.SocketKit.Properties"
-                     mc:Ignorable="d">
+                     mc:Ignorable="d"
+                     Title="SocketKnife服务端">
     <Grid>
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" />
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="64" />
+            <RowDefinition Height="34" />
             <RowDefinition Height="*" />
             <RowDefinition Height="26" />
         </Grid.RowDefinitions>
@@ -19,16 +19,19 @@
             <Button Click="Start">
                 <Image Source="../Common/Res/start.png"></Image>
             </Button>
-            <Button Click="Pause">
+            <Button Click="Pause" IsEnabled="False">
                 <Image Source="../Common/Res/pause.png"></Image>
             </Button>
-            <Button Click="Restart">
-                <Image Source="../Common/Res/restart.png"></Image>
-            </Button>
-            <Button Click="Stop">
+            <Button Click="Stop" IsEnabled="False">
                 <Image Source="../Common/Res/stop.png"></Image>
             </Button>
         </ToolBar>
-        <ListView Width="Auto" Height="Auto" Grid.Row="1" />
+        <DataGrid Grid.Row="1" Width="Auto" Height="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="时间" Width="120" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="30" Binding="{Binding Age}"/>
+                <DataGridTextColumn Header="消息日志" Width="*" Binding="{Binding Age}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </xcad:LayoutDocument>
