@@ -101,7 +101,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Workbench\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -112,7 +112,7 @@
     <Compile Include="Commands\MenuCommandManager.cs" />
     <Compile Include="Common\MessageDocumentCollection.cs" />
     <Compile Include="IoC\UIModule.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Workbench\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -169,6 +169,7 @@
     <Resource Include="Common\Res\start-e.png" />
     <Resource Include="Common\Res\stop-e.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
