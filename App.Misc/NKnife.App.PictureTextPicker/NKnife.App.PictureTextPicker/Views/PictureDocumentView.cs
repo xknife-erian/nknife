@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -178,7 +179,7 @@ namespace NKnife.App.PictureTextPicker.Views
             _ArrowRightButton.Click += (s, e) => _PictureFrame.RectangleOperating(RectangleOperation.ArrowRight);
             _ArrowUpButton.Click += (s, e) => _PictureFrame.RectangleOperating(RectangleOperation.ArrowUp);
 
-            LoadImage(Document.ImageFileName);
+            LoadImage(Document.ImageFullFileName);
         }
 
         private void LoadImage(string imgFile)
@@ -648,6 +649,12 @@ namespace NKnife.App.PictureTextPicker.Views
             this._ArrowToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
 
         /// <summary>
