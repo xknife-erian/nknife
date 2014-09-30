@@ -96,7 +96,8 @@
     <Compile Include="Views\TcpServerView.xaml.cs">
       <DependentUpon>TcpServerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TcpServerViewVm.cs" />
+    <Compile Include="Views\TcpServerViewViewModel.cs" />
+    <Compile Include="Workbench\MainWindowViewModel.cs" />
     <Page Include="Dialogs\NewTcpServerCreatorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

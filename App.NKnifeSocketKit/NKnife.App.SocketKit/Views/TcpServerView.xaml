@@ -26,9 +26,9 @@
                 <Image Source="../Common/Res/stop.png"></Image>
             </Button>
         </ToolBar>
-        <DataGrid Grid.Row="1" Width="Auto" Height="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False">
+        <DataGrid Name="_DataGrid" Grid.Row="1" Width="Auto" Height="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="时间" Width="120" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="{Binding Path=TimeHeader}" Width="120" Binding="{Binding Time}"/>
                 <DataGridTextColumn Width="30" Binding="{Binding Age}"/>
                 <DataGridTextColumn Header="消息日志" Width="*" Binding="{Binding Age}"/>
             </DataGrid.Columns>

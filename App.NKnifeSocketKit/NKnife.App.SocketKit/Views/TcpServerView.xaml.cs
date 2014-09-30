@@ -32,6 +32,7 @@ namespace NKnife.App.SocketKit.Views
         public TcpServerView(IPAddress ipAddress, int port)
         {
             InitializeComponent();
+            _DataGrid.DataContext = new TcpServerViewViewModel();
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
             if (!_ServerList.ContainsKey(key))
             {
