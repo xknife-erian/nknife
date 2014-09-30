@@ -28,7 +28,7 @@ namespace NKnife.App.PictureTextPicker.Views
             InitializeComponent();
             _PictureList.PictureSelected += (s, e) =>
             {
-
+                LoadRectangleList();
             };
         }
 
@@ -136,5 +136,13 @@ namespace NKnife.App.PictureTextPicker.Views
 
         }
         #endregion
+
+        private void LoadRectangleList()
+        {
+            foreach (var rect in _PictureList.ActiveDocument.RectangleList)
+            {
+                
+            }
+        }
     }
 }
