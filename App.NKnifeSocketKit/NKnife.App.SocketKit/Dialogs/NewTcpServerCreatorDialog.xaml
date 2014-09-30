@@ -21,9 +21,9 @@
         </Grid.ColumnDefinitions>
         <WrapPanel Grid.Column="1" Grid.Row="5">
             <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="30"
-                    Margin="140,5,0,0" Content="确定(_C)" Click="Confirm" />
+                    Margin="140,5,0,0" Content="确定(_C)" Click="Confirm" IsDefault="True" />
             <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="30"
-                    Margin="5,5,0,0" Content="取消(_X)" Click="Cancel" />
+                    Margin="5,5,0,0" Content="取消(_X)" Click="Cancel" IsCancel="True" />
         </WrapPanel>
         <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="本地IP:" Margin="0,0,5,0" />

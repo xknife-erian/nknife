@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -31,8 +32,6 @@ namespace NKnife.App.SocketKit.Views
         public TcpServerView(IPAddress ipAddress, int port)
         {
             InitializeComponent();
-            Title = "SocketKnife服务端";
-
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
             if (!_ServerList.ContainsKey(key))
             {
@@ -65,6 +64,12 @@ namespace NKnife.App.SocketKit.Views
         private void Stop(object sender, RoutedEventArgs e)
         {
             _Server.Stop();
+        }
+
+        protected override void OnClosing(CancelEventArgs args)
+        {
+            _Server.Stop();
+            base.OnClosing(args);
         }
     }
 }
