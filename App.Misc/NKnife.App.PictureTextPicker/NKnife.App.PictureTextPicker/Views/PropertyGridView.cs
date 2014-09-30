@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using NKnife.App.PictureTextPicker.Common.Base;
 using NKnife.App.PictureTextPicker.Common.Base.Res;
+using NKnife.Ioc;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views
@@ -12,11 +14,15 @@ namespace NKnife.App.PictureTextPicker.Views
     public class PropertyGridView : DockContent
     {
         private System.Windows.Forms.PropertyGrid _DocumentPropertyGrid;
-
+        private readonly IPictureList _PictureList = DI.Get<IPictureList>();
         public PropertyGridView()
         {
             InitializeComponent();
             Icon = Icon.FromHandle(OwnResources.icon_property.GetHicon());
+            _PictureList.PictureSelected += (o, s) =>
+            {
+                _DocumentPropertyGrid.SelectedObject = _PictureList.ActiveDocument;
+            };
         }
 
         protected override void OnClosing(CancelEventArgs e)

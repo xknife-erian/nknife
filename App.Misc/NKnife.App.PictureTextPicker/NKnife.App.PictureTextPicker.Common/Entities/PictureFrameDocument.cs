@@ -18,18 +18,24 @@ namespace NKnife.App.PictureTextPicker.Common.Entities
         }
 
         [Category("基本")]
-        [Description("单据宽度。实际宽度，单位mm。请用尺子精确测量。")]
+        [Description("单据宽度。实际宽度，单位像素。")]
         public int ImageWidth { get; set; }
 
         [Category("基本")]
-        [Description("单据高度。实际高度，单位mm。请用尺子精确测量。")]
+        [Description("单据高度。实际高度，单位像素。")]
         public int ImageHeight { get; set; }
 
         [Category("基本")]
-        [Description("单据扫描图")]
+        [Description("图片文件名")]
         public string ImageFileName { get; set; }
+
+        [Category("基本")]
+        [Description("图片完整文件名")]
+        public string ImageFullFileName { get; set; }
 
         [Browsable(false)]
         public RectangleList RectangleList { get; private set; }
+
+
     }
 }

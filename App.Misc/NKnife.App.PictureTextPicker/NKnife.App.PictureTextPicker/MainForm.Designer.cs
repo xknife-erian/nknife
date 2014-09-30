@@ -133,8 +133,9 @@
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.AboutToolStripMenuItem.Text = "关于(&A)";
+            this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
             // CreateThumbNailBackgroundWorker
             // 

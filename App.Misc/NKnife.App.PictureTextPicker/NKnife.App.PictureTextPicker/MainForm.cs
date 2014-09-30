@@ -8,8 +8,10 @@ using System.Windows.Forms;
 using NKnife.Adapters;
 using NKnife.App.PictureTextPicker.Common;
 using NKnife.App.PictureTextPicker.Common.Base;
+using NKnife.App.PictureTextPicker.Common.Controls;
 using NKnife.App.PictureTextPicker.Common.Entities;
 using NKnife.App.PictureTextPicker.Views;
+using NKnife.Collections;
 using NKnife.Interface;
 using NKnife.Ioc;
 using WeifenLuo.WinFormsUI.Docking;
@@ -30,7 +32,8 @@ namespace NKnife.App.PictureTextPicker
         private readonly DockContent _LogView = DI.Get<LogView>();
 
         private readonly IPictureList _PictureList = DI.Get<IPictureList>();
-        private IAppOption _AppOption = DI.Get<IAppOption>();
+        private readonly IAppOption _AppOption = DI.Get<IAppOption>();
+        private readonly Dictionary<string,PictureDocumentView> _FileNameViewMap = new Dictionary<string, PictureDocumentView>(); //key是图片完整路径，值是对应的View
 
         public MainForm()
         {
@@ -103,7 +106,11 @@ namespace NKnife.App.PictureTextPicker
         {
             Close();
         }
-
+        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var about = new AboutForm();
+            about.ShowDialog(this);
+        }
 
         /// <summary>
         /// 打开目录
@@ -135,9 +142,19 @@ namespace NKnife.App.PictureTextPicker
             var pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
             var pictureType = _AppOption.GetOption("PictureFileType", "*.jpg");
             var di = new DirectoryInfo(pictureDirectory);
-            var lstAll = new List<string>();
-            var lst = di.EnumerateFiles(pictureType, SearchOption.AllDirectories).Select(file => file.FullName).ToList();
+            var lstAll = new List<PictureFrameDocument>();
+            var lst = di.EnumerateFiles(pictureType, SearchOption.AllDirectories).Select(file => new PictureFrameDocument()
+            {
+                ImageFullFileName = file.FullName,
+                ImageFileName = file.Name,
+            }).ToList();
             lstAll.AddRange(lst);
+
+            _FileNameViewMap.Clear();
+            foreach (var pictureFrameDocument in lst)
+            {
+                _FileNameViewMap.Add(pictureFrameDocument.ImageFullFileName,null);
+            }
 
             _PictureList.AddRange(lstAll);
         }
@@ -175,19 +192,28 @@ namespace NKnife.App.PictureTextPicker
         public void ShowPic(string picName)
         {
             string pictureDirectory = _AppOption.GetOption("PictureDirectory", "");
-            var pictureDocument = new PictureFrameDocument
-            {
-                ImageFileName = Path.Combine(pictureDirectory, picName)
-            };
+            var imageFullFileName = Path.Combine(pictureDirectory, picName);
 
-            var pictureDocumentView = new PictureDocumentView(pictureDocument)
+            if (_FileNameViewMap[imageFullFileName] != null)
             {
-                Text = picName
-            };
-            pictureDocumentView.Show(_DockPanel,DockState.Document);
-            pictureDocumentView.Activate();
+                _FileNameViewMap[imageFullFileName].Activate();
+            }
+            else
+            {
+                var pictureDocument = _PictureList.GetPictureDocumentByFileName(imageFullFileName);
+                var pictureDocumentView = new PictureDocumentView(pictureDocument)
+                {
+                    Text = picName
+                };
+                _FileNameViewMap[imageFullFileName] = pictureDocumentView;
+                pictureDocumentView.Show(_DockPanel, DockState.Document);
+                pictureDocumentView.Activate();
+            }
 
+            _PictureList.SetActiveDocumentByFileName(imageFullFileName);
 
         }
+
+
     }
 }
