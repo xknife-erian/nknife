@@ -4,6 +4,7 @@ using System.Windows.Documents;
 using NKnife.Base;
 using NKnife.GUI.WinForm.IPAddressControl;
 using SocketKnife;
+using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Dialogs
 {
@@ -11,7 +12,7 @@ namespace NKnife.App.SocketKit.Dialogs
     {
     }
 
-    class ServerList : Dictionary<Pair<IPAddress, int>, Server>
+    class ServerList : Dictionary<Pair<IPAddress, int>, ISocketServerKnife>
     {
 
     }

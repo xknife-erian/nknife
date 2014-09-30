@@ -5,7 +5,7 @@ namespace SocketKnife.Interfaces
     public interface ISocketServerKnife
     {
         void Bind(IPAddress ipAddress, int port);
-        ISocketConfig GetConfig { get; }
+        ISocketServerConfig Config { get; }
         IFilterChain GetFilterChain();
         bool Start();
         bool ReStart();

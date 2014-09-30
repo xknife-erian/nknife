@@ -35,14 +35,16 @@
             this.iMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.汉字使用频率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.简易拼音输入法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.控件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.图片浏览容器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.控件ToolStripMenuItem,
             this.loggingToolStripMenuItem,
             this.iMEToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -57,8 +59,8 @@
             this._MultiLanguageLoPanleMenuItem,
             this._LogPanelTestMenuItem});
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
-            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.loggingToolStripMenuItem.Text = "Logging";
+            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.loggingToolStripMenuItem.Text = "日志";
             // 
             // _MultiLanguageLoPanleMenuItem
             // 
@@ -78,30 +80,22 @@
             // 
             this.iMEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.汉字使用频率ToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.简易拼音输入法ToolStripMenuItem});
+            this.toolStripSeparator1});
             this.iMEToolStripMenuItem.Name = "iMEToolStripMenuItem";
-            this.iMEToolStripMenuItem.Size = new System.Drawing.Size(43, 21);
-            this.iMEToolStripMenuItem.Text = "IME";
+            this.iMEToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.iMEToolStripMenuItem.Text = "杂项";
             // 
             // 汉字使用频率ToolStripMenuItem
             // 
             this.汉字使用频率ToolStripMenuItem.Name = "汉字使用频率ToolStripMenuItem";
-            this.汉字使用频率ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.汉字使用频率ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.汉字使用频率ToolStripMenuItem.Text = "汉字使用频率";
             this.汉字使用频率ToolStripMenuItem.Click += new System.EventHandler(this.汉字使用频率ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
-            // 
-            // 简易拼音输入法ToolStripMenuItem
-            // 
-            this.简易拼音输入法ToolStripMenuItem.Name = "简易拼音输入法ToolStripMenuItem";
-            this.简易拼音输入法ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.简易拼音输入法ToolStripMenuItem.Text = "简易拼音输入法";
-            this.简易拼音输入法ToolStripMenuItem.Click += new System.EventHandler(this.简易拼音输入法ToolStripMenuItem_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // statusStrip1
             // 
@@ -109,6 +103,21 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
+            // 
+            // 控件ToolStripMenuItem
+            // 
+            this.控件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.图片浏览容器ToolStripMenuItem});
+            this.控件ToolStripMenuItem.Name = "控件ToolStripMenuItem";
+            this.控件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.控件ToolStripMenuItem.Text = "控件";
+            // 
+            // 图片浏览容器ToolStripMenuItem
+            // 
+            this.图片浏览容器ToolStripMenuItem.Name = "图片浏览容器ToolStripMenuItem";
+            this.图片浏览容器ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.图片浏览容器ToolStripMenuItem.Text = "图片浏览容器";
+            this.图片浏览容器ToolStripMenuItem.Click += new System.EventHandler(this.图片浏览容器ToolStripMenuItem_Click);
             // 
             // KitListForm
             // 
@@ -138,9 +147,10 @@
         private System.Windows.Forms.ToolStripMenuItem _LogPanelTestMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _MultiLanguageLoPanleMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iMEToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 简易拼音输入法ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 汉字使用频率ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem 控件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 图片浏览容器ToolStripMenuItem;
     }
 }
 

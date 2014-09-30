@@ -13,6 +13,8 @@ namespace NKnife.StarterKit
 {
     public partial class KitListForm : Form
     {
+        readonly LoggingStarterForm _LoggingForm = new LoggingStarterForm();
+
         public KitListForm()
         {
             InitializeComponent();
@@ -25,28 +27,27 @@ namespace NKnife.StarterKit
         private void _LogPanelTestMenuItem_Click(object sender, EventArgs e)
         {
             NKnife.Global.Culture = _MultiLanguageLoPanleMenuItem.Checked ? "en-US" : "zh-CN";
-            var form = new LoggingStarterForm();
-            form.MdiParent = this;
-            form.FormClosed += LoggingFormClosed;
-            form.Show();
+            _LoggingForm.MdiParent = this;
+            _LoggingForm.FormClosed += LoggingFormClosed;
+            _LoggingForm.Show();
         }
 
         void LoggingFormClosed(object sender, FormClosedEventArgs e)
         {
             var form = (Form) sender;
-            form.Close();
-        }
-
-        private void 简易拼音输入法ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = new PinyinImeForm();
-            form.MdiParent = this;
-            form.Show();
+            form.Hide();
         }
 
         private void 汉字使用频率ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new ChineseCharUseFrequency();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void 图片浏览容器ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new ImagesPanelDemo();
             form.MdiParent = this;
             form.Show();
         }

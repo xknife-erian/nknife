@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.Ioc;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
@@ -58,7 +60,8 @@ namespace SocketKnife
             _Port = port;
         }
 
-        public ISocketConfig GetConfig { get; private set; }
+        [Inject]
+        public ISocketServerConfig Config { get; private set; }
 
         public IFilterChain GetFilterChain()
         {
@@ -145,8 +148,6 @@ namespace SocketKnife
 
         #endregion
 
-        #region 属性
-
         public ConcurrentDictionary<string, Socket> ClientMap
         {
             get { return _ClientMap; }
@@ -164,72 +165,6 @@ namespace SocketKnife
         {
             get { return _ReceiveQueueMap; }
         }
-
-        /// <summary>
-        ///     接收包大小
-        /// </summary>
-        public int MaxBufferSize { get; set; }
-
-        /// <summary>
-        ///     最大用户连接数
-        /// </summary>
-        public int MaxConnectCount { get; set; }
-
-        /// <summary>
-        ///     是否关闭SOCKET Delay算法
-        /// </summary>
-        public bool NoDelay
-        {
-            get { return _MainSocket.NoDelay; }
-            set { _MainSocket.NoDelay = value; }
-        }
-
-        /// <summary>
-        ///     SOCKET 的 ReceiveTimeout属性
-        /// </summary>
-        public int ReceiveTimeout
-        {
-            get { return _MainSocket.ReceiveTimeout; }
-            set { _MainSocket.ReceiveTimeout = value; }
-        }
-
-        /// <summary>
-        ///     SOCKET 的 SendTimeout
-        /// </summary>
-        public int SendTimeout
-        {
-            get { return _MainSocket.SendTimeout; }
-            set { _MainSocket.SendTimeout = value; }
-        }
-
-//        /// <summary>
-//        ///     接收到的数据的解析器
-//        /// </summary>
-//        /// <value>The decoder.</value>
-//        public IDatagramDecoder Decoder
-//        {
-//            get { return Option.Decoder; }
-//        }
-//
-//        /// <summary>
-//        ///     字符 向 字节数组的转换器
-//        /// </summary>
-//        /// <value>The encoder.</value>
-//        public IDatagramEncoder Encoder
-//        {
-//            get { return Option.Encoder; }
-//        }
-
-//        /// <summary>
-//        ///     命令字解析器
-//        /// </summary>
-//        /// <value>The command parser.</value>
-//        public IDatagramCommandParser CommandParser
-//        {
-//            get { return Option.CommandParser; }
-//        }
-
-        #endregion
 
         #region 公共方法
 
@@ -363,23 +298,23 @@ namespace SocketKnife
             _MainSocket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _MainSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
             _MainSocket.Bind(ipEndPoint);
-            _MainSocket.ReceiveBufferSize = MaxBufferSize;
-            _MainSocket.SendBufferSize = MaxBufferSize;
+            _MainSocket.ReceiveBufferSize = Config.MaxBufferSize;
+            _MainSocket.SendBufferSize = Config.MaxBufferSize;
 
             //挂起连接队列的最大长度。
             _MainSocket.Listen(64);
 
-            SendTimeout = 1000;
-            ReceiveTimeout = 1000;
+            Config.SendTimeout = 1000;
+            Config.ReceiveTimeout = 1000;
 
-            _BufferContainer = new BufferContainer(MaxConnectCount*MaxBufferSize, MaxBufferSize);
+            _BufferContainer = new BufferContainer(Config.MaxConnectCount * Config.MaxBufferSize, Config.MaxBufferSize);
             _BufferContainer.Initialize();
 
             #region 核心连接池的预创建
 
-            _SocketAsynPool = new SocketAsyncEventArgsPool(MaxConnectCount);
+            _SocketAsynPool = new SocketAsyncEventArgsPool(Config.MaxConnectCount);
 
-            for (int i = 0; i < MaxConnectCount; i++)
+            for (int i = 0; i < Config.MaxConnectCount; i++)
             {
                 var socketAsyn = new SocketAsyncEventArgs();
                 socketAsyn.Completed += AsynCompleted;
@@ -394,7 +329,7 @@ namespace SocketKnife
             _Logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
             _Logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
             _Logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
-            _Logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", MaxConnectCount));
+            _Logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
         }
 
         protected virtual void Accept()
