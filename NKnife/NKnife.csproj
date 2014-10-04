@@ -88,6 +88,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="API\API.Shell32.cs" />
+    <Compile Include="GUI\Wpf\DownButton.xaml.cs">
+      <DependentUpon>DownButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Wpf\RotateButton.xaml.cs">
+      <DependentUpon>RotateButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interface\ILogger.cs" />
     <Compile Include="Ioc\ConfiguringModule.cs" />
     <Compile Include="API\WinMsg.cs" />
@@ -595,7 +601,16 @@
     <Compile Include="Zip\GZipFileInfo.cs" />
     <Compile Include="Zip\GZipResult.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="GUI\Wpf\DownButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Wpf\RotateButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.resx" />
     <EmbeddedResource Include="GUI\WinForm\DataSelector\DataItemSelector.resx">
