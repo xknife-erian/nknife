@@ -18,7 +18,7 @@ namespace NKnife.App.SocketKit.Mvvm
     /// </summary>
     public partial class Workbench : Window
     {
-        private ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
         private readonly ObservableCollection<LayoutContent> _Documents; 
 
         public Workbench()
@@ -35,7 +35,6 @@ namespace NKnife.App.SocketKit.Mvvm
             }
             _Logger.Info("主窗体构造完成");
         }
-
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -113,6 +112,11 @@ namespace NKnife.App.SocketKit.Mvvm
             dockingManager.Theme = theme;
 
             #endregion
+        }
+
+        private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
     }
 

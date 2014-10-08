@@ -94,6 +94,7 @@
     <Compile Include="Dialogs\Server.cs" />
     <Compile Include="IoC\ClientModule.cs" />
     <Compile Include="IoC\ServerModule.cs" />
+    <Compile Include="Mvvm\Commands\ServerCreatorCommand.cs" />
     <Compile Include="Mvvm\Views\LoggerView.xaml.cs">
       <DependentUpon>LoggerView.xaml</DependentUpon>
     </Compile>
@@ -121,7 +122,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Mvvm\Commands\MenuCommandManager.cs" />
     <Compile Include="Common\ViewCollection.cs" />
     <Compile Include="IoC\UIModule.cs" />
     <Compile Include="Mvvm\Workbench.xaml.cs">

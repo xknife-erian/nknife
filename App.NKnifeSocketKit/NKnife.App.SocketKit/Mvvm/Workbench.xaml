@@ -4,18 +4,18 @@
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:commands="clr-namespace:NKnife.App.SocketKit.Mvvm.Commands"
+        xmlns:mvvm="clr-namespace:NKnife.App.SocketKit.Mvvm"
         mc:Ignorable="d"
         Title="NKnife@Socket测试工具" Height="350" Width="525" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.ServerCreator}" Executed="ServerCreatorMenuItem_Click"/>
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.ClientCreator}" Executed="ClientCreatorMenuItem_Click" />
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.Option}" Executed="OptionMenuItem_Click" />
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.Exit}" Executed="ExitMenuItem_Click" />
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.ParamsView}" Executed="ParamsViewMenuItem_Click" />
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.PropertiesView}" Executed="PropertiesViewMenuItem_Click" />
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.Logger}" Executed="LoggerMenuItem_Click" />
-        <CommandBinding Command="{x:Static commands:MenuCommandManager.About}" Executed="AboutMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ServerCreator}" Executed="ServerCreatorMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ClientCreator}" Executed="ClientCreatorMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Option}" Executed="OptionMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Exit}" Executed="ExitMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ParamsView}" Executed="ParamsViewMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.PropertiesView}" Executed="PropertiesViewMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Logger}" Executed="LoggerMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.About}" Executed="AboutMenuItem_Click" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -28,21 +28,21 @@
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Width="Auto">
             <MenuItem Name="_FileMenu" Padding="11,7,11,0" Height="30" VerticalAlignment="Center" Header="文件(_F)">
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.ServerCreator}" Name="_ServerCreator"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.ClientCreator}" Name="_ClientCreator"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.ServerCreator}" Name="_ServerCreator"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.ClientCreator}" Name="_ClientCreator"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Option}" Name="_Option"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.Option}" Name="_Option"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Exit}" Name="_Exit"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.Exit}" Name="_Exit"/>
             </MenuItem>
             <MenuItem Padding="11,7,11,0" Height="30" Header="视图(_V)">
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.ParamsView}" Name="_ParamsView"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.PropertiesView}" Name="_PropertiesView"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.ParamsView}" Name="_ParamsView"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.PropertiesView}" Name="_PropertiesView"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Logger}" Name="_LoggerButton"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.Logger}" Name="_LoggerButton"/>
             </MenuItem>
             <MenuItem Padding="11,7,11,0" Height="30" Header="帮助(_H)">
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.About}" Name="_About"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.About}" Name="_About"/>
             </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2" Height="Auto" Width="Auto">
