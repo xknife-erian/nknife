@@ -57,7 +57,6 @@
             <Button Click="Stop" IsEnabled="False" Style="{StaticResource StartImage}" />
         </ToolBar>
         <StatusBar Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Button Click="Start" Style="{StaticResource StartImage}" />
         </StatusBar>
         <ListView Grid.Row="1" Name="_DataGrid" DataContext="{DynamicResource ViewModel}"
                   IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"

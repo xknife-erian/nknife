@@ -94,7 +94,6 @@
     <Compile Include="Dialogs\Server.cs" />
     <Compile Include="IoC\ClientModule.cs" />
     <Compile Include="IoC\ServerModule.cs" />
-    <Compile Include="Mvvm\Commands\ServerCreatorCommand.cs" />
     <Compile Include="Mvvm\Views\LoggerView.xaml.cs">
       <DependentUpon>LoggerView.xaml</DependentUpon>
     </Compile>
@@ -173,6 +172,7 @@
     <Resource Include="Attachments\stop-unable.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Mvvm\Commands\" />
     <Folder Include="Mvvm\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

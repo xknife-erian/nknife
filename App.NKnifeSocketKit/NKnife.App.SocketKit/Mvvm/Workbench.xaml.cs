@@ -77,7 +77,15 @@ namespace NKnife.App.SocketKit.Mvvm
         private void LoggerMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var view = new LoggerView();
-            _Documents.Add(view);
+            //_Documents.Add(view);
+            var bottomAnchorGroup = _DockingManager.Layout.BottomSide.Children.FirstOrDefault();
+            if (bottomAnchorGroup == null)
+            {
+                bottomAnchorGroup = new LayoutAnchorGroup();
+                _DockingManager.Layout.BottomSide.Children.Add(bottomAnchorGroup);
+            }
+
+            bottomAnchorGroup.Children.Add(view);
         }
 
         private void AboutMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
