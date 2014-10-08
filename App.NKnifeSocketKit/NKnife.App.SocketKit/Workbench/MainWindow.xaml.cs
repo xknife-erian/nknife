@@ -19,6 +19,7 @@ namespace NKnife.App.SocketKit.Workbench
     public partial class MainWindow : Window
     {
         private ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private readonly ObservableCollection<LayoutContent> _Documents; 
 
         public MainWindow()
         {
@@ -32,9 +33,9 @@ namespace NKnife.App.SocketKit.Workbench
             {
                 Debug.Fail("未找到文档面板。");
             }
+            _Logger.Info("主窗体构造完成");
         }
 
-        private readonly ObservableCollection<LayoutContent> _Documents; 
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -48,6 +49,7 @@ namespace NKnife.App.SocketKit.Workbench
             if (drs != null && (bool)drs)
             {
                 var view = new TcpServerView(win.IpAddress, win.Port);
+                _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.IpAddress, win.Port));
                 _Documents.Add(view);
             }
         }
@@ -77,10 +79,6 @@ namespace NKnife.App.SocketKit.Workbench
         {
             var view = new LoggerView();
             _Documents.Add(view);
-            for (int i = 0; i < 100; i++)
-            {
-                _Logger.Debug(i.ToString());
-            }
         }
 
         private void AboutMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
