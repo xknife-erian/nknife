@@ -72,7 +72,8 @@ namespace SocketKnife
         {
             try
             {
-                Run();
+                Initialize();
+                _AutoReset[0].Set();
                 return true;
             }
             catch (Exception e)
@@ -80,11 +81,6 @@ namespace SocketKnife
                 _Logger.Error(string.Format("SocketServer打开异常。{0}", e.Message), e);
                 return false;
             }
-        }
-
-        public void StartAccept()
-        {
-            _AutoReset[0].Set();
         }
 
         public bool ReStart()
@@ -100,6 +96,7 @@ namespace SocketKnife
         {
             try
             {
+                _AutoReset[0].Reset();
                 _IsClose = true;
                 _MainSocket.Close();
                 foreach (Socket client in _ClientMap.Values)
@@ -127,11 +124,6 @@ namespace SocketKnife
                 _Logger.Error(string.Format("SocketServer关闭异常。{0}", e.Message), e);
                 return false;
             }
-        }
-
-        public void StopAccept()
-        {
-            _AutoReset[0].Reset();
         }
 
         #endregion
@@ -289,7 +281,7 @@ namespace SocketKnife
         /// <summary>
         ///     启动并运行
         /// </summary>
-        protected void Run()
+        protected virtual void Initialize()
         {
             if (_IsDisposed)
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
