@@ -18,7 +18,8 @@ namespace NKnife.NLog3
         /// <returns></returns>
         public ILogger GetLogger(string name)
         {
-            return _LoggerMap.GetOrAdd(name, new NLogLogger(name));
+            var nlog = new NLogLogger(name);
+            return _LoggerMap.GetOrAdd(name, nlog);
         }
 
         private class NLogLogger : ILogger
@@ -31,7 +32,7 @@ namespace NKnife.NLog3
 
             public NLogLogger(string name)
             {
-                _Logger = LogManager.GetCurrentClassLogger();
+                _Logger = LogManager.GetLogger(name);
             }
 
             public void Trace(string message)
