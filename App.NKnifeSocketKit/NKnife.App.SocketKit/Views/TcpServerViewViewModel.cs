@@ -6,8 +6,11 @@ using NKnife.Mvvm;
 
 namespace NKnife.App.SocketKit.Views
 {
-    class TcpServerViewViewModel : NotificationObject
+    public class TcpServerViewViewModel : NotificationObject
     {
+        /// <summary>
+        /// 时间列的标题
+        /// </summary>
         public string TimeHeader { get; set; }
 
         public TcpServerViewViewModel()

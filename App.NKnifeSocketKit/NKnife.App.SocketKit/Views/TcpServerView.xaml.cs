@@ -49,6 +49,8 @@ namespace NKnife.App.SocketKit.Views
 
         private void Start(object sender, RoutedEventArgs e)
         {
+            var c = (Button) sender;
+            c.IsEnabled = !(c.IsEnabled);
             _Server.Start();
         }
 

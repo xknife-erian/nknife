@@ -4,9 +4,46 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+                     xmlns:vm="clr-namespace:NKnife.App.SocketKit.Views"
                      mc:Ignorable="d"
                      Title="SocketKnife服务端">
     <Grid>
+        <Grid.Resources>
+            <vm:TcpServerViewViewModel x:Key="ViewModel" />
+            <Style x:Key="StartImage" TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="3"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="../Common/Res/start-e.png"  />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="../Common/Res/start.png" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="45" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                        <Setter Property="Background" Value="#FF0CC030" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="a" BasedOn="{StaticResource StartImage}"></Style>
+        </Grid.Resources>
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" />
         </Grid.Background>
@@ -16,21 +53,16 @@
             <RowDefinition Height="26" />
         </Grid.RowDefinitions>
         <ToolBar HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0">
-            <Button Click="Start">
-                <Image Source="../Common/Res/start.png"></Image>
-            </Button>
-            <Button Click="Pause" IsEnabled="False">
-                <Image Source="../Common/Res/pause.png"></Image>
-            </Button>
-            <Button Click="Stop" IsEnabled="False">
-                <Image Source="../Common/Res/stop.png"></Image>
-            </Button>
+            <Button Click="Start" Style="{StaticResource StartImage}" />
+            <Button Click="Pause" IsEnabled="False" Style="{StaticResource StartImage}" />
+            <Button Click="Stop" IsEnabled="False" Style="{StaticResource StartImage}" />
         </ToolBar>
-        <DataGrid Name="_DataGrid" Grid.Row="1" Width="Auto" Height="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False">
+        <DataGrid Name="_DataGrid" Grid.Row="1" Width="Auto" Height="Auto" DataContext="{StaticResource ViewModel}"
+                  AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{Binding Path=TimeHeader}" Width="120" Binding="{Binding Time}"/>
-                <DataGridTextColumn Width="30" Binding="{Binding Age}"/>
-                <DataGridTextColumn Header="消息日志" Width="*" Binding="{Binding Age}"/>
+                <DataGridTextColumn Header="{Binding TimeHeader}" Width="120" />
+                <DataGridTextColumn Width="30" />
+                <DataGridTextColumn Header="消息日志" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
