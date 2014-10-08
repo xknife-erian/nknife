@@ -14,7 +14,7 @@ namespace NKnife.App.SocketKit.IoC
     {
         public override void Load()
         {
-            Bind<ObservableCollection<LayoutContent>>().To<MessageDocumentCollection>().InSingletonScope();
+            Bind<ObservableCollection<LayoutContent>>().To<ViewCollection>().InSingletonScope();
         }
     }
 }

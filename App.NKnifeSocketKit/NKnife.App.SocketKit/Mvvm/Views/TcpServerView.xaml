@@ -11,13 +11,13 @@
         <Grid.Resources>
             <vm:TcpServerViewViewModel x:Key="ViewModel" />
             <Style x:Key="StartImage" TargetType="{x:Type Button}">
-                <Setter Property="Margin" Value="3"/>
+                <Setter Property="Margin" Value="3" />
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
-                                    <Image Source="../Common/Res/start-e.png"  />
+                                    <Image Source="/Attachments/start-unable.png" />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -26,7 +26,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
-                                    <Image Source="../Common/Res/start.png" />
+                                    <Image Source="/Attachments/start.png" />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -42,28 +42,34 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <Style x:Key="a" BasedOn="{StaticResource StartImage}"></Style>
         </Grid.Resources>
         <Grid.Background>
-            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" />
+            <SolidColorBrush Color="{StaticResource {x:Static SystemColors.ControlLightColorKey}}" />
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
             <RowDefinition Height="26" />
         </Grid.RowDefinitions>
-        <ToolBar HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0">
+        <ToolBar Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Button Click="Start" Style="{StaticResource StartImage}" />
             <Button Click="Pause" IsEnabled="False" Style="{StaticResource StartImage}" />
             <Button Click="Stop" IsEnabled="False" Style="{StaticResource StartImage}" />
         </ToolBar>
-        <DataGrid Name="_DataGrid" Grid.Row="1" Width="Auto" Height="Auto" DataContext="{StaticResource ViewModel}"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{Binding TimeHeader}" Width="120" />
-                <DataGridTextColumn Width="30" />
-                <DataGridTextColumn Header="消息日志" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <StatusBar Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Button Click="Start" Style="{StaticResource StartImage}" />
+        </StatusBar>
+        <ListView Grid.Row="1" Name="_DataGrid" DataContext="{DynamicResource ViewModel}"
+                  IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  SelectionMode="Single"
+                  Height="Auto" Width="Auto">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Level}" Width="40" />
+                    <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="800" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </xcad:LayoutDocument>

@@ -11,17 +11,17 @@ using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Themes;
 
-namespace NKnife.App.SocketKit.Workbench
+namespace NKnife.App.SocketKit.Mvvm
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Workbench : Window
     {
         private ILogger _Logger = LogFactory.GetCurrentClassLogger();
         private readonly ObservableCollection<LayoutContent> _Documents; 
 
-        public MainWindow()
+        public Workbench()
         {
             InitializeComponent();
             var pane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
