@@ -16,7 +16,7 @@ using NKnife.Draws.Controls.Frames;
 using NKnife.Draws.Controls.Frames.Base;
 using NKnife.Draws.Controls.Frames.Event;
 using NKnife.Events;
-using NKnife.Ioc;
+using NKnife.IoC;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views

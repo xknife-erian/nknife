@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NKnife.App.PictureTextPicker.Common.Base;
-using NKnife.Ioc;
+using NKnife.IoC;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views

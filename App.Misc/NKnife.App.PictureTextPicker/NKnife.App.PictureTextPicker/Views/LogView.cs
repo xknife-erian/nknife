@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NKnife.Ioc;
+using NKnife.IoC;
 using NKnife.NLog3.Logging.LogPanel;
 using WeifenLuo.WinFormsUI.Docking;
 

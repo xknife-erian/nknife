@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using NKnife.Adapters;
 using NKnife.App.PictureTextPicker.Common.Base;
 using NKnife.Interface;
-using NKnife.Ioc;
+using NKnife.IoC;
 
 namespace NKnife.App.PictureTextPicker
 {

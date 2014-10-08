@@ -13,7 +13,7 @@ using NKnife.App.PictureTextPicker.Common.Entities;
 using NKnife.App.PictureTextPicker.Views;
 using NKnife.Collections;
 using NKnife.Interface;
-using NKnife.Ioc;
+using NKnife.IoC;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker

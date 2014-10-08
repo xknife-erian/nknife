@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using NKnife.App.PictureTextPicker.Common.Base;
 using NKnife.App.PictureTextPicker.Common.Base.Res;
-using NKnife.Ioc;
+using NKnife.IoC;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views

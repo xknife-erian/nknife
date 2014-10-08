@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using NKnife.App.PictureTextPicker.Common.Base;
-using NKnife.Ioc;
+using NKnife.IoC;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views
