@@ -15,8 +15,8 @@
                 <GridView>
                     <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
                     <GridViewColumn Header="级别" DisplayMemberBinding="{Binding Path=Level}" Width="60" />
-                    <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="Auto" />
-                    <GridViewColumn Header="日志源" DisplayMemberBinding="{Binding Path=Source}" Width="420" />
+                    <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="600" />
+                    <GridViewColumn Header="日志源" DisplayMemberBinding="{Binding Path=Source}" Width="180" />
                 </GridView>
             </ListView.View>
         </ListView>

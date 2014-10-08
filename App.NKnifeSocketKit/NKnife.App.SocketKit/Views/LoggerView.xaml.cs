@@ -24,6 +24,7 @@ namespace NKnife.App.SocketKit.Views
     /// </summary>
     public partial class LoggerView
     {
+
         public LoggerView()
         {
             InitializeComponent();
