@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using NKnife.Ioc;
 using NLog;
@@ -12,7 +14,7 @@ namespace NKnife.NLog3.Logging.LoggerWPFControl
     [Target("Log_Collection")]
     public class LoggerWpfControlTarget : TargetWithLayout
     {
-        private readonly LogMessageCollection _LogList = DI.Get<LogMessageCollection>();
+        private readonly ObservableCollection<LogMessage> _LogList = DI.Get<ObservableCollection<LogMessage>>();
         protected override void Write(LogEventInfo logEvent)
         {
             try
@@ -31,7 +33,8 @@ namespace NKnife.NLog3.Logging.LoggerWPFControl
             }
             catch (Exception e)
             {
-                Console.WriteLine(string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace));
+                var error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
+                Debug.Fail(error);
             }
         }
 

@@ -3,8 +3,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using NKnife.Adapters;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.App.SocketKit.Views;
+using NKnife.Interface;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Themes;
@@ -16,6 +18,8 @@ namespace NKnife.App.SocketKit.Workbench
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ILogger _Logger = LogFactory.GetCurrentClassLogger();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -71,7 +75,12 @@ namespace NKnife.App.SocketKit.Workbench
 
         private void LoggerMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("LoggerMenuItem_Click");
+            var view = new LoggerView();
+            _Documents.Add(view);
+            for (int i = 0; i < 100; i++)
+            {
+                _Logger.Debug(i.ToString());
+            }
         }
 
         private void AboutMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
