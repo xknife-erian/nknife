@@ -12,7 +12,7 @@ using NKnife.App.TouchIme.Ime.Pinyin;
 using NKnife.App.TouchIme.TouchInput.Common;
 using NKnife.App.TouchKnife.Properties;
 using NKnife.Interface;
-using NKnife.Ioc;
+using NKnife.IoC;
 using NLog;
 using Application = System.Windows.Forms.Application;
 using Point = System.Drawing.Point;

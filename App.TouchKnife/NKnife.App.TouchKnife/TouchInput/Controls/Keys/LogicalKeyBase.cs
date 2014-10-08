@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Controls;
 using WindowsInput;
-using NKnife.Ioc;
+using NKnife.IoC;
 
 namespace NKnife.App.TouchIme.TouchInput.Controls.Keys
 {

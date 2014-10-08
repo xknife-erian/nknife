@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using NKnife.App.TouchIme.TouchInput.Common;
-using NKnife.Ioc;
+using NKnife.IoC;
 
 namespace NKnife.App.TouchIme.TouchInput
 {

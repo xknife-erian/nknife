@@ -7,7 +7,7 @@ using WindowsInput;
 using NKnife.App.TouchIme.Ime.Pinyin;
 using NKnife.App.TouchIme.TouchInput.Common;
 using NKnife.App.TouchKnife.Properties;
-using NKnife.Ioc;
+using NKnife.IoC;
 
 namespace NKnife.App.TouchIme.TouchInput
 {

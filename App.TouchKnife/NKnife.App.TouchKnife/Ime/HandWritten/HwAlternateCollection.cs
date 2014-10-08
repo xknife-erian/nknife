@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Ink;
-using NKnife.Ioc;
+using NKnife.IoC;
 
 namespace NKnife.App.TouchIme.Ime.HandWritten
 {

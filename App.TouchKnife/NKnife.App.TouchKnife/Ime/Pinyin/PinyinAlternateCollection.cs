@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using NKnife.Ioc;
+using NKnife.IoC;
 
 namespace NKnife.App.TouchIme.Ime.Pinyin
 {

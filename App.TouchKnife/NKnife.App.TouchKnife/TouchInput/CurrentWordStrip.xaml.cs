@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Interop;
 using NKnife.App.TouchIme.TouchInput.Common;
-using NKnife.Ioc;
+using NKnife.IoC;
 
 namespace NKnife.App.TouchIme.TouchInput
 {

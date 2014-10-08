@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Soc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog3", "NKnife.NLog3\NKnife.NLog3.csproj", "{3D1D08D2-46B0-4C33-A214-A5A76A998102}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{0BFBD393-2CD6-414A-8399-00B67D16C5DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF} = {0BFBD393-2CD6-414A-8399-00B67D16C5DA}
+		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825} = {0BFBD393-2CD6-414A-8399-00B67D16C5DA}
+		{3D1D08D2-46B0-4C33-A214-A5A76A998102} = {0BFBD393-2CD6-414A-8399-00B67D16C5DA}
 	EndGlobalSection
 EndGlobal
