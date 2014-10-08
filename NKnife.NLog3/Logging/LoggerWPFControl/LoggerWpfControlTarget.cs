@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using NKnife.Ioc;
 using NLog;
 using NLog.Targets;
 
@@ -8,10 +9,10 @@ namespace NKnife.NLog3.Logging.LoggerWPFControl
     /// <summary>
     /// 这是一个基于NLog的自定义的输出目标（Target），这个输出目标是一个WPF控件可绑定的ObservableCollection
     /// </summary>
-    [Target("ShowLogControl4WPF")]
+    [Target("Log_Collection")]
     public class LoggerWpfControlTarget : TargetWithLayout
     {
-        private readonly LogMessageCollection _LogList = LogMessageCollection.ME;
+        private readonly LogMessageCollection _LogList = DI.Get<LogMessageCollection>();
         protected override void Write(LogEventInfo logEvent)
         {
             try
