@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using NKnife.Adapters;
 using NKnife.App.SocketKit.Dialogs;
-using NKnife.App.SocketKit.Views;
+using NKnife.App.SocketKit.Mvvm.Views;
 using NKnife.Interface;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;

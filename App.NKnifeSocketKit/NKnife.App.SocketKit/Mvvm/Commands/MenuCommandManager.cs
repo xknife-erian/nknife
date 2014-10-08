@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace NKnife.App.SocketKit.Commands
+namespace NKnife.App.SocketKit.Mvvm.Commands
 {
     public class MenuCommandManager
     {

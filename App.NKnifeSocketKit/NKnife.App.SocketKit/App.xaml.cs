@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using NKnife.Ioc;
+using NKnife.IoC;
 using NKnife.NLog3.Ioc;
 
 namespace NKnife.App.SocketKit

@@ -1,4 +1,4 @@
-﻿<xcad:LayoutDocument x:Class="NKnife.App.SocketKit.Views.TcpClientView"
+﻿<xcad:LayoutDocument x:Class="NKnife.App.SocketKit.Mvvm.Views.TcpClientView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

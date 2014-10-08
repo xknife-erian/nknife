@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Dialogs;
-using NKnife.Base;
-using NKnife.Ioc;
+using NKnife.IoC;
 using NKnife.Mvvm;
 using SocketKnife.Interfaces;
 
-namespace NKnife.App.SocketKit.Views
+namespace NKnife.App.SocketKit.Mvvm.ViewModels
 {
     public class TcpServerViewViewModel : NotificationObject
     {
