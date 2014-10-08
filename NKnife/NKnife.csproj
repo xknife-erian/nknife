@@ -95,7 +95,7 @@
       <DependentUpon>RotateButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interface\ILogger.cs" />
-    <Compile Include="IoCc\ConfiguringModule.cs" />
+    <Compile Include="IoC\ConfiguringModule.cs" />
     <Compile Include="API\WinMsg.cs" />
     <Compile Include="API\WinMsgUtil.cs" />
     <Compile Include="Utility\UtilityReflection.cs">
@@ -174,7 +174,7 @@
     <Compile Include="GUI\Wpf\CircularPanel.cs" />
     <Compile Include="Interface\IFileCompress.cs" />
     <Compile Include="Interface\ITouchInput.cs" />
-    <Compile Include="IoCc\DI.cs" />
+    <Compile Include="IoC\DI.cs" />
     <Compile Include="Events\ChangedEventArgs`.cs" />
     <Compile Include="Events\EventArgs`.cs" />
     <Compile Include="Exceptions\NKnifeException.cs" />
