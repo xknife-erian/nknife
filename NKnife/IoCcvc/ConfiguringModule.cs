@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ninject.Modules;
-using NKnife.Configuring;
+﻿using Ninject.Modules;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.UserData;
-using NKnife.Interface;
 
-namespace NKnife.Ioc
+namespace NKnife.IoCcvc
 {
     public class ConfiguringModule : NinjectModule
     {

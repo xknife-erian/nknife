@@ -10,7 +10,7 @@ using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Interface;
-using NKnife.Ioc;
+using NKnife.IoCcvc;
 using NKnife.Utility.File;
 
 namespace NKnife.Configuring.Option

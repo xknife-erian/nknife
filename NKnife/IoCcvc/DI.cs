@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Parameters;
 using Ninject.Planning.Bindings;
-using Ninject.Syntax;
 using NKnife.Utility.File;
 
-namespace NKnife.Ioc
+namespace NKnife.IoCcvc
 {
     public static class DI
     {

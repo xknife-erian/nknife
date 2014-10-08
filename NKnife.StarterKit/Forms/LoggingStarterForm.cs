@@ -9,7 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Ioc;
+using NKnife.IoCcvc;
 using NKnife.NLog3.Logging.LogPanel;
 using NKnife.Utility;
 

@@ -7,7 +7,6 @@ using System.Threading;
 using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Ioc;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;

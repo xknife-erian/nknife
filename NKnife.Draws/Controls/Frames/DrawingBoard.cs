@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using NKnife.Draws.Controls.Base;
 using NKnife.Draws.Controls.Frames.Base;
 using NKnife.Draws.Controls.Frames.Event;
-using NKnife.Ioc;
 
 namespace NKnife.Draws.Controls.Frames
 {
