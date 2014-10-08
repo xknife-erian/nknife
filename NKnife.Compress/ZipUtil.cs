@@ -17,8 +17,7 @@ namespace NKnife.Compress
         /// </param>
         /// <param name="level">The level.</param>
         /// <param name="password">The password.</param>
-        public static void ZipFiles(string[] fileList, string outputPath, string inpath, int level = 6,
-            string password = "")
+        public static void ZipFiles(string[] fileList, string outputPath, string inpath, int level = 6, string password = "")
         {
             var outZipStream = new ZipOutputStream(File.Create(outputPath)); //创建Zip流
             if (!string.IsNullOrEmpty(password))
@@ -63,14 +62,12 @@ namespace NKnife.Compress
             outZipStream.Close();
         }
 
-        public static void UnZipFiles(FileInfo zipPathAndFile, string outputFolder, string password = "",
-            bool needDeleteZipFile = false)
+        public static void UnZipFiles(FileInfo zipPathAndFile, string outputFolder, string password = "", bool needDeleteZipFile = false)
         {
             UnZipFiles(zipPathAndFile.FullName, outputFolder, password, needDeleteZipFile);
         }
 
-        public static void UnZipFiles(string zipPathAndFile, string outputFolder, string password = "",
-            bool needDeleteZipFile = false)
+        public static void UnZipFiles(string zipPathAndFile, string outputFolder, string password = "", bool needDeleteZipFile = false)
         {
             var zipStream = new ZipInputStream(File.OpenRead(zipPathAndFile));
             if (!string.IsNullOrWhiteSpace(password))

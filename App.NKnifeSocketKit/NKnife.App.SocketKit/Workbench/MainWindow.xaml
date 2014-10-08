@@ -38,7 +38,7 @@
                 <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.ParamsView}" Name="_ParamsView"/>
                 <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.PropertiesView}" Name="_PropertiesView"/>
                 <Separator Padding="0" Margin="0"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Logger}" Name="_Logger"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.Logger}" Name="_LoggerButton"/>
             </MenuItem>
             <MenuItem Padding="11,7,11,0" Height="30" Header="帮助(_H)">
                 <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static commands:MenuCommandManager.About}" Name="_About"/>

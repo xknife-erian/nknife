@@ -3,8 +3,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using NKnife.Adapters;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.App.SocketKit.Views;
+using NKnife.Interface;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Themes;
@@ -16,6 +18,9 @@ namespace NKnife.App.SocketKit.Workbench
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private readonly ObservableCollection<LayoutContent> _Documents; 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,9 +33,9 @@ namespace NKnife.App.SocketKit.Workbench
             {
                 Debug.Fail("未找到文档面板。");
             }
+            _Logger.Info("主窗体构造完成");
         }
 
-        private readonly ObservableCollection<LayoutContent> _Documents; 
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -44,6 +49,7 @@ namespace NKnife.App.SocketKit.Workbench
             if (drs != null && (bool)drs)
             {
                 var view = new TcpServerView(win.IpAddress, win.Port);
+                _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.IpAddress, win.Port));
                 _Documents.Add(view);
             }
         }
@@ -71,7 +77,8 @@ namespace NKnife.App.SocketKit.Workbench
 
         private void LoggerMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("LoggerMenuItem_Click");
+            var view = new LoggerView();
+            _Documents.Add(view);
         }
 
         private void AboutMenuItem_Click(object sender, ExecutedRoutedEventArgs e)

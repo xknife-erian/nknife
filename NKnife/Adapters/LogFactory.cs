@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using NKnife.Interface;
 using NKnife.Ioc;
 
 namespace NKnife.Adapters
 {
+    /// <summary>
+    /// 日志记录器的生成工厂
+    /// </summary>
     public class LogFactory
     {
         public static ILogger GetLogger(String name)
@@ -31,6 +35,10 @@ namespace NKnife.Adapters
             return GetLogger(typeof (T).Name);
         }
 
+        /// <summary>
+        /// 获取当前类的日志记录器
+        /// </summary>
+        /// <returns></returns>
         public static ILogger GetCurrentClassLogger()
         {
             string loggerName;
@@ -39,7 +47,7 @@ namespace NKnife.Adapters
             do
             {
                 var frame = new StackFrame(framesToSkip, false);
-                var method = frame.GetMethod();
+                MethodBase method = frame.GetMethod();
                 declaringType = method.DeclaringType;
                 if (declaringType == null)
                 {
@@ -56,15 +64,24 @@ namespace NKnife.Adapters
         }
 
         /// <summary>
-        /// 空实现
+        ///     空实现
         /// </summary>
-        class NopLogger:ILogger
+        private class NopLogger : ILogger
         {
             private static readonly Lazy<NopLogger> _Lazy = new Lazy<NopLogger>(() => new NopLogger());
-            public static NopLogger Instance { get { return _Lazy.Value; } }
-            private NopLogger(){ }
 
-            public void Trace(string message){ }
+            private NopLogger()
+            {
+            }
+
+            public static NopLogger Instance
+            {
+                get { return _Lazy.Value; }
+            }
+
+            public void Trace(string message)
+            {
+            }
 
             public void Trace(string message, Exception exception)
             {

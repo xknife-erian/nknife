@@ -7,28 +7,32 @@ using LogMessageGenerator = NKnife.Interface.LogMessageGenerator;
 
 namespace NKnife.NLog3
 {
-    public class NLogLoggerFactory:ILoggerFactory
+    public class NLogLoggerFactory : ILoggerFactory
     {
-        private readonly ConcurrentDictionary<string, ILogger> _LoggerMap = new ConcurrentDictionary<string, ILogger>(); 
+        private readonly ConcurrentDictionary<string, ILogger> _LoggerMap = new ConcurrentDictionary<string, ILogger>();
+
         /// <summary>
-        /// 返回Logger
+        ///     返回Logger
         /// </summary>
         /// <param name="name">使用Logger的所在类的classname</param>
         /// <returns></returns>
         public ILogger GetLogger(string name)
         {
-            return _LoggerMap.GetOrAdd(name, new NLogLogger(name));
+            var nlog = new NLogLogger(name);
+            return _LoggerMap.GetOrAdd(name, nlog);
         }
 
-        class NLogLogger:ILogger
+        private class NLogLogger : ILogger
         {
             private readonly Logger _Logger;
 
-            private NLogLogger() { }
+            private NLogLogger()
+            {
+            }
 
             public NLogLogger(string name)
             {
-                _Logger = LogManager.GetCurrentClassLogger();
+                _Logger = LogManager.GetLogger(name);
             }
 
             public void Trace(string message)
@@ -53,7 +57,7 @@ namespace NKnife.NLog3
 
             public void Debug(string message, Exception exception)
             {
-                _Logger.Debug(message,exception);
+                _Logger.Debug(message, exception);
             }
 
             public void Debug(LogMessageGenerator messageFunc)
@@ -68,7 +72,7 @@ namespace NKnife.NLog3
 
             public void Info(string message, Exception exception)
             {
-                _Logger.Info(message,exception);
+                _Logger.Info(message, exception);
             }
 
             public void Info(LogMessageGenerator messageFunc)
@@ -83,7 +87,7 @@ namespace NKnife.NLog3
 
             public void Warn(string message, Exception exception)
             {
-                _Logger.Warn(message,exception);
+                _Logger.Warn(message, exception);
             }
 
             public void Warn(LogMessageGenerator messageFunc)
@@ -98,7 +102,7 @@ namespace NKnife.NLog3
 
             public void Error(string message, Exception exception)
             {
-                _Logger.Error(message,exception);
+                _Logger.Error(message, exception);
             }
 
             public void Error(LogMessageGenerator messageFunc)
@@ -113,7 +117,7 @@ namespace NKnife.NLog3
 
             public void Fatal(string message, Exception exception)
             {
-                _Logger.Fatal(message,exception);
+                _Logger.Fatal(message, exception);
             }
 
             public void Fatal(LogMessageGenerator messageFunc)

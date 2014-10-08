@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
+using NKnife.Ioc;
 using NLog;
 using NLog.Targets;
 
@@ -8,10 +11,10 @@ namespace NKnife.NLog3.Logging.LoggerWPFControl
     /// <summary>
     /// 这是一个基于NLog的自定义的输出目标（Target），这个输出目标是一个WPF控件可绑定的ObservableCollection
     /// </summary>
-    [Target("ShowLogControl4WPF")]
+    [Target("Log_Collection")]
     public class LoggerWpfControlTarget : TargetWithLayout
     {
-        private readonly LogMessageCollection _LogList = LogMessageCollection.ME;
+        private readonly ObservableCollection<LogMessage> _LogList = DI.Get<ObservableCollection<LogMessage>>();
         protected override void Write(LogEventInfo logEvent)
         {
             try
@@ -30,7 +33,8 @@ namespace NKnife.NLog3.Logging.LoggerWPFControl
             }
             catch (Exception e)
             {
-                Console.WriteLine(string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace));
+                var error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
+                Debug.Fail(error);
             }
         }
 
