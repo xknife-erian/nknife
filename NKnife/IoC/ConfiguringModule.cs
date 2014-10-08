@@ -2,7 +2,7 @@
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.UserData;
 
-namespace NKnife.IoCcvc
+namespace NKnife.IoC
 {
     public class ConfiguringModule : NinjectModule
     {

@@ -6,7 +6,7 @@ using Ninject.Parameters;
 using Ninject.Planning.Bindings;
 using NKnife.Utility.File;
 
-namespace NKnife.IoCcvc
+namespace NKnife.IoC
 {
     public static class DI
     {

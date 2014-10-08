@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using NKnife.Interface;
-using NKnife.IoCcvc;
+using NKnife.IoC;
 
 namespace NKnife.Adapters
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using NKnife.IoCcvc;
+using NKnife.IoC;
 using NLog;
 using NLog.Targets;
 

@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
-using NKnife.IoCcvc;
+using NKnife.IoC;
 using NLog;
 using NLog.Targets;
 
