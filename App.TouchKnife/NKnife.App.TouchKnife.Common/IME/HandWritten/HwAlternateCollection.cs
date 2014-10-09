@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Ink;
 using NKnife.IoC;
 
-namespace NKnife.App.TouchKnife.Ime.HandWritten
+namespace NKnife.App.TouchKnife.Common.IME.HandWritten
 {
     /// <summary>
     ///     一个放置输入法或输入控件产生的待选词(字)的集合

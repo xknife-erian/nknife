@@ -2,9 +2,8 @@
 using System.Linq;
 using System.Windows.Ink;
 using System.Windows.Input;
-using NKnife.App.TouchKnife.Common;
 
-namespace NKnife.App.TouchKnife.Ime.HandWritten
+namespace NKnife.App.TouchKnife.Common.IME.HandWritten
 {
     /// <summary>
     /// 在识别前将笔迹做一定的连接的识别器，识别率略有提升

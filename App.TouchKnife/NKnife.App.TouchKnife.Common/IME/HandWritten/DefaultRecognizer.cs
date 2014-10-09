@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Ink;
-using NKnife.App.TouchKnife.Common;
 
-namespace NKnife.App.TouchKnife.Ime.HandWritten
+namespace NKnife.App.TouchKnife.Common.IME.HandWritten
 {
     /// <summary>
     /// 缺省识别器

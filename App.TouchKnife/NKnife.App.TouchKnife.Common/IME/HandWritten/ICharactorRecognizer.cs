@@ -1,6 +1,6 @@
 ﻿using System.Windows.Ink;
 
-namespace NKnife.App.TouchKnife.Ime.HandWritten
+namespace NKnife.App.TouchKnife.Common.IME.HandWritten
 {
     /// <summary>
     /// 手写识别器接口

@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using WindowsInput;
 using NKnife.App.TouchKnife.Common;
-using NKnife.App.TouchKnife.Ime.Pinyin;
+using NKnife.App.TouchKnife.Common.IME.Pinyin;
 using NKnife.App.TouchKnife.Properties;
 using NKnife.IoC;
 

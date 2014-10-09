@@ -1,4 +1,4 @@
-namespace NKnife.App.TouchKnife.Ime.Pinyin
+namespace NKnife.App.TouchKnife.Common.IME.Pinyin
 {
     public interface ISyllableCollection
     {

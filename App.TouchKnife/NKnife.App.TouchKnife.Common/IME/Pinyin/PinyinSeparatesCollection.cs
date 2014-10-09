@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using NKnife.IoC;
 
-namespace NKnife.App.TouchKnife.Ime.Pinyin
+namespace NKnife.App.TouchKnife.Common.IME.Pinyin
 {
     /// <summary>
     ///     一个放置输入法或输入控件产生的待选词(字)的集合

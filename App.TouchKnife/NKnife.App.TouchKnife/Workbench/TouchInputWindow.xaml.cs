@@ -7,14 +7,14 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
+using NKnife.Adapters;
 using NKnife.App.TouchKnife.Common;
+using NKnife.App.TouchKnife.Common.IME.HandWritten;
+using NKnife.App.TouchKnife.Common.IME.Pinyin;
 using NKnife.App.TouchKnife.Core;
-using NKnife.App.TouchKnife.Ime.HandWritten;
-using NKnife.App.TouchKnife.Ime.Pinyin;
 using NKnife.App.TouchKnife.Properties;
 using NKnife.Interface;
 using NKnife.IoC;
-using NLog;
 using Application = System.Windows.Forms.Application;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
@@ -28,7 +28,7 @@ namespace NKnife.App.TouchKnife.Workbench
     {
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string SYMBOL = "“)^~}、/\\…|：；》《'%?<”>&({]![";
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly Params _PanelParams = DI.Get<Params>();
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
@@ -52,9 +52,7 @@ namespace NKnife.App.TouchKnife.Workbench
             ShowInTaskbar = false;
             Hide();
 
-            _HwAlternatesListBox.ItemsSource = DI.Get<HwAlternateCollection>();
-            //_HwAlternatesListBox.Visibility = Visibility.Hidden;
-
+            _WordListBox.ItemsSource = DI.Get<HwAlternateCollection>();
             _HandWriteGrid.Visibility = Visibility.Hidden;
             StartKernel();
         }

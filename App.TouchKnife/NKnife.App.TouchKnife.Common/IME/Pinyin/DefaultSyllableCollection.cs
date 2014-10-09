@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace NKnife.App.TouchKnife.Ime.Pinyin
+namespace NKnife.App.TouchKnife.Common.IME.Pinyin
 {
     public class DefaultSyllableCollection : ISyllableCollection
     {

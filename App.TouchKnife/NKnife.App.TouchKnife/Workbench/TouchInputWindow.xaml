@@ -40,7 +40,7 @@
                             <GradientStop Color="#FFA1A1A1" Offset="0.01"/>
                         </LinearGradientBrush>
                     </Grid.Background>
-                    <ListBox Name="_HwAlternatesListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22" BorderThickness="0" Background="{x:Null}" 
+                    <ListBox Name="_WordListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22" BorderThickness="0" Background="{x:Null}" 
                              Visibility="{Binding HasAlternates}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -190,7 +190,9 @@
 			<Button FontSize="20" Content="2" Margin="1" Grid.Row="2" Grid.Column="1" Click="NumberButton_Click" />
 			<Button FontSize="20" Content="3" Margin="1" Grid.Row="2" Grid.Column="2" Click="NumberButton_Click" />
 			<Button FontSize="20" Content="0" Margin="1" Grid.Row="3" Grid.Column="0" Click="NumberButton_Click" Grid.ColumnSpan="2" />
-			<Button FontSize="40" Content="." Margin="1" Grid.Row="3" Grid.Column="2" Click="NumberButton_Click" />
+            <Button Margin="1" Grid.Row="3" Padding="-1,-34,0,0" Grid.Column="2" Click="NumberButton_Click">
+                <TextBlock Text="." FontSize="50" />
+            </Button>
 		</Grid>
 	</Grid>
 </Window>
