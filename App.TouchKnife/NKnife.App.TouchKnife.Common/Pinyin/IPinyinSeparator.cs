@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NKnife.App.TouchKnife.Common.IME.Pinyin
+namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     /// <summary>
     /// Æ´Òô·Ö¸îÆ÷½Ó¿Ú

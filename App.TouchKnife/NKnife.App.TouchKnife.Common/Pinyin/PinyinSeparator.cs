@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NKnife.Base;
 
-namespace NKnife.App.TouchKnife.Common.IME.Pinyin
+namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     /// <summary>
     ///     采用动态规划的算法将拼音序列分隔为音节

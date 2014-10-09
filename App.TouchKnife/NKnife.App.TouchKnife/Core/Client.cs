@@ -2,7 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using NLog;
+using NKnife.Adapters;
+using NKnife.Interface;
 
 namespace NKnife.App.TouchKnife.Core
 {
@@ -13,7 +14,7 @@ namespace NKnife.App.TouchKnife.Core
 
         private const string HOST = "127.0.0.1";
         private const int PORT = 22033;
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         ///     与服务器的连接
@@ -45,7 +46,7 @@ namespace NKnife.App.TouchKnife.Core
         public void Connect()
         {
             _Socket.Connect(IPAddress.Parse(HOST), PORT);
-            _Logger.Info("连接{0}:{1}成功", HOST, PORT);
+            _Logger.Info(string.Format("连接{0}:{1}成功", HOST, PORT));
         }
 
         private static System.Net.Sockets.Socket BuildSocket(int timeout = 0)

@@ -68,18 +68,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IME\HandWritten\ConcatenationRecognizer.cs" />
-    <Compile Include="IME\HandWritten\DefaultRecognizer.cs" />
-    <Compile Include="IME\HandWritten\HwAlternateCollection.cs" />
-    <Compile Include="IME\HandWritten\ICharactorRecognizer.cs" />
-    <Compile Include="IME\Pinyin\DefaultSyllableCollection.cs" />
-    <Compile Include="IME\Pinyin\IPinyinSeparator.cs" />
-    <Compile Include="IME\Pinyin\ISyllableCollection.cs" />
-    <Compile Include="IME\Pinyin\Pinyin.cs" />
-    <Compile Include="IME\Pinyin\PinyinAlternateCollection.cs" />
-    <Compile Include="IME\Pinyin\PinyinSeparatedEventArgs.cs" />
-    <Compile Include="IME\Pinyin\PinyinSeparatesCollection.cs" />
-    <Compile Include="IME\Pinyin\PinyinSeparator.cs" />
+    <Compile Include="HandWritten\ConcatenationRecognizer.cs" />
+    <Compile Include="HandWritten\DefaultRecognizer.cs" />
+    <Compile Include="HandWritten\HwAlternateCollection.cs" />
+    <Compile Include="HandWritten\ICharactorRecognizer.cs" />
+    <Compile Include="Pinyin\DefaultSyllableCollection.cs" />
+    <Compile Include="Pinyin\IPinyinSeparator.cs" />
+    <Compile Include="Pinyin\ISyllableCollection.cs" />
+    <Compile Include="Pinyin\Pinyin.cs" />
+    <Compile Include="Pinyin\PinyinAlternateCollection.cs" />
+    <Compile Include="Pinyin\PinyinSeparatedEventArgs.cs" />
+    <Compile Include="Pinyin\PinyinSeparatesCollection.cs" />
+    <Compile Include="Pinyin\PinyinSeparator.cs" />
     <Compile Include="Keys\CaseSensitiveKey.cs" />
     <Compile Include="Keys\ChordKey.cs" />
     <Compile Include="Keys\ILogicalKey.cs" />

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using NKnife.IoC;
 
-namespace NKnife.App.TouchKnife.Common.IME.Pinyin
+namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     /// <summary>
     ///     一个放置输入法或输入控件产生的待选词(字)的集合
@@ -64,7 +64,7 @@ namespace NKnife.App.TouchKnife.Common.IME.Pinyin
                 return false;
             }
             _CurrentPinyinIndex++;
-            char[] r = Common.IME.Pinyin.Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
+            char[] r = Common.Pinyin.Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
             if (r != null && r.Length > 0)
             {
                 _CurrentResult = new char[r.Length];
@@ -96,7 +96,7 @@ namespace NKnife.App.TouchKnife.Common.IME.Pinyin
         {
             _CurrentPinyinCollection = e.Pinyin;
             _CurrentPinyinIndex = 0;
-            char[] r = Common.IME.Pinyin.Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
+            char[] r = Common.Pinyin.Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
             if (r != null && r.Length > 0)
             {
                 _CurrentResult = new char[r.Length];

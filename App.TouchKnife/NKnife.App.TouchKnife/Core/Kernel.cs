@@ -5,15 +5,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using NKnife.Adapters;
 using NKnife.Interface;
-using NLog;
 using SocketKnife;
 
 namespace NKnife.App.TouchKnife.Core
 {
     public class Kernel
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
         private AsynListener _Listener;
         private ITouchInput _TouchInput;
 
@@ -59,18 +59,18 @@ namespace NKnife.App.TouchKnife.Core
 
         private void Listener_ReceivedData(object sender, AsynListener.ReceivedDataEventArgs e)
         {
-            _Logger.Info("收到控制:{0}", e.Data.ToLower());
+            _Logger.Info(string.Format("收到控制:{0}", e.Data.ToLower()));
             string command = e.Data.ToLower().Replace("@", "");
             if (command.IndexOf("keepalivetestfromclient", StringComparison.Ordinal)>=0)
             {
                 const string RESPONSE = "KeepAliveTestFromServer@";
                 _Listener.Send(e.Client, RESPONSE);
-                _Logger.Trace("心跳回复:{0}", RESPONSE);
+                _Logger.Trace(string.Format("心跳回复:{0}", RESPONSE));
                 return;
             }
             if (!Regex.IsMatch(command, @"\d{16}"))
             {
-                _Logger.Warn("不识别的指令:{0}", command);
+                _Logger.Warn(string.Format("不识别的指令:{0}", command));
                 return;
             }
 
@@ -81,7 +81,7 @@ namespace NKnife.App.TouchKnife.Core
 
             if (xw > 4 || yw > 4)
             {
-                _Logger.Warn("不识别的指令:{0}", command);
+                _Logger.Warn(string.Format("不识别的指令:{0}", command));
                 return;
             }
 
@@ -129,7 +129,7 @@ namespace NKnife.App.TouchKnife.Core
             {
                 command.X = (int) (x - tih);
             }
-            _Logger.Trace("窗体控制:{0},{1},{2}", command.Mode, command.X, command.Y);
+            _Logger.Trace(string.Format("窗体控制:{0},{1},{2}", command.Mode, command.X, command.Y));
             try
             {
                 //1.拼音;2.手写;3.符号;4.小写英文;5.大写英文;6.数字
