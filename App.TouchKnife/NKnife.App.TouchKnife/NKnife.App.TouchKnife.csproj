@@ -88,10 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Workbench\PyAlternatesStrip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Workbench\CurrentWordStrip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,9 +114,6 @@
     </Compile>
     <Compile Include="Core\Kernel.cs" />
     <Compile Include="Core\Notify.cs" />
-    <Compile Include="Workbench\PyAlternatesStrip.xaml.cs">
-      <DependentUpon>PyAlternatesStrip.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Workbench\CurrentWordStrip.xaml.cs">
       <DependentUpon>CurrentWordStrip.xaml</DependentUpon>
     </Compile>

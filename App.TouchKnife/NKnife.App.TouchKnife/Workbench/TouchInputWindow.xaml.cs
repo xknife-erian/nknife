@@ -239,8 +239,7 @@ namespace NKnife.App.TouchKnife.Workbench
 
         #region 点击键的功能
 
-        /// <summary>
-        ///     数字小键盘输入
+        /// <summary>数字小键盘输入
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -251,8 +250,7 @@ namespace NKnife.App.TouchKnife.Workbench
             _PanelParams.PlayVoice(OwnResources.键_数字);
         }
 
-        /// <summary>
-        ///     当26个英文字母键的点击时
+        /// <summary>当26个英文字母键的点击时
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -276,8 +274,7 @@ namespace NKnife.App.TouchKnife.Workbench
             _PanelParams.PlayVoice(OwnResources.键_全键盘);
         }
 
-        /// <summary>
-        ///     空格键
+        /// <summary>空格键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -287,8 +284,7 @@ namespace NKnife.App.TouchKnife.Workbench
             _PanelParams.PlayVoice(OwnResources.键_全键盘);
         }
 
-        /// <summary>
-        ///     符号键
+        /// <summary>符号键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -298,8 +294,7 @@ namespace NKnife.App.TouchKnife.Workbench
             _PanelParams.PlayVoice(OwnResources.键_全键盘);
         }
 
-        /// <summary>
-        ///     回退键
+        /// <summary>回退键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -319,8 +314,7 @@ namespace NKnife.App.TouchKnife.Workbench
 //            }
         }
 
-        /// <summary>
-        ///     回车键
+        /// <summary>回车键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -330,8 +324,7 @@ namespace NKnife.App.TouchKnife.Workbench
             _PanelParams.PlayVoice(OwnResources.键_全键盘);
         }
 
-        /// <summary>
-        ///     切换为全符号键盘
+        /// <summary>切换为全符号键盘
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -341,8 +334,7 @@ namespace NKnife.App.TouchKnife.Workbench
             KeyboardSwitchCase(-1);
         }
 
-        /// <summary>
-        ///     切换为全英文大写
+        /// <summary>切换为全英文大写
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -355,8 +347,7 @@ namespace NKnife.App.TouchKnife.Workbench
             KeyboardSwitchCase(1);
         }
 
-        /// <summary>
-        ///     中英文切换功能键
+        /// <summary>中英文切换功能键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -383,9 +374,7 @@ namespace NKnife.App.TouchKnife.Workbench
             }
         }
 
-
-        /// <summary>
-        ///     键盘切换（-1:符号; 0:小写; 1:大写）
+        /// <summary>键盘切换（-1:符号; 0:小写; 1:大写）
         /// </summary>
         /// <param name="n">-1:符号; 0:小写; 1:大写</param>
         private void KeyboardSwitchCase(short n)
@@ -462,14 +451,7 @@ namespace NKnife.App.TouchKnife.Workbench
             DI.Get<PinyinAlternateCollection>().Next();
         }
 
-        public bool BackSpace()
-        {
-            var sc = DI.Get<PinyinSeparatesCollection>();
-            return sc.BackSpaceLetter();
-        }
-
-        /// <summary>
-        ///     当有候选词选择完成后发生
+        /// <summary>当有候选词选择完成后发生
         /// </summary>
         public event EventHandler<AlternateSelectedEventArgs> AlternateSelected;
 
@@ -481,5 +463,17 @@ namespace NKnife.App.TouchKnife.Workbench
         }
 
         #endregion
+    }
+
+    public class AlternateSelectedEventArgs : EventArgs
+    {
+        public AlternateSelectedEventArgs(bool hasAlternate, string selectedWord)
+        {
+            Word = selectedWord;
+            HasAlternate = hasAlternate;
+        }
+
+        public string Word { get; set; }
+        public bool HasAlternate { get; set; }
     }
 }

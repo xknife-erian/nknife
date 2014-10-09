@@ -11,8 +11,9 @@ namespace NKnife.App.TouchKnife
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
             DI.Initialize();
+
+            base.OnStartup(e);
 
             var notify = DI.Get<Notify>();
             notify.Show();
