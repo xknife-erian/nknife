@@ -1,8 +1,8 @@
 ﻿using System.Windows;
-using NKnife.App.TouchIme.TouchInput.Common;
+using NKnife.App.TouchKnife.Core;
 using NKnife.IoC;
 
-namespace NKnife.App.TouchIme.TouchInput
+namespace NKnife.App.TouchKnife
 {
     /// <summary>
     /// App.xaml 的交互逻辑

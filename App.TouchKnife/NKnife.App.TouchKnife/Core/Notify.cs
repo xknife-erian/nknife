@@ -6,7 +6,7 @@ using NKnife.IoC;
 using NKnife.NLog3.Logging.Base;
 using NKnife.Utility;
 
-namespace NKnife.App.TouchIme.TouchInput.Common
+namespace NKnife.App.TouchKnife.Core
 {
     internal class Notify
     {
@@ -14,7 +14,6 @@ namespace NKnife.App.TouchIme.TouchInput.Common
         private readonly NotifyIcon _NotifyIcon;
         private readonly UtilityRandom _Random = new UtilityRandom();
         private bool _IsConnection;
-
 
         public Notify()
         {
@@ -188,7 +187,6 @@ namespace NKnife.App.TouchIme.TouchInput.Common
         {
             _NotifyIcon.ContextMenuStrip.Show();
         }
-
 
         public void Show()
         {

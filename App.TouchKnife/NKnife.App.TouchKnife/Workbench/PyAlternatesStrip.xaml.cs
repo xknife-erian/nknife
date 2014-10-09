@@ -4,13 +4,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WindowsInput;
-using NKnife.App.TouchIme.TouchInput.Common;
 using NKnife.App.TouchKnife.Common;
 using NKnife.App.TouchKnife.Ime.Pinyin;
 using NKnife.App.TouchKnife.Properties;
 using NKnife.IoC;
 
-namespace NKnife.App.TouchIme.TouchInput
+namespace NKnife.App.TouchKnife.Workbench
 {
     /// <summary>
     ///     PyAlternatesStrip.xaml 的交互逻辑

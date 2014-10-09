@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interop;
-using NKnife.App.TouchIme.TouchInput.Common;
 using NKnife.App.TouchKnife.Common;
 using NKnife.IoC;
 
-namespace NKnife.App.TouchIme.TouchInput
+namespace NKnife.App.TouchKnife.Workbench
 {
     /// <summary>
     /// CurrentWordStrip.xaml 的交互逻辑

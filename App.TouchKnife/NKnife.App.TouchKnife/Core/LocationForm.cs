@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows.Forms;
 using NKnife.Utility;
 
-namespace NKnife.App.TouchIme.TouchInput.Common
+namespace NKnife.App.TouchKnife.Core
 {
     public partial class LocationForm : Form
     {

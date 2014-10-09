@@ -1,4 +1,4 @@
-﻿namespace NKnife.App.TouchIme.TouchInput.Common
+﻿namespace NKnife.App.TouchKnife.Core
 {
     partial class LocationForm
     {

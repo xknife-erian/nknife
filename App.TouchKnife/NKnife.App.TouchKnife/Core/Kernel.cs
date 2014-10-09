@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,9 +8,8 @@ using System.Windows.Forms;
 using NKnife.Interface;
 using NLog;
 using SocketKnife;
-using Point = System.Drawing.Point;
 
-namespace NKnife.App.TouchIme.TouchInput.Common
+namespace NKnife.App.TouchKnife.Core
 {
     public class Kernel
     {

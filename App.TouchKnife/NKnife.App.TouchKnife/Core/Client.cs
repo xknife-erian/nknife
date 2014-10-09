@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using NLog;
 
-namespace NKnife.App.TouchIme.TouchInput.Common
+namespace NKnife.App.TouchKnife.Core
 {
     internal class Client
     {

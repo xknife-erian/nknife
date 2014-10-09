@@ -1,7 +1,7 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="NKnife.App.TouchIme.TouchInput.TouchInputWindow"
+        x:Class="NKnife.App.TouchKnife.Workbench.TouchInputWindow"
         Title="MainWindow" Height="280" Width="780"
         AllowsTransparency="True" Background="Transparent"
         WindowStyle="None" ResizeMode="NoResize">

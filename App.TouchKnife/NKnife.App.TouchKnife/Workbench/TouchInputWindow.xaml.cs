@@ -7,8 +7,8 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
-using NKnife.App.TouchIme.TouchInput.Common;
 using NKnife.App.TouchKnife.Common;
+using NKnife.App.TouchKnife.Core;
 using NKnife.App.TouchKnife.Ime.HandWritten;
 using NKnife.App.TouchKnife.Ime.Pinyin;
 using NKnife.App.TouchKnife.Properties;
@@ -19,7 +19,7 @@ using Application = System.Windows.Forms.Application;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
-namespace NKnife.App.TouchIme.TouchInput
+namespace NKnife.App.TouchKnife.Workbench
 {
     /// <summary>
     ///     MainWindow.xaml 的交互逻辑
