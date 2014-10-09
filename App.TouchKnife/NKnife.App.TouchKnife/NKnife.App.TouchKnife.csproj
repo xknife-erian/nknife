@@ -43,7 +43,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Main.ico</ApplicationIcon>
+    <ApplicationIcon>Attachments\Main.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChnCharInfo">
@@ -87,91 +87,66 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="TouchInput\App.xaml">
+    <ApplicationDefinition Include="Workbench\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="TouchInput\PyAlternatesStrip.xaml">
+    <Page Include="Workbench\PyAlternatesStrip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TouchInput\CurrentWordStrip.xaml">
+    <Page Include="Workbench\CurrentWordStrip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TouchInput\TouchInputWindow.xaml">
+    <Page Include="Workbench\TouchInputWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Ime\Pinyin\PinyinAlternateCollection.cs" />
-    <Compile Include="Ime\Pinyin\DefaultSyllableCollection.cs" />
-    <Compile Include="Ime\Pinyin\ISyllableCollection.cs" />
-    <Compile Include="Ime\Pinyin\PinyinSeparatedEventArgs.cs" />
-    <Compile Include="Ime\Pinyin\PinyinSeparator.cs" />
-    <Compile Include="Ime\Pinyin\IPinyinSeparator.cs" />
-    <Compile Include="Ime\HandWritten\DefaultRecognizer.cs" />
-    <Compile Include="Ime\HandWritten\ICharactorRecognizer.cs" />
-    <Compile Include="Ime\HandWritten\ConcatenationRecognizer.cs" />
-    <Compile Include="Ime\Pinyin\PinyinSeparatesCollection.cs" />
-    <Compile Include="Ime\HandWritten\HwAlternateCollection.cs" />
-    <Compile Include="TouchInput\Common\About.cs" />
-    <Compile Include="TouchInput\Common\LocationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TouchInput\Common\LocationForm.Designer.cs">
-      <DependentUpon>LocationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TouchInput\Common\Params.cs" />
-    <Compile Include="TouchInput\Controls\Keys\CaseSensitiveKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\ChordKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\ILogicalKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\InstantaneousModifierKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\LogicalKeyBase.cs" />
-    <Compile Include="TouchInput\Controls\Keys\ModifierKeyBase.cs" />
-    <Compile Include="TouchInput\Controls\Keys\MultiCharacterKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\NumLockSensitiveKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\ShiftSensitiveKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\StringKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\TogglingModifierKey.cs" />
-    <Compile Include="TouchInput\Controls\Keys\VirtualKey.cs" />
-    <Compile Include="TouchInput\Common\Module.cs" />
-    <Compile Include="TouchInput\App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TouchInput\Common\Kernel.cs" />
-    <Compile Include="TouchInput\Common\Notify.cs" />
-    <Compile Include="TouchInput\PyAlternatesStrip.xaml.cs">
-      <DependentUpon>PyAlternatesStrip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TouchInput\CurrentWordStrip.xaml.cs">
-      <DependentUpon>CurrentWordStrip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TouchInput\Common\Client.cs" />
-    <Compile Include="TouchInput\TouchInputWindow.xaml.cs">
-      <DependentUpon>TouchInputWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Resources\GlassButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Ime\Pinyin\Pinyin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="IoC\Modules.cs" />
     <Compile Include="Properties\OwnResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OwnResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Core\LocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Core\LocationForm.Designer.cs">
+      <DependentUpon>LocationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Module.cs" />
+    <Compile Include="Workbench\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Kernel.cs" />
+    <Compile Include="Core\Notify.cs" />
+    <Compile Include="Workbench\PyAlternatesStrip.xaml.cs">
+      <DependentUpon>PyAlternatesStrip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workbench\CurrentWordStrip.xaml.cs">
+      <DependentUpon>CurrentWordStrip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Client.cs" />
+    <Compile Include="Workbench\TouchInputWindow.xaml.cs">
+      <DependentUpon>TouchInputWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Attachments\GlassButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\OwnResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>OwnResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="TouchInput\Common\LocationForm.resx">
+    <EmbeddedResource Include="Core\LocationForm.resx">
       <DependentUpon>LocationForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
@@ -179,25 +154,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\划过.wav" />
+    <None Include="Attachments\划过.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\键-功能.wav" />
+    <None Include="Attachments\键-功能.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\键-全键盘.wav" />
+    <None Include="Attachments\键-全键盘.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\键-手写.wav" />
+    <None Include="Attachments\键-手写.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\键-数字.wav" />
+    <None Include="Attachments\键-数字.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\失误.wav" />
+    <None Include="Attachments\失误.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Main.ico" />
+    <Resource Include="Attachments\Main.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
@@ -211,6 +186,10 @@
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NKnife.App.TouchKnife.Common\NKnife.App.TouchKnife.Common.csproj">
+      <Project>{b942b77e-2329-4c61-ac2c-3a2bc1ce221a}</Project>
+      <Name>NKnife.App.TouchKnife.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

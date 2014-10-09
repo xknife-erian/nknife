@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog3", "NKnife.NLog
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{0BFBD393-2CD6-414A-8399-00B67D16C5DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.TouchKnife.Common", "App.TouchKnife\NKnife.App.TouchKnife.Common\NKnife.App.TouchKnife.Common.csproj", "{B942B77E-2329-4C61-AC2C-3A2BC1CE221A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{3D1D08D2-46B0-4C33-A214-A5A76A998102}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D1D08D2-46B0-4C33-A214-A5A76A998102}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D1D08D2-46B0-4C33-A214-A5A76A998102}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B942B77E-2329-4C61-AC2C-3A2BC1CE221A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B942B77E-2329-4C61-AC2C-3A2BC1CE221A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B942B77E-2329-4C61-AC2C-3A2BC1CE221A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B942B77E-2329-4C61-AC2C-3A2BC1CE221A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
