@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:my="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:mvvm="clr-namespace:NKnife.App.SocketKit.Mvvm"
+        xmlns:wpf="clr-namespace:NKnife.GUI.Wpf;assembly=NKnife"
         mc:Ignorable="d"
         Title="NKnife@Socket测试工具" Height="350" Width="525" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
     <Window.CommandBindings>
@@ -57,17 +58,14 @@
                         <xcad:LayoutDocumentPane/>
                     </xcad:LayoutDocumentPaneGroup>
 
-                    <xcad:LayoutAnchorablePaneGroup DockWidth="260" DockHeight="*">
-                        <xcad:LayoutAnchorablePane Name="_RightPane">
-                            <xcad:LayoutAnchorable ContentId="toolWindow1" Title="参数">
-                                <WindowsFormsHost Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto">
-                                    <my:PropertyGrid x:Name="_ParamsPropertyGrid"></my:PropertyGrid>
-                                </WindowsFormsHost>
-                            </xcad:LayoutAnchorable>
+                    <xcad:LayoutAnchorablePaneGroup x:Name="layoutAnchorablePaneGroup" DockWidth="260" DockHeight="*">
+                        <xcad:LayoutAnchorablePane x:Name="_RightPane">
                             <xcad:LayoutAnchorable ContentId="toolWindow2" Title="属性">
-                                <WindowsFormsHost Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto">
-                                    <my:PropertyGrid x:Name="_PropertyGrid"></my:PropertyGrid>
-                                </WindowsFormsHost>
+                                <wpf:WpfPropertyGrid VerticalAlignment="Top" HorizontalAlignment="Left"
+                                                     Name="_PropertyControl" Height="{Binding DockHeight, ElementName=layoutAnchorablePaneGroup}" Width="260" />
+                            </xcad:LayoutAnchorable>
+                            <xcad:LayoutAnchorable ContentId="toolWindow1" Title="参数">
+                                <ListView></ListView>
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
                     </xcad:LayoutAnchorablePaneGroup>

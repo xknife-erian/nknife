@@ -52,9 +52,9 @@
             <RowDefinition Height="26" />
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Button Click="Start" Style="{StaticResource StartImage}" />
-            <Button Click="Pause" IsEnabled="False" Style="{StaticResource StartImage}" />
-            <Button Click="Stop" IsEnabled="False" Style="{StaticResource StartImage}" />
+            <Button Click="Start" Name="_StartButton" Style="{StaticResource StartImage}" />
+            <Button Click="Pause" IsEnabled="{Binding IsEnabled, ElementName=_StartButton}" Style="{StaticResource StartImage}" />
+            <Button Click="Stop" IsEnabled="{Binding IsEnabled, ElementName=_StartButton}" Style="{StaticResource StartImage}" />
         </ToolBar>
         <StatusBar Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
         </StatusBar>

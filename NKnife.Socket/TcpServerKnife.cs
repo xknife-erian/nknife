@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -159,10 +160,6 @@ namespace SocketKnife
 
         #region 公共方法
 
-
-
-
-
         /// <summary>
         ///     断开此SOCKET
         /// </summary>
@@ -221,6 +218,7 @@ namespace SocketKnife
             byte[] senddata = null;
             try
             {
+                //TODO:
                 //senddata = Encoder.Execute(data, isCompress);
             }
             catch (Exception e)
@@ -560,7 +558,7 @@ namespace SocketKnife
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
         {
             done = 0;
-            string[] datagram = null;//Decoder.Execute(data, out done);
+            string[] datagram = null;//TODO: Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _Logger.Debug("协议消息无内容。");
@@ -573,6 +571,7 @@ namespace SocketKnife
                     continue;
                 try
                 {
+                    //TODO:
 //                    string command = CommandParser.GetCommand(dg);
 //                    IProtocol protocol = Protocols.Get(FamilyType, command);
 //                    _Logger.Trace("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg);
@@ -632,8 +631,9 @@ namespace SocketKnife
                         _BufferContainer.FreeBuffer(args);
                     }
                 }
-                catch
+                catch(Exception e)
                 {
+                    Debug.Fail(string.Format("Main Socket释放时发生异常。{0}", e.Message));
                 }
                 _IsDisposed = true;
             }
