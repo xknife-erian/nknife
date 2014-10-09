@@ -28,10 +28,6 @@ namespace NKnife.App.SocketKit.Mvvm
             typeof (WorkbenchViewModel),
             new InputGestureCollection(new InputGesture[] {new KeyGesture(Key.R, ModifierKeys.Control)}));
 
-        public static RoutedUICommand Logger = new RoutedUICommand("日志管理器(_L)", "Logger",
-            typeof (WorkbenchViewModel),
-            new InputGestureCollection(new InputGesture[] {new KeyGesture(Key.F2, ModifierKeys.Alt)}));
-
         public static RoutedUICommand About = new RoutedUICommand("关于(_A)...", "About",
             typeof (WorkbenchViewModel),
             new InputGestureCollection(new InputGesture[] {}));

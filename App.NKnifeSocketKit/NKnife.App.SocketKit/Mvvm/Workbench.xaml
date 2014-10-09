@@ -4,6 +4,7 @@
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:my="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:mvvm="clr-namespace:NKnife.App.SocketKit.Mvvm"
         mc:Ignorable="d"
         Title="NKnife@Socket测试工具" Height="350" Width="525" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
@@ -12,9 +13,6 @@
         <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ClientCreator}" Executed="ClientCreatorMenuItem_Click" />
         <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Option}" Executed="OptionMenuItem_Click" />
         <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Exit}" Executed="ExitMenuItem_Click" />
-        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ParamsView}" Executed="ParamsViewMenuItem_Click" />
-        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.PropertiesView}" Executed="PropertiesViewMenuItem_Click" />
-        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Logger}" Executed="LoggerMenuItem_Click" />
         <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.About}" Executed="AboutMenuItem_Click" />
     </Window.CommandBindings>
     <Grid>
@@ -35,12 +33,6 @@
                 <Separator Padding="0" Margin="0"/>
                 <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.Exit}" Name="_Exit"/>
             </MenuItem>
-            <MenuItem Padding="11,7,11,0" Height="30" Header="视图(_V)">
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.ParamsView}" Name="_ParamsView"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.PropertiesView}" Name="_PropertiesView"/>
-                <Separator Padding="0" Margin="0"/>
-                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.Logger}" Name="_LoggerButton"/>
-            </MenuItem>
             <MenuItem Padding="11,7,11,0" Height="30" Header="帮助(_H)">
                 <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.About}" Name="_About"/>
             </MenuItem>
@@ -59,21 +51,33 @@
             </xcad:DockingManager.Theme>
 
             <xcad:LayoutRoot>
-                <xcad:LayoutRoot.RightSide>
+                <xcad:LayoutPanel Orientation="Horizontal">
+
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane/>
+                    </xcad:LayoutDocumentPaneGroup>
+
+                    <xcad:LayoutAnchorablePaneGroup DockWidth="260" DockHeight="*">
+                        <xcad:LayoutAnchorablePane Name="_RightPane">
+                            <xcad:LayoutAnchorable ContentId="toolWindow1" Title="参数">
+                                <WindowsFormsHost Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto">
+                                    <my:PropertyGrid x:Name="_ParamsPropertyGrid"></my:PropertyGrid>
+                                </WindowsFormsHost>
+                            </xcad:LayoutAnchorable>
+                            <xcad:LayoutAnchorable ContentId="toolWindow2" Title="属性">
+                                <WindowsFormsHost Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto">
+                                    <my:PropertyGrid x:Name="_PropertyGrid"></my:PropertyGrid>
+                                </WindowsFormsHost>
+                            </xcad:LayoutAnchorable>
+                        </xcad:LayoutAnchorablePane>
+                    </xcad:LayoutAnchorablePaneGroup>
+                </xcad:LayoutPanel>
+                <xcad:LayoutRoot.BottomSide>
                     <xcad:LayoutAnchorSide>
                         <xcad:LayoutAnchorGroup>
-                            <xcad:LayoutAnchorable Title="参数" AutoHideWidth="180" ContentId="Right1">
-                                <TextBox Width="Auto" />
-                            </xcad:LayoutAnchorable>
-                            <xcad:LayoutAnchorable Title="属性" AutoHideWidth="180" ContentId="Right2">
-                                <TextBox Width="Auto" />
-                            </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorGroup>
                     </xcad:LayoutAnchorSide>
-                </xcad:LayoutRoot.RightSide>
-                <xcad:LayoutPanel>
-                    <xcad:LayoutDocumentPane/>
-                </xcad:LayoutPanel>
+                </xcad:LayoutRoot.BottomSide>
             </xcad:LayoutRoot>
         </xcad:DockingManager>
     </Grid>

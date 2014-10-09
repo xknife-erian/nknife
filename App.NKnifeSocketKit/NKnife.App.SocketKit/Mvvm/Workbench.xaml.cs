@@ -1,14 +1,20 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using NKnife.Adapters;
+using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.App.SocketKit.Mvvm.Views;
 using NKnife.Interface;
+using NKnife.IoC;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
+using Xceed.Wpf.AvalonDock.Layout.Serialization;
 using Xceed.Wpf.AvalonDock.Themes;
 
 namespace NKnife.App.SocketKit.Mvvm
@@ -19,21 +25,29 @@ namespace NKnife.App.SocketKit.Mvvm
     public partial class Workbench : Window
     {
         private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
-        private readonly ObservableCollection<LayoutContent> _Documents; 
 
         public Workbench()
         {
             InitializeComponent();
-            var pane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
-            if (pane != null)
-            {
-                _Documents = pane.Children;
-            }
-            else
-            {
-                Debug.Fail("未找到文档面板。");
-            }
+            DI.Get<DockUtil>().Init(_DockingManager);
+
+            var view = new LoggerView();
+            DI.Get<DockUtil>().Buttom.Children.Add(view);
             _Logger.Info("主窗体构造完成");
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            foreach (var document in DI.Get<DockUtil>().Documents)
+            {
+                document.Close();
+            }
+
+            base.OnClosing(e);
+
+            var serializer = new XmlLayoutSerializer(_DockingManager);
+            using (var stream = new StreamWriter(string.Format(@".\AvalonDock.config")))
+                serializer.Serialize(stream);
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
@@ -49,43 +63,19 @@ namespace NKnife.App.SocketKit.Mvvm
             {
                 var view = new TcpServerView(win.IpAddress, win.Port);
                 _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.IpAddress, win.Port));
-                _Documents.Add(view);
+                DI.Get<DockUtil>().Documents.Add(view);
             }
         }
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var view = new TcpClientView();
-            _Documents.Add(view);
+            DI.Get<DockUtil>().Documents.Add(view);
         }
 
         private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show("OptionMenuItem_Click");
-        }
-
-        private void ParamsViewMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("ParamsViewMenuItem_Click");
-        }
-
-        private void PropertiesViewMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("PropertiesViewMenuItem_Click");
-        }
-
-        private void LoggerMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
-        {
-            var view = new LoggerView();
-            //_Documents.Add(view);
-            var bottomAnchorGroup = _DockingManager.Layout.BottomSide.Children.FirstOrDefault();
-            if (bottomAnchorGroup == null)
-            {
-                bottomAnchorGroup = new LayoutAnchorGroup();
-                _DockingManager.Layout.BottomSide.Children.Add(bottomAnchorGroup);
-            }
-
-            bottomAnchorGroup.Children.Add(view);
         }
 
         private void AboutMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
@@ -120,11 +110,6 @@ namespace NKnife.App.SocketKit.Mvvm
             dockingManager.Theme = theme;
 
             #endregion
-        }
-
-        private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
         }
     }
 

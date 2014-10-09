@@ -14,6 +14,7 @@ namespace NKnife.App.SocketKit.IoC
     {
         public override void Load()
         {
+            Bind<DockUtil>().ToSelf().InSingletonScope();
             Bind<ObservableCollection<LayoutContent>>().To<ViewCollection>().InSingletonScope();
         }
     }

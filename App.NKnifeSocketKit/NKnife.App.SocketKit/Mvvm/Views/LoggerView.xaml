@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              mc:Ignorable="d"
-             Title="日志管理器">
+             Title="系统日志" AutoHideHeight="250" IconSource="/Attachments/logger-view-icon.png">
     <Grid>
         <ListView Name="_LoggerGrid"
                   IsSynchronizedWithCurrentItem="True" 
