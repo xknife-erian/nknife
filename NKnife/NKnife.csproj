@@ -42,6 +42,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Activities.Presentation" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -94,6 +95,7 @@
     <Compile Include="GUI\Wpf\RotateButton.xaml.cs">
       <DependentUpon>RotateButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Wpf\WpfPropertyGrid.cs" />
     <Compile Include="Interface\ILogger.cs" />
     <Compile Include="IoC\ConfiguringModule.cs" />
     <Compile Include="API\WinMsg.cs" />
