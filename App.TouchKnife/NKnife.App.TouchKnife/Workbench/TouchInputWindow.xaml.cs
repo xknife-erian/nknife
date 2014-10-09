@@ -421,5 +421,65 @@ namespace NKnife.App.TouchKnife.Workbench
         }
 
         #endregion
+
+        #region 拼音候选条
+
+        private void InputCharListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ShowWordStrip(((TextBlock)sender).Text, e);
+        }
+
+        private void PyWordListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            string word = ((TextBlock)sender).Text;
+            ShowWordStrip(word, e);
+        }
+
+        private void InputCharListBox_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            HideWordStrip();
+        }
+
+        private void PyWordListBox_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            HideWordStrip();
+
+            string word = ((TextBlock)sender).Text;
+            _Simulator.Keyboard.TextEntry(word);
+
+            DI.Get<Params>().PlayVoice(OwnResources.划过);
+            var rs = DI.Get<PinyinAlternateCollection>().CallNextAlternateGroup();
+            OnAlternateSelected(new AlternateSelectedEventArgs(rs, word)); //候选词选择完成的事件
+        }
+
+        private void HasPreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+            DI.Get<PinyinAlternateCollection>().Previous();
+        }
+
+        private void HasLastButton_Click(object sender, RoutedEventArgs e)
+        {
+            DI.Get<PinyinAlternateCollection>().Next();
+        }
+
+        public bool BackSpace()
+        {
+            var sc = DI.Get<PinyinSeparatesCollection>();
+            return sc.BackSpaceLetter();
+        }
+
+        /// <summary>
+        ///     当有候选词选择完成后发生
+        /// </summary>
+        public event EventHandler<AlternateSelectedEventArgs> AlternateSelected;
+
+        protected virtual void OnAlternateSelected(AlternateSelectedEventArgs e)
+        {
+            EventHandler<AlternateSelectedEventArgs> handler = AlternateSelected;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        #endregion
     }
 }
