@@ -42,7 +42,7 @@
       <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
-      <HintPath>..\..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,7 +55,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
-      <HintPath>..\..\..\packages\DockPanelSuite.2.9.0.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+      <HintPath>..\..\packages\DockPanelSuite.2.9.0.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +144,7 @@
       <Name>NKnife</Name>
     </ProjectReference>
     <ProjectReference Include="..\NKnife.App.PictureTextPicker.Common\NKnife.App.PictureTextPicker.Common.csproj">
-      <Project>{E29ED242-DF99-4D00-AE38-1267C6FCAE45}</Project>
+      <Project>{e29ed242-df99-4d00-ae38-1267c6fcae45}</Project>
       <Name>NKnife.App.PictureTextPicker.Common</Name>
     </ProjectReference>
   </ItemGroup>

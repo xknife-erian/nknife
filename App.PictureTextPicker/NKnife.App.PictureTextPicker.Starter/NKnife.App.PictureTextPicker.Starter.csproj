@@ -57,9 +57,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -71,6 +68,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.Draws\NKnife.Draws.csproj">
+      <Project>{48dcfea4-948a-45f8-8fa5-010a1e095c19}</Project>
+      <Name>NKnife.Draws</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
       <Project>{3d1d08d2-46b0-4c33-a214-a5a76a998102}</Project>
       <Name>NKnife.NLog3</Name>
