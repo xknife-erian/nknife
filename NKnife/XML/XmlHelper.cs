@@ -5,15 +5,17 @@ using System.Linq;
 using System.Xml.Schema;
 using NKnife.Base;
 using NKnife.Utility;
+using NKnife.Utility.File;
 
 namespace System.Xml
 {
     /// <summary>
-    /// 针对XmlDocument的一些扩展操作方法。静态类。
+    ///     针对XmlDocument的一些扩展操作方法。静态类。
     /// </summary>
     public static class XmlHelper
     {
-        /// <summary>快速创建XML的XmlDeclaration结点
+        /// <summary>
+        ///     快速创建XML的XmlDeclaration结点
         /// </summary>
         /// <param name="document">The document.</param>
         /// <param name="version">The version.</param>
@@ -21,13 +23,13 @@ namespace System.Xml
         /// <param name="standalone">The standalone.</param>
         public static void SetXmlDeclaration(this XmlDocument document, string version = "1.0", string encoding = "UTF-8", string standalone = "")
         {
-            var xmldecl = document.CreateXmlDeclaration(version, encoding, standalone);
+            XmlDeclaration xmldecl = document.CreateXmlDeclaration(version, encoding, standalone);
             XmlElement root = document.DocumentElement;
             document.InsertBefore(xmldecl, root);
         }
 
         /// <summary>
-        /// 根据XmlElement的LocalName获取一组XmlElement中的第一个Element
+        ///     根据XmlElement的LocalName获取一组XmlElement中的第一个Element
         /// </summary>
         /// <param name="node">将要查找的父级XmlNode</param>
         /// <param name="name">要查找的Element的LcoalName</param>
@@ -38,15 +40,19 @@ namespace System.Xml
             XmlNode subnode = node.SelectSingleNode(string.Format(@"(.//{0})[1]", name));
             if (subnode == null)
             {
-                XmlElement ele = node.OwnerDocument.CreateElement(name);
-                node.AppendChild(ele);
-                return ele;
+                if (node.OwnerDocument != null)
+                {
+                    XmlElement ele = node.OwnerDocument.CreateElement(name);
+                    node.AppendChild(ele);
+                    return ele;
+                }
+                Debug.Fail("node.OwnerDocument != null");
             }
             return (XmlElement) subnode;
         }
 
         /// <summary>
-        /// 如果Element有一个属性的名为“id”，根据XmlElement的LocalName和id的值获取一组XmlElement中的第一个Element
+        ///     如果Element有一个属性的名为“id”，根据XmlElement的LocalName和id的值获取一组XmlElement中的第一个Element
         /// </summary>
         /// <param name="node">将要查找的父级XmlNode</param>
         /// <param name="name">要查找的Element的LcoalName</param>
@@ -61,8 +67,8 @@ namespace System.Xml
         }
 
         /// <summary>
-        /// 从XmlElement里查代一组值是否存在，返回不存在的值，已存在的值的不返回。
-        /// 如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
+        ///     从XmlElement里查代一组值是否存在，返回不存在的值，已存在的值的不返回。
+        ///     如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
         /// </summary>
         /// <param name="groupEle">将搜索的XmlElement</param>
         /// <param name="itemNodeName">子XmlElement的LocalName</param>
@@ -71,8 +77,7 @@ namespace System.Xml
         /// <param name="attributeName">当数据存储节点类型为Attribute时的属性的LocalName，当其他类型时输入Null</param>
         /// <returns>返回一组不包含在父级Element中的值的数组</returns>
         public static string[] ContainsValuesByGroupItems
-            (this XmlElement groupEle, string itemNodeName, XmlNodeType nodetype, string attributeName,
-             params string[] valueList)
+            (this XmlElement groupEle, string itemNodeName, XmlNodeType nodetype, string attributeName, params string[] valueList)
         {
             var t = new List<string>();
             t.AddRange(valueList);
@@ -80,8 +85,8 @@ namespace System.Xml
         }
 
         /// <summary>
-        /// 从XmlElement里查代一组值是否存在，返回不存在的值，已存在的值的不返回。
-        /// 如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
+        ///     从XmlElement里查代一组值是否存在，返回不存在的值，已存在的值的不返回。
+        ///     如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
         /// </summary>
         /// <param name="groupEle">将搜索的XmlElement</param>
         /// <param name="itemNodeName">子XmlElement的LocalName</param>
@@ -91,41 +96,42 @@ namespace System.Xml
         /// <returns>返回一组不包含在父级Element中的值的数组</returns>
         public static string[] ContainsValuesByGroupItems
             (this XmlElement groupEle, string itemNodeName, XmlNodeType nodetype, string attributeName,
-             List<string> valueList)
+                List<string> valueList)
         {
             var returnValues = new List<string>(valueList.Count);
             XmlNodeList nodes = groupEle.SelectNodes(itemNodeName);
             switch (nodetype)
             {
-                #region case
+                    #region case
+
                 case XmlNodeType.Attribute:
+                {
+                    Debug.Assert(!string.IsNullOrEmpty(attributeName));
+                    foreach (XmlNode node in nodes)
                     {
-                        Debug.Assert(!string.IsNullOrEmpty(attributeName));
-                        foreach (XmlNode node in nodes)
+                        var ele = node as XmlElement;
+                        string value = ele.GetAttribute(attributeName);
+                        if (!valueList.Contains(value))
                         {
-                            var ele = node as XmlElement;
-                            string value = ele.GetAttribute(attributeName);
-                            if (!valueList.Contains(value))
-                            {
-                                returnValues.Add(value);
-                            }
+                            returnValues.Add(value);
                         }
-                        break;
                     }
+                    break;
+                }
                 case XmlNodeType.CDATA:
                 case XmlNodeType.Text:
+                {
+                    foreach (XmlNode node in nodes)
                     {
-                        foreach (XmlNode node in nodes)
+                        var ele = node as XmlElement;
+                        string value = ele.InnerText;
+                        if (!valueList.Contains(value))
                         {
-                            var ele = node as XmlElement;
-                            string value = ele.InnerText;
-                            if (!valueList.Contains(value))
-                            {
-                                returnValues.Add(value);
-                            }
+                            returnValues.Add(value);
                         }
-                        break;
                     }
+                    break;
+                }
                 case XmlNodeType.Comment:
                 case XmlNodeType.Document:
                 case XmlNodeType.DocumentFragment:
@@ -144,14 +150,15 @@ namespace System.Xml
                 default:
                     Debug.Fail("值只能存放在Attribute，CDATA，Text三种类型的节点中！");
                     break;
-                #endregion
+
+                    #endregion
             }
             return returnValues.ToArray();
         }
 
         /// <summary>
-        /// 从XmlElement里获取一组值。
-        /// 如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
+        ///     从XmlElement里获取一组值。
+        ///     如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
         /// </summary>
         /// <param name="groupEle">从此XmlElement里获取值</param>
         /// <param name="itemNodeName">子节点的LocalName</param>
@@ -169,27 +176,27 @@ namespace System.Xml
                     #region case
 
                 case XmlNodeType.Attribute:
+                {
+                    Debug.Assert(!string.IsNullOrEmpty(attributeName));
+                    int i = 0;
+                    foreach (XmlNode node in nodes)
                     {
-                        Debug.Assert(!string.IsNullOrEmpty(attributeName));
-                        int i = 0;
-                        foreach (XmlNode node in nodes)
-                        {
-                            returnItems[i] = node.Attributes[attributeName].Value;
-                            i++;
-                        }
-                        break;
+                        returnItems[i] = node.Attributes[attributeName].Value;
+                        i++;
                     }
+                    break;
+                }
                 case XmlNodeType.CDATA:
                 case XmlNodeType.Text:
+                {
+                    int i = 0;
+                    foreach (XmlNode node in nodes)
                     {
-                        int i = 0;
-                        foreach (XmlNode node in nodes)
-                        {
-                            returnItems[i] = node.InnerText;
-                            i++;
-                        }
-                        break;
+                        returnItems[i] = node.InnerText;
+                        i++;
                     }
+                    break;
+                }
                 case XmlNodeType.Comment:
                 case XmlNodeType.Document:
                 case XmlNodeType.DocumentFragment:
@@ -216,8 +223,8 @@ namespace System.Xml
         }
 
         /// <summary>
-        /// 向XmlElement里追加一组节点，并设置这组节点的值。
-        /// 如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
+        ///     向XmlElement里追加一组节点，并设置这组节点的值。
+        ///     如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
         /// </summary>
         /// <param name="groupEle">将设置的XmlElement</param>
         /// <param name="itemNodeName">子XmlElement的LocalName</param>
@@ -227,7 +234,7 @@ namespace System.Xml
         /// <param name="valueList">值的数组</param>
         public static void AppendGroupItemsValue
             (this XmlElement groupEle, string itemNodeName, XmlNodeType nodetype, string attributeName, bool isRepeat,
-             params string[] valueList)
+                params string[] valueList)
         {
             var t = new List<string>();
             t.AddRange(valueList);
@@ -235,8 +242,8 @@ namespace System.Xml
         }
 
         /// <summary>
-        /// 向XmlElement里追加一组节点，并设置这组节点的值。
-        /// 如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
+        ///     向XmlElement里追加一组节点，并设置这组节点的值。
+        ///     如：＜groups＞＜item value="a"＞＜/item＞＜item value="B"＞＜/item＞＜/groups＞
         /// </summary>
         /// <param name="groupEle">将设置的XmlElement</param>
         /// <param name="itemNodeName">子XmlElement的LocalName</param>
@@ -244,45 +251,56 @@ namespace System.Xml
         /// <param name="attributeName">当数据存储类型为Attribute时的属性的LocalName，当其他类型时输入Null</param>
         /// <param name="isRepeat">是否允许有重复的值,true允许,false不允许(如不允许将增加大量的运算时间)</param>
         /// <param name="valueList">值的集合</param>
-        public static void AppendGroupItemsValue
-            (this XmlElement groupEle, string itemNodeName, XmlNodeType nodetype, string attributeName, bool isRepeat,
-             List<string> valueList)
+        public static void AppendGroupItemsValue(this XmlElement groupEle, string itemNodeName, XmlNodeType nodetype, string attributeName, bool isRepeat, List<string> valueList)
         {
             switch (nodetype)
             {
                     #region case
 
                 case XmlNodeType.Attribute:
+                {
+                    if (isRepeat)
                     {
-                        if (isRepeat)
+                        foreach (string value in valueList)
                         {
-                            foreach (string value in valueList)
+                            XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
+                            item.SetAttribute(attributeName, value);
+                            groupEle.AppendChild(item);
+                        }
+                    }
+                    else
+                    {
+                        var vList = new List<string>(GetGroupItemsValue(groupEle, itemNodeName, nodetype, ""));
+                        foreach (string value in valueList)
+                        {
+                            if (!vList.Contains(value))
                             {
                                 XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
                                 item.SetAttribute(attributeName, value);
                                 groupEle.AppendChild(item);
                             }
                         }
-                        else
-                        {
-                            var vList = new List<string>(GetGroupItemsValue(groupEle, itemNodeName, nodetype, ""));
-                            foreach (string value in valueList)
-                            {
-                                if (!vList.Contains(value))
-                                {
-                                    XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
-                                    item.SetAttribute(attributeName, value);
-                                    groupEle.AppendChild(item);
-                                }
-                            }
-                        }
-                        break;
                     }
+                    break;
+                }
                 case XmlNodeType.CDATA:
+                {
+                    if (isRepeat)
                     {
-                        if (isRepeat)
+                        foreach (string value in valueList)
                         {
-                            foreach (string value in valueList)
+                            XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
+                            XmlCDataSection cdata = groupEle.OwnerDocument.CreateCDataSection(value);
+                            item.AppendChild(cdata);
+                            groupEle.AppendChild(item);
+                        }
+                    }
+                    else
+                    {
+                        var vList = new List<string>(GetGroupItemsValue(groupEle, itemNodeName, nodetype, ""));
+                        foreach (string value in valueList)
+                        {
+                            if (!vList.Contains(value))
                             {
                                 XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
                                 XmlCDataSection cdata = groupEle.OwnerDocument.CreateCDataSection(value);
@@ -290,48 +308,35 @@ namespace System.Xml
                                 groupEle.AppendChild(item);
                             }
                         }
-                        else
-                        {
-                            var vList = new List<string>(GetGroupItemsValue(groupEle, itemNodeName, nodetype, ""));
-                            foreach (string value in valueList)
-                            {
-                                if (!vList.Contains(value))
-                                {
-                                    XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
-                                    XmlCDataSection cdata = groupEle.OwnerDocument.CreateCDataSection(value);
-                                    item.AppendChild(cdata);
-                                    groupEle.AppendChild(item);
-                                }
-                            }
-                        }
-                        break;
                     }
+                    break;
+                }
                 case XmlNodeType.Text:
+                {
+                    if (isRepeat)
                     {
-                        if (isRepeat)
+                        foreach (string value in valueList)
                         {
-                            foreach (string value in valueList)
+                            XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
+                            item.InnerText = value;
+                            groupEle.AppendChild(item);
+                        }
+                    }
+                    else
+                    {
+                        var vList = new List<string>(GetGroupItemsValue(groupEle, itemNodeName, nodetype, ""));
+                        foreach (string value in valueList)
+                        {
+                            if (!vList.Contains(value))
                             {
                                 XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
                                 item.InnerText = value;
                                 groupEle.AppendChild(item);
                             }
                         }
-                        else
-                        {
-                            var vList = new List<string>(GetGroupItemsValue(groupEle, itemNodeName, nodetype, ""));
-                            foreach (string value in valueList)
-                            {
-                                if (!vList.Contains(value))
-                                {
-                                    XmlElement item = groupEle.OwnerDocument.CreateElement(itemNodeName);
-                                    item.InnerText = value;
-                                    groupEle.AppendChild(item);
-                                }
-                            }
-                        }
-                        break;
                     }
+                    break;
+                }
                 case XmlNodeType.Comment:
                 case XmlNodeType.Document:
                 case XmlNodeType.DocumentFragment:
@@ -355,7 +360,8 @@ namespace System.Xml
             }
         }
 
-        /// <summary>清除所有NodeType为Element的子节点
+        /// <summary>
+        ///     清除所有NodeType为Element的子节点
         /// </summary>
         /// <param name="node">所有子节点的父节点</param>
         public static void RemoveAllElements(this XmlNode node)
@@ -369,7 +375,7 @@ namespace System.Xml
         }
 
         /// <summary>
-        /// 创建一个新的Xml文件，如文件存在，将覆盖。
+        ///     创建一个新的Xml文件，如文件存在，将覆盖。
         /// </summary>
         /// <param name="file">Xml文件全名</param>
         /// <param name="rootnodename">根节点的LocalName</param>
@@ -384,14 +390,14 @@ namespace System.Xml
             doc.AppendChild(rootele);
             if (!File.Exists(file))
             {
-                Directory.CreateDirectory(file.Substring(0, file.LastIndexOf(@"\")));
+                UtilityFile.CreateDirectory(file.Substring(0, file.LastIndexOf(@"\")));
             }
             doc.Save(file);
             return doc;
         }
 
         /// <summary>
-        /// 创建一个新的Xml文件，如文件存在，将覆盖。默认为utf-8编码模式。
+        ///     创建一个新的Xml文件，如文件存在，将覆盖。默认为utf-8编码模式。
         /// </summary>
         /// <param name="file">Xml文件全名</param>
         /// <param name="rootnodename">根节点的LocalName</param>
@@ -402,7 +408,7 @@ namespace System.Xml
         }
 
         /// <summary>
-        /// 创建一个新的Xml文件，如文件存在，将覆盖。默认为utf-8编码模式。默认根节点名root。
+        ///     创建一个新的Xml文件，如文件存在，将覆盖。默认为utf-8编码模式。默认根节点名root。
         /// </summary>
         /// <param name="file">Xml文件全名</param>
         /// <returns></returns>
@@ -411,7 +417,8 @@ namespace System.Xml
             return CreatNewDoucmnet(file, "Root");
         }
 
-        /// <summary>用XmlSchema校验一个Xml文件的格式是否正确
+        /// <summary>
+        ///     用XmlSchema校验一个Xml文件的格式是否正确
         /// </summary>
         /// <param name="file">The file.</param>
         /// <param name="xmlSchema">The XML schema.</param>
@@ -421,7 +428,8 @@ namespace System.Xml
             return false;
         }
 
-        /// <summary>获得一个XmlNode的CData节点(当他有时，如无，将返回Null)
+        /// <summary>
+        ///     获得一个XmlNode的CData节点(当他有时，如无，将返回Null)
         /// </summary>
         /// <param name="childNode">The child node.</param>
         /// <returns></returns>
@@ -434,18 +442,27 @@ namespace System.Xml
                 .FirstOrDefault();
         }
 
-        /// <summary>创建并追加XmlNode的CData节点
+        /// <summary>
+        ///     创建并追加XmlNode的CData节点
         /// </summary>
         /// <param name="childNode">The child node.</param>
         /// <param name="value"></param>
         /// <returns></returns>
         public static void SetCDataElement(this XmlNode childNode, string value)
         {
-            var cd= childNode.OwnerDocument.CreateCDataSection(value);
-            childNode.AppendChild(cd);
+            if (childNode.OwnerDocument != null)
+            {
+                XmlCDataSection cd = childNode.OwnerDocument.CreateCDataSection(value);
+                childNode.AppendChild(cd);
+            }
+            else
+            {
+                Debug.Fail("childNode.OwnerDocument != null");
+            }
         }
 
-        /// <summary>快速创建并追加一个普通的数据节点
+        /// <summary>
+        ///     快速创建并追加一个普通的数据节点
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="localname">The localname.</param>
@@ -454,7 +471,7 @@ namespace System.Xml
         public static XmlElement SetChildElement(this XmlElement element, string localname, object value, params Pair<string, string>[] attributes)
         {
             XmlElement ele = null;
-            if (element!= null && element.OwnerDocument != null)
+            if (element != null && element.OwnerDocument != null)
             {
                 ele = element.OwnerDocument.CreateElement(localname);
                 if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))

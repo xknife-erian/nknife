@@ -20,6 +20,32 @@ namespace NKnife.Configuring.UserData
             Load();
         }
 
+        /// <summary>将本选项文件所对应的XML文件
+        /// </summary>
+        /// <value>The document.</value>
+        protected virtual XmlDocument Document { get; private set; }
+
+        /// <summary>获取指定名称的XmlElement，如果不存在，将创建
+        /// </summary>
+        /// <param name="localname">The localname.</param>
+        /// <returns></returns>
+        protected virtual XmlElement GetElement(string localname)
+        {
+            if (Document.DocumentElement != null)
+            {
+                XmlNode node = Document.DocumentElement.SelectSingleNode(localname);
+                if (node == null)
+                {
+                    node = Document.CreateElement(localname);
+                    if (Document.DocumentElement != null)
+                        Document.DocumentElement.AppendChild(node);
+                    Save();
+                }
+                return (XmlElement)node;
+            }
+            return null;
+        }
+
         /// <summary>本选项面向的持久化文件
         /// </summary>
         /// <value>The name of the file.</value>
@@ -56,11 +82,6 @@ namespace NKnife.Configuring.UserData
             }
         }
 
-        /// <summary>将本选项文件所对应的XML文件
-        /// </summary>
-        /// <value>The document.</value>
-        protected virtual XmlDocument Document { get; private set; }
-
         /// <summary>按指定的名称获取选项值，如果该值无法获取，将保存指定的默认值
         /// </summary>
         /// <param name="localname">The localname.</param>
@@ -90,33 +111,14 @@ namespace NKnife.Configuring.UserData
             Save();
         }
 
-        /// <summary>获取指定名称的XmlElement，如果不存在，将创建
-        /// </summary>
-        /// <param name="localname">The localname.</param>
-        /// <returns></returns>
-        public XmlElement GetElement(string localname)
-        {
-            if (Document.DocumentElement != null)
-            {
-                XmlNode node = Document.DocumentElement.SelectSingleNode(localname);
-                if (node == null)
-                {
-                    node = Document.CreateElement(localname);
-                    if (Document.DocumentElement != null) 
-                        Document.DocumentElement.AppendChild(node);
-                    Save();
-                }
-                return (XmlElement) node;
-            }
-            return null;
-        }
-
         /// <summary>加载选项文件
         /// </summary>
         public void Load()
         {
             if (!File.Exists(FileName))
+            {
                 Document = XmlHelper.CreatNewDoucmnet(FileName);
+            }
             else
             {
                 Document = new XmlDocument();
