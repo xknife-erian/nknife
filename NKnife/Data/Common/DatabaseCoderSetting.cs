@@ -4,7 +4,7 @@ using NKnife.Configuring;
 
 namespace NKnife.Data.Common
 {
-    public abstract class DatabaseCoderSetting : CoderSettingModule
+    public abstract class DatabaseCoderSetting //: CoderSettingModule
     {
         /// <summary>解析数据库相关的一些原始SQL语句
         /// </summary>
