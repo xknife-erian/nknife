@@ -40,10 +40,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>NKnife.App.TouchKnife.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Attachments\Main.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChnCharInfo">
@@ -96,6 +97,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="Properties\OwnResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -107,10 +111,6 @@
     </Compile>
     <Compile Include="Core\LocationForm.Designer.cs">
       <DependentUpon>LocationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Kernel.cs" />
     <Compile Include="Core\Notify.cs" />
@@ -138,10 +138,10 @@
     <EmbeddedResource Include="Core\LocationForm.resx">
       <DependentUpon>LocationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Attachments\划过.wav" />
   </ItemGroup>
@@ -161,9 +161,6 @@
     <None Include="Attachments\失误.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Attachments\Main.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
       <Project>{3d1d08d2-46b0-4c33-a214-a5a76a998102}</Project>
       <Name>NKnife.NLog3</Name>
@@ -180,6 +177,9 @@
       <Project>{b942b77e-2329-4c61-ac2c-3a2bc1ce221a}</Project>
       <Name>NKnife.App.TouchKnife.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Attachments\app-main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

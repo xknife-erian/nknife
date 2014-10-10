@@ -8,7 +8,7 @@ using NKnife.Utility;
 
 namespace NKnife.App.TouchKnife.Core
 {
-    internal class Notify
+    public class Notify
     {
         private readonly Client _Client;
         private readonly NotifyIcon _NotifyIcon;
