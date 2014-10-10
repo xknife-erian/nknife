@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace NKnife.Data.Interface
+namespace NKnife.Database.Interface
 {
     public interface IDataSetProcess<out T>
     {

@@ -670,7 +670,11 @@ namespace NKnife.API
             /// 该函数返回桌面窗口的句柄。桌面窗口覆盖整个屏幕。
             /// </summary>
             [DllImport("user32.dll")]
-            static public extern IntPtr GetDesktopWindow();
+            public static extern IntPtr GetDesktopWindow();
+
+            //通过窗口的标题来查找窗口的句柄
+            [DllImport("User32.dll", EntryPoint = "FindWindow")]
+            public static extern int FindWindow(string lpClassName, string lpWindowName);
 
             /// <summary>
             /// 该函数设置指定窗口的显示状态。
@@ -766,6 +770,8 @@ namespace NKnife.API
             [DllImport("user32.dll")]
             public static extern void SendMessage(IntPtr hWnd, int msg, int wParam, ref TVITEM lParam);
 
+            [DllImport("User32.dll")]
+            public static extern int SendMessage(int hWnd,int msg, int wParam, ref CopyDataStruct lParam);
             /// <summary>
             /// 该函数将一个消息放入（寄送）到与指定窗口创建的线程相联系消息队列里,与SendMessage对应。
             /// </summary>
@@ -1309,6 +1315,18 @@ namespace NKnife.API
                 public int cxIdeal;
                 public int lParam;
                 public int cxHeader;
+            }
+
+            /// <summary>
+            ///     WM_COPYDATA消息所要求的数据结构
+            /// </summary>
+            public struct CopyDataStruct
+            {
+                public int cbData;
+                public IntPtr dwData;
+
+                [MarshalAs(UnmanagedType.LPStr)]
+                public string lpData;
             }
 
             [StructLayout(LayoutKind.Sequential)]

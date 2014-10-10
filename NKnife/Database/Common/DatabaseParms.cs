@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace NKnife.Data.Common
+namespace NKnife.Database.Common
 {
     public class DatabaseParms
     {

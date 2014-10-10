@@ -4,10 +4,10 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using NKnife.Adapters;
-using NKnife.Data.Interface;
+using NKnife.Database.Interface;
 using NKnife.Interface;
 
-namespace NKnife.Data.Common
+namespace NKnife.Database.Common
 {
     public abstract class DatabaseHelper : IDataBaseHelper
     {
