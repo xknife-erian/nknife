@@ -1,20 +1,29 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows.Forms.VisualStyles;
 using Ninject.Modules;
 using NKnife.Adapters;
+using NKnife.NLog3.Logging.Base;
+using NKnife.NLog3.Logging.LoggerWPFControl;
+using NKnife.NLog3.Logging.LogPanel;
 using NKnife.NLog3.Properties;
 
-namespace NKnife.NLog3.Ioc
+namespace NKnife.NLog3.IoC
 {
     public class NLogModules : NinjectModule
     {
-        public static AppStyle Style = AppStyle.WinForm;
+        public enum AppStyle
+        {
+            WinForm,
+            WPF
+        }
 
         private const string CONFIG_FILE_NAME = "nlog.config";
+        public static AppStyle Style = AppStyle.WinForm;
+
         public override void Load()
         {
-            var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIG_FILE_NAME);
+            string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIG_FILE_NAME);
             if (!File.Exists(file))
             {
                 string configContent;
@@ -27,7 +36,7 @@ namespace NKnife.NLog3.Ioc
                         configContent = OwnResources.nlog_winform_config;
                         break;
                 }
-                using (var write = File.CreateText(file))
+                using (StreamWriter write = File.CreateText(file))
                 {
                     write.Write(configContent);
                     write.Flush();
@@ -36,13 +45,9 @@ namespace NKnife.NLog3.Ioc
             }
 
             Bind<ILoggerFactory>().To<NLogLoggerFactory>().InSingletonScope();
+            Bind<ObservableCollection<LogMessage>>().To<LogMessageCollection>().InSingletonScope();
+            Bind<LogPanel>().To<LogPanel>().InSingletonScope();
+            Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
         }
-
-        public enum AppStyle
-        {
-            WinForm, WPF
-        }
-
     }
-
 }
