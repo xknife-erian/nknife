@@ -4,12 +4,11 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-                     xmlns:viewModels="clr-namespace:NKnife.App.SocketKit.Mvvm.ViewModels"
+                     xmlns:vms="clr-namespace:NKnife.App.SocketKit.Mvvm.ViewModels"
                      mc:Ignorable="d"
                      Title="SocketKnife服务端">
-    <Grid>
+    <Grid Name="_View" Loaded="View_OnLoaded">
         <Grid.Resources>
-            <viewModels:TcpServerViewViewModel x:Key="ViewModel" />
             <Style x:Key="StartImage" TargetType="{x:Type Button}">
                 <Setter Property="Margin" Value="3" />
                 <Style.Triggers>
@@ -58,14 +57,14 @@
         </ToolBar>
         <StatusBar Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
         </StatusBar>
-        <ListView Grid.Row="1" Name="_DataGrid" DataContext="{DynamicResource ViewModel}"
+        <ListView Grid.Row="1" Name="_DataGrid" ItemsSource="{Binding SocketMessages}"
                   IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                   SelectionMode="Single"
                   Height="Auto" Width="Auto">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Level}" Width="40" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SocketDirection}" Width="40" />
                     <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="800" />
                 </GridView>
             </ListView.View>

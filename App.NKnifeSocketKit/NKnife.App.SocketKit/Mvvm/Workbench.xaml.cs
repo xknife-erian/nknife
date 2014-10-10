@@ -62,7 +62,9 @@ namespace NKnife.App.SocketKit.Mvvm
             var drs = win.ShowDialog(this);
             if (drs != null && (bool)drs)
             {
-                var view = new TcpServerView(win.IpAddress, win.Port);
+                var view = new TcpServerView();
+                view.IpAddress = win.IpAddress;
+                view.Port = win.Port;
                 _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.IpAddress, win.Port));
                 DI.Get<DockUtil>().Documents.Add(view);
             }

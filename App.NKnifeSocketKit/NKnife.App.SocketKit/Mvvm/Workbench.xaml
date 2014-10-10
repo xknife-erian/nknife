@@ -4,9 +4,7 @@
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:my="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:mvvm="clr-namespace:NKnife.App.SocketKit.Mvvm"
-        xmlns:wpf="clr-namespace:NKnife.GUI.Wpf;assembly=NKnife"
         mc:Ignorable="d"
         Title="NKnife@Socket测试工具" Height="350" Width="525" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
     <Window.CommandBindings>
