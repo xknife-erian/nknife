@@ -43,8 +43,7 @@
     <StartupObject>NKnife.App.TouchKnife.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Attachments\app-main.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChnCharInfo">

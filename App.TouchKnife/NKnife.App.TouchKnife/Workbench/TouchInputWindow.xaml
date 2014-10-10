@@ -33,10 +33,10 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,5,-3">
-            <Button DockPanel.Dock="Left" x:Name="_CallPinyinPanelButton" Click="CallPinyinPanelButton_Click"
+            <Button DockPanel.Dock="Left" Click="CallPinyinButton_Click"
                     Width="50"
                     Height="50" Content="拼音" Padding="10,0,10,0" />
-            <Button DockPanel.Dock="Left" x:Name="_CallHandWriterPanelButton" Click="CallHandWriterPanel_Click"
+            <Button DockPanel.Dock="Left" Click="CallHandWriterButton_Click"
                     Width="50"
                     Height="50" Content="手写" Padding="10,0,10,0" />
             <StackPanel Height="50" Margin="4,4,2,3">
@@ -60,7 +60,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding}" Margin="0" Padding="15,0,15,0"
-                                           MouseDown="AlternatesListBox_MouseDown" MouseUp="AlternatesListBox_MouseUp" />
+                                           MouseDown="HwWordListBox_MouseDown" MouseUp="HwWordListBox_MouseUp" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

@@ -26,9 +26,12 @@ namespace NKnife.App.TouchKnife.Workbench
     /// </summary>
     public partial class TouchInputWindow : Window, ITouchInput
     {
+        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+
+        #region 类成员变量
+
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string SYMBOL = "“)^~}、/\\…|：；》《'%?<”>&({]![";
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly Params _PanelParams = DI.Get<Params>();
         private readonly InputSimulator _Simulator = DI.Get<InputSimulator>();
@@ -38,7 +41,10 @@ namespace NKnife.App.TouchKnife.Workbench
 
         private Point _OwnLocation;
         private Size _OwnSize;
-        private readonly CurrentWordStrip _WordPop = DI.Get<CurrentWordStrip>();
+
+        #endregion
+
+        #region 构造函数及核心的启动
 
         public TouchInputWindow()
         {
@@ -63,38 +69,20 @@ namespace NKnife.App.TouchKnife.Workbench
             _Kernel.Start(this);
         }
 
-        private void AlternatesListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        #endregion
+
+        #region 当最外层Grid载入后，通过Windows的API控制窗体不再获取焦点
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            var word = ((TextBlock)sender).Text;
-            ShowWordStrip(word, e);
+            //注意：如果在构造函数中，窗体的句柄无法获得
+            //通过WinAPI的调用控制窗体不再获取焦点
+            const int GWL_EXSTYLE = (-20);
+            IntPtr handle = new WindowInteropHelper(this).Handle;
+            API.API.User32.SetWindowLong(handle, GWL_EXSTYLE, 0x8000000);
         }
 
-        private void AlternatesListBox_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            HideWordStrip();
-            var word = ((TextBlock)sender).Text;
-            _Simulator.Keyboard.TextEntry(word);
-            _PanelParams.PlayVoice(OwnResources.划过);
-            DI.Get<HwAlternateCollection>().ClearAlternates();
-            _InkCanvas.Strokes.Clear();
-        }
-
-        private void ShowWordStrip(String word, MouseButtonEventArgs e)
-        {
-            System.Windows.Point point = e.GetPosition(this);
-
-            _WordPop.Left = Left + point.X - _WordPop.Width / 2;
-            _WordPop.Top = Top + point.Y - _WordPop.Height - 40;
-
-            _WordPop.UpdateText(word);
-            _WordPop.Show();
-        }
-
-        private void HideWordStrip()
-        {
-            _WordPop.Hide();
-            _WordPop.UpdateText("");
-        }
+        #endregion
 
         #region ITouchInput
 
@@ -131,25 +119,25 @@ namespace NKnife.App.TouchKnife.Workbench
             switch (mode)
             {
                 case 1: //拼音
-                    CallPinyinPanelButton_Click(null, null);
+                    CallPinyinButton_Click(null, null);
                     ChineseAndEnglishFunction(_InputMode);
                     break;
                 case 2: //手写
-                    CallHandWriterPanel_Click(null, null);
+                    CallHandWriterButton_Click(null, null);
                     break;
                 case 3: //符号
-                    CallPinyinPanelButton_Click(null, null);
+                    CallPinyinButton_Click(null, null);
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(-1);
                     break;
                 case 5: //大写英文
-                    CallPinyinPanelButton_Click(null, null);
+                    CallPinyinButton_Click(null, null);
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(1);
                     break;
                 case 4: //小写英文
                 case 6: //数字
-                    CallPinyinPanelButton_Click(null, null);
+                    CallPinyinButton_Click(null, null);
                     _InputMode = Params.InputMode.Letter;
                     KeyboardSwitchCase(0);
                     break;
@@ -188,51 +176,19 @@ namespace NKnife.App.TouchKnife.Workbench
 
         #endregion
 
-        #region 当最外层Grid载入后，通过Windows的API控制窗体不再获取焦点
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            //注意：如果在构造函数中，窗体的句柄无法获得
-            //通过WinAPI的调用控制窗体不再获取焦点
-            const int GWL_EXSTYLE = (-20);
-            IntPtr handle = new WindowInteropHelper(this).Handle;
-            API.API.User32.SetWindowLong(handle, GWL_EXSTYLE, 0x8000000);
-        }
-
-        #endregion
-
-        #region 手写板，每笔触的触发动作
-
-        private void InkCanvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
-        {
-            DI.Get<HwAlternateCollection>().Recognize(_InkCanvas.Strokes);
-        }
-
-        #endregion
-
         #region Tab控制: 手写 or 拼音
 
-        private void CallPinyinPanelButton_Click(object sender, RoutedEventArgs e)
+        private void CallPinyinButton_Click(object sender, RoutedEventArgs e)
         {
             _InputMode = Params.InputMode.Pinyin;
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _KeyboardGrid.Visibility = Visibility.Visible;
         }
 
-        private void CallHandWriterPanel_Click(object sender, RoutedEventArgs e)
+        private void CallHandWriterButton_Click(object sender, RoutedEventArgs e)
         {
             _KeyboardGrid.Visibility = Visibility.Hidden;
             _HandWriteGrid.Visibility = Visibility.Visible;
-        }
-
-        #endregion
-
-        #region 手写板功能
-
-        private void HandWriterClearButton_Click(object sender, RoutedEventArgs e)
-        {
-            _InkCanvas.Strokes.Clear();
-            DI.Get<HwAlternateCollection>().ClearAlternates();
         }
 
         #endregion
@@ -411,6 +367,39 @@ namespace NKnife.App.TouchKnife.Workbench
 
         #endregion
 
+        #region 手写板，每笔触的触发动作
+
+        //每笔触的触发动作,解析手写
+        private void InkCanvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
+        {
+            DI.Get<HwAlternateCollection>().Recognize(_InkCanvas.Strokes);
+        }
+
+        //清除手写板的笔迹
+        private void HandWriterClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            _InkCanvas.Strokes.Clear();
+            DI.Get<HwAlternateCollection>().ClearAlternates();
+        }
+
+        private void HwWordListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var word = ((TextBlock)sender).Text;
+            ShowWordStrip(word, e);
+        }
+
+        private void HwWordListBox_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            HideWordStrip();
+            var word = ((TextBlock)sender).Text;
+            _Simulator.Keyboard.TextEntry(word);
+            _PanelParams.PlayVoice(OwnResources.划过);
+            DI.Get<HwAlternateCollection>().ClearAlternates();
+            _InkCanvas.Strokes.Clear();
+        }
+
+        #endregion
+
         #region 拼音候选条
 
         private void InputCharListBox_MouseDown(object sender, MouseButtonEventArgs e)
@@ -463,6 +452,30 @@ namespace NKnife.App.TouchKnife.Workbench
         }
 
         #endregion
+
+        #region 选中字提示器
+
+        private readonly CurrentWordStrip _WordPop = DI.Get<CurrentWordStrip>();
+
+        private void ShowWordStrip(String word, MouseButtonEventArgs e)
+        {
+            System.Windows.Point point = e.GetPosition(this);
+
+            _WordPop.Left = Left + point.X - _WordPop.Width / 2;
+            _WordPop.Top = Top + point.Y - _WordPop.Height - 40;
+
+            _WordPop.UpdateText(word);
+            _WordPop.Show();
+        }
+
+        private void HideWordStrip()
+        {
+            _WordPop.Hide();
+            _WordPop.UpdateText("");
+        }
+
+        #endregion
+
     }
 
     public class AlternateSelectedEventArgs : EventArgs
