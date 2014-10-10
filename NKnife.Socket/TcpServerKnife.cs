@@ -622,13 +622,15 @@ namespace SocketKnife
             {
                 try
                 {
-                    _MainSocket.Shutdown(SocketShutdown.Both);
-                    _MainSocket.Close();
-                    _IsClose = true;
-                    for (int i = 0; i < _SocketAsynPool.Count; i++)
+                    if (_MainSocket != null)
                     {
-                        SocketAsyncEventArgs args = _SocketAsynPool.Pop();
-                        _BufferContainer.FreeBuffer(args);
+                        _MainSocket.Close();
+                        _IsClose = true;
+                        for (int i = 0; i < _SocketAsynPool.Count; i++)
+                        {
+                            SocketAsyncEventArgs args = _SocketAsynPool.Pop();
+                            _BufferContainer.FreeBuffer(args);
+                        }
                     }
                 }
                 catch(Exception e)

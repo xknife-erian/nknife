@@ -38,9 +38,10 @@ namespace NKnife.App.SocketKit.Mvvm
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            foreach (var document in DI.Get<DockUtil>().Documents)
+            var docs = DI.Get<DockUtil>().Documents;
+            for (int i = 0; i < docs.Count; i++)
             {
-                document.Close();
+                docs[i].Close();
             }
 
             base.OnClosing(e);
