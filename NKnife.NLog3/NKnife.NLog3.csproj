@@ -54,7 +54,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IoC1\NLogModules.cs" />
+    <Compile Include="IoC\NLogModules.cs" />
     <Compile Include="Logging\Base\LoggerForm.cs">
       <SubType>Form</SubType>
     </Compile>
