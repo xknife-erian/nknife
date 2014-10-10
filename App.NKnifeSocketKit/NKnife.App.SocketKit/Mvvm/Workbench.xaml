@@ -61,8 +61,8 @@
                     <xcad:LayoutAnchorablePaneGroup x:Name="layoutAnchorablePaneGroup" DockWidth="260" DockHeight="*">
                         <xcad:LayoutAnchorablePane x:Name="_RightPane">
                             <xcad:LayoutAnchorable ContentId="toolWindow2" Title="属性">
-                                <wpf:WpfPropertyGrid VerticalAlignment="Top" HorizontalAlignment="Left"
-                                                     Name="_PropertyControl" Height="{Binding DockHeight, ElementName=layoutAnchorablePaneGroup}" Width="260" />
+                                <!--<wpf:WpfPropertyGrid VerticalAlignment="Top" HorizontalAlignment="Left"
+                                                     Name="_PropertyControl" Height="{Binding DockHeight, ElementName=layoutAnchorablePaneGroup}" Width="260" />-->
                             </xcad:LayoutAnchorable>
                             <xcad:LayoutAnchorable ContentId="toolWindow1" Title="参数">
                                 <ListView></ListView>
