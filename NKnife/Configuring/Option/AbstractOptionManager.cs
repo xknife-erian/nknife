@@ -5,6 +5,7 @@ using NKnife.Adapters;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Interface;
+using NKnife.IoC;
 using NKnife.Utility;
 
 namespace NKnife.Configuring.Option
@@ -13,11 +14,7 @@ namespace NKnife.Configuring.Option
     /// </summary>
     public abstract class AbstractOptionManager : IOptionManager
     {
-        #region Logger
-
         private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
-
-        #endregion
 
         #region 成员/属性定义
 
@@ -26,7 +23,7 @@ namespace NKnife.Configuring.Option
             get { return OptionServiceCoderSetting.ME.OptionDataStore; }
         }
 
-        public Dictionary<string, OptionDataTable> DefaultTableSchemaMap { get; protected set; }
+        public Dictionary<string, IOption> DefaultTableSchemaMap { get; protected set; }
 
         /// <summary>获取一个选项实例的集合
         /// </summary>
@@ -139,11 +136,13 @@ namespace NKnife.Configuring.Option
             }
             try
             {
-                Type type = value.GetType();
-                DataRow row = GetRow(tablename, key, type);
-                row[key] = value;
-                var table = (OptionDataTable)row.Table;
-                return table.IsModified = true;
+//                Type type = value.GetType();
+//                DataRow row = GetRow(tablename, key, type);
+//                row[key] = value;
+//                var table = (IOption)row.Table;
+//                return table.IsModified = true;
+                //todo:Option
+                return false;
             }
             catch (Exception e)
             {
@@ -183,7 +182,7 @@ namespace NKnife.Configuring.Option
         {
             try
             {
-                foreach (OptionDataTable table in DataStore.DataTables.Values)
+                foreach (IOption table in DataStore.DataTables.Values)
                 {
                     if (table.IsModified)
                         DataStore.Update(table);
@@ -220,20 +219,21 @@ namespace NKnife.Configuring.Option
         public virtual OptionCaseItem CopyCaseFrom(OptionCaseItem srcSolution)
         {
             var targetSolution = new OptionCaseItem();
-            foreach (OptionDataTable table in DataStore.DataTables.Values)
+            foreach (IOption table in DataStore.DataTables.Values)
             {
-                DataRow[] rows = table[srcSolution.Name];
-                foreach (DataRow dataRow in rows)
-                {
-                    DataRow newRow = table.NewRow();
-                    for (int i = 0; i < table.Columns.Count; i++)
-                    {
-                        newRow[i] = dataRow[i];
-                    }
-                    newRow["solution"] = targetSolution.Name;
-                    table.Rows.Add(newRow);
-                }
-                table.AcceptChanges();
+//                DataRow[] rows = table[srcSolution.Name];
+//                foreach (DataRow dataRow in rows)
+//                {
+//                    DataRow newRow = table.NewRow();
+//                    for (int i = 0; i < table.Columns.Count; i++)
+//                    {
+//                        newRow[i] = dataRow[i];
+//                    }
+//                    newRow["solution"] = targetSolution.Name;
+//                    table.Rows.Add(newRow);
+//                }
+                //todo:Option
+                table.Update();
             }
             targetSolution.Name = srcSolution.Name + "1";
             CaseManager.Add(targetSolution);
@@ -258,11 +258,13 @@ namespace NKnife.Configuring.Option
         /// <param name="isStore"></param>
         public virtual void RemoveCase(OptionCaseItem solution, bool isStore = true)
         {
-            foreach (OptionDataTable dataTable in DataStore.DataTables.Values)
+            foreach (IOption dataTable in DataStore.DataTables.Values)
             {
-                DataRow row = dataTable[solution.Name, CurrentClientId];
-                if (row != null)
-                    dataTable.Rows.Remove(row);
+//                DataRow row = dataTable[solution.Name, CurrentClientId];
+//                if (row != null)
+//                    dataTable.Rows.Remove(row);
+                //todo:Option
+
             }
             CaseManager.Remove(solution);
             if (isStore)
@@ -289,7 +291,7 @@ namespace NKnife.Configuring.Option
         /// <returns></returns>
         protected virtual DataRow GetRow(string tablename, string key, Type dataType)
         {
-            OptionDataTable dt = null;
+            IOption dt = null;
             if (!DataStore.DataTables.ContainsKey(tablename))
             {
                 _Logger.Warn(string.Format("配置存储器没有{0}的表", tablename));
@@ -301,37 +303,38 @@ namespace NKnife.Configuring.Option
             {
                 dt = DataStore.DataTables[tablename];
             }
-            if (dt.Rows == null || dt.Rows.Count <= 0)
-            {
-                _Logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", tablename));
-                DataRow newrow = dt.NewRow();
-                newrow["solution"] = _CurrentCase.Name;
-                newrow["clientId"] = CurrentClientId;
-                dt.Rows.Add(newrow);
-                dt.AcceptChanges();
-            }
-            DataRow row = dt[_CurrentCase.Name, CurrentClientId];
-            if (row == null)
-            {
-                row = dt.NewRow();
-                row["solution"] = _CurrentCase.Name;
-                row["clientId"] = CurrentClientId;
-                dt.Rows.Add(row);
-            }
-            if (!row.Table.Columns.Contains(key))
-            {
-                _Logger.Warn(string.Format("配置中没有{0}的列", key));
-                var c = new DataColumn(key);
-                c.Caption = key;
-                c.DataType = dataType;
-                dt.Columns.Add(c);
-            }
-            return row;
+//            if (dt.Rows == null || dt.Rows.Count <= 0)
+//            {
+//                _Logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", tablename));
+//                DataRow newrow = dt.NewRow();
+//                newrow["solution"] = _CurrentCase.Name;
+//                newrow["clientId"] = CurrentClientId;
+//                dt.Rows.Add(newrow);
+//                dt.AcceptChanges();
+//            }
+//            DataRow row = dt[_CurrentCase.Name, CurrentClientId];
+//            if (row == null)
+//            {
+//                row = dt.NewRow();
+//                row["solution"] = _CurrentCase.Name;
+//                row["clientId"] = CurrentClientId;
+//                dt.Rows.Add(row);
+//            }
+//            if (!row.Table.Columns.Contains(key))
+//            {
+//                _Logger.Warn(string.Format("配置中没有{0}的列", key));
+//                var c = new DataColumn(key);
+//                c.Caption = key;
+//                c.DataType = dataType;
+//                dt.Columns.Add(c);
+//            }
+            //todo:Option
+            return null;// row;
         }
 
-        private OptionDataTable BuildNewDataTable(string fulltableName)
+        private IOption BuildNewDataTable(string fulltableName)
         {
-            OptionDataTable dt;
+            IOption dt;
             if (DefaultTableSchemaMap != null && DefaultTableSchemaMap.ContainsKey(fulltableName))
             {
                 dt = DefaultTableSchemaMap[fulltableName];
@@ -339,13 +342,15 @@ namespace NKnife.Configuring.Option
             else
             {
                 _Logger.Error(string.Format("默认表集合中没有{0}的表", fulltableName));
-                dt = new OptionDataTable();
-                dt.TableName = fulltableName;
+                dt = DI.Get<IOption>();
+                dt.Category = fulltableName;
             }
-            if (!dt.Columns.Contains("solution"))
-                dt.Columns.Add("solution");
-            if (!dt.Columns.Contains("clientId"))
-                dt.Columns.Add("clientId");
+//            if (!dt.Columns.Contains("solution"))
+//                dt.Columns.Add("solution");
+//            if (!dt.Columns.Contains("clientId"))
+//                dt.Columns.Add("clientId");
+            //todo:Option
+
             return dt;
         }
 

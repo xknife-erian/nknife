@@ -29,7 +29,7 @@ namespace NKnife.Configuring.Option
         /// <summary>多个子选项信息的集合
         /// </summary>
         /// <returns></returns>
-        private ConcurrentDictionary<string, OptionDataTable> _DataTableMap;
+        private ConcurrentDictionary<string, IOption> _DataTableMap;
 
         /// <summary>Option.info文件的XML实例
         /// </summary>
@@ -53,7 +53,7 @@ namespace NKnife.Configuring.Option
 
         /// <summary>文件压缩器
         /// </summary>
-        private IFileCompress _FileCompress = DI.Get<IFileCompress>();
+        private readonly IFileCompress _FileCompress = DI.Get<IFileCompress>();
 
         /// <summary>本实例总的初始化
         /// </summary>
@@ -75,7 +75,7 @@ namespace NKnife.Configuring.Option
             var fileInfo = (FileInfo) StoreObject;
             lock (StoreObject)
             {
-                _DataTableMap = new ConcurrentDictionary<string, OptionDataTable>();
+                _DataTableMap = new ConcurrentDictionary<string, IOption>();
                 if (File.Exists(fileInfo.FullName))
                 {
                     try
@@ -108,7 +108,7 @@ namespace NKnife.Configuring.Option
                         string[] files = Directory.GetFiles(_OptionWorkDateDirectory, "*" + _TablePostfix);
                         foreach (string file in files)
                         {
-                            OptionDataTable optionTable = OptionDataTable.ParseTableNode(this, file);
+                            IOption optionTable = UtilityOption.ParseTableNode(this, file);
                             string filename = Path.GetFileNameWithoutExtension(file);
                             if (!string.IsNullOrWhiteSpace(filename))
                                 _DataTableMap.TryAdd(filename, optionTable);
@@ -137,9 +137,9 @@ namespace NKnife.Configuring.Option
         /// </summary>
         /// <param name="dataTable">The data table.</param>
         /// <returns></returns>
-        private string GetTableFileName(OptionDataTable dataTable)
+        private string GetTableFileName(IOption dataTable)
         {
-            string filename = string.Format("{0}{1}", dataTable.TableName, _TablePostfix);
+            string filename = string.Format("{0}{1}", dataTable.Category, _TablePostfix);
             string s = Path.Combine(_OptionWorkDateDirectory, filename);
             return s;
         }
@@ -288,35 +288,35 @@ namespace NKnife.Configuring.Option
         /// <summary>多个子选项信息的集合
         /// </summary>
         /// <returns></returns>
-        public ConcurrentDictionary<string, OptionDataTable> DataTables
+        public ConcurrentDictionary<string, IOption> DataTables
         {
             get
             {
                 if (!_IsInitalizeSuccess)
                     Initialize();
-                return _DataTableMap ?? (_DataTableMap = new ConcurrentDictionary<string, OptionDataTable>());
+                return _DataTableMap ?? (_DataTableMap = new ConcurrentDictionary<string, IOption>());
             }
         }
 
         /// <summary>保存一个节点的选项信息
         /// </summary>
         /// <returns></returns>
-        public bool Update(OptionDataTable table)
+        public bool Update(IOption option)
         {
-            table.AcceptChanges();
+            option.Update();
             try
             {
                 lock (StoreObject)
                 {
-                    string filefullname = GetTableFileName(table);
-                    table.WriteXml(filefullname, XmlWriteMode.WriteSchema);
+                    string filefullname = GetTableFileName(option);
+                    option.WriteXml(filefullname, XmlWriteMode.WriteSchema);
                     string file = ZipSave();
                     return File.Exists(file);
                 }
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", table.TableName, e.Message), e);
+                _Logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", option.Category, e.Message), e);
                 return false;
             }
         }
@@ -331,14 +331,14 @@ namespace NKnife.Configuring.Option
                 string filefullname;
                 lock (StoreObject)
                 {
-                    foreach (OptionDataTable dataTable in _DataTableMap.Values)
+                    foreach (IOption option in _DataTableMap.Values)
                     {
-                        if (dataTable.IsModified)
+                        if (option.IsModified)
                         {
-                            string s = GetTableFileName(dataTable);
-                            dataTable.WriteXml(s, XmlWriteMode.WriteSchema);
+                            string s = GetTableFileName(option);
+                            option.WriteXml(s, XmlWriteMode.WriteSchema);
                         }
-                        dataTable.IsModified = false;
+                        option.IsModified = false;
                     }
                     filefullname = ZipSave();
                 }

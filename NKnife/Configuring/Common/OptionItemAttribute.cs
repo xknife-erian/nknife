@@ -71,9 +71,10 @@ namespace NKnife.Configuring.Common
 
         public int CompareTo(object obj)
         {
-            if (obj is OptionPanelAttribute)
+            var attribute = obj as OptionPanelAttribute;
+            if (attribute != null)
             {
-                var item = (OptionPanelAttribute)obj;
+                var item = attribute;
                 return item.OrderIndex - OrderIndex;
             }
             return 0;

@@ -74,6 +74,8 @@
     <Compile Include="Chinese\Spell.cs" />
     <Compile Include="Chinese\SpellRandom.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
+    <Compile Include="Configuring\Common\UtilityOption.cs" />
+    <Compile Include="Configuring\Interfaces\IOption.cs" />
     <Compile Include="Extensions\WindowExtension.cs" />
     <Compile Include="FTP\FtpFileListStyle.cs" />
     <Compile Include="FTP\FtpFileStruct.cs" />
@@ -138,7 +140,6 @@
     <Compile Include="Configuring\Interfaces\IOptionCaseManager.cs" />
     <Compile Include="Configuring\Interfaces\IOptionControl.cs" />
     <Compile Include="Configuring\Interfaces\IOptionDataStore.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionDataTableSchema.cs" />
     <Compile Include="Configuring\Interfaces\IOptionItemManager.cs" />
     <Compile Include="Configuring\Interfaces\IOptionListItem.cs" />
     <Compile Include="Configuring\Interfaces\IOptionManager.cs" />
@@ -685,6 +686,7 @@
     <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuring\readme.txt" />
     <Content Include="ShareResources\BaseActionIcon\Add.ico" />
     <Content Include="ShareResources\BaseActionIcon\Alert.ico" />
     <Content Include="ShareResources\BaseActionIcon\Back.ico" />

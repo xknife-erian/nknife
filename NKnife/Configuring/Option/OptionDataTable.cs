@@ -12,7 +12,7 @@ using NKnife.Interface;
 namespace NKnife.Configuring.Option
 {
     [Serializable]
-    public class OptionDataTable : DataTable
+    public class OptionDataTable : DataTable, IOption
     {
         private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
@@ -27,6 +27,12 @@ namespace NKnife.Configuring.Option
         /// 	<c>true</c> if this instance is modified; otherwise, <c>false</c>.
         /// </value>
         public bool IsModified { get; set; }
+
+        public string Category
+        {
+            get { return TableName; } 
+            set { TableName = value; }
+        }
 
         public StringBuilder AsXml
         {
@@ -93,9 +99,9 @@ namespace NKnife.Configuring.Option
         /// 提交自上次调用 System.Data.DataTable.AcceptChanges() 以来对该表进行的所有更改。
         /// 并触发 OptionTableChangedEvent 事件，以确保主从的选项信息表的同步动作。
         /// </summary>
-        public new void AcceptChanges()
+        public void Update()
         {
-            base.AcceptChanges();
+            AcceptChanges();
             if (IsModified)
                 OnOptionTableChanged(new OptionTableChangedEventArgs(this.TableName));
         }

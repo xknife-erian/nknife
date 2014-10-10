@@ -31,7 +31,7 @@ namespace NKnife.Configuring.Interfaces
         /// 多个子选项信息的集合
         /// </summary>
         /// <returns></returns>
-        ConcurrentDictionary<string, OptionDataTable> DataTables { get; }
+        ConcurrentDictionary<string, IOption> DataTables { get; }
 
         /// <summary>初始化选项的存储目标
         /// </summary>
@@ -50,7 +50,7 @@ namespace NKnife.Configuring.Interfaces
         /// 保存一个节点的选项信息
         /// </summary>
         /// <returns></returns>
-        bool Update(OptionDataTable table);
+        bool Update(IOption table);
 
         /// <summary>
         /// 保存整个存储器

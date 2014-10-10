@@ -24,7 +24,7 @@ namespace NKnife.Configuring.Option
 
         private static readonly OptionServiceCoderSetting _Setting = OptionServiceCoderSetting.ME;
         private DataSet _DataSet;
-        private ConcurrentDictionary<string, OptionDataTable> _DataTables;
+        private ConcurrentDictionary<string, IOption> _OptionMap;
         private XmlDocument _Document;
 
         protected FileInfo FileInfo
@@ -50,7 +50,8 @@ namespace NKnife.Configuring.Option
                             ele.AppendChild(subEle);
                             if (_Document.DocumentElement != null)
                                 _Document.DocumentElement.AppendChild(ele);
-                            BuildNewDocument(_Document, FileInfo.FullName);
+                            //BuildNewDocument(_Document, FileInfo.FullName);
+                            //todo:Option
                         }
                         //激活即将开始载入选项事件
                         OnOptionLoading(new OptionLoadEventArgs(FileInfo));
@@ -116,7 +117,7 @@ namespace NKnife.Configuring.Option
         /// 多个子选项信息的集合
         /// </summary>
         /// <returns></returns>
-        public ConcurrentDictionary<string, OptionDataTable> DataTables
+        public ConcurrentDictionary<string, IOption> DataTables
         {
             get
             {
@@ -131,17 +132,18 @@ namespace NKnife.Configuring.Option
                                 continue;
                             if (!childNode.LocalName.Equals(_Setting.OptionDataTableFlagName))
                                 continue;
-                            _DataSet.Tables.Add(OptionDataTable.ParseTableNode(this, childNode));
+                            _DataSet.Tables.Add(UtilityOption.ParseTableNode(this, childNode));
                         }
                     }
-                    if (_DataTables == null)
-                        _DataTables = new ConcurrentDictionary<string, OptionDataTable>();
-                    foreach (OptionDataTable table in _DataSet.Tables)
+                    if (_OptionMap == null)
+                        _OptionMap = new ConcurrentDictionary<string, IOption>();
+                    //TODO:此处应该有问题
+                    foreach (IOption table in _DataSet.Tables)
                     {
-                        _DataTables.TryAdd(table.TableName, table);
+                        _OptionMap.TryAdd(table.Category, table);
                     }
                 }
-                return _DataTables;
+                return _OptionMap;
             }
         }
 
@@ -149,34 +151,34 @@ namespace NKnife.Configuring.Option
         /// 保存一个节点的选项信息
         /// </summary>
         /// <returns></returns>
-        public bool Update(OptionDataTable table)
+        public bool Update(IOption option)
         {
-            table.AcceptChanges();
+            option.Update();
             try
             {
                 lock (Document)
                 {
-                    string xpath = string.Format("//{1}[@name='{0}']", table.TableName, _Setting.OptionDataTableFlagName);
+                    string xpath = string.Format("//{1}[@name='{0}']", option.Category, _Setting.OptionDataTableFlagName);
                     var ele = (XmlElement) Document.SelectSingleNode(xpath);
                     if (ele != null)
                     {
-                        XmlCDataSection xcds = Document.CreateCDataSection(table.AsXml.ToString());
+                        XmlCDataSection xcds = Document.CreateCDataSection(option.AsXml.ToString());
                         ele.RemoveAllElements();
                         ele.AppendChild(xcds);
                         return true;
                     }
                     else
                     {
-                        _Logger.Warn(string.Format("找不到{0}表的节点。", table.TableName));
-                        BuildNewNode(Document, table);
-                        _Logger.Info(string.Format("创建Option的{0}表的新节点。", table.TableName));
+                        _Logger.Warn(string.Format("找不到{0}表的节点。", option.Category));
+                        BuildNewNode(Document, option);
+                        _Logger.Info(string.Format("创建Option的{0}表的新节点。", option.Category));
                         return false;
                     }
                 }
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", table.TableName, e.Message), e);
+                _Logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", option.Category, e.Message), e);
                 return false;
             }
         }
@@ -194,7 +196,9 @@ namespace NKnife.Configuring.Option
                     Document.Save(FileInfo.FullName);
                     foreach (DataTable dataTable in _DataSet.Tables)
                     {
-                        ((OptionDataTable) dataTable).IsModified = false;
+                        //todo:Option
+
+                        //((OptionDataTable) dataTable).IsModified = false;
                     }
                 }
                 return true;
@@ -276,48 +280,50 @@ namespace NKnife.Configuring.Option
 
         #region 一些内部方法
 
-        private static IEnumerable<IOptionDataTableSchema> GetSchemas()
-        {
-            IEnumerable<Type> types = null;
-            try
-            {
-                string path = AppDomain.CurrentDomain.BaseDirectory;
-                types = UtilityType.FindTypesByDirectory(path, typeof (IOptionDataTableSchema));
-            }
-            catch (Exception e)
-            {
-                _Logger.Error(string.Format("从目录中搜索选项类时异常。{0}", e.Message), e);
-            }
-            _Logger.Info(string.Format("搜索所有的程序集，并找到 {0} 个IOption类型(包括基本类型和抽象类型)。", types.Count()));
-            var schemas = new List<IOptionDataTableSchema>();
-            foreach (Type type in types)
-            {
-                object obj = Activator.CreateInstance(type);
-                schemas.Add((IOptionDataTableSchema) obj);
-            }
-            return schemas;
-        }
+        //todo:Option
+//
+//        private static IEnumerable<IOptionDataTableSchema> GetSchemas()
+//        {
+//            IEnumerable<Type> types = null;
+//            try
+//            {
+//                string path = AppDomain.CurrentDomain.BaseDirectory;
+//                types = UtilityType.FindTypesByDirectory(path, typeof (IOptionDataTableSchema));
+//            }
+//            catch (Exception e)
+//            {
+//                _Logger.Error(string.Format("从目录中搜索选项类时异常。{0}", e.Message), e);
+//            }
+//            _Logger.Info(string.Format("搜索所有的程序集，并找到 {0} 个IOption类型(包括基本类型和抽象类型)。", types.Count()));
+//            var schemas = new List<IOptionDataTableSchema>();
+//            foreach (Type type in types)
+//            {
+//                object obj = Activator.CreateInstance(type);
+//                schemas.Add((IOptionDataTableSchema) obj);
+//            }
+//            return schemas;
+//        }
+//
+//        private static void BuildNewDocument(XmlDocument document, string filepath)
+//        {
+//            IEnumerable<IOptionDataTableSchema> schemas = GetSchemas();
+//            foreach (IOptionDataTableSchema schema in schemas)
+//            {
+//                XmlElement element = document.CreateElement(_Setting.OptionDataTableFlagName);
+//                element.SetAttribute("name", schema.TableName);
+//                XmlCDataSection xcds = document.CreateCDataSection(schema.OptionDataTableSchema.AsXml.ToString());
+//                element.AppendChild(xcds);
+//                if (document.DocumentElement != null)
+//                    document.DocumentElement.AppendChild(element);
+//            }
+//            document.Save(filepath);
+//        }
 
-        private static void BuildNewDocument(XmlDocument document, string filepath)
-        {
-            IEnumerable<IOptionDataTableSchema> schemas = GetSchemas();
-            foreach (IOptionDataTableSchema schema in schemas)
-            {
-                XmlElement element = document.CreateElement(_Setting.OptionDataTableFlagName);
-                element.SetAttribute("name", schema.TableName);
-                XmlCDataSection xcds = document.CreateCDataSection(schema.OptionDataTableSchema.AsXml.ToString());
-                element.AppendChild(xcds);
-                if (document.DocumentElement != null)
-                    document.DocumentElement.AppendChild(element);
-            }
-            document.Save(filepath);
-        }
-
-        private static void BuildNewNode(XmlDocument document, OptionDataTable table)
+        private static void BuildNewNode(XmlDocument document, IOption option)
         {
             XmlElement element = document.CreateElement(_Setting.OptionDataTableFlagName);
-            element.SetAttribute("name", table.TableName);
-            XmlCDataSection xcds = document.CreateCDataSection(table.AsXml.ToString());
+            element.SetAttribute("name", option.Category);
+            XmlCDataSection xcds = document.CreateCDataSection(option.AsXml.ToString());
             element.AppendChild(xcds);
             if (document.DocumentElement != null)
                 document.DocumentElement.AppendChild(element);
