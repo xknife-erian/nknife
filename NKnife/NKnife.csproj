@@ -75,6 +75,7 @@
     <Compile Include="Database\Interface\IDataSetProcess.cs" />
     <Compile Include="Database\Process\ArrayProcess.cs" />
     <Compile Include="Database\Process\IntProcess.cs" />
+    <Compile Include="Mvvm\DelegateCommand`.cs" />
     <Compile Include="Utility\UtilityAssembly.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
     <Compile Include="Chinese\IdCardChecker.cs" />
