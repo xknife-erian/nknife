@@ -65,7 +65,17 @@
     <Compile Include="Algrithm\IAsyncOperation.cs" />
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="API\API.Kernel32.cs" />
-    <Compile Include="Architecture\ClassLoader.cs" />
+    <Compile Include="Database\Common\DatabaseCoderSetting.cs" />
+    <Compile Include="Database\Common\DatabaseHelper.cs" />
+    <Compile Include="Database\Common\DatabaseParms.cs" />
+    <Compile Include="Database\Common\SqlDbHelper.cs" />
+    <Compile Include="Database\Interface\IDatabaseHelper.cs" />
+    <Compile Include="Database\Interface\IDataBaseParameters.cs" />
+    <Compile Include="Database\Interface\IDataReaderProcess.cs" />
+    <Compile Include="Database\Interface\IDataSetProcess.cs" />
+    <Compile Include="Database\Process\ArrayProcess.cs" />
+    <Compile Include="Database\Process\IntProcess.cs" />
+    <Compile Include="Utility\UtilityAssembly.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
     <Compile Include="Chinese\IdCardChecker.cs" />
     <Compile Include="Chinese\Rmb.cs" />
@@ -98,8 +108,7 @@
     </Compile>
     <Compile Include="Interface\ILogger.cs" />
     <Compile Include="IoC\ConfiguringModule.cs" />
-    <Compile Include="API\WinMsg.cs" />
-    <Compile Include="API\WinMsgUtil.cs" />
+    <Compile Include="Utility\UtilityWndMsg.cs" />
     <Compile Include="Utility\UtilityReflection.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,16 +162,6 @@
     <Compile Include="Configuring\Option\XmlDataStore.cs" />
     <Compile Include="Configuring\Option\ZipDataStore.cs" />
     <Compile Include="Configuring\UserData\UserApplicationData.cs" />
-    <Compile Include="Data\Common\DatabaseCoderSetting.cs" />
-    <Compile Include="Data\Common\DatabaseHelper.cs" />
-    <Compile Include="Data\Common\DatabaseParms.cs" />
-    <Compile Include="Data\Common\SqlDbHelper.cs" />
-    <Compile Include="Data\Interface\IDatabaseHelper.cs" />
-    <Compile Include="Data\Interface\IDataBaseParameters.cs" />
-    <Compile Include="Data\Interface\IDataReaderProcess.cs" />
-    <Compile Include="Data\Interface\IDataSetProcess.cs" />
-    <Compile Include="Data\Process\ArrayProcess.cs" />
-    <Compile Include="Data\Process\IntProcess.cs" />
     <Compile Include="Electronics\CircuitType.cs" />
     <Compile Include="Electronics\Collections\Resistances.cs" />
     <Compile Include="Electronics\Exceptions\ResistanceCollectionException.cs" />
@@ -555,8 +554,7 @@
     <Compile Include="API\API.IMM32.cs" />
     <Compile Include="API\API.Sounder.cs" />
     <Compile Include="API\API.User32.cs" />
-    <Compile Include="API\Secur32.cs" />
-    <Compile Include="API\SysDateTime.cs" />
+    <Compile Include="API\API.Secur32.cs" />
     <Compile Include="Wrapper\Checker.cs" />
     <Compile Include="Wrapper\Computer.cs" />
     <Compile Include="Entities\CPUInfo.cs" />
@@ -672,7 +670,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Data\Database.template" />
+    <None Include="Database\Database.template" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

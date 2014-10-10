@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using NKnife.Configuring;
 
-namespace NKnife.Data.Common
+namespace NKnife.Database.Common
 {
     public abstract class DatabaseCoderSetting //: CoderSettingModule
     {
