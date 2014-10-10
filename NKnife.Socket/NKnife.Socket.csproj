@@ -71,10 +71,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NKnife.Compress\NKnife.Compress.csproj">
-      <Project>{ACF8BB89-EDE4-433E-BF14-7A9F499D39E8}</Project>
-      <Name>NKnife.Compress</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>

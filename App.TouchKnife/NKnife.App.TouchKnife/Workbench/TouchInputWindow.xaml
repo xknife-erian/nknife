@@ -12,12 +12,6 @@
             <GradientStop Color="#FFC5CAFD" Offset="0.5" />
             <GradientStop Color="#FFA0A9FF" Offset="1" />
         </LinearGradientBrush>
-        <LinearGradientBrush x:Key="PinyinWordBackgroundBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#FFD3D7FF" Offset="0" />
-            <GradientStop Color="#FFEBEBEB" Offset="0.5" />
-            <GradientStop Color="#FFC5CAFD" Offset="0.5" />
-            <GradientStop Color="#FFA0A9FF" Offset="1" />
-        </LinearGradientBrush>
     </Window.Resources>
     <Grid Loaded="Grid_Loaded" Margin="0">
         <Grid.Background>
@@ -41,7 +35,7 @@
                     Height="50" Content="手写" Padding="10,0,10,0" />
             <StackPanel Height="50" Margin="4,4,2,3">
                 <!--手写候选区-->
-                <Grid Margin="0" Height="50">
+                <Grid x:Name="_HwWordGrid" Margin="0" Height="50">
                     <Grid.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                             <GradientStop Color="#FFD1D1D1" Offset="0.5" />
@@ -49,7 +43,7 @@
                             <GradientStop Color="#FFA1A1A1" Offset="0.01" />
                         </LinearGradientBrush>
                     </Grid.Background>
-                    <ListBox Name="_WordListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22"
+                    <ListBox Name="_HwWordListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22"
                              BorderThickness="0" Background="{x:Null}"
                              Visibility="{Binding HasAlternates}">
                         <ListBox.ItemsPanel>
@@ -66,7 +60,15 @@
                     </ListBox>
                 </Grid>
                 <!--拼音候选条-->
-                <Grid Background="{StaticResource PinyinWordBackgroundBrush}">
+                <Grid x:Name="_PinyinWordGrid" Margin="0" Height="50" Visibility="Hidden">
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                            <GradientStop Color="#FFD3D7FF" Offset="0" />
+                            <GradientStop Color="#FFEBEBEB" Offset="0.5" />
+                            <GradientStop Color="#FFC5CAFD" Offset="0.5" />
+                            <GradientStop Color="#FFA0A9FF" Offset="1" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -110,7 +112,8 @@
                 </Grid>
             </StackPanel>
         </DockPanel>
-
+        
+        <!--模拟键盘区-->
         <Grid x:Name="_KeyboardGrid" Grid.Row="1" Grid.Column="0" Margin="5,2,2,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -205,13 +208,9 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Name="_SwitchMainLabel" FontSize="30" Grid.Row="0" Grid.Column="0"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center">
-                            英
-                        </TextBlock>
+                                   HorizontalAlignment="Right" VerticalAlignment="Center">英</TextBlock>
                         <TextBlock Name="_SwitchSubLabel" Padding="3,20,0,0" Grid.Row="0" Grid.Column="1"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center">
-                            拼音
-                        </TextBlock>
+                                   HorizontalAlignment="Right" VerticalAlignment="Center">拼音</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
@@ -232,7 +231,7 @@
             <Button FontSize="15" Content="空格" Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="3" Margin="2"
                     Click="SpaceButtonClick" />
         </Grid>
-
+        <!--手写板-->
         <Grid x:Name="_HandWriteGrid" Grid.Row="1" Grid.Column="0" Margin="5,3,0,5">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -260,7 +259,7 @@
                 <Button Content="重写" Padding="0,10,0,10" Margin="0" Click="HandWriterClearButton_Click" />
             </StackPanel>
         </Grid>
-
+        <!--数字键盘-->
         <Grid x:Name="_NumberGrid" Grid.Row="1" Grid.Column="1" Margin="4,2,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -288,5 +287,6 @@
                 <TextBlock Text="." FontSize="50" />
             </Button>
         </Grid>
+        
     </Grid>
 </Window>

@@ -58,7 +58,7 @@ namespace NKnife.App.TouchKnife.Workbench
             ShowInTaskbar = false;
             Hide();
 
-            _WordListBox.ItemsSource = DI.Get<HwAlternateCollection>();
+            _HwWordListBox.ItemsSource = DI.Get<HwAlternateCollection>();
             _HandWriteGrid.Visibility = Visibility.Hidden;
             StartKernel();
         }
@@ -183,12 +183,18 @@ namespace NKnife.App.TouchKnife.Workbench
             _InputMode = Params.InputMode.Pinyin;
             _HandWriteGrid.Visibility = Visibility.Hidden;
             _KeyboardGrid.Visibility = Visibility.Visible;
+
+            _PinyinWordGrid.Visibility = Visibility.Visible;
+            _HwWordGrid.Visibility = Visibility.Hidden;
         }
 
         private void CallHandWriterButton_Click(object sender, RoutedEventArgs e)
         {
             _KeyboardGrid.Visibility = Visibility.Hidden;
             _HandWriteGrid.Visibility = Visibility.Visible;
+
+            _PinyinWordGrid.Visibility = Visibility.Hidden;
+            _HwWordGrid.Visibility = Visibility.Visible;
         }
 
         #endregion
