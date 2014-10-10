@@ -20,6 +20,7 @@ namespace NKnife.Adapters
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 Debug.Fail(string.Format("无法获取工厂(ILoggerFactory)的实例,可能是未引用ILogger适配器项目。\r\n{0}", e.Message));
             }
             return factory == null ? NopLogger.Instance : factory.GetLogger(name);

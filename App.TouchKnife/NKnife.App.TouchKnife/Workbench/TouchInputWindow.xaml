@@ -34,39 +34,13 @@
                     Width="50"
                     Height="50" Content="手写" Padding="10,0,10,0" />
             <StackPanel Height="50" Margin="4,4,2,3">
-                <!--手写候选区-->
-                <Grid x:Name="_HwWordGrid" Margin="0" Height="50">
+                <!--拼音候选条-->
+                <Grid x:Name="_PinyinWordGrid" Margin="0" Height="50">
                     <Grid.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="#FFD1D1D1" Offset="0.5" />
-                            <GradientStop Color="#FFA1A1A1" Offset="1" />
-                            <GradientStop Color="#FFA1A1A1" Offset="0.01" />
-                        </LinearGradientBrush>
-                    </Grid.Background>
-                    <ListBox Name="_HwWordListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22"
-                             BorderThickness="0" Background="{x:Null}"
-                             Visibility="{Binding HasAlternates}">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}" Margin="0" Padding="15,0,15,0"
-                                           MouseDown="HwWordListBox_MouseDown" MouseUp="HwWordListBox_MouseUp" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-                <!--拼音候选条-->
-                <Grid x:Name="_PinyinWordGrid" Margin="0" Height="50" Visibility="Hidden">
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                            <GradientStop Color="#FFD3D7FF" Offset="0" />
-                            <GradientStop Color="#FFEBEBEB" Offset="0.5" />
-                            <GradientStop Color="#FFC5CAFD" Offset="0.5" />
-                            <GradientStop Color="#FFA0A9FF" Offset="1" />
+                            <GradientStop Color="#FF6EAA78" Offset="0.5" />
+                            <GradientStop Color="#FF54815D" Offset="1" />
+                            <GradientStop Color="#FF56785C" Offset="0.01" />
                         </LinearGradientBrush>
                     </Grid.Background>
                     <Grid.RowDefinitions>
@@ -109,6 +83,31 @@
                         <Button Name="_HasLastButton" Content="下页" Margin="3,5" Padding="8,0"
                                 IsEnabled="{Binding HasLast}" Click="HasLastButton_Click" />
                     </VirtualizingStackPanel>
+                </Grid>
+                <!--手写候选区-->
+                <Grid x:Name="_HwWordGrid" Margin="0" Height="50" Visibility="Hidden">
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FFD1D1D1" Offset="0.5" />
+                            <GradientStop Color="#FFA1A1A1" Offset="1" />
+                            <GradientStop Color="#FFA1A1A1" Offset="0.01" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <ListBox Name="_HwWordListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22"
+                             BorderThickness="0" Background="{x:Null}"
+                             Visibility="{Binding HasAlternates}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="0" Padding="15,0,15,0"
+                                           MouseDown="HwWordListBox_MouseDown" MouseUp="HwWordListBox_MouseUp" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </StackPanel>
         </DockPanel>
