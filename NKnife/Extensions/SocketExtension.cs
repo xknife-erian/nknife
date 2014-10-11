@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Net;
 using System.Net.Sockets;
 
-namespace System.Net.Sockets
+namespace NKnife.Extensions
 {
     internal static class SocketExtension
 	{

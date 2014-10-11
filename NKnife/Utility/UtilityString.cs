@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -329,6 +330,28 @@ namespace NKnife.Utility
                 } //if
             } //if (length >= 0)
             return myResult;
+        }
+
+        /// <summary>
+        /// 判断字符是否汉字
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+
+        public static bool IsChinese(char c)
+        {
+            return (int)c >= 0x4E00 && (int)c <= 0x9FA5;
+        }
+
+        /// <summary>
+        /// 获得字符串（包括汉字）assci码
+        /// </summary>
+        /// <param name="sSou"></param>
+        /// <returns></returns>
+        public static string GetAssciHexCode(string sSou)
+        {
+            byte[] b = Encoding.Default.GetBytes(sSou.ToCharArray());
+            return b.Aggregate("", (current, t) => current + Convert.ToString(t, 16));
         }
     }
 }

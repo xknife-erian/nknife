@@ -153,13 +153,13 @@ namespace NKnife.NSerial
         {
             if (_EnableDetialLogger)
             {
-                _Logger.Trace(() => string.Format("串发:{0}", package.DataToSend.ToHex()));
+                _Logger.Trace(() => string.Format("串发:{0}", package.DataToSend.ToHexString()));
             }
             else if (package.GetType() == typeof (OneWayPackage))
             {
                 _Logger.Debug(() =>
                               string.Format("串发:{0}, {1},{2}",
-                                            package.DataToSend.ToHex(),
+                                            package.DataToSend.ToHexString(),
                                             package.GetType().Name,
                                             package.SendInterval));
             }
@@ -168,7 +168,7 @@ namespace NKnife.NSerial
                 var twowayPackage = (TwoWayPackage) package;
                 _Logger.Debug(() =>
                               string.Format("串发:{0}, {1},{2},{3}",
-                                            package.DataToSend.ToHex(),
+                                            package.DataToSend.ToHexString(),
                                             package.GetType().Name,
                                             package.SendInterval,
                                             twowayPackage.PackageId));

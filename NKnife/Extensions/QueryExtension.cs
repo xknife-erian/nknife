@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-namespace System.Data
+namespace NKnife.Extensions
 {
     public static class QueryExtension
     {

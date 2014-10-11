@@ -16,8 +16,8 @@ namespace NKnife.Events
 
         public ChangedEventArgs(T oldItem, T newItem)
         {
-            this.OldItem = oldItem;
-            this.NewItem = newItem;
+            OldItem = oldItem;
+            NewItem = newItem;
         }
     }
 }

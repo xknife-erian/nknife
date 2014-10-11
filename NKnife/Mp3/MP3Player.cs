@@ -6,7 +6,7 @@ namespace NKnife.Mp3
     /// <summary>
     ///     一个基本的MP3的播放类
     /// </summary>
-    public class MP3Player
+    public class Mp3Player
     {
         #region 定义API函数使用的字符串变量 
 

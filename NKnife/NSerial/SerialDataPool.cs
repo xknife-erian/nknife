@@ -93,7 +93,7 @@ namespace NKnife.NSerial
                 if (two.AlreadySentTimes < two.SendTimes)
                 {
                     if (two.AlreadySentTimes > 0)
-                        _Logger.Trace(string.Format("[{0}/{1}]重发:,{2}", two.AlreadySentTimes + 1, two.SendTimes, two.DataToSend.ToHex()));
+                        _Logger.Trace(string.Format("[{0}/{1}]重发:,{2}", two.AlreadySentTimes + 1, two.SendTimes, two.DataToSend.ToHexString()));
                     two.AlreadySentTimes++;
                     outTwoWayPackage = package;
                     return true;

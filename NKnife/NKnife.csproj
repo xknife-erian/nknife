@@ -75,6 +75,50 @@
     <Compile Include="Database\Interface\IDataSetProcess.cs" />
     <Compile Include="Database\Process\ArrayProcess.cs" />
     <Compile Include="Database\Process\IntProcess.cs" />
+    <Compile Include="GUI\WinForm\Grouper\Constants.cs" />
+    <Compile Include="GUI\WinForm\Grouper\Grouper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\HorizontalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\ISplashForm.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\AntiAliasGraphics.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\ControlBoxManager.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\ControlBoxState.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\ControlBoxStyle.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\ControlPaintEx.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\GraphicsPathHelper.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\MouseOperate.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\NativeMethods.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\RenderHelper.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\RoundStyle.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\SkinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\SkinForm\SkinFormBackgroundRenderEvent.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\SkinFormBorderRenderEvent.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\SkinFormCaptionRenderEvent.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\SkinFormColorTable.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\SkinFormControlBoxRenderEvent.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\SkinFormProfessionalRenderer.cs" />
+    <Compile Include="GUI\WinForm\SkinForm\SkinFormRenderer.cs" />
+    <Compile Include="GUI\WinForm\Splasher.cs" />
+    <Compile Include="GUI\WinForm\TabControlEx\Events.cs" />
+    <Compile Include="GUI\WinForm\TabControlEx\NativeMethods.cs" />
+    <Compile Include="GUI\WinForm\TabControlEx\TabControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\VirticalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\WinFormContainer\AppFileNameEditor.cs" />
+    <Compile Include="GUI\WinForm\WinFormContainer\WinFormContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\WinFormContainer\WinFormContainer.Designer.cs">
+      <DependentUpon>WinFormContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mvvm\DelegateCommand`.cs" />
     <Compile Include="Utility\UtilityAssembly.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
@@ -207,51 +251,6 @@
       <DependentUpon>StringResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\UtilityData.cs" />
-    <Compile Include="GUI\Controls\Container\AppFileNameEditor.cs" />
-    <Compile Include="GUI\Controls\Container\WinFormContainer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\Controls\Container\WinFormContainer.Designer.cs" />
-    <Compile Include="GUI\Controls\ExListBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\Controls\Grouper\Constants.cs" />
-    <Compile Include="GUI\Controls\Grouper\Grouper.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\Controls\HorizontalLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\Controls\ISplashForm.cs" />
-    <Compile Include="GUI\Controls\SkinForm\AntiAliasGraphics.cs" />
-    <Compile Include="GUI\Controls\SkinForm\ControlBoxManager.cs" />
-    <Compile Include="GUI\Controls\SkinForm\ControlBoxState.cs" />
-    <Compile Include="GUI\Controls\SkinForm\ControlBoxStyle.cs" />
-    <Compile Include="GUI\Controls\SkinForm\ControlPaintEx.cs" />
-    <Compile Include="GUI\Controls\SkinForm\GraphicsPathHelper.cs" />
-    <Compile Include="GUI\Controls\SkinForm\MouseOperate.cs" />
-    <Compile Include="GUI\Controls\SkinForm\NativeMethods.cs" />
-    <Compile Include="GUI\Controls\SkinForm\RenderHelper.cs" />
-    <Compile Include="GUI\Controls\SkinForm\RoundStyle.cs" />
-    <Compile Include="GUI\Controls\SkinForm\SkinForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Controls\SkinForm\SkinFormBackgroundRenderEvent.cs" />
-    <Compile Include="GUI\Controls\SkinForm\SkinFormBorderRenderEvent.cs" />
-    <Compile Include="GUI\Controls\SkinForm\SkinFormCaptionRenderEvent.cs" />
-    <Compile Include="GUI\Controls\SkinForm\SkinFormColorTable.cs" />
-    <Compile Include="GUI\Controls\SkinForm\SkinFormControlBoxRenderEvent.cs" />
-    <Compile Include="GUI\Controls\SkinForm\SkinFormProfessionalRenderer.cs" />
-    <Compile Include="GUI\Controls\SkinForm\SkinFormRenderer.cs" />
-    <Compile Include="GUI\Controls\Splasher.cs" />
-    <Compile Include="GUI\Controls\TabControlEx\Events.cs" />
-    <Compile Include="GUI\Controls\TabControlEx\NativeMethods.cs" />
-    <Compile Include="GUI\Controls\TabControlEx\TabControlEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\Controls\VirticalLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoControlType.cs" />
     <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanel.cs">
       <SubType>Component</SubType>
@@ -509,12 +508,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Text\ByteClass.cs" />
-    <Compile Include="Text\Bytes.cs" />
-    <Compile Include="Text\ConvertUtil.cs" />
-    <Compile Include="Text\CounterDisplay.cs" />
-    <Compile Include="Text\StringHandler.cs" />
-    <Compile Include="Text\StringJoiner.cs" />
+    <Compile Include="Wrapper\ByteClass.cs" />
     <Compile Include="TSQL\AccessExecute.cs" />
     <Compile Include="TSQL\DataExecute.cs" />
     <Compile Include="TSQL\MSSql.cs" />
@@ -577,7 +571,7 @@
     </Compile>
     <Compile Include="Zip\GZipFileEntry.cs" />
     <Compile Include="Zip\SimpleCipher.cs" />
-    <Compile Include="Mp3\MP3Player.cs" />
+    <Compile Include="Mp3\Mp3Player.cs" />
     <Compile Include="Mp3\Mp3Tag.cs" />
     <Compile Include="Entities\PersonSex.cs" />
     <Compile Include="Wrapper\SerialPorter.cs" />
@@ -610,7 +604,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.resx" />
     <EmbeddedResource Include="GUI\WinForm\DataSelector\DataItemSelector.resx">
       <DependentUpon>DataItemSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -625,6 +618,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\WinForm\GroupboxPro\RadioGroupBox.resx">
       <DependentUpon>RadioGroupBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\WinForm\Grouper\Grouper.resx">
+      <DependentUpon>Grouper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\WinForm\MarqueeControl.resx">
       <DependentUpon>MarqueeControl.cs</DependentUpon>
@@ -675,13 +671,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Controls\Container\WinFormContainer.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="GUI\Controls\Grouper\Grouper.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Configuring\readme.txt" />
+    <EmbeddedResource Include="GUI\WinForm\Grouper\Grouper.bmp" />
+    <EmbeddedResource Include="GUI\WinForm\WinFormContainer\WinFormContainer.bmp" />
     <Content Include="ShareResources\BaseActionIcon\Add.ico" />
     <Content Include="ShareResources\BaseActionIcon\Alert.ico" />
     <Content Include="ShareResources\BaseActionIcon\Back.ico" />

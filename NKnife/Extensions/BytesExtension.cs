@@ -20,15 +20,31 @@ namespace System
             return true;
         }
 
+        /// <summary>
+        /// 字节数组转换成字符串，
+        /// 针对java程序socket发给C#客户端时，
+        /// 有时候字节流头三个字节bytes[0] == 239 && bytes[1] == 187 && bytes[2] == 191
+        /// 做了处理
+        /// </summary>
+        public static string ToString(this byte[] bytes, Encoding encoding)
+        {
+            if (!Equals(encoding, Encoding.UTF8)) return encoding.GetString(bytes);
+            if (bytes[0] == 239 && bytes[1] == 187 && bytes[2] == 191)
+            {
+                return encoding.GetString(bytes, 3, bytes.Length - 3);
+            }
+            return encoding.GetString(bytes);
+        }
+
         /// <summary>转换为十六进制字符串
         /// </summary>
-        public static string ToHex(this byte b)
+        public static string ToHexString(this byte b)
         {
             return b.ToString("X2");
         }
         /// <summary>转换为十六进制字符串
         /// </summary>
-        public static string ToHex(this IEnumerable<byte> bytes, char spliter = ' ')
+        public static string ToHexString(this IEnumerable<byte> bytes, char spliter = ' ')
         {
             if (bytes == null)
                 return string.Empty;
