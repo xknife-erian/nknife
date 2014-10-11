@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.IO;
 using System.Text;
-using NKnife.Utility.File;
+using NKnife.NIo;
 
 namespace Gean.Module.Chess
 {
