@@ -56,10 +56,12 @@ namespace NKnife.App.TouchKnife.Workbench
             ShowInTaskbar = false;
             Hide();
 
-            _PinyinCharListBox.ItemsSource = DI.Get<PinyinSeparatesCollection>();
+            _PinyinInputListBox.ItemsSource = DI.Get<PinyinSeparatesCollection>();
             _PinyinWordListBox.ItemsSource = DI.Get<PinyinAlternateCollection>();
+
             _HwWordListBox.ItemsSource = DI.Get<HwAlternateCollection>();
-            _HandWriteGrid.Visibility = Visibility.Hidden;
+            _PinyinWordPanel.DataContext = DI.Get<PinyinAlternateCollection>();
+
             StartKernel();
         }
 
@@ -434,9 +436,10 @@ namespace NKnife.App.TouchKnife.Workbench
 
             DI.Get<Params>().PlayVoice(OwnResources.划过);
             var rs = DI.Get<PinyinAlternateCollection>().CallNextAlternateGroup();
-            //候选词选择完成的事件
+            
             if (!rs)
-            {
+            {   
+                //候选词选择完成
                 DI.Get<PinyinAlternateCollection>().ClearAlternates();
                 DI.Get<PinyinSeparatesCollection>().ClearInput();
             }
@@ -477,17 +480,5 @@ namespace NKnife.App.TouchKnife.Workbench
 
         #endregion
 
-    }
-
-    public class AlternateSelectedEventArgs : EventArgs
-    {
-        public AlternateSelectedEventArgs(bool hasAlternate, string selectedWord)
-        {
-            Word = selectedWord;
-            HasAlternate = hasAlternate;
-        }
-
-        public string Word { get; set; }
-        public bool HasAlternate { get; set; }
     }
 }

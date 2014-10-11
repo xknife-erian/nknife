@@ -19,9 +19,9 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
         private List<string> _CurrentPinyinCollection;
         private int _CurrentPinyinIndex;
         private char[] _CurrentResult;
-        private bool _HasLast;
 
-        private bool _HasPrevious;
+        private bool _HasLast = false;
+        private bool _HasPrevious = false;
 
         public PinyinAlternateCollection()
         {

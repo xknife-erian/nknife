@@ -47,7 +47,8 @@
                         <RowDefinition Height="20" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ListBox Name="_PinyinCharListBox" Margin="0" BorderThickness="0" Background="{x:Null}" FontSize="13">
+                    <!--拼音候选条(拼音分割显示部份)-->
+                    <ListBox Name="_PinyinInputListBox" Margin="0" BorderThickness="0" Background="{x:Null}" FontSize="13">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel Orientation="Horizontal" />
@@ -60,8 +61,8 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-
-                    <VirtualizingStackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                    <!--拼音候选条(汉字候选显示部份)-->
+                    <VirtualizingStackPanel Grid.Column="0" Grid.Row="1" Name="_PinyinWordPanel" Orientation="Horizontal">
                         <ListBox Name="_PinyinWordListBox" Margin="0" FontSize="17"
                                  BorderThickness="0" Background="{x:Null}" Width="566">
                             <ListBox.ItemsPanel>
