@@ -157,7 +157,6 @@
     <Compile Include="Utility\UtilityReflection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Workbench\IAddin.cs" />
     <Compile Include="Wrapper\About.cs" />
     <Compile Include="Entities\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />
@@ -509,9 +508,9 @@
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
     <Compile Include="Wrapper\ByteClass.cs" />
-    <Compile Include="TSQL\AccessExecute.cs" />
-    <Compile Include="TSQL\DataExecute.cs" />
-    <Compile Include="TSQL\MSSql.cs" />
+    <Compile Include="Database\TSQL\AccessExecute.cs" />
+    <Compile Include="Database\TSQL\DataExecute.cs" />
+    <Compile Include="Database\TSQL\MSSql.cs" />
     <Compile Include="Utility\Converts\Converting.cs" />
     <Compile Include="Utility\Converts\UtilityConvert.cs" />
     <Compile Include="Utility\Encrypt\FileMD5.cs" />
@@ -589,7 +588,6 @@
     <Compile Include="XML\XmlHelper.cs" />
     <Compile Include="XML\XmlSchemaValidator.cs" />
     <Compile Include="Xaml\XamlHelper.cs" />
-    <Compile Include="XML\XmlUtility.cs" />
     <Compile Include="Zip\GZipFileInfo.cs" />
     <Compile Include="Zip\GZipResult.cs" />
   </ItemGroup>
