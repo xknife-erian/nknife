@@ -44,10 +44,10 @@
                         </LinearGradientBrush>
                     </Grid.Background>
                     <Grid.RowDefinitions>
-                        <RowDefinition />
+                        <RowDefinition Height="20" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ListBox Name="_PinyinCharListBox" Margin="0" BorderThickness="0" Background="{x:Null}" FontSize="14">
+                    <ListBox Name="_PinyinCharListBox" Margin="0" BorderThickness="0" Background="{x:Null}" FontSize="13">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel Orientation="Horizontal" />
@@ -62,7 +62,7 @@
                     </ListBox>
 
                     <VirtualizingStackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
-                        <ListBox Name="_PinyinWordListBox" Margin="0" FontSize="16"
+                        <ListBox Name="_PinyinWordListBox" Margin="0" FontSize="17"
                                  BorderThickness="0" Background="{x:Null}" Width="566">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>

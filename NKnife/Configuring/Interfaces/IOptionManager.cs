@@ -15,33 +15,33 @@ namespace NKnife.Configuring.Interfaces
 
         /// <summary>根据组名+键名获取选项信息
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的信息表</param>
         /// <param name="key">选项键</param>
         /// <returns></returns>
-        string GetOptionValue(string tablename, string key);
+        string GetOptionValue(string category, string key);
 
         /// <summary>根据组名+键名获取选项信息
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的分类</param>
         /// <param name="key">选项键</param>
         /// <returns></returns>
-        T GetOptionValue<T>(string tablename, string key) where T : struct;
+        T GetOptionValue<T>(string category, string key) where T : struct;
 
         /// <summary>根据组名+键名获取选项信息，并通过解析器将选项信息转换成指定的类型
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的分类</param>
         /// <param name="key">选项键</param>
         /// <param name="parser">解析器</param>
         /// <returns></returns>
-        T GetOptionValue<T>(string tablename, string key, Func<object, T> parser);
+        T GetOptionValue<T>(string category, string key, Func<object, T> parser);
 
         /// <summary>根据组名+键名设置选项信息
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的分类</param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        bool SetOptionValue(string tablename, string key, object value);
+        bool SetOptionValue(string category, string key, object value);
 
         // ===========================
 

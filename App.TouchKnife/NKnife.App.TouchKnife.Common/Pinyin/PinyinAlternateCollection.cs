@@ -12,12 +12,12 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
     /// </summary>
     public class PinyinAlternateCollection : ObservableCollection<string>
     {
-        private const int WORD_COUNT = 12;
+        private const int WORD_COUNT = 10;
 
         private int _CurrentPage;
-        private char[] _CurrentResult;
         private List<string> _CurrentPinyinCollection;
         private int _CurrentPinyinIndex;
+        private char[] _CurrentResult;
         private bool _HasLast;
 
         private bool _HasPrevious;
@@ -64,7 +64,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
                 return false;
             }
             _CurrentPinyinIndex++;
-            char[] r = Common.Pinyin.Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
+            char[] r = Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
             if (r != null && r.Length > 0)
             {
                 _CurrentResult = new char[r.Length];
@@ -78,7 +78,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
                 {
                     if (i < r.Length)
                     {
-                        Add(r[_CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                        Add(r[_CurrentPage*i].ToString(CultureInfo.InvariantCulture));
                     }
                 }
             }
@@ -96,7 +96,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
         {
             _CurrentPinyinCollection = e.Pinyin;
             _CurrentPinyinIndex = 0;
-            char[] r = Common.Pinyin.Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
+            char[] r = Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
             if (r != null && r.Length > 0)
             {
                 _CurrentResult = new char[r.Length];
@@ -156,6 +156,5 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
             Clear();
             ResetCurrent();
         }
-
     }
 }

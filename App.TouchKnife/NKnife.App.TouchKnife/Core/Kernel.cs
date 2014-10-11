@@ -6,7 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using NKnife.Adapters;
+using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
+using NKnife.IoC;
 using SocketKnife;
 
 namespace NKnife.App.TouchKnife.Core
@@ -109,26 +111,7 @@ namespace NKnife.App.TouchKnife.Core
         private void CallTouchInput(object state)
         {
             var command = (Command) state;
-            var x = command.X;
-            var screenH = Screen.PrimaryScreen.WorkingArea.Height;
-            command.Y += 54;
-            switch (command.Mode)
-            {
-                case 1:
-                    command.X += 118;
-                    break;
-                case 2:
-                    command.X += 95;
-                    break;
-                default:
-                    command.X += 50;
-                    break;
-            }
-            var tih = _TouchInput.OwnSize.Height;
-            if ((screenH - command.X + 65) < tih)
-            {
-                command.X = (int) (x - tih);
-            }
+            SetLocation(command);
             _Logger.Trace(string.Format("窗体控制:{0},{1},{2}", command.Mode, command.X, command.Y));
             try
             {
@@ -150,6 +133,32 @@ namespace NKnife.App.TouchKnife.Core
             {
                 _Logger.Info(exception.Message, exception);
             }
+        }
+
+        private void SetLocation(Command command)
+        {
+            command.X += int.Parse(DI.Get<IOptionManager>().GetOptionValue("", "OffsetX"));
+            command.Y += int.Parse(DI.Get<IOptionManager>().GetOptionValue("", "OffsetY"));
+            //            var x = command.X;
+//            var screenH = Screen.PrimaryScreen.WorkingArea.Height;
+//            command.Y += 54;
+//            switch (command.Mode)
+//            {
+//                case 1:
+//                    command.X += 118;
+//                    break;
+//                case 2:
+//                    command.X += 95;
+//                    break;
+//                default:
+//                    command.X += 50;
+//                    break;
+//            }
+//            var tih = _TouchInput.OwnSize.Height;
+//            if ((screenH - command.X + 65) < tih)
+//            {
+//                command.X = (int) (x - tih);
+//            }
         }
 
         private class Command

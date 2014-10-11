@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\Option.cs" />
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="Properties\OwnResources.Designer.cs">
       <AutoGen>True</AutoGen>

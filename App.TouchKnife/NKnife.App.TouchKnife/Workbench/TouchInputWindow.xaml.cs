@@ -26,8 +26,6 @@ namespace NKnife.App.TouchKnife.Workbench
     /// </summary>
     public partial class TouchInputWindow : Window, ITouchInput
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
-
         #region 类成员变量
 
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -115,8 +113,8 @@ namespace NKnife.App.TouchKnife.Workbench
 
         private void SyncShowInputView(short mode, Point location)
         {
-            Top = location.X;
-            Left = location.Y;
+            Top = location.Y;
+            Left = location.X;
             //1.拼音;2.手写;3.符号;4.小写英文;5.大写英文;6.数字
             switch (mode)
             {

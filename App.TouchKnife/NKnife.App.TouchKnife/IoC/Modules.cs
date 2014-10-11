@@ -9,6 +9,7 @@ using NKnife.App.TouchKnife.Common.HandWritten;
 using NKnife.App.TouchKnife.Common.Pinyin;
 using NKnife.App.TouchKnife.Core;
 using NKnife.App.TouchKnife.Workbench;
+using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
 using NKnife.Wrapper;
 
@@ -20,6 +21,7 @@ namespace NKnife.App.TouchKnife.IoC
         {
             Bind<IAbout>().To<About>().InSingletonScope();
 
+            Bind<IOptionManager>().To<Option>().InSingletonScope();
             Bind<Notify>().To<Notify>().InSingletonScope();
             Bind<Kernel>().To<Kernel>().InSingletonScope();
 
