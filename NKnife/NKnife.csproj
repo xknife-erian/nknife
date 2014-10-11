@@ -79,6 +79,7 @@
     <Compile Include="Database\Process\IntProcess.cs" />
     <Compile Include="Encrypt\FileMD5.cs" />
     <Compile Include="Encrypt\RSACryption.cs" />
+    <Compile Include="Encrypt\SimpleCipher.cs" />
     <Compile Include="Encrypt\SoftwareSN.cs" />
     <Compile Include="Encrypt\TripleDESHelper.cs" />
     <Compile Include="Encrypt\UtilityEncrypt.cs" />
@@ -560,6 +561,7 @@
     <Compile Include="Interface\IAbout.cs" />
     <Compile Include="Wrapper\JWebs.cs" />
     <Compile Include="Wrapper\ServiceForm.cs" />
+    <Compile Include="Zip\CompressHelper.cs" />
     <Compile Include="Zip\GZip.cs" />
     <Compile Include="Entities\IDCardData.cs" />
     <Compile Include="Wrapper\IDGenerator.cs" />
@@ -570,7 +572,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Zip\GZipFileEntry.cs" />
-    <Compile Include="Zip\SimpleCipher.cs" />
     <Compile Include="Mp3\Mp3Player.cs" />
     <Compile Include="Mp3\Mp3Tag.cs" />
     <Compile Include="Entities\PersonSex.cs" />

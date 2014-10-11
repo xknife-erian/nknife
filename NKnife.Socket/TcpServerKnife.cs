@@ -11,6 +11,7 @@ using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
+using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife
 {
@@ -54,6 +55,9 @@ namespace SocketKnife
 
         #region ISocketServerKnife 接口实现
 
+        protected IProtocolTools _ProtocolTools;
+        protected ISocketPlan _SocketPlan;
+
         public void Bind(IPAddress ipAddress, int port)
         {
             _IpAddress = ipAddress;
@@ -63,9 +67,16 @@ namespace SocketKnife
         [Inject]
         public ISocketServerConfig Config { get; private set; }
 
-        public IFilterChain GetFilterChain()
+        public IFilterChain FilterChain { get; private set; }
+
+        public void Attach(IProtocolTools protocolTools)
         {
-            throw new NotImplementedException();
+            _ProtocolTools = protocolTools;
+        }
+
+        public void Attach(ISocketPlan socketPlan)
+        {
+            _SocketPlan = socketPlan;
         }
 
         public bool Start()

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Interfaces
 {
@@ -6,7 +7,9 @@ namespace SocketKnife.Interfaces
     {
         void Bind(IPAddress ipAddress, int port);
         ISocketServerConfig Config { get; }
-        IFilterChain GetFilterChain();
+        IFilterChain FilterChain { get; }
+        void Attach(IProtocolTools protocolTools);
+        void Attach(ISocketPlan socketPlan);
         bool Start();
         bool ReStart();
         bool Stop();

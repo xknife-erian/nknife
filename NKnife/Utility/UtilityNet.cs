@@ -11,22 +11,24 @@ using System.Web;
 namespace NKnife.Utility
 {
     /// <summary>
-    /// 一些简单的基于网络的小型扩展方法
+    ///     一些简单的基于网络的小型扩展方法
     /// </summary>
     public sealed class UtilityNet
     {
         #region netapi32.dll
+
         [DllImport("netapi32.dll", EntryPoint = "NetMessageBufferSend", CharSet = CharSet.Unicode)]
         private static extern int NetMessageBufferSend(
-          string servername,
-          string msgname,
-          string fromname,
-          [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 4)] byte[] buf,
-          [MarshalAs(UnmanagedType.U4)] int buflen);
+            string servername,
+            string msgname,
+            string fromname,
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 4)] byte[] buf,
+            [MarshalAs(UnmanagedType.U4)] int buflen);
+
         #endregion
 
         /// <summary>
-        /// 系统信使服务:发送消息
+        ///     系统信使服务:发送消息
         /// </summary>
         /// <param name="fromName">发送人</param>
         /// <param name="toName">接收人(机器名或者IP)</param>
@@ -39,8 +41,8 @@ namespace NKnife.Utility
         }
 
         /// <summary>
-        /// 获取本机的子网掩码。
-        /// 如果无法获取，将返回Null值。
+        ///     获取本机的子网掩码。
+        ///     如果无法获取，将返回Null值。
         /// </summary>
         public static IPAddress GetSubnet()
         {
@@ -48,22 +50,23 @@ namespace NKnife.Utility
         }
 
         /// <summary>
-        /// 获取本机的默认网关。
-        /// 如果无法获取，将返回Null值。
+        ///     获取本机的默认网关。
+        ///     如果无法获取，将返回Null值。
         /// </summary>
         public static IPAddress GetDefaultIPGateway()
         {
             return GetNetInformation("DefaultIPGateway");
         }
 
-        /// <summary>获取本机IP地址（V4）
+        /// <summary>
+        ///     获取本机IP地址（V4）
         /// </summary>
         /// <returns></returns>
         public static IPAddress[] GetLocalIpv4()
         {
-            var localIPs = Dns.GetHostAddresses(Dns.GetHostName());
+            IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
             var ipCollection = new List<IPAddress>(localIPs);
-            foreach (var ip in localIPs)
+            foreach (IPAddress ip in localIPs)
             {
                 if (ip.AddressFamily == AddressFamily.InterNetworkV6)
                     ipCollection.Remove(ip);
@@ -71,20 +74,25 @@ namespace NKnife.Utility
             return ipCollection.ToArray();
         }
 
-        /// <summary>获取本机的一些网络设置的相关信息
+        /// <summary>
+        ///     获取本机的一些网络设置的相关信息
         /// </summary>
         private static IPAddress GetNetInformation(string ipType)
         {
             try
             {
-                ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+                var mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
                 ManagementObjectCollection nics = mc.GetInstances();
-                foreach (ManagementObject nic in nics)
+                foreach (ManagementBaseObject nic in nics)
                 {
-                    if (Convert.ToBoolean(nic["ipEnabled"]) == true)
+                    if (Convert.ToBoolean(nic["ipEnabled"]))
                     {
-                        string ipstr = (nic[ipType] as String[])[0];
-                        return IPAddress.Parse(ipstr);
+                        var strings = nic[ipType] as String[];
+                        if (!UtilityCollection.IsNullOrEmpty(strings))
+                        {
+                            string ipstr = strings[0];
+                            return IPAddress.Parse(ipstr);
+                        }
                     }
                 }
             }
@@ -96,7 +104,7 @@ namespace NKnife.Utility
         }
 
         /// <summary>
-        /// 根据IP地址获得主机名称
+        ///     根据IP地址获得主机名称
         /// </summary>
         /// <param name="ip">主机的IP地址</param>
         /// <returns>主机名称</returns>
@@ -113,8 +121,7 @@ namespace NKnife.Utility
                     IPHostEntry host = Dns.GetHostEntry(ip);
                     return host.HostName;
                 }
-                else
-                    return String.Empty;
+                return String.Empty;
             }
             catch (Exception)
             {
@@ -123,10 +130,10 @@ namespace NKnife.Utility
         }
 
         /// <summary>
-        /// 根据主机名（域名）获得主机的IP地址
+        ///     根据主机名（域名）获得主机的IP地址
         /// </summary>
         /// <example>
-        /// GetIPByDomain("pc001"); GetIPByDomain("www.google.com");
+        ///     GetIPByDomain("pc001"); GetIPByDomain("www.google.com");
         /// </example>
         /// <param name="hostName">主机名或域名</param>
         /// <returns>主机的IP地址</returns>
@@ -147,7 +154,7 @@ namespace NKnife.Utility
         }
 
         /// <summary>
-        /// 是否以200毫秒的间隔时间 Ping 通指定的主机
+        ///     是否以200毫秒的间隔时间 Ping 通指定的主机
         /// </summary>
         /// <param name="ip">ip 地址或主机名或域名</param>
         /// <returns>true 通，false 不通</returns>
@@ -166,41 +173,40 @@ namespace NKnife.Utility
         }
 
         /// <summary>
-        /// 是否 Ping 通指定的主机
+        ///     是否 Ping 通指定的主机
         /// </summary>
         /// <param name="ip">ip 地址或主机名或域名</param>
         /// <param name="timeout">Ping的间隔时间，单位：毫秒</param>
         /// <returns>true 通，false 不通</returns>
         public static bool NetPing(string ip, int timeout)
         {
-            Ping ping = new Ping();
-            PingOptions options = new PingOptions();
+            var ping = new Ping();
+            var options = new PingOptions();
             options.DontFragment = true;
             string data = "Hello...";
             byte[] buffer = Encoding.ASCII.GetBytes(data);
             PingReply reply = ping.Send(ip, timeout, buffer, options);
             if (reply.Status == IPStatus.Success)
                 return true;
-            else
-                return false;
+            return false;
         }
 
         /// <summary>
-        /// [ 仅供Asp.net使用, WinForm无法使用 ] 获取本机的公网IP地址
+        ///     [ 仅供Asp.net使用, WinForm无法使用 ] 获取本机的公网IP地址
         /// </summary>
         /// <returns>返回结果集合中的[0]为公网IP地址，后续的为代理地址</returns>
         public static IPAddress[] GetInternetIPAddressByLocalhost()
         {
-            List<IPAddress> iplist = new List<IPAddress>();
+            var iplist = new List<IPAddress>();
 
-            string ip;// = HttpContext.Current.Request.UserHostAddress;
+            string ip; // = HttpContext.Current.Request.UserHostAddress;
             if (HttpContext.Current.Request.ServerVariables["HTTP_VIA"] != null)
             {
-                ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].ToString();
+                ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             }
             else
             {
-                ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"].ToString();
+                ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
             }
             iplist.Add(IPAddress.Parse(ip));
 
@@ -215,15 +221,15 @@ namespace NKnife.Utility
                     if (agentip.IndexOf("unknow") != -1)
                         agentip = agentip.Replace("unknow", String.Empty);
 
-                    string[] temparyip = agentip.Replace("   ", String.Empty).Replace("'", String.Empty).Split(new char[] { ',', ';' });
+                    string[] temparyip = agentip.Replace("   ", String.Empty).Replace("'", String.Empty).Split(new[] {',', ';'});
                     //过滤代理格式中的非IP和内网IP
                     foreach (string str in temparyip)
                     {
                         if (String.IsNullOrEmpty(str))
                         {
                             if (str.Substring(0, 3) != "10."
-                                   && str.Substring(0, 7) != "192.168"
-                                   && str.Substring(0, 7) != "172.16.")
+                                && str.Substring(0, 7) != "192.168"
+                                && str.Substring(0, 7) != "172.16.")
                             {
                                 IPAddress i;
                                 if (IPAddress.TryParse(str, out i))

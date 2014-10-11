@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace NKnife.Utility
@@ -37,8 +38,9 @@ namespace NKnife.Utility
                     Delegate d = GetEventHandler(eventInfo, handlerHost, handlerMethodName);
                     eventInfo.AddEventHandler(target, d);
                 }
-                catch
+                catch(Exception e)
                 {
+                    Debug.Fail("反射找指定对象异常", e.Message);
                 }
             }
         }
@@ -63,8 +65,9 @@ namespace NKnife.Utility
                 Delegate d = Delegate.CreateDelegate(eventInfo.EventHandlerType, handlerHost, concreteDoEventMethod);
                 return d;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                Debug.Fail("GetEventHandler异常", e.Message);
                 return null;
             }
         }

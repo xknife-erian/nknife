@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Windows.Forms;
+using NKnife.Encrypt;
 
 namespace NKnife.Zip
 {
