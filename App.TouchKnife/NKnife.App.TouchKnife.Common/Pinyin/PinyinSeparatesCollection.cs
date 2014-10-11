@@ -7,7 +7,7 @@ using NKnife.IoC;
 namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     /// <summary>
-    ///     一个放置输入法或输入控件产生的待选词(字)的集合
+    ///     一个放置产生的待选词(拼音)的集合
     /// </summary>
     public class PinyinSeparatesCollection : ObservableCollection<string>
     {
@@ -115,7 +115,6 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
             if (handler != null) 
                 handler(this, EventArgs.Empty);
         }
-
 
         #endregion
     }
