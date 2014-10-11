@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NKnife.Utility.Maths
+namespace NKnife.Maths
 {
     public class UtilityMath
     {

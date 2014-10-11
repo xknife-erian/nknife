@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using System.Threading;
-using NKnife.Utility.Maths;
+using NKnife.Maths;
 
 namespace Gean.Client.EinsteinPuzzle
 {

@@ -7,9 +7,10 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using NKnife.ShareResources;
+using NKnife.Utility;
 using NKnife.Wrapper;
 
-namespace NKnife.Utility.Converts
+namespace NKnife.Converts
 {
     /// <summary>
     /// 定义一些基础的转换方法(对系统方法的一些扩展)

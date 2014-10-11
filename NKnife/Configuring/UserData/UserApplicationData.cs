@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using NKnife.Configuring.Interfaces;
-using NKnife.Utility.File;
+using NKnife.NIo;
 
 namespace NKnife.Configuring.UserData
 {

@@ -1,8 +1,9 @@
 ﻿using System;
 using NKnife.Exceptions;
 using NKnife.Interface;
+using NKnife.Utility;
 
-namespace NKnife.Utility.Converts
+namespace NKnife.Converts
 {
     /// <summary>
     /// 转换抽象类

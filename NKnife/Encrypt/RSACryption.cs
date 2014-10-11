@@ -2,7 +2,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace NKnife.Utility.Encrypt
+namespace NKnife.Encrypt
 {
     /// <summary> 
     /// RSA加密解密及RSA签名和验证

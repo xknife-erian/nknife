@@ -2,19 +2,15 @@
 using System.IO;
 using System.Text;
 
-namespace NKnife.Utility.File
+namespace NKnife.NIo
 {
     /// <summary>
-    /// 用于取得一个文本文件的编码方式(Encoding)。
+    ///     用于取得一个文本文件的编码方式(Encoding)。
     /// </summary>
     public class TextFileEncoding
     {
-        public TextFileEncoding()
-        {
-        }
-
         /// <summary>
-        /// 取得一个文本文件的编码方式。如果无法在文件头部找到有效的前导符，Encoding.Default将被返回。
+        ///     取得一个文本文件的编码方式。如果无法在文件头部找到有效的前导符，Encoding.Default将被返回。
         /// </summary>
         /// <param name="fileName">文件名。</param>
         /// <returns></returns>
@@ -22,8 +18,9 @@ namespace NKnife.Utility.File
         {
             return GetEncoding(fileName, Encoding.Default);
         }
+
         /// <summary>
-        /// 取得一个文本文件流的编码方式。
+        ///     取得一个文本文件流的编码方式。
         /// </summary>
         /// <param name="stream">文本文件流。</param>
         /// <returns></returns>
@@ -31,21 +28,23 @@ namespace NKnife.Utility.File
         {
             return GetEncoding(stream, Encoding.Default);
         }
+
         /// <summary>
-        /// 取得一个文本文件的编码方式。
+        ///     取得一个文本文件的编码方式。
         /// </summary>
         /// <param name="fileName">文件名。</param>
         /// <param name="defaultEncoding">默认编码方式。当该方法无法从文件的头部取得有效的前导符时，将返回该编码方式。</param>
         /// <returns></returns>
         public static Encoding GetEncoding(string fileName, Encoding defaultEncoding)
         {
-            FileStream fs = new FileStream(fileName, FileMode.Open);
+            var fs = new FileStream(fileName, FileMode.Open);
             Encoding targetEncoding = GetEncoding(fs, defaultEncoding);
             fs.Close();
             return targetEncoding;
         }
+
         /// <summary>
-        /// 取得一个文本文件流的编码方式。
+        ///     取得一个文本文件流的编码方式。
         /// </summary>
         /// <param name="stream">文本文件流。</param>
         /// <param name="defaultEncoding">默认编码方式。当该方法无法从文件的头部取得有效的前导符时，将返回该编码方式。</param>
@@ -79,15 +78,15 @@ namespace NKnife.Utility.File
                 //Unicode {0xFF, 0xFE};
                 //BE-Unicode {0xFE, 0xFF};
                 //UTF8 = {0xEF, 0xBB, 0xBF};
-                if (byte1 == 0xFE && byte2 == 0xFF)//UnicodeBe
+                if (byte1 == 0xFE && byte2 == 0xFF) //UnicodeBe
                 {
                     targetEncoding = Encoding.BigEndianUnicode;
                 }
-                if (byte1 == 0xFF && byte2 == 0xFE && byte3 != 0xFF)//Unicode
+                if (byte1 == 0xFF && byte2 == 0xFE && byte3 != 0xFF) //Unicode
                 {
                     targetEncoding = Encoding.Unicode;
                 }
-                if (byte1 == 0xEF && byte2 == 0xBB && byte3 == 0xBF)//UTF8
+                if (byte1 == 0xEF && byte2 == 0xBB && byte3 == 0xBF) //UTF8
                 {
                     targetEncoding = Encoding.UTF8;
                 }

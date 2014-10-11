@@ -1,4 +1,4 @@
-﻿namespace NKnife.Utility.File
+﻿namespace NKnife.NIo
 {
     public enum FileErrorPolicy
     {

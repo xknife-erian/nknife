@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using NKnife.Utility.Converts;
+using NKnife.Converts;
 
 namespace NKnife.Utility
 {

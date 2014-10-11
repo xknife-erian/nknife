@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NKnife.Interface;
-using NKnife.Utility.Maths;
+using NKnife.Maths;
 
 namespace NKnife.Wrapper
 {

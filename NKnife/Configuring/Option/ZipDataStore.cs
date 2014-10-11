@@ -11,7 +11,7 @@ using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.Utility.File;
+using NKnife.NIo;
 
 namespace NKnife.Configuring.Option
 {

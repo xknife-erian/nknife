@@ -65,6 +65,8 @@
     <Compile Include="Algrithm\IAsyncOperation.cs" />
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="API\API.Kernel32.cs" />
+    <Compile Include="Converts\Converting.cs" />
+    <Compile Include="Converts\UtilityConvert.cs" />
     <Compile Include="Database\Common\DatabaseCoderSetting.cs" />
     <Compile Include="Database\Common\DatabaseHelper.cs" />
     <Compile Include="Database\Common\DatabaseParms.cs" />
@@ -75,6 +77,11 @@
     <Compile Include="Database\Interface\IDataSetProcess.cs" />
     <Compile Include="Database\Process\ArrayProcess.cs" />
     <Compile Include="Database\Process\IntProcess.cs" />
+    <Compile Include="Encrypt\FileMD5.cs" />
+    <Compile Include="Encrypt\RSACryption.cs" />
+    <Compile Include="Encrypt\SoftwareSN.cs" />
+    <Compile Include="Encrypt\TripleDESHelper.cs" />
+    <Compile Include="Encrypt\UtilityEncrypt.cs" />
     <Compile Include="GUI\WinForm\Grouper\Constants.cs" />
     <Compile Include="GUI\WinForm\Grouper\Grouper.cs">
       <SubType>UserControl</SubType>
@@ -119,8 +126,18 @@
     <Compile Include="GUI\WinForm\WinFormContainer\WinFormContainer.Designer.cs">
       <DependentUpon>WinFormContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Maths\BigInteger.cs" />
+    <Compile Include="Maths\Combinations.cs" />
+    <Compile Include="Maths\Permutations.cs" />
+    <Compile Include="Maths\UtilityMath.cs" />
     <Compile Include="Mvvm\DelegateCommand`.cs" />
-    <Compile Include="Utility\UtilityAssembly.cs" />
+    <Compile Include="Entities\AssemblyWrapper.cs" />
+    <Compile Include="NIo\FileEnums.cs" />
+    <Compile Include="NIo\FileSearching.cs" />
+    <Compile Include="NIo\NoDotNetAssemblyFiles.cs" />
+    <Compile Include="NIo\TextFileEncoding.cs" />
+    <Compile Include="NIo\UtilityFile.cs" />
+    <Compile Include="Wrapper\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
     <Compile Include="Chinese\IdCardChecker.cs" />
     <Compile Include="Chinese\Rmb.cs" />
@@ -511,22 +528,6 @@
     <Compile Include="Database\TSQL\AccessExecute.cs" />
     <Compile Include="Database\TSQL\DataExecute.cs" />
     <Compile Include="Database\TSQL\MSSql.cs" />
-    <Compile Include="Utility\Converts\Converting.cs" />
-    <Compile Include="Utility\Converts\UtilityConvert.cs" />
-    <Compile Include="Utility\Encrypt\FileMD5.cs" />
-    <Compile Include="Utility\Encrypt\RSACryption.cs" />
-    <Compile Include="Utility\Encrypt\SoftwareSN.cs" />
-    <Compile Include="Utility\Encrypt\TripleDESHelper.cs" />
-    <Compile Include="Utility\Encrypt\UtilityEncrypt.cs" />
-    <Compile Include="Utility\File\FileEnums.cs" />
-    <Compile Include="Utility\File\FileSearching.cs" />
-    <Compile Include="Utility\File\NoDotNetAssemblyFiles.cs" />
-    <Compile Include="Utility\File\TextFileEncoding.cs" />
-    <Compile Include="Utility\File\UtilityFile.cs" />
-    <Compile Include="Utility\Maths\BigInteger.cs" />
-    <Compile Include="Utility\Maths\Combinations.cs" />
-    <Compile Include="Utility\Maths\Permutations.cs" />
-    <Compile Include="Utility\Maths\UtilityMath.cs" />
     <Compile Include="Utility\UtilityByte.cs" />
     <Compile Include="Utility\UtilityClipboard.cs" />
     <Compile Include="Utility\UtilityCollection.cs" />

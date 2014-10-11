@@ -23,5 +23,5 @@ using System.Runtime.InteropServices;
 //      修订号
 //
 
-[assembly: AssemblyVersion("14.4.2.1011")]
-[assembly: AssemblyFileVersionAttribute("14.4.2.1011")]
+[assembly: AssemblyVersion("14.4.5.1011")]
+[assembly: AssemblyFileVersionAttribute("14.4.5.1011")]

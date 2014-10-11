@@ -2,35 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Xml.Serialization;
+using NKnife.Entities;
 
-namespace NKnife.Utility
+namespace NKnife.Wrapper
 {
-     [Serializable]
-    public class AssemblyWrapper<T>
-    {
-         /// <summary>
-        /// 是否加载
-        /// </summary>
-        public bool Enable { get; set; }
-
-		/// <summary>
-		/// 插件所在程序集
-		/// </summary>
-		public string Assembly { get; set; }
-
-		/// <summary>
-		/// 类别名
-		/// </summary>
-		public string TypeName { get; set; }
-
-		/// <summary>
-		/// 实例对象
-		/// </summary>
-		[XmlIgnore]
-        public T ClassInstance { get; set; }
-
-    }
     public class ClassLoader<T> where T:class 
     {
         /// <summary>
@@ -43,7 +18,7 @@ namespace NKnife.Utility
             var list = new List<AssemblyWrapper<T>>();
             Action<string> loader = s =>
             {
-                AssemblyWrapper<T>[] slist = GetServicesInAssembly(s);
+                IEnumerable<AssemblyWrapper<T>> slist = GetServicesInAssembly(s);
                 if (slist != null) list.AddRange(slist);
             };
             Action<string> folderLoader = s =>
@@ -66,7 +41,7 @@ namespace NKnife.Utility
         /// </summary>
         /// <param name="assemblyPath"></param>
         /// <returns></returns>
-        private static AssemblyWrapper<T>[] GetServicesInAssembly(string assemblyPath)
+        private static IEnumerable<AssemblyWrapper<T>> GetServicesInAssembly(string assemblyPath)
         {
             try
             {
@@ -83,7 +58,7 @@ namespace NKnife.Utility
         /// </summary>
         /// <param name="assembly"></param>
         /// <returns></returns>
-        private static AssemblyWrapper<T>[] GetServicesInAssembly(Assembly assembly)
+        private static IEnumerable<AssemblyWrapper<T>> GetServicesInAssembly(Assembly assembly)
         {
             Type[] types = assembly.GetTypes();
 

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
-using NKnife.Utility.File;
+using NKnife.NIo;
 
 namespace NKnife.Compress
 {

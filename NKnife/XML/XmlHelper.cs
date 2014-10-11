@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Xml.Schema;
 using NKnife.Base;
+using NKnife.NIo;
 using NKnife.Utility;
-using NKnife.Utility.File;
 
 namespace System.Xml
 {

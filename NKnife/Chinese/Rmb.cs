@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using NKnife.Utility.Maths;
+using NKnife.Maths;
 
 namespace NKnife.Chinese
 {
