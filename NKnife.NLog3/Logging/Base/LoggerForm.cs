@@ -13,15 +13,11 @@ namespace NKnife.NLog3.Logging.Base
         {
             InitializeComponent();
             Icon = IconBoxResource.Restart;
+            Padding = new Padding(3);
             var logPanel = DI.Get<LogPanel.LogPanel>();
-            logPanel.Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right;
+            logPanel.Dock = DockStyle.Fill;
             logPanel.Font = new Font("Tahoma", 8.25F);
             logPanel.HeaderStyle = ColumnHeaderStyle.Clickable;
-            logPanel.Location = new Point(12, 12);
-            logPanel.Name = "logPanel1";
-            logPanel.Size = new Size(652, 485);
-            logPanel.TabIndex = 0;
-            logPanel.ToolStripVisible = true;
             Controls.Add(logPanel);
         }
 

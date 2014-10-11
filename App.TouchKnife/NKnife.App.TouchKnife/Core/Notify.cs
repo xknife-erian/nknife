@@ -132,6 +132,7 @@ namespace NKnife.App.TouchKnife.Core
             logger.Click += delegate
             {
                 var loggerForm = new LoggerForm();
+                loggerForm.ShowInTaskbar = false;
                 loggerForm.Show();
             };
 
