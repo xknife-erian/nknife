@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using NKnife.IoC;
 
@@ -138,10 +139,17 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
             for (int i = 0; i < WORD_COUNT; i++)
             {
                 int index = _CurrentPage*WORD_COUNT + i;
-                if (index < _CurrentResult.Length)
+                if (index < 0)
                 {
-                    string c = _CurrentResult[index].ToString();
-                    Add(c);
+                    Debug.Fail(string.Format("拼音候选词索引值有误:{1}/{0}", index, _CurrentResult.Length));
+                }
+                else
+                {
+                    if (index < _CurrentResult.Length)
+                    {
+                        string c = _CurrentResult[index].ToString();
+                        Add(c);
+                    }
                 }
             }
             HasPrevious = _CurrentPage + 1 > 1;

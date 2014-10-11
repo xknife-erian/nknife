@@ -331,7 +331,7 @@ namespace NKnife.App.TouchKnife.Workbench
                     break;
                 case Params.InputMode.Pinyin:
                     _SwitchMainLabel.Text = "英";
-                    _SwitchSubLabel.Text = "拼音";
+                    _SwitchSubLabel.Text = "中文";
                     KeyboardSwitchCase(1);
                     break;
             }
@@ -434,7 +434,12 @@ namespace NKnife.App.TouchKnife.Workbench
 
             DI.Get<Params>().PlayVoice(OwnResources.划过);
             var rs = DI.Get<PinyinAlternateCollection>().CallNextAlternateGroup();
-            OnAlternateSelected(new AlternateSelectedEventArgs(rs, word)); //候选词选择完成的事件
+            //候选词选择完成的事件
+            if (!rs)
+            {
+                DI.Get<PinyinAlternateCollection>().ClearAlternates();
+                DI.Get<PinyinSeparatesCollection>().ClearInput();
+            }
         }
 
         private void HasPreviousButton_Click(object sender, RoutedEventArgs e)
@@ -445,17 +450,6 @@ namespace NKnife.App.TouchKnife.Workbench
         private void HasLastButton_Click(object sender, RoutedEventArgs e)
         {
             DI.Get<PinyinAlternateCollection>().Next();
-        }
-
-        /// <summary>当有候选词选择完成后发生
-        /// </summary>
-        public event EventHandler<AlternateSelectedEventArgs> AlternateSelected;
-
-        protected virtual void OnAlternateSelected(AlternateSelectedEventArgs e)
-        {
-            EventHandler<AlternateSelectedEventArgs> handler = AlternateSelected;
-            if (handler != null)
-                handler(this, e);
         }
 
         #endregion
