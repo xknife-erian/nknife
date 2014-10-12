@@ -1,29 +1,31 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Xml;
+using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.IoC;
 using NKnife.Utility;
-using SocketKnife.Interfaces;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Protocol
+namespace SocketKnife.Default
 {
     /// <summary>协议工具接口集合
     /// </summary>
-    public class ProtocolTools : IProtocolTools, ICloneable
+    public class DefaultProtocolTools : IProtocolTools, ICloneable
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        public ProtocolTools()
+        public DefaultProtocolTools()
         {
+//            Family = DI.Get<IProtocolFamily>();
         }
 
         public IProtocolHead Head { get; private set; }
         public IProtocolTail Tail { get; private set; }
         public IProtocolPackager Packager { get; private set; }
         public IProtocolUnPackager UnPackager { get; private set; }
-
+        [Inject]
         public IProtocolFamily Family { get; private set; }
 
         #region ICloneable Members
@@ -33,7 +35,7 @@ namespace SocketKnife.Protocol
         /// <returns>作为此实例副本的新对象。</returns>
         public object Clone()
         {
-            var t = new ProtocolTools {Head = Head, Tail = Tail, Packager = Packager, UnPackager = UnPackager};
+            var t = new DefaultProtocolTools {Head = Head, Tail = Tail, Packager = Packager, UnPackager = UnPackager};
             return t;
         }
 
@@ -113,9 +115,9 @@ namespace SocketKnife.Protocol
         /// <summary>创建作为当前实例副本的新对象。
         /// </summary>
         /// <returns>作为此实例副本的新对象。</returns>
-        public ProtocolTools CloneTools()
+        public DefaultProtocolTools CloneTools()
         {
-            return (ProtocolTools) Clone();
+            return (DefaultProtocolTools) Clone();
         }
     }
 }

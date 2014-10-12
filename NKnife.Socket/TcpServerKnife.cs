@@ -67,6 +67,7 @@ namespace SocketKnife
         [Inject]
         public ISocketServerConfig Config { get; private set; }
 
+        [Inject]
         public IFilterChain FilterChain { get; private set; }
 
         public void Attach(IProtocolTools protocolTools)

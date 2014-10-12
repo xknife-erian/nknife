@@ -14,7 +14,6 @@ namespace NKnife.App.SocketKit.IoC
         {
             Bind<ISocketServerKnife>().To<Server>();
             Bind<ServerList>().ToSelf().InSingletonScope();
-
         }
     }
 }

@@ -31,7 +31,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
             var filter = new DefaultFilter();
-            var protocolTools = new ProtocolTools();
+            var protocolTools = DI.Get<IProtocolTools>();
             protocolTools.Family.Add("", typeof(IProtocol));
 
             if (!_ServerList.ContainsKey(key))

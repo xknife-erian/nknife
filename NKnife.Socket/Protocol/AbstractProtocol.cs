@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NKnife.Adapters;
 using NKnife.Interface;
+using SocketKnife.Default;
 using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Protocol
@@ -21,7 +22,7 @@ namespace SocketKnife.Protocol
         {
             Family = family;
             Command = command;
-            Tools = new ProtocolTools();
+            Tools = new DefaultProtocolTools();
         }
 
         #region IProtocol Members
@@ -42,7 +43,7 @@ namespace SocketKnife.Protocol
 
         /// <summary>针对协议工作的工具
         /// </summary>
-        public ProtocolTools Tools { get; set; }
+        public DefaultProtocolTools Tools { get; set; }
 
         /// <summary>获取第一个数据(往往协议中数据不多，当只有一个数据时用该属性比较方便)
         /// </summary>

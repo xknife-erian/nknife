@@ -9,6 +9,8 @@ namespace SocketKnife.Default
 {
     public class DefaultFilterChain : IFilterChain
     {
+        private LinkedList<IFilter> _Filters = new LinkedList<IFilter>(); 
+
         public IEnumerator<IFilter> GetEnumerator()
         {
             throw new NotImplementedException();
@@ -63,7 +65,7 @@ namespace SocketKnife.Default
 
         public void AddLast(IFilter filter)
         {
-            throw new NotImplementedException();
+            _Filters.AddLast(filter);
         }
 
         public void RemoveFirst()

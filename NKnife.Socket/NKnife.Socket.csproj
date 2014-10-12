@@ -92,8 +92,8 @@
     <Compile Include="Protocol\Interfaces\IProtocolTools.cs" />
     <Compile Include="Protocol\Interfaces\IProtocolUnPackager.cs" />
     <Compile Include="Protocol\ProtocolContent.cs" />
-    <Compile Include="Protocol\ProtocolFamily.cs" />
-    <Compile Include="Protocol\ProtocolTools.cs" />
+    <Compile Include="Default\DefaultProtocolFamily.cs" />
+    <Compile Include="Default\DefaultProtocolTools.cs" />
     <Compile Include="TcpServerKnife.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

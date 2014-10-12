@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SocketKnife.Default;
 
 namespace SocketKnife.Protocol.Interfaces
 {
@@ -18,7 +19,7 @@ namespace SocketKnife.Protocol.Interfaces
 
         /// <summary>本协议的工具接口集合
         /// </summary>
-        ProtocolTools Tools { get; set; }
+        DefaultProtocolTools Tools { get; set; }
 
         /// <summary>协议的具体内容.
         /// </summary>
