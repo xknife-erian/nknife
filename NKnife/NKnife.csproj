@@ -49,6 +49,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -138,6 +139,7 @@
     <Compile Include="NIo\NoDotNetAssemblyFiles.cs" />
     <Compile Include="NIo\TextFileEncoding.cs" />
     <Compile Include="NIo\UtilityFile.cs" />
+    <Compile Include="Utility\UtilityWebService.cs" />
     <Compile Include="Wrapper\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
     <Compile Include="Chinese\IdCardChecker.cs" />
