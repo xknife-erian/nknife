@@ -28,7 +28,7 @@ namespace SocketKnife.Generic.Filters
 
         public event SocketAsyncDataComeInEventHandler DataComeInEvent;
 
-        protected virtual void OnDataComeInEvent(byte[] data, EndPoint endpoint)
+        protected internal virtual void OnDataComeInEvent(byte[] data, EndPoint endpoint)
         {
             SocketAsyncDataComeInEventHandler handler = DataComeInEvent;
             if (handler != null) 
@@ -37,7 +37,7 @@ namespace SocketKnife.Generic.Filters
 
         public event ListenToClientEventHandler ListenToClient;
 
-        protected virtual void OnListenToClient(SocketAsyncEventArgs e)
+        protected internal virtual void OnListenToClient(SocketAsyncEventArgs e)
         {
             ListenToClientEventHandler handler = ListenToClient;
             if (handler != null) 
@@ -46,7 +46,7 @@ namespace SocketKnife.Generic.Filters
 
         public event ConnectionBreakEventHandler ConnectionBreak;
 
-        protected virtual void OnConnectionBreak(ConnectionBreakEventArgs e)
+        protected internal virtual void OnConnectionBreak(ConnectionBreakEventArgs e)
         {
             ConnectionBreakEventHandler handler = ConnectionBreak;
             if (handler != null) 

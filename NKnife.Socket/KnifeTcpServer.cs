@@ -316,7 +316,10 @@ namespace SocketKnife
                             session.Socket = e.AcceptSocket;
                             _SessionMap.Add(iep, session);
                             _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _SessionMap.Count));
-                            OnListenToClient(e);
+                            foreach (var filter in _Policy)
+                            {
+                                filter.OnListenToClient(e);
+                            }
                         }
                     }
                     else
@@ -353,7 +356,10 @@ namespace SocketKnife
             {
                 string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
                 _logger.Info(message);
-                OnConnectionBreak(new ConnectionBreakEventArgs(message));
+                foreach (var filter in _Policy)
+                {
+                    filter.OnConnectionBreak(new ConnectionBreakEventArgs(message));
+                }
 
                 var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
                 if (iep != null)
@@ -391,12 +397,10 @@ namespace SocketKnife
 
             foreach (KnifeSocketFilter filter in _Policy)
             {
+                filter.OnDataComeInEvent(data, e.RemoteEndPoint);// 触发数据到达事件
                 filter.PrcoessReceiveData(e.AcceptSocket, data);
             }
-
-            // 触发数据到达事件
-            OnDataComeIn(data, e);
-
+            
             if (!e.AcceptSocket.ReceiveAsync(e))
                 BeginReceive(e);
         }
@@ -450,52 +454,5 @@ namespace SocketKnife
 
         #endregion
 
-        #region 事件
-
-        /// <summary>
-        ///     数据异步接收到后事件,得到的数据是Byte数组,一般情况下没有必要使用该事件,使用 ReceiveDataParsedEvent 会比较方便。
-        /// </summary>
-        public event SocketAsyncDataComeInEventHandler DataComeInEvent;
-
-        /// <summary>
-        ///     服务器侦听到新客户端连接事件
-        /// </summary>
-        public event ListenToClientEventHandler ListenToClient;
-
-        /// <summary>
-        ///     连接出错或断开触发事件
-        /// </summary>
-        public event ConnectionBreakEventHandler ConnectionBreak;
-
-        /// <summary>
-        ///     接收到的数据解析完成后发生的事件
-        /// </summary>
-        public event ReceiveDataParsedEventHandler ReceiveDataParsedEvent;
-
-        protected virtual void OnDataComeIn(byte[] data, SocketAsyncEventArgs e)
-        {
-            if (DataComeInEvent != null)
-                DataComeInEvent(data, e.AcceptSocket.RemoteEndPoint);
-        }
-
-        protected virtual void OnListenToClient(SocketAsyncEventArgs e)
-        {
-            if (ListenToClient != null)
-                ListenToClient(e);
-        }
-
-        protected virtual void OnConnectionBreak(ConnectionBreakEventArgs e)
-        {
-            if (ConnectionBreak != null)
-                ConnectionBreak(e);
-        }
-
-        protected virtual void OnReceiveDataParsed(ReceiveDataParsedEventArgs e, EndPoint endPoint)
-        {
-            if (ReceiveDataParsedEvent != null)
-                ReceiveDataParsedEvent(e, endPoint);
-        }
-
-        #endregion
     }
 }
