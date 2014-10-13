@@ -148,8 +148,9 @@ namespace NKnife.GUI.WinForm.AutoLayoutPanel
             //根据Type来生成控件
             this.BuildControlForType(typeAndInterface);
 
-            #region 根据接口来生成控件//todo:未做
+            #region 根据接口来生成控件
 
+            //todo:根据接口来生成控件未完成
             Type[] listInterface = typeAndInterface.Interfaces;
 
             #endregion
