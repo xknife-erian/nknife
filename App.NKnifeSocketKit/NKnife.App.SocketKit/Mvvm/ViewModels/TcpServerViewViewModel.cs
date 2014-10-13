@@ -9,6 +9,7 @@ using NKnife.Base;
 using NKnife.IoC;
 using NKnife.Mvvm;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol;
 using SocketKnife.Protocol.Interfaces;
@@ -30,7 +31,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         {
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
-            var filter = new DefaultFilter();
+            var filter = new KnifeFilter();
 
             var protocolFamily = DI.Get<IProtocolFamily>();
             protocolFamily.Add("", typeof(IProtocol));

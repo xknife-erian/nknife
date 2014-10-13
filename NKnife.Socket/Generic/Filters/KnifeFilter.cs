@@ -2,13 +2,14 @@
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Filters
 {
-    public class DefaultFilter : IFilter
+    public abstract class KnifeFilter : IFilter
     {
         public IDatagramCommandParser CommandParser { get; private set; }
         public IDatagramDecoder Decoder { get; private set; }
         public IDatagramEncoder Encoder { get; private set; }
+
         public event SocketAsyncDataComeInEventHandler DataComeInEvent;
         public event ListenToClientEventHandler ListenToClient;
         public event ConnectionBreakEventHandler ConnectionBreak;

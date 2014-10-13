@@ -10,6 +10,7 @@ using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Common;
+using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol.Interfaces;
 
@@ -56,6 +57,7 @@ namespace SocketKnife
         #region ISocketServerKnife 接口实现
 
         protected IProtocolFamily _Family;
+        protected IProtocolHandler _Handler;
         protected ISocketPlan _SocketPlan;
 
         public void Bind(IPAddress ipAddress, int port)
@@ -64,9 +66,10 @@ namespace SocketKnife
             _Port = port;
         }
 
-        public void Bind(IProtocolHandler handler)
+        public void Bind(KnifeProtocolHandler handler)
         {
-            throw new NotImplementedException();
+            _Handler = handler;
+            _Handler.Bind(SendTo);
         }
 
         [Inject]
@@ -240,16 +243,21 @@ namespace SocketKnife
                 _Logger.Warn(string.Format("协议编码异常.未发送.{0},{1}", e.Message, data), e);
                 return;
             }
+            SendTo(socket, senddata, isCompress);
+        }
+
+        public bool SendTo(Socket socket, byte[] data, bool isCompress = false)
+        {
             try
             {
                 switch (Mode)
                 {
                     case SocketMode.AsyncKeepAlive:
-                        socket.BeginSend(senddata, 0, senddata.Length, SocketFlags.None, AsynCallBackSend, socket);
+                        socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
                         break;
                     case SocketMode.Talk:
                         SocketError errCode;
-                        socket.Send(senddata, 0, senddata.Length, SocketFlags.None, out errCode);
+                        socket.Send(data, 0, data.Length, SocketFlags.None, out errCode);
                         break;
                 }
                 _Logger.Trace(string.Format("Server.Send:{0}", data));
@@ -257,8 +265,11 @@ namespace SocketKnife
             catch
             {
                 throw new SocketClientDisOpenedException(string.Format("TRY-DisOpened,远端无法连接."));
+                return false;
             }
+            return true;
         }
+
 
         /// <summary>
         ///     当是长连接时向多个客户端群发

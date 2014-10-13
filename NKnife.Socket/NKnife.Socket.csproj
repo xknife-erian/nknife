@@ -61,12 +61,14 @@
     <Compile Include="Generic\DatagramCommandParser.cs" />
     <Compile Include="Generic\DatagramDecoder.cs" />
     <Compile Include="Generic\DatagramEncoder.cs" />
-    <Compile Include="Generic\DefaultFilter.cs" />
+    <Compile Include="Generic\Filters\KeepAliveFilter.cs" />
+    <Compile Include="Generic\Filters\KnifeFilter.cs" />
     <Compile Include="Generic\DefaultSocketPolicy.cs" />
     <Compile Include="Generic\DefaultSocketServerConfig.cs" />
     <Compile Include="Generic\EndMarkDecoder.cs" />
     <Compile Include="Generic\EndMarkEncoder.cs" />
     <Compile Include="Generic\HeartbeatPlan.cs" />
+    <Compile Include="Generic\KnifeProtocolHandler.cs" />
     <Compile Include="Generic\ProtocolDataTableDeserializeParser.cs" />
     <Compile Include="Generic\ProtocolDeserializeParser.cs" />
     <Compile Include="Generic\ProtocolHead.cs" />
