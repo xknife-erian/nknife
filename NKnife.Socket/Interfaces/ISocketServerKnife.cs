@@ -8,7 +8,7 @@ namespace SocketKnife.Interfaces
     public interface ISocketServerKnife
     {
         void Bind(IPAddress ipAddress, int port);
-        void Bind(KnifeProtocolHandler handler);
+        void Bind(ProtocolHandlerBase handler);
         ISocketServerConfig Config { get; }
         ISocketPolicy Policy { get; }
         void Attach(IProtocolFamily protocolFamily);

@@ -16,6 +16,7 @@ namespace SocketKnife.IoC
             Bind<ISocketServerConfig>().To<DefaultSocketServerConfig>();
             Bind<IProtocolFamily>().To<DefaultProtocolFamily>();
             Bind<IProtocolTools>().To<DefaultProtocolTools>();
+            Bind<ISocketSessionMap>().To<DefalutSocketSessionMap>();
             Bind<ISocketPolicy>().To<DefaultSocketPolicy>();
         }
     }

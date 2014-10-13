@@ -16,7 +16,9 @@ namespace SocketKnife.Generic
 
         #region IDatagramEncoder Members
 
-        public byte[] Execute(string replay, bool isCompress = false)
+        public bool EnabelCompress { get; set; }
+
+        public byte[] Execute(string replay)
         {
             if (string.IsNullOrWhiteSpace(replay))
             {
@@ -25,7 +27,7 @@ namespace SocketKnife.Generic
 
             //处理是否压缩字符串的字节数组进行发送
             byte[] reBytes;
-            if (isCompress)
+            if (EnabelCompress)
             {
                 var src = Encoding.UTF8.GetBytes(replay);
                 reBytes = CompressHelper.Compress(src);

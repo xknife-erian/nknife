@@ -8,17 +8,16 @@ namespace SocketKnife.Generic
     /// 协议族
     /// </summary>
     [Serializable]
-    public class DefaultProtocolFamily : Dictionary<string, Type>, IProtocolFamily
+    public class DefaultProtocolFamily : Dictionary<string, IProtocol>, IProtocolFamily
     {
         public DefaultProtocolFamily()
         {
             
         }
 
-        public DefaultProtocolFamily(string name, Type type)
+        public DefaultProtocolFamily(string name)
         {
             Family = name;
-            DefaultContentType = type;
         }
 
         /// <summary>协议族名称
@@ -26,11 +25,8 @@ namespace SocketKnife.Generic
         /// <value>The family.</value>
         public string Family { get; private set; }
 
-        public Type DefaultContentType { get; private set; }
-
-        public IProtocol Get(string familyType, string command)
-        {
-            throw new NotImplementedException();
-        }
+        public IDatagramCommandParser CommandParser { get; private set; }
+        public IDatagramDecoder Decoder { get; private set; }
+        public IDatagramEncoder Encoder { get; private set; }
     }
 }

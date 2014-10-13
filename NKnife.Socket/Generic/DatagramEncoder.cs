@@ -9,7 +9,7 @@ namespace SocketKnife.Generic
     /// </summary>
     public class DatagramEncoder : IDatagramEncoder
     {
-        public byte[] Execute(string replay, bool isCompress = false)
+        public byte[] Execute(string replay)
         {
             byte[] content = Encoding.UTF8.GetBytes(replay);
             byte[] tail = Encoding.UTF8.GetBytes("ö");
@@ -18,5 +18,7 @@ namespace SocketKnife.Generic
             Array.Copy(tail, 0, result, content.Length, tail.Length);
             return result;
         }
+
+        public bool EnabelCompress { get; set; }
     }
 }

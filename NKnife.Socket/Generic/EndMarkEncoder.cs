@@ -11,7 +11,7 @@ namespace SocketKnife.Generic
     {
         private static readonly byte[] _tail = Encoding.UTF8.GetBytes("ö");
 
-        public byte[] Execute(string replay, bool isCompress = false)
+        public byte[] Execute(string replay)
         {
             byte[] content = Encoding.UTF8.GetBytes(replay);
 
@@ -22,5 +22,7 @@ namespace SocketKnife.Generic
 
             return result;
         }
+
+        public bool EnabelCompress { get; set; }
     }
 }

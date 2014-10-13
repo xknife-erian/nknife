@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
     public class DefaultSocketPolicy : ISocketPolicy
     {
-        private readonly LinkedList<IFilter> _Filters = new LinkedList<IFilter>(); 
+        private readonly LinkedList<FilterBase> _Filters = new LinkedList<FilterBase>();
 
-        public IEnumerator<IFilter> GetEnumerator()
+        public IEnumerator<FilterBase> GetEnumerator()
         {
             throw new NotImplementedException();
         }
@@ -19,7 +20,7 @@ namespace SocketKnife.Generic
             return GetEnumerator();
         }
 
-        public void Add(IFilter item)
+        public void Add(FilterBase item)
         {
             throw new NotImplementedException();
         }
@@ -29,39 +30,39 @@ namespace SocketKnife.Generic
             throw new NotImplementedException();
         }
 
-        public bool Contains(IFilter item)
+        public bool Contains(FilterBase item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(IFilter[] array, int arrayIndex)
+        public void CopyTo(FilterBase[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(IFilter item)
+        public bool Remove(FilterBase item)
         {
             throw new NotImplementedException();
         }
 
         public int Count { get; private set; }
         public bool IsReadOnly { get; private set; }
-        public void AddAfter(IFilter filter, IFilter newfilter)
+        public void AddAfter(FilterBase filter, FilterBase newfilter)
         {
             throw new NotImplementedException();
         }
 
-        public void AddBefore(IFilter filter, IFilter newfilter)
+        public void AddBefore(FilterBase filter, FilterBase newfilter)
         {
             throw new NotImplementedException();
         }
 
-        public void AddFirst(IFilter filter)
+        public void AddFirst(FilterBase filter)
         {
             throw new NotImplementedException();
         }
 
-        public void AddLast(IFilter filter)
+        public void AddLast(FilterBase filter)
         {
             _Filters.AddLast(filter);
         }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace SocketKnife.Protocol.Interfaces
 {
-    public interface IProtocolFamily : IDictionary<string, Type>
+    public interface IProtocolFamily : IDictionary<string, IProtocol>
     {
-        IProtocol Get(string familyType, string command);
+        IDatagramCommandParser CommandParser { get; }
+        IDatagramDecoder Decoder { get; }
+        IDatagramEncoder Encoder { get; }
     }
 }

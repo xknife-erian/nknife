@@ -5,6 +5,7 @@ using System.Net;
 using System.Reflection;
 using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Dialogs;
+using NKnife.App.SocketKit.Socket;
 using NKnife.Base;
 using NKnife.IoC;
 using NKnife.Mvvm;
@@ -31,10 +32,9 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         {
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
-            var filter = new KnifeFilter();
+            var filter = new KeepAliveFilter();
 
-            var protocolFamily = DI.Get<IProtocolFamily>();
-            protocolFamily.Add("", typeof(IProtocol));
+            var protocolFamily = GetProtocolFamily();
 
             if (!_ServerList.ContainsKey(key))
             {
@@ -51,6 +51,15 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
                 Debug.Fail("不应出现相同IP与端口的服务器请求。");
             }
         }
+
+        private static IProtocolFamily GetProtocolFamily()
+        {
+            var protocolFamily = DI.Get<IProtocolFamily>();
+            var a = new GetTicket();
+            protocolFamily.Add(a.Command, a);
+            return protocolFamily;
+        }
+
 
         public void StartServer()
         {

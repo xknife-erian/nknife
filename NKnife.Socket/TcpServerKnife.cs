@@ -11,6 +11,7 @@ using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol.Interfaces;
 
@@ -20,9 +21,9 @@ namespace SocketKnife
     {
         #region 成员变量
 
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        private readonly AutoResetEvent[] _AutoReset;
+        private readonly WaitHandle[] _AutoReset;
 
         /// <summary>
         ///     当长连接时的客户端集合,Key为IP地址,Value为Socket实例
@@ -66,10 +67,11 @@ namespace SocketKnife
             _Port = port;
         }
 
-        public void Bind(KnifeProtocolHandler handler)
+        public void Bind(ProtocolHandlerBase handler)
         {
             _Handler = handler;
-            _Handler.Bind(SendTo);
+            _Handler.Bind(WirteBase);
+            _Handler.Bind(WirteProtocol);
         }
 
         [Inject]
@@ -93,12 +95,12 @@ namespace SocketKnife
             try
             {
                 Initialize();
-                _AutoReset[0].Set();
+                ((AutoResetEvent)_AutoReset[0]).Set();
                 return true;
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("SocketServer打开异常。{0}", e.Message), e);
+                _logger.Error(string.Format("SocketServer打开异常。{0}", e.Message), e);
                 return false;
             }
         }
@@ -116,7 +118,7 @@ namespace SocketKnife
         {
             try
             {
-                _AutoReset[0].Reset();
+                ((AutoResetEvent)_AutoReset[0]).Reset();
                 _IsClose = true;
                 _MainSocket.Close();
                 foreach (Socket client in _ClientMap.Values)
@@ -141,7 +143,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("SocketServer关闭异常。{0}", e.Message), e);
+                _logger.Error(string.Format("SocketServer关闭异常。{0}", e.Message), e);
                 return false;
             }
         }
@@ -154,7 +156,7 @@ namespace SocketKnife
         {
             _ClientMap = new ConcurrentDictionary<string, Socket>();
             _ReceiveQueueMap = new ConcurrentDictionary<EndPoint, ReceiveQueue>();
-            _AutoReset = new AutoResetEvent[1];
+            _AutoReset = new WaitHandle[1];
             _AutoReset[0] = new AutoResetEvent(false);
         }
 
@@ -178,131 +180,6 @@ namespace SocketKnife
 
         #region 公共方法
 
-        /// <summary>
-        ///     断开此SOCKET
-        /// </summary>
-        /// <param name="socket"></param>
-        public void Disconnect(Socket socket)
-        {
-            if (_MainSocket != null && _MainSocket.Connected)
-                socket.BeginDisconnect(false, AsynCallBackDisconnect, socket);
-        }
-
-        /// <summary>
-        ///     发送数据
-        /// </summary>
-        /// <param name="ipaddress">客户端</param>
-        /// <param name="data">The data.</param>
-        public void SendTo(string ipaddress, string data)
-        {
-            SendTo(ipaddress, data, false);
-        }
-
-        /// <summary>
-        ///     发送数据
-        /// </summary>
-        /// <param name="socket">客户端</param>
-        /// <param name="data">The data.</param>
-        public void SendTo(Socket socket, string data)
-        {
-            SendTo(socket, data, false);
-        }
-
-        /// <summary>
-        ///     指定IP地址发送，该方法一般在是长连接服务时使用。
-        /// </summary>
-        /// <param name="ipaddress">The ipaddress.</param>
-        /// <param name="data">The data.</param>
-        /// <param name="isCompress">是否将数据压缩后发送</param>
-        public void SendTo(string ipaddress, string data, bool isCompress = false)
-        {
-            Socket socket;
-            if (!_ClientMap.TryGetValue(ipaddress, out socket))
-            {
-                _Logger.Info(string.Format("客户端IP地址:({0})不在列表中，列表数:{1}", ipaddress, _ClientMap.Count));
-                return;
-            }
-            SendTo(socket, data, isCompress);
-        }
-
-        /// <summary>
-        ///     发送数据包
-        /// </summary>
-        /// <param name="socket"></param>
-        /// <param name="data"></param>
-        /// <param name="isCompress">是否将数据压缩后发送</param>
-        public void SendTo(Socket socket, string data, bool isCompress = false)
-        {
-            byte[] senddata = null;
-            try
-            {
-                senddata = _ProtocolTools.Encoder.Execute(data, isCompress);
-            }
-            catch (Exception e)
-            {
-                _Logger.Warn(string.Format("协议编码异常.未发送.{0},{1}", e.Message, data), e);
-                return;
-            }
-            SendTo(socket, senddata, isCompress);
-        }
-
-        public bool SendTo(Socket socket, byte[] data, bool isCompress = false)
-        {
-            try
-            {
-                switch (Mode)
-                {
-                    case SocketMode.AsyncKeepAlive:
-                        socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-                        break;
-                    case SocketMode.Talk:
-                        SocketError errCode;
-                        socket.Send(data, 0, data.Length, SocketFlags.None, out errCode);
-                        break;
-                }
-                _Logger.Trace(string.Format("Server.Send:{0}", data));
-            }
-            catch
-            {
-                throw new SocketClientDisOpenedException(string.Format("TRY-DisOpened,远端无法连接."));
-                return false;
-            }
-            return true;
-        }
-
-
-        /// <summary>
-        ///     当是长连接时向多个客户端群发
-        /// </summary>
-        /// <param name="data">The data.</param>
-        public void MultiClientSendTo(string data)
-        {
-            MultiClientSendTo(data, false);
-        }
-
-        /// <summary>
-        ///     当是长连接时向多个客户端群发
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <param name="isCompress">是否将数据压缩后发送</param>
-        public void MultiClientSendTo(string data, bool isCompress = false)
-        {
-            switch (Mode)
-            {
-                case SocketMode.AsyncKeepAlive:
-                    foreach (Socket socket in _ClientMap.Values)
-                        SendTo(socket, data, isCompress);
-                    break;
-            }
-        }
-
-        #endregion
-
-        #region 私有方法
-
-        /// <summary>
-        ///     启动并运行
-        /// </summary>
         protected virtual void Initialize()
         {
             if (_IsDisposed)
@@ -340,17 +217,17 @@ namespace SocketKnife
             _IsClose = false;
             Accept();
 
-            _Logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
-            _Logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
-            _Logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
-            _Logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
+            _logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
+            _logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
+            _logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
+            _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
         }
 
         protected virtual void Accept()
         {
             if (_IsClose)
             {
-                _Logger.Warn("Server: Socket已关闭。");
+                _logger.Warn("Server: Socket已关闭。");
                 return;
             }
             if (_SocketAsynPool.Count > 0)
@@ -361,7 +238,7 @@ namespace SocketKnife
             }
             else
             {
-                _Logger.Warn("Server: Socket连接池中已达到最大连接数。");
+                _logger.Warn("Server: Socket连接池中已达到最大连接数。");
             }
         }
 
@@ -372,7 +249,7 @@ namespace SocketKnife
                 if (e.SocketError == SocketError.Success)
                 {
                     WaitHandle.WaitAll(_AutoReset);
-                    _AutoReset[0].Set();
+                    ((AutoResetEvent)_AutoReset[0]).Set();
                     if (_BufferContainer.SetBuffer(e))
                     {
                         if (!e.AcceptSocket.ReceiveAsync(e))
@@ -386,20 +263,20 @@ namespace SocketKnife
                         if (!_ClientMap.ContainsKey(ip))
                         {
                             _ClientMap.TryAdd(ip, e.AcceptSocket);
-                            _Logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _ClientMap.Count));
+                            _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _ClientMap.Count));
                             OnListenToClient(e);
                         }
                     }
                     else
                     {
-                        _Logger.Warn("e.AcceptSocket.RemoteEndPoint 不是正确的 IPEndPoint");
+                        _logger.Warn("e.AcceptSocket.RemoteEndPoint 不是正确的 IPEndPoint");
                     }
                 }
                 else
                 {
                     e.AcceptSocket = null;
                     _SocketAsynPool.Push(e);
-                    _Logger.Error("Server: Don't Accep.");
+                    _logger.Error("Server: Don't Accep.");
                 }
             }
             finally
@@ -423,7 +300,7 @@ namespace SocketKnife
             else
             {
                 string message = string.Format("Server: >> Client: {0}, Connection Break.", e.AcceptSocket.RemoteEndPoint);
-                _Logger.Info(message);
+                _logger.Info(message);
                 OnConnectionBreak(new ConnectionBreakEventArgs(message));
                 var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
                 if (iep != null)
@@ -433,18 +310,12 @@ namespace SocketKnife
                     {
                         Socket outSocket;
                         _ClientMap.TryRemove(ip, out outSocket);
-                        _Logger.Info(string.Format("Server: IP地址:{0}的连接被移出客户端池。{1}", ip, _ClientMap.Count));
-                    }
-                    if (_ReceiveThreadMap.ContainsKey(iep))
-                    {
-                        _ReceiveThreadMap[iep].IsMonitor = false;
-                        _ReceiveThreadMap[iep].ReceiveQueue.AutoResetEvent.Set();
-                        _Logger.Trace(string.Format("Server: IP地址:{0}的数据池循环开关被关闭。{1}", ip, _ReceiveThreadMap.Count));
+                        _logger.Info(string.Format("Server: IP地址:{0}的连接被移出客户端池。{1}", ip, _ClientMap.Count));
                     }
                 }
                 else
                 {
-                    _Logger.Warn("e.AcceptSocket.RemoteEndPoint 不是正确的 IPEndPoint");
+                    _logger.Warn("e.AcceptSocket.RemoteEndPoint 不是正确的 IPEndPoint");
                 }
 
                 e.AcceptSocket = null;
@@ -461,16 +332,14 @@ namespace SocketKnife
         {
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
-            ReceiveQueue receive = null;
-            if (!_ReceiveQueueMap.TryGetValue(e.AcceptSocket.RemoteEndPoint, out receive))
+
+            foreach (FilterBase filter in Policy)
             {
-                receive = new ReceiveQueue();
-                _ReceiveQueueMap.TryAdd(e.AcceptSocket.RemoteEndPoint, receive);
-                InitializeDataMonitor(new KeyValuePair<EndPoint, ReceiveQueue>(e.AcceptSocket.RemoteEndPoint, receive));
+                filter.PrcoessReceiveData(e.AcceptSocket, data);
             }
+
             // 触发数据到达事件
             OnDataComeIn(data, e);
-            receive.Enqueue(data);
 
             if (!e.AcceptSocket.ReceiveAsync(e))
                 BeginReceive(e);
@@ -501,7 +370,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _Logger.Warn(string.Format("结束挂起的异步发送异常.{0}", e.Message));
+                _logger.Warn(string.Format("结束挂起的异步发送异常.{0}", e.Message));
             }
         }
 
@@ -515,109 +384,34 @@ namespace SocketKnife
             }
         }
 
-        #endregion
-
-        #region 数据处理
-
-        private readonly ConcurrentDictionary<EndPoint, DataMonitor> _ReceiveThreadMap = new ConcurrentDictionary<EndPoint, DataMonitor>();
-
-        protected virtual void InitializeDataMonitor(KeyValuePair<EndPoint, ReceiveQueue> pair)
+        private void WirteBase(ISocketSession session, byte[] data)
         {
-            var t = new Thread(ReceiveQueueMonitor);
-            var dm = new DataMonitor {IsMonitor = true, ReceiveQueue = pair.Value, Thread = t};
-            _ReceiveThreadMap.TryAdd(pair.Key, dm);
-            t.Start(pair);
-        }
-
-        /// <summary>
-        ///     核心方法:监听 ReceiveQueue 队列
-        /// </summary>
-        protected void ReceiveQueueMonitor(object obj)
-        {
-            var pair = (KeyValuePair<EndPoint, ReceiveQueue>) obj;
-            _Logger.Debug(() => string.Format("启动基于{0}的ReceiveQueue队列的监听。", pair.Key));
-            ReceiveQueue receiveQueue = pair.Value;
-            var undone = new byte[] {};
-            while (_ReceiveThreadMap[pair.Key].IsMonitor)
+            var socket = session.Socket;
+            try
             {
-                if (receiveQueue.Count > 0)
+                switch (Mode)
                 {
-                    byte[] data = receiveQueue.Dequeue();
-                    if (!UtilityCollection.IsNullOrEmpty(undone))
-                    {
-                        // 当有半包数据时，进行接包操作
-                        int srcLen = data.Length;
-                        var list = new List<byte>(data.Length + undone.Length);
-                        list.AddRange(undone);
-                        list.AddRange(data);
-                        data = list.ToArray();
-                        int length = undone.Length;
-                        _Logger.Trace(() => string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", length, srcLen, data.Length));
-                        undone = new byte[] {};
-                    }
-                    int done;
-                    DataProcessBase(pair.Key, data, out done);
-                    if (data.Length > done)
-                    {
-                        // 暂存半包数据，留待下条队列数据接包使用
-                        undone = new byte[data.Length - done];
-                        Buffer.BlockCopy(data, done, undone, 0, undone.Length);
-                        int length = undone.Length;
-                        _Logger.Trace(() => string.Format("半包数据暂存,数据长度:{0}", length));
-                    }
+                    case SocketMode.AsyncKeepAlive:
+                        socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
+                        break;
+                    case SocketMode.Talk:
+                        SocketError errCode;
+                        socket.Send(data, 0, data.Length, SocketFlags.None, out errCode);
+                        break;
                 }
-                else
-                {
-                    receiveQueue.AutoResetEvent.WaitOne();
-                }
+                _logger.Trace(string.Format("Server.Send:{0}", data));
             }
-            // 当接收队列完成后，移除该客户端信息
-            DataMonitor outBool;
-            bool remove = _ReceiveThreadMap.TryRemove(pair.Key, out outBool);
-            if (remove)
-                _Logger.Trace(() => string.Format("接收队列完成，移除该客户端{0}信息，{1}", pair.Key, _ReceiveThreadMap.Count));
-            else
-                _Logger.Trace(() => string.Format("接收队列完成，移除该客户端{0}信息不成功{1}", pair.Key, _ReceiveThreadMap.Count));
-        }
-
-        protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
-        {
-            done = 0;
-            string[] datagram = _ProtocolTools.Decoder.Execute(data, out done);
-            if (UtilityCollection.IsNullOrEmpty(datagram))
+            catch
             {
-                _Logger.Debug("协议消息无内容。");
-                return;
-            }
-
-            foreach (string dg in datagram)
-            {
-                if (string.IsNullOrWhiteSpace(dg))
-                    continue;
-                try
-                {
-                    string command = _ProtocolTools.CommandParser.GetCommand(dg);
-                    IProtocol protocol = _ProtocolTools.Family.Get(FamilyType, command);
-                    _Logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
-                    if (protocol != null)
-                    {
-                        protocol.Parse(dg);
-                        // 触发数据基础解析后发生的数据到达事件
-                        OnReceiveDataParsed(new ReceiveDataParsedEventArgs(protocol), endpoint);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _Logger.Warn(string.Format("协议字符串预处理异常。{0}", dg), ex);
-                }
+                throw new SocketClientDisOpenedException(string.Format("TRY-DisOpened,远端无法连接."));
             }
         }
 
-        private class DataMonitor
+        private void WirteProtocol(ISocketSession session, IProtocol protocol)
         {
-            public bool IsMonitor { get; set; }
-            public Thread Thread { get; set; }
-            public ReceiveQueue ReceiveQueue { get; set; }
+            var replay = protocol.Protocol();
+            var data = _Family.Encoder.Execute(replay);
+            WirteBase(session, data);
         }
 
         #endregion
@@ -663,6 +457,16 @@ namespace SocketKnife
                 }
                 _IsDisposed = true;
             }
+        }
+
+        /// <summary>
+        ///     断开此SOCKET
+        /// </summary>
+        /// <param name="socket"></param>
+        public void Disconnect(Socket socket)
+        {
+            if (_MainSocket != null && _MainSocket.Connected)
+                socket.BeginDisconnect(false, AsynCallBackDisconnect, socket);
         }
 
         #endregion

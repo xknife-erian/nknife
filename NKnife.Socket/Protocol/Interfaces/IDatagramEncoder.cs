@@ -5,6 +5,7 @@
     /// </summary>
     public interface IDatagramEncoder
     {
-        byte[] Execute(string replay, bool isCompress);
+        bool EnabelCompress { get; set; }
+        byte[] Execute(string replay);
     }
 }

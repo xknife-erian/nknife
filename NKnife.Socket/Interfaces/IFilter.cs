@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using SocketKnife.Common;
 using SocketKnife.Protocol.Interfaces;
@@ -10,6 +11,10 @@ namespace SocketKnife.Interfaces
         IDatagramCommandParser CommandParser { get; }
         IDatagramDecoder Decoder { get; }
         IDatagramEncoder Encoder { get; }
+
+        void PrcoessReceiveData(Socket socket, byte[] data);
+
+        void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter);
 
         #region 事件
 
@@ -27,11 +32,6 @@ namespace SocketKnife.Interfaces
         ///     连接出错或断开触发事件
         /// </summary>
         event ConnectionBreakEventHandler ConnectionBreak;
-
-        /// <summary>
-        ///     接收到的数据解析完成后发生的事件
-        /// </summary>
-        event ReceiveDataParsedEventHandler ReceiveDataParsedEvent;
 
         #endregion
 

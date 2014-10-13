@@ -43,7 +43,7 @@ namespace SocketKnife.Protocol
 
         /// <summary>针对协议工作的工具
         /// </summary>
-        public DefaultProtocolTools Tools { get; set; }
+        public IProtocolTools Tools { get; set; }
 
         /// <summary>获取第一个数据(往往协议中数据不多，当只有一个数据时用该属性比较方便)
         /// </summary>

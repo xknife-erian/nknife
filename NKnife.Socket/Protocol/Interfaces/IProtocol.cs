@@ -19,7 +19,7 @@ namespace SocketKnife.Protocol.Interfaces
 
         /// <summary>本协议的工具接口集合
         /// </summary>
-        DefaultProtocolTools Tools { get; set; }
+        IProtocolTools Tools { get; set; }
 
         /// <summary>协议的具体内容.
         /// </summary>
