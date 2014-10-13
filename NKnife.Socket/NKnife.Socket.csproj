@@ -61,7 +61,7 @@
     <Compile Include="Generic\DatagramCommandParser.cs" />
     <Compile Include="Generic\DatagramDecoder.cs" />
     <Compile Include="Generic\DatagramEncoder.cs" />
-    <Compile Include="Generic\DefalutSocketSessionMap.cs" />
+    <Compile Include="Generic\DefaultSocketSessionMap.cs" />
     <Compile Include="Generic\Filters\KeepAliveFilter.cs" />
     <Compile Include="Generic\Filters\FilterBase.cs" />
     <Compile Include="Generic\DefaultSocketPolicy.cs" />

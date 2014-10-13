@@ -8,6 +8,7 @@ using System.Threading;
 using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.IoC;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Generic;
@@ -25,16 +26,8 @@ namespace SocketKnife
 
         private readonly WaitHandle[] _AutoReset;
 
-        /// <summary>
-        ///     当长连接时的客户端集合,Key为IP地址,Value为Socket实例
-        /// </summary>
-        /// <value>The session.</value>
-        private readonly ConcurrentDictionary<string, Socket> _ClientMap;
-
         private IPAddress _IpAddress;
         private int _Port;
-
-        private readonly ConcurrentDictionary<EndPoint, ReceiveQueue> _ReceiveQueueMap;
 
         /// <summary>
         ///     数据包管理
@@ -60,6 +53,8 @@ namespace SocketKnife
         protected IProtocolFamily _Family;
         protected IProtocolHandler _Handler;
         protected ISocketPlan _SocketPlan;
+        [Inject] protected ISocketSessionMap _SessionMap;
+        [Inject] protected ISocketPolicy _Policy;
 
         public void Bind(IPAddress ipAddress, int port)
         {
@@ -77,8 +72,26 @@ namespace SocketKnife
         [Inject]
         public ISocketServerConfig Config { get; private set; }
 
-        [Inject]
-        public ISocketPolicy Policy { get; private set; }
+        public void AddFilter(KeepAliveFilter filter)
+        {
+            filter.Bind(GetFamily,GetHandle,GetSessionMap);
+            _Policy.AddLast(filter);
+        }
+
+        private ISocketSessionMap GetSessionMap()
+        {
+            return _SessionMap;
+        }
+
+        private IProtocolHandler GetHandle()
+        {
+            return _Handler;
+        }
+
+        private IProtocolFamily GetFamily()
+        {
+            return _Family;
+        }
 
         public virtual void Attach(IProtocolFamily protocolFamily)
         {
@@ -121,8 +134,9 @@ namespace SocketKnife
                 ((AutoResetEvent)_AutoReset[0]).Reset();
                 _IsClose = true;
                 _MainSocket.Close();
-                foreach (Socket client in _ClientMap.Values)
+                foreach (ISocketSession session in _SessionMap.Values)
                 {
+                    var client = session.Socket;
                     if (client.Connected)
                     {
                         client.Shutdown(SocketShutdown.Both);
@@ -154,29 +168,13 @@ namespace SocketKnife
 
         public TcpServerKnife()
         {
-            _ClientMap = new ConcurrentDictionary<string, Socket>();
-            _ReceiveQueueMap = new ConcurrentDictionary<EndPoint, ReceiveQueue>();
             _AutoReset = new WaitHandle[1];
             _AutoReset[0] = new AutoResetEvent(false);
         }
 
         #endregion
 
-        public ConcurrentDictionary<string, Socket> ClientMap
-        {
-            get { return _ClientMap; }
-        }
-
         public SocketMode Mode { get; set; }
-
-        /// <summary>
-        ///     接收数据队列MAP,Key是客户端,Value是接收到的数据的队列
-        /// </summary>
-        /// <value>The command parser.</value>
-        public ConcurrentDictionary<EndPoint, ReceiveQueue> ReceiveQueueMap
-        {
-            get { return _ReceiveQueueMap; }
-        }
 
         #region 公共方法
 
@@ -260,10 +258,13 @@ namespace SocketKnife
                     if (iep != null)
                     {
                         string ip = iep.ToString();
-                        if (!_ClientMap.ContainsKey(ip))
+                        if (!_SessionMap.ContainsKey(iep))
                         {
-                            _ClientMap.TryAdd(ip, e.AcceptSocket);
-                            _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _ClientMap.Count));
+                            var session = DI.Get<ISocketSession>();
+                            session.Point = iep;
+                            session.Socket = e.AcceptSocket;
+                            _SessionMap.Add(iep, session);
+                            _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _SessionMap.Count));
                             OnListenToClient(e);
                         }
                     }
@@ -306,11 +307,10 @@ namespace SocketKnife
                 if (iep != null)
                 {
                     string ip = iep.ToString();
-                    if (_ClientMap.ContainsKey(ip))
+                    if (_SessionMap.ContainsKey(iep))
                     {
-                        Socket outSocket;
-                        _ClientMap.TryRemove(ip, out outSocket);
-                        _logger.Info(string.Format("Server: IP地址:{0}的连接被移出客户端池。{1}", ip, _ClientMap.Count));
+                        _SessionMap.Remove(iep);
+                        _logger.Info(string.Format("Server: IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count));
                     }
                 }
                 else
@@ -333,7 +333,7 @@ namespace SocketKnife
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
 
-            foreach (FilterBase filter in Policy)
+            foreach (FilterBase filter in _Policy)
             {
                 filter.PrcoessReceiveData(e.AcceptSocket, data);
             }

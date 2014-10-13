@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Filters;
 using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Interfaces
@@ -10,7 +11,7 @@ namespace SocketKnife.Interfaces
         void Bind(IPAddress ipAddress, int port);
         void Bind(ProtocolHandlerBase handler);
         ISocketServerConfig Config { get; }
-        ISocketPolicy Policy { get; }
+        void AddFilter(KeepAliveFilter filter);
         void Attach(IProtocolFamily protocolFamily);
         void Attach(ISocketPlan socketPlan);
         bool Start();

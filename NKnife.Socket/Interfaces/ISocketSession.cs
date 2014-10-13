@@ -8,9 +8,9 @@ namespace SocketKnife.Interfaces
     {
         long Id { get; }
 
-        EndPoint Point { get; }
+        EndPoint Point { get; set; }
 
-        Socket Socket { get; }
+        Socket Socket { get; set; }
 
         void Wirte(byte[] data);
     }

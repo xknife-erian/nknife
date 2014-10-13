@@ -40,7 +40,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             {
                 _Server = DI.Get<ISocketServerKnife>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
-                _Server.Policy.AddLast(filter);
+                _Server.AddFilter(filter);
                 _Server.Bind(ipAddress, port);
                 _Server.Attach(protocolFamily);
                 _Server.Attach(new HeartbeatPlan());
