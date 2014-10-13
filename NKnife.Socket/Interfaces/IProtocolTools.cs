@@ -1,6 +1,8 @@
-﻿namespace SocketKnife.Interfaces
+﻿using System;
+
+namespace SocketKnife.Interfaces
 {
-    public interface IProtocolTools
+    public interface IProtocolTools : ICloneable
     {
         IProtocolHead Head { get; }
         IProtocolTail Tail { get; }

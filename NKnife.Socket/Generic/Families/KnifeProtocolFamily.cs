@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Families
 {
     /// <summary>
     /// 协议族
     /// </summary>
     [Serializable]
-    public class DefaultProtocolFamily : Dictionary<string, IProtocol>, IProtocolFamily
+    public class KnifeProtocolFamily : Dictionary<string, IProtocol>, IProtocolFamily
     {
-        public DefaultProtocolFamily()
+        public KnifeProtocolFamily()
         {
             
         }
 
-        public DefaultProtocolFamily(string name)
+        public KnifeProtocolFamily(string name)
         {
             Family = name;
         }

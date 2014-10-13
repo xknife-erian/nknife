@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.IoC;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Protocols
 {
     /// <summary>协议的抽象实现
     /// </summary>
@@ -21,7 +22,7 @@ namespace SocketKnife.Generic
         {
             Family = family;
             Command = command;
-            Tools = new DefaultProtocolTools();
+            Tools = DI.Get<IProtocolTools>();
         }
 
         #region IProtocol Members

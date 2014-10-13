@@ -13,7 +13,6 @@ using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
-using SocketKnife.Protocol;
 
 namespace NKnife.App.SocketKit.Mvvm.ViewModels
 {
@@ -32,7 +31,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         {
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
-            var keepAliveFilter = new KeepAliveFilter();
+            var keepAliveFilter = new KeepAliveServerFilter();
 
             var protocolFamily = GetProtocolFamily();
 
@@ -41,8 +40,8 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
                 _Server = DI.Get<ISocketServerKnife>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
                 _Server.AddFilter(keepAliveFilter);
-                _Server.Bind(ipAddress, port);
-                _Server.Attach(protocolFamily);
+                _Server.Configure(ipAddress, port);
+                _Server.Bind(protocolFamily, new MyHandler(SocketMessages));
                 _Server.Attach(new HeartbeatPlan());
                 _ServerList.Add(key, _Server);
             }
@@ -55,8 +54,8 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         private static IProtocolFamily GetProtocolFamily()
         {
             var protocolFamily = DI.Get<IProtocolFamily>();
-            var a = new GetTicket();
-            protocolFamily.Add(a.Command, a);
+            var getTicket = new GetTicket();
+            protocolFamily.Add(getTicket.Command, getTicket);
             return protocolFamily;
         }
 
@@ -83,6 +82,26 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         public void StopServer()
         {
             _Server.Stop();
+        }
+    }
+
+    internal class MyHandler : KnifeProtocolHandler
+    {
+        private readonly ObservableCollection<SocketMessage> _SocketMessages;
+
+        public MyHandler(ObservableCollection<SocketMessage> socketMessages)
+        {
+            _SocketMessages = socketMessages;
+        }
+
+        public override void Recevied(ISocketSession session, IProtocol protocol)
+        {
+            var msg = new SocketMessage();
+            msg.Command = protocol.Command;
+            msg.SocketDirection = SocketDirection.Receive;
+            msg.Message = protocol.Protocol();
+            msg.Time = DateTime.Now.ToString("HH:MM:SS.fff");
+            _SocketMessages.Add(msg);
         }
     }
 }

@@ -4,7 +4,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class DefaultSocketSessionMap : ConcurrentDictionary<EndPoint, ISocketSession>, ISocketSessionMap
+    public class KnifeSocketSessionMap : ConcurrentDictionary<EndPoint, ISocketSession>, ISocketSessionMap
     {
     }
 }

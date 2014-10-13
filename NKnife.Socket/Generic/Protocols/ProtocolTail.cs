@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Protocols
 {
     public class ProtocolTail : IProtocolTail
     {

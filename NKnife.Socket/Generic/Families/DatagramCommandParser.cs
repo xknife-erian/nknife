@@ -5,7 +5,7 @@ using NKnife.Adapters;
 using NKnife.Interface;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Families
 {
     /// <summary>
     /// 一个基本的从协议字符串中解析命令字的工具

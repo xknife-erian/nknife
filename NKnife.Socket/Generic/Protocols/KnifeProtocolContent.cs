@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Text;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Protocol
+namespace SocketKnife.Generic.Protocols
 {
     /// <summary>
     ///     一个协议的具体内容。其中：

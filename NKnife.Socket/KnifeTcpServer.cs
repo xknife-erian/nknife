@@ -55,23 +55,16 @@ namespace SocketKnife
         protected ISocketSessionMap _SessionMap;
         protected ISocketPolicy _Policy;
 
-        public void Bind(IPAddress ipAddress, int port)
+        public void Configure(IPAddress ipAddress, int port)
         {
             _IpAddress = ipAddress;
             _Port = port;
         }
 
-        public void Bind(KnifeProtocolHandler handler)
-        {
-            _Handler = handler;
-            _Handler.Bind(WirteBase);
-            _Handler.Bind(WirteProtocol);
-        }
-
         [Inject]
         public ISocketServerConfig Config { get; private set; }
 
-        public void AddFilter(KeepAliveFilter filter)
+        public void AddFilter(KnifeSocketFilter filter)
         {
             filter.Bind(GetFamily, GetHandle, GetSessionMap);
             _Policy.AddLast(filter);
@@ -92,9 +85,12 @@ namespace SocketKnife
             return _Family;
         }
 
-        public virtual void Attach(IProtocolFamily protocolFamily)
+        public virtual void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler)
         {
             _Family = protocolFamily;
+            _Handler = handler;
+            _Handler.Bind(WirteBase);
+            _Handler.Bind(WirteProtocol);
         }
 
         public virtual void Attach(ISocketPlan socketPlan)

@@ -14,7 +14,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
-    public class KeepAliveFilter : KnifeSocketFilter
+    public class KeepAliveServerFilter : KnifeSocketFilter
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

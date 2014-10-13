@@ -5,7 +5,7 @@ using NKnife.Interface;
 using NKnife.Zip;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Families
 {
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器

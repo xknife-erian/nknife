@@ -2,7 +2,7 @@
 using System.Text;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Families
 {
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器,以“ö”结尾，防止粘包

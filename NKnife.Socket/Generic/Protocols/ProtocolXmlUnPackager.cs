@@ -8,9 +8,9 @@ using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Protocols
 {
-    public class ProtocolXmlParser : IProtocolUnPackager
+    public class ProtocolXmlUnPackager : IProtocolUnPackager
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

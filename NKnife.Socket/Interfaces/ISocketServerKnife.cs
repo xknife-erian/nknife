@@ -7,11 +7,10 @@ namespace SocketKnife.Interfaces
 {
     public interface ISocketServerKnife : IDisposable
     {
-        void Bind(IPAddress ipAddress, int port);
-        void Bind(KnifeProtocolHandler handler);
+        void Configure(IPAddress ipAddress, int port);
+        void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler);
         ISocketServerConfig Config { get; }
-        void AddFilter(KeepAliveFilter filter);
-        void Attach(IProtocolFamily protocolFamily);
+        void AddFilter(KnifeSocketFilter filter);
         void Attach(ISocketPlan socketPlan);
         bool Start();
         bool ReStart();

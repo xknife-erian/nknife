@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Ninject.Modules;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Families;
+using SocketKnife.Generic.Protocols;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.IoC
@@ -12,10 +14,10 @@ namespace SocketKnife.IoC
     {
         public override void Load()
         {
-            Bind<ISocketServerConfig>().To<DefaultSocketServerConfig>();
-            Bind<IProtocolFamily>().To<DefaultProtocolFamily>();
-            Bind<IProtocolTools>().To<DefaultProtocolTools>();
-            Bind<ISocketSessionMap>().To<DefaultSocketSessionMap>();
+            Bind<ISocketServerConfig>().To<KnifeSocketServerConfig>();
+            Bind<IProtocolFamily>().To<KnifeProtocolFamily>();
+            Bind<IProtocolTools>().To<KnifeProtocolTools>();
+            Bind<ISocketSessionMap>().To<KnifeSocketSessionMap>();
             Bind<ISocketPolicy>().To<KnifeSocketPolicy>();
         }
     }

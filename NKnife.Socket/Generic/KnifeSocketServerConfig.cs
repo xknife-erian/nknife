@@ -2,7 +2,7 @@
 
 namespace SocketKnife.Generic
 {
-    public class DefaultSocketServerConfig : ISocketServerConfig
+    public class KnifeSocketServerConfig : ISocketServerConfig
     {
         public void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int readBufferSize)
         {

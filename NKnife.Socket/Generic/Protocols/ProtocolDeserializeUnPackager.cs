@@ -9,11 +9,11 @@ using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic
+namespace SocketKnife.Generic.Protocols
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>
-    public class ProtocolDeserializeParser : ProtocolXmlParser
+    public class ProtocolDeserializeUnPackager : ProtocolXmlUnPackager
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
