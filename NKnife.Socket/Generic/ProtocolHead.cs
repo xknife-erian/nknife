@@ -1,4 +1,4 @@
-﻿using SocketKnife.Protocol.Interfaces;
+﻿using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {

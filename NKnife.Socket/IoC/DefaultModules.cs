@@ -5,7 +5,6 @@ using System.Text;
 using Ninject.Modules;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
-using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.IoC
 {
@@ -17,7 +16,7 @@ namespace SocketKnife.IoC
             Bind<IProtocolFamily>().To<DefaultProtocolFamily>();
             Bind<IProtocolTools>().To<DefaultProtocolTools>();
             Bind<ISocketSessionMap>().To<DefaultSocketSessionMap>();
-            Bind<ISocketPolicy>().To<DefaultSocketPolicy>();
+            Bind<ISocketPolicy>().To<KnifeSocketPolicy>();
         }
     }
 }

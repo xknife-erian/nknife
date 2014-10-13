@@ -2,14 +2,13 @@
 using System.Net;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
-using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketServerKnife
+    public interface ISocketServerKnife : IDisposable
     {
         void Bind(IPAddress ipAddress, int port);
-        void Bind(ProtocolHandlerBase handler);
+        void Bind(KnifeProtocolHandler handler);
         ISocketServerConfig Config { get; }
         void AddFilter(KeepAliveFilter filter);
         void Attach(IProtocolFamily protocolFamily);

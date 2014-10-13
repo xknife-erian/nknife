@@ -9,11 +9,11 @@ using NKnife.App.SocketKit.Socket;
 using NKnife.Base;
 using NKnife.IoC;
 using NKnife.Mvvm;
+using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol;
-using SocketKnife.Protocol.Interfaces;
 
 namespace NKnife.App.SocketKit.Mvvm.ViewModels
 {
@@ -32,7 +32,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         {
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
-            var filter = new KeepAliveFilter();
+            var keepAliveFilter = new KeepAliveFilter();
 
             var protocolFamily = GetProtocolFamily();
 
@@ -40,7 +40,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             {
                 _Server = DI.Get<ISocketServerKnife>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
-                _Server.AddFilter(filter);
+                _Server.AddFilter(keepAliveFilter);
                 _Server.Bind(ipAddress, port);
                 _Server.Attach(protocolFamily);
                 _Server.Attach(new HeartbeatPlan());

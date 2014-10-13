@@ -94,7 +94,7 @@
     <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
       <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\Server.cs" />
+    <Compile Include="Common\ServerList.cs" />
     <Compile Include="IoC\ClientModule.cs" />
     <Compile Include="IoC\ServerModule.cs" />
     <Compile Include="Mvvm\Views\LoggerView.xaml.cs">

@@ -4,11 +4,10 @@ using System.Net;
 using System.Net.Sockets;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
-using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
-    public abstract class FilterBase : IFilter
+    public abstract class KnifeSocketFilter : ISocketFilter
     {
         public IDatagramCommandParser CommandParser { get; private set; }
         public IDatagramDecoder Decoder { get; private set; }

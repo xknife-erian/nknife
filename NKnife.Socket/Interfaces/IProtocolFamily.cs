@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SocketKnife.Protocol.Interfaces
+namespace SocketKnife.Interfaces
 {
     public interface IProtocolFamily : IDictionary<string, IProtocol>
     {

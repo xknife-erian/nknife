@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Protocol.Interfaces
+﻿namespace SocketKnife.Interfaces
 {
     /// <summary>
     /// 当通讯的一端接收到消息后，将消息进行处理的解析器

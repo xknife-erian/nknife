@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
-using SocketKnife.Protocol.Interfaces;
+using SocketKnife.Interfaces;
 
 namespace SocketKnife.Protocol
 {
@@ -13,9 +13,9 @@ namespace SocketKnife.Protocol
     ///     Tags:内容较大的数据，如序列化的对象等。
     ///     Infomations:固定数据，按协议规定的必须每次携带的数据。
     /// </summary>
-    public class ProtocolContent : IProtocolContent
+    public class KnifeProtocolContent : IProtocolContent
     {
-        public ProtocolContent()
+        public KnifeProtocolContent()
         {
             Datas = new NameValueCollection();
             Infomations = new Dictionary<string, string>(0);

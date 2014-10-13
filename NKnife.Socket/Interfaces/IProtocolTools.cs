@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Protocol.Interfaces
+﻿namespace SocketKnife.Interfaces
 {
     public interface IProtocolTools
     {

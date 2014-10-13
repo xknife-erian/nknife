@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using NKnife.Adapters;
 using NKnife.Interface;
-using SocketKnife.Generic;
-using SocketKnife.Protocol.Interfaces;
+using SocketKnife.Interfaces;
 
-namespace SocketKnife.Protocol
+namespace SocketKnife.Generic
 {
     /// <summary>协议的抽象实现
     /// </summary>
-    public abstract class AbstractProtocol : IProtocol
+    public abstract class KnifeProtocol : IProtocol
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -18,7 +17,7 @@ namespace SocketKnife.Protocol
         /// </summary>
         /// <param name="family">协议家族名</param>
         /// <param name="command">协议命令字</param>
-        protected AbstractProtocol(string family, string command)
+        protected KnifeProtocol(string family, string command)
         {
             Family = family;
             Command = command;

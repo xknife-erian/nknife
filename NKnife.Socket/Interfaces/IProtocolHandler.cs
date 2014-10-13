@@ -1,7 +1,6 @@
 ﻿using System;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Protocol.Interfaces
+namespace SocketKnife.Interfaces
 {
     public interface IProtocolHandler
     {

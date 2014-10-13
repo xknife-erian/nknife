@@ -14,15 +14,14 @@ using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
-using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife
 {
-    public class TcpServerKnife : ISocketServerKnife
+    public class KnifeTcpServer : ISocketServerKnife
     {
-        #region 成员变量
-
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
+        #region 成员变量
 
         private readonly WaitHandle[] _AutoReset;
 
@@ -53,8 +52,8 @@ namespace SocketKnife
         protected IProtocolFamily _Family;
         protected IProtocolHandler _Handler;
         protected ISocketPlan _SocketPlan;
-        [Inject] protected ISocketSessionMap _SessionMap;
-        [Inject] protected ISocketPolicy _Policy;
+        protected ISocketSessionMap _SessionMap;
+        protected ISocketPolicy _Policy;
 
         public void Bind(IPAddress ipAddress, int port)
         {
@@ -62,7 +61,7 @@ namespace SocketKnife
             _Port = port;
         }
 
-        public void Bind(ProtocolHandlerBase handler)
+        public void Bind(KnifeProtocolHandler handler)
         {
             _Handler = handler;
             _Handler.Bind(WirteBase);
@@ -74,7 +73,7 @@ namespace SocketKnife
 
         public void AddFilter(KeepAliveFilter filter)
         {
-            filter.Bind(GetFamily,GetHandle,GetSessionMap);
+            filter.Bind(GetFamily, GetHandle, GetSessionMap);
             _Policy.AddLast(filter);
         }
 
@@ -162,21 +161,62 @@ namespace SocketKnife
             }
         }
 
-        #endregion
+        #region 释放( IDisposable )
 
-        #region 构造函数，及面向CodeFirst方式的设置方法
+        /// <summary>
+        ///     用来确定是否以释放
+        /// </summary>
+        private bool _IsDisposed;
 
-        public TcpServerKnife()
+        public void Dispose()
         {
-            _AutoReset = new WaitHandle[1];
-            _AutoReset[0] = new AutoResetEvent(false);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~KnifeTcpServer()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_IsDisposed || disposing)
+            {
+                try
+                {
+                    if (_MainSocket != null)
+                    {
+                        _MainSocket.Close();
+                        _IsClose = true;
+                        for (int i = 0; i < _SocketAsynPool.Count; i++)
+                        {
+                            SocketAsyncEventArgs args = _SocketAsynPool.Pop();
+                            _BufferContainer.FreeBuffer(args);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.Fail(string.Format("Main Socket释放时发生异常。{0}", e.Message));
+                }
+                _IsDisposed = true;
+            }
         }
 
         #endregion
 
-        public SocketMode Mode { get; set; }
+        #endregion
 
-        #region 公共方法
+        #region 构造函数,初始化
+        
+        public KnifeTcpServer(ISocketSessionMap sessionMap, ISocketPolicy policy)
+        {
+            _SessionMap = sessionMap;
+            _Policy = policy;
+            _AutoReset = new WaitHandle[1];
+            _AutoReset[0] = new AutoResetEvent(false);
+        }
 
         protected virtual void Initialize()
         {
@@ -199,8 +239,7 @@ namespace SocketKnife
             _BufferContainer = new BufferContainer(Config.MaxConnectCount * Config.MaxBufferSize, Config.MaxBufferSize);
             _BufferContainer.Initialize();
 
-            #region 核心连接池的预创建
-
+            //核心连接池的预创建
             _SocketAsynPool = new SocketAsyncEventArgsPool(Config.MaxConnectCount);
 
             for (int i = 0; i < Config.MaxConnectCount; i++)
@@ -210,18 +249,34 @@ namespace SocketKnife
                 _SocketAsynPool.Push(socketAsyn);
             }
 
-            #endregion
-
-            _IsClose = false;
             Accept();
 
             _logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
             _logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
             _logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
             _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
+
+            _IsClose = false;
         }
 
-        protected virtual void Accept()
+        #endregion
+
+        #region 公共方法
+
+        protected virtual void AsynCompleted(object sender, SocketAsyncEventArgs e) // SocketAsyncEventArgs的Completed事件
+        {
+            switch (e.LastOperation)
+            {
+                case SocketAsyncOperation.Accept:
+                    BeginAccept(e);
+                    break;
+                case SocketAsyncOperation.Receive:
+                    BeginReceive(e);
+                    break;
+            }
+        }
+
+        protected virtual void Accept() // 启动
         {
             if (_IsClose)
             {
@@ -232,7 +287,7 @@ namespace SocketKnife
             {
                 SocketAsyncEventArgs sockAsyn = _SocketAsynPool.Pop();
                 if (!_MainSocket.AcceptAsync(sockAsyn))
-                    BeginAccep(sockAsyn);
+                    BeginAccept(sockAsyn);
             }
             else
             {
@@ -240,7 +295,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void BeginAccep(SocketAsyncEventArgs e)
+        protected virtual void BeginAccept(SocketAsyncEventArgs e)
         {
             try
             {
@@ -300,9 +355,10 @@ namespace SocketKnife
             }
             else
             {
-                string message = string.Format("Server: >> Client: {0}, Connection Break.", e.AcceptSocket.RemoteEndPoint);
+                string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
                 _logger.Info(message);
                 OnConnectionBreak(new ConnectionBreakEventArgs(message));
+
                 var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
                 if (iep != null)
                 {
@@ -310,12 +366,16 @@ namespace SocketKnife
                     if (_SessionMap.ContainsKey(iep))
                     {
                         _SessionMap.Remove(iep);
-                        _logger.Info(string.Format("Server: IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count));
+                        _logger.Info(string.Format("服务端:IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count));
+                    }
+                    else
+                    {
+                        _logger.Warn(string.Format("服务端:打算清理IP地址{0}时，该地址未在池中。{1}", ip, _SessionMap.Count));
                     }
                 }
                 else
                 {
-                    _logger.Warn("e.AcceptSocket.RemoteEndPoint 不是正确的 IPEndPoint");
+                    _logger.Warn(string.Format("e.AcceptSocket.RemoteEndPoint不是正确的IPEndPoint：null"));
                 }
 
                 e.AcceptSocket = null;
@@ -333,7 +393,7 @@ namespace SocketKnife
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
 
-            foreach (FilterBase filter in _Policy)
+            foreach (KnifeSocketFilter filter in _Policy)
             {
                 filter.PrcoessReceiveData(e.AcceptSocket, data);
             }
@@ -343,19 +403,6 @@ namespace SocketKnife
 
             if (!e.AcceptSocket.ReceiveAsync(e))
                 BeginReceive(e);
-        }
-
-        protected virtual void AsynCompleted(object sender, SocketAsyncEventArgs e)
-        {
-            switch (e.LastOperation)
-            {
-                case SocketAsyncOperation.Accept:
-                    BeginAccep(e);
-                    break;
-                case SocketAsyncOperation.Receive:
-                    BeginReceive(e);
-                    break;
-            }
         }
 
         protected virtual void AsynCallBackSend(IAsyncResult result)
@@ -384,21 +431,12 @@ namespace SocketKnife
             }
         }
 
-        private void WirteBase(ISocketSession session, byte[] data)
+        protected virtual void WirteBase(ISocketSession session, byte[] data)
         {
             var socket = session.Socket;
             try
             {
-                switch (Mode)
-                {
-                    case SocketMode.AsyncKeepAlive:
-                        socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-                        break;
-                    case SocketMode.Talk:
-                        SocketError errCode;
-                        socket.Send(data, 0, data.Length, SocketFlags.None, out errCode);
-                        break;
-                }
+                socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
                 _logger.Trace(string.Format("Server.Send:{0}", data));
             }
             catch
@@ -407,66 +445,11 @@ namespace SocketKnife
             }
         }
 
-        private void WirteProtocol(ISocketSession session, IProtocol protocol)
+        protected virtual void WirteProtocol(ISocketSession session, IProtocol protocol)
         {
             var replay = protocol.Protocol();
             var data = _Family.Encoder.Execute(replay);
             WirteBase(session, data);
-        }
-
-        #endregion
-
-        #region 释放
-
-        /// <summary>
-        ///     用来确定是否以释放
-        /// </summary>
-        private bool _IsDisposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~TcpServerKnife()
-        {
-            Dispose(false);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_IsDisposed || disposing)
-            {
-                try
-                {
-                    if (_MainSocket != null)
-                    {
-                        _MainSocket.Close();
-                        _IsClose = true;
-                        for (int i = 0; i < _SocketAsynPool.Count; i++)
-                        {
-                            SocketAsyncEventArgs args = _SocketAsynPool.Pop();
-                            _BufferContainer.FreeBuffer(args);
-                        }
-                    }
-                }
-                catch(Exception e)
-                {
-                    Debug.Fail(string.Format("Main Socket释放时发生异常。{0}", e.Message));
-                }
-                _IsDisposed = true;
-            }
-        }
-
-        /// <summary>
-        ///     断开此SOCKET
-        /// </summary>
-        /// <param name="socket"></param>
-        public void Disconnect(Socket socket)
-        {
-            if (_MainSocket != null && _MainSocket.Connected)
-                socket.BeginDisconnect(false, AsynCallBackDisconnect, socket);
         }
 
         #endregion
@@ -518,6 +501,5 @@ namespace SocketKnife
         }
 
         #endregion
-
     }
 }

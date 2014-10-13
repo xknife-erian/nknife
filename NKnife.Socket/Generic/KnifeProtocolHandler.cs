@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using NKnife.IoC;
 using SocketKnife.Interfaces;
-using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public abstract class ProtocolHandlerBase : IProtocolHandler
+    public abstract class KnifeProtocolHandler : IProtocolHandler
     {
-        protected ProtocolHandlerBase()
+        protected KnifeProtocolHandler()
         {
             SessionMap = DI.Get<ISocketSessionMap>();
         }
@@ -38,7 +37,7 @@ namespace SocketKnife.Generic
         }
     }
 
-    class DemoHandler : ProtocolHandlerBase
+    class DemoHandler : KnifeProtocolHandler
     {
         public override void Recevied(ISocketSession session, IProtocol protocol)
         {

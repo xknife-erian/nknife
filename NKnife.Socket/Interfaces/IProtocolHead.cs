@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Protocol.Interfaces
+﻿namespace SocketKnife.Interfaces
 {
     /// <summary>
     /// 描述Socket服务的消息头。

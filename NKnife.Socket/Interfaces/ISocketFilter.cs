@@ -2,11 +2,10 @@
 using System.Net;
 using System.Net.Sockets;
 using SocketKnife.Common;
-using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Interfaces
 {
-    public interface IFilter
+    public interface ISocketFilter
     {
         IDatagramCommandParser CommandParser { get; }
         IDatagramDecoder Decoder { get; }

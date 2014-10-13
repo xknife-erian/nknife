@@ -10,11 +10,11 @@ using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Common;
-using SocketKnife.Protocol.Interfaces;
+using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
-    public class KeepAliveFilter : FilterBase
+    public class KeepAliveFilter : KnifeSocketFilter
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

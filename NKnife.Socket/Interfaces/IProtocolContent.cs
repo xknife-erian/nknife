@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace SocketKnife.Protocol.Interfaces
+namespace SocketKnife.Interfaces
 {
     /// <summary>
     /// 一个协议的具体内容。其中：

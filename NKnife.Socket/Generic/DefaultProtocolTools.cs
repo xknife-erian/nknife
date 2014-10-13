@@ -5,7 +5,7 @@ using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.Utility;
-using SocketKnife.Protocol.Interfaces;
+using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
