@@ -5,7 +5,7 @@ using SocketKnife.Generic.Filters;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketServerKnife : IDisposable
+    public interface IKnifeSocketServer : IDisposable
     {
         void Configure(IPAddress ipAddress, int port);
         void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler);

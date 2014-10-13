@@ -107,7 +107,6 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
         {
-            done = 0;
             string[] datagram = Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {

@@ -95,11 +95,11 @@
     <Compile Include="Interfaces\ISocketPolicy.cs" />
     <Compile Include="Interfaces\ISocketPlan.cs" />
     <Compile Include="Interfaces\ISocketServerConfig.cs" />
-    <Compile Include="Interfaces\ISocketServerKnife.cs" />
+    <Compile Include="Interfaces\IKnifeSocketServer.cs" />
     <Compile Include="Interfaces\ISocketSession.cs" />
     <Compile Include="IoC\DefaultModules.cs" />
     <Compile Include="Generic\Families\KnifeProtocolFamily.cs" />
-    <Compile Include="KnifeTcpServer.cs" />
+    <Compile Include="KnifeServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

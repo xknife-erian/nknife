@@ -20,7 +20,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
     {
         public ObservableCollection<SocketMessage> SocketMessages { get; set; }
         private readonly ServerList _ServerList = DI.Get<ServerList>();
-        private ISocketServerKnife _Server;
+        private IKnifeSocketServer _Server;
 
         public TcpServerViewViewModel()
         {
@@ -37,7 +37,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
 
             if (!_ServerList.ContainsKey(key))
             {
-                _Server = DI.Get<ISocketServerKnife>();
+                _Server = DI.Get<IKnifeSocketServer>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
                 _Server.AddFilter(keepAliveFilter);
                 _Server.Configure(ipAddress, port);
@@ -100,7 +100,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             msg.Command = protocol.Command;
             msg.SocketDirection = SocketDirection.Receive;
             msg.Message = protocol.Protocol();
-            msg.Time = DateTime.Now.ToString("HH:MM:SS.fff");
+            msg.Time = DateTime.Now.ToString("HH:mm:ss.fff");
             _SocketMessages.Add(msg);
         }
     }

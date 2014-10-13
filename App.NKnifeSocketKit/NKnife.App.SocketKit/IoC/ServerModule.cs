@@ -14,7 +14,7 @@ namespace NKnife.App.SocketKit.IoC
     {
         public override void Load()
         {
-            Bind<ISocketServerKnife>().To<KnifeTcpServer>();
+            Bind<IKnifeSocketServer>().To<KnifeServer>();
             Bind<ServerList>().ToSelf().InSingletonScope();
         }
     }

@@ -17,7 +17,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
-    public class KnifeTcpServer : ISocketServerKnife
+    public class KnifeServer : IKnifeSocketServer
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -170,7 +170,7 @@ namespace SocketKnife
             GC.SuppressFinalize(this);
         }
 
-        ~KnifeTcpServer()
+        ~KnifeServer()
         {
             Dispose(false);
         }
@@ -206,7 +206,7 @@ namespace SocketKnife
 
         #region 构造函数,初始化
         
-        public KnifeTcpServer(ISocketSessionMap sessionMap, ISocketPolicy policy)
+        public KnifeServer(ISocketSessionMap sessionMap, ISocketPolicy policy)
         {
             _SessionMap = sessionMap;
             _Policy = policy;
@@ -218,6 +218,7 @@ namespace SocketKnife
         {
             if (_IsDisposed)
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
+            _IsClose = false;
 
             var ipEndPoint = new IPEndPoint(_IpAddress, _Port);
             _MainSocket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -251,8 +252,6 @@ namespace SocketKnife
             _logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
             _logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
             _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
-
-            _IsClose = false;
         }
 
         #endregion
@@ -295,43 +294,53 @@ namespace SocketKnife
         {
             try
             {
-                if (e.SocketError == SocketError.Success)
+                switch (e.SocketError)
                 {
-                    WaitHandle.WaitAll(_AutoReset);
-                    ((AutoResetEvent)_AutoReset[0]).Set();
-                    if (_BufferContainer.SetBuffer(e))
+                    case SocketError.Success:
                     {
-                        if (!e.AcceptSocket.ReceiveAsync(e))
-                            BeginReceive(e);
-                    }
-                    //如果选用长连接服务时，将相应的连接置入一个Map以做处理
-                    var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
-                    if (iep != null)
-                    {
-                        string ip = iep.ToString();
-                        if (!_SessionMap.ContainsKey(iep))
+                        WaitHandle.WaitAll(_AutoReset);
+                        ((AutoResetEvent) _AutoReset[0]).Set();
+                        if (_BufferContainer.SetBuffer(e))
                         {
-                            var session = DI.Get<ISocketSession>();
-                            session.Point = iep;
-                            session.Socket = e.AcceptSocket;
-                            _SessionMap.Add(iep, session);
-                            _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _SessionMap.Count));
-                            foreach (var filter in _Policy)
+                            if (!e.AcceptSocket.ReceiveAsync(e))
+                                BeginReceive(e);
+                        }
+                        //如果选用长连接服务时，将相应的连接置入一个Map以做处理
+                        var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
+                        if (iep != null)
+                        {
+                            string ip = iep.ToString();
+                            if (!_SessionMap.ContainsKey(iep))
                             {
-                                filter.OnListenToClient(e);
+                                var session = DI.Get<ISocketSession>();
+                                session.Point = iep;
+                                session.Socket = e.AcceptSocket;
+                                _SessionMap.Add(iep, session);
+                                _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _SessionMap.Count));
+                                foreach (var filter in _Policy)
+                                {
+                                    filter.OnListenToClient(e);
+                                }
                             }
                         }
+                        else
+                        {
+                            _logger.Warn("e.AcceptSocket.RemoteEndPoint 不是正确的 IPEndPoint");
+                        }
+                        break;
                     }
-                    else
+                    case SocketError.OperationAborted:
                     {
-                        _logger.Warn("e.AcceptSocket.RemoteEndPoint 不是正确的 IPEndPoint");
+                        _logger.Info("服务端: 停止服务.");
+                        break;
                     }
-                }
-                else
-                {
-                    e.AcceptSocket = null;
-                    _SocketAsynPool.Push(e);
-                    _logger.Error("Server: Don't Accep.");
+                    default:
+                    {
+                        e.AcceptSocket = null;
+                        _SocketAsynPool.Push(e);
+                        _logger.Warn(string.Format("服务端:未处理状态,{0}", e.SocketError));
+                        break;
+                    }
                 }
             }
             finally
@@ -354,32 +363,7 @@ namespace SocketKnife
             }
             else
             {
-                string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
-                _logger.Info(message);
-                foreach (var filter in _Policy)
-                {
-                    filter.OnConnectionBreak(new ConnectionBreakEventArgs(message));
-                }
-
-                var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
-                if (iep != null)
-                {
-                    string ip = iep.ToString();
-                    if (_SessionMap.ContainsKey(iep))
-                    {
-                        _SessionMap.Remove(iep);
-                        _logger.Info(string.Format("服务端:IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count));
-                    }
-                    else
-                    {
-                        _logger.Warn(string.Format("服务端:打算清理IP地址{0}时，该地址未在池中。{1}", ip, _SessionMap.Count));
-                    }
-                }
-                else
-                {
-                    _logger.Warn(string.Format("e.AcceptSocket.RemoteEndPoint不是正确的IPEndPoint：null"));
-                }
-
+                RemoveSession(e);
                 e.AcceptSocket = null;
                 _BufferContainer.FreeBuffer(e);
                 _SocketAsynPool.Push(e);
@@ -387,6 +371,35 @@ namespace SocketKnife
                 {
                     Accept();
                 }
+            }
+        }
+
+        private void RemoveSession(SocketAsyncEventArgs e)
+        {
+            string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
+            _logger.Info(message);
+            foreach (var filter in _Policy)
+            {
+                filter.OnConnectionBreak(new ConnectionBreakEventArgs(message));
+            }
+
+            var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
+            if (iep != null)
+            {
+                string ip = iep.ToString();
+                if (_SessionMap.ContainsKey(iep))
+                {
+                    _SessionMap.Remove(iep);
+                    _logger.Info(string.Format("服务端:IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count));
+                }
+                else
+                {
+                    _logger.Warn(string.Format("服务端:打算清理IP地址{0}时，该地址未在池中。{1}", ip, _SessionMap.Count));
+                }
+            }
+            else
+            {
+                _logger.Warn(string.Format("e.AcceptSocket.RemoteEndPoint不是正确的IPEndPoint：null"));
             }
         }
 
