@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using SocketKnife.Interfaces;
+using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Common
 {
@@ -140,12 +141,12 @@ namespace SocketKnife.Common
     /// </summary>
     public class ReceiveDataParsedEventArgs : EventArgs
     {
-//        public ReceiveDataParsedEventArgs(IProtocol protocol)
-//        {
-//            Protocol = protocol;
-//        }
-//
-//        public IProtocol Protocol { get; private set; }
+        public ReceiveDataParsedEventArgs(IProtocol protocol)
+        {
+            Protocol = protocol;
+        }
+
+        public IProtocol Protocol { get; private set; }
     }
 
     #endregion

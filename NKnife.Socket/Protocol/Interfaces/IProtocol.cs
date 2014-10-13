@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SocketKnife.Default;
+using SocketKnife.Generic;
 
 namespace SocketKnife.Protocol.Interfaces
 {

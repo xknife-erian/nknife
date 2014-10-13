@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NKnife.Adapters;
 using NKnife.Interface;
-using SocketKnife.Default;
+using SocketKnife.Generic;
 using SocketKnife.Protocol.Interfaces;
 
 namespace SocketKnife.Protocol

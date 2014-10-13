@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using SocketKnife.Protocol;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Default
+namespace SocketKnife.Generic
 {
     /// <summary>
     /// 协议族
@@ -27,11 +26,11 @@ namespace SocketKnife.Default
         /// <value>The family.</value>
         public string Family { get; private set; }
 
-        /// <summary>默认协议工具接口集合
-        /// </summary>
-        /// <value>The default tool.</value>
-        //internal ProtocolTools DefaultTools { get; private set; }
-
         public Type DefaultContentType { get; private set; }
+
+        public IProtocol Get(string familyType, string command)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

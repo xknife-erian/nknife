@@ -55,7 +55,7 @@ namespace SocketKnife
 
         #region ISocketServerKnife 接口实现
 
-        protected IProtocolTools _ProtocolTools;
+        protected IProtocolFamily _Family;
         protected ISocketPlan _SocketPlan;
 
         public void Bind(IPAddress ipAddress, int port)
@@ -64,23 +64,28 @@ namespace SocketKnife
             _Port = port;
         }
 
+        public void Bind(IProtocolHandler handler)
+        {
+            throw new NotImplementedException();
+        }
+
         [Inject]
         public ISocketServerConfig Config { get; private set; }
 
         [Inject]
-        public IFilterChain FilterChain { get; private set; }
+        public ISocketPolicy Policy { get; private set; }
 
-        public void Attach(IProtocolTools protocolTools)
+        public virtual void Attach(IProtocolFamily protocolFamily)
         {
-            _ProtocolTools = protocolTools;
+            _Family = protocolFamily;
         }
 
-        public void Attach(ISocketPlan socketPlan)
+        public virtual void Attach(ISocketPlan socketPlan)
         {
             _SocketPlan = socketPlan;
         }
 
-        public bool Start()
+        public virtual bool Start()
         {
             try
             {
@@ -95,7 +100,7 @@ namespace SocketKnife
             }
         }
 
-        public bool ReStart()
+        public virtual bool ReStart()
         {
             if (Stop())
             {
@@ -104,7 +109,7 @@ namespace SocketKnife
             return false;
         }
 
-        public bool Stop()
+        public virtual bool Stop()
         {
             try
             {
@@ -158,8 +163,6 @@ namespace SocketKnife
         }
 
         public SocketMode Mode { get; set; }
-
-        public string FamilyType { get; set; }
 
         /// <summary>
         ///     接收数据队列MAP,Key是客户端,Value是接收到的数据的队列
@@ -230,8 +233,7 @@ namespace SocketKnife
             byte[] senddata = null;
             try
             {
-                //TODO:
-                //senddata = Encoder.Execute(data, isCompress);
+                senddata = _ProtocolTools.Encoder.Execute(data, isCompress);
             }
             catch (Exception e)
             {
@@ -570,7 +572,7 @@ namespace SocketKnife
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
         {
             done = 0;
-            string[] datagram = null;//TODO: Decoder.Execute(data, out done);
+            string[] datagram = _ProtocolTools.Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _Logger.Debug("协议消息无内容。");
@@ -583,16 +585,15 @@ namespace SocketKnife
                     continue;
                 try
                 {
-                    //TODO:
-//                    string command = CommandParser.GetCommand(dg);
-//                    IProtocol protocol = Protocols.Get(FamilyType, command);
-//                    _Logger.Trace("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg);
-//                    if (protocol != null)
-//                    {
-//                        protocol.Parse(dg);
-//                        // 触发数据基础解析后发生的数据到达事件
-//                        OnReceiveDataParsed(new ReceiveDataParsedEventArgs(protocol), endpoint);
-//                    }
+                    string command = _ProtocolTools.CommandParser.GetCommand(dg);
+                    IProtocol protocol = _ProtocolTools.Family.Get(FamilyType, command);
+                    _Logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
+                    if (protocol != null)
+                    {
+                        protocol.Parse(dg);
+                        // 触发数据基础解析后发生的数据到达事件
+                        OnReceiveDataParsed(new ReceiveDataParsedEventArgs(protocol), endpoint);
+                    }
                 }
                 catch (Exception ex)
                 {

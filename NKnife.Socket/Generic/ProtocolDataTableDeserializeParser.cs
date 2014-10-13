@@ -7,7 +7,7 @@ using NKnife.Adapters;
 using NKnife.Interface;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Default
+namespace SocketKnife.Generic
 {
     /// <summary>含有序列化对象(DataTable)的解析器
     /// </summary>

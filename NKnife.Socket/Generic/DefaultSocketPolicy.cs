@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Default
+namespace SocketKnife.Generic
 {
-    public class DefaultFilterChain : IFilterChain
+    public class DefaultSocketPolicy : ISocketPolicy
     {
-        private LinkedList<IFilter> _Filters = new LinkedList<IFilter>(); 
+        private readonly LinkedList<IFilter> _Filters = new LinkedList<IFilter>(); 
 
         public IEnumerator<IFilter> GetEnumerator()
         {

@@ -2,7 +2,7 @@
 
 namespace SocketKnife.Interfaces
 {
-    public interface IFilterChain : ICollection<IFilter>
+    public interface ISocketPolicy : ICollection<IFilter>
     {
         void AddAfter(IFilter filter, IFilter newfilter);
         void AddBefore(IFilter filter, IFilter newfilter);

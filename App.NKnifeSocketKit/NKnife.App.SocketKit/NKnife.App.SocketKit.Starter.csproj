@@ -174,10 +174,7 @@
     <Resource Include="Attachments\start-unable.png" />
     <Resource Include="Attachments\stop-unable.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mvvm\Commands\" />
-    <Folder Include="Mvvm\Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Attachments\logger-view-icon.png" />
   </ItemGroup>

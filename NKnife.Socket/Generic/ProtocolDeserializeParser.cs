@@ -9,7 +9,7 @@ using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Default
+namespace SocketKnife.Generic
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>

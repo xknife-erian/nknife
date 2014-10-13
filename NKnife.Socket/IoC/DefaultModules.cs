@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ninject.Modules;
-using SocketKnife.Default;
+using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol.Interfaces;
 
@@ -16,7 +16,7 @@ namespace SocketKnife.IoC
             Bind<ISocketServerConfig>().To<DefaultSocketServerConfig>();
             Bind<IProtocolFamily>().To<DefaultProtocolFamily>();
             Bind<IProtocolTools>().To<DefaultProtocolTools>();
-            Bind<IFilterChain>().To<DefaultFilterChain>();
+            Bind<ISocketPolicy>().To<DefaultSocketPolicy>();
         }
     }
 }

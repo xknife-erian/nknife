@@ -8,7 +8,7 @@ using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Default
+namespace SocketKnife.Generic
 {
     public class ProtocolXmlParser : IProtocolUnPackager
     {

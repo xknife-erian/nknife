@@ -6,6 +6,5 @@
         IProtocolTail Tail { get; }
         IProtocolPackager Packager { get; }
         IProtocolUnPackager UnPackager { get; }
-        IProtocolFamily Family { get; }
     }
 }

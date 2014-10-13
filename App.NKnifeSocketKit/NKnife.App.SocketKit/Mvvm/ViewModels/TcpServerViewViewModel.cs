@@ -8,7 +8,7 @@ using NKnife.App.SocketKit.Dialogs;
 using NKnife.Base;
 using NKnife.IoC;
 using NKnife.Mvvm;
-using SocketKnife.Default;
+using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 using SocketKnife.Protocol;
 using SocketKnife.Protocol.Interfaces;
@@ -31,16 +31,18 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
             var filter = new DefaultFilter();
-            var protocolTools = DI.Get<IProtocolTools>();
-            protocolTools.Family.Add("", typeof(IProtocol));
+
+            var protocolFamily = DI.Get<IProtocolFamily>();
+            protocolFamily.Add("", typeof(IProtocol));
 
             if (!_ServerList.ContainsKey(key))
             {
                 _Server = DI.Get<ISocketServerKnife>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
-                _Server.FilterChain.AddLast(filter);
+                _Server.Policy.AddLast(filter);
                 _Server.Bind(ipAddress, port);
-                _Server.Attach(protocolTools);
+                _Server.Attach(protocolFamily);
+                _Server.Attach(new HeartbeatPlan());
                 _ServerList.Add(key, _Server);
             }
             else

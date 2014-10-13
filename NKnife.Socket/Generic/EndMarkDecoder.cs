@@ -2,7 +2,7 @@
 using NKnife.Utility;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Default
+namespace SocketKnife.Generic
 {
     /// <summary>
     /// 一个最常用的 字符数组 => 字符串 转换器。

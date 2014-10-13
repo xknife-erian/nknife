@@ -4,11 +4,10 @@ using System.Xml;
 using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.IoC;
 using NKnife.Utility;
 using SocketKnife.Protocol.Interfaces;
 
-namespace SocketKnife.Default
+namespace SocketKnife.Generic
 {
     /// <summary>协议工具接口集合
     /// </summary>
@@ -16,11 +15,9 @@ namespace SocketKnife.Default
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        public DefaultProtocolTools()
-        {
-//            Family = DI.Get<IProtocolFamily>();
-        }
-
+        public IDatagramCommandParser CommandParser { get; private set; }
+        public IDatagramDecoder Decoder { get; private set; }
+        public IDatagramEncoder Encoder { get; private set; }
         public IProtocolHead Head { get; private set; }
         public IProtocolTail Tail { get; private set; }
         public IProtocolPackager Packager { get; private set; }
