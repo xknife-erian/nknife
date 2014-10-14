@@ -2,19 +2,19 @@
 using System.Data;
 using System.Data.OleDb;
 
-namespace NKnife.TSQL
+namespace NKnife.Database.DbHelper
 {
-    public class AccessExecute
+    public class AccessHelper
     {
         //private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
         public static string _ConnString;
 
         #region "ExecuteSQL"
 
-        public static int ExecuteSQL(string strSQL)
+        public static int ExecuteSql(string strSql)
         {
             var conn = new OleDbConnection(_ConnString);
-            var cmd = new OleDbCommand(strSQL, conn);
+            var cmd = new OleDbCommand(strSql, conn);
             try
             {
                 conn.Open(); //打开数据库链接
@@ -32,14 +32,14 @@ namespace NKnife.TSQL
 
         #region "ExecuteSQLDS"
 
-        public static DataSet ExecuteSQLDataSet(string strSQL)
+        public static DataSet ExecuteSqlDataSet(string strSql)
         {
             var conn = new OleDbConnection(_ConnString);
 
             try
             {
                 conn.Open();
-                var da = new OleDbDataAdapter(strSQL, conn);
+                var da = new OleDbDataAdapter(strSql, conn);
                 var ds = new DataSet("ds"); //调用OleDbDataAdapter的Fill方法，为DataSet填充数据
                 da.Fill(ds);
                 return ds; //返回得到的DataSet对象，它保存了从数据库查询到都的数据
@@ -148,7 +148,7 @@ namespace NKnife.TSQL
 
         #endregion
 
-        static AccessExecute()
+        static AccessHelper()
         {
             const string baseconn = @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source = {0}";
             const string path = @"Data\AccessData\PanChinaQRecord.mdb";
