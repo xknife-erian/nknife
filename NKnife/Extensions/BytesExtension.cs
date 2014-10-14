@@ -170,6 +170,13 @@ namespace System
             File.WriteAllBytes(path, data);
         }
 
+        /// <summary>
+        /// 报告指定的字节数组在源数组中的第一个匹配项的索引
+        /// </summary>
+        /// <param name="data">源数组</param>
+        /// <param name="target">指定的字节数组</param>
+        /// <param name="position">开始匹配的位置</param>
+        /// <returns>索引值。为-1时，指无匹配项。</returns>
         public static int IndexOf(this byte[] data, byte[] target, int position = 0)
         {
             if (position >= data.Length)
@@ -180,12 +187,19 @@ namespace System
             {
                 if (target.Length + i <= data.Length)
                 {
+                    bool ok = false;
                     for (int j = 0; j < target.Length; j++)
                     {
                         if (target[j] != data[i + j])
                         {
+                            ok = false;
                             break;
                         }
+                        ok = true;
+                    }
+                    if (ok)
+                    {
+                        return i;
                     }
                 }
                 else

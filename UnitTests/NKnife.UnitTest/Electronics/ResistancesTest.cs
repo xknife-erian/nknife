@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NKnife.Electronics;
 using NKnife.Electronics.Collections;
 
-namespace NKnife.UnitTests.Electronics
+namespace NKnife.UnitTest.Electronics
 {
     /// <summary>
     /// 

@@ -3,7 +3,7 @@ using NKnife.Electronics;
 using NKnife.Electronics.Collections;
 using NKnife.Electronics.Helper;
 
-namespace NKnife.UnitTests.Electronics
+namespace NKnife.UnitTest.Electronics
 {
     [TestClass]
     public class ResistanceValueResolveTest
