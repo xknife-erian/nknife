@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csproj", "{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.UnitTests", "NKnife.UnitTests\NKnife.UnitTests.csproj", "{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.UnitTests", "UnitTests\NKnife.UnitTests\NKnife.UnitTests.csproj", "{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.StarterKit", "NKnife.StarterKit\NKnife.StarterKit.csproj", "{BFC7CF57-92D4-4950-B926-8606EC571395}"
 EndProject
