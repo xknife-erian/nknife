@@ -17,52 +17,9 @@ namespace SocketKnife.Generic.Protocols
     {
         public KnifeProtocolContent()
         {
-            Datas = new NameValueCollection();
             Infomations = new Dictionary<string, string>(0);
             Tags = new List<object>(0);
         }
-
-        /// <summary>
-        ///     协议命令字
-        /// </summary>
-        /// <value></value>
-        public string Command { get; set; }
-
-        /// <summary>
-        ///     协议命令字参数
-        /// </summary>
-        /// <value>The command param.</value>
-        public string CommandParam { get; set; }
-
-        /// <summary>
-        ///     获取协议的大数据
-        ///     Datas,Tags,Infomations均属于协议的内容
-        ///     Datas:一般的简单数据，（一般较短）
-        ///     Tags:内容较大的数据
-        ///     Infomations:固定数据，按协议规定的必须每次携带的数据
-        /// </summary>
-        /// <value></value>
-        public List<object> Tags { get; set; }
-
-        /// <summary>
-        ///     获取协议的简单数据
-        ///     Datas,Tags,Infomations均属于协议的内容
-        ///     Datas:一般的简单数据，（一般较短）
-        ///     Tags:内容较大的数据
-        ///     Infomations:固定数据，按协议规定的必须每次携带的数据
-        /// </summary>
-        /// <value></value>
-        public NameValueCollection Datas { get; private set; }
-
-        /// <summary>
-        ///     获取协议的固定数据
-        ///     Datas,Tags,Infomations均属于协议的内容
-        ///     Datas:一般的简单数据，（一般较短）
-        ///     Tags:内容较大的数据
-        ///     Infomations:固定数据，按协议规定的必须每次携带的数据
-        /// </summary>
-        /// <value></value>
-        public Dictionary<string, string> Infomations { get; private set; }
 
         /// <summary>
         ///     Returns a <see cref="System.String" /> that represents this instance.
@@ -73,13 +30,19 @@ namespace SocketKnife.Generic.Protocols
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("Command:").Append(Command).Append(" >>> ");
-            IEnumerator myEnumerator = Datas.GetEnumerator();
+            sb.Append("Command:").Append(Command).Append("[").Append(CommandParam).Append("] >>> \r\n");
+            IEnumerator myEnumerator = Infomations.GetEnumerator();
             while ((myEnumerator.MoveNext()))
             {
                 sb.Append("[").Append(myEnumerator.Current).Append("]");
             }
+            sb.Append("\r\nTags Count:").Append(Tags.Count);
             return base.ToString();
         }
+
+        public string Command { get; set; }
+        public string CommandParam { get; set; }
+        public Dictionary<string, string> Infomations { get; private set; }
+        public List<object> Tags { get; set; }
     }
 }

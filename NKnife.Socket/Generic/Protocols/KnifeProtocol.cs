@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Ninject;
 using NKnife.Adapters;
@@ -11,7 +12,7 @@ namespace SocketKnife.Generic.Protocols
 {
     /// <summary>协议的抽象实现
     /// </summary>
-    public abstract class KnifeProtocol : IProtocol
+    public sealed class KnifeProtocol : IProtocol
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -19,11 +20,10 @@ namespace SocketKnife.Generic.Protocols
         /// </summary>
         /// <param name="family">协议家族名</param>
         /// <param name="command">协议命令字</param>
-        protected KnifeProtocol(string family, string command)
+        private KnifeProtocol(string family, string command)
         {
             Family = family;
             Command = command;
-            Tools = DI.Get<IProtocolTools>();
         }
 
         #region IProtocol Members
@@ -31,175 +31,31 @@ namespace SocketKnife.Generic.Protocols
         /// <summary>协议族名称
         /// </summary>
         /// <value>The family.</value>
-        public virtual string Family { get; protected set; }
+        public string Family { get; set; }
 
+        [Inject]
+        public IProtocolPackager Packager { get; set; }
+
+        [Inject]
+        public IProtocolUnPackager UnPackager { get; set; }
         /// <summary>Gets or sets 协议命令字
         /// </summary>
         /// <value>The command.</value>
-        public virtual string Command { get; set; }
+        public string Command { get; set; }
 
         /// <summary>协议的具体内容的容器
         /// </summary>
         [Inject]
-        public virtual IProtocolContent Content { get; set; }
-
-        /// <summary>针对协议工作的工具
-        /// </summary>
-        [Inject]
-        public virtual IProtocolTools Tools { get; set; }
-
-        /// <summary>获取第一个数据(往往协议中数据不多，当只有一个数据时用该属性比较方便)
-        /// </summary>
-        /// <value>
-        /// The first data.
-        /// </value>
-        public virtual KeyValuePair<string, string> FirstData { get; private set; }
-
-        /// <summary>Gets the <see cref="System.String"/> with the specified key.
-        /// </summary>
-        public virtual string this[string key]
-        {
-            get
-            {
-                try
-                {
-                    string value = Content.Datas[key];
-                    if (!string.IsNullOrEmpty(value))
-                        return value;
-                    if (Content.Infomations.ContainsKey(key))
-                        return Content.Infomations[key];
-                    return null;
-                }
-                catch (Exception e)
-                {
-                    _logger.Warn(string.Format("无法从协议中正确获取指定键({0})的值。", key), e);
-                    return null;
-                }
-            }
-        }
-
-        /// <summary>根据指定的键获取数据
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public virtual string Get(string key)
-        {
-            return this[key];
-        }
-
-        /// <summary>
-        /// 增加一个对象做为协议数据
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public virtual void AddTag(object value)
-        {
-            Content.Tags.Add(value);
-        }
-
-        /// <summary>
-        /// 清除所有做为协议数据的对象。
-        /// </summary>
-        public virtual void ClearTag()
-        {
-            Content.Tags.Clear();
-        }
-
-        /// <summary>
-        /// 移除指定索引的协议数据
-        /// </summary>
-        /// <param name="index">The index.</param>
-        public virtual void RemoveTag(int index)
-        {
-            Content.Tags.RemoveAt(index);
-        }
-
-        /// <summary>
-        /// 设置命令字参数.
-        /// </summary>
-        /// <param name="obj">The obj.</param>
-        public virtual void SetCommandParam(string obj)
-        {
-            Content.CommandParam = obj;
-        }
-
-        /// <summary>
-        /// 清除命令字参数
-        /// </summary>
-        public virtual void ClearCommandParam()
-        {
-            Content.CommandParam = null;
-        }
-
-        /// <summary>增加类似键值对样式的数据
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="value">The value.</param>
-        public virtual void AddData(string key, string value)
-        {
-            if (Content.Datas.Keys.Cast<string>().Any(tmpKey => tmpKey.Equals(key)))
-            {
-                Content.Datas.Remove(key);
-            }
-            Content.Datas.Add(key, value);
-
-            if (Content.Datas.Count == 1)
-            {
-                FirstData = new KeyValuePair<string, string>(key, value);
-            }
-        }
-
-        /// <summary>
-        /// 移除指定键值的数据
-        /// </summary>
-        /// <param name="key">The key.</param>
-        public virtual void RemoveData(string key)
-        {
-            Content.Datas.Remove(key);
-        }
-
-        /// <summary>
-        /// 清除所有数据
-        /// </summary>
-        public virtual void ClearData()
-        {
-            Content.Datas.Clear();
-        }
-
-        /// <summary>
-        /// 增加固定信息。Info:协议制定时确认必须携带的数据,如:时间,交易ID等
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="value">The value.</param>
-        public virtual void AddInfo(string key, string value)
-        {
-            Content.Infomations.Add(key, value);
-        }
-
-        /// <summary>
-        /// 移除指定的信息。Info:协议制定时确认必须携带的数据,如:时间,交易ID等
-        /// </summary>
-        /// <param name="key">The key.</param>
-        public virtual void RemoveInfo(string key)
-        {
-            Content.Infomations.Remove(key);
-        }
-
-        /// <summary>
-        /// 清除所有信息。Info:协议制定时确认必须携带的数据,如:时间,交易ID等
-        /// </summary>
-        public virtual void ClearInfo()
-        {
-            Content.Infomations.Clear();
-        }
+        public IProtocolContent Content { get; set; }
 
         /// <summary>
         /// 根据当前实例生成协议的原生字符串表达
         /// </summary>
         /// <returns></returns>
-        public virtual string Protocol()
+        public string Generate()
         {
             if (Content != null)
-                return Tools.Packager.Combine(Content);
+                return Packager.Combine(Content);
             return string.Empty;
         }
 
@@ -207,24 +63,21 @@ namespace SocketKnife.Generic.Protocols
         /// 根据远端得到的数据包解析，将数据填充到本实例中
         /// </summary>
         /// <param name="datagram">The datas.</param>
-        public virtual void Parse(string datagram)
+        public void Parse(string datagram)
         {
-            if (Content == null)
-                throw new NullReferenceException("协议数据容器为空:IProtocolContent");
             if (string.IsNullOrWhiteSpace(datagram))
+            {
+                Debug.Fail("空数据无法进行协议的解析");
                 return;
+            }
             try
             {
                 IProtocolContent c = Content;
-                Tools.UnPackager.Execute(ref c, datagram, Family, Command);
+                UnPackager.Execute(ref c, datagram, Family, Command);
             }
             catch (Exception e)
             {
                 _logger.Error(() => string.Format("协议字符串无法解析.{0}..{1}", e.Message, datagram));
-            }
-            if (null != Content && Content.Datas.Count > 0)
-            {
-                FirstData = new KeyValuePair<string, string>(Content.Datas.GetKey(0), Content.Datas.Get(0));
             }
         }
 
@@ -235,11 +88,11 @@ namespace SocketKnife.Generic.Protocols
             string str = string.Empty;
             try
             {
-                str = Protocol();
+                str = Generate();
             }
             catch (Exception e)
             {
-                _logger.Warn(() => string.Format("调用协议的ToString方法联动Protocol()方法时异常。{0}", e.Message));
+                _logger.Warn(() => string.Format("调用协议的ToString方法联动Generate()方法时异常。{0}", e.Message));
             }
             return str;
         }

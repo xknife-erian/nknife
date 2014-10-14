@@ -118,7 +118,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             var msg = new SocketMessage();
             msg.Command = protocol.Command;
             msg.SocketDirection = SocketDirection.Receive;
-            msg.Message = protocol.Protocol();
+            msg.Message = protocol.Generate();
             msg.Time = DateTime.Now.ToString("HH:mm:ss.fff");
             _SocketMessages.Add(msg);
         }

@@ -456,7 +456,7 @@ namespace SocketKnife
 
         protected virtual void WirteProtocol(ISocketSession session, IProtocol protocol)
         {
-            string replay = protocol.Protocol();
+            string replay = protocol.Generate();
             byte[] data = _Family.Encoder.Execute(replay);
             WirteBase(session, data);
         }
