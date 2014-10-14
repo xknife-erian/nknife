@@ -19,7 +19,7 @@ namespace SocketKnife.Generic.Families
         public string[] Execute(byte[] data, out int done)
         {
             done = data.Length;
-            data.Contains(GetTail())
+            //data.Contains(GetTail())
             string src = UtilityString.TidyUTF8(data);
             string[] result = src.Contains("ö") ? src.Split(new[] { 'ö' }, StringSplitOptions.RemoveEmptyEntries) : new[] { src };
             if (result.Length > 1)
