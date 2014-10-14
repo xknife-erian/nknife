@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NKnife", "NKnife", "{A9A2AA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog3", "NKnife.NLog3\NKnife.NLog3.csproj", "{3D1D08D2-46B0-4C33-A214-A5A76A998102}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.UnitTests", "UnitTests\NKnife.UnitTests\NKnife.UnitTests.csproj", "{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.UnitTest", "UnitTests\NKnife.UnitTest\NKnife.UnitTest.csproj", "{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
