@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -43,8 +44,8 @@ namespace NKnife.Utility
         /// </summary>
         public static string ToString(object o)
         {
-            var sb = new StringBuilder();
             Type t = o.GetType();
+            var sb = new StringBuilder();
 
             PropertyInfo[] pi = t.GetProperties();
 
@@ -56,28 +57,12 @@ namespace NKnife.Utility
                     sb.Append("\t" + i.Name + "(" + i.PropertyType + "): ");
                     if (null != i.GetValue(o, null))
                     {
-                        sb.Append(i.GetValue(o, null).ToString());
+                        sb.Append(i.GetValue(o, null));
                     }
                 }
                 catch
                 {
-                }
-                sb.Append(Environment.NewLine);
-            }
-
-            FieldInfo[] fi = t.GetFields();
-            foreach (FieldInfo i in fi)
-            {
-                try
-                {
-                    sb.Append("\t" + i.Name + "(" + i.FieldType + "): ");
-                    if (null != i.GetValue(o))
-                    {
-                        sb.Append(i.GetValue(o).ToString());
-                    }
-                }
-                catch
-                {
+                    Debug.Fail(string.Format("属性“{0}”取值时异常", i.Name));
                 }
                 sb.Append(Environment.NewLine);
             }
