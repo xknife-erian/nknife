@@ -12,7 +12,6 @@ namespace SocketKnife.Generic.Families
     {
         public KnifeProtocolFamily()
         {
-            
         }
 
         public KnifeProtocolFamily(string name)
@@ -28,5 +27,10 @@ namespace SocketKnife.Generic.Families
         public virtual IDatagramCommandParser CommandParser { get; set; }
         public virtual IDatagramDecoder Decoder { get; set; }
         public virtual IDatagramEncoder Encoder { get; set; }
+        public void Add(IProtocol protocol)
+        {
+            Add(protocol.Command, protocol);
+        }
+
     }
 }

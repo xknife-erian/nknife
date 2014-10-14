@@ -55,14 +55,27 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
 
         private static IProtocolFamily GetProtocolFamily()
         {
-            var protocolFamily = DI.Get<IProtocolFamily>();
-            protocolFamily.CommandParser = new FirstFieldCommandParser();
-            protocolFamily.Decoder = new FixedTailDecoder();
-            protocolFamily.Encoder = new DatagramEncoder();
-
             var getTicket = DI.Get<GetTicket>();
-            protocolFamily.Add(getTicket.Command, getTicket);
-            return protocolFamily;
+            var call = DI.Get<Call>();
+            var dance = DI.Get<Dance>();
+            var recall = DI.Get<ReCall>();
+            var sing = DI.Get<Sing>();
+            var register = DI.Get<Register>();
+
+
+            var family = DI.Get<IProtocolFamily>();
+            family.CommandParser = new FirstFieldCommandParser();
+            family.Decoder = new FixedTailDecoder();
+            family.Encoder = new DatagramEncoder();
+
+            family.Add(getTicket);
+            family.Add(call);
+            family.Add(dance);
+            family.Add(recall);
+            family.Add(sing);
+            family.Add(register);
+
+            return family;
         }
 
 

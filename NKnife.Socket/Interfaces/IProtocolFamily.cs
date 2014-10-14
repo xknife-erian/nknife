@@ -7,5 +7,7 @@ namespace SocketKnife.Interfaces
         IDatagramCommandParser CommandParser { get; set; }
         IDatagramDecoder Decoder { get; set; }
         IDatagramEncoder Encoder { get; set; }
+
+        void Add(IProtocol protocol);
     }
 }

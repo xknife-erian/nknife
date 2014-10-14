@@ -4,9 +4,7 @@ namespace SocketKnife.Interfaces
 {
     public interface IProtocolTools : ICloneable
     {
-        IProtocolHead Head { get; }
-        IProtocolTail Tail { get; }
-        IProtocolPackager Packager { get; }
-        IProtocolUnPackager UnPackager { get; }
+        IProtocolPackager Packager { get; set; }
+        IProtocolUnPackager UnPackager { get; set; }
     }
 }

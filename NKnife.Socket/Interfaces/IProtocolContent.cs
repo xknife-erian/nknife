@@ -13,11 +13,6 @@ namespace SocketKnife.Interfaces
     public interface IProtocolContent
     {
         /// <summary>
-        /// 描述Socket服务协议的一条消息的消息头。
-        /// </summary>
-        IProtocolHead Head { get; }
-
-        /// <summary>
         /// 协议命令字
         /// </summary>
         string Command { get; set; }
@@ -51,9 +46,5 @@ namespace SocketKnife.Interfaces
         /// Infomations:固定数据，按协议规定的必须每次携带的数据
         /// </summary>
         Dictionary<string, string> Infomations { get; }
-
-        /// <summary>描述Socket服务协议的一条消息的消息头。
-        /// </summary>
-        IProtocolTail Tail { get; }
     }
 }

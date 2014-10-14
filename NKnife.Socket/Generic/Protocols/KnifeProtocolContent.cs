@@ -65,18 +65,6 @@ namespace SocketKnife.Generic.Protocols
         public Dictionary<string, string> Infomations { get; private set; }
 
         /// <summary>
-        ///     描述Socket服务协议的一条消息的消息头。
-        /// </summary>
-        /// <value></value>
-        public IProtocolHead Head { get; private set; }
-
-        /// <summary>
-        ///     描述Socket服务协议的一条消息的消息头。
-        /// </summary>
-        /// <value></value>
-        public IProtocolTail Tail { get; private set; }
-
-        /// <summary>
         ///     Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

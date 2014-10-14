@@ -77,8 +77,6 @@
     <Compile Include="Generic\Protocols\KnifeProtocolContent.cs" />
     <Compile Include="Generic\Protocols\ProtocolDataTableDeserializeUnPackager.cs" />
     <Compile Include="Generic\Protocols\ProtocolDeserializeUnPackager.cs" />
-    <Compile Include="Generic\Protocols\ProtocolHead.cs" />
-    <Compile Include="Generic\Protocols\ProtocolTail.cs" />
     <Compile Include="Generic\Protocols\ProtocolXmlPackage.cs" />
     <Compile Include="Generic\Protocols\ProtocolXmlUnPackager.cs" />
     <Compile Include="Interfaces\IDatagramCommandParser.cs" />
@@ -88,9 +86,7 @@
     <Compile Include="Interfaces\IProtocolContent.cs" />
     <Compile Include="Interfaces\IProtocolFamily.cs" />
     <Compile Include="Interfaces\IProtocolHandler.cs" />
-    <Compile Include="Interfaces\IProtocolHead.cs" />
     <Compile Include="Interfaces\IProtocolPackager.cs" />
-    <Compile Include="Interfaces\IProtocolTail.cs" />
     <Compile Include="Interfaces\IProtocolTools.cs" />
     <Compile Include="Interfaces\IProtocolUnPackager.cs" />
     <Compile Include="Interfaces\ISocketFilter.cs" />

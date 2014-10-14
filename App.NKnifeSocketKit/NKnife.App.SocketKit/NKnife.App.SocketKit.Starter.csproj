@@ -108,7 +108,12 @@
     </Compile>
     <Compile Include="Mvvm\ViewModels\TcpServerViewViewModel.cs" />
     <Compile Include="Mvvm\WorkbenchViewModel.cs" />
+    <Compile Include="Socket\Call.cs" />
+    <Compile Include="Socket\Dance.cs" />
     <Compile Include="Socket\GetTicket.cs" />
+    <Compile Include="Socket\ReCall.cs" />
+    <Compile Include="Socket\Register.cs" />
+    <Compile Include="Socket\Sing.cs" />
     <Page Include="Dialogs\NewTcpServerCreatorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
