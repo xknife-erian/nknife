@@ -15,18 +15,18 @@ namespace NKnife.NSerial
     {
         private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
-        protected readonly ManualResetEventSlim _Reset = new ManualResetEventSlim(false);
+        protected readonly ManualResetEventSlim Reset = new ManualResetEventSlim(false);
 
-        protected byte[] _Buffer = new byte[64];
-        protected int _CurrReadLength;
-        protected bool _OnReceive;
+        protected byte[] Buffer = new byte[64];
+        protected int CurrReadLength;
+        protected bool OnReceive;
 
         /// <summary>
         ///     串口操作类（通过.net 类库）
         /// </summary>
-        protected SerialPort _SerialPort;
+        protected SerialPort SerialPort;
 
-        protected int _TimeOut = 150;
+        protected int TimeOut = 150;
 
         #region ISerialPortWrapper Members
 
@@ -42,7 +42,7 @@ namespace NKnife.NSerial
         /// <returns></returns>
         public bool InitPort(string portName)
         {
-            _SerialPort = new SerialPort
+            SerialPort = new SerialPort
                               {
                                   PortName = portName,
                                   BaudRate = 9600,
@@ -51,24 +51,24 @@ namespace NKnife.NSerial
                                   ReceivedBytesThreshold = 1,
                                   ReadBufferSize = 32,
                               };
-            _SerialPort.DataReceived += SerialPortDataReceived;
-            _SerialPort.ErrorReceived += SerialPortErrorReceived;
+            SerialPort.DataReceived += SerialPortDataReceived;
+            SerialPort.ErrorReceived += SerialPortErrorReceived;
             try
             {
-                if (_SerialPort.IsOpen)
+                if (SerialPort.IsOpen)
                 {
-                    _SerialPort.Close();
-                    _SerialPort.Open();
+                    SerialPort.Close();
+                    SerialPort.Open();
                 }
                 else
                 {
-                    _SerialPort.Open();
+                    SerialPort.Open();
                 }
-                IsOpen = _SerialPort.IsOpen;
+                IsOpen = SerialPort.IsOpen;
                 if (IsOpen)
-                    _Logger.Info(string.Format("通讯:成功打开串口:{0}。{1},{2},{3}", portName, _SerialPort.BaudRate,
-                                               _SerialPort.ReceivedBytesThreshold, _SerialPort.ReadTimeout));
-                return _SerialPort.IsOpen;
+                    _Logger.Info(string.Format("通讯:成功打开串口:{0}。{1},{2},{3}", portName, SerialPort.BaudRate,
+                                               SerialPort.ReceivedBytesThreshold, SerialPort.ReadTimeout));
+                return SerialPort.IsOpen;
             }
             catch (Exception e)
             {
@@ -86,17 +86,17 @@ namespace NKnife.NSerial
         {
             try
             {
-                if (_SerialPort.IsOpen)
+                if (SerialPort.IsOpen)
                 {
-                    _SerialPort.Close();
-                    _Logger.Info(string.Format("通讯:成功关闭串口:{0}。", _SerialPort.PortName));
+                    SerialPort.Close();
+                    _Logger.Info(string.Format("通讯:成功关闭串口:{0}。", SerialPort.PortName));
                 }
                 IsOpen = false;
                 return true;
             }
             catch (Exception e)
             {
-                _Logger.Warn("关闭串口异常:" + _SerialPort.PortName, e);
+                _Logger.Warn("关闭串口异常:" + SerialPort.PortName, e);
                 return false;
             }
         }
@@ -109,8 +109,8 @@ namespace NKnife.NSerial
         {
             if (!IsOpen)
                 return;
-            _SerialPort.ReadTimeout = timeout;
-            _TimeOut = timeout;
+            SerialPort.ReadTimeout = timeout;
+            TimeOut = timeout;
         }
 
         /// <summary>
@@ -123,20 +123,20 @@ namespace NKnife.NSerial
         {
             try
             {
-                _CurrReadLength = 0;
-                _SerialPort.Write(cmd, 0, cmd.Length);
-                _OnReceive = true;
-                _Reset.Reset();
-                _Reset.Wait(_TimeOut); //收到返回
-                _OnReceive = false;
+                CurrReadLength = 0;
+                SerialPort.Write(cmd, 0, cmd.Length);
+                OnReceive = true;
+                Reset.Reset();
+                Reset.Wait(TimeOut); //收到返回
+                OnReceive = false;
 
-                int currReadLength = _CurrReadLength;
+                int currReadLength = CurrReadLength;
                 if (currReadLength > 0)
                 {
                     recv = new byte[currReadLength];
-                    Array.Copy(_Buffer, recv, currReadLength);
-                    _Buffer = new byte[64];
-                    _CurrReadLength = 0;
+                    Array.Copy(Buffer, recv, currReadLength);
+                    Buffer = new byte[64];
+                    CurrReadLength = 0;
                 }
                 else
                 {
@@ -154,22 +154,22 @@ namespace NKnife.NSerial
         #endregion
 
         /// <summary>
-        ///     接收到数据
+        /// 接收到数据
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected virtual void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            if (!_OnReceive)
+            if (!OnReceive)
             {
-                _SerialPort.DiscardInBuffer();
+                SerialPort.DiscardInBuffer();
                 return;
             }
             var readedBuffer = new byte[64];
             int recvCount = 0;
             try
             {
-                recvCount = _SerialPort.Read(readedBuffer, 0, readedBuffer.Length);
+                recvCount = SerialPort.Read(readedBuffer, 0, readedBuffer.Length);
             }
             catch (TimeoutException ex)
             {
@@ -179,27 +179,27 @@ namespace NKnife.NSerial
             {
                 
             }
-            if (recvCount > 0 && _CurrReadLength + recvCount <= _Buffer.Length)
+            if (recvCount > 0 && CurrReadLength + recvCount <= Buffer.Length)
             {
-                Buffer.BlockCopy(readedBuffer, 0, _Buffer, _CurrReadLength, recvCount);
-                _CurrReadLength += recvCount;
+                System.Buffer.BlockCopy(readedBuffer, 0, Buffer, CurrReadLength, recvCount);
+                CurrReadLength += recvCount;
                 //TODO 结束符要做成活的，不能使用固定的0xFF
                 if (readedBuffer[recvCount - 1] == 0xFF) //校验指令结束符FF
                 {
-                    _Reset.Set();
-                    _OnReceive = false;
+                    Reset.Set();
+                    OnReceive = false;
                 }
             }
             else
             {
-                _Buffer = new byte[64];
-                _CurrReadLength = 0;
+                Buffer = new byte[64];
+                CurrReadLength = 0;
             }
         }
 
         protected virtual void SerialPortErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
-            _SerialPort.DiscardInBuffer();
+            SerialPort.DiscardInBuffer();
         }
     }
 }

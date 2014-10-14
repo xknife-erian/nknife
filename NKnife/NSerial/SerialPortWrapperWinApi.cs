@@ -4,11 +4,11 @@ using NKnife.NSerial.Base;
 
 namespace NKnife.NSerial
 {
-    public class SerialPortWrapper : ISerialPortWrapper
+    public class SerialPortWrapperWinApi : ISerialPortWrapper
     {
         /// <summary>通过windows api实现的串口操作类
         /// </summary>
-        private SerialPortPro _SerialPort;
+        private SerialPortWin32 _SerialPort;
 
         #region ISerialPortWrapper Members
 
@@ -22,11 +22,11 @@ namespace NKnife.NSerial
         /// <returns></returns>
         public bool InitPort(string portName)
         {
-            _SerialPort = new SerialPortPro {Port = portName, BaudRate = 9600, ByteSize = 8, ReadTimeout = 150};
+            _SerialPort = new SerialPortWin32 {Port = portName, BaudRate = 9600, ByteSize = 8, ReadTimeout = 150};
 
             try
             {
-                if (_SerialPort._Opened)
+                if (_SerialPort.Opened)
                 {
                     _SerialPort.Close();
                     _SerialPort.Open();
@@ -56,7 +56,7 @@ namespace NKnife.NSerial
         {
             try
             {
-                if (_SerialPort._Opened)
+                if (_SerialPort.Opened)
                 {
                     _SerialPort.Close();
                 }

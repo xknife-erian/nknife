@@ -6,7 +6,7 @@ namespace NKnife.NSerial
     /// </summary>
     public enum SerialType
     {
-        API,
+        WinApi,
         DotNet
     }
 }

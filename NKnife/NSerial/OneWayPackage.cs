@@ -12,14 +12,12 @@ namespace NKnife.NSerial
         {
         }
 
-        #region IEquatable<OneWayPackage> Members
+        #region IEquatable<OneWayPackage> Members，及相关重写
 
         public bool Equals(OneWayPackage other)
         {
             return other.Port.Equals(Port) && other.DataToSend.Equals(DataToSend);
         }
-
-        #endregion
 
         public override bool Equals(object obj)
         {
@@ -43,5 +41,6 @@ namespace NKnife.NSerial
         {
             return !Equals(left, right);
         }
+        #endregion
     }
 }

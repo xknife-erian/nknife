@@ -199,7 +199,7 @@ namespace NKnife.GUI.WinForm.WinFormContainer
 
         #endregion 属性
 
-        #region Win32 API
+        #region Win32 WinApi
         [DllImport("user32.dll", EntryPoint = "GetWindowThreadProcessId", SetLastError = true,
              CharSet = CharSet.Unicode, ExactSpelling = true,
              CallingConvention = CallingConvention.StdCall)]
@@ -297,7 +297,7 @@ namespace NKnife.GUI.WinForm.WinFormContainer
         //const int PROCESS_ALL_ACCESS = 0x1F0FFF;
         //const int PROCESS_VM_READ = 0x0010;
         //const int PROCESS_VM_WRITE = 0x0020;     
-        #endregion Win32 API
+        #endregion Win32 WinApi
 
         public void EmbedAgain()
         {

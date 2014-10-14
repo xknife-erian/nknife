@@ -19,7 +19,7 @@ namespace NKnife.NSerial
         private ISerialDataPool _DataPool;
         private string _PortName;
 
-        public SerialCommunication(bool enableDetialLog = false, SerialType serialType = SerialType.API)
+        public SerialCommunication(bool enableDetialLog = false, SerialType serialType = SerialType.WinApi)
         {
             _EnableDetialLogger = enableDetialLog;
             switch (serialType)
@@ -28,7 +28,7 @@ namespace NKnife.NSerial
                     _SerialComm = new SerialPortWrapperDotNet();
                     break;
                 default:
-                    _SerialComm = new SerialPortWrapper();
+                    _SerialComm = new SerialPortWrapperWinApi();
                     break;
             }
         }

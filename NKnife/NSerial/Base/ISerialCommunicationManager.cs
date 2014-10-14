@@ -4,7 +4,7 @@ namespace NKnife.NSerial.Base
     /// </summary>
     public interface ISerialCommunicationManager
     {
-        bool Initialize(SerialType serialType = SerialType.API, bool enableDetialLog = false);
+        bool Initialize(SerialType serialType = SerialType.WinApi, bool enableDetialLog = false);
 
         /// <summary>添加一个串口
         /// </summary>

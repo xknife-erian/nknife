@@ -496,8 +496,8 @@
     <Compile Include="NSerial\SerialCommunication.cs" />
     <Compile Include="NSerial\SerialCommunicationManager.cs" />
     <Compile Include="NSerial\SerialDataPool.cs" />
-    <Compile Include="NSerial\SerialPortPro.cs" />
-    <Compile Include="NSerial\SerialPortWrapper.cs" />
+    <Compile Include="NSerial\SerialPortWin32.cs" />
+    <Compile Include="NSerial\SerialPortWrapperWinApi.cs" />
     <Compile Include="NSerial\SerialPortWrapperDotNet.cs" />
     <Compile Include="NSerial\SerialType.cs" />
     <Compile Include="NSerial\TwoWayPackage.cs" />

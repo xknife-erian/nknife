@@ -29,7 +29,7 @@ namespace NKnife.NSerial
 
         #region ISerialCommunicationManager Members
 
-        public bool Initialize(SerialType serialType = SerialType.API, bool enableDetialLog = false)
+        public bool Initialize(SerialType serialType = SerialType.WinApi, bool enableDetialLog = false)
         {
             _EnableDetialLog = enableDetialLog;
             _SerialType = serialType;

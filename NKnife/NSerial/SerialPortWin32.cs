@@ -6,15 +6,15 @@ namespace NKnife.NSerial
 {
     ///<summary>串口类操作类，通过windows api实现
     ///</summary>
-    public class SerialPortPro
+    public class SerialPortWin32
     {
         ///<summary>奇偶校验0-4=no,odd,even,mark,space 
         ///</summary>
-        public const byte PARITY = 0; //0-4=no,odd,even,mark,space 
+        public const byte Parity = 0; //0-4=no,odd,even,mark,space 
 
         ///<summary>停止位
         ///</summary>
-        public const byte STOP_BITS = 0; //0,1,2 = 1, 1.5, 2 
+        public const byte StopBits = 0; //0,1,2 = 1, 1.5, 2 
 
         ///<summary>COM口句柄
         ///</summary>
@@ -22,9 +22,9 @@ namespace NKnife.NSerial
 
         ///<summary>串口是否已经打开
         ///</summary>
-        public bool _Opened;
+        public bool Opened;
 
-        public SerialPortPro()
+        public SerialPortWin32()
         {
             BaudRate = 9600;
             ByteSize = 8;
@@ -101,12 +101,12 @@ namespace NKnife.NSerial
             dcb.BaudRate = BaudRate;
             dcb.flags = 0;
             dcb.ByteSize = ByteSize;
-            dcb.StopBits = STOP_BITS;
-            dcb.Parity = PARITY;
+            dcb.StopBits = StopBits;
+            dcb.Parity = Parity;
 
             //------------------------------
             SetDcbFlag(0, 1, dcb); //二进制方式 
-            SetDcbFlag(1, (PARITY == 0) ? 0 : 1, dcb);
+            SetDcbFlag(1, (Parity == 0) ? 0 : 1, dcb);
             SetDcbFlag(2, 0, dcb); //不用CTS检测发送流控制
             SetDcbFlag(3, 0, dcb); //不用DSR检测发送流控制
             SetDcbFlag(4, 0, dcb); //禁止DTR流量控制
@@ -132,7 +132,7 @@ namespace NKnife.NSerial
             {
                 return -2;
             }
-            _Opened = true;
+            Opened = true;
             return 0;
         }
 
