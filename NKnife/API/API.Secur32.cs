@@ -424,7 +424,7 @@ namespace NKnife.API
 						//         + Buffers[i - 1].Size - Buffers[i].Size;
 						// }
 						// else
-						// throw new InvalidOperationException("I do not know ho to fix SSPI API return data");
+						// throw new InvalidOperationException("I do not know ho to fix SSPI WinApi return data");
 					}
 				}
 			}

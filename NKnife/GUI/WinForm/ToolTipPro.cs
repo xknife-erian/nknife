@@ -457,7 +457,7 @@ namespace NKnife.GUI.WinForm
 
         #endregion
 
-        #region API
+        #region WinApi
 
         [DllImport("user32.dll")]
         private static extern IntPtr BeginPaint(IntPtr hWnd, ref PAINTSTRUCT ps);
