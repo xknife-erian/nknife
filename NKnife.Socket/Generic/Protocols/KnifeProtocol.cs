@@ -12,7 +12,7 @@ namespace SocketKnife.Generic.Protocols
 {
     /// <summary>协议的抽象实现
     /// </summary>
-    public sealed class KnifeProtocol : IProtocol
+    public class KnifeProtocol : IProtocol
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -20,7 +20,7 @@ namespace SocketKnife.Generic.Protocols
         /// </summary>
         /// <param name="family">协议家族名</param>
         /// <param name="command">协议命令字</param>
-        private KnifeProtocol(string family, string command)
+        protected KnifeProtocol(string family, string command)
         {
             Family = family;
             Command = command;
@@ -33,15 +33,17 @@ namespace SocketKnife.Generic.Protocols
         /// <value>The family.</value>
         public string Family { get; set; }
 
+        public string Command
+        {
+            get { return Content.Command; }
+            set { Content.Command = value; }
+        }
+
         [Inject]
         public IProtocolPackager Packager { get; set; }
 
         [Inject]
         public IProtocolUnPackager UnPackager { get; set; }
-        /// <summary>Gets or sets 协议命令字
-        /// </summary>
-        /// <value>The command.</value>
-        public string Command { get; set; }
 
         /// <summary>协议的具体内容的容器
         /// </summary>

@@ -121,12 +121,12 @@ namespace SocketKnife.Generic.Protocols
         {
             // Datas,Tags,Infomations均属于协议的内容。
             // Datas:一般的简单数据，（一般较短）。
-            if (content.Datas.Count > 0)
+            if (content.Infomations.Count > 0)
             {
                 writer.WriteStartElement("Datas");
-                for (int i = 0; i < content.Datas.Count; i++)
+                foreach (var infomation in content.Infomations)
                 {
-                    writer.WriteAttributeString(content.Datas.GetKey(i), content.Datas.Get(i));
+                    writer.WriteAttributeString(infomation.Key, infomation.Value);
                 }
                 writer.WriteEndElement();
             }
@@ -141,7 +141,7 @@ namespace SocketKnife.Generic.Protocols
             {
                 //命令参数
                 if (!string.IsNullOrEmpty(content.CommandParam))
-                    writer.WriteAttributeString("Parm", content.CommandParam);
+                    writer.WriteAttributeString("Param", content.CommandParam);
             }
         }
     }

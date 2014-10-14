@@ -116,15 +116,15 @@ namespace SocketKnife.Generic.Protocols
         {
             foreach (XmlAttribute attr in dataElement.Attributes)
             {
-                content.Datas.Add(attr.LocalName, attr.Value);
+                content.Infomations.Add(attr.LocalName, attr.Value);
             }
         }
 
         protected virtual void ParseParm(IProtocolContent content, XmlElement docElement)
         {
-            if (docElement.HasAttribute("Parm"))
+            if (docElement.HasAttribute("Param"))
             {
-                content.CommandParam = docElement.GetAttribute("Parm");
+                content.CommandParam = docElement.GetAttribute("Param");
             }
         }
 
