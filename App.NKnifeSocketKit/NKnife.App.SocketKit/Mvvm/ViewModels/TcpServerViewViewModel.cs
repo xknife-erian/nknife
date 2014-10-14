@@ -33,9 +33,6 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
             var keepAliveFilter = new KeepAliveServerFilter();
-            keepAliveFilter.CommandParser = new DatagramCommandParser();
-            keepAliveFilter.Decoder = new DatagramDecoder();
-            keepAliveFilter.Encoder = new DatagramEncoder();
 
             var protocolFamily = GetProtocolFamily();
 
@@ -58,6 +55,10 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         private static IProtocolFamily GetProtocolFamily()
         {
             var protocolFamily = DI.Get<IProtocolFamily>();
+            protocolFamily.CommandParser = new DatagramCommandParser();
+            protocolFamily.Decoder = new FixedTailDecoder();
+            protocolFamily.Encoder = new DatagramEncoder();
+
             var getTicket = new GetTicket();
             protocolFamily.Add(getTicket.Command, getTicket);
             return protocolFamily;

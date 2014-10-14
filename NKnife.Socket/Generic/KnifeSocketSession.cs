@@ -15,9 +15,9 @@ namespace SocketKnife.Generic
             Id = DateTime.Now.Ticks;
         }
 
-        public long Id { get; private set; }
-        public EndPoint Point { get; set; }
-        public Socket Socket { get; set; }
+        public virtual long Id { get; private set; }
+        public virtual EndPoint Point { get; set; }
+        public virtual Socket Socket { get; set; }
 
     }
 }

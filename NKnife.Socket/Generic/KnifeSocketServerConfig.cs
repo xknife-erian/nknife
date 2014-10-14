@@ -13,10 +13,10 @@ namespace SocketKnife.Generic
             SendTimeout = sendTimeout;
         }
 
-        public int ReadBufferSize { get; set; }
-        public int MaxBufferSize { get; set; }
-        public int MaxConnectCount { get; set; }
-        public int ReceiveTimeout { get; set; }
-        public int SendTimeout { get; set; }
+        public virtual int ReadBufferSize { get; set; }
+        public virtual int MaxBufferSize { get; set; }
+        public virtual int MaxConnectCount { get; set; }
+        public virtual int ReceiveTimeout { get; set; }
+        public virtual int SendTimeout { get; set; }
     }
 }

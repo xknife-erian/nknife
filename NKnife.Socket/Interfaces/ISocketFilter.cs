@@ -7,10 +7,6 @@ namespace SocketKnife.Interfaces
 {
     public interface ISocketFilter
     {
-        IDatagramCommandParser CommandParser { get; set; }
-        IDatagramDecoder Decoder { get; set; }
-        IDatagramEncoder Encoder { get; set; }
-
         void PrcoessReceiveData(Socket socket, byte[] data);
 
         void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter);

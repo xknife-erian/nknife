@@ -25,8 +25,8 @@ namespace SocketKnife.Generic.Families
         /// <value>The family.</value>
         public string Family { get; private set; }
 
-        public IDatagramCommandParser CommandParser { get; private set; }
-        public IDatagramDecoder Decoder { get; private set; }
-        public IDatagramEncoder Encoder { get; private set; }
+        public virtual IDatagramCommandParser CommandParser { get; set; }
+        public virtual IDatagramDecoder Decoder { get; set; }
+        public virtual IDatagramEncoder Encoder { get; set; }
     }
 }

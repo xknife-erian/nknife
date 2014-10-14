@@ -111,7 +111,8 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
         {
-            string[] datagram = Decoder.Execute(data, out done);
+            var family = _FamilyGetter.Invoke();
+            string[] datagram = family.Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _logger.Debug("协议消息无内容。");
@@ -124,8 +125,7 @@ namespace SocketKnife.Generic.Filters
                     continue;
                 try
                 {
-                    string command = CommandParser.GetCommand(dg);
-                    var family = _FamilyGetter.Invoke();
+                    string command = family.CommandParser.GetCommand(dg);
                     IProtocol protocol = family[command];
                     _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
                     if (protocol != null)

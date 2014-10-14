@@ -120,7 +120,9 @@ namespace System
         public static byte[] Hash(this byte[] data, string hashName)
         {
             var algorithm = string.IsNullOrEmpty(hashName) ? HashAlgorithm.Create() : HashAlgorithm.Create(hashName);
-            return algorithm.ComputeHash(data);
+            if (algorithm != null)
+                return algorithm.ComputeHash(data);
+            return null;
         }
 
         /// <summary>使用默认算法Hash
@@ -166,6 +168,32 @@ namespace System
         public static void Save(this byte[] data, string path)
         {
             File.WriteAllBytes(path, data);
+        }
+
+        public static int IndexOf(this byte[] data, byte[] target, int position = 0)
+        {
+            if (position >= data.Length)
+            {
+                return -1;
+            }
+            for (int i = position; i < data.Length; i++)
+            {
+                if (target.Length + i <= data.Length)
+                {
+                    for (int j = 0; j < target.Length; j++)
+                    {
+                        if (target[j] != data[i + j])
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            return -1;
         }
 
         /// <summary>转换为内存流

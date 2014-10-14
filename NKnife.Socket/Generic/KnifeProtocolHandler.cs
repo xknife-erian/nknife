@@ -14,7 +14,7 @@ namespace SocketKnife.Generic
         protected Action<ISocketSession, byte[]> _WriteBaseMethod;
         protected Action<ISocketSession, IProtocol> _WriteProtocolMethod;
 
-        public ISocketSessionMap SessionMap { get; private set; }
+        public virtual ISocketSessionMap SessionMap { get; private set; }
 
         public virtual void Bind(Action<ISocketSession, byte[]> sendMethod)
         {
