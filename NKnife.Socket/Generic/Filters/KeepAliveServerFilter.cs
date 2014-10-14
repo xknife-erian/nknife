@@ -123,9 +123,10 @@ namespace SocketKnife.Generic.Filters
             {
                 if (string.IsNullOrWhiteSpace(dg))
                     continue;
+                string command = string.Empty;
                 try
                 {
-                    string command = family.CommandParser.GetCommand(dg);
+                    command = family.CommandParser.GetCommand(dg);
                     IProtocol protocol = family[command];
                     _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
                     if (protocol != null)
@@ -139,7 +140,7 @@ namespace SocketKnife.Generic.Filters
                 }
                 catch (Exception ex)
                 {
-                    _logger.Warn(string.Format("协议字符串预处理异常。{0}", dg), ex);
+                    _logger.Warn(string.Format("预处理异常。内容:{0};命令字:{1}。{2}", dg, command, ex.Message), ex);
                 }
             }
         }

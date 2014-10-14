@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
@@ -30,31 +31,33 @@ namespace SocketKnife.Generic.Protocols
         /// <summary>协议族名称
         /// </summary>
         /// <value>The family.</value>
-        public string Family { get; protected set; }
+        public virtual string Family { get; protected set; }
 
         /// <summary>Gets or sets 协议命令字
         /// </summary>
         /// <value>The command.</value>
-        public string Command { get; set; }
+        public virtual string Command { get; set; }
 
         /// <summary>协议的具体内容的容器
         /// </summary>
-        public IProtocolContent Content { get; set; }
+        [Inject]
+        public virtual IProtocolContent Content { get; set; }
 
         /// <summary>针对协议工作的工具
         /// </summary>
-        public IProtocolTools Tools { get; set; }
+        [Inject]
+        public virtual IProtocolTools Tools { get; set; }
 
         /// <summary>获取第一个数据(往往协议中数据不多，当只有一个数据时用该属性比较方便)
         /// </summary>
         /// <value>
         /// The first data.
         /// </value>
-        public KeyValuePair<string, string> FirstData { get; private set; }
+        public virtual KeyValuePair<string, string> FirstData { get; private set; }
 
         /// <summary>Gets the <see cref="System.String"/> with the specified key.
         /// </summary>
-        public string this[string key]
+        public virtual string this[string key]
         {
             get
             {
@@ -79,7 +82,7 @@ namespace SocketKnife.Generic.Protocols
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public string Get(string key)
+        public virtual string Get(string key)
         {
             return this[key];
         }
@@ -88,7 +91,7 @@ namespace SocketKnife.Generic.Protocols
         /// 增加一个对象做为协议数据
         /// </summary>
         /// <param name="value">The value.</param>
-        public void AddTag(object value)
+        public virtual void AddTag(object value)
         {
             Content.Tags.Add(value);
         }
@@ -96,7 +99,7 @@ namespace SocketKnife.Generic.Protocols
         /// <summary>
         /// 清除所有做为协议数据的对象。
         /// </summary>
-        public void ClearTag()
+        public virtual void ClearTag()
         {
             Content.Tags.Clear();
         }
@@ -105,7 +108,7 @@ namespace SocketKnife.Generic.Protocols
         /// 移除指定索引的协议数据
         /// </summary>
         /// <param name="index">The index.</param>
-        public void RemoveTag(int index)
+        public virtual void RemoveTag(int index)
         {
             Content.Tags.RemoveAt(index);
         }
@@ -114,7 +117,7 @@ namespace SocketKnife.Generic.Protocols
         /// 设置命令字参数.
         /// </summary>
         /// <param name="obj">The obj.</param>
-        public void SetCommandParam(string obj)
+        public virtual void SetCommandParam(string obj)
         {
             Content.CommandParam = obj;
         }
@@ -122,7 +125,7 @@ namespace SocketKnife.Generic.Protocols
         /// <summary>
         /// 清除命令字参数
         /// </summary>
-        public void ClearCommandParam()
+        public virtual void ClearCommandParam()
         {
             Content.CommandParam = null;
         }
@@ -131,7 +134,7 @@ namespace SocketKnife.Generic.Protocols
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        public void AddData(string key, string value)
+        public virtual void AddData(string key, string value)
         {
             if (Content.Datas.Keys.Cast<string>().Any(tmpKey => tmpKey.Equals(key)))
             {
@@ -149,7 +152,7 @@ namespace SocketKnife.Generic.Protocols
         /// 移除指定键值的数据
         /// </summary>
         /// <param name="key">The key.</param>
-        public void RemoveData(string key)
+        public virtual void RemoveData(string key)
         {
             Content.Datas.Remove(key);
         }
@@ -157,7 +160,7 @@ namespace SocketKnife.Generic.Protocols
         /// <summary>
         /// 清除所有数据
         /// </summary>
-        public void ClearData()
+        public virtual void ClearData()
         {
             Content.Datas.Clear();
         }
@@ -167,7 +170,7 @@ namespace SocketKnife.Generic.Protocols
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        public void AddInfo(string key, string value)
+        public virtual void AddInfo(string key, string value)
         {
             Content.Infomations.Add(key, value);
         }
@@ -176,7 +179,7 @@ namespace SocketKnife.Generic.Protocols
         /// 移除指定的信息。Info:协议制定时确认必须携带的数据,如:时间,交易ID等
         /// </summary>
         /// <param name="key">The key.</param>
-        public void RemoveInfo(string key)
+        public virtual void RemoveInfo(string key)
         {
             Content.Infomations.Remove(key);
         }
@@ -184,7 +187,7 @@ namespace SocketKnife.Generic.Protocols
         /// <summary>
         /// 清除所有信息。Info:协议制定时确认必须携带的数据,如:时间,交易ID等
         /// </summary>
-        public void ClearInfo()
+        public virtual void ClearInfo()
         {
             Content.Infomations.Clear();
         }
@@ -193,7 +196,7 @@ namespace SocketKnife.Generic.Protocols
         /// 根据当前实例生成协议的原生字符串表达
         /// </summary>
         /// <returns></returns>
-        public string Protocol()
+        public virtual string Protocol()
         {
             if (Content != null)
                 return Tools.Packager.Combine(Content);

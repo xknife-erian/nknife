@@ -13,6 +13,7 @@ using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Filters;
+using SocketKnife.Generic.Protocols;
 using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Mvvm.ViewModels
@@ -59,7 +60,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             protocolFamily.Decoder = new FixedTailDecoder();
             protocolFamily.Encoder = new DatagramEncoder();
 
-            var getTicket = new GetTicket();
+            var getTicket = DI.Get<GetTicket>();
             protocolFamily.Add(getTicket.Command, getTicket);
             return protocolFamily;
         }

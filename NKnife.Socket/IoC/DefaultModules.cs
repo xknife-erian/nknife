@@ -15,11 +15,13 @@ namespace SocketKnife.IoC
         public override void Load()
         {
             Bind<ISocketServerConfig>().To<KnifeSocketServerConfig>();
-            Bind<IProtocolFamily>().To<KnifeProtocolFamily>();
-            Bind<IProtocolTools>().To<KnifeProtocolTools>();
             Bind<ISocketSessionMap>().To<KnifeSocketSessionMap>();
             Bind<ISocketPolicy>().To<KnifeSocketPolicy>();
             Bind<ISocketSession>().To<KnifeSocketSession>();
+
+            Bind<IProtocolFamily>().To<KnifeProtocolFamily>();
+            Bind<IProtocolTools>().To<KnifeProtocolTools>();
+            Bind<IProtocolContent>().To<KnifeProtocolContent>();
         }
     }
 }
