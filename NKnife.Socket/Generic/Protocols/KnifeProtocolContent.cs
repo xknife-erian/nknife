@@ -44,5 +44,10 @@ namespace SocketKnife.Generic.Protocols
         public string CommandParam { get; set; }
         public Dictionary<string, string> Infomations { get; private set; }
         public List<object> Tags { get; set; }
+        public IProtocolContent NewInstance()
+        {
+            var pc = new KnifeProtocolContent();
+            return pc;
+        }
     }
 }

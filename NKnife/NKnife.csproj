@@ -66,6 +66,7 @@
     <Compile Include="Algrithm\IAsyncOperation.cs" />
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="API\API.Kernel32.cs" />
+    <Compile Include="Collections\AsyncObservableCollection`.cs" />
     <Compile Include="Converts\Converting.cs" />
     <Compile Include="Converts\UtilityConvert.cs" />
     <Compile Include="Database\Common\DatabaseCoderSetting.cs" />

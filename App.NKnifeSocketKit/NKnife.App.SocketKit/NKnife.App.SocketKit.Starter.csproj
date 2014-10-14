@@ -97,6 +97,7 @@
     <Compile Include="Common\ServerList.cs" />
     <Compile Include="IoC\ClientModule.cs" />
     <Compile Include="IoC\ServerModule.cs" />
+    <Compile Include="Mvvm\ViewModels\DemoServerHandler.cs" />
     <Compile Include="Mvvm\Views\LoggerView.xaml.cs">
       <DependentUpon>LoggerView.xaml</DependentUpon>
     </Compile>

@@ -32,5 +32,9 @@ namespace SocketKnife.Generic.Families
             Add(protocol.Command, protocol);
         }
 
+        public IProtocol NewProtocol(string command)
+        {
+            return this[command].NewInstance();
+        }
     }
 }

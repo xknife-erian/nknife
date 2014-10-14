@@ -26,7 +26,8 @@ namespace NKnife.App.SocketKit.Mvvm.Views
         {
             InitializeComponent();
             _View.DataContext = _ViewModel;
-            
+            _ViewModel.Dispatcher = this.Dispatcher;
+
         }
         private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)
         {

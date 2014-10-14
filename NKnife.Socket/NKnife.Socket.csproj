@@ -76,8 +76,10 @@
     <Compile Include="Generic\Protocols\KnifeProtocolContent.cs" />
     <Compile Include="Generic\Protocols\ProtocolDataTableDeserializeUnPackager.cs" />
     <Compile Include="Generic\Protocols\ProtocolDeserializeUnPackager.cs" />
-    <Compile Include="Generic\Protocols\ProtocolXmlPackage.cs" />
+    <Compile Include="Generic\Protocols\ProtocolXmlPackager.cs" />
     <Compile Include="Generic\Protocols\ProtocolXmlUnPackager.cs" />
+    <Compile Include="Generic\Protocols\TextPlainPackager.cs" />
+    <Compile Include="Generic\Protocols\TextPlainUnPackager.cs" />
     <Compile Include="Interfaces\IDatagramCommandParser.cs" />
     <Compile Include="Interfaces\IDatagramDecoder.cs" />
     <Compile Include="Interfaces\IDatagramEncoder.cs" />

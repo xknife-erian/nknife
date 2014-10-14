@@ -9,5 +9,7 @@ namespace SocketKnife.Interfaces
         IDatagramEncoder Encoder { get; set; }
 
         void Add(IProtocol protocol);
+
+        IProtocol NewProtocol(string command);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SocketKnife.Interfaces
 {
@@ -33,5 +34,6 @@ namespace SocketKnife.Interfaces
         /// </summary>
         void Parse(string datagram);
 
+        IProtocol NewInstance();
     }
 }

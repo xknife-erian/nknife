@@ -22,7 +22,7 @@ namespace SocketKnife.Generic.Filters
         {
             base.OnConnectionBreak(e);
             var endPoint = e.RemoteEndPoint;
-            if (!_DataMonitors.ContainsKey(endPoint))
+            if (endPoint != null && !_DataMonitors.ContainsKey(endPoint))
             {
                 var dataMonitor = new DataMonitor();
                 _DataMonitors.AddOrUpdate(endPoint, dataMonitor, (p, m) => m);
@@ -127,7 +127,7 @@ namespace SocketKnife.Generic.Filters
                 try
                 {
                     command = family.CommandParser.GetCommand(dg);
-                    IProtocol protocol = family[command];
+                    IProtocol protocol = family.NewProtocol(command);
                     _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
                     if (protocol != null)
                     {

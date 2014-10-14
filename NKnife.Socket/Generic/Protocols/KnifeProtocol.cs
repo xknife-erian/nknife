@@ -33,11 +33,7 @@ namespace SocketKnife.Generic.Protocols
         /// <value>The family.</value>
         public string Family { get; set; }
 
-        public string Command
-        {
-            get { return Content.Command; }
-            set { Content.Command = value; }
-        }
+        public string Command { get; set; }
 
         [Inject]
         public IProtocolPackager Packager { get; set; }
@@ -83,6 +79,15 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
+        public IProtocol NewInstance()
+        {
+            var p = new KnifeProtocol(Family, Command);
+            p.Packager = Packager;
+            p.UnPackager = UnPackager;
+            p.Content = Content.NewInstance();
+            return p;
+        }
+
         #endregion
 
         public override string ToString()
@@ -98,5 +103,6 @@ namespace SocketKnife.Generic.Protocols
             }
             return str;
         }
+
     }
 }

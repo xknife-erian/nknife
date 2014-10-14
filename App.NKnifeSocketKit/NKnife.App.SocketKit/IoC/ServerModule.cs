@@ -6,6 +6,7 @@ using Ninject.Modules;
 using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Dialogs;
 using SocketKnife;
+using SocketKnife.Generic.Protocols;
 using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.IoC
@@ -14,8 +15,11 @@ namespace NKnife.App.SocketKit.IoC
     {
         public override void Load()
         {
-            Bind<IKnifeSocketServer>().To<KnifeServer>();
             Bind<ServerList>().ToSelf().InSingletonScope();
+            Bind<IKnifeSocketServer>().To<KnifeServer>();
+
+            Bind<IProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
+            Bind<IProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();
         }
     }
 }
