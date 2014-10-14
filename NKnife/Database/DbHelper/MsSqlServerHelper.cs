@@ -1,21 +1,24 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text.RegularExpressions;
 
-namespace NKnife.TSQL
+namespace NKnife.Database.DbHelper
 {
-    public class DataExecute
+    public class MsSqlServerHelper
     {
         /// <summary>
         /// 测试数据库连接
         /// </summary>
         /// <returns></returns>
         /// 
-        public static bool testConn(string connStr)
+        public static bool TestConnection(string connStr)
         {
             try
             {
-                using(SqlConnection conn = new SqlConnection(connStr))
+                using(var conn = new SqlConnection(connStr))
                 {
                     conn.Open();
                 }
@@ -30,20 +33,20 @@ namespace NKnife.TSQL
         //返回DataSet
         public static DataSet ExecuteDataSet(string cmdText,string connStr)
         {
-            using (SqlConnection cn = new SqlConnection(connStr))
+            using (var cn = new SqlConnection(connStr))
             {
                 cn.Open();
 
                 //创建一个SqlCommand对象，并对其进行初始化
-                SqlCommand cmd = new SqlCommand();
+                var cmd = new SqlCommand();
                 //cmd属性赋值
                 cmd.Connection = cn;
                 cmd.CommandText = cmdText;
                 cmd.CommandType = CommandType.Text;
 
                 //创建SqlDataAdapter对象以及DataSet
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataSet ds = new DataSet();
+                var da = new SqlDataAdapter(cmd);
+                var ds = new DataSet();
                 da.Fill(ds);
 
                 //返回ds
@@ -51,23 +54,28 @@ namespace NKnife.TSQL
             }
         }
 
-        //返回DataTable
+        /// <summary>
+        /// 返回DataTable
+        /// </summary>
+        /// <param name="cmdText"></param>
+        /// <param name="connStr"></param>
+        /// <returns></returns>
         public static DataTable ExecuteDataTable(string cmdText, string connStr)
         {
-            using (SqlConnection cn = new SqlConnection(connStr))
+            using (var cn = new SqlConnection(connStr))
             {
                 cn.Open();
 
                 //创建一个SqlCommand对象，并对其进行初始化
-                SqlCommand cmd = new SqlCommand();
+                var cmd = new SqlCommand();
                 //cmd属性赋值
                 cmd.Connection = cn;
                 cmd.CommandText = cmdText;
                 cmd.CommandType = CommandType.Text;
 
                 //创建SqlDataAdapter对象以及DataSet
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+                var da = new SqlDataAdapter(cmd);
+                var dt = new DataTable();
                 da.Fill(dt);
 
                 //返回ds
@@ -78,8 +86,8 @@ namespace NKnife.TSQL
         //返回DataReader
         public static IDataReader ExecuteDataReader(string cmdText, string connStr)
         {
-            SqlCommand cmd = new SqlCommand();
-            SqlConnection conn = new SqlConnection(connStr);
+            var cmd = new SqlCommand();
+            var conn = new SqlConnection(connStr);
             conn.Open();
             try
             {
@@ -101,8 +109,8 @@ namespace NKnife.TSQL
         /// 执行SQL指令，无返回查询结果
         /// </summary>
         /// <param name="cmdText"></param>
+        /// <param name="connStr"></param>
         /// <returns></returns>
-        /// 
         public static int ExecuteNonQuery(string cmdText, string connStr)
         {
             using (SqlConnection cn = new SqlConnection(connStr))
@@ -129,8 +137,8 @@ namespace NKnife.TSQL
         /// 执行SQL指令返回单个查询结果
         /// </summary>
         /// <param name="cmdText"></param>
+        /// <param name="connStr"></param>
         /// <returns></returns>
-        /// 
         public static object ExecuteScalar(string cmdText, string connStr)
         {
             using (SqlConnection cn = new SqlConnection(connStr))
@@ -156,6 +164,13 @@ namespace NKnife.TSQL
                     return val;
                 //}
             }
+        }
+
+        public static IEnumerable<string> GetCommands(string script)
+        {
+            Regex regex = new Regex(@"\r{0,1}\nGO\r{0,1}\n");
+            string[] commands = regex.Split(script);
+            return commands.Where(s => s.Trim().Length > 0);
         }
     }
 }

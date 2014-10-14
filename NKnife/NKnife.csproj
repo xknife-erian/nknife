@@ -528,9 +528,8 @@
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
     <Compile Include="Wrapper\ByteClass.cs" />
-    <Compile Include="Database\TSQL\AccessExecute.cs" />
-    <Compile Include="Database\TSQL\DataExecute.cs" />
-    <Compile Include="Database\TSQL\MSSql.cs" />
+    <Compile Include="Database\DbHelper\AccessHelper.cs" />
+    <Compile Include="Database\DbHelper\MsSqlServerHelper.cs" />
     <Compile Include="Utility\UtilityByte.cs" />
     <Compile Include="Utility\UtilityClipboard.cs" />
     <Compile Include="Utility\UtilityCollection.cs" />
