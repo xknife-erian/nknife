@@ -47,7 +47,7 @@ namespace NKnife.NLog3
 
             public void Trace(LogMessageGenerator messageFunc)
             {
-                _Logger.Trace(messageFunc);
+                _Logger.Trace(new NLog.LogMessageGenerator(messageFunc));
             }
 
             public void Debug(string message)
@@ -62,7 +62,7 @@ namespace NKnife.NLog3
 
             public void Debug(LogMessageGenerator messageFunc)
             {
-                _Logger.Debug(messageFunc);
+                _Logger.Debug(new NLog.LogMessageGenerator(messageFunc));
             }
 
             public void Info(string message)
@@ -77,7 +77,7 @@ namespace NKnife.NLog3
 
             public void Info(LogMessageGenerator messageFunc)
             {
-                _Logger.Info(messageFunc);
+                _Logger.Info(new NLog.LogMessageGenerator(messageFunc));
             }
 
             public void Warn(string message)
@@ -92,7 +92,7 @@ namespace NKnife.NLog3
 
             public void Warn(LogMessageGenerator messageFunc)
             {
-                _Logger.Warn(messageFunc);
+                _Logger.Warn(new NLog.LogMessageGenerator(messageFunc));
             }
 
             public void Error(string message)
@@ -107,7 +107,7 @@ namespace NKnife.NLog3
 
             public void Error(LogMessageGenerator messageFunc)
             {
-                _Logger.Error(messageFunc);
+                _Logger.Error(new NLog.LogMessageGenerator(messageFunc));
             }
 
             public void Fatal(string message)
@@ -122,7 +122,7 @@ namespace NKnife.NLog3
 
             public void Fatal(LogMessageGenerator messageFunc)
             {
-                _Logger.Fatal(messageFunc);
+                _Logger.Fatal(new NLog.LogMessageGenerator(messageFunc));
             }
         }
     }

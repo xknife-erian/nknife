@@ -55,7 +55,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         private static IProtocolFamily GetProtocolFamily()
         {
             var protocolFamily = DI.Get<IProtocolFamily>();
-            protocolFamily.CommandParser = new DatagramCommandParser();
+            protocolFamily.CommandParser = new FirstFieldCommandParser();
             protocolFamily.Decoder = new FixedTailDecoder();
             protocolFamily.Encoder = new DatagramEncoder();
 
