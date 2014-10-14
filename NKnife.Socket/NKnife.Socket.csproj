@@ -55,11 +55,13 @@
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Common\Tcps.cs" />
-    <Compile Include="Generic\Families\Byte4Decoder.cs" />
+    <Compile Include="Generic\Families\LengthHeadDecoder.cs" />
     <Compile Include="Generic\Families\Byte4Encoder.cs" />
     <Compile Include="Generic\Families\DatagramCommandParser.cs" />
     <Compile Include="Generic\Families\DatagramDecoder.cs" />
     <Compile Include="Generic\Families\DatagramEncoder.cs" />
+    <Compile Include="Generic\Families\FixedTailDecoder.cs" />
+    <Compile Include="Generic\KnifeSocketSession.cs" />
     <Compile Include="Generic\KnifeSocketSessionMap.cs" />
     <Compile Include="Generic\Filters\KeepAliveServerFilter.cs" />
     <Compile Include="Generic\Filters\KnifeSocketFilter.cs" />

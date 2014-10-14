@@ -9,11 +9,6 @@ namespace SocketKnife.Generic.Families
     /// </summary>
     public class EndMarkDecoder : IDatagramDecoder
     {
-        public bool HasLengthOnHead
-        {
-            get { return false; }
-        }
-
         public string[] Execute(byte[] data, out int done)
         {
             done = data.Length;

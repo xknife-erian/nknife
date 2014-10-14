@@ -11,6 +11,7 @@ using NKnife.IoC;
 using NKnife.Mvvm;
 using SocketKnife.Common;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
@@ -32,6 +33,9 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
             var keepAliveFilter = new KeepAliveServerFilter();
+            keepAliveFilter.CommandParser = new DatagramCommandParser();
+            keepAliveFilter.Decoder = new DatagramDecoder();
+            keepAliveFilter.Encoder = new DatagramEncoder();
 
             var protocolFamily = GetProtocolFamily();
 

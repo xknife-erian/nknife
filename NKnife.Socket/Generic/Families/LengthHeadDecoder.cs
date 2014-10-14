@@ -11,21 +11,19 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个最常用的 字符数组 => 字符串 转换器。
     /// </summary>
-    public class Byte4Decoder : IDatagramDecoder
+    public class LengthHeadDecoder : IDatagramDecoder
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        /// <summary>是否在头部用4字节描述协议体的长度
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance has length on head; otherwise, <c>false</c>.
-        /// </value>
-        public bool HasLengthOnHead
-        {
-            get { return true; }
-        }
+        protected bool _NeedReverse = false;
 
-        public virtual bool NeedReverse { get { return false; } }
+        protected virtual int GetLengthHead(byte[] lenArray)
+        {
+            if (_NeedReverse)
+                Array.Reverse(lenArray);
+            int protocolLength = BitConverter.ToInt32(lenArray, 0);
+            return protocolLength;
+        }
 
         /// <summary>
         /// 解码。将字节数组解析成字符串。
@@ -39,12 +37,12 @@ namespace SocketKnife.Generic.Families
             var results = new List<string>();
             try
             {
-                bool beginProcess = true;
-                while (beginProcess)
+                bool inComplete = true;//解析未完成标记
+                while (inComplete)
                 {
                     if (results.Count > 1)
                         _logger.Trace(string.Format("粘包处理,总长度:{0},已解析:{1},得到结果:{2}", data.Length, done, results.Count));
-                    beginProcess = ExecuteSubMethod(data, done, results, NeedReverse, ref done);
+                    inComplete = ExecuteSubMethod(data, done, ref results, ref done);
                 }
                 return results.ToArray();
             }
@@ -55,7 +53,7 @@ namespace SocketKnife.Generic.Families
             }
         }
 
-        private bool ExecuteSubMethod(byte[] data, int index, List<string> results, bool needReverse, ref int done)
+        private bool ExecuteSubMethod(byte[] data, int index, ref List<string> results, ref int done)
         {
             if (UtilityCollection.IsNullOrEmpty(data))
                 return false;
@@ -66,9 +64,7 @@ namespace SocketKnife.Generic.Families
             {
                 var lenArray = new byte[4];
                 Buffer.BlockCopy(data, index, lenArray, 0, 4);
-                if (needReverse)
-                    Array.Reverse(lenArray);
-                int protocolLength = BitConverter.ToInt32(lenArray, 0);
+                var protocolLength = GetLengthHead(lenArray);
                 if (index + 4 + protocolLength > data.Length)//这时又出现了半包现象
                 {
                     _logger.Trace(string.Format("处理粘包时出现半包:起点:{0},计算得到的长度:{1},源数据长度:{2}", index, protocolLength, data.Length));

@@ -18,10 +18,10 @@ namespace SocketKnife.Generic.Filters
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        public override void PrcoessReceiveData(Socket socket, byte[] data)
+        protected internal override void OnConnectionBreak(ConnectionBreakEventArgs e)
         {
-            var endPoint = socket.RemoteEndPoint;
-
+            base.OnConnectionBreak(e);
+            var endPoint = e.RemoteEndPoint;
             if (!_DataMonitors.ContainsKey(endPoint))
             {
                 var dataMonitor = new DataMonitor();
@@ -30,7 +30,11 @@ namespace SocketKnife.Generic.Filters
                 dataMonitor.ReceiveQueue.AutoResetEvent.Set();
                 _logger.Trace(string.Format("Server: IP地址:{0}的数据池循环开关被关闭。{1}", endPoint, _DataMonitors.Count));
             }
+        }
 
+        public override void PrcoessReceiveData(Socket socket, byte[] data)
+        {
+            var endPoint = socket.RemoteEndPoint;
             ReceiveQueue receive = null;
             if (!_ReceiveQueueMap.TryGetValue(endPoint, out receive))
             {

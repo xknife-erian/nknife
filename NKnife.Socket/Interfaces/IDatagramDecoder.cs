@@ -4,13 +4,6 @@
     /// </summary>
     public interface IDatagramDecoder
     {
-        /// <summary>是否在头部用4字节描述协议体的长度
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance has length on head; otherwise, <c>false</c>.
-        /// </value>
-        bool HasLengthOnHead { get; }
-
         /// <summary>
         /// 解码。将字节数组解析成字符串。
         /// </summary>

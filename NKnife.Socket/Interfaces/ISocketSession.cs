@@ -11,7 +11,5 @@ namespace SocketKnife.Interfaces
         EndPoint Point { get; set; }
 
         Socket Socket { get; set; }
-
-        void Wirte(byte[] data);
     }
 }

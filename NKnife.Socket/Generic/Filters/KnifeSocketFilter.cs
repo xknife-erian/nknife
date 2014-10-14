@@ -9,9 +9,9 @@ namespace SocketKnife.Generic.Filters
 {
     public abstract class KnifeSocketFilter : ISocketFilter
     {
-        public IDatagramCommandParser CommandParser { get; private set; }
-        public IDatagramDecoder Decoder { get; private set; }
-        public IDatagramEncoder Encoder { get; private set; }
+        public IDatagramCommandParser CommandParser { get; set; }
+        public IDatagramDecoder Decoder { get; set; }
+        public IDatagramEncoder Encoder { get; set; }
 
         protected Func<IProtocolFamily> _FamilyGetter;
         protected Func<IProtocolHandler> _HandlerGetter;

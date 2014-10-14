@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
@@ -9,7 +7,6 @@ using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
@@ -23,17 +20,12 @@ namespace SocketKnife
 
         #region 成员变量
 
-        private readonly WaitHandle[] _AutoReset;
-
-        private IPAddress _IpAddress;
-        private int _Port;
+        private readonly AutoResetEvent _MainAutoReset;
 
         /// <summary>
         ///     数据包管理
         /// </summary>
         private BufferContainer _BufferContainer;
-
-        private bool _IsClose = true;
 
         /// <summary>
         ///     Socket对象
@@ -45,15 +37,20 @@ namespace SocketKnife
         /// </summary>
         private SocketAsyncEventArgsPool _SocketAsynPool;
 
+        private bool _IsClose = true;
+
         #endregion
 
         #region ISocketServerKnife 接口实现
 
+        private IPAddress _IpAddress;
+        private int _Port;
+
         protected IProtocolFamily _Family;
         protected IProtocolHandler _Handler;
-        protected ISocketPlan _SocketPlan;
-        protected ISocketSessionMap _SessionMap;
         protected ISocketPolicy _Policy;
+        protected ISocketSessionMap _SessionMap;
+        protected ISocketPlan _SocketPlan;
 
         public void Configure(IPAddress ipAddress, int port)
         {
@@ -62,27 +59,12 @@ namespace SocketKnife
         }
 
         [Inject]
-        public ISocketServerConfig Config { get; private set; }
+        public ISocketServerConfig Config { get; set; }
 
         public void AddFilter(KnifeSocketFilter filter)
         {
             filter.Bind(GetFamily, GetHandle, GetSessionMap);
             _Policy.AddLast(filter);
-        }
-
-        private ISocketSessionMap GetSessionMap()
-        {
-            return _SessionMap;
-        }
-
-        private IProtocolHandler GetHandle()
-        {
-            return _Handler;
-        }
-
-        private IProtocolFamily GetFamily()
-        {
-            return _Family;
         }
 
         public virtual void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler)
@@ -103,7 +85,7 @@ namespace SocketKnife
             try
             {
                 Initialize();
-                ((AutoResetEvent)_AutoReset[0]).Set();
+                _MainAutoReset.Set();
                 return true;
             }
             catch (Exception e)
@@ -126,12 +108,12 @@ namespace SocketKnife
         {
             try
             {
-                ((AutoResetEvent)_AutoReset[0]).Reset();
+                _MainAutoReset.Reset();
                 _IsClose = true;
                 _MainSocket.Close();
                 foreach (ISocketSession session in _SessionMap.Values)
                 {
-                    var client = session.Socket;
+                    Socket client = session.Socket;
                     if (client.Connected)
                     {
                         client.Shutdown(SocketShutdown.Both);
@@ -202,16 +184,30 @@ namespace SocketKnife
 
         #endregion
 
+        private ISocketSessionMap GetSessionMap()
+        {
+            return _SessionMap;
+        }
+
+        private IProtocolHandler GetHandle()
+        {
+            return _Handler;
+        }
+
+        private IProtocolFamily GetFamily()
+        {
+            return _Family;
+        }
+
         #endregion
 
         #region 构造函数,初始化
-        
+
         public KnifeServer(ISocketSessionMap sessionMap, ISocketPolicy policy)
         {
             _SessionMap = sessionMap;
             _Policy = policy;
-            _AutoReset = new WaitHandle[1];
-            _AutoReset[0] = new AutoResetEvent(false);
+            _MainAutoReset = new AutoResetEvent(false);
         }
 
         protected virtual void Initialize()
@@ -233,7 +229,7 @@ namespace SocketKnife
             Config.SendTimeout = 1000;
             Config.ReceiveTimeout = 1000;
 
-            _BufferContainer = new BufferContainer(Config.MaxConnectCount * Config.MaxBufferSize, Config.MaxBufferSize);
+            _BufferContainer = new BufferContainer(Config.MaxConnectCount*Config.MaxBufferSize, Config.MaxBufferSize);
             _BufferContainer.Initialize();
 
             //核心连接池的预创建
@@ -256,7 +252,7 @@ namespace SocketKnife
 
         #endregion
 
-        #region 公共方法
+        #region 内部方法
 
         protected virtual void AsynCompleted(object sender, SocketAsyncEventArgs e) // SocketAsyncEventArgs的Completed事件
         {
@@ -298,8 +294,8 @@ namespace SocketKnife
                 {
                     case SocketError.Success:
                     {
-                        WaitHandle.WaitAll(_AutoReset);
-                        ((AutoResetEvent) _AutoReset[0]).Set();
+                        WaitHandle.WaitAll(new WaitHandle[] {_MainAutoReset});
+                        _MainAutoReset.Set();
                         if (_BufferContainer.SetBuffer(e))
                         {
                             if (!e.AcceptSocket.ReceiveAsync(e))
@@ -317,7 +313,7 @@ namespace SocketKnife
                                 session.Socket = e.AcceptSocket;
                                 _SessionMap.Add(iep, session);
                                 _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _SessionMap.Count));
-                                foreach (var filter in _Policy)
+                                foreach (KnifeSocketFilter filter in _Policy)
                                 {
                                     filter.OnListenToClient(e);
                                 }
@@ -378,7 +374,7 @@ namespace SocketKnife
         {
             string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
             _logger.Info(message);
-            foreach (var filter in _Policy)
+            foreach (KnifeSocketFilter filter in _Policy)
             {
                 filter.OnConnectionBreak(new ConnectionBreakEventArgs(message));
             }
@@ -410,10 +406,10 @@ namespace SocketKnife
 
             foreach (KnifeSocketFilter filter in _Policy)
             {
-                filter.OnDataComeInEvent(data, e.RemoteEndPoint);// 触发数据到达事件
+                filter.OnDataComeInEvent(data, e.RemoteEndPoint); // 触发数据到达事件
                 filter.PrcoessReceiveData(e.AcceptSocket, data);
             }
-            
+
             if (!e.AcceptSocket.ReceiveAsync(e))
                 BeginReceive(e);
         }
@@ -446,7 +442,7 @@ namespace SocketKnife
 
         protected virtual void WirteBase(ISocketSession session, byte[] data)
         {
-            var socket = session.Socket;
+            Socket socket = session.Socket;
             try
             {
                 socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
@@ -460,12 +456,11 @@ namespace SocketKnife
 
         protected virtual void WirteProtocol(ISocketSession session, IProtocol protocol)
         {
-            var replay = protocol.Protocol();
-            var data = _Family.Encoder.Execute(replay);
+            string replay = protocol.Protocol();
+            byte[] data = _Family.Encoder.Execute(replay);
             WirteBase(session, data);
         }
 
         #endregion
-
     }
 }

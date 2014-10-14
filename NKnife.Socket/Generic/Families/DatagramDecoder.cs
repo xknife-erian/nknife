@@ -11,11 +11,6 @@ namespace SocketKnife.Generic.Families
     {
         #region IDatagramDecoder Members
 
-        public bool HasLengthOnHead
-        {
-            get { return false; }
-        }
-
         public string[] Execute(byte[] data, out int done)
         {
             done = data.Length;
