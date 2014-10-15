@@ -72,7 +72,7 @@
     <Compile Include="Database\Common\DatabaseCoderSetting.cs" />
     <Compile Include="Database\Common\DatabaseHelper.cs" />
     <Compile Include="Database\Common\DatabaseParms.cs" />
-    <Compile Include="Database\Common\SqlDbHelper.cs" />
+    <Compile Include="Database\DbHelper\SqlDbHelper.cs" />
     <Compile Include="Database\Interface\IDatabaseHelper.cs" />
     <Compile Include="Database\Interface\IDataBaseParameters.cs" />
     <Compile Include="Database\Interface\IDataReaderProcess.cs" />
