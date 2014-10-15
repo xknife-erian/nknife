@@ -36,6 +36,10 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         {
             var key = Pair<IPAddress, int>.Build(ipAddress, port);
 
+            var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
+            heartbeatServerFilter.Interval = 1000*5;
+            heartbeatServerFilter.Heartbeat = new Heartbeat();
+
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
 
             var protocolFamily = GetProtocolFamily();
@@ -44,10 +48,10 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             {
                 _Server = DI.Get<IKnifeSocketServer>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
+                _Server.AddFilter(heartbeatServerFilter);
                 _Server.AddFilter(keepAliveFilter);
                 _Server.Configure(ipAddress, port);
                 _Server.Bind(protocolFamily, new DemoServerHandler(SocketMessages));
-                _Server.Attach(new HeartbeatPlan());
                 _ServerList.Add(key, _Server);
             }
             else

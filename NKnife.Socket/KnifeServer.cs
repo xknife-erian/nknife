@@ -50,7 +50,6 @@ namespace SocketKnife
         protected IProtocolHandler _Handler;
         protected ISocketPolicy _Policy;
         protected ISocketSessionMap _SessionMap;
-        protected ISocketPlan _SocketPlan;
 
         public void Configure(IPAddress ipAddress, int port)
         {
@@ -73,11 +72,6 @@ namespace SocketKnife
             _Handler = handler;
             _Handler.Bind(WirteBase);
             _Handler.Bind(WirteProtocol);
-        }
-
-        public virtual void Attach(ISocketPlan socketPlan)
-        {
-            _SocketPlan = socketPlan;
         }
 
         public virtual bool Start()

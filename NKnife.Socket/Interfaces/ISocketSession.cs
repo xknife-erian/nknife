@@ -11,5 +11,7 @@ namespace SocketKnife.Interfaces
         EndPoint Point { get; set; }
 
         Socket Socket { get; set; }
+
+        bool WaitHeartBeatingReplay { get; set; }
     }
 }

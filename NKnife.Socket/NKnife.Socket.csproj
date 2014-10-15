@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,7 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -54,6 +54,7 @@
     <Compile Include="Common\ConnectionStatus.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\Exceptions.cs" />
+    <Compile Include="Common\Heartbeat.cs" />
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Generic\Families\FirstFieldCommandParser.cs" />
@@ -73,7 +74,6 @@
     <Compile Include="Generic\KnifeSocketServerConfig.cs" />
     <Compile Include="Generic\Families\EndMarkDecoder.cs" />
     <Compile Include="Generic\Families\EndMarkEncoder.cs" />
-    <Compile Include="Generic\HeartbeatPlan.cs" />
     <Compile Include="Generic\Protocols\KnifeProtocol.cs" />
     <Compile Include="Generic\Protocols\KnifeProtocolContent.cs" />
     <Compile Include="Generic\Protocols\ProtocolDataTableDeserializeUnPackager.cs" />
@@ -94,7 +94,6 @@
     <Compile Include="Interfaces\ISocketServerFilter.cs" />
     <Compile Include="Interfaces\ISocketSessionMap.cs" />
     <Compile Include="Interfaces\ISocketPolicy.cs" />
-    <Compile Include="Interfaces\ISocketPlan.cs" />
     <Compile Include="Interfaces\ISocketServerConfig.cs" />
     <Compile Include="Interfaces\IKnifeSocketServer.cs" />
     <Compile Include="Interfaces\ISocketSession.cs" />

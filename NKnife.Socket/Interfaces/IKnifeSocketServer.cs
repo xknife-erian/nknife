@@ -11,7 +11,6 @@ namespace SocketKnife.Interfaces
         void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler);
         ISocketServerConfig Config { get; }
         void AddFilter(KnifeSocketServerFilter filter);
-        void Attach(ISocketPlan socketPlan);
         bool Start();
         bool ReStart();
         bool Stop();
