@@ -11,9 +11,9 @@ namespace SocketKnife.Generic.Filters
     {
         protected Func<IProtocolFamily> _FamilyGetter;
         protected Func<IProtocolHandler> _HandlerGetter;
-        protected Func<ISocketSessionMap> _SessionMapGetter; 
+        protected Func<ISocketSessionMap> _SessionMapGetter;
 
-        public abstract void PrcoessReceiveData(Socket socket, byte[] data);
+        public abstract void PrcoessReceiveData(ISocketSession socket, byte[] data);
 
         public virtual void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter)
         {

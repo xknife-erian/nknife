@@ -17,7 +17,7 @@ namespace SocketKnife.Generic
         }
 
         public virtual long Id { get; private set; }
-        public virtual EndPoint Point { get; set; }
+        public virtual EndPoint EndPoint { get; set; }
         public virtual Socket Socket { get; set; }
         public bool WaitHeartBeatingReplay { get; set; }
     }

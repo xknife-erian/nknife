@@ -43,10 +43,10 @@ namespace SocketKnife.Generic.Filters
             {
                 EndPoint endpoint = pair.Key;
                 ISocketSession session = pair.Value;
-                if (!session.WaitHeartBeatingReplay) //第一次检查时，和心跳后收到回复后回写为非等待状态
+                if (!session.WaitHeartBeatingReplay) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
                 {
                     handler.Write(session, Heartbeat.BeatingOfServerHeart);
-                    session.WaitHeartBeatingReplay = true;
+                    session.WaitHeartBeatingReplay = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override void PrcoessReceiveData(Socket socket, byte[] data)
+        public override void PrcoessReceiveData(ISocketSession socket, byte[] data)
         {
         }
     }

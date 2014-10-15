@@ -306,7 +306,7 @@ namespace SocketKnife
                             if (!_SessionMap.ContainsKey(iep))
                             {
                                 var session = DI.Get<ISocketSession>();
-                                session.Point = iep;
+                                session.EndPoint = iep;
                                 session.Socket = e.AcceptSocket;
                                 _SessionMap.Add(iep, session);
                                 _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count));
@@ -369,6 +369,7 @@ namespace SocketKnife
 
         private void RemoveSession(SocketAsyncEventArgs e)
         {
+            _logger.Trace(() => string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
             if (!e.AcceptSocket.Connected)
             {
                 return;
@@ -408,7 +409,8 @@ namespace SocketKnife
             foreach (KnifeSocketServerFilter filter in _Policy)
             {
                 filter.OnDataComeInEvent(data, e.RemoteEndPoint); // 触发数据到达事件
-                filter.PrcoessReceiveData(e.AcceptSocket, data); // 调用filter对数据进行处理
+                var session = _SessionMap[e.RemoteEndPoint];
+                filter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
             }
 
             if (!e.AcceptSocket.ReceiveAsync(e))

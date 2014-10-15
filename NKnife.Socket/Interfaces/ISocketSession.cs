@@ -8,7 +8,7 @@ namespace SocketKnife.Interfaces
     {
         long Id { get; }
 
-        EndPoint Point { get; set; }
+        EndPoint EndPoint { get; set; }
 
         Socket Socket { get; set; }
 

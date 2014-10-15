@@ -7,7 +7,7 @@ namespace SocketKnife.Interfaces
 {
     public interface ISocketServerFilter
     {
-        void PrcoessReceiveData(Socket socket, byte[] data);
+        void PrcoessReceiveData(ISocketSession socket, byte[] data);
 
         void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter);
 

@@ -42,19 +42,19 @@ namespace SocketKnife.Generic.Filters
             {
                 dataMonitor.IsMonitor = false;
                 dataMonitor.ReceiveQueue.AutoResetEvent.Set();
-                _logger.Trace(string.Format("客户端:{0}的数据监听器池循环开关被关闭。{1}", endPoint, _DataMonitors.Count));
+                _logger.Trace(string.Format("客户端:{0}的数据监听器池循环开关被关闭并移除。{1}", endPoint, _DataMonitors.Count));
             }
             ReceiveQueue receiveQueue;
             if (_ReceiveQueueMap.TryRemove(endPoint, out receiveQueue))
             {
                 receiveQueue.Clear();
-                _logger.Trace(string.Format("客户端:{0}的数据池移除。{1}", endPoint, _ReceiveQueueMap.Count));
+                _logger.Trace(string.Format("客户端:{0}从ReceiveQueue池中被移除。{1}", endPoint, _ReceiveQueueMap.Count));
             }
         }
 
-        public override void PrcoessReceiveData(Socket socket, byte[] data)
+        public override void PrcoessReceiveData(ISocketSession session, byte[] data)
         {
-            EndPoint endPoint = socket.RemoteEndPoint;
+            EndPoint endPoint = session.EndPoint;
             ReceiveQueue receive = null;
             if (!_ReceiveQueueMap.TryGetValue(endPoint, out receive))
             {
@@ -129,8 +129,6 @@ namespace SocketKnife.Generic.Filters
             bool isRemoved = _DataMonitors.TryRemove(pair.Key, out dataMonitor);
             if (isRemoved)
                 _logger.Trace(() => string.Format("从数据队列池中移除该客户端{0}成功，{1}", pair.Key, _DataMonitors.Count));
-            else
-                _logger.Warn(() => string.Format("从数据队列池中移除该客户端{0}不成功{1}", pair.Key, _DataMonitors.Count));
         }
 
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
