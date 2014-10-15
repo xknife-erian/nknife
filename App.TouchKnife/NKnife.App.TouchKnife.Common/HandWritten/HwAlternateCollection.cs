@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Ink;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.IoC;
 
 namespace NKnife.App.TouchKnife.Common.HandWritten
@@ -11,7 +13,14 @@ namespace NKnife.App.TouchKnife.Common.HandWritten
     /// </summary>
     public class HwAlternateCollection : ObservableCollection<string>
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         private Visibility _HasAlternates = Visibility.Hidden;
+
+        public HwAlternateCollection()
+        {
+            _logger.Info(string.Format("HwAlternateCollection实例正常"));
+        }
 
         /// <summary>
         /// 针对指的墨迹集合进行识别

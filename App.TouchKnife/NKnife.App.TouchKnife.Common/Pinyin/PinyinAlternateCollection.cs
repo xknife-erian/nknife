@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.IoC;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
@@ -13,9 +15,11 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
     /// </summary>
     public class PinyinAlternateCollection : ObservableCollection<string>
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         private const int WORD_COUNT = 10;
 
-        private int _CurrentPage;
+        private int _CurrentPage = 1;
         private List<string> _CurrentPinyinCollection;
         private int _CurrentPinyinIndex;
         private char[] _CurrentResult;
@@ -25,9 +29,16 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
 
         public PinyinAlternateCollection()
         {
-            var separator = DI.Get<PinyinSeparatesCollection>();
-            separator.PinyinSeparated += SeparatorOnPinyinSeparated;
-            ResetCurrent();
+            try
+            {
+                var separator = DI.Get<PinyinCollection>();
+                separator.PinyinSeparated += SeparatorOnPinyinSeparated;
+                _logger.Info(string.Format("PinyinAlternateCollection实例正常"));
+            }
+            catch (Exception e)
+            {
+                _logger.Warn(string.Format("PinyinAlternateCollection实例异常:{0}", e.Message));
+            }
         }
 
         public bool HasPrevious
@@ -95,29 +106,36 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
         /// </summary>
         private void SeparatorOnPinyinSeparated(object sender, PinyinSeparatedEventArgs e)
         {
-            _CurrentPinyinCollection = e.Pinyin;
-            _CurrentPinyinIndex = 0;
-            char[] r = Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
-            if (r != null && r.Length > 0)
+            try
             {
-                _CurrentResult = new char[r.Length];
-                Array.Copy(r, _CurrentResult, r.Length);
-                ClearAlternates();
-                if (r.Length > WORD_COUNT)
+                _CurrentPinyinCollection = e.Pinyin;
+                _CurrentPinyinIndex = 0;
+                char[] r = Pinyin.GetCharArrayOfPinyin(_CurrentPinyinCollection[_CurrentPinyinIndex]);
+                if (r != null && r.Length > 0)
                 {
-                    HasLast = true;
-                }
-                for (int i = 0; i < WORD_COUNT; i++)
-                {
-                    if (i < r.Length)
+                    _CurrentResult = new char[r.Length];
+                    Array.Copy(r, _CurrentResult, r.Length);
+                    ClearAlternates();
+                    if (r.Length > WORD_COUNT)
                     {
-                        Add(r[_CurrentPage*i].ToString(CultureInfo.InvariantCulture));
+                        HasLast = true;
+                    }
+                    for (int i = 0; i < WORD_COUNT; i++)
+                    {
+                        if (i < r.Length)
+                        {
+                            Add(r[_CurrentPage * i].ToString(CultureInfo.InvariantCulture));
+                        }
                     }
                 }
+                if (_CurrentPinyinCollection.Count == 1 && (r == null || r.Length == 0))
+                {
+                    ClearAlternates();
+                }
             }
-            if (_CurrentPinyinCollection.Count == 1 && (r == null || r.Length == 0))
+            catch (Exception ex)
             {
-                ClearAlternates();
+                _logger.Warn(string.Format("OnPinyinSeparated异常:{0}", ex.Message));
             }
         }
 

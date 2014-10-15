@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.International.Converters.PinYinConverter;
+using NKnife.Adapters;
 using NKnife.Chinese;
+using NKnife.Interface;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     public class Pinyin
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         /// <summary>
         /// 获取指定拼音的汉字集合
         /// </summary>
@@ -24,6 +28,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
                     charArray.AddRange(chars);
                 }
             }
+            _logger.Trace(string.Format("拼音分割完成:{0},{1}", input, charArray.Count));
             if (sortByFreq)
             {
                 return ListFrequencySort(charArray);
@@ -53,6 +58,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
             ilist.Sort();
             charArray.Clear();
             charArray.AddRange(ilist.Select(i => map[i]));
+            _logger.Trace("ListFrequencySort完成");
             return charArray.ToArray();
         }
 

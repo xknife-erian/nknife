@@ -410,7 +410,7 @@ namespace SocketKnife
             foreach (KnifeSocketServerFilter filter in _Policy)
             {
                 filter.OnDataComeInEvent(data, e.RemoteEndPoint); // 触发数据到达事件
-                filter.PrcoessReceiveData(e.AcceptSocket, data);
+                filter.PrcoessReceiveData(e.AcceptSocket, data); // 调用filter对数据进行处理
             }
 
             if (!e.AcceptSocket.ReceiveAsync(e))

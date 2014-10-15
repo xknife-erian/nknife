@@ -34,7 +34,7 @@ namespace NKnife.App.TouchKnife.IoC
 
             Bind<HwAlternateCollection>().To<HwAlternateCollection>().InSingletonScope();
 
-            Bind<PinyinSeparatesCollection>().To<PinyinSeparatesCollection>().InSingletonScope();
+            Bind<PinyinCollection>().To<PinyinCollection>().InSingletonScope();
             Bind<PinyinAlternateCollection>().To<PinyinAlternateCollection>().InSingletonScope();
 
             Bind<CurrentWordStrip>().To<CurrentWordStrip>().InSingletonScope();
