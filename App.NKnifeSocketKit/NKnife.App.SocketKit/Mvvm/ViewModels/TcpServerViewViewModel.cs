@@ -41,6 +41,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
+            keepAliveFilter.ListenToClient += args => true;
 
             var protocolFamily = GetProtocolFamily();
 
@@ -60,7 +61,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             }
         }
 
-        private static IProtocolFamily GetProtocolFamily()
+        private IProtocolFamily GetProtocolFamily()
         {
             var getTicket = DI.Get<GetTicket>();
             var call = DI.Get<Call>();
@@ -68,11 +69,13 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             var recall = DI.Get<ReCall>();
             var sing = DI.Get<Sing>();
             var register = DI.Get<Register>();
+            register.Packager = new ProtocolXmlPackager();
+            register.UnPackager = new ProtocolDataTableDeserializeUnPackager();
 
             var family = DI.Get<IProtocolFamily>();
             family.CommandParser = new FirstFieldCommandParser();
             family.Decoder = new FixedTailDecoder();
-            family.Encoder = new DatagramEncoder();
+            family.Encoder = new FixedTailEncoder();
 
             family.Add(getTicket);
             family.Add(call);

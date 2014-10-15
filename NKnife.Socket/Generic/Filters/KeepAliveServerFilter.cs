@@ -17,6 +17,8 @@ namespace SocketKnife.Generic.Filters
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
+        protected bool _ContinueNextFilter = true;
+
         public override void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter)
         {
             base.Bind(familyGetter, handlerGetter, mapGetter);
@@ -50,6 +52,11 @@ namespace SocketKnife.Generic.Filters
                 receiveQueue.Clear();
                 _logger.Trace(string.Format("客户端:{0}从ReceiveQueue池中被移除。{1}", endPoint, _ReceiveQueueMap.Count));
             }
+        }
+
+        public override bool ContinueNextFilter
+        {
+            get { return _ContinueNextFilter; }
         }
 
         public override void PrcoessReceiveData(ISocketSession session, byte[] data)

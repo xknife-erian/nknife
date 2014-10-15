@@ -13,6 +13,8 @@ namespace SocketKnife.Generic.Filters
         protected Func<IProtocolHandler> _HandlerGetter;
         protected Func<ISocketSessionMap> _SessionMapGetter;
 
+        public abstract bool ContinueNextFilter { get; }
+
         public abstract void PrcoessReceiveData(ISocketSession socket, byte[] data);
 
         public virtual void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter)

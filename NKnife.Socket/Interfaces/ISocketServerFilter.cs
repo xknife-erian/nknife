@@ -7,6 +7,8 @@ namespace SocketKnife.Interfaces
 {
     public interface ISocketServerFilter
     {
+        bool ContinueNextFilter { get; }
+
         void PrcoessReceiveData(ISocketSession socket, byte[] data);
 
         void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter);
@@ -14,7 +16,7 @@ namespace SocketKnife.Interfaces
         #region 事件
 
         /// <summary>
-        ///     数据异步接收到后事件,得到的数据是Byte数组,一般情况下没有必要使用该事件,使用 ReceiveDataParsedEvent 会比较方便。
+        ///     数据异步接收到后事件,得到的数据是Byte数组
         /// </summary>
         event SocketAsyncDataComeInEventHandler DataComeInEvent;
 

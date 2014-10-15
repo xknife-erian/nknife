@@ -72,6 +72,7 @@ namespace SocketKnife
             _Handler = handler;
             _Handler.Bind(WirteBase);
             _Handler.Bind(WirteProtocol);
+            _Handler.SessionMap = _SessionMap;
         }
 
         public virtual bool Start()
@@ -408,9 +409,12 @@ namespace SocketKnife
 
             foreach (KnifeSocketServerFilter filter in _Policy)
             {
-                filter.OnDataComeInEvent(data, e.RemoteEndPoint); // 触发数据到达事件
-                var session = _SessionMap[e.RemoteEndPoint];
+                var endPoint = e.AcceptSocket.RemoteEndPoint;
+                filter.OnDataComeInEvent(data, endPoint); // 触发数据到达事件
+                var session = _SessionMap[endPoint];
                 filter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
+                if (!filter.ContinueNextFilter)
+                    break;
             }
 
             if (!e.AcceptSocket.ReceiveAsync(e))

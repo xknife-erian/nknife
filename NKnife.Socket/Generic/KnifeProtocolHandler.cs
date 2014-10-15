@@ -6,15 +6,10 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeProtocolHandler : IProtocolHandler
     {
-        protected KnifeProtocolHandler()
-        {
-            SessionMap = DI.Get<ISocketSessionMap>();
-        }
-
         protected Action<ISocketSession, byte[]> _WriteBaseMethod;
         protected Action<ISocketSession, IProtocol> _WriteProtocolMethod;
 
-        public virtual ISocketSessionMap SessionMap { get; private set; }
+        public virtual ISocketSessionMap SessionMap { get; set; }
 
         public virtual void Bind(Action<ISocketSession, byte[]> sendMethod)
         {

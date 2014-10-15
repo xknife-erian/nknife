@@ -4,7 +4,7 @@ namespace SocketKnife.Interfaces
 {
     public interface IProtocolHandler
     {
-        ISocketSessionMap SessionMap { get; }
+        ISocketSessionMap SessionMap { get; set; }
 
         void Bind(Action<ISocketSession, byte[]> sendMethod);
         void Bind(Action<ISocketSession, IProtocol> sendMethod);

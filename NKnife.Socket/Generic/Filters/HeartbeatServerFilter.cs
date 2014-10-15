@@ -13,15 +13,22 @@ namespace SocketKnife.Generic.Filters
     public class HeartbeatServerFilter : KnifeSocketServerFilter
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
+        protected bool _ContinueNextFilter = true;
         private bool _IsTimerStarted;
 
         public Heartbeat Heartbeat { get; set; }
         public double Interval { get; set; }
 
+        public override bool ContinueNextFilter
+        {
+            get { return _ContinueNextFilter; }
+        }
+
         protected internal override void OnListenToClient(SocketAsyncEventArgs e)
         {
             base.OnListenToClient(e);
-            if (!_IsTimerStarted)
+            if (!_IsTimerStarted) //第一次监听到时启动
             {
                 _IsTimerStarted = true;
 
@@ -29,7 +36,7 @@ namespace SocketKnife.Generic.Filters
                 beatingTimer.Elapsed += BeatingTimer_Elapsed;
                 beatingTimer.Interval = Interval;
                 beatingTimer.Start();
-                _logger.Info(string.Format("服务器心跳启动。{0}", Interval));
+                _logger.Info(string.Format("服务器心跳启动。间隔:{0}", Interval));
             }
         }
 
@@ -72,8 +79,14 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override void PrcoessReceiveData(ISocketSession socket, byte[] data)
+        public override void PrcoessReceiveData(ISocketSession session, byte[] data)
         {
+            if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
+            {
+                session.WaitHeartBeatingReplay = false;
+                _ContinueNextFilter = false;
+                _logger.Trace(() => string.Format("收到{0}心跳回复.", session.EndPoint));
+            }
         }
     }
 }
