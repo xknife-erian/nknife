@@ -61,6 +61,7 @@
     <Compile Include="Generic\Families\DatagramDecoder.cs" />
     <Compile Include="Generic\Families\DatagramEncoder.cs" />
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
+    <Compile Include="Generic\Filters\HeartbeatServerFilter.cs" />
     <Compile Include="Generic\KnifeSocketSession.cs" />
     <Compile Include="Generic\KnifeSocketSessionMap.cs" />
     <Compile Include="Generic\Filters\KeepAliveServerFilter.cs" />
