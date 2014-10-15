@@ -887,7 +887,7 @@ namespace NKnife.NIo
                     }
                     catch (Exception e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}", e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", dllPath, e.Message));
                     }
                 }
                 foreach (string exePath in exes)
