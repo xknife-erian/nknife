@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Timers;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
 
@@ -15,7 +13,7 @@ namespace SocketKnife.Generic.Filters
     public class HeartbeatServerFilter : KnifeSocketServerFilter
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
-        private bool _IsTimerStarted = false;
+        private bool _IsTimerStarted;
 
         public Heartbeat Heartbeat { get; set; }
         public double Interval { get; set; }
@@ -37,15 +35,15 @@ namespace SocketKnife.Generic.Filters
 
         private void BeatingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var handler = _HandlerGetter.Invoke();
-            var map = _SessionMapGetter.Invoke();
+            IProtocolHandler handler = _HandlerGetter.Invoke();
+            ISocketSessionMap map = _SessionMapGetter.Invoke();
 
             var list = new List<EndPoint>(0);
             foreach (var pair in map)
             {
-                var endpoint = pair.Key;
-                var session = pair.Value;
-                if (!session.WaitHeartBeatingReplay)//第一次检查时，和心跳后收到回复后回写为非等待状态
+                EndPoint endpoint = pair.Key;
+                ISocketSession session = pair.Value;
+                if (!session.WaitHeartBeatingReplay) //第一次检查时，和心跳后收到回复后回写为非等待状态
                 {
                     handler.Write(session, Heartbeat.BeatingOfServerHeart);
                     session.WaitHeartBeatingReplay = true;
@@ -55,10 +53,22 @@ namespace SocketKnife.Generic.Filters
                     list.Add(endpoint);
                 }
             }
-            foreach (var endPoint in list)
+            foreach (EndPoint endPoint in list)
             {
-                map.Remove(endPoint);
-                _logger.Info(string.Format("心跳检查客户端{0}无响应，移除之。池中:{1}", endPoint, map.Count));
+                ISocketSession session;
+                if (map.TryGetValue(endPoint, out session))
+                {
+                    try
+                    {
+                        session.Socket.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Warn(string.Format("断开客户端{0}时异常:{1}", endPoint, ex.Message), ex);
+                    }
+                    map.Remove(endPoint);
+                    _logger.Info(string.Format("心跳检查客户端{0}无响应，从SessionMap中移除之。池中:{1}", endPoint, map.Count));
+                }
             }
         }
 

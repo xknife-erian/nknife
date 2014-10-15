@@ -369,6 +369,10 @@ namespace SocketKnife
 
         private void RemoveSession(SocketAsyncEventArgs e)
         {
+            if (!e.AcceptSocket.Connected)
+            {
+                return;
+            }
             string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
             _logger.Info(message);
             foreach (KnifeSocketServerFilter filter in _Policy)
@@ -433,7 +437,7 @@ namespace SocketKnife
             try
             {
                 socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-                _logger.Trace(string.Format("Server.Send:{0}", data));
+                _logger.Trace(()=>string.Format("Server.Send:{0}", data.ToHexString()));
             }
             catch
             {
@@ -446,6 +450,7 @@ namespace SocketKnife
             string replay = protocol.Generate();
             byte[] data = _Family.Encoder.Execute(replay);
             WirteBase(session, data);
+            _logger.Trace(string.Format("Server.Send:{0}", replay));
         }
 
         #endregion

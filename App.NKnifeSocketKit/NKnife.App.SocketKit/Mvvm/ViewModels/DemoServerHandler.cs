@@ -1,6 +1,8 @@
 using System;
+using NKnife.Adapters;
 using NKnife.App.SocketKit.Common;
 using NKnife.Collections;
+using NKnife.Interface;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 
@@ -8,6 +10,8 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
 {
     internal class DemoServerHandler : KnifeProtocolHandler
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         private readonly AsyncObservableCollection<SocketMessage> _SocketMessages;
 
         public DemoServerHandler(AsyncObservableCollection<SocketMessage> socketMessages)
@@ -23,6 +27,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             msg.Message = protocol.Generate();
             msg.Time = DateTime.Now.ToString("HH:mm:ss.fff");
             _SocketMessages.Insert(0, msg);
+            _logger.Info("新消息解析完成" + msg.Message);
         }
     }
 }

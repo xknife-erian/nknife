@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using NKnife.Adapters;
+using NKnife.Events;
 using NKnife.Interface;
 using NKnife.Utility;
 using SocketKnife.Common;
@@ -18,22 +17,44 @@ namespace SocketKnife.Generic.Filters
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
+        public override void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter)
+        {
+            base.Bind(familyGetter, handlerGetter, mapGetter);
+            var map = mapGetter.Invoke();
+            map.Removed += SessionMap_OnRemoved;
+        }
+
+        private void SessionMap_OnRemoved(object sender, EventArgs<EndPoint> e)
+        {
+            ClearByEndPoint(e.Item);
+        }
+
         protected internal override void OnConnectionBreak(ConnectionBreakEventArgs e)
         {
             base.OnConnectionBreak(e);
-            var endPoint = e.EndPoint;
-            if (endPoint != null && _DataMonitors.ContainsKey(endPoint))
+            ClearByEndPoint(e.EndPoint);
+        }
+
+        private void ClearByEndPoint(EndPoint endPoint)
+        {
+            DataMonitor dataMonitor;
+            if (_DataMonitors.TryRemove(endPoint, out dataMonitor))
             {
-                var dataMonitor = _DataMonitors[endPoint];
                 dataMonitor.IsMonitor = false;
                 dataMonitor.ReceiveQueue.AutoResetEvent.Set();
-                _logger.Trace(string.Format("Server: IP地址:{0}的数据池循环开关被关闭。{1}", endPoint, _DataMonitors.Count));
+                _logger.Trace(string.Format("客户端:{0}的数据监听器池循环开关被关闭。{1}", endPoint, _DataMonitors.Count));
+            }
+            ReceiveQueue receiveQueue;
+            if (_ReceiveQueueMap.TryRemove(endPoint, out receiveQueue))
+            {
+                receiveQueue.Clear();
+                _logger.Trace(string.Format("客户端:{0}的数据池移除。{1}", endPoint, _ReceiveQueueMap.Count));
             }
         }
 
         public override void PrcoessReceiveData(Socket socket, byte[] data)
         {
-            var endPoint = socket.RemoteEndPoint;
+            EndPoint endPoint = socket.RemoteEndPoint;
             ReceiveQueue receive = null;
             if (!_ReceiveQueueMap.TryGetValue(endPoint, out receive))
             {
@@ -63,47 +84,50 @@ namespace SocketKnife.Generic.Filters
         /// </summary>
         protected virtual void ReceiveQueueMonitor(object obj)
         {
-            var pair = (KeyValuePair<EndPoint, ReceiveQueue>)obj;
+            var pair = (KeyValuePair<EndPoint, ReceiveQueue>) obj;
             _logger.Debug(() => string.Format("启动基于{0}的ReceiveQueue队列的监听。", pair.Key));
             ReceiveQueue receiveQueue = pair.Value;
-            var undone = new byte[] { };
-            while (_DataMonitors[pair.Key].IsMonitor)
+            var undone = new byte[] {};
+            DataMonitor dataMonitor;
+            if (_DataMonitors.TryGetValue(pair.Key, out dataMonitor))
             {
-                if (receiveQueue.Count > 0)
+                while (dataMonitor.IsMonitor)
                 {
-                    byte[] data = receiveQueue.Dequeue();
-                    if (!UtilityCollection.IsNullOrEmpty(undone))
+                    if (receiveQueue.Count > 0)
                     {
-                        // 当有半包数据时，进行接包操作
-                        int srcLen = data.Length;
-                        var list = new List<byte>(data.Length + undone.Length);
-                        list.AddRange(undone);
-                        list.AddRange(data);
-                        data = list.ToArray();
-                        int length = undone.Length;
-                        _logger.Trace(() => string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", length, srcLen, data.Length));
-                        undone = new byte[] { };
+                        byte[] data = receiveQueue.Dequeue();
+                        if (!UtilityCollection.IsNullOrEmpty(undone))
+                        {
+                            // 当有半包数据时，进行接包操作
+                            int srcLen = data.Length;
+                            var list = new List<byte>(data.Length + undone.Length);
+                            list.AddRange(undone);
+                            list.AddRange(data);
+                            data = list.ToArray();
+                            int length = undone.Length;
+                            _logger.Trace(() => string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", length, srcLen, data.Length));
+                            undone = new byte[] {};
+                        }
+                        int done;
+                        DataProcessBase(pair.Key, data, out done);
+                        if (data.Length > done)
+                        {
+                            // 暂存半包数据，留待下条队列数据接包使用
+                            undone = new byte[data.Length - done];
+                            Buffer.BlockCopy(data, done, undone, 0, undone.Length);
+                            int length = undone.Length;
+                            _logger.Trace(() => string.Format("半包数据暂存,数据长度:{0}", length));
+                        }
                     }
-                    int done;
-                    DataProcessBase(pair.Key, data, out done);
-                    if (data.Length > done)
+                    else
                     {
-                        // 暂存半包数据，留待下条队列数据接包使用
-                        undone = new byte[data.Length - done];
-                        Buffer.BlockCopy(data, done, undone, 0, undone.Length);
-                        int length = undone.Length;
-                        _logger.Trace(() => string.Format("半包数据暂存,数据长度:{0}", length));
+                        receiveQueue.AutoResetEvent.WaitOne();
                     }
-                }
-                else
-                {
-                    receiveQueue.AutoResetEvent.WaitOne();
                 }
             }
             // 当接收队列停止监听时，移除该客户端数据队列
-            DataMonitor outBool;
-            bool remove = _DataMonitors.TryRemove(pair.Key, out outBool);
-            if (remove)
+            bool isRemoved = _DataMonitors.TryRemove(pair.Key, out dataMonitor);
+            if (isRemoved)
                 _logger.Trace(() => string.Format("从数据队列池中移除该客户端{0}成功，{1}", pair.Key, _DataMonitors.Count));
             else
                 _logger.Warn(() => string.Format("从数据队列池中移除该客户端{0}不成功{1}", pair.Key, _DataMonitors.Count));
@@ -111,7 +135,7 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
         {
-            var family = _FamilyGetter.Invoke();
+            IProtocolFamily family = _FamilyGetter.Invoke();
             string[] datagram = family.Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
@@ -121,27 +145,52 @@ namespace SocketKnife.Generic.Filters
 
             foreach (string dg in datagram)
             {
-                if (string.IsNullOrWhiteSpace(dg))
-                    continue;
-                string command = string.Empty;
+                if (string.IsNullOrWhiteSpace(dg)) continue;
+                string command = "";
                 try
                 {
                     command = family.CommandParser.GetCommand(dg);
-                    IProtocol protocol = family.NewProtocol(command);
-                    _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
-                    if (protocol != null)
-                    {
-                        protocol.Parse(dg);
-                        // 触发数据基础解析后发生的数据到达事件
-                        var handler = _HandlerGetter.Invoke();
-                        var sessionMap = _SessionMapGetter.Invoke();
-                        handler.Recevied(sessionMap[endpoint], protocol);
-                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(string.Format("命令字解析异常:{0},Data:{1}", e.Message, dg), e);
+                    continue;
+                }
+                _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
+                IProtocol protocol = family.NewProtocol(command);
+                try
+                {
+                    protocol.Parse(dg);
                 }
                 catch (Exception ex)
                 {
-                    _logger.Warn(string.Format("预处理异常。内容:{0};命令字:{1}。{2}", dg, command, ex.Message), ex);
+                    _logger.Warn(string.Format("协议分装异常。内容:{0};命令字:{1}。{2}", dg, command, ex.Message), ex);
+                    continue;
                 }
+                // 触发数据基础解析后发生的数据到达事件
+                HandlerInvoke(endpoint, protocol);
+            }
+        }
+
+        /// <summary>
+        /// // 触发数据基础解析后发生的数据到达事件
+        /// </summary>
+        private void HandlerInvoke(EndPoint endpoint, IProtocol protocol)
+        {
+            IProtocolHandler handler = _HandlerGetter.Invoke();
+            ISocketSessionMap sessionMap = _SessionMapGetter.Invoke();
+            ISocketSession session;
+            if (!sessionMap.TryGetValue(endpoint, out session))
+            {
+                _logger.Warn(string.Format("SessionMap中未找到指定的客户端:{0}", endpoint));
+            }
+            try
+            {
+                handler.Recevied(session, protocol);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(string.Format("{0}调用异常:{1}", handler.GetType().Name, e.Message), e);
             }
         }
 
@@ -153,6 +202,5 @@ namespace SocketKnife.Generic.Filters
         }
 
         #endregion
-
     }
 }
