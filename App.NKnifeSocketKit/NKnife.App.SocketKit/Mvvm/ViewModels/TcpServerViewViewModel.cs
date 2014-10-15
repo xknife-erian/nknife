@@ -86,11 +86,6 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             _Server.Start();
         }
 
-        public void PauseServer()
-        {
-            _Server.Stop();
-        }
-
         public void StopServer()
         {
             _Server.Stop();

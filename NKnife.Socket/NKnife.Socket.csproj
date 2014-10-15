@@ -64,7 +64,7 @@
     <Compile Include="Generic\KnifeSocketSession.cs" />
     <Compile Include="Generic\KnifeSocketSessionMap.cs" />
     <Compile Include="Generic\Filters\KeepAliveServerFilter.cs" />
-    <Compile Include="Generic\Filters\KnifeSocketFilter.cs" />
+    <Compile Include="Generic\Filters\KnifeSocketServerFilter.cs" />
     <Compile Include="Generic\KnifeProtocolHandler.cs" />
     <Compile Include="Generic\KnifeSocketPolicy.cs" />
     <Compile Include="Generic\KnifeSocketServerConfig.cs" />
@@ -88,7 +88,7 @@
     <Compile Include="Interfaces\IProtocolHandler.cs" />
     <Compile Include="Interfaces\IProtocolPackager.cs" />
     <Compile Include="Interfaces\IProtocolUnPackager.cs" />
-    <Compile Include="Interfaces\ISocketFilter.cs" />
+    <Compile Include="Interfaces\ISocketServerFilter.cs" />
     <Compile Include="Interfaces\ISocketSessionMap.cs" />
     <Compile Include="Interfaces\ISocketPolicy.cs" />
     <Compile Include="Interfaces\ISocketPlan.cs" />

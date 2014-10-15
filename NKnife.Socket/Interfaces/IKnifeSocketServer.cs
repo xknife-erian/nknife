@@ -10,7 +10,7 @@ namespace SocketKnife.Interfaces
         void Configure(IPAddress ipAddress, int port);
         void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler);
         ISocketServerConfig Config { get; }
-        void AddFilter(KnifeSocketFilter filter);
+        void AddFilter(KnifeSocketServerFilter filter);
         void Attach(ISocketPlan socketPlan);
         bool Start();
         bool ReStart();

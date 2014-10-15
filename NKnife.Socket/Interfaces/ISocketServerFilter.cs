@@ -5,7 +5,7 @@ using SocketKnife.Common;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketFilter
+    public interface ISocketServerFilter
     {
         void PrcoessReceiveData(Socket socket, byte[] data);
 

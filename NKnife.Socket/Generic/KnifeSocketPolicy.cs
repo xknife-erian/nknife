@@ -9,9 +9,9 @@ namespace SocketKnife.Generic
 {
     public class KnifeSocketPolicy : ISocketPolicy
     {
-        private readonly LinkedList<KnifeSocketFilter> _Filters = new LinkedList<KnifeSocketFilter>();
+        private readonly LinkedList<KnifeSocketServerFilter> _Filters = new LinkedList<KnifeSocketServerFilter>();
 
-        public IEnumerator<KnifeSocketFilter> GetEnumerator()
+        public IEnumerator<KnifeSocketServerFilter> GetEnumerator()
         {
             return _Filters.GetEnumerator();
         }
@@ -21,7 +21,7 @@ namespace SocketKnife.Generic
             return GetEnumerator();
         }
 
-        public void Add(KnifeSocketFilter item)
+        public void Add(KnifeSocketServerFilter item)
         {
             _Filters.AddLast(item);
         }
@@ -31,17 +31,17 @@ namespace SocketKnife.Generic
             _Filters.Clear();
         }
 
-        public bool Contains(KnifeSocketFilter item)
+        public bool Contains(KnifeSocketServerFilter item)
         {
             return _Filters.Contains(item);
         }
 
-        public void CopyTo(KnifeSocketFilter[] array, int arrayIndex)
+        public void CopyTo(KnifeSocketServerFilter[] array, int arrayIndex)
         {
             _Filters.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(KnifeSocketFilter item)
+        public bool Remove(KnifeSocketServerFilter item)
         {
             return _Filters.Remove(item);
         }
@@ -51,26 +51,26 @@ namespace SocketKnife.Generic
             get { return _Filters.Count; }
             
         }
-        public bool IsReadOnly { get { return ((ICollection<KnifeSocketFilter>)_Filters).IsReadOnly; } }
+        public bool IsReadOnly { get { return ((ICollection<KnifeSocketServerFilter>)_Filters).IsReadOnly; } }
 
-        public void AddAfter(KnifeSocketFilter filter, KnifeSocketFilter newfilter)
+        public void AddAfter(KnifeSocketServerFilter filter, KnifeSocketServerFilter newfilter)
         {
-            _Filters.AddAfter(new LinkedListNode<KnifeSocketFilter>(filter), new LinkedListNode<KnifeSocketFilter>(newfilter));
+            _Filters.AddAfter(new LinkedListNode<KnifeSocketServerFilter>(filter), new LinkedListNode<KnifeSocketServerFilter>(newfilter));
         }
 
-        public void AddBefore(KnifeSocketFilter filter, KnifeSocketFilter newfilter)
+        public void AddBefore(KnifeSocketServerFilter filter, KnifeSocketServerFilter newfilter)
         {
-            _Filters.AddBefore(new LinkedListNode<KnifeSocketFilter>(filter), new LinkedListNode<KnifeSocketFilter>(newfilter));
+            _Filters.AddBefore(new LinkedListNode<KnifeSocketServerFilter>(filter), new LinkedListNode<KnifeSocketServerFilter>(newfilter));
         }
 
-        public void AddFirst(KnifeSocketFilter filter)
+        public void AddFirst(KnifeSocketServerFilter filter)
         {
-            _Filters.AddFirst(new LinkedListNode<KnifeSocketFilter>(filter));
+            _Filters.AddFirst(new LinkedListNode<KnifeSocketServerFilter>(filter));
         }
 
-        public void AddLast(KnifeSocketFilter filter)
+        public void AddLast(KnifeSocketServerFilter filter)
         {
-            _Filters.AddLast(new LinkedListNode<KnifeSocketFilter>(filter));
+            _Filters.AddLast(new LinkedListNode<KnifeSocketServerFilter>(filter));
         }
 
         public void RemoveFirst()

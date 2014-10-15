@@ -14,18 +14,17 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
-    public class KeepAliveServerFilter : KnifeSocketFilter
+    public class KeepAliveServerFilter : KnifeSocketServerFilter
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         protected internal override void OnConnectionBreak(ConnectionBreakEventArgs e)
         {
             base.OnConnectionBreak(e);
-            var endPoint = e.RemoteEndPoint;
-            if (endPoint != null && !_DataMonitors.ContainsKey(endPoint))
+            var endPoint = e.EndPoint;
+            if (endPoint != null && _DataMonitors.ContainsKey(endPoint))
             {
-                var dataMonitor = new DataMonitor();
-                _DataMonitors.AddOrUpdate(endPoint, dataMonitor, (p, m) => m);
+                var dataMonitor = _DataMonitors[endPoint];
                 dataMonitor.IsMonitor = false;
                 dataMonitor.ReceiveQueue.AutoResetEvent.Set();
                 _logger.Trace(string.Format("Server: IP地址:{0}的数据池循环开关被关闭。{1}", endPoint, _DataMonitors.Count));
@@ -38,6 +37,7 @@ namespace SocketKnife.Generic.Filters
             ReceiveQueue receive = null;
             if (!_ReceiveQueueMap.TryGetValue(endPoint, out receive))
             {
+                //当第一次有相应的客户端连接时，为该客户端创建相应的处理队列
                 receive = new ReceiveQueue();
                 _ReceiveQueueMap.TryAdd(endPoint, receive);
                 InitializeDataMonitor(new KeyValuePair<EndPoint, ReceiveQueue>(endPoint, receive));
@@ -52,10 +52,10 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void InitializeDataMonitor(KeyValuePair<EndPoint, ReceiveQueue> pair)
         {
-            var t = new Thread(ReceiveQueueMonitor);
-            var dm = new DataMonitor { IsMonitor = true, ReceiveQueue = pair.Value, Thread = t };
+            var thread = new Thread(ReceiveQueueMonitor) {IsBackground = true};
+            var dm = new DataMonitor {IsMonitor = true, ReceiveQueue = pair.Value, Thread = thread};
             _DataMonitors.TryAdd(pair.Key, dm);
-            t.Start(pair);
+            thread.Start(pair);
         }
 
         /// <summary>
@@ -100,13 +100,13 @@ namespace SocketKnife.Generic.Filters
                     receiveQueue.AutoResetEvent.WaitOne();
                 }
             }
-            // 当接收队列完成后，移除该客户端信息
+            // 当接收队列停止监听时，移除该客户端数据队列
             DataMonitor outBool;
             bool remove = _DataMonitors.TryRemove(pair.Key, out outBool);
             if (remove)
-                _logger.Trace(() => string.Format("接收队列完成，移除该客户端{0}信息，{1}", pair.Key, _DataMonitors.Count));
+                _logger.Trace(() => string.Format("从数据队列池中移除该客户端{0}成功，{1}", pair.Key, _DataMonitors.Count));
             else
-                _logger.Trace(() => string.Format("接收队列完成，移除该客户端{0}信息不成功{1}", pair.Key, _DataMonitors.Count));
+                _logger.Warn(() => string.Format("从数据队列池中移除该客户端{0}不成功{1}", pair.Key, _DataMonitors.Count));
         }
 
         protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
