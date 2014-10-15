@@ -211,7 +211,10 @@ namespace NKnife.App.TouchKnife.Workbench
         private void NumberButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button) sender;
-            _Simulator.Keyboard.TextEntry(button.Content.ToString());
+            var content = button.Content.ToString();
+            if (content.Length > 1)
+                content = _PointButton.Text;
+            _Simulator.Keyboard.TextEntry(content);
             _PanelParams.PlayVoice(OwnResources.键_数字);
         }
 

@@ -283,7 +283,7 @@
             <Button FontSize="20" Content="0" Margin="1" Grid.Row="3" Grid.Column="0" Click="NumberButton_Click"
                     Grid.ColumnSpan="2" />
             <Button Margin="1" Grid.Row="3" Padding="-1,-34,0,0" Grid.Column="2" Click="NumberButton_Click">
-                <TextBlock Text="." FontSize="50" />
+                <TextBlock Name="_PointButton" Text="." FontSize="50" />
             </Button>
         </Grid>
         

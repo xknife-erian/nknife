@@ -35,5 +35,5 @@ using System.Windows;
     ResourceDictionaryLocation.SourceAssembly //常规资源词典所处位置
 )]
 
-[assembly: AssemblyVersion("1.6.14.1014")]
-[assembly: AssemblyFileVersion("1.6.14.1014")]
+[assembly: AssemblyVersion("1.7.14.1014")]
+[assembly: AssemblyFileVersion("1.7.14.1014")]
