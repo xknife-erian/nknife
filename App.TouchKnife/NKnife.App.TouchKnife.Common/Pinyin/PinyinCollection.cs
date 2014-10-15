@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.IoC;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
@@ -9,10 +11,25 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
     /// <summary>
     ///     一个放置产生的待选词(拼音)的集合
     /// </summary>
-    public class PinyinSeparatesCollection : ObservableCollection<string>
+    public class PinyinCollection : ObservableCollection<string>
     {
-        private readonly PinyinSeparator _Separator = new PinyinSeparator(DI.Get<ISyllableCollection>());
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
+        private readonly PinyinSeparator _Separator;
         private readonly StringBuilder _StringBuilder = new StringBuilder();
+
+        public PinyinCollection()
+        {
+            try
+            {
+                _Separator = new PinyinSeparator(DI.Get<ISyllableCollection>());
+                _logger.Info(string.Format("PinyinCollection实例正常"));
+            }
+            catch (Exception e)
+            {
+                _logger.Warn(string.Format("PinyinCollection实例异常:{0}", e.Message));
+            }
+        }
 
         public void UpdateSource(IEnumerable<string> src)
         {

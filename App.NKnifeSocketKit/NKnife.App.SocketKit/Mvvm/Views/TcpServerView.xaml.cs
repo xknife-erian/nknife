@@ -37,25 +37,14 @@ namespace NKnife.App.SocketKit.Mvvm.Views
         private void Start(object sender, RoutedEventArgs e)
         {
             _StartButton.IsEnabled = false;
-            _PauseButton.IsEnabled = true;
             _StopButton.IsEnabled = true;
 
             _ViewModel.StartServer();
         }
 
-        private void Pause(object sender, RoutedEventArgs e)
-        {
-            _StartButton.IsEnabled = true;
-            _PauseButton.IsEnabled = false;
-            _StopButton.IsEnabled = true;
-
-            _ViewModel.PauseServer();
-        }
-
         private void Stop(object sender, RoutedEventArgs e)
         {
             _StartButton.IsEnabled = true;
-            _PauseButton.IsEnabled = false;
             _StopButton.IsEnabled = false;
 
             _ViewModel.StopServer();

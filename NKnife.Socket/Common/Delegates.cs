@@ -47,13 +47,15 @@ namespace SocketKnife.Common
     /// <summary>
     ///     当出错或断开触发事件发生时包含事件数据的类，继承自 SocketAsyncEventArgs
     /// </summary>
-    public class ConnectionBreakEventArgs : SocketAsyncEventArgs
+    public class ConnectionBreakEventArgs : EventArgs
     {
-        public ConnectionBreakEventArgs(string message)
+        public ConnectionBreakEventArgs(string message, EndPoint endPoint)
         {
             EventMessage = message;
+            EndPoint = endPoint;
         }
 
+        public EndPoint EndPoint { get; set; }
         public string EventMessage { get; private set; }
     }
 

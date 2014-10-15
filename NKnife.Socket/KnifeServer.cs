@@ -50,7 +50,6 @@ namespace SocketKnife
         protected IProtocolHandler _Handler;
         protected ISocketPolicy _Policy;
         protected ISocketSessionMap _SessionMap;
-        protected ISocketPlan _SocketPlan;
 
         public void Configure(IPAddress ipAddress, int port)
         {
@@ -61,7 +60,7 @@ namespace SocketKnife
         [Inject]
         public ISocketServerConfig Config { get; set; }
 
-        public void AddFilter(KnifeSocketFilter filter)
+        public void AddFilter(KnifeSocketServerFilter filter)
         {
             filter.Bind(GetFamily, GetHandle, GetSessionMap);
             _Policy.AddLast(filter);
@@ -73,11 +72,6 @@ namespace SocketKnife
             _Handler = handler;
             _Handler.Bind(WirteBase);
             _Handler.Bind(WirteProtocol);
-        }
-
-        public virtual void Attach(ISocketPlan socketPlan)
-        {
-            _SocketPlan = socketPlan;
         }
 
         public virtual bool Start()
@@ -120,6 +114,7 @@ namespace SocketKnife
                     }
                     client.Close();
                 }
+                _SessionMap.Clear();
                 foreach (SocketAsyncEventArgs async in _SocketAsynPool)
                 {
                     if (null == async.AcceptSocket || !async.AcceptSocket.Connected)
@@ -130,6 +125,7 @@ namespace SocketKnife
                     async.AcceptSocket.Close();
                 }
                 _SocketAsynPool.Clear();
+                _logger.Info(string.Format("SocketServer关闭。"));
                 return true;
             }
             catch (Exception e)
@@ -203,6 +199,7 @@ namespace SocketKnife
 
         #region 构造函数,初始化
 
+        [Inject]
         public KnifeServer(ISocketSessionMap sessionMap, ISocketPolicy policy)
         {
             _SessionMap = sessionMap;
@@ -312,8 +309,8 @@ namespace SocketKnife
                                 session.Point = iep;
                                 session.Socket = e.AcceptSocket;
                                 _SessionMap.Add(iep, session);
-                                _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。{1}", ip, _SessionMap.Count));
-                                foreach (KnifeSocketFilter filter in _Policy)
+                                _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count));
+                                foreach (KnifeSocketServerFilter filter in _Policy)
                                 {
                                     filter.OnListenToClient(e);
                                 }
@@ -374,9 +371,9 @@ namespace SocketKnife
         {
             string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
             _logger.Info(message);
-            foreach (KnifeSocketFilter filter in _Policy)
+            foreach (KnifeSocketServerFilter filter in _Policy)
             {
-                filter.OnConnectionBreak(new ConnectionBreakEventArgs(message));
+                filter.OnConnectionBreak(new ConnectionBreakEventArgs(message, e.AcceptSocket.RemoteEndPoint));
             }
 
             var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
@@ -404,10 +401,10 @@ namespace SocketKnife
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
 
-            foreach (KnifeSocketFilter filter in _Policy)
+            foreach (KnifeSocketServerFilter filter in _Policy)
             {
                 filter.OnDataComeInEvent(data, e.RemoteEndPoint); // 触发数据到达事件
-                filter.PrcoessReceiveData(e.AcceptSocket, data);
+                filter.PrcoessReceiveData(e.AcceptSocket, data); // 调用filter对数据进行处理
             }
 
             if (!e.AcceptSocket.ReceiveAsync(e))
@@ -427,16 +424,6 @@ namespace SocketKnife
             catch (Exception e)
             {
                 _logger.Warn(string.Format("结束挂起的异步发送异常.{0}", e.Message));
-            }
-        }
-
-        protected virtual void AsynCallBackDisconnect(IAsyncResult result)
-        {
-            var socket = result.AsyncState as Socket;
-            if (socket != null)
-            {
-                socket.Shutdown(SocketShutdown.Both);
-                socket.EndDisconnect(result);
             }
         }
 

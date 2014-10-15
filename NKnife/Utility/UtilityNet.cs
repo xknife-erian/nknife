@@ -53,7 +53,7 @@ namespace NKnife.Utility
         ///     获取本机的默认网关。
         ///     如果无法获取，将返回Null值。
         /// </summary>
-        public static IPAddress GetDefaultIPGateway()
+        public static IPAddress GetDefaultIpGateway()
         {
             return GetNetInformation("DefaultIPGateway");
         }
@@ -195,7 +195,7 @@ namespace NKnife.Utility
         ///     [ 仅供Asp.net使用, WinForm无法使用 ] 获取本机的公网IP地址
         /// </summary>
         /// <returns>返回结果集合中的[0]为公网IP地址，后续的为代理地址</returns>
-        public static IPAddress[] GetInternetIPAddressByLocalhost()
+        public static IPAddress[] GetInternetIpAddressByLocalhost()
         {
             var iplist = new List<IPAddress>();
 
@@ -243,5 +243,62 @@ namespace NKnife.Utility
             }
             return iplist.ToArray();
         }
+
+        /// <summary>
+        ///     获取一个标准的微型KeepAlive通讯包。
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] GenerateKeepAliveCommand()
+        {
+            const uint DUMMY = 0;
+            var inOptionValues = new byte[Marshal.SizeOf(DUMMY) * 3];
+            BitConverter.GetBytes((uint)1).CopyTo(inOptionValues, 0);
+            BitConverter.GetBytes((uint)15000).CopyTo(inOptionValues, Marshal.SizeOf(DUMMY));
+            BitConverter.GetBytes((uint)15000).CopyTo(inOptionValues, Marshal.SizeOf(DUMMY) * 2);
+            return inOptionValues;
+        }
+
+        /// <summary>
+        ///     SendArp获取MAC地址
+        /// </summary>
+        /// <param name="macip"></param>
+        /// <returns></returns>
+        public static string GetMacAddress(string macip)
+        {
+            var strReturn = new StringBuilder();
+            try
+            {
+                Int32 remote = inet_addr(macip);
+                var macinfo = new Int64();
+                Int32 length = 6;
+                SendARP(remote, 0, ref macinfo, ref length);
+                string temp = Convert.ToString(macinfo, 16).PadLeft(12, '0').ToUpper();
+                int x = 12;
+                for (int i = 0; i < 6; i++)
+                {
+                    if (i == 5)
+                    {
+                        strReturn.Append(temp.Substring(x - 2, 2));
+                    }
+                    else
+                    {
+                        strReturn.Append(temp.Substring(x - 2, 2) + ":");
+                    }
+                    x -= 2;
+                }
+                return strReturn.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        [DllImport("Iphlpapi.dll")]
+        private static extern int SendARP(Int32 destIp, Int32 srcIp, ref Int64 macAddr, ref Int32 phyAddrLen);
+
+        [DllImport("Ws2_32.dll")]
+        private static extern Int32 inet_addr(string ipaddr);
+
     }
 }

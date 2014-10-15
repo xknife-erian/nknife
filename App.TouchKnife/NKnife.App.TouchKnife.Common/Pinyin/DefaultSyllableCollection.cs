@@ -1,15 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using NKnife.Adapters;
+using NKnife.Interface;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     public class DefaultSyllableCollection : ISyllableCollection
     {
-        private static readonly ReadOnlyCollection<string> _SyllableList;
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
+        private static readonly ReadOnlyCollection<string> _syllableList;
+
+        public DefaultSyllableCollection()
+        {
+            _logger.Info(string.Format("DefaultSyllableCollection实例正常"));
+        }
 
         public int Check(string pinyin)
         {
-            if (_SyllableList.IndexOf(pinyin) >= 0)
+            if (_syllableList.IndexOf(pinyin) >= 0)
                 return 0;
             if(IsSubSyllable(pinyin))
                 return 1;
@@ -23,7 +32,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
         /// <returns></returns>
         private bool IsSubSyllable(string pinyin)
         {
-            foreach (var syllable in _SyllableList)
+            foreach (var syllable in _syllableList)
             {
                 if (pinyin.Length >= syllable.Length)
                     continue;
@@ -47,7 +56,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
 
         static DefaultSyllableCollection()
         {
-            _SyllableList = InitializeCollection();
+            _syllableList = InitializeCollection();
         }
 
         public static ReadOnlyCollection<string> InitializeCollection()

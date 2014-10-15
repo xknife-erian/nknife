@@ -28,16 +28,6 @@ namespace NKnife.Utility
             return DateTime.Parse(sb.ToString());
         }
 
-        /// <summary>当前时间的一个毫秒级的长整型数值（保持和Java的一致性）
-        /// Java获取此值的方法是:Calendar.getInstance().getTimeInMillis()
-        /// 具体分析请见:http://blog.csdn.net/LaoBai_2006/archive/2008/10/22/3124719.aspx
-        /// </summary>
-        /// <returns></returns>
-        public static long CurrTicks(this DateTime currDateTime)
-        {
-            return Decimal.ToInt64(Decimal.Divide(DateTime.UtcNow.Ticks - 621355968000000000, 10000));
-        }
-
         /// <summary>返回两个日期之间的时间间隔（y：年份间隔、M：月份间隔、d：天数间隔、h：小时间隔、m：分钟间隔、s：秒钟间隔、ms：微秒间隔）     
         /// </summary>     
         /// <param name="date1">开始日期</param>     

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -39,7 +40,14 @@ namespace NKnife.Collections
         private void RaiseCollectionChanged(object param)
         {
             // We are in the creator thread, call the base implementation directly
-            base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
+            try
+            {
+                base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
+            }
+            catch (Exception e)
+            {
+                Debug.Fail("线程异常:{0}", e.Message);
+            }
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)

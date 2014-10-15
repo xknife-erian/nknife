@@ -115,7 +115,6 @@
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Button Click="Start" Name="_StartButton" Style="{StaticResource StartButtonImage}" />
-            <Button Click="Pause" Name="_PauseButton" IsEnabled="False" Style="{StaticResource PauseButtonImage}" />
             <Button Click="Stop" Name="_StopButton" IsEnabled="False" Style="{StaticResource StopButtonImage}" />
         </ToolBar>
         <StatusBar Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -127,7 +126,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SocketDirection}" Width="40" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SocketDirection}" Width="70" />
+                    <GridViewColumn Header="命令字" DisplayMemberBinding="{Binding Path=Command}" Width="150" />
                     <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="900" />
                 </GridView>
             </ListView.View>

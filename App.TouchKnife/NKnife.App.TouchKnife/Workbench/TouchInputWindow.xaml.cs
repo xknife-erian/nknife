@@ -26,6 +26,8 @@ namespace NKnife.App.TouchKnife.Workbench
     /// </summary>
     public partial class TouchInputWindow : Window, ITouchInput
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         #region 类成员变量
 
         private const string ENGLISH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -56,11 +58,18 @@ namespace NKnife.App.TouchKnife.Workbench
             ShowInTaskbar = false;
             Hide();
 
-            _PinyinInputListBox.ItemsSource = DI.Get<PinyinSeparatesCollection>();
-            _PinyinWordListBox.ItemsSource = DI.Get<PinyinAlternateCollection>();
-
-            _HwWordListBox.ItemsSource = DI.Get<HwAlternateCollection>();
-            _PinyinWordPanel.DataContext = DI.Get<PinyinAlternateCollection>();
+            try
+            {
+                _HwWordListBox.ItemsSource = DI.Get<HwAlternateCollection>();
+                _PinyinInputListBox.ItemsSource = DI.Get<PinyinCollection>();
+                _PinyinWordPanel.DataContext = DI.Get<PinyinAlternateCollection>();
+                _PinyinWordListBox.ItemsSource = DI.Get<PinyinAlternateCollection>();
+                _logger.Info(string.Format("绑定拼音源完成."));
+            }
+            catch (Exception e)
+            {
+                _logger.Warn(string.Format("绑定拼音源出错:{0}", e.Message));
+            }
 
             StartKernel();
         }
@@ -211,7 +220,10 @@ namespace NKnife.App.TouchKnife.Workbench
         private void NumberButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button) sender;
-            _Simulator.Keyboard.TextEntry(button.Content.ToString());
+            var content = button.Content.ToString();
+            if (content.Length > 1)
+                content = _PointButton.Text;
+            _Simulator.Keyboard.TextEntry(content);
             _PanelParams.PlayVoice(OwnResources.键_数字);
         }
 
@@ -226,7 +238,7 @@ namespace NKnife.App.TouchKnife.Workbench
                 case Params.InputMode.Pinyin:
                 {
                     KeyboardSwitchCase(1);
-                    var py = DI.Get<PinyinSeparatesCollection>();
+                    var py = DI.Get<PinyinCollection>();
                     py.AddLetter(((Button) sender).Content.ToString());
                     break;
                 }
@@ -266,17 +278,18 @@ namespace NKnife.App.TouchKnife.Workbench
         private void BackFunctionButtonClick(object sender, RoutedEventArgs e)
         {
             _PanelParams.PlayVoice(OwnResources.键_功能);
-//            if (_PyStripEnable)
-//            {
-//                if (!_PyStrip.BackSpace())
-//                {
-//                    HidePyStrip();
-//                }
-//            }
-//            else
-//            {
+            if (_InputMode == Params.InputMode.Pinyin)
+            {
+                var pyStrip = DI.Get<PinyinCollection>();
+                if (!pyStrip.BackSpaceLetter())
+                {
+                    _Simulator.Keyboard.KeyPress(VirtualKeyCode.BACK);
+                }
+            }
+            else
+            {
                 _Simulator.Keyboard.KeyPress(VirtualKeyCode.BACK);
-//            }
+            }
         }
 
         /// <summary>回车键
@@ -441,7 +454,7 @@ namespace NKnife.App.TouchKnife.Workbench
             {   
                 //候选词选择完成
                 DI.Get<PinyinAlternateCollection>().ClearAlternates();
-                DI.Get<PinyinSeparatesCollection>().ClearInput();
+                DI.Get<PinyinCollection>().ClearInput();
             }
         }
 

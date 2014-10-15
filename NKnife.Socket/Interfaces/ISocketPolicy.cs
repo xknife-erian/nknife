@@ -4,12 +4,12 @@ using SocketKnife.Generic.Filters;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketPolicy : ICollection<KnifeSocketFilter>
+    public interface ISocketPolicy : ICollection<KnifeSocketServerFilter>
     {
-        void AddAfter(KnifeSocketFilter filter, KnifeSocketFilter newfilter);
-        void AddBefore(KnifeSocketFilter filter, KnifeSocketFilter newfilter);
-        void AddFirst(KnifeSocketFilter filter);
-        void AddLast(KnifeSocketFilter filter);
+        void AddAfter(KnifeSocketServerFilter filter, KnifeSocketServerFilter newfilter);
+        void AddBefore(KnifeSocketServerFilter filter, KnifeSocketServerFilter newfilter);
+        void AddFirst(KnifeSocketServerFilter filter);
+        void AddLast(KnifeSocketServerFilter filter);
         void RemoveFirst();
         void RemoveLast();
     }

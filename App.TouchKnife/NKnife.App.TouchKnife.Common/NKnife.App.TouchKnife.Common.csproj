@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChnCharInfo">
@@ -78,7 +80,7 @@
     <Compile Include="Pinyin\Pinyin.cs" />
     <Compile Include="Pinyin\PinyinAlternateCollection.cs" />
     <Compile Include="Pinyin\PinyinSeparatedEventArgs.cs" />
-    <Compile Include="Pinyin\PinyinSeparatesCollection.cs" />
+    <Compile Include="Pinyin\PinyinCollection.cs" />
     <Compile Include="Pinyin\PinyinSeparator.cs" />
     <Compile Include="Keys\CaseSensitiveKey.cs" />
     <Compile Include="Keys\ChordKey.cs" />

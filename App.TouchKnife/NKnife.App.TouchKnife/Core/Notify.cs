@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Windows.Forms;
 using NKnife.App.TouchKnife.Properties;
 using NKnife.Interface;
@@ -136,7 +137,8 @@ namespace NKnife.App.TouchKnife.Core
                 loggerForm.Show();
             };
 
-            ToolStripItem version = new ToolStripLabel("Version: " + DI.Get<IAbout>().AssemblyVersion);
+            ToolStripItem version = new ToolStripLabel(DI.Get<IAbout>().AssemblyVersion.ToString());
+            ToolStripItem framework = new ToolStripLabel(Environment.Version.ToString());
 
             ToolStripItem exit = new ToolStripMenuItem("退出");
             exit.Click += delegate
@@ -162,6 +164,7 @@ namespace NKnife.App.TouchKnife.Core
             menu.Items.Add(logger);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(version);
+            menu.Items.Add(framework);
             menu.Items.Add(exit);
             return menu;
         }

@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -52,9 +54,9 @@
     <Compile Include="Common\ConnectionStatus.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\Exceptions.cs" />
+    <Compile Include="Common\Heartbeat.cs" />
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
-    <Compile Include="Common\Tcps.cs" />
     <Compile Include="Generic\Families\FirstFieldCommandParser.cs" />
     <Compile Include="Generic\Families\LengthHeadDecoder.cs" />
     <Compile Include="Generic\Families\Byte4Encoder.cs" />
@@ -62,16 +64,16 @@
     <Compile Include="Generic\Families\DatagramDecoder.cs" />
     <Compile Include="Generic\Families\DatagramEncoder.cs" />
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
+    <Compile Include="Generic\Filters\HeartbeatServerFilter.cs" />
     <Compile Include="Generic\KnifeSocketSession.cs" />
     <Compile Include="Generic\KnifeSocketSessionMap.cs" />
     <Compile Include="Generic\Filters\KeepAliveServerFilter.cs" />
-    <Compile Include="Generic\Filters\KnifeSocketFilter.cs" />
+    <Compile Include="Generic\Filters\KnifeSocketServerFilter.cs" />
     <Compile Include="Generic\KnifeProtocolHandler.cs" />
     <Compile Include="Generic\KnifeSocketPolicy.cs" />
     <Compile Include="Generic\KnifeSocketServerConfig.cs" />
     <Compile Include="Generic\Families\EndMarkDecoder.cs" />
     <Compile Include="Generic\Families\EndMarkEncoder.cs" />
-    <Compile Include="Generic\HeartbeatPlan.cs" />
     <Compile Include="Generic\Protocols\KnifeProtocol.cs" />
     <Compile Include="Generic\Protocols\KnifeProtocolContent.cs" />
     <Compile Include="Generic\Protocols\ProtocolDataTableDeserializeUnPackager.cs" />
@@ -89,10 +91,9 @@
     <Compile Include="Interfaces\IProtocolHandler.cs" />
     <Compile Include="Interfaces\IProtocolPackager.cs" />
     <Compile Include="Interfaces\IProtocolUnPackager.cs" />
-    <Compile Include="Interfaces\ISocketFilter.cs" />
+    <Compile Include="Interfaces\ISocketServerFilter.cs" />
     <Compile Include="Interfaces\ISocketSessionMap.cs" />
     <Compile Include="Interfaces\ISocketPolicy.cs" />
-    <Compile Include="Interfaces\ISocketPlan.cs" />
     <Compile Include="Interfaces\ISocketServerConfig.cs" />
     <Compile Include="Interfaces\IKnifeSocketServer.cs" />
     <Compile Include="Interfaces\ISocketSession.cs" />

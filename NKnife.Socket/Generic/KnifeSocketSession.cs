@@ -13,11 +13,12 @@ namespace SocketKnife.Generic
         public KnifeSocketSession()
         {
             Id = DateTime.Now.Ticks;
+            WaitHeartBeatingReplay = false;
         }
 
         public virtual long Id { get; private set; }
         public virtual EndPoint Point { get; set; }
         public virtual Socket Socket { get; set; }
-
+        public bool WaitHeartBeatingReplay { get; set; }
     }
 }

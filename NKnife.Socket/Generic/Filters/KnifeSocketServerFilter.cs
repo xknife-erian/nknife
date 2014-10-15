@@ -7,7 +7,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
-    public abstract class KnifeSocketFilter : ISocketFilter
+    public abstract class KnifeSocketServerFilter : ISocketServerFilter
     {
         protected Func<IProtocolFamily> _FamilyGetter;
         protected Func<IProtocolHandler> _HandlerGetter;
