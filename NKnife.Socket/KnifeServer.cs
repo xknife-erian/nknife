@@ -271,7 +271,7 @@ namespace SocketKnife
         {
             if (_IsClose)
             {
-                _logger.Warn("Server: Socket已关闭。");
+                _logger.Info("Server: Socket已关闭。");
                 return;
             }
             if (_SocketAsynPool.Count > 0)
