@@ -115,6 +115,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.NSerial\NKnife.NSerial.csproj">
+      <Project>{3b1ba8e0-29dd-4cfc-8593-889b9d547ab7}</Project>
+      <Name>NKnife.NSerial</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
