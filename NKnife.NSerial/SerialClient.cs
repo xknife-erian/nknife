@@ -6,7 +6,6 @@ using NKnife.IoC;
 using NKnife.NSerial.Abstracts;
 using NKnife.NSerial.Common;
 using NKnife.NSerial.Interfaces;
-using NKnife.NSerial.Wrappers;
 
 namespace NKnife.NSerial
 {
@@ -116,7 +115,7 @@ namespace NKnife.NSerial
             try
             {
                 PackageBase package;
-                int packageType = 0; //packageType 1=单向，2=双向,3=轮询
+                int packageType; //packageType 1=单向，2=双向,3=轮询
                 if (!_DataPool.TryGetPackage(out package,out packageType))
                 {
                     return;

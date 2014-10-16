@@ -10,7 +10,7 @@ namespace NKnife.NSerial
 {
     /// <summary>串口通讯管理器
     /// </summary>
-    public sealed class SerialClientManager : ISerialClientManager, IDisposable
+    public sealed class SerialClients : ISerialClientManager, IDisposable
     {
         private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
@@ -18,7 +18,7 @@ namespace NKnife.NSerial
         /// </summary>
         private readonly ConcurrentDictionary<ushort, ISerialClient> _SerialMap; 
 
-        public SerialClientManager()
+        public SerialClients()
         {
 
             _SerialMap = new ConcurrentDictionary<ushort, ISerialClient>();

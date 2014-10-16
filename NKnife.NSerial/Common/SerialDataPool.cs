@@ -8,6 +8,7 @@ using NKnife.NSerial.Interfaces;
 namespace NKnife.NSerial.Common
 {
     /// <summary>向串口即将发送的指令包的集合
+    /// TODO:这里分成三类包，双向包，单向包，巡查包，三类包的优先级不同，其实三类包没有必要，下一步引入包优先级的概念
     /// </summary>
     internal class SerialDataPool : ISerialDataPool
     {
@@ -39,6 +40,7 @@ namespace NKnife.NSerial.Common
         /// <summary>尝试获取数据包
         /// </summary>
         /// <param name="package"></param>
+        /// <param name="packageType"></param>
         /// <returns>有数据包则返回true，无则返回false</returns>
         public bool TryGetPackage(out PackageBase package,out int packageType)
         {

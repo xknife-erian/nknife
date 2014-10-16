@@ -62,7 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\QueryPackage.cs" />
     <Compile Include="SerialClient.cs" />
-    <Compile Include="SerialClientManager.cs" />
+    <Compile Include="SerialClients.cs" />
     <Compile Include="Common\SerialDataPool.cs" />
     <Compile Include="Wrappers\SerialPortWin32.cs" />
     <Compile Include="Wrappers\SerialPortWrapperDotNet.cs" />
