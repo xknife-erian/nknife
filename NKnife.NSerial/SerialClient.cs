@@ -2,6 +2,7 @@
 using System.Threading;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.IoC;
 using NKnife.NSerial.Abstracts;
 using NKnife.NSerial.Common;
 using NKnife.NSerial.Interfaces;
@@ -25,15 +26,7 @@ namespace NKnife.NSerial
         public SerialClient(SerialType serialType = SerialType.WinApi, bool enableDetialLog = false)
         {
             _EnableDetialLogger = enableDetialLog;
-            switch (serialType)
-            {
-                case SerialType.DotNet:
-                    _SerialComm = new SerialPortWrapperDotNet();
-                    break;
-                default:
-                    _SerialComm = new SerialPortWrapperWinApi();
-                    break;
-            }
+            _SerialComm = DI.Get<ISerialPortWrapper>(serialType.ToString());
         }
 
         #region ISerialClient
