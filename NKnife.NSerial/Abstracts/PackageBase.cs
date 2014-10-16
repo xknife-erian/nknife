@@ -1,8 +1,9 @@
 ﻿using System;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.NSerial.Common;
 
-namespace NKnife.NSerial.Base
+namespace NKnife.NSerial.Abstracts
 {
     /// <summary>数据包的基类，包含指令及信息与事件的封装
     /// </summary>
@@ -42,17 +43,15 @@ namespace NKnife.NSerial.Base
 
         internal void OnPackageSent(PackageSentEventArgs e)
         {
-            EventHandler<PackageSentEventArgs> handler = PackageSent;
-            if (handler != null)
+            var handler = PackageSent;
+            if (handler == null) return;
+            try
             {
-                try
-                {
-                    handler.Invoke(null, e);
-                }
-                catch (Exception ex)
-                {
-                    _Logger.Warn("OnPackageSent:", ex);
-                }
+                handler.Invoke(null, e);
+            }
+            catch (Exception ex)
+            {
+                _Logger.Warn("OnPackageSent:", ex);
             }
         }
     }

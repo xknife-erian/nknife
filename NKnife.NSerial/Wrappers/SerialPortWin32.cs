@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace NKnife.NSerial
+namespace NKnife.NSerial.Wrappers
 {
     ///<summary>串口类操作类，通过windows api实现
     ///</summary>

@@ -1,4 +1,4 @@
-namespace NKnife.NSerial.Base
+namespace NKnife.NSerial.Interfaces
 {
     /// <summary>串口操作类接口
     /// </summary>

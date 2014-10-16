@@ -2,13 +2,16 @@
 using System.Threading;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.NSerial.Base;
+using NKnife.NSerial.Abstracts;
+using NKnife.NSerial.Common;
+using NKnife.NSerial.Interfaces;
+using NKnife.NSerial.Wrappers;
 
 namespace NKnife.NSerial
 {
     /// <summary>串口通讯器。每个实例绑定一个端口。
     /// </summary>
-    internal class SerialCommunication : ISerialCommunication
+    internal class SerialClient : ISerialClient
     {
         private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
 
@@ -19,7 +22,7 @@ namespace NKnife.NSerial
         private ISerialDataPool _DataPool;
         private string _PortName;
 
-        public SerialCommunication(bool enableDetialLog = false, SerialType serialType = SerialType.WinApi)
+        public SerialClient(SerialType serialType = SerialType.WinApi, bool enableDetialLog = false)
         {
             _EnableDetialLogger = enableDetialLog;
             switch (serialType)
@@ -33,7 +36,7 @@ namespace NKnife.NSerial
             }
         }
 
-        #region ISerialCommunication
+        #region ISerialClient
 
         /// <summary>
         /// 打开端口
@@ -49,6 +52,7 @@ namespace NKnife.NSerial
                 _DataPool = new SerialDataPool();
                 _Logger.Info(string.Format("通讯串口{0}打开成功", _PortName));
 
+                //一个端口一个线程，专门处理该端口的数据收发
                 var queryThread = new Thread(QuerySendLoop) {IsBackground = true};
                 queryThread.Start();
                 return true;

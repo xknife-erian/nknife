@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.NSerial.Base
+namespace NKnife.NSerial.Common
 {
     public class SerialProDataReceivedEventArgs : EventArgs
     {

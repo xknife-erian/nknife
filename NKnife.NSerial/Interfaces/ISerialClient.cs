@@ -1,8 +1,8 @@
-﻿namespace NKnife.NSerial.Base
+﻿namespace NKnife.NSerial.Interfaces
 {
     /// <summary>描述一个串口操作的接口
     /// </summary>
-    internal interface ISerialCommunication
+    internal interface ISerialClient
     {
         /// <summary>该串口是否激活
         /// </summary>

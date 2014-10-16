@@ -39,34 +39,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\DataRecvEventArgs.cs" />
-    <Compile Include="Base\ISerialCommunication.cs" />
-    <Compile Include="Base\ISerialCommunicationManager.cs" />
-    <Compile Include="Base\ISerialDataPool.cs" />
-    <Compile Include="Base\ISerialPortWrapper.cs" />
-    <Compile Include="Base\NoResponseEventArgs.cs" />
-    <Compile Include="Base\PackageBase.cs" />
-    <Compile Include="Base\PackageSentEventArgs.cs" />
-    <Compile Include="Base\SendInterval.cs" />
-    <Compile Include="Base\SendRecvEventArgs.cs" />
-    <Compile Include="Base\SerialProDataReceivedEventArgs.cs" />
-    <Compile Include="OneWayPackage.cs" />
+    <Compile Include="Common\DataRecvEventArgs.cs" />
+    <Compile Include="Common\NoResponseEventArgs.cs" />
+    <Compile Include="Abstracts\PackageBase.cs" />
+    <Compile Include="Common\PackageSentEventArgs.cs" />
+    <Compile Include="Common\SendInterval.cs" />
+    <Compile Include="Common\SendRecvEventArgs.cs" />
+    <Compile Include="Common\SerialProDataReceivedEventArgs.cs" />
+    <Compile Include="Common\SerialType.cs" />
+    <Compile Include="Interfaces\ISerialClient.cs" />
+    <Compile Include="Interfaces\ISerialClientManager.cs" />
+    <Compile Include="Interfaces\ISerialDataPool.cs" />
+    <Compile Include="Interfaces\ISerialPortWrapper.cs" />
+    <Compile Include="Common\OneWayPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryPackage.cs" />
-    <Compile Include="SerialCommunication.cs" />
-    <Compile Include="SerialCommunicationManager.cs" />
-    <Compile Include="SerialDataPool.cs" />
-    <Compile Include="SerialPortWin32.cs" />
-    <Compile Include="SerialPortWrapperDotNet.cs" />
-    <Compile Include="SerialPortWrapperWinApi.cs" />
-    <Compile Include="SerialType.cs" />
-    <Compile Include="TwoWayPackage.cs" />
+    <Compile Include="Common\QueryPackage.cs" />
+    <Compile Include="SerialClient.cs" />
+    <Compile Include="SerialClientManager.cs" />
+    <Compile Include="Common\SerialDataPool.cs" />
+    <Compile Include="Wrappers\SerialPortWin32.cs" />
+    <Compile Include="Wrappers\SerialPortWrapperDotNet.cs" />
+    <Compile Include="Wrappers\SerialPortWrapperWinApi.cs" />
+    <Compile Include="Common\TwoWayPackage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IoC\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,7 @@
-﻿namespace NKnife.NSerial.Base
+﻿using NKnife.NSerial.Abstracts;
+using NKnife.NSerial.Common;
+
+namespace NKnife.NSerial.Interfaces
 {
     /// <summary>向串口即将发送的指令包的集合
     /// </summary>

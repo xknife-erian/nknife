@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.NSerial.Base
+namespace NKnife.NSerial.Common
 {
     /// <summary> 数据包发送完成事件参数
     /// </summary>

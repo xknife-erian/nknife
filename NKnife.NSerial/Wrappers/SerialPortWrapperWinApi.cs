@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using NKnife.NSerial.Base;
+using NKnife.NSerial.Interfaces;
 
-namespace NKnife.NSerial
+namespace NKnife.NSerial.Wrappers
 {
     public class SerialPortWrapperWinApi : ISerialPortWrapper
     {

@@ -2,51 +2,43 @@
 using System.Collections.Concurrent;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.NSerial.Base;
+using NKnife.NSerial.Abstracts;
+using NKnife.NSerial.Common;
+using NKnife.NSerial.Interfaces;
 
 namespace NKnife.NSerial
 {
     /// <summary>串口通讯管理器
     /// </summary>
-    public sealed class SerialCommunicationManager : ISerialCommunicationManager, IDisposable
+    public sealed class SerialClientManager : ISerialClientManager, IDisposable
     {
         private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
-        private bool _EnableDetialLog;
 
         /// <summary>串口管理器字典，以串口号作为键值
         /// </summary>
-        private readonly ConcurrentDictionary<ushort, ISerialCommunication> _SerialMap;
-        
-        /// <summary>实现了两种串口管理器，一种是通过.net实现，一种是通过windows api实现，默认采用.net实现的版本
-        /// </summary>
-        private SerialType _SerialType;
+        private readonly ConcurrentDictionary<ushort, ISerialClient> _SerialMap; 
 
-        public SerialCommunicationManager()
+        public SerialClientManager()
         {
 
-            _SerialMap = new ConcurrentDictionary<ushort, ISerialCommunication>();
+            _SerialMap = new ConcurrentDictionary<ushort, ISerialClient>();
         }
 
-        #region ISerialCommunicationManager Members
-
-        public bool Initialize(SerialType serialType = SerialType.WinApi, bool enableDetialLog = false)
-        {
-            _EnableDetialLog = enableDetialLog;
-            _SerialType = serialType;
-            return true;
-        }
+        #region ISerialClientManager Members
 
         /// <summary>添加一个串口
         /// </summary>
         /// <param name="port">描述一个串口序号</param>
+        /// <param name="serialType"></param>
+        /// <param name="enableDetialLog"></param>
         /// <returns></returns>
-        public bool AddPort(ushort port)
+        public bool AddPort(ushort port,SerialType serialType = SerialType.WinApi, bool enableDetialLog = false)
         {
             if (_SerialMap.ContainsKey(port))
             {
                 return _SerialMap[port].Active;
             }
-            ISerialCommunication serial = new SerialCommunication(_EnableDetialLog, _SerialType);
+            ISerialClient serial = new SerialClient(serialType, enableDetialLog);
             serial.OpenPort(port);
             _SerialMap.TryAdd(port, serial);
             return true;
@@ -58,7 +50,7 @@ namespace NKnife.NSerial
         /// <returns></returns>
         public bool RemovePort(ushort port)
         {
-            ISerialCommunication serial;
+            ISerialClient serial;
             if (_SerialMap.TryRemove(port, out serial))
             {
                 serial.ClosePort();
@@ -73,7 +65,7 @@ namespace NKnife.NSerial
         {
             try
             {
-                foreach (SerialCommunication serialuti in _SerialMap.Values)
+                foreach (SerialClient serialuti in _SerialMap.Values)
                 {
                     serialuti.ClosePort();
                 }
@@ -93,17 +85,11 @@ namespace NKnife.NSerial
         /// <param name="package">包含发送数据，以及相关指令及信息与事件的封装</param>
         public bool AddPackage(ushort port, PackageBase package)
         {
-            ISerialCommunication serialCommunication;
-            if (_SerialMap.TryGetValue(port, out serialCommunication))
-            {
-                if (serialCommunication.Active)//该串口是否激活
-                {
-                    serialCommunication.DataPool.AddPackage(package);
-                    return true;
-                }
-                return false;
-            }
-            return false;
+            ISerialClient serialClient;
+            if (!_SerialMap.TryGetValue(port, out serialClient)) return false;
+            if (!serialClient.Active) return false;
+            serialClient.DataPool.AddPackage(package);
+            return true;
         }
 
         #endregion

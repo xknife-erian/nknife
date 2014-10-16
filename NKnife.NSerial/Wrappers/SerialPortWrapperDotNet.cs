@@ -4,9 +4,9 @@ using System.IO.Ports;
 using System.Threading;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.NSerial.Base;
+using NKnife.NSerial.Interfaces;
 
-namespace NKnife.NSerial
+namespace NKnife.NSerial.Wrappers
 {
     /// <summary>
     ///     通过.net实现的串口操作类

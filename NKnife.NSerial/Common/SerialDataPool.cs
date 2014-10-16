@@ -2,9 +2,10 @@
 using System.Collections.Concurrent;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.NSerial.Base;
+using NKnife.NSerial.Abstracts;
+using NKnife.NSerial.Interfaces;
 
-namespace NKnife.NSerial
+namespace NKnife.NSerial.Common
 {
     /// <summary>向串口即将发送的指令包的集合
     /// </summary>

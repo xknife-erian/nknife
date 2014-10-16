@@ -1,16 +1,19 @@
-namespace NKnife.NSerial.Base
+using NKnife.NSerial.Abstracts;
+using NKnife.NSerial.Common;
+
+namespace NKnife.NSerial.Interfaces
 {
     /// <summary>串口通讯管理器
     /// </summary>
-    public interface ISerialCommunicationManager
+    public interface ISerialClientManager
     {
-        bool Initialize(SerialType serialType = SerialType.WinApi, bool enableDetialLog = false);
-
         /// <summary>添加一个串口
         /// </summary>
         /// <param name="port">描述一个串口序号</param>
+        /// <param name="serialType"></param>
+        /// <param name="enableDetialLog"></param>
         /// <returns></returns>
-        bool AddPort(ushort port);
+        bool AddPort(ushort port, SerialType serialType = SerialType.WinApi, bool enableDetialLog = false);
 
         /// <summary>
         /// 关闭一个串口
