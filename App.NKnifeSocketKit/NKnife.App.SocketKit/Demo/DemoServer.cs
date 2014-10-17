@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net;
-using System.Reflection;
 using System.Windows.Threading;
 using NKnife.App.SocketKit.Common;
-using NKnife.App.SocketKit.Dialogs;
-using NKnife.App.SocketKit.IoC;
 using NKnife.App.SocketKit.Socket;
 using NKnife.Base;
 using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Mvvm;
 using NKnife.Protocol;
+using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
@@ -20,17 +16,21 @@ using SocketKnife.Generic.Filters;
 using SocketKnife.Generic.Protocols;
 using SocketKnife.Interfaces;
 
-namespace NKnife.App.SocketKit.Mvvm.ViewModels
+namespace NKnife.App.SocketKit.Demo
 {
-    public class TcpServerViewViewModel : NotificationObject
+    public class DemoServer : NotificationObject
     {
+        #region App
+
         internal Dispatcher Dispatcher { get; set; }
         public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
         private readonly ServerList _ServerList = DI.Get<ServerList>();
 
-        private IKnifeSocketServer _Server;
+        #endregion
 
-        public TcpServerViewViewModel()
+        private KnifeSocketServerBase _Server;
+
+        public DemoServer()
         {
             SocketMessages = new AsyncObservableCollection<SocketMessage>();
         }
@@ -44,18 +44,20 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
-            keepAliveFilter.ClientCome += args => true;
+            keepAliveFilter.ClientCome += delegate {  };
+
+            var codec = new DemoCodec();
 
             var protocolFamily = GetProtocolFamily();
 
             if (!_ServerList.ContainsKey(key))
             {
-                _Server = DI.Get<IKnifeSocketServer>();
+                _Server = DI.Get<KnifeSocketServerBase>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
                 _Server.AddFilter(heartbeatServerFilter);
                 _Server.AddFilter(keepAliveFilter);
                 _Server.Configure(ipAddress, port);
-                _Server.Bind(protocolFamily, new DemoServerHandler(SocketMessages));
+                _Server.Bind(codec, protocolFamily, new DemoServerHandler(SocketMessages));
                 _ServerList.Add(key, _Server);
             }
             else
@@ -64,7 +66,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             }
         }
 
-        private IProtocolFamily GetProtocolFamily()
+        private KnifeProtocolFamily GetProtocolFamily()
         {
             var getTicket = DI.Get<GetTicket>();
             var call = DI.Get<Call>();
@@ -76,10 +78,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             register.Packager = new ProtocolXmlPackager();
             register.UnPackager = new ProtocolDataTableDeserializeUnPackager();
 
-            var family = DI.Get<IProtocolFamily>();
-            family.CommandParser = new FirstFieldCommandParser();
-            family.Decoder = new FixedTailDecoder();
-            family.Encoder = new FixedTailEncoder();
+            var family = DI.Get<KnifeProtocolFamily>();
 
             family.Add(getTicket);
             family.Add(call);

@@ -91,14 +91,15 @@
     </ApplicationDefinition>
     <Compile Include="Common\DockUtil.cs" />
     <Compile Include="Common\SocketMessage.cs" />
+    <Compile Include="Demo\DemoCodec.cs" />
     <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
       <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\ServerList.cs" />
     <Compile Include="IoC\ClientModule.cs" />
     <Compile Include="IoC\ServerModule.cs" />
-    <Compile Include="Mvvm\ViewModels\DemoServerHandler.cs" />
-    <Compile Include="Mvvm\ViewModels\DemoSocketSessionMap.cs" />
+    <Compile Include="Demo\DemoServerHandler.cs" />
+    <Compile Include="Demo\DemoSocketSessionMap.cs" />
     <Compile Include="Mvvm\Views\LoggerView.xaml.cs">
       <DependentUpon>LoggerView.xaml</DependentUpon>
     </Compile>
@@ -108,7 +109,7 @@
     <Compile Include="Mvvm\Views\TcpServerView.xaml.cs">
       <DependentUpon>TcpServerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Mvvm\ViewModels\TcpServerViewViewModel.cs" />
+    <Compile Include="Demo\DemoServer.cs" />
     <Compile Include="Mvvm\WorkbenchViewModel.cs" />
     <Compile Include="Socket\Call.cs" />
     <Compile Include="Socket\Dance.cs" />
@@ -182,7 +183,9 @@
     <Resource Include="Attachments\start-unable.png" />
     <Resource Include="Attachments\stop-unable.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Mvvm\ViewModels\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Attachments\logger-view-icon.png" />
   </ItemGroup>

@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using NKnife.App.SocketKit.Demo;
 using NKnife.App.SocketKit.Dialogs;
-using NKnife.App.SocketKit.Mvvm.ViewModels;
 using NKnife.Base;
 using NKnife.IoC;
 using SocketKnife.Interfaces;
@@ -16,7 +16,7 @@ namespace NKnife.App.SocketKit.Mvvm.Views
     /// </summary>
     public partial class TcpServerView
     {
-        private readonly TcpServerViewViewModel _ViewModel = new TcpServerViewViewModel();
+        private readonly DemoServer _ViewModel = new DemoServer();
 
         public IPAddress IpAddress { get; set; }
         public int Port { get; set; }

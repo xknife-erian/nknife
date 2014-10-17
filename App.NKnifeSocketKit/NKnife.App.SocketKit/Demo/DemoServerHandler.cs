@@ -7,7 +7,7 @@ using NKnife.Protocol;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 
-namespace NKnife.App.SocketKit.Mvvm.ViewModels
+namespace NKnife.App.SocketKit.Demo
 {
     internal class DemoServerHandler : KnifeSocketProtocolHandler
     {
