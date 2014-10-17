@@ -6,7 +6,7 @@ using SocketKnife.Generic.Protocols;
 
 namespace NKnife.App.SocketKit.Socket
 {
-    class Call : KnifeProtocol
+    class Call : KnifeSocketProtocol
     {
         public Call() 
             : base("socket-kit", "call")

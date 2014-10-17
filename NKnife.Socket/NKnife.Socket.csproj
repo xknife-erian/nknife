@@ -80,8 +80,8 @@
     <Compile Include="Generic\KnifeSocketServerConfig.cs" />
     <Compile Include="Generic\Families\EndMarkDecoder.cs" />
     <Compile Include="Generic\Families\EndMarkEncoder.cs" />
-    <Compile Include="Generic\Protocols\KnifeProtocol.cs" />
-    <Compile Include="Generic\Protocols\KnifeProtocolContent.cs" />
+    <Compile Include="Generic\Protocols\KnifeSocketProtocol.cs" />
+    <Compile Include="Generic\Protocols\KnifeSocketProtocolContent.cs" />
     <Compile Include="Generic\Protocols\ProtocolDataTableDeserializeUnPackager.cs" />
     <Compile Include="Generic\Protocols\ProtocolDeserializeUnPackager.cs" />
     <Compile Include="Generic\Protocols\ProtocolXmlPackager.cs" />

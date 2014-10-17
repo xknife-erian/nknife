@@ -6,7 +6,7 @@ using SocketKnife.Generic.Protocols;
 
 namespace NKnife.App.SocketKit.Socket
 {
-    class Dance : KnifeProtocol
+    class Dance : KnifeSocketProtocol
     {
         public Dance() 
             : base("socket-kit", "dance")

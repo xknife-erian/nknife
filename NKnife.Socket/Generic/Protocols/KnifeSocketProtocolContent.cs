@@ -14,9 +14,9 @@ namespace SocketKnife.Generic.Protocols
     ///     Tags:内容较大的数据，如序列化的对象等。
     ///     Infomations:固定数据，按协议规定的必须每次携带的数据。
     /// </summary>
-    public class KnifeProtocolContent : IProtocolContent
+    public class KnifeSocketProtocolContent : IProtocolContent
     {
-        public KnifeProtocolContent()
+        public KnifeSocketProtocolContent()
         {
             Infomations = new Dictionary<string, string>(0);
             Tags = new List<object>(0);
@@ -45,10 +45,16 @@ namespace SocketKnife.Generic.Protocols
         public string CommandParam { get; set; }
         public Dictionary<string, string> Infomations { get; private set; }
         public List<object> Tags { get; set; }
-        public IProtocolContent NewInstance()
+
+        public KnifeSocketProtocolContent NewInstance()
         {
-            var pc = new KnifeProtocolContent();
+            var pc = new KnifeSocketProtocolContent();
             return pc;
+        }
+
+        IProtocolContent IProtocolContent.NewInstance()
+        {
+            return NewInstance();
         }
     }
 }

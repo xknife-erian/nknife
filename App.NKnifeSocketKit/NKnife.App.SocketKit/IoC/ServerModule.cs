@@ -9,6 +9,7 @@ using NKnife.App.SocketKit.Demo;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.Protocol;
 using SocketKnife;
+using SocketKnife.Generic;
 using SocketKnife.Generic.Protocols;
 using SocketKnife.Interfaces;
 
@@ -19,12 +20,10 @@ namespace NKnife.App.SocketKit.IoC
         public override void Load()
         {
             Bind<ServerList>().ToSelf().InSingletonScope();
-            Bind<IKnifeSocketServer>().To<KnifeSocketServer>();
+            Bind<KnifeSocketServerBase>().To<KnifeSocketServer>();
 
             Bind<IProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
             Bind<IProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();
-
-            Bind<ISocketSessionMap>().To<DemoSocketSessionMap>().When(IsMyServer);
         }
 
         private bool IsMyServer(IRequest arg)

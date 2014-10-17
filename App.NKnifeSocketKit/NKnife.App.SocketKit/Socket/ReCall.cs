@@ -6,7 +6,7 @@ using SocketKnife.Generic.Protocols;
 
 namespace NKnife.App.SocketKit.Socket
 {
-    class ReCall : KnifeProtocol
+    class ReCall : KnifeSocketProtocol
     {
         public ReCall() 
             : base("socket-kit", "re-call")

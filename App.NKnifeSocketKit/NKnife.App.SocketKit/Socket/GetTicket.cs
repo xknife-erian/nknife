@@ -7,7 +7,7 @@ using SocketKnife.Generic.Protocols;
 
 namespace NKnife.App.SocketKit.Socket
 {
-    class GetTicket : KnifeProtocol
+    class GetTicket : KnifeSocketProtocol
     {
         public GetTicket() 
             : base("socket-kit", "get-ticket")
