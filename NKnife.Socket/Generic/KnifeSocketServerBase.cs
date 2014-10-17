@@ -16,7 +16,7 @@ namespace SocketKnife.Generic
         void IKnifeServer<EndPoint, Socket>.Bind(ITunnelCodec codec, IProtocolFamily protocolFamily,
             IProtocolHandler<EndPoint, Socket> handler)
         {
-            Bind((KnifeSocketCodec)codec, (KnifeProtocolFamily)protocolFamily, (KnifeProtocolHandler)handler);
+            Bind((KnifeSocketCodec)codec, (KnifeProtocolFamily)protocolFamily, (KnifeSocketProtocolHandler)handler);
         }
 
         ITunnelConfig IKnifeServer<EndPoint, Socket>.Config
@@ -34,6 +34,6 @@ namespace SocketKnife.Generic
         public abstract bool Stop();
         public abstract void Configure(IPAddress ipAddress, int port);
         public abstract void AddFilter(KnifeSocketServerFilter filter);
-        public abstract void Bind(KnifeSocketCodec codec, KnifeProtocolFamily family, KnifeProtocolHandler handle);
+        public abstract void Bind(KnifeSocketCodec codec, KnifeProtocolFamily family, KnifeSocketProtocolHandler handle);
     }
 }

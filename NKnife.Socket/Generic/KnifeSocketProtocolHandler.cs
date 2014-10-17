@@ -8,12 +8,16 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public abstract class KnifeProtocolHandler : IProtocolHandler<EndPoint, Socket>
+    public abstract class KnifeSocketProtocolHandler : IProtocolHandler<EndPoint, Socket>
     {
         protected Action<ISocketSession, byte[]> _WriteBaseMethod;
         protected Action<ISocketSession, IProtocol> _WriteProtocolMethod;
 
-        public virtual ITunnelSessionMap<EndPoint, Socket> SessionMap { get; set; }
+        ITunnelSessionMap<EndPoint, Socket> IProtocolHandler<EndPoint, Socket>.SessionMap
+        {
+            get { return SessionMap; }
+            set { SessionMap = (KnifeSocketSessionMap)value; }
+        }
 
         void IProtocolHandler<EndPoint, Socket>.Recevied(ITunnelSession<EndPoint, Socket> session, IProtocol protocol)
         {
@@ -29,6 +33,8 @@ namespace SocketKnife.Generic
         {
             Write((ISocketSession)session, data);
         }
+
+        public KnifeSocketSessionMap SessionMap { get; set; }
 
         public virtual void Bind(Action<ISocketSession, byte[]> sendMethod)
         {

@@ -9,7 +9,7 @@ using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Mvvm.ViewModels
 {
-    internal class DemoServerHandler : KnifeProtocolHandler
+    internal class DemoServerHandler : KnifeSocketProtocolHandler
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

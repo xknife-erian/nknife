@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
@@ -53,7 +54,7 @@ namespace SocketKnife
         private int _Port;
 
         protected KnifeSocketCodec _Codec;
-        protected KnifeProtocolHandler _Handler;
+        protected KnifeSocketProtocolHandler _Handler;
         protected KnifeSocketFilterChain _FilterChain;
         protected KnifeProtocolFamily _Family;
         protected KnifeSocketSessionMap _SessionMap;
@@ -68,11 +69,11 @@ namespace SocketKnife
 
         public override void AddFilter(KnifeSocketServerFilter filter)
         {
-            filter.Bind(GetFamily, GetHandle, GetSessionMap);
+            filter.Bind(GetFamily, GetHandle, GetSessionMap, GetCodec);
             _FilterChain.AddLast(filter);
         }
 
-        public override void Bind(KnifeSocketCodec codec, KnifeProtocolFamily protocolFamily, KnifeProtocolHandler handler)
+        public override void Bind(KnifeSocketCodec codec, KnifeProtocolFamily protocolFamily, KnifeSocketProtocolHandler handler)
         {
             _Family = protocolFamily;
             _Handler = handler;
@@ -112,9 +113,9 @@ namespace SocketKnife
                 _MainAutoReset.Reset();
                 _IsClose = true;
                 _MainSocket.Close();
-                foreach (ISocketSession session in _SessionMap.Values)
+                foreach (KeyValuePair<EndPoint, KnifeSocketSession> pair in _SessionMap)
                 {
-                    Socket client = session.Connector;
+                    Socket client = pair.Value.Connector;
                     if (client.Connected)
                     {
                         client.Shutdown(SocketShutdown.Both);
@@ -197,7 +198,7 @@ namespace SocketKnife
             return _SessionMap;
         }
 
-        private KnifeProtocolHandler GetHandle()
+        private KnifeSocketProtocolHandler GetHandle()
         {
             return _Handler;
         }
@@ -205,6 +206,11 @@ namespace SocketKnife
         private KnifeProtocolFamily GetFamily()
         {
             return _Family;
+        }
+
+        private KnifeSocketCodec GetCodec()
+        {
+            return _Codec;
         }
 
         #endregion
@@ -320,7 +326,7 @@ namespace SocketKnife
                                 var session = DI.Get<ISocketSession>();
                                 session.Source = iep;
                                 session.Connector = e.AcceptSocket;
-                                _SessionMap.TryAdd(iep, session);
+                                _SessionMap.Add(iep, session);
                                 _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count));
                                 foreach (var filter in _FilterChain)
                                 {

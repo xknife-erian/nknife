@@ -2,11 +2,13 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using NKnife.Events;
+using NKnife.Tunnel;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketSessionMap : IDictionary<EndPoint, ISocketSession>
+    public interface ISocketSessionMap : ITunnelSessionMap<EndPoint, Socket>
     {
         event EventHandler<EventArgs<EndPoint>> Removed;
     }

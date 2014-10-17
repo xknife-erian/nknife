@@ -24,14 +24,9 @@ namespace SocketKnife.Generic.Filters
 
         protected bool _ContinueNextFilter = true;
 
-        public override void Bind(
-            Func<IProtocolFamily> familyGetter,
-            Func<IProtocolHandler<EndPoint, Socket>> handlerGetter,
-            Func<ISocketSessionMap> sessionMapGetter,
-            Func<ISocketCodec> codecFunc)
+        protected override void OnBoundGetter(Func<KnifeProtocolFamily> familyGetter, Func<KnifeSocketProtocolHandler> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter, Func<KnifeSocketCodec> codecGetter)
         {
-            base.Bind(familyGetter, handlerGetter, mapGetter, codecGetter);
-            var map = mapGetter.Invoke();
+            var map = sessionMapGetter.Invoke();
             map.Removed += SessionMap_OnRemoved;
         }
 
@@ -151,7 +146,7 @@ namespace SocketKnife.Generic.Filters
         protected virtual void DataDecoder(EndPoint endpoint, byte[] data, out int done)
         {
             IProtocolFamily family = _FamilyGetter.Invoke();
-            string[] datagram = family.Decoder.Execute(data, out done);
+            string[] datagram = _CodecGetter.Invoke().Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _logger.Debug("协议消息无内容。");
@@ -174,7 +169,7 @@ namespace SocketKnife.Generic.Filters
                 string command = "";
                 try
                 {
-                    command = family.CommandParser.GetCommand(dg);
+                    command = _CodecGetter.Invoke().CommandParser.GetCommand(dg);
                 }
                 catch (Exception e)
                 {
@@ -200,11 +195,11 @@ namespace SocketKnife.Generic.Filters
         /// <summary>
         /// // 触发数据基础解析后发生的数据到达事件
         /// </summary>
-        private void HandlerInvoke(EndPoint endpoint, IProtocol protocol)
+        protected virtual void HandlerInvoke(EndPoint endpoint, IProtocol protocol)
         {
-            IProtocolHandler handler = _HandlerGetter.Invoke();
-            ISocketSessionMap sessionMap = _SessionMapGetter.Invoke();
-            ISocketSession session;
+            KnifeSocketProtocolHandler handler = _HandlerGetter.Invoke();
+            KnifeSocketSessionMap sessionMap = _SessionMapGetter.Invoke();
+            KnifeSocketSession session;
             if (!sessionMap.TryGetValue(endpoint, out session))
             {
                 _logger.Warn(string.Format("SessionMap中未找到指定的客户端:{0}", endpoint));

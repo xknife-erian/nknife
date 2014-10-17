@@ -18,11 +18,6 @@ namespace SocketKnife
     public delegate void SocketAsyncDataComeInEventHandler(byte[] data, EndPoint endPoint);
 
     /// <summary>
-    ///     连接出错或断开触发事件
-    /// </summary>
-    public delegate void ConnectionBreakEventHandler(ConnectionBreakEventArgs e);
-
-    /// <summary>
     ///     Socket连接状态发生改变
     /// </summary>
     public delegate void SocketStatusChangedEventHandler(Object sender, SocketStatusChangedEventArgs e);

@@ -10,6 +10,8 @@ using NKnife.Protocol;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Common;
+using SocketKnife.Events;
+using SocketKnife.Generic.Families;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
@@ -30,7 +32,7 @@ namespace SocketKnife.Generic.Filters
             get { return _ContinueNextFilter; }
         }
 
-        protected override void OnClientCome(SessionEventArgs<EndPoint, Socket> e)
+        protected internal override void OnClientCome(SocketSessionEventArgs e)
         {
             base.OnClientCome(e);
             if (!_IsTimerStarted) //第一次监听到时启动
@@ -47,11 +49,11 @@ namespace SocketKnife.Generic.Filters
 
         private void BeatingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            IProtocolHandler handler = _HandlerGetter.Invoke();
-            ISocketSessionMap map = _SessionMapGetter.Invoke();
+            KnifeSocketProtocolHandler handler = _HandlerGetter.Invoke();
+            KnifeSocketSessionMap map = _SessionMapGetter.Invoke();
 
             var list = new List<EndPoint>(0);
-            foreach (var pair in map)
+            foreach (KeyValuePair<EndPoint, ISocketSession> pair in map)
             {
                 EndPoint endpoint = pair.Key;
                 ISocketSession session = pair.Value;
@@ -67,7 +69,7 @@ namespace SocketKnife.Generic.Filters
             }
             foreach (EndPoint endPoint in list)
             {
-                ISocketSession session;
+                KnifeSocketSession session;
                 if (map.TryGetValue(endPoint, out session))
                 {
                     try
@@ -84,7 +86,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override void PrcoessReceiveData(ITunnelSession<EndPoint, Socket> session, byte[] data)
+        public override void PrcoessReceiveData(ISocketSession session, byte[] data)
         {
             if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
             {
@@ -93,5 +95,6 @@ namespace SocketKnife.Generic.Filters
                 _logger.Trace(() => string.Format("收到{0}心跳回复.", session.Source));
             }
         }
+
     }
 }
