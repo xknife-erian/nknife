@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Net;
+using System.Net.Sockets;
+using NKnife.Protocol;
+using NKnife.Tunnel;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
 
 namespace SocketKnife.Interfaces
 {
-    public interface IKnifeSocketServer : IDisposable
+    public interface IKnifeSocketServer : IKnifeServer<EndPoint, Socket>
     {
         void Configure(IPAddress ipAddress, int port);
-        void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler);
-        ISocketServerConfig Config { get; }
-        void AddFilter(KnifeSocketServerFilter filter);
-        bool Start();
-        bool ReStart();
-        bool Stop();
     }
 }

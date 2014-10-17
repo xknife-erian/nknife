@@ -6,11 +6,13 @@ using System.Reflection;
 using System.Windows.Threading;
 using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Dialogs;
+using NKnife.App.SocketKit.IoC;
 using NKnife.App.SocketKit.Socket;
 using NKnife.Base;
 using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Mvvm;
+using NKnife.Protocol;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
@@ -25,6 +27,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
         internal Dispatcher Dispatcher { get; set; }
         public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
         private readonly ServerList _ServerList = DI.Get<ServerList>();
+
         private IKnifeSocketServer _Server;
 
         public TcpServerViewViewModel()
@@ -41,7 +44,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
-            keepAliveFilter.ListenToClient += args => true;
+            keepAliveFilter.ClientCome += args => true;
 
             var protocolFamily = GetProtocolFamily();
 
@@ -68,6 +71,7 @@ namespace NKnife.App.SocketKit.Mvvm.ViewModels
             var dance = DI.Get<Dance>();
             var recall = DI.Get<ReCall>();
             var sing = DI.Get<Sing>();
+
             var register = DI.Get<Register>();
             register.Packager = new ProtocolXmlPackager();
             register.UnPackager = new ProtocolDataTableDeserializeUnPackager();

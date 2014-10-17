@@ -14,7 +14,7 @@ namespace NKnife.Configuring.Option
     /// </summary>
     public abstract class AbstractOptionManager : IOptionManager
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         #region 成员/属性定义
 
@@ -74,47 +74,47 @@ namespace NKnife.Configuring.Option
 
         /// <summary>根据组名+键名获取选项信息
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的信息表</param>
         /// <param name="key">选项键</param>
         /// <returns></returns>
-        public virtual string GetOptionValue(string tablename, string key)
+        public virtual string GetOptionValue(string category, string key)
         {
-            return GetOptionValue(tablename, key, StringFunc);
+            return GetOptionValue(category, key, StringFunc);
         }
 
         /// <summary>根据组名+键名获取选项信息
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的信息表</param>
         /// <param name="key">选项键</param>
         /// <returns></returns>
-        public virtual T GetOptionValue<T>(string tablename, string key)
+        public virtual T GetOptionValue<T>(string category, string key)
             where T : struct
         {
             Type type = typeof(T);
             if (type == typeof(int))
             {
-                return (T)((ValueType)GetOptionValue(tablename, key, IntegerFunc));
+                return (T)((ValueType)GetOptionValue(category, key, IntegerFunc));
             }
             else if (type == typeof(bool))
             {
-                return (T)((ValueType)GetOptionValue(tablename, key, BooleanFunc));
+                return (T)((ValueType)GetOptionValue(category, key, BooleanFunc));
             }
             else if (type == typeof(DateTime))
             {
-                return (T)((ValueType)GetOptionValue(tablename, key, DateTimeFunc));
+                return (T)((ValueType)GetOptionValue(category, key, DateTimeFunc));
             }
             return default(T);
         }
 
         /// <summary>根据组名+键名获取选项信息，并通过解析器将选项信息转换成指定的类型
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的信息表</param>
         /// <param name="key">选项键</param>
         /// <param name="parser">解析器</param>
         /// <returns></returns>
-        public T GetOptionValue<T>(string tablename, string key, Func<object, T> parser)
+        public T GetOptionValue<T>(string category, string key, Func<object, T> parser)
         {
-            DataRow row = GetRow(tablename, key, typeof(T));
+            DataRow row = GetRow(category, key, typeof(T));
             object obj = row[key];
             if (obj == null)
                 return default(T);
@@ -123,21 +123,21 @@ namespace NKnife.Configuring.Option
 
         /// <summary>根据组名+键名设置选项信息
         /// </summary>
-        /// <param name="tablename">选项信息所在的信息表</param>
+        /// <param name="category">选项信息所在的信息表</param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public virtual bool SetOptionValue(string tablename, string key, object value)
+        public virtual bool SetOptionValue(string category, string key, object value)
         {
-            if (string.IsNullOrWhiteSpace(tablename) || string.IsNullOrWhiteSpace(key) || null == value)
+            if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(key) || null == value)
             {
-                _Logger.Warn(string.Format("设置选项值Table:{0},Key:{1},Value:{2}时有空值。", tablename, key, value));
+                _logger.Warn(string.Format("设置选项值Table:{0},Key:{1},Value:{2}时有空值。", category, key, value));
                 return false;
             }
             try
             {
 //                Type type = value.GetType();
-//                DataRow row = GetRow(tablename, key, type);
+//                DataRow row = GetRow(category, key, type);
 //                row[key] = value;
 //                var table = (IOption)row.Table;
 //                return table.IsModified = true;
@@ -146,7 +146,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("设置选项值时异常。{0}", e.Message), e);
+                _logger.Error(string.Format("设置选项值时异常。{0}", e.Message), e);
                 return false;
             }
         }
@@ -191,7 +191,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("选项持久化异常。{0}", e.Message), e);
+                _logger.Error(string.Format("选项持久化异常。{0}", e.Message), e);
                 return false;
             }
         }
@@ -285,27 +285,27 @@ namespace NKnife.Configuring.Option
 
         /// <summary>重点方法。根据指定的表名，键，和数据格式来获取相应的值。当不存在时创建。
         /// </summary>
-        /// <param name="tablename">The tablename.</param>
+        /// <param name="category">The category.</param>
         /// <param name="key">The key.</param>
         /// <param name="dataType">Type of the data.</param>
         /// <returns></returns>
-        protected virtual DataRow GetRow(string tablename, string key, Type dataType)
+        protected virtual DataRow GetRow(string category, string key, Type dataType)
         {
             IOption dt = null;
-            if (!DataStore.DataTables.ContainsKey(tablename))
+            if (!DataStore.DataTables.ContainsKey(category))
             {
-                _Logger.Warn(string.Format("配置存储器没有{0}的表", tablename));
-                dt = BuildNewDataTable(tablename);
-                DataStore.DataTables.TryAdd(tablename, dt);
-                _Logger.Info(string.Format("创建表名为{0}的默认表", tablename));
+                _logger.Warn(string.Format("配置存储器没有{0}的表", category));
+                dt = BuildNewDataTable(category);
+                DataStore.DataTables.TryAdd(category, dt);
+                _logger.Info(string.Format("创建表名为{0}的默认表", category));
             }
             else
             {
-                dt = DataStore.DataTables[tablename];
+                dt = DataStore.DataTables[category];
             }
 //            if (dt.Rows == null || dt.Rows.Count <= 0)
 //            {
-//                _Logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", tablename));
+//                _Logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", category));
 //                DataRow newrow = dt.NewRow();
 //                newrow["solution"] = _CurrentCase.Name;
 //                newrow["clientId"] = CurrentClientId;
@@ -341,7 +341,7 @@ namespace NKnife.Configuring.Option
             }
             else
             {
-                _Logger.Error(string.Format("默认表集合中没有{0}的表", fulltableName));
+                _logger.Error(string.Format("默认表集合中没有{0}的表", fulltableName));
                 dt = DI.Get<IOption>();
                 dt.Category = fulltableName;
             }

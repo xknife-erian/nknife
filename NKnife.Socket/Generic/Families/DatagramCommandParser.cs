@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.Tunnel;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families

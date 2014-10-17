@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using NKnife.Protocol;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Protocols

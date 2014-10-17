@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.Tunnel;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
 

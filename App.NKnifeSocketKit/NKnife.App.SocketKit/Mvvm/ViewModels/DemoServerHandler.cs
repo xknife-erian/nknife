@@ -3,6 +3,7 @@ using NKnife.Adapters;
 using NKnife.App.SocketKit.Common;
 using NKnife.Collections;
 using NKnife.Interface;
+using NKnife.Protocol;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 

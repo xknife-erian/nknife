@@ -7,8 +7,13 @@ using System.Threading;
 using NKnife.Adapters;
 using NKnife.Events;
 using NKnife.Interface;
+using NKnife.Protocol;
+using NKnife.Tunnel;
+using NKnife.Tunnel.Events;
 using NKnife.Utility;
 using SocketKnife.Common;
+using SocketKnife.Events;
+using SocketKnife.Generic.Families;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
@@ -19,9 +24,13 @@ namespace SocketKnife.Generic.Filters
 
         protected bool _ContinueNextFilter = true;
 
-        public override void Bind(Func<IProtocolFamily> familyGetter, Func<IProtocolHandler> handlerGetter, Func<ISocketSessionMap> mapGetter)
+        public override void Bind(
+            Func<IProtocolFamily> familyGetter,
+            Func<IProtocolHandler<EndPoint, Socket>> handlerGetter,
+            Func<ISocketSessionMap> sessionMapGetter,
+            Func<ISocketCodec> codecFunc)
         {
-            base.Bind(familyGetter, handlerGetter, mapGetter);
+            base.Bind(familyGetter, handlerGetter, mapGetter, codecGetter);
             var map = mapGetter.Invoke();
             map.Removed += SessionMap_OnRemoved;
         }
@@ -31,9 +40,10 @@ namespace SocketKnife.Generic.Filters
             ClearByEndPoint(e.Item);
         }
 
-        protected internal override void OnConnectionBreak(ConnectionBreakEventArgs e)
+
+        protected internal override void OnClientBroke(ConnectionBreakEventArgs<EndPoint> e)
         {
-            base.OnConnectionBreak(e);
+            base.OnClientBroke(e);
             ClearByEndPoint(e.EndPoint);
         }
 
@@ -61,7 +71,7 @@ namespace SocketKnife.Generic.Filters
 
         public override void PrcoessReceiveData(ISocketSession session, byte[] data)
         {
-            EndPoint endPoint = session.EndPoint;
+            EndPoint endPoint = session.Source;
             ReceiveQueue receive = null;
             if (!_ReceiveQueueMap.TryGetValue(endPoint, out receive))
             {
@@ -116,7 +126,7 @@ namespace SocketKnife.Generic.Filters
                             undone = new byte[] {};
                         }
                         int done;
-                        DataProcessBase(pair.Key, data, out done);
+                        DataDecoder(pair.Key, data, out done);
                         if (data.Length > done)
                         {
                             // 暂存半包数据，留待下条队列数据接包使用
@@ -138,7 +148,7 @@ namespace SocketKnife.Generic.Filters
                 _logger.Trace(() => string.Format("从数据队列池中移除该客户端{0}成功，{1}", pair.Key, _DataMonitors.Count));
         }
 
-        protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
+        protected virtual void DataDecoder(EndPoint endpoint, byte[] data, out int done)
         {
             IProtocolFamily family = _FamilyGetter.Invoke();
             string[] datagram = family.Decoder.Execute(data, out done);
@@ -147,7 +157,17 @@ namespace SocketKnife.Generic.Filters
                 _logger.Debug("协议消息无内容。");
                 return;
             }
+            var protocols = ProtocolParse(family, datagram);
+            foreach (var protocol in protocols)
+            {
+                // 触发数据基础解析后发生的数据到达事件
+                HandlerInvoke(endpoint, protocol);
+            }
+        }
 
+        protected virtual IEnumerable<IProtocol> ProtocolParse(IProtocolFamily family, string[] datagram)
+        {
+            var protocols = new List<IProtocol>(datagram.Length);
             foreach (string dg in datagram)
             {
                 if (string.IsNullOrWhiteSpace(dg)) continue;
@@ -172,9 +192,9 @@ namespace SocketKnife.Generic.Filters
                     _logger.Warn(string.Format("协议分装异常。内容:{0};命令字:{1}。{2}", dg, command, ex.Message), ex);
                     continue;
                 }
-                // 触发数据基础解析后发生的数据到达事件
-                HandlerInvoke(endpoint, protocol);
+                protocols.Add(protocol);
             }
+            return protocols;
         }
 
         /// <summary>

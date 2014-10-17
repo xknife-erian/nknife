@@ -4,7 +4,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Timers;
 using NKnife.Adapters;
+using NKnife.Events;
 using NKnife.Interface;
+using NKnife.Protocol;
+using NKnife.Tunnel;
+using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Interfaces;
 
@@ -14,6 +18,7 @@ namespace SocketKnife.Generic.Filters
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
+        private const string WAIT = "WAIT";
         protected bool _ContinueNextFilter = true;
         private bool _IsTimerStarted;
 
@@ -25,9 +30,9 @@ namespace SocketKnife.Generic.Filters
             get { return _ContinueNextFilter; }
         }
 
-        protected internal override void OnListenToClient(SocketAsyncEventArgs e)
+        protected override void OnClientCome(SessionEventArgs<EndPoint, Socket> e)
         {
-            base.OnListenToClient(e);
+            base.OnClientCome(e);
             if (!_IsTimerStarted) //第一次监听到时启动
             {
                 _IsTimerStarted = true;
@@ -50,10 +55,10 @@ namespace SocketKnife.Generic.Filters
             {
                 EndPoint endpoint = pair.Key;
                 ISocketSession session = pair.Value;
-                if (!session.WaitHeartBeatingReplay) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
+                if (!((bool)session.GetAttribute(WAIT))) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
                 {
                     handler.Write(session, Heartbeat.BeatingOfServerHeart);
-                    session.WaitHeartBeatingReplay = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
+                    session.SetAttribute(WAIT, true); //在PrcoessReceiveData方法里，当收到回复时会回写为false
                 }
                 else
                 {
@@ -67,7 +72,7 @@ namespace SocketKnife.Generic.Filters
                 {
                     try
                     {
-                        session.Socket.Close();
+                        session.Connector.Close();
                     }
                     catch (Exception ex)
                     {
@@ -79,13 +84,13 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override void PrcoessReceiveData(ISocketSession session, byte[] data)
+        public override void PrcoessReceiveData(ITunnelSession<EndPoint, Socket> session, byte[] data)
         {
             if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
             {
-                session.WaitHeartBeatingReplay = false;
+                session.SetAttribute(WAIT, false);
                 _ContinueNextFilter = false;
-                _logger.Trace(() => string.Format("收到{0}心跳回复.", session.EndPoint));
+                _logger.Trace(() => string.Format("收到{0}心跳回复.", session.Source));
             }
         }
     }

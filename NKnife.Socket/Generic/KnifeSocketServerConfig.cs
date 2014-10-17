@@ -1,8 +1,9 @@
-﻿using SocketKnife.Interfaces;
+﻿using System.Collections.Generic;
+using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketServerConfig : ISocketServerConfig
+    public class KnifeSocketServerConfig : Dictionary<string, object>, ISocketServerConfig
     {
         public void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int readBufferSize)
         {

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using NKnife.Exceptions;
 
-namespace SocketKnife.Common
+namespace SocketKnife.Exceptions
 {
     /// <summary>
     ///     Socket客户端无法连接时的异常

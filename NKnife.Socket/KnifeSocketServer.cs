@@ -5,16 +5,22 @@ using System.Net.Sockets;
 using System.Threading;
 using Ninject;
 using NKnife.Adapters;
+using NKnife.Events;
 using NKnife.Interface;
 using NKnife.IoC;
+using NKnife.Protocol;
+using NKnife.Tunnel.Events;
 using SocketKnife.Common;
+using SocketKnife.Events;
+using SocketKnife.Exceptions;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
-    public class KnifeServer : IKnifeSocketServer
+    public class KnifeSocketServer : KnifeSocketServerBase
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -46,27 +52,27 @@ namespace SocketKnife
         private IPAddress _IpAddress;
         private int _Port;
 
-        protected IProtocolFamily _Family;
-        protected IProtocolHandler _Handler;
-        protected ISocketPolicy _Policy;
-        protected ISocketSessionMap _SessionMap;
+        protected KnifeSocketCodec _Codec;
+        protected KnifeProtocolHandler _Handler;
+        protected KnifeSocketFilterChain _FilterChain;
+        protected KnifeProtocolFamily _Family;
+        protected KnifeSocketSessionMap _SessionMap;
 
-        public void Configure(IPAddress ipAddress, int port)
+        public override void Configure(IPAddress ipAddress, int port)
         {
             _IpAddress = ipAddress;
             _Port = port;
         }
 
         [Inject]
-        public ISocketServerConfig Config { get; set; }
 
-        public void AddFilter(KnifeSocketServerFilter filter)
+        public override void AddFilter(KnifeSocketServerFilter filter)
         {
             filter.Bind(GetFamily, GetHandle, GetSessionMap);
-            _Policy.AddLast(filter);
+            _FilterChain.AddLast(filter);
         }
 
-        public virtual void Bind(IProtocolFamily protocolFamily, KnifeProtocolHandler handler)
+        public override void Bind(KnifeSocketCodec codec, KnifeProtocolFamily protocolFamily, KnifeProtocolHandler handler)
         {
             _Family = protocolFamily;
             _Handler = handler;
@@ -75,7 +81,7 @@ namespace SocketKnife
             _Handler.SessionMap = _SessionMap;
         }
 
-        public virtual bool Start()
+        public override bool Start()
         {
             try
             {
@@ -90,7 +96,7 @@ namespace SocketKnife
             }
         }
 
-        public virtual bool ReStart()
+        public override bool ReStart()
         {
             if (Stop())
             {
@@ -99,7 +105,7 @@ namespace SocketKnife
             return false;
         }
 
-        public virtual bool Stop()
+        public override bool Stop()
         {
             try
             {
@@ -108,7 +114,7 @@ namespace SocketKnife
                 _MainSocket.Close();
                 foreach (ISocketSession session in _SessionMap.Values)
                 {
-                    Socket client = session.Socket;
+                    Socket client = session.Connector;
                     if (client.Connected)
                     {
                         client.Shutdown(SocketShutdown.Both);
@@ -143,13 +149,18 @@ namespace SocketKnife
         /// </summary>
         private bool _IsDisposed;
 
-        public void Dispose()
+        public override ISocketServerConfig Config
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        ~KnifeServer()
+        ~KnifeSocketServer()
         {
             Dispose(false);
         }
@@ -181,17 +192,17 @@ namespace SocketKnife
 
         #endregion
 
-        private ISocketSessionMap GetSessionMap()
+        private KnifeSocketSessionMap GetSessionMap()
         {
             return _SessionMap;
         }
 
-        private IProtocolHandler GetHandle()
+        private KnifeProtocolHandler GetHandle()
         {
             return _Handler;
         }
 
-        private IProtocolFamily GetFamily()
+        private KnifeProtocolFamily GetFamily()
         {
             return _Family;
         }
@@ -201,10 +212,10 @@ namespace SocketKnife
         #region 构造函数,初始化
 
         [Inject]
-        public KnifeServer(ISocketSessionMap sessionMap, ISocketPolicy policy)
+        public KnifeSocketServer(KnifeSocketSessionMap sessionMap, KnifeSocketFilterChain filterChain)
         {
             _SessionMap = sessionMap;
-            _Policy = policy;
+            _FilterChain = filterChain;
             _MainAutoReset = new AutoResetEvent(false);
         }
 
@@ -307,13 +318,13 @@ namespace SocketKnife
                             if (!_SessionMap.ContainsKey(iep))
                             {
                                 var session = DI.Get<ISocketSession>();
-                                session.EndPoint = iep;
-                                session.Socket = e.AcceptSocket;
-                                _SessionMap.Add(iep, session);
+                                session.Source = iep;
+                                session.Connector = e.AcceptSocket;
+                                _SessionMap.TryAdd(iep, session);
                                 _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count));
-                                foreach (KnifeSocketServerFilter filter in _Policy)
+                                foreach (var filter in _FilterChain)
                                 {
-                                    filter.OnListenToClient(e);
+                                    filter.OnClientCome(new SocketSessionEventArgs(session));
                                 }
                             }
                         }
@@ -370,6 +381,7 @@ namespace SocketKnife
 
         private void RemoveSession(SocketAsyncEventArgs e)
         {
+            var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
             _logger.Trace(() => string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
             if (!e.AcceptSocket.Connected)
             {
@@ -377,12 +389,11 @@ namespace SocketKnife
             }
             string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
             _logger.Info(message);
-            foreach (KnifeSocketServerFilter filter in _Policy)
+            foreach (KnifeSocketServerFilter filter in _FilterChain)
             {
-                filter.OnConnectionBreak(new ConnectionBreakEventArgs(message, e.AcceptSocket.RemoteEndPoint));
+                filter.OnClientBroke(new ConnectionBreakEventArgs<EndPoint>(iep, message));
             }
 
-            var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
             if (iep != null)
             {
                 string ip = iep.ToString();
@@ -407,10 +418,10 @@ namespace SocketKnife
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
 
-            foreach (KnifeSocketServerFilter filter in _Policy)
+            foreach (KnifeSocketServerFilter filter in _FilterChain)
             {
                 var endPoint = e.AcceptSocket.RemoteEndPoint;
-                filter.OnDataComeInEvent(data, endPoint); // 触发数据到达事件
+                filter.OnDataFetched(new DataFetchedEventArgs<EndPoint>(endPoint, data));// 触发数据到达事件
                 var session = _SessionMap[endPoint];
                 filter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
                 if (!filter.ContinueNextFilter)
@@ -439,7 +450,7 @@ namespace SocketKnife
 
         protected virtual void WirteBase(ISocketSession session, byte[] data)
         {
-            Socket socket = session.Socket;
+            Socket socket = session.Connector;
             try
             {
                 socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
@@ -454,7 +465,7 @@ namespace SocketKnife
         protected virtual void WirteProtocol(ISocketSession session, IProtocol protocol)
         {
             string replay = protocol.Generate();
-            byte[] data = _Family.Encoder.Execute(replay);
+            byte[] data = _Codec.Encoder.Execute(replay);
             WirteBase(session, data);
             _logger.Trace(string.Format("Server.Send:{0}", replay));
         }

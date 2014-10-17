@@ -1,4 +1,5 @@
 ﻿using System;
+using NKnife.Tunnel;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
 

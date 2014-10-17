@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Interfaces
+﻿namespace NKnife.Tunnel
 {
     /// <summary>
     /// 从原生消息体中获取命令字

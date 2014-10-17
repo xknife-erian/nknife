@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SocketKnife.Interfaces
+namespace NKnife.Protocol
 {
     /// <summary>
     ///     一个协议的具体内容。其中：

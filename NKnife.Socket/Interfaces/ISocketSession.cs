@@ -1,17 +1,11 @@
 ﻿using System.Dynamic;
 using System.Net;
 using System.Net.Sockets;
+using NKnife.Tunnel;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketSession
+    public interface ISocketSession: ITunnelSession<EndPoint, Socket>
     {
-        long Id { get; }
-
-        EndPoint EndPoint { get; set; }
-
-        Socket Socket { get; set; }
-
-        bool WaitHeartBeatingReplay { get; set; }
     }
 }

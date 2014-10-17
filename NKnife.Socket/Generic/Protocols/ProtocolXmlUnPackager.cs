@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Xml;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.Protocol;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
 

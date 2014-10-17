@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.Protocol;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
 

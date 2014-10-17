@@ -2,6 +2,7 @@
 using System.Text;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.Tunnel;
 using NKnife.Zip;
 using SocketKnife.Interfaces;
 

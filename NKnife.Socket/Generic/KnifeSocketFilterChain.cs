@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using NKnife.Tunnel;
 using SocketKnife.Common;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketPolicy : ISocketPolicy
+    public class KnifeSocketFilterChain : ISocketFilterChain
     {
         private readonly LinkedList<KnifeSocketServerFilter> _Filters = new LinkedList<KnifeSocketServerFilter>();
+
+        IEnumerator<ITunnelFilter<EndPoint, Socket>> IEnumerable<ITunnelFilter<EndPoint, Socket>>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         public IEnumerator<KnifeSocketServerFilter> GetEnumerator()
         {
@@ -26,9 +34,29 @@ namespace SocketKnife.Generic
             _Filters.AddLast(item);
         }
 
+        void ICollection<ITunnelFilter<EndPoint, Socket>>.Add(ITunnelFilter<EndPoint, Socket> item)
+        {
+            Add((KnifeSocketServerFilter)item);
+        }
+
         public void Clear()
         {
             _Filters.Clear();
+        }
+
+        bool ICollection<ITunnelFilter<EndPoint, Socket>>.Contains(ITunnelFilter<EndPoint, Socket> item)
+        {
+            return Contains((KnifeSocketServerFilter) item);
+        }
+
+        void ICollection<ITunnelFilter<EndPoint, Socket>>.CopyTo(ITunnelFilter<EndPoint, Socket>[] array, int arrayIndex)
+        {
+            CopyTo((KnifeSocketServerFilter[])array, arrayIndex);
+        }
+
+        bool ICollection<ITunnelFilter<EndPoint, Socket>>.Remove(ITunnelFilter<EndPoint, Socket> item)
+        {
+            return Remove((KnifeSocketServerFilter) item);
         }
 
         public bool Contains(KnifeSocketServerFilter item)
@@ -71,6 +99,26 @@ namespace SocketKnife.Generic
         public void AddLast(KnifeSocketServerFilter filter)
         {
             _Filters.AddLast(new LinkedListNode<KnifeSocketServerFilter>(filter));
+        }
+
+        void ITunnelFilterChain<EndPoint, Socket>.AddAfter(ITunnelFilter<EndPoint, Socket> filter, ITunnelFilter<EndPoint, Socket> newfilter)
+        {
+            AddAfter((KnifeSocketServerFilter)filter, (KnifeSocketServerFilter)newfilter);
+        }
+
+        void ITunnelFilterChain<EndPoint, Socket>.AddBefore(ITunnelFilter<EndPoint, Socket> filter, ITunnelFilter<EndPoint, Socket> newfilter)
+        {
+            AddBefore((KnifeSocketServerFilter)filter, (KnifeSocketServerFilter)newfilter);
+        }
+
+        void ITunnelFilterChain<EndPoint, Socket>.AddFirst(ITunnelFilter<EndPoint, Socket> filter)
+        {
+            AddFirst((KnifeSocketServerFilter)filter);
+        }
+
+        void ITunnelFilterChain<EndPoint, Socket>.AddLast(ITunnelFilter<EndPoint, Socket> filter)
+        {
+            AddLast((KnifeSocketServerFilter)filter);
         }
 
         public void RemoveFirst()

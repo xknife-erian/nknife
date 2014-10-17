@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ninject.Modules;
+using NKnife.Protocol;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Protocols;
@@ -15,7 +16,7 @@ namespace SocketKnife.IoC
         public override void Load()
         {
             Bind<ISocketServerConfig>().To<KnifeSocketServerConfig>();
-            Bind<ISocketSessionMap>().To<KnifeSocketSessionMap>();
+            Bind<ISocketFilterChainnMKnifeSocketFilterChainketSessionMap>();
             Bind<ISocketPolicy>().To<KnifeSocketPolicy>();
             Bind<ISocketSession>().To<KnifeSocketSession>();
 

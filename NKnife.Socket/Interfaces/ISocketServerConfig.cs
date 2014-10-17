@@ -1,6 +1,8 @@
+using NKnife.Tunnel;
+
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketServerConfig
+    public interface ISocketServerConfig : ITunnelConfig
     {
         void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int readBufferSize);
 

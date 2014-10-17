@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using NKnife.Tunnel;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
