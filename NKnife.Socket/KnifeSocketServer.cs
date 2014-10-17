@@ -10,6 +10,7 @@ using NKnife.Events;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol;
+using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Events;
@@ -58,14 +59,13 @@ namespace SocketKnife
         protected KnifeSocketFilterChain _FilterChain;
         protected KnifeProtocolFamily _Family;
         protected KnifeSocketSessionMap _SessionMap;
+        protected KnifeSocketServerConfig _Config = new KnifeSocketServerConfig();
 
         public override void Configure(IPAddress ipAddress, int port)
         {
             _IpAddress = ipAddress;
             _Port = port;
         }
-
-        [Inject]
 
         public override void AddFilter(KnifeSocketServerFilter filter)
         {
@@ -152,7 +152,7 @@ namespace SocketKnife
 
         public override ISocketServerConfig Config
         {
-            get { throw new NotImplementedException(); }
+            get { return _Config; }
         }
 
         public override void Dispose()
