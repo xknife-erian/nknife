@@ -21,6 +21,7 @@ namespace NKnife.App.SocketKit.IoC
         {
             Bind<ServerList>().ToSelf().InSingletonScope();
             Bind<KnifeSocketServerBase>().To<KnifeSocketServer>();
+            Bind<KnifeSocketSession>().To<KnifeSocketSession>();
 
             Bind<IProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
             Bind<IProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();

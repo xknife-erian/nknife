@@ -19,12 +19,12 @@ namespace SocketKnife.Generic.Filters
 
         public abstract bool ContinueNextFilter { get; }
 
-        void ITunnelFilter<EndPoint, Socket>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> socket, byte[] data)
+        void ITunnelFilter<EndPoint, Socket, string>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> socket, byte[] data)
         {
-            PrcoessReceiveData((ISocketSession) socket, data);
+            PrcoessReceiveData((KnifeSocketSession) socket, data);
         }
 
-        ITunnelCodec ITunnelFilter<EndPoint, Socket>.Codec
+        ITunnelCodec<string> ITunnelFilter<EndPoint, Socket, string>.Codec
         {
             get { return SocketCodec; }
             set { SocketCodec = (KnifeSocketCodec) value; }
@@ -39,15 +39,15 @@ namespace SocketKnife.Generic.Filters
         public event EventHandler<ConnectionBreakEventArgs<EndPoint>> ClientBroke;
 
         public virtual void Bind(
-            Func<IProtocolFamily> familyGetter,
-            Func<IProtocolHandler<EndPoint, Socket>> handlerGetter, 
-            Func<ISocketSessionMap> sessionMapGetter, 
-            Func<ISocketCodec> codecFunc)
+            Func<KnifeProtocolFamily> familyGetter,
+            Func<KnifeSocketProtocolHandler> handlerGetter,
+            Func<KnifeSocketSessionMap> sessionMapGetter,
+            Func<KnifeSocketCodec> codecFunc)
         {
-            _FamilyGetter = (Func<KnifeProtocolFamily>) familyGetter;
-            _HandlerGetter = (Func<KnifeSocketProtocolHandler>) handlerGetter;
-            _SessionMapGetter = (Func<KnifeSocketSessionMap>) sessionMapGetter;
-            _CodecGetter = (Func<KnifeSocketCodec>) codecFunc;
+            _FamilyGetter = familyGetter;
+            _HandlerGetter = handlerGetter;
+            _SessionMapGetter = sessionMapGetter;
+            _CodecGetter = codecFunc;
             OnBoundGetter(_FamilyGetter, _HandlerGetter, _SessionMapGetter, _CodecGetter);
         }
 
@@ -57,7 +57,7 @@ namespace SocketKnife.Generic.Filters
 
         public KnifeSocketCodec SocketCodec { get; set; }
 
-        public abstract void PrcoessReceiveData(ISocketSession socket, byte[] data);
+        public abstract void PrcoessReceiveData(KnifeSocketSession socket, byte[] data);
 
         protected internal virtual void OnDataFetched(DataFetchedEventArgs<EndPoint> e)
         {

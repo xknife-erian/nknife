@@ -8,7 +8,7 @@ using SocketKnife.Generic.Filters;
 
 namespace SocketKnife.Interfaces
 {
-    public interface IKnifeSocketServer : IKnifeServer<EndPoint, Socket>
+    public interface IKnifeSocketServer : IKnifeServer<EndPoint, Socket, string>
     {
         void Configure(IPAddress ipAddress, int port);
     }

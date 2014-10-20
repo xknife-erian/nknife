@@ -13,18 +13,18 @@ namespace SocketKnife.Generic
         public abstract ISocketServerConfig Config { get; }
         public abstract void Dispose();
 
-        void IKnifeServer<EndPoint, Socket>.Bind(ITunnelCodec codec, IProtocolFamily protocolFamily,
+        void IKnifeServer<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec, IProtocolFamily protocolFamily,
             IProtocolHandler<EndPoint, Socket> handler)
         {
             Bind((KnifeSocketCodec)codec, (KnifeProtocolFamily)protocolFamily, (KnifeSocketProtocolHandler)handler);
         }
 
-        ITunnelConfig IKnifeServer<EndPoint, Socket>.Config
+        ITunnelConfig IKnifeServer<EndPoint, Socket, string>.Config
         {
             get { return Config; }
         }
 
-        void IKnifeServer<EndPoint, Socket>.AddFilter(ITunnelFilter<EndPoint, Socket> filter)
+        void IKnifeServer<EndPoint, Socket, string>.AddFilter(ITunnelFilter<EndPoint, Socket, string> filter)
         {
             AddFilter((KnifeSocketServerFilter)filter);
         }

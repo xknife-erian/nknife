@@ -7,7 +7,7 @@ using SocketKnife.Generic.Filters;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketFilterChain : ITunnelFilterChain<EndPoint, Socket>
+    public interface ISocketFilterChain : ITunnelFilterChain<EndPoint, Socket, string>
     {
     }
 }

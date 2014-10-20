@@ -64,7 +64,7 @@ namespace SocketKnife.Generic.Filters
             get { return _ContinueNextFilter; }
         }
 
-        public override void PrcoessReceiveData(ISocketSession session, byte[] data)
+        public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
             EndPoint endPoint = session.Source;
             ReceiveQueue receive = null;
@@ -145,8 +145,9 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void DataDecoder(EndPoint endpoint, byte[] data, out int done)
         {
-            IProtocolFamily family = _FamilyGetter.Invoke();
-            string[] datagram = _CodecGetter.Invoke().Decoder.Execute(data, out done);
+            KnifeProtocolFamily family = _FamilyGetter.Invoke();
+            KnifeSocketCodec codec = _CodecGetter.Invoke();
+            string[] datagram = codec.Decoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _logger.Debug("协议消息无内容。");
@@ -169,7 +170,7 @@ namespace SocketKnife.Generic.Filters
                 string command = "";
                 try
                 {
-                    command = _CodecGetter.Invoke().CommandParser.GetCommand(dg);
+                    command = _CodecGetter.Invoke().SocketCommandParser.GetCommand(dg);
                 }
                 catch (Exception e)
                 {

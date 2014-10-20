@@ -6,7 +6,7 @@ using NKnife.Tunnel;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketCodec : ITunnelCodec<string>
+    public interface ISocketCommandParser : IDatagramCommandParser<string>
     {
     }
 }

@@ -89,6 +89,7 @@
     <Compile Include="Generic\Protocols\TextPlainPackager.cs" />
     <Compile Include="Generic\Protocols\TextPlainUnPackager.cs" />
     <Compile Include="Interfaces\ISocketCodec.cs" />
+    <Compile Include="Interfaces\ISocketCommandParser.cs" />
     <Compile Include="Interfaces\ISocketProtocolHandler.cs" />
     <Compile Include="Interfaces\ISocketServerFilter.cs" />
     <Compile Include="Interfaces\ISocketSessionMap.cs" />

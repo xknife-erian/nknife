@@ -11,7 +11,7 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个基本的从协议字符串中解析命令字的工具
     /// </summary>
-    public class DatagramCommandParser : IDatagramCommandParser
+    public class DatagramCommandParser : ISocketCommandParser
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         

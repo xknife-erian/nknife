@@ -6,13 +6,13 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelFilter<TSource, TConnector>
+    public interface ITunnelFilter<TSource, TConnector, TCommand>
     {
         bool ContinueNextFilter { get; }
 
         void PrcoessReceiveData(ITunnelSession<TSource, TConnector> session, byte[] data);
 
-        ITunnelCodec Codec { get; set; }
+        ITunnelCodec<TCommand> Codec { get; set; }
 
         #region 事件
 

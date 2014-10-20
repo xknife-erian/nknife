@@ -7,7 +7,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FirstFieldCommandParser : IDatagramCommandParser
+    public class FirstFieldCommandParser : ISocketCommandParser
     {
         public string GetCommand(string datagram)
         {

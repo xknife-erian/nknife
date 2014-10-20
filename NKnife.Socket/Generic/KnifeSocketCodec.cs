@@ -7,9 +7,14 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public abstract class KnifeSocketCodec : ISocketCodec
+    public class KnifeSocketCodec : ISocketCodec
     {
-        public IDatagramCommandParser CommandParser { get; set; }
+        IDatagramCommandParser<string> ITunnelCodec<string>.CommandParser
+        {
+            get { return SocketCommandParser; }
+            set { SocketCommandParser = (ISocketCommandParser) value; }
+        }
+        public ISocketCommandParser SocketCommandParser { get; set; }
         public IDatagramDecoder Decoder { get; set; }
         public IDatagramEncoder Encoder { get; set; }
     }

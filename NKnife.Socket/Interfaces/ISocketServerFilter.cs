@@ -7,16 +7,18 @@ using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Events;
+using SocketKnife.Generic;
+using SocketKnife.Generic.Families;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketServerFilter : ITunnelFilter<EndPoint, Socket>
+    public interface ISocketServerFilter : ITunnelFilter<EndPoint, Socket, string>
     {
         void Bind(
-            Func<IProtocolFamily> familyGetter, 
-            Func<IProtocolHandler<EndPoint, Socket>> handlerGetter, 
-            Func<ISocketSessionMap> sessionMapGetter,
-            Func<ISocketCodec> codecFunc 
+            Func<KnifeProtocolFamily> familyGetter,
+            Func<KnifeSocketProtocolHandler> handlerGetter,
+            Func<KnifeSocketSessionMap> sessionMapGetter,
+            Func<KnifeSocketCodec> codecFunc 
             );
     }
 }

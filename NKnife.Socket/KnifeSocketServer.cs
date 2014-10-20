@@ -323,7 +323,7 @@ namespace SocketKnife
                             string ip = iep.ToString();
                             if (!_SessionMap.ContainsKey(iep))
                             {
-                                var session = DI.Get<ISocketSession>();
+                                var session = DI.Get<KnifeSocketSession>();
                                 session.Source = iep;
                                 session.Connector = e.AcceptSocket;
                                 _SessionMap.Add(iep, session);

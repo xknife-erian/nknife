@@ -5,9 +5,9 @@ using System.Text;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelCodec
+    public interface ITunnelCodec<T>
     {
-        IDatagramCommandParser CommandParser { get; set; }
+        IDatagramCommandParser<T> CommandParser { get; set; }
         IDatagramDecoder Decoder { get; set; }
         IDatagramEncoder Encoder { get; set; }
     }

@@ -86,7 +86,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override void PrcoessReceiveData(ISocketSession session, byte[] data)
+        public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
             if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
             {
