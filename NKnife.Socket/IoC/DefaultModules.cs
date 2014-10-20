@@ -20,6 +20,7 @@ namespace SocketKnife.IoC
             Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>();
             Bind<KnifeSocketSession>().To<KnifeSocketSession>();
 
+            Bind<KnifeSocketProtocol>().To<KnifeSocketProtocol>();
             Bind<KnifeSocketProtocolFamily>().To<KnifeSocketProtocolFamily>();
             Bind<KnifeSocketProtocolContent>().To<KnifeSocketProtocolContent>();
         }

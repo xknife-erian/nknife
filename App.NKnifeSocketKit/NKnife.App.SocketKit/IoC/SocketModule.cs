@@ -15,9 +15,7 @@ namespace NKnife.App.SocketKit.IoC
             Bind<KnifeSocketServerBase>().To<KnifeSocketServer>();
 
             Bind<KnifeSocketProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
-            Bind<KnifeSocketProtocolPackager>().To<ProtocolXmlPackager>().InSingletonScope().Named("xml");
             Bind<KnifeSocketProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();
-            Bind<KnifeSocketProtocolUnPackager>().To<ProtocolDataTableDeserializeUnPackager>().InSingletonScope().Named("dataTable-deserialize");
 
             Bind<KnifeSocketCommandParser>().To<FirstFieldCommandParser>().InSingletonScope();
             Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();

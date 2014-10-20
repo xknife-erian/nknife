@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using NKnife.Protocol;
@@ -12,6 +13,7 @@ namespace SocketKnife.Generic
         protected Action<KnifeSocketSession, byte[]> _WriteBaseMethod;
         protected Action<KnifeSocketSession, KnifeSocketProtocol> _WriteProtocolMethod;
         public KnifeSocketSessionMap SessionMap { get; set; }
+        public abstract List<string> Commands { get; set; }
 
         ITunnelSessionMap<EndPoint, Socket> IProtocolHandler<EndPoint, Socket, string>.SessionMap
         {

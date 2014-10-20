@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.IoC;
 using NKnife.Protocol;
 using SocketKnife.Generic.Protocols;
 
@@ -16,14 +17,18 @@ namespace SocketKnife.Generic
 
         [Inject]
         public virtual KnifeSocketProtocolPackager SocketPackager { get; set; }
+
         [Inject]
         public virtual KnifeSocketProtocolUnPackager SocketUnPackager { get; set; }
 
-        /// <summary>构造函数
-        /// </summary>
-        /// <param name="family">协议家族名</param>
-        /// <param name="command">协议命令字</param>
-        protected KnifeSocketProtocol(string family, string command)
+        [Inject]
+        public KnifeSocketProtocolContent Content { get; set; }
+
+        public KnifeSocketProtocol()
+        {
+        }
+
+        public KnifeSocketProtocol(string family, string command)
         {
             Family = family;
             Command = command;
@@ -44,7 +49,6 @@ namespace SocketKnife.Generic
             set { SocketPackager = (KnifeSocketProtocolPackager) value; }
         }
 
-        [Inject]
         IProtocolUnPackager<string> IProtocol<string>.UnPackager
         {
             get { return SocketUnPackager; }
@@ -58,9 +62,6 @@ namespace SocketKnife.Generic
             get { return Content; }
             set { Content = (KnifeSocketProtocolContent) value; }
         }
-
-        [Inject]
-        public KnifeSocketProtocolContent Content { get; set; }
 
         /// <summary>
         /// 根据当前实例生成协议的原生字符串表达
@@ -97,13 +98,7 @@ namespace SocketKnife.Generic
 
         public KnifeSocketProtocol NewInstance()
         {
-            var p = new KnifeSocketProtocol(Family, Command)
-            {
-                SocketPackager = SocketPackager,
-                SocketUnPackager = SocketUnPackager,
-                Content = Content.NewInstance()
-            };
-            return p;
+            return Build(Family, Command);
         }
 
         IProtocol<string> IProtocol<string>.NewInstance()
@@ -129,7 +124,10 @@ namespace SocketKnife.Generic
 
         public static KnifeSocketProtocol Build(string family, string command)
         {
-            return new KnifeSocketProtocol(family, command);
+            var protocol = DI.Get<KnifeSocketProtocol>();
+            protocol.Family = family;
+            protocol.Command = command;
+            return protocol;
         }
     }
 }

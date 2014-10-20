@@ -42,7 +42,7 @@ namespace SocketKnife.Generic.Filters
 
         private void BeatingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            KnifeSocketProtocolHandler handler = _HandlerGetter.Invoke();
+            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSessionMap map = _SessionMapGetter.Invoke();
 
             var list = new List<EndPoint>(0);
@@ -52,7 +52,7 @@ namespace SocketKnife.Generic.Filters
                 KnifeSocketSession session = pair.Value;
                 if (!(session.WaitingForReply)) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
                 {
-                    handler.Write(session, Heartbeat.BeatingOfServerHeart);
+                    handlers[0].Write(session, Heartbeat.BeatingOfServerHeart);
                     session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
                 }
                 else

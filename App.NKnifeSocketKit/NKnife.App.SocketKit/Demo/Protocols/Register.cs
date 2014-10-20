@@ -11,11 +11,9 @@ namespace NKnife.App.SocketKit.Demo.Protocols
         }
 
         [Inject]
-        [Named("xml")]
         public override KnifeSocketProtocolPackager SocketPackager { get; set; }
 
         [Inject]
-        [Named("dataTable-deserialize")]
         public override KnifeSocketProtocolUnPackager SocketUnPackager { get; set; }
     }
 }

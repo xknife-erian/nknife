@@ -13,7 +13,7 @@ namespace SocketKnife.Generic.Filters
     public abstract class KnifeSocketServerFilter : ISocketServerFilter
     {
         protected Func<KnifeSocketProtocolFamily> _FamilyGetter;
-        protected Func<KnifeSocketProtocolHandler> _HandlerGetter;
+        protected Func<KnifeSocketProtocolHandler[]> _HandlersGetter;
         protected Func<KnifeSocketSessionMap> _SessionMapGetter;
         protected Func<KnifeSocketCodec> _CodecGetter;
 
@@ -40,18 +40,18 @@ namespace SocketKnife.Generic.Filters
 
         public virtual void Bind(
             Func<KnifeSocketProtocolFamily> familyGetter,
-            Func<KnifeSocketProtocolHandler> handlerGetter,
+            Func<KnifeSocketProtocolHandler[]> handlerGetter,
             Func<KnifeSocketSessionMap> sessionMapGetter,
             Func<KnifeSocketCodec> codecFunc)
         {
             _FamilyGetter = familyGetter;
-            _HandlerGetter = handlerGetter;
+            _HandlersGetter = handlerGetter;
             _SessionMapGetter = sessionMapGetter;
             _CodecGetter = codecFunc;
-            OnBoundGetter(_FamilyGetter, _HandlerGetter, _SessionMapGetter, _CodecGetter);
+            OnBoundGetter(_FamilyGetter, _HandlersGetter, _SessionMapGetter, _CodecGetter);
         }
 
-        protected virtual void OnBoundGetter(Func<KnifeSocketProtocolFamily> familyGetter, Func<KnifeSocketProtocolHandler> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter, Func<KnifeSocketCodec> codecGetter)
+        protected virtual void OnBoundGetter(Func<KnifeSocketProtocolFamily> familyGetter, Func<KnifeSocketProtocolHandler[]> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter, Func<KnifeSocketCodec> codecGetter)
         {
         }
 

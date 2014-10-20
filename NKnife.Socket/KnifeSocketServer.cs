@@ -53,7 +53,7 @@ namespace SocketKnife
         protected KnifeSocketServerConfig _Config = new KnifeSocketServerConfig();
         protected KnifeSocketProtocolFamily _Family;
         protected KnifeSocketFilterChain _FilterChain;
-        protected KnifeSocketProtocolHandler _Handler;
+        protected KnifeSocketProtocolHandler[] _Handlers;
         protected KnifeSocketSessionMap _SessionMap;
 
         public override void Configure(IPAddress ipAddress, int port)
@@ -69,14 +69,17 @@ namespace SocketKnife
         }
 
         public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily,
-            KnifeSocketProtocolHandler handler)
+            params KnifeSocketProtocolHandler[] handlers)
         {
             _Codec = codec;
             _Family = protocolFamily;
-            _Handler = handler;
-            _Handler.Bind(WirteBase);
-            _Handler.Bind(WirteProtocol);
-            _Handler.SessionMap = _SessionMap;
+            _Handlers = handlers;
+            foreach (var handler in _Handlers)
+            {
+                handler.Bind(WirteBase);
+                handler.Bind(WirteProtocol);
+                handler.SessionMap = _SessionMap;
+            }
         }
 
         public override bool Start()
@@ -145,9 +148,9 @@ namespace SocketKnife
             return _SessionMap;
         }
 
-        private KnifeSocketProtocolHandler GetHandle()
+        private KnifeSocketProtocolHandler[] GetHandle()
         {
-            return _Handler;
+            return _Handlers;
         }
 
         private KnifeSocketProtocolFamily GetFamily()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NKnife.Adapters;
 using NKnife.App.SocketKit.Common;
 using NKnife.Collections;
@@ -17,6 +18,8 @@ namespace NKnife.App.SocketKit.Demo
         {
             _SocketMessages = socketMessages;
         }
+
+        public override List<string> Commands { get; set; }
 
         public override void Recevied(KnifeSocketSession session, KnifeSocketProtocol protocol)
         {

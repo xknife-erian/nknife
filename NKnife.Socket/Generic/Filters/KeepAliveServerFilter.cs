@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using NKnife.Adapters;
@@ -24,7 +25,7 @@ namespace SocketKnife.Generic.Filters
         }
 
         protected override void OnBoundGetter(Func<KnifeSocketProtocolFamily> familyGetter,
-            Func<KnifeSocketProtocolHandler> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter,
+            Func<KnifeSocketProtocolHandler[]> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter,
             Func<KnifeSocketCodec> codecGetter)
         {
             KnifeSocketSessionMap map = sessionMapGetter.Invoke();
@@ -116,7 +117,8 @@ namespace SocketKnife.Generic.Filters
                             list.AddRange(data);
                             data = list.ToArray();
                             int length = undone.Length;
-                            _logger.Trace(() => string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", length, srcLen, data.Length));
+                            _logger.Trace(
+                                () => string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", length, srcLen, data.Length));
                             undone = new byte[] {};
                         }
                         int done;
@@ -198,7 +200,7 @@ namespace SocketKnife.Generic.Filters
         /// </summary>
         protected virtual void HandlerInvoke(EndPoint endpoint, KnifeSocketProtocol protocol)
         {
-            KnifeSocketProtocolHandler handler = _HandlerGetter.Invoke();
+            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSessionMap sessionMap = _SessionMapGetter.Invoke();
             KnifeSocketSession session;
             if (!sessionMap.TryGetValue(endpoint, out session))
@@ -207,11 +209,27 @@ namespace SocketKnife.Generic.Filters
             }
             try
             {
-                handler.Recevied(session, protocol);
+                if (handlers == null || handlers.Length == 0)
+                {
+                    Debug.Fail(string.Format("Handler集合不应为空."));
+                    return;
+                }
+                if (handlers.Length == 1)
+                {
+                    handlers[0].Recevied(session, protocol);
+                }
+                else
+                {
+                    foreach (KnifeSocketProtocolHandler handler in handlers)
+                    {
+                        if (handler.Commands.Contains(protocol.Command))
+                            handler.Recevied(session, protocol);
+                    }
+                }
             }
             catch (Exception e)
             {
-                _logger.Error(string.Format("{0}调用异常:{1}", handler.GetType().Name, e.Message), e);
+                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
             }
         }
 
