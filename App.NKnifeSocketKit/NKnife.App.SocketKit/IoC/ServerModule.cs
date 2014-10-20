@@ -23,8 +23,8 @@ namespace NKnife.App.SocketKit.IoC
             Bind<KnifeSocketServerBase>().To<KnifeSocketServer>();
             Bind<KnifeSocketSession>().To<KnifeSocketSession>();
 
-            Bind<IProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
-            Bind<IProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();
+            Bind<KnifeSocketProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
+            Bind<KnifeSocketProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();
         }
 
         private bool IsMyServer(IRequest arg)

@@ -44,7 +44,6 @@ namespace SocketKnife.Generic
             _WriteProtocolMethod = sendMethod;
         }
 
-        public abstract void Recevied(KnifeSocketSession session, byte[] data);
         public abstract void Recevied(KnifeSocketSession session, KnifeSocketProtocol protocol);
 
         public virtual void Write(KnifeSocketSession session, byte[] data)

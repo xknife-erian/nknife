@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Ninject;
 using NKnife.Tunnel;
 using SocketKnife.Interfaces;
 
@@ -9,7 +10,14 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketCodec : ISocketCodec
     {
+
+        [Inject]
+        public abstract ISocketCommandParser SocketCommandParser { get; set; }
+
+        [Inject]
         public abstract KnifeSocketDatagramDecoder SocketDecoder { get; set; }
+
+        [Inject]
         public abstract KnifeSocketDatagramEncoder SocketEncoder { get; set; }
 
         IDatagramCommandParser<string> ITunnelCodec<string>.CommandParser
@@ -17,7 +25,6 @@ namespace SocketKnife.Generic
             get { return SocketCommandParser; }
             set { SocketCommandParser = (ISocketCommandParser) value; }
         }
-        public ISocketCommandParser SocketCommandParser { get; set; }
 
         IDatagramDecoder<string> ITunnelCodec<string>.Decoder
         {

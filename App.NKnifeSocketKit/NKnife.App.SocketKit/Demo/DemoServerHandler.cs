@@ -3,9 +3,7 @@ using NKnife.Adapters;
 using NKnife.App.SocketKit.Common;
 using NKnife.Collections;
 using NKnife.Interface;
-using NKnife.Protocol;
 using SocketKnife.Generic;
-using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Demo
 {
@@ -20,11 +18,7 @@ namespace NKnife.App.SocketKit.Demo
             _SocketMessages = socketMessages;
         }
 
-        public override void Recevied(ISocketSession session, byte[] data)
-        {
-        }
-
-        public override void Recevied(ISocketSession session, IProtocol protocol)
+        public override void Recevied(KnifeSocketSession session, KnifeSocketProtocol protocol)
         {
             var msg = new SocketMessage();
             msg.Command = protocol.Command;
