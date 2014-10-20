@@ -10,6 +10,7 @@ using NKnife.App.SocketKit.Dialogs;
 using NKnife.Protocol;
 using SocketKnife;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Protocols;
 using SocketKnife.Interfaces;
 
@@ -21,10 +22,13 @@ namespace NKnife.App.SocketKit.IoC
         {
             Bind<ServerList>().ToSelf().InSingletonScope();
             Bind<KnifeSocketServerBase>().To<KnifeSocketServer>();
-            Bind<KnifeSocketSession>().To<KnifeSocketSession>();
 
             Bind<KnifeSocketProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
             Bind<KnifeSocketProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();
+
+            Bind<KnifeSocketCommandParser>().To<FirstFieldCommandParser>().InSingletonScope();
+            Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();
+            Bind<KnifeSocketDatagramEncoder>().To<FixedTailEncoder>();
         }
 
         private bool IsMyServer(IRequest arg)

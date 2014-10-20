@@ -46,7 +46,7 @@ namespace NKnife.App.SocketKit.Demo
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
             keepAliveFilter.ClientCome += delegate {  };
 
-            var codec = new DemoCodec();
+            var codec = DI.Get<DemoCodec>();
 
             var protocolFamily = GetProtocolFamily();
 
@@ -75,8 +75,8 @@ namespace NKnife.App.SocketKit.Demo
             var sing = DI.Get<Sing>();
 
             var register = DI.Get<Register>();
-            register.Packager = new ProtocolXmlPackager();
-            register.UnPackager = new ProtocolDataTableDeserializeUnPackager();
+            register.SocketPackager = new ProtocolXmlPackager();
+            register.SocketUnPackager = new ProtocolDataTableDeserializeUnPackager();
 
             var family = DI.Get<KnifeSocketProtocolFamily>();
 

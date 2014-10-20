@@ -71,6 +71,7 @@ namespace SocketKnife
         public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily,
             KnifeSocketProtocolHandler handler)
         {
+            _Codec = codec;
             _Family = protocolFamily;
             _Handler = handler;
             _Handler.Bind(WirteBase);
@@ -383,7 +384,6 @@ namespace SocketKnife
 
         private void RemoveSession(SocketAsyncEventArgs e)
         {
-            var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
             _logger.Trace(() => string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
             if (!e.AcceptSocket.Connected)
             {
@@ -391,6 +391,8 @@ namespace SocketKnife
             }
             string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
             _logger.Info(message);
+
+            var iep = e.AcceptSocket.RemoteEndPoint;
             foreach (KnifeSocketServerFilter filter in _FilterChain)
             {
                 filter.OnClientBroke(new ConnectionBreakEventArgs<EndPoint>(iep, message));

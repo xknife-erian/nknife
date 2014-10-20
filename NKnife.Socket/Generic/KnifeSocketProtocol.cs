@@ -14,6 +14,11 @@ namespace SocketKnife.Generic
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
+        [Inject]
+        public KnifeSocketProtocolPackager SocketPackager { get; set; }
+        [Inject]
+        public KnifeSocketProtocolUnPackager SocketUnPackager { get; set; }
+
         /// <summary>构造函数
         /// </summary>
         /// <param name="family">协议家族名</param>
@@ -33,21 +38,28 @@ namespace SocketKnife.Generic
 
         public string Command { get; set; }
 
-        [Inject]
-        public IProtocolPackager<string> Packager { get; set; }
+        IProtocolPackager<string> IProtocol<string>.Packager
+        {
+            get { return SocketPackager; }
+            set { SocketPackager = (KnifeSocketProtocolPackager) value; }
+        }
 
         [Inject]
-        public IProtocolUnPackager<string> UnPackager { get; set; }
+        IProtocolUnPackager<string> IProtocol<string>.UnPackager
+        {
+            get { return SocketUnPackager; }
+            set { SocketUnPackager = (KnifeSocketProtocolUnPackager) value; }
+        }
 
         /// <summary>协议的具体内容的容器
         /// </summary>
-        [Inject]
         IProtocolContent<string> IProtocol<string>.Content
         {
             get { return Content; }
             set { Content = (KnifeSocketProtocolContent) value; }
         }
 
+        [Inject]
         public KnifeSocketProtocolContent Content { get; set; }
 
         /// <summary>
@@ -57,7 +69,7 @@ namespace SocketKnife.Generic
         public string Generate()
         {
             if (Content != null)
-                return Packager.Combine(Content);
+                return SocketPackager.Combine(Content);
             return string.Empty;
         }
 
@@ -74,8 +86,8 @@ namespace SocketKnife.Generic
             }
             try
             {
-                IProtocolContent<string> c = Content;
-                UnPackager.Execute(ref c, datagram, Family, Command);
+                KnifeSocketProtocolContent c = Content;
+                SocketUnPackager.Execute(c, datagram, Family, Command);
             }
             catch (Exception e)
             {
@@ -85,10 +97,12 @@ namespace SocketKnife.Generic
 
         public KnifeSocketProtocol NewInstance()
         {
-            var p = new KnifeSocketProtocol(Family, Command);
-            p.Packager = Packager;
-            p.UnPackager = UnPackager;
-            p.Content = Content.NewInstance();
+            var p = new KnifeSocketProtocol(Family, Command)
+            {
+                SocketPackager = SocketPackager,
+                SocketUnPackager = SocketUnPackager,
+                Content = Content.NewInstance()
+            };
             return p;
         }
 
