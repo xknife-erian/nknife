@@ -4,16 +4,13 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Events;
 using SocketKnife.Exceptions;
 using SocketKnife.Generic;
-using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife
@@ -114,7 +111,7 @@ namespace SocketKnife
             Config.SendTimeout = 1000;
             Config.ReceiveTimeout = 1000;
 
-            _BufferContainer = new BufferContainer(Config.MaxConnectCount * Config.MaxBufferSize, Config.MaxBufferSize);
+            _BufferContainer = new BufferContainer(Config.MaxConnectCount*Config.MaxBufferSize, Config.MaxBufferSize);
             _BufferContainer.Initialize();
 
             //核心连接池的预创建
@@ -138,7 +135,7 @@ namespace SocketKnife
         public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily, params KnifeSocketProtocolHandler[] handlers)
         {
             base.Bind(codec, protocolFamily, handlers);
-            foreach (var handler in handlers)
+            foreach (KnifeSocketProtocolHandler handler in handlers)
             {
                 handler.Bind(WirteProtocol);
                 handler.Bind(WirteBase);
@@ -155,6 +152,7 @@ namespace SocketKnife
         public override ISocketConfig Config
         {
             get { return _Config; }
+            set { _Config = (KnifeSocketServerConfig) value; }
         }
 
         public override void Dispose()
@@ -325,10 +323,10 @@ namespace SocketKnife
             string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
             _logger.Info(message);
 
-            var iep = e.AcceptSocket.RemoteEndPoint;
+            EndPoint iep = e.AcceptSocket.RemoteEndPoint;
             foreach (KnifeSocketServerFilter filter in _FilterChain)
             {
-                filter.OnClientBroke(new ConnectionBreakEventArgs<EndPoint>(iep, message));
+                filter.OnClientBroke(new SocketConnectionBreakEventArgs(iep, message));
             }
 
             if (iep != null)
@@ -358,7 +356,7 @@ namespace SocketKnife
             foreach (KnifeSocketServerFilter filter in _FilterChain)
             {
                 EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
-                filter.OnDataFetched(new DataFetchedEventArgs<EndPoint>(endPoint, data)); // 触发数据到达事件
+                filter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
                 KnifeSocketSession session = _SessionMap[endPoint];
                 filter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
                 if (!filter.ContinueNextFilter)

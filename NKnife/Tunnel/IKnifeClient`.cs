@@ -8,7 +8,7 @@ namespace NKnife.Tunnel
     {
         void Bind(ITunnelCodec<TCommand> codec, IProtocolFamily<TCommand> protocolFamily, params IProtocolHandler<TSource, TConnector, TCommand>[] handlers);
         ITunnelConfig Config { get; }
-        void AddFilter(ITunnelFilter<TSource, TConnector, TCommand> filter);
+        void AddFilter(ITunnelFilter<TSource, TConnector> filter);
         bool Start();
         bool ReStart();
         bool Stop();

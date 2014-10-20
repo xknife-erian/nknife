@@ -1,7 +1,5 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using Ninject;
 using NKnife.IoC;
 using NKnife.Protocol;
 using NKnife.Tunnel;
@@ -12,40 +10,45 @@ namespace SocketKnife.Generic
 {
     public abstract class TunnelBase : ITunnel<EndPoint, Socket, string>
     {
-        protected KnifeSocketCodec _Codec;
         protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
+        protected KnifeSocketServerFilterChain _FilterChain = DI.Get<KnifeSocketServerFilterChain>();
         protected KnifeSocketSessionMap _SessionMap = DI.Get<KnifeSocketSessionMap>();
-        protected KnifeSocketFilterChain _FilterChain = DI.Get<KnifeSocketFilterChain>();
+
+        protected KnifeSocketCodec _Codec;
         protected KnifeSocketProtocolFamily _Family;
         protected KnifeSocketProtocolHandler[] _Handlers;
+
         protected IPAddress _IpAddress;
         protected int _Port;
 
-        public abstract ISocketConfig Config { get; }
+        public abstract ISocketConfig Config { get; set; }
         public abstract void Dispose();
 
-        void ITunnel<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec,
-            IProtocolFamily<string> protocolFamily,
+        void ITunnel<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec, IProtocolFamily<string> protocolFamily,
             params IProtocolHandler<EndPoint, Socket, string>[] handlers)
         {
-            Bind((KnifeSocketCodec) codec, (KnifeSocketProtocolFamily) protocolFamily,
-                (KnifeSocketProtocolHandler[]) handlers);
+            var hs = new KnifeSocketProtocolHandler[handlers.Length];
+            for (int i = 0; i < handlers.Length; i++)
+            {
+                hs[i] = (KnifeSocketProtocolHandler) handlers[i];
+            }
+            Bind((KnifeSocketCodec) codec, (KnifeSocketProtocolFamily) protocolFamily, hs);
         }
 
         ITunnelConfig ITunnel<EndPoint, Socket, string>.Config
         {
             get { return Config; }
+            set { Config = (ISocketConfig) value; }
         }
 
-        void ITunnel<EndPoint, Socket, string>.AddFilter(ITunnelFilter<EndPoint, Socket, string> filter)
+        void ITunnel<EndPoint, Socket, string>.AddFilter(ITunnelFilter<EndPoint, Socket> filter)
         {
-            AddFilter((KnifeSocketServerFilter) filter);
+            AddFilter((ISocketServerFilter)filter);
         }
 
         public abstract bool Start();
         public abstract bool ReStart();
         public abstract bool Stop();
-
 
         public virtual void Configure(IPAddress ipAddress, int port)
         {

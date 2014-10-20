@@ -10,6 +10,7 @@ using NKnife.Mvvm;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
+using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Demo
 {
@@ -23,7 +24,7 @@ namespace NKnife.App.SocketKit.Demo
 
         #endregion
 
-        private TunnelBase _Server;
+        private IKnifeSocketServer _Server;
 
         public DemoServer()
         {
@@ -33,6 +34,9 @@ namespace NKnife.App.SocketKit.Demo
         public void Initialize(IPAddress ipAddress, int port)
         {
             Pair<IPAddress, int> key = Pair<IPAddress, int>.Build(ipAddress, port);
+
+            var config = DI.Get<KnifeSocketServerConfig>();
+            config.Initialize(1000, 1000, 1024 * 10, 32, 1024 * 10);
 
             var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
             heartbeatServerFilter.Interval = 1000*5;
@@ -44,8 +48,8 @@ namespace NKnife.App.SocketKit.Demo
 
             if (!_ServerList.ContainsKey(key))
             {
-                _Server = DI.Get<TunnelBase>();
-                _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
+                _Server = DI.Get<IKnifeSocketServer>();
+                _Server.Config = config;
                 _Server.AddFilter(heartbeatServerFilter);
                 _Server.AddFilter(keepAliveFilter);
                 _Server.Configure(ipAddress, port);

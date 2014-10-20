@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using NKnife.Adapters;
 using NKnife.Events;
@@ -10,6 +11,8 @@ using NKnife.Interface;
 using NKnife.Tunnel.Events;
 using NKnife.Utility;
 using SocketKnife.Common;
+using SocketKnife.Events;
+using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
@@ -37,8 +40,7 @@ namespace SocketKnife.Generic.Filters
             ClearByEndPoint(e.Item);
         }
 
-
-        protected internal override void OnClientBroke(ConnectionBreakEventArgs<EndPoint> e)
+        protected internal override void OnClientBroke(SocketConnectionBreakEventArgs e)
         {
             base.OnClientBroke(e);
             ClearByEndPoint(e.EndPoint);

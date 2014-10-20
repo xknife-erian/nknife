@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using NKnife.Protocol;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Events;
-using SocketKnife.Generic.Families;
 using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Filters
+namespace SocketKnife.Generic
 {
-    public abstract class KnifeSocketServerFilter : ISocketServerFilter
+    public abstract class KnifeSocketFilter : ISocketFilter
     {
         protected Func<KnifeSocketProtocolFamily> _FamilyGetter;
         protected Func<KnifeSocketProtocolHandler[]> _HandlersGetter;
@@ -19,24 +17,14 @@ namespace SocketKnife.Generic.Filters
 
         public abstract bool ContinueNextFilter { get; }
 
-        void ITunnelFilter<EndPoint, Socket, string>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> socket, byte[] data)
+        void ITunnelFilter<EndPoint, Socket>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> socket, byte[] data)
         {
             PrcoessReceiveData((KnifeSocketSession) socket, data);
-        }
-
-        ITunnelCodec<string> ITunnelFilter<EndPoint, Socket, string>.Codec
-        {
-            get { return SocketCodec; }
-            set { SocketCodec = (KnifeSocketCodec) value; }
         }
 
         public event EventHandler<DataFetchedEventArgs<EndPoint>> DataFetched;
 
         public event EventHandler<DataDecodedEventArgs<EndPoint>> DataDecoded;
-
-        public event EventHandler<SessionEventArgs<EndPoint, Socket>> ClientCome;
-
-        public event EventHandler<ConnectionBreakEventArgs<EndPoint>> ClientBroke;
 
         public virtual void Bind(
             Func<KnifeSocketProtocolFamily> familyGetter,
@@ -55,33 +43,21 @@ namespace SocketKnife.Generic.Filters
         {
         }
 
-        public KnifeSocketCodec SocketCodec { get; set; }
-
         public abstract void PrcoessReceiveData(KnifeSocketSession socket, byte[] data);
 
-        protected internal virtual void OnDataFetched(DataFetchedEventArgs<EndPoint> e)
+        protected internal virtual void OnDataFetched(SocketDataFetchedEventArgs e)
         {
             EventHandler<DataFetchedEventArgs<EndPoint>> handler = DataFetched;
-            if (handler != null) handler(this, e);
-        }
-
-        protected internal virtual void OnDataDecoded(DataDecodedEventArgs<EndPoint> e)
-        {
-            EventHandler<DataDecodedEventArgs<EndPoint>> handler = DataDecoded;
-            if (handler != null) handler(this, e);
-        }
-
-        protected internal virtual void OnClientCome(SocketSessionEventArgs e)
-        {
-            EventHandler<SessionEventArgs<EndPoint, Socket>> handler = ClientCome;
-            if (handler != null)
+            if (handler != null) 
                 handler(this, e);
         }
 
-        protected internal virtual void OnClientBroke(ConnectionBreakEventArgs<EndPoint> e)
+        protected internal virtual void OnDataDecoded(SocketDataDecodedEventArgs e)
         {
-            EventHandler<ConnectionBreakEventArgs<EndPoint>> handler = ClientBroke;
-            if (handler != null) handler(this, e);
+            EventHandler<DataDecodedEventArgs<EndPoint>> handler = DataDecoded;
+            if (handler != null) 
+                handler(this, e);
         }
+
     }
 }

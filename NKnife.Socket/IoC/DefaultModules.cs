@@ -15,8 +15,10 @@ namespace SocketKnife.IoC
     {
         public override void Load()
         {
+            Bind<IKnifeSocketServer>().To<KnifeSocketServer>();
+
             Bind<KnifeSocketServerConfig>().To<KnifeSocketServerConfig>();
-            Bind<KnifeSocketFilterChain>().To<KnifeSocketFilterChain>();
+            Bind<KnifeSocketServerFilterChain>().To<KnifeSocketServerFilterChain>();
             Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>();
             Bind<KnifeSocketSession>().To<KnifeSocketSession>();
 
