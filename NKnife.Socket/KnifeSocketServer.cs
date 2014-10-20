@@ -47,13 +47,13 @@ namespace SocketKnife
 
         #region ISocketServerKnife 接口实现
 
+        private IPAddress _IpAddress;
+        private int _Port;
         protected KnifeSocketCodec _Codec;
         protected KnifeSocketServerConfig _Config = new KnifeSocketServerConfig();
         protected KnifeSocketProtocolFamily _Family;
         protected KnifeSocketFilterChain _FilterChain;
         protected KnifeSocketProtocolHandler _Handler;
-        private IPAddress _IpAddress;
-        private int _Port;
         protected KnifeSocketSessionMap _SessionMap;
 
         public override void Configure(IPAddress ipAddress, int port)
