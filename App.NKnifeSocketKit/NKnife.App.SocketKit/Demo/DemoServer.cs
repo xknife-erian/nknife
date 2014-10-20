@@ -3,19 +3,13 @@ using System.Net;
 using System.Windows.Threading;
 using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Demo.Protocols;
-using NKnife.App.SocketKit.Socket;
 using NKnife.Base;
 using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Mvvm;
-using NKnife.Protocol;
-using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Generic;
-using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Filters;
-using SocketKnife.Generic.Protocols;
-using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Demo
 {
@@ -23,9 +17,9 @@ namespace NKnife.App.SocketKit.Demo
     {
         #region App
 
+        private readonly ServerList _ServerList = DI.Get<ServerList>();
         internal Dispatcher Dispatcher { get; set; }
         public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
-        private readonly ServerList _ServerList = DI.Get<ServerList>();
 
         #endregion
 
@@ -38,7 +32,7 @@ namespace NKnife.App.SocketKit.Demo
 
         public void Initialize(IPAddress ipAddress, int port)
         {
-            var key = Pair<IPAddress, int>.Build(ipAddress, port);
+            Pair<IPAddress, int> key = Pair<IPAddress, int>.Build(ipAddress, port);
 
             var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
             heartbeatServerFilter.Interval = 1000*5;
@@ -46,7 +40,7 @@ namespace NKnife.App.SocketKit.Demo
 
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
             var codec = DI.Get<KnifeSocketCodec>();
-            var protocolFamily = GetProtocolFamily();
+            KnifeSocketProtocolFamily protocolFamily = GetProtocolFamily();
 
             if (!_ServerList.ContainsKey(key))
             {
