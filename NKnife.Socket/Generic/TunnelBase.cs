@@ -43,7 +43,7 @@ namespace SocketKnife.Generic
 
         void ITunnel<EndPoint, Socket, string>.AddFilter(ITunnelFilter<EndPoint, Socket> filter)
         {
-            AddFilter((ISocketServerFilter)filter);
+            AddFilter((KnifeSocketServerFilter)filter);
         }
 
         public abstract bool Start();
