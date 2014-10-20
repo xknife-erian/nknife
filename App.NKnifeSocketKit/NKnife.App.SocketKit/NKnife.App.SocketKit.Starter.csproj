@@ -91,15 +91,12 @@
     </ApplicationDefinition>
     <Compile Include="Common\DockUtil.cs" />
     <Compile Include="Common\SocketMessage.cs" />
-    <Compile Include="Demo\DemoCodec.cs" />
     <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
       <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\ServerList.cs" />
-    <Compile Include="IoC\ClientModule.cs" />
-    <Compile Include="IoC\ServerModule.cs" />
+    <Compile Include="IoC\SocketModule.cs" />
     <Compile Include="Demo\DemoServerHandler.cs" />
-    <Compile Include="Demo\DemoSocketSessionMap.cs" />
     <Compile Include="Mvvm\Views\LoggerView.xaml.cs">
       <DependentUpon>LoggerView.xaml</DependentUpon>
     </Compile>
@@ -111,12 +108,7 @@
     </Compile>
     <Compile Include="Demo\DemoServer.cs" />
     <Compile Include="Mvvm\WorkbenchViewModel.cs" />
-    <Compile Include="Socket\Call.cs" />
-    <Compile Include="Socket\Dance.cs" />
-    <Compile Include="Socket\GetTicket.cs" />
-    <Compile Include="Socket\ReCall.cs" />
-    <Compile Include="Socket\Register.cs" />
-    <Compile Include="Socket\Sing.cs" />
+    <Compile Include="Demo\Protocols\Register.cs" />
     <Page Include="Dialogs\NewTcpServerCreatorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

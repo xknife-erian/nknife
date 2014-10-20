@@ -7,7 +7,7 @@ using SocketKnife.Generic;
 
 namespace NKnife.App.SocketKit.Demo
 {
-    internal class DemoServerHandler : KnifeSocketProtocolHandler
+    public class DemoServerHandler : KnifeSocketProtocolHandler
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

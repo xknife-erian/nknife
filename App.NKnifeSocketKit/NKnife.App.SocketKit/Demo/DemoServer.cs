@@ -2,6 +2,7 @@
 using System.Net;
 using System.Windows.Threading;
 using NKnife.App.SocketKit.Common;
+using NKnife.App.SocketKit.Demo.Protocols;
 using NKnife.App.SocketKit.Socket;
 using NKnife.Base;
 using NKnife.Collections;
@@ -44,10 +45,7 @@ namespace NKnife.App.SocketKit.Demo
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
-            keepAliveFilter.ClientCome += delegate {  };
-
-            var codec = DI.Get<DemoCodec>();
-
+            var codec = DI.Get<KnifeSocketCodec>();
             var protocolFamily = GetProtocolFamily();
 
             if (!_ServerList.ContainsKey(key))
@@ -68,23 +66,14 @@ namespace NKnife.App.SocketKit.Demo
 
         private KnifeSocketProtocolFamily GetProtocolFamily()
         {
-            var getTicket = DI.Get<GetTicket>();
-            var call = DI.Get<Call>();
-            var dance = DI.Get<Dance>();
-            var recall = DI.Get<ReCall>();
-            var sing = DI.Get<Sing>();
-
             var register = DI.Get<Register>();
-            register.SocketPackager = new ProtocolXmlPackager();
-            register.SocketUnPackager = new ProtocolDataTableDeserializeUnPackager();
 
             var family = DI.Get<KnifeSocketProtocolFamily>();
 
-            family.Add(getTicket);
-            family.Add(call);
-            family.Add(dance);
-            family.Add(recall);
-            family.Add(sing);
+            family.Add(KnifeSocketProtocol.Build("socket-kit", "call"));
+            family.Add(KnifeSocketProtocol.Build("socket-kit", "recall"));
+            family.Add(KnifeSocketProtocol.Build("socket-kit", "sing"));
+            family.Add(KnifeSocketProtocol.Build("socket-kit", "dance"));
             family.Add(register);
 
             return family;

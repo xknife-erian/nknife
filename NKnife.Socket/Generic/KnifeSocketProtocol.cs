@@ -15,9 +15,9 @@ namespace SocketKnife.Generic
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         [Inject]
-        public KnifeSocketProtocolPackager SocketPackager { get; set; }
+        public virtual KnifeSocketProtocolPackager SocketPackager { get; set; }
         [Inject]
-        public KnifeSocketProtocolUnPackager SocketUnPackager { get; set; }
+        public virtual KnifeSocketProtocolUnPackager SocketUnPackager { get; set; }
 
         /// <summary>构造函数
         /// </summary>
@@ -111,8 +111,6 @@ namespace SocketKnife.Generic
             return NewInstance();
         }
 
-        #endregion
-
         public override string ToString()
         {
             string str = string.Empty;
@@ -127,5 +125,11 @@ namespace SocketKnife.Generic
             return str;
         }
 
+        #endregion
+
+        public static KnifeSocketProtocol Build(string family, string command)
+        {
+            return new KnifeSocketProtocol(family, command);
+        }
     }
 }

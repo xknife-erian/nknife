@@ -8,17 +8,17 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public abstract class KnifeSocketCodec : ITunnelCodec<string>
+    public class KnifeSocketCodec : ITunnelCodec<string>
     {
 
         [Inject]
-        public abstract KnifeSocketCommandParser SocketCommandParser { get; set; }
+        public virtual KnifeSocketCommandParser SocketCommandParser { get; set; }
 
         [Inject]
-        public abstract KnifeSocketDatagramDecoder SocketDecoder { get; set; }
+        public virtual KnifeSocketDatagramDecoder SocketDecoder { get; set; }
 
         [Inject]
-        public abstract KnifeSocketDatagramEncoder SocketEncoder { get; set; }
+        public virtual KnifeSocketDatagramEncoder SocketEncoder { get; set; }
 
         IDatagramCommandParser<string> ITunnelCodec<string>.CommandParser
         {
