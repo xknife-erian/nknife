@@ -8,11 +8,11 @@ namespace SocketKnife.Events
     /// </summary>
     public class ConnectioningEventArgs : EventArgs
     {
-        public ConnectioningEventArgs(IPEndPoint serverInfo)
+        public ConnectioningEventArgs(EndPoint serverInfo)
         {
             ServerInfo = serverInfo;
         }
 
-        public IPEndPoint ServerInfo { get; set; }
+        public EndPoint ServerInfo { get; set; }
     }
 }

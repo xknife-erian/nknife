@@ -256,9 +256,10 @@ namespace SocketKnife
                                 session.Connector = e.AcceptSocket;
                                 _SessionMap.Add(iep, session);
                                 _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count));
-                                foreach (KnifeSocketServerFilter filter in _FilterChain)
+                                foreach (var filter in _FilterChain)
                                 {
-                                    filter.OnClientCome(new SocketSessionEventArgs(session));
+                                    var serverFilter = (KnifeSocketServerFilter) filter;
+                                    serverFilter.OnClientCome(new SocketSessionEventArgs(session));
                                 }
                             }
                         }
@@ -324,9 +325,10 @@ namespace SocketKnife
             _logger.Info(message);
 
             EndPoint iep = e.AcceptSocket.RemoteEndPoint;
-            foreach (KnifeSocketServerFilter filter in _FilterChain)
+            foreach (var filter in _FilterChain)
             {
-                filter.OnClientBroke(new SocketConnectionBreakEventArgs(iep, message));
+                var serverFilter = (KnifeSocketServerFilter)filter;
+                serverFilter.OnClientBroke(new SocketConnectionBreakEventArgs(iep, message));
             }
 
             if (iep != null)
@@ -353,13 +355,14 @@ namespace SocketKnife
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
 
-            foreach (KnifeSocketServerFilter filter in _FilterChain)
+            foreach (var filter in _FilterChain)
             {
+                var serverFilter = (KnifeSocketServerFilter) filter;
                 EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
-                filter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
+                serverFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
                 KnifeSocketSession session = _SessionMap[endPoint];
-                filter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
-                if (!filter.ContinueNextFilter)
+                serverFilter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
+                if (!serverFilter.ContinueNextFilter)
                     break;
             }
 

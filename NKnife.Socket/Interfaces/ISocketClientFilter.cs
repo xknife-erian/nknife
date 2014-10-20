@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NKnife.Tunnel.Events;
+using NKnife.Events;
+using SocketKnife.Common;
 using SocketKnife.Events;
 
 namespace SocketKnife.Interfaces
@@ -12,21 +10,21 @@ namespace SocketKnife.Interfaces
         /// <summary>
         ///     即将连接事件
         /// </summary>
-        event EventHandler<ConnectioningEventArgs> ConnectioningEvent;
+        event EventHandler<ConnectioningEventArgs> Connectioning;
 
         /// <summary>
-        ///     连接成功事件
+        ///     连接成功后事件
         /// </summary>
-        event EventHandler<ConnectionedEventArgs> ConnectionedEvent;
+        event EventHandler<ConnectionedEventArgs> Connectioned;
 
         /// <summary>
         ///     Sokcet连接的状态发生改变后的事件
         /// </summary>
-        event EventHandler<SocketStatusChangedEventArgs> SocketStatusChangedEvent;
+        event EventHandler<ChangedEventArgs<ConnectionStatus>> SocketStatusChanged;
 
         /// <summary>
-        ///     当连接断开发生的事件
+        ///     当连接断开后发生的事件
         /// </summary>
-        event EventHandler<ConnectionedEventArgs> ConnectionedWhileBreakEvent;
+        event EventHandler<ConnectionedEventArgs> ConnectionBroke;
     }
 }

@@ -11,7 +11,7 @@ namespace SocketKnife.Generic
     public abstract class TunnelBase : ITunnel<EndPoint, Socket, string>
     {
         protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
-        protected KnifeSocketServerFilterChain _FilterChain = DI.Get<KnifeSocketServerFilterChain>();
+        protected ITunnelFilterChain<EndPoint, Socket> _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>();
         protected KnifeSocketSessionMap _SessionMap = DI.Get<KnifeSocketSessionMap>();
 
         protected KnifeSocketCodec _Codec;
@@ -56,7 +56,7 @@ namespace SocketKnife.Generic
             _Port = port;
         }
 
-        public virtual void AddFilter(KnifeSocketServerFilter filter)
+        public virtual void AddFilter(KnifeSocketFilter filter)
         {
             filter.Bind(GetFamily, GetHandle, GetSessionMap, GetCodec);
             _FilterChain.AddLast(filter);

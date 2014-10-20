@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using NKnife.Adapters;
+using NKnife.Events;
 using NKnife.Interface;
 using NKnife.Protocol;
 using NKnife.Tunnel.Events;
@@ -159,7 +160,11 @@ namespace SocketKnife
                     _IsConnection = false;
                     _logger.Warn(string.Format("远程连接失败。{0}", ex.Message), ex);
                 }
-                //OnConnectioning(new ConnectioningEventArgs(ipPoint));
+                foreach (var filter in _FilterChain)
+                {
+                    var clientFilter = (KnifeSocketClientFilter) filter;
+                    clientFilter.OnConnectioning(new ConnectioningEventArgs(ipPoint));
+                }
                 var e = new SocketAsyncEventArgs { RemoteEndPoint = ipPoint };
                 e.Completed += CompletedEvent;
                 if (_ConnectionCount > 0)
@@ -200,8 +205,12 @@ namespace SocketKnife
                     _IsConnection = true;
                     _AutoReset.Set();
 
-                    //OnConnectioned(new ConnectionedEventArgs(true, "Connection Success."));
-                    //OnSocketStatusChanged(new SocketStatusChangedEventArgs(ConnectionStatus.Normal));
+                    foreach (var filter in _FilterChain)
+                    {
+                        var clientFilter = (KnifeSocketClientFilter) filter;
+                        clientFilter.OnConnectioned(new ConnectionedEventArgs(true, "Connection Success."));
+                        clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Break, ConnectionStatus.Normal));
+                    }
 
                     var data = new byte[Config.ReadBufferSize];
                     e.SetBuffer(data, 0, data.Length); //设置数据包
@@ -221,8 +230,13 @@ namespace SocketKnife
                     _logger.Debug(string.Format("当前SocketAsyncEventArgs工作状态:{0}", e.SocketError));
                     _IsConnection = false;
                     _AutoReset.Set();
-                    //OnConnectioned(new ConnectionedEventArgs(false, "Connection FAIL."));
-                    //OnSocketStatusChanged(new SocketStatusChangedEventArgs(ConnectionStatus.Break));
+
+                    foreach (var filter in _FilterChain)
+                    {
+                        var clientFilter = (KnifeSocketClientFilter)filter;
+                        clientFilter.OnConnectioned(new ConnectionedEventArgs(false, "Connection FAIL."));
+                        clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Normal, ConnectionStatus.Break));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -249,7 +263,8 @@ namespace SocketKnife
                 // 触发数据到达事件
                 foreach (var filter in _FilterChain)
                 {
-                    filter.OnDataFetched(new SocketDataFetchedEventArgs(e.RemoteEndPoint, data));
+                    var clientFilter = (KnifeSocketClientFilter)filter;
+                    clientFilter.OnDataFetched(new SocketDataFetchedEventArgs(e.RemoteEndPoint, data));
                 }
                 _ReceiveQueue.Enqueue(data);
             }
