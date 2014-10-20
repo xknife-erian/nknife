@@ -85,7 +85,7 @@ namespace SocketKnife.Generic
 
         public bool IsReadOnly
         {
-            get { return ((IDictionary<EndPoint, ISocketSession>) _Map).IsReadOnly; }
+            get { return ((IDictionary<EndPoint, KnifeSocketSession>)_Map).IsReadOnly; }
         }
 
         IEnumerator<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>> IEnumerable<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>.GetEnumerator()
@@ -129,11 +129,6 @@ namespace SocketKnife.Generic
         public void Add(EndPoint key, KnifeSocketSession value)
         {
             _Map.TryAdd(key, value);
-        }
-
-        public void Add(EndPoint key, ISocketSession value)
-        {
-            Add(key, (KnifeSocketSession)value);
         }
 
         public bool Contains(EndPoint key)

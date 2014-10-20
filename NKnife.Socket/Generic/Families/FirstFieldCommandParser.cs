@@ -7,9 +7,9 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FirstFieldCommandParser : ISocketCommandParser
+    public class FirstFieldCommandParser : KnifeSocketCommandParser
     {
-        public string GetCommand(string datagram)
+        public override string GetCommand(string datagram)
         {
             var index = datagram.IndexOf("|", StringComparison.Ordinal);
             if (index > 0)

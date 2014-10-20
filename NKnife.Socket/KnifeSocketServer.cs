@@ -450,7 +450,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void WirteBase(ISocketSession session, byte[] data)
+        protected virtual void WirteBase(KnifeSocketSession session, byte[] data)
         {
             Socket socket = session.Connector;
             try
@@ -464,7 +464,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void WirteProtocol(ISocketSession session, KnifeSocketProtocol protocol)
+        protected virtual void WirteProtocol(KnifeSocketSession session, KnifeSocketProtocol protocol)
         {
             string replay = protocol.Generate();
             byte[] data = _Codec.SocketEncoder.Execute(replay);

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using NKnife.Tunnel;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketSession : ISocketSession
+    public class KnifeSocketSession : ITunnelSession<EndPoint, Socket>
     {
         public KnifeSocketSession()
         {

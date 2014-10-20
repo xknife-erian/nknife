@@ -11,11 +11,11 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个基本的从协议字符串中解析命令字的工具
     /// </summary>
-    public class DatagramCommandParser : ISocketCommandParser
+    public class DatagramCommandParser : KnifeSocketCommandParser
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         
-        public string GetCommand(string protocolString)
+        public override string GetCommand(string protocolString)
         {
             string command = string.Empty;
             using (var reader = new XmlTextReader(new StringReader(protocolString)))

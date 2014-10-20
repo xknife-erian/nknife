@@ -6,13 +6,14 @@ using System.Net.Sockets;
 using System.Text;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
+using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Events
 {
     public class SocketSessionEventArgs : SessionEventArgs<EndPoint, Socket>
     {
-        public SocketSessionEventArgs(ISocketSession item) 
+        public SocketSessionEventArgs(KnifeSocketSession item) 
             : base(item)
         {
         }

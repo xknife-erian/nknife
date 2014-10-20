@@ -8,11 +8,11 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public abstract class KnifeSocketCodec : ISocketCodec
+    public abstract class KnifeSocketCodec : ITunnelCodec<string>
     {
 
         [Inject]
-        public abstract ISocketCommandParser SocketCommandParser { get; set; }
+        public abstract KnifeSocketCommandParser SocketCommandParser { get; set; }
 
         [Inject]
         public abstract KnifeSocketDatagramDecoder SocketDecoder { get; set; }
@@ -23,7 +23,7 @@ namespace SocketKnife.Generic
         IDatagramCommandParser<string> ITunnelCodec<string>.CommandParser
         {
             get { return SocketCommandParser; }
-            set { SocketCommandParser = (ISocketCommandParser) value; }
+            set { SocketCommandParser = (KnifeSocketCommandParser)value; }
         }
 
         IDatagramDecoder<string> ITunnelCodec<string>.Decoder
