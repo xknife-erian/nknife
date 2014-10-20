@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace NKnife.Tunnel.Events
+namespace SocketKnife.Events
 {
     /// <summary>
     ///     当Socket即将启动连接包含事件数据的类

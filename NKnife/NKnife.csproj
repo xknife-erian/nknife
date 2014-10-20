@@ -149,11 +149,8 @@
     <Compile Include="Protocol\IProtocolPackager`.cs" />
     <Compile Include="Protocol\IProtocolUnPackager`.cs" />
     <Compile Include="Tunnel\Events\ConnectionBreakEventArgs.cs" />
-    <Compile Include="Tunnel\Events\ConnectionedEventArgs.cs" />
-    <Compile Include="Tunnel\Events\ConnectioningEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataDecodedEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
-    <Compile Include="Tunnel\Events\ReceiveDataParsedEventArgs.cs" />
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />
     <Compile Include="Tunnel\IDatagramCommandParser`.cs" />
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
