@@ -23,7 +23,7 @@ namespace NKnife.App.SocketKit.Demo
 
         #endregion
 
-        private KnifeSocketServerBase _Server;
+        private TunnelBase _Server;
 
         public DemoServer()
         {
@@ -44,7 +44,7 @@ namespace NKnife.App.SocketKit.Demo
 
             if (!_ServerList.ContainsKey(key))
             {
-                _Server = DI.Get<KnifeSocketServerBase>();
+                _Server = DI.Get<TunnelBase>();
                 _Server.Config.Initialize(1000, 1000, 1024*10, 32, 1024*10);
                 _Server.AddFilter(heartbeatServerFilter);
                 _Server.AddFilter(keepAliveFilter);

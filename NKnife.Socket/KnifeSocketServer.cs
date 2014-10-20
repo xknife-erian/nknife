@@ -18,69 +18,21 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
-    public class KnifeSocketServer : KnifeSocketServerBase
+    public class KnifeSocketServer : TunnelBase, IKnifeSocketServer
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         #region 成员变量
 
-        private readonly AutoResetEvent _MainAutoReset;
-
-        /// <summary>
-        ///     数据包管理
-        /// </summary>
+        private readonly AutoResetEvent _MainAutoReset = new AutoResetEvent(false);
         private BufferContainer _BufferContainer;
-
         private bool _IsClose = true;
-
-        /// <summary>
-        ///     Socket对象
-        /// </summary>
         private Socket _MainSocket;
-
-        /// <summary>
-        ///     Socket异步对象池
-        /// </summary>
         private SocketAsyncEventArgsPool _SocketAsynPool;
 
         #endregion
 
         #region ISocketServerKnife 接口实现
-
-        private IPAddress _IpAddress;
-        private int _Port;
-        protected KnifeSocketCodec _Codec;
-        protected KnifeSocketServerConfig _Config = new KnifeSocketServerConfig();
-        protected KnifeSocketProtocolFamily _Family;
-        protected KnifeSocketFilterChain _FilterChain;
-        protected KnifeSocketProtocolHandler[] _Handlers;
-        protected KnifeSocketSessionMap _SessionMap;
-
-        public override void Configure(IPAddress ipAddress, int port)
-        {
-            _IpAddress = ipAddress;
-            _Port = port;
-        }
-
-        public override void AddFilter(KnifeSocketServerFilter filter)
-        {
-            filter.Bind(GetFamily, GetHandle, GetSessionMap, GetCodec);
-            _FilterChain.AddLast(filter);
-        }
-
-        public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily,
-            params KnifeSocketProtocolHandler[] handlers)
-        {
-            _Codec = codec;
-            _Family = protocolFamily;
-            _Handlers = handlers;
-            foreach (var handler in _Handlers)
-            {
-                handler.Bind(WirteBase);
-                handler.Bind(WirteProtocol);
-                handler.SessionMap = _SessionMap;
-            }
-        }
 
         public override bool Start()
         {
@@ -143,24 +95,54 @@ namespace SocketKnife
             }
         }
 
-        private KnifeSocketSessionMap GetSessionMap()
+        protected virtual void Initialize()
         {
-            return _SessionMap;
+            if (_IsDisposed)
+                throw new ObjectDisposedException(GetType().FullName + " is Disposed");
+            _IsClose = false;
+
+            var ipEndPoint = new IPEndPoint(_IpAddress, _Port);
+            _MainSocket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            _MainSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
+            _MainSocket.Bind(ipEndPoint);
+            _MainSocket.ReceiveBufferSize = Config.MaxBufferSize;
+            _MainSocket.SendBufferSize = Config.MaxBufferSize;
+
+            //挂起连接队列的最大长度。
+            _MainSocket.Listen(64);
+
+            Config.SendTimeout = 1000;
+            Config.ReceiveTimeout = 1000;
+
+            _BufferContainer = new BufferContainer(Config.MaxConnectCount * Config.MaxBufferSize, Config.MaxBufferSize);
+            _BufferContainer.Initialize();
+
+            //核心连接池的预创建
+            _SocketAsynPool = new SocketAsyncEventArgsPool(Config.MaxConnectCount);
+
+            for (int i = 0; i < Config.MaxConnectCount; i++)
+            {
+                var socketAsyn = new SocketAsyncEventArgs();
+                socketAsyn.Completed += AsynCompleted;
+                _SocketAsynPool.Push(socketAsyn);
+            }
+
+            Accept();
+
+            _logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
+            _logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
+            _logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
+            _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
         }
 
-        private KnifeSocketProtocolHandler[] GetHandle()
+        public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily, params KnifeSocketProtocolHandler[] handlers)
         {
-            return _Handlers;
-        }
-
-        private KnifeSocketProtocolFamily GetFamily()
-        {
-            return _Family;
-        }
-
-        private KnifeSocketCodec GetCodec()
-        {
-            return _Codec;
+            base.Bind(codec, protocolFamily, handlers);
+            foreach (var handler in handlers)
+            {
+                handler.Bind(WirteProtocol);
+                handler.Bind(WirteBase);
+            }
         }
 
         #region 释放( IDisposable )
@@ -170,7 +152,7 @@ namespace SocketKnife
         /// </summary>
         private bool _IsDisposed;
 
-        public override ISocketServerConfig Config
+        public override ISocketConfig Config
         {
             get { return _Config; }
         }
@@ -212,58 +194,6 @@ namespace SocketKnife
         }
 
         #endregion
-
-        #endregion
-
-        #region 构造函数,初始化
-
-        [Inject]
-        public KnifeSocketServer(KnifeSocketSessionMap sessionMap, KnifeSocketFilterChain filterChain)
-        {
-            _SessionMap = sessionMap;
-            _FilterChain = filterChain;
-            _MainAutoReset = new AutoResetEvent(false);
-        }
-
-        protected virtual void Initialize()
-        {
-            if (_IsDisposed)
-                throw new ObjectDisposedException(GetType().FullName + " is Disposed");
-            _IsClose = false;
-
-            var ipEndPoint = new IPEndPoint(_IpAddress, _Port);
-            _MainSocket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            _MainSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
-            _MainSocket.Bind(ipEndPoint);
-            _MainSocket.ReceiveBufferSize = Config.MaxBufferSize;
-            _MainSocket.SendBufferSize = Config.MaxBufferSize;
-
-            //挂起连接队列的最大长度。
-            _MainSocket.Listen(64);
-
-            Config.SendTimeout = 1000;
-            Config.ReceiveTimeout = 1000;
-
-            _BufferContainer = new BufferContainer(Config.MaxConnectCount*Config.MaxBufferSize, Config.MaxBufferSize);
-            _BufferContainer.Initialize();
-
-            //核心连接池的预创建
-            _SocketAsynPool = new SocketAsyncEventArgsPool(Config.MaxConnectCount);
-
-            for (int i = 0; i < Config.MaxConnectCount; i++)
-            {
-                var socketAsyn = new SocketAsyncEventArgs();
-                socketAsyn.Completed += AsynCompleted;
-                _SocketAsynPool.Push(socketAsyn);
-            }
-
-            Accept();
-
-            _logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
-            _logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
-            _logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
-            _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
-        }
 
         #endregion
 
@@ -385,7 +315,7 @@ namespace SocketKnife
             }
         }
 
-        private void RemoveSession(SocketAsyncEventArgs e)
+        protected virtual void RemoveSession(SocketAsyncEventArgs e)
         {
             _logger.Trace(() => string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
             if (!e.AcceptSocket.Connected)

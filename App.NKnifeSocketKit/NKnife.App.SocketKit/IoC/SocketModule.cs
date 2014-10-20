@@ -12,7 +12,7 @@ namespace NKnife.App.SocketKit.IoC
         public override void Load()
         {
             Bind<ServerList>().ToSelf().InSingletonScope();
-            Bind<KnifeSocketServerBase>().To<KnifeSocketServer>();
+            Bind<TunnelBase>().To<KnifeSocketServer>();
 
             Bind<KnifeSocketProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
             Bind<KnifeSocketProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();

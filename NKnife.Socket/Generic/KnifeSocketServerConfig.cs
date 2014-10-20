@@ -3,7 +3,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketServerConfig : Dictionary<string, object>, ISocketServerConfig
+    public class KnifeSocketServerConfig : Dictionary<string, object>, ISocketConfig
     {
         public void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int readBufferSize)
         {

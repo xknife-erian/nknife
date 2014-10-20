@@ -36,7 +36,5 @@ namespace NKnife.Protocol
         ///     Tags:内容较大的数据,一般为可序列化的对象
         /// </summary>
         List<object> Tags { get; set; }
-
-        IProtocolContent<T> NewInstance();
     }
 }
