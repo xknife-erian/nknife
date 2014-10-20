@@ -2,23 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using NKnife.Protocol;
-using SocketKnife.Generic.Protocols;
 
-namespace SocketKnife.Generic.Families
+namespace SocketKnife.Generic
 {
     /// <summary>
     ///     协议族
     /// </summary>
     [Serializable]
-    public class KnifeProtocolFamily : IProtocolFamily
+    public class KnifeSocketProtocolFamily : IProtocolFamily<string>
     {
-        protected Dictionary<string, IProtocol> _Map = new Dictionary<string, IProtocol>();
+        protected Dictionary<string, KnifeSocketProtocol> _Map = new Dictionary<string, KnifeSocketProtocol>();
 
-        public KnifeProtocolFamily()
+        public KnifeSocketProtocolFamily()
         {
         }
 
-        public KnifeProtocolFamily(string name)
+        public KnifeSocketProtocolFamily(string name)
         {
             Family = name;
         }
@@ -31,16 +30,16 @@ namespace SocketKnife.Generic.Families
 
         public KnifeSocketProtocol this[string command]
         {
-            get { return _Map[command] as KnifeSocketProtocol; }
+            get { return _Map[command]; }
             set { _Map[command] = value; }
         }
 
-        void IProtocolFamily.Add(IProtocol protocol)
+        void IProtocolFamily<string>.Add(IProtocol<string> protocol)
         {
             Add((KnifeSocketProtocol) protocol);
         }
 
-        IProtocol IProtocolFamily.NewProtocol(string command)
+        IProtocol<string> IProtocolFamily<string>.NewProtocol(string command)
         {
             return NewProtocol(command);
         }
@@ -50,12 +49,12 @@ namespace SocketKnife.Generic.Families
             return _Map.GetEnumerator();
         }
 
-        IEnumerator<KeyValuePair<string, IProtocol>> IEnumerable<KeyValuePair<string, IProtocol>>.GetEnumerator()
+        IEnumerator<KeyValuePair<string, IProtocol<string>>> IEnumerable<KeyValuePair<string, IProtocol<string>>>.GetEnumerator()
         {
-            return _Map.GetEnumerator();
+            return (IEnumerator<KeyValuePair<string, IProtocol<string>>>) GetEnumerator();
         }
 
-        void ICollection<KeyValuePair<string, IProtocol>>.Add(KeyValuePair<string, IProtocol> item)
+        void ICollection<KeyValuePair<string, IProtocol<string>>>.Add(KeyValuePair<string, IProtocol<string>> item)
         {
             Add(item.Key, (KnifeSocketProtocol) item.Value);
         }
@@ -65,14 +64,13 @@ namespace SocketKnife.Generic.Families
             _Map.Clear();
         }
 
-        bool ICollection<KeyValuePair<string, IProtocol>>.Contains(KeyValuePair<string, IProtocol> item)
+        bool ICollection<KeyValuePair<string, IProtocol<string>>>.Contains(KeyValuePair<string, IProtocol<string>> item)
         {
-            return _Map.ContainsKey(item.Key) && _Map.ContainsValue(item.Value);
+            return _Map.ContainsKey(item.Key) && _Map.ContainsValue((KnifeSocketProtocol) item.Value);
         }
 
-        void ICollection<KeyValuePair<string, IProtocol>>.CopyTo(KeyValuePair<string, IProtocol>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<string, IProtocol<string>>>.CopyTo(KeyValuePair<string, IProtocol<string>>[] array, int arrayIndex)
         {
-            ((IDictionary<string, IProtocol>) _Map).CopyTo(array, arrayIndex);
         }
 
         public bool Remove(string command)
@@ -80,7 +78,7 @@ namespace SocketKnife.Generic.Families
             return _Map.Remove(command);
         }
 
-        bool ICollection<KeyValuePair<string, IProtocol>>.Remove(KeyValuePair<string, IProtocol> item)
+        bool ICollection<KeyValuePair<string, IProtocol<string>>>.Remove(KeyValuePair<string, IProtocol<string>> item)
         {
             return Remove(item.Key);
         }
@@ -92,7 +90,7 @@ namespace SocketKnife.Generic.Families
 
         public bool IsReadOnly
         {
-            get { return ((IDictionary<string, IProtocol>) _Map).IsReadOnly; }
+            get { return ((IDictionary<string, KnifeSocketProtocol>)_Map).IsReadOnly; }
         }
 
         public bool ContainsKey(string key)
@@ -100,30 +98,37 @@ namespace SocketKnife.Generic.Families
             return _Map.ContainsKey(key);
         }
 
-        void IDictionary<string, IProtocol>.Add(string key, IProtocol value)
+        void IDictionary<string, IProtocol<string>>.Add(string key, IProtocol<string> value)
         {
             Add(key, (KnifeSocketProtocol) value);
         }
 
-        bool IDictionary<string, IProtocol>.TryGetValue(string key, out IProtocol value)
+        bool IDictionary<string, IProtocol<string>>.TryGetValue(string key, out IProtocol<string> value)
         {
-            return _Map.TryGetValue(key, out value);
+            KnifeSocketProtocol protocol;
+            if (_Map.TryGetValue(key, out protocol))
+            {
+                value = protocol;
+                return true;
+            }
+            value = null;
+            return false;
         }
 
-        IProtocol IDictionary<string, IProtocol>.this[string key]
+        IProtocol<string> IDictionary<string, IProtocol<string>>.this[string key]
         {
             get { return this[key]; }
             set { this[key] = (KnifeSocketProtocol) value; }
         }
 
-        ICollection<string> IDictionary<string, IProtocol>.Keys
+        ICollection<string> IDictionary<string, IProtocol<string>>.Keys
         {
             get { return _Map.Keys; }
         }
 
-        ICollection<IProtocol> IDictionary<string, IProtocol>.Values
+        ICollection<IProtocol<string>> IDictionary<string, IProtocol<string>>.Values
         {
-            get { return _Map.Values; }
+            get { return null; }
         }
 
         public void Add(KnifeSocketProtocol protocol)
@@ -133,7 +138,7 @@ namespace SocketKnife.Generic.Families
 
         public KnifeSocketProtocol NewProtocol(string command)
         {
-            return _Map[command].NewInstance() as KnifeSocketProtocol;
+            return _Map[command].NewInstance();
         }
 
         public void Add(string key, KnifeSocketProtocol value)
@@ -148,14 +153,7 @@ namespace SocketKnife.Generic.Families
 
         public bool TryGetValue(string key, out KnifeSocketProtocol value)
         {
-            IProtocol protocol;
-            if (_Map.TryGetValue(key, out protocol))
-            {
-                value = (KnifeSocketProtocol) protocol;
-                return true;
-            }
-            value = null;
-            return false;
+            return _Map.TryGetValue(key, out value);
         }
     }
 }

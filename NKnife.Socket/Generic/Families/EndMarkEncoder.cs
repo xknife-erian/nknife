@@ -8,11 +8,11 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器,以“ö”结尾，防止粘包
     /// </summary>
-    public class EndMarkEncode : IDatagramEncoder
+    public class EndMarkEncode : KnifeSocketDatagramEncoder
     {
         private static readonly byte[] _tail = Encoding.UTF8.GetBytes("ö");
 
-        public byte[] Execute(string replay)
+        public override byte[] Execute(string replay)
         {
             byte[] content = Encoding.UTF8.GetBytes(replay);
 

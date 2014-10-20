@@ -8,11 +8,11 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个最常用的 字符数组 => 字符串 转换器。
     /// </summary>
-    public class DatagramDecoder : IDatagramDecoder
+    public class DatagramDecoder : KnifeSocketDatagramDecoder
     {
         #region IDatagramDecoder Members
 
-        public string[] Execute(byte[] data, out int done)
+        public override string[] Execute(byte[] data, out int done)
         {
             done = data.Length;
             string[] result;

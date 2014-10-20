@@ -14,15 +14,5 @@ namespace NKnife.Tunnel
         TSource Source { get; set; }
 
         TConnector Connector { get; set; }
-
-        Object TryGetAttribute(Object key, Object defaultValue);
-
-        void SetAttribute(Object key, Object value);
-
-        Object GetAttribute(Object key);
-
-        bool RemoveAttribute(Object key);
-
-        bool ContainsAttribute(Object key);
     }
 }

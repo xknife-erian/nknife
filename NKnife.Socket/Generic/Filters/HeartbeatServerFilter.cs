@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
 using System.Timers;
 using NKnife.Adapters;
-using NKnife.Events;
 using NKnife.Interface;
-using NKnife.Protocol;
-using NKnife.Tunnel;
-using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Events;
-using SocketKnife.Generic.Families;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
     public class HeartbeatServerFilter : KnifeSocketServerFilter
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
-
         private const string WAIT = "WAIT";
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         protected bool _ContinueNextFilter = true;
         private bool _IsTimerStarted;
 
@@ -53,14 +46,14 @@ namespace SocketKnife.Generic.Filters
             KnifeSocketSessionMap map = _SessionMapGetter.Invoke();
 
             var list = new List<EndPoint>(0);
-            foreach (KeyValuePair<EndPoint, ISocketSession> pair in map)
+            foreach (KeyValuePair<EndPoint, KnifeSocketSession> pair in map)
             {
                 EndPoint endpoint = pair.Key;
-                ISocketSession session = pair.Value;
-                if (!((bool)session.GetAttribute(WAIT))) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
+                KnifeSocketSession session = pair.Value;
+                if (!(session.WaitingForReply)) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
                 {
                     handler.Write(session, Heartbeat.BeatingOfServerHeart);
-                    session.SetAttribute(WAIT, true); //在PrcoessReceiveData方法里，当收到回复时会回写为false
+                    session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
                 }
                 else
                 {
@@ -90,11 +83,10 @@ namespace SocketKnife.Generic.Filters
         {
             if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
             {
-                session.SetAttribute(WAIT, false);
+                session.WaitingForReply = false;
                 _ContinueNextFilter = false;
                 _logger.Trace(() => string.Format("收到{0}心跳回复.", session.Source));
             }
         }
-
     }
 }

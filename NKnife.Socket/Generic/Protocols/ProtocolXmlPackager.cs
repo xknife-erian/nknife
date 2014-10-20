@@ -16,7 +16,7 @@ namespace SocketKnife.Generic.Protocols
     /// <summary>
     /// 描述一个将协议内容按指定的格式组装成一个指定类型(一般是字符串，但也可以是任何，如文件)
     /// </summary>
-    public class ProtocolXmlPackager : IProtocolPackager
+    public class ProtocolXmlPackager : KnifeSocketProtocolPackager
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -26,7 +26,7 @@ namespace SocketKnife.Generic.Protocols
         /// 当前IProtocolPackage实现类型的版本。
         /// </summary>
         /// <value>The version.</value>
-        public short Version
+        public override short Version
         {
             get { return 1; }
         }
@@ -36,7 +36,7 @@ namespace SocketKnife.Generic.Protocols
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns></returns>
-        public string Combine(IProtocolContent content)
+        public override string Combine(KnifeSocketProtocolContent content)
         {
             using (var stream = new MemoryStream())
             {
@@ -64,7 +64,7 @@ namespace SocketKnife.Generic.Protocols
 
         #endregion
 
-        protected virtual void WriteInformation(IProtocolContent content, XmlWriter writer)
+        protected virtual void WriteInformation(KnifeSocketProtocolContent content, XmlWriter writer)
         {
             // Infomations:固定数据，按协议规定的必须每次携带的数据。
             if (content.Infomations.Count > 0)
@@ -78,7 +78,7 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
-        protected virtual void WriteTags(IProtocolContent content, XmlWriter writer)
+        protected virtual void WriteTags(KnifeSocketProtocolContent content, XmlWriter writer)
         {
             // Datas,Tags,Infomations均属于协议的内容。
             // Tags:内容较大的数据，如序列化的对象等。
@@ -118,7 +118,7 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
-        protected virtual void WriteDatas(IProtocolContent content, XmlWriter writer)
+        protected virtual void WriteDatas(KnifeSocketProtocolContent content, XmlWriter writer)
         {
             // Datas,Tags,Infomations均属于协议的内容。
             // Datas:一般的简单数据，（一般较短）。
@@ -133,7 +133,7 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
-        protected virtual void WriteRoot(IProtocolContent content, XmlWriter writer)
+        protected virtual void WriteRoot(KnifeSocketProtocolContent content, XmlWriter writer)
         {
             writer.WriteStartElement(content.Command);
             //协议版本号

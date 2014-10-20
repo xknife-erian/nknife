@@ -20,6 +20,10 @@ namespace NKnife.App.SocketKit.Demo
             _SocketMessages = socketMessages;
         }
 
+        public override void Recevied(ISocketSession session, byte[] data)
+        {
+        }
+
         public override void Recevied(ISocketSession session, IProtocol protocol)
         {
             var msg = new SocketMessage();

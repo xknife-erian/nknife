@@ -10,7 +10,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FixedTailDecoder : IDatagramDecoder
+    public class FixedTailDecoder : KnifeSocketDatagramDecoder
     {
         private static readonly byte[] _tail = Encoding.Default.GetBytes("\r\n");
 
@@ -24,7 +24,7 @@ namespace SocketKnife.Generic.Families
             return Encoding.Default.GetString(data, index, count);
         }
 
-        public string[] Execute(byte[] data, out int done)
+        public override string[] Execute(byte[] data, out int done)
         {
             done = data.Length;
             var index = data.IndexOf(_tail);

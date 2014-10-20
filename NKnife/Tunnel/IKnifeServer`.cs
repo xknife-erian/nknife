@@ -6,7 +6,7 @@ namespace NKnife.Tunnel
 {
     public interface IKnifeServer<TSource, TConnector, TCommand> : IDisposable
     {
-        void Bind(ITunnelCodec<TCommand> codec, IProtocolFamily protocolFamily, IProtocolHandler<TSource, TConnector> handler);
+        void Bind(ITunnelCodec<TCommand> codec, IProtocolFamily<TCommand> protocolFamily, IProtocolHandler<TSource, TConnector, TCommand> handler);
         ITunnelConfig Config { get; }
         void AddFilter(ITunnelFilter<TSource, TConnector, TCommand> filter);
         bool Start();

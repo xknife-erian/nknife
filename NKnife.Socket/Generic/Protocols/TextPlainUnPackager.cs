@@ -5,14 +5,14 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Protocols
 {
-    public class TextPlainUnPackager : IProtocolUnPackager
+    public class TextPlainUnPackager : KnifeSocketProtocolUnPackager
     {
-        public short Version
+        public override short Version
         {
             get { return 1; }
         }
 
-        public void Execute(ref IProtocolContent content, string data, string family, string command)
+        public override void Execute(KnifeSocketProtocolContent content, string data, string family, string command)
         {
             string[] array = data.Split(new[] {'|', '#', '@'}, StringSplitOptions.RemoveEmptyEntries);
             content.Command = command;

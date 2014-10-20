@@ -2,19 +2,13 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using NKnife.Adapters;
 using NKnife.Events;
 using NKnife.Interface;
-using NKnife.Protocol;
-using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using NKnife.Utility;
 using SocketKnife.Common;
-using SocketKnife.Events;
-using SocketKnife.Generic.Families;
-using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
@@ -24,9 +18,16 @@ namespace SocketKnife.Generic.Filters
 
         protected bool _ContinueNextFilter = true;
 
-        protected override void OnBoundGetter(Func<KnifeProtocolFamily> familyGetter, Func<KnifeSocketProtocolHandler> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter, Func<KnifeSocketCodec> codecGetter)
+        public override bool ContinueNextFilter
         {
-            var map = sessionMapGetter.Invoke();
+            get { return _ContinueNextFilter; }
+        }
+
+        protected override void OnBoundGetter(Func<KnifeSocketProtocolFamily> familyGetter,
+            Func<KnifeSocketProtocolHandler> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter,
+            Func<KnifeSocketCodec> codecGetter)
+        {
+            KnifeSocketSessionMap map = sessionMapGetter.Invoke();
             map.Removed += SessionMap_OnRemoved;
         }
 
@@ -59,11 +60,6 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override bool ContinueNextFilter
-        {
-            get { return _ContinueNextFilter; }
-        }
-
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
             EndPoint endPoint = session.Source;
@@ -80,8 +76,11 @@ namespace SocketKnife.Generic.Filters
 
         #region 数据处理
 
-        private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors = new ConcurrentDictionary<EndPoint, DataMonitor>();
-        private readonly ConcurrentDictionary<EndPoint, ReceiveQueue> _ReceiveQueueMap = new ConcurrentDictionary<EndPoint, ReceiveQueue>();
+        private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors =
+            new ConcurrentDictionary<EndPoint, DataMonitor>();
+
+        private readonly ConcurrentDictionary<EndPoint, ReceiveQueue> _ReceiveQueueMap =
+            new ConcurrentDictionary<EndPoint, ReceiveQueue>();
 
         protected virtual void InitializeDataMonitor(KeyValuePair<EndPoint, ReceiveQueue> pair)
         {
@@ -145,25 +144,26 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void DataDecoder(EndPoint endpoint, byte[] data, out int done)
         {
-            KnifeProtocolFamily family = _FamilyGetter.Invoke();
+            KnifeSocketProtocolFamily family = _FamilyGetter.Invoke();
             KnifeSocketCodec codec = _CodecGetter.Invoke();
-            string[] datagram = codec.Decoder.Execute(data, out done);
+            string[] datagram = codec.SocketDecoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _logger.Debug("协议消息无内容。");
                 return;
             }
-            var protocols = ProtocolParse(family, datagram);
-            foreach (var protocol in protocols)
+            IEnumerable<KnifeSocketProtocol> protocols = ProtocolParse(family, datagram);
+            foreach (KnifeSocketProtocol protocol in protocols)
             {
                 // 触发数据基础解析后发生的数据到达事件
                 HandlerInvoke(endpoint, protocol);
             }
         }
 
-        protected virtual IEnumerable<IProtocol> ProtocolParse(IProtocolFamily family, string[] datagram)
+        protected virtual IEnumerable<KnifeSocketProtocol> ProtocolParse(KnifeSocketProtocolFamily family,
+            string[] datagram)
         {
-            var protocols = new List<IProtocol>(datagram.Length);
+            var protocols = new List<KnifeSocketProtocol>(datagram.Length);
             foreach (string dg in datagram)
             {
                 if (string.IsNullOrWhiteSpace(dg)) continue;
@@ -178,7 +178,7 @@ namespace SocketKnife.Generic.Filters
                     continue;
                 }
                 _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
-                IProtocol protocol = family.NewProtocol(command);
+                KnifeSocketProtocol protocol = family.NewProtocol(command);
                 try
                 {
                     protocol.Parse(dg);
@@ -194,9 +194,9 @@ namespace SocketKnife.Generic.Filters
         }
 
         /// <summary>
-        /// // 触发数据基础解析后发生的数据到达事件
+        ///     // 触发数据基础解析后发生的数据到达事件
         /// </summary>
-        protected virtual void HandlerInvoke(EndPoint endpoint, IProtocol protocol)
+        protected virtual void HandlerInvoke(EndPoint endpoint, KnifeSocketProtocol protocol)
         {
             KnifeSocketProtocolHandler handler = _HandlerGetter.Invoke();
             KnifeSocketSessionMap sessionMap = _SessionMapGetter.Invoke();

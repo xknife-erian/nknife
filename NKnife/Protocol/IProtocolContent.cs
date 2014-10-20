@@ -8,18 +8,18 @@ namespace NKnife.Protocol
     ///     Infomations:固定数据，按协议规定的必须每次携带的数据
     ///     Tags:内容较大的数据,一般为可序列化的对象
     /// </summary>
-    public interface IProtocolContent
+    public interface IProtocolContent<T>
     {
         /// <summary>
         ///     协议命令字
         /// </summary>
-        string Command { get; set; }
+        T Command { get; set; }
 
         /// <summary>
         ///     协议命令字参数
         /// </summary>
         /// <value>The command param.</value>
-        string CommandParam { get; set; }
+        T CommandParam { get; set; }
 
         /// <summary>
         ///     获取协议的固定数据
@@ -27,7 +27,7 @@ namespace NKnife.Protocol
         ///     Infomations:固定数据，按协议规定的必须每次携带的数据
         ///     Tags:内容较大的数据,一般为可序列化的对象
         /// </summary>
-        Dictionary<string, string> Infomations { get; }
+        Dictionary<string, T> Infomations { get; }
 
         /// <summary>
         ///     获取协议的大数据
@@ -37,6 +37,6 @@ namespace NKnife.Protocol
         /// </summary>
         List<object> Tags { get; set; }
 
-        IProtocolContent NewInstance();
+        IProtocolContent<T> NewInstance();
     }
 }

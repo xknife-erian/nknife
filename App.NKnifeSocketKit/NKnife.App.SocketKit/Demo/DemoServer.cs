@@ -66,7 +66,7 @@ namespace NKnife.App.SocketKit.Demo
             }
         }
 
-        private KnifeProtocolFamily GetProtocolFamily()
+        private KnifeSocketProtocolFamily GetProtocolFamily()
         {
             var getTicket = DI.Get<GetTicket>();
             var call = DI.Get<Call>();
@@ -78,7 +78,7 @@ namespace NKnife.App.SocketKit.Demo
             register.Packager = new ProtocolXmlPackager();
             register.UnPackager = new ProtocolDataTableDeserializeUnPackager();
 
-            var family = DI.Get<KnifeProtocolFamily>();
+            var family = DI.Get<KnifeSocketProtocolFamily>();
 
             family.Add(getTicket);
             family.Add(call);

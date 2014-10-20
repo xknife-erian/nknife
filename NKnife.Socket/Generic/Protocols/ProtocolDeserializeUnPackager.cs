@@ -18,7 +18,7 @@ namespace SocketKnife.Generic.Protocols
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        protected override void ParseTags(IProtocolContent content, XmlElement tagsElement)
+        protected override void ParseTags(KnifeSocketProtocolContent content, XmlElement tagsElement)
         {
             content.Tags = new List<object>();
             foreach (XmlNode node in tagsElement.ChildNodes)

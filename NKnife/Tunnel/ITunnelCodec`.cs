@@ -8,7 +8,7 @@ namespace NKnife.Tunnel
     public interface ITunnelCodec<T>
     {
         IDatagramCommandParser<T> CommandParser { get; set; }
-        IDatagramDecoder Decoder { get; set; }
-        IDatagramEncoder Encoder { get; set; }
+        IDatagramDecoder<T> Decoder { get; set; }
+        IDatagramEncoder<T> Encoder { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace NKnife.Protocol
 {
-    public interface IProtocolFamily : IDictionary<string, IProtocol>
+    public interface IProtocolFamily<T> : IDictionary<string, IProtocol<T>>
     {
-        void Add(IProtocol protocol);
+        void Add(IProtocol<T> protocol);
 
-        IProtocol NewProtocol(string command);
+        IProtocol<T> NewProtocol(T command);
     }
 }

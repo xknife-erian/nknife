@@ -6,17 +6,13 @@ using System.Net.Sockets;
 using System.Threading;
 using Ninject;
 using NKnife.Adapters;
-using NKnife.Events;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.Protocol;
-using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Events;
 using SocketKnife.Exceptions;
 using SocketKnife.Generic;
-using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
@@ -35,6 +31,8 @@ namespace SocketKnife
         /// </summary>
         private BufferContainer _BufferContainer;
 
+        private bool _IsClose = true;
+
         /// <summary>
         ///     Socket对象
         /// </summary>
@@ -45,21 +43,18 @@ namespace SocketKnife
         /// </summary>
         private SocketAsyncEventArgsPool _SocketAsynPool;
 
-        private bool _IsClose = true;
-
         #endregion
 
         #region ISocketServerKnife 接口实现
 
+        protected KnifeSocketCodec _Codec;
+        protected KnifeSocketServerConfig _Config = new KnifeSocketServerConfig();
+        protected KnifeSocketProtocolFamily _Family;
+        protected KnifeSocketFilterChain _FilterChain;
+        protected KnifeSocketProtocolHandler _Handler;
         private IPAddress _IpAddress;
         private int _Port;
-
-        protected KnifeSocketCodec _Codec;
-        protected KnifeSocketProtocolHandler _Handler;
-        protected KnifeSocketFilterChain _FilterChain;
-        protected KnifeProtocolFamily _Family;
         protected KnifeSocketSessionMap _SessionMap;
-        protected KnifeSocketServerConfig _Config = new KnifeSocketServerConfig();
 
         public override void Configure(IPAddress ipAddress, int port)
         {
@@ -73,7 +68,8 @@ namespace SocketKnife
             _FilterChain.AddLast(filter);
         }
 
-        public override void Bind(KnifeSocketCodec codec, KnifeProtocolFamily protocolFamily, KnifeSocketProtocolHandler handler)
+        public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily,
+            KnifeSocketProtocolHandler handler)
         {
             _Family = protocolFamily;
             _Handler = handler;
@@ -143,6 +139,26 @@ namespace SocketKnife
             }
         }
 
+        private KnifeSocketSessionMap GetSessionMap()
+        {
+            return _SessionMap;
+        }
+
+        private KnifeSocketProtocolHandler GetHandle()
+        {
+            return _Handler;
+        }
+
+        private KnifeSocketProtocolFamily GetFamily()
+        {
+            return _Family;
+        }
+
+        private KnifeSocketCodec GetCodec()
+        {
+            return _Codec;
+        }
+
         #region 释放( IDisposable )
 
         /// <summary>
@@ -192,26 +208,6 @@ namespace SocketKnife
         }
 
         #endregion
-
-        private KnifeSocketSessionMap GetSessionMap()
-        {
-            return _SessionMap;
-        }
-
-        private KnifeSocketProtocolHandler GetHandle()
-        {
-            return _Handler;
-        }
-
-        private KnifeProtocolFamily GetFamily()
-        {
-            return _Family;
-        }
-
-        private KnifeSocketCodec GetCodec()
-        {
-            return _Codec;
-        }
 
         #endregion
 
@@ -328,7 +324,7 @@ namespace SocketKnife
                                 session.Connector = e.AcceptSocket;
                                 _SessionMap.Add(iep, session);
                                 _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count));
-                                foreach (var filter in _FilterChain)
+                                foreach (KnifeSocketServerFilter filter in _FilterChain)
                                 {
                                     filter.OnClientCome(new SocketSessionEventArgs(session));
                                 }
@@ -426,9 +422,9 @@ namespace SocketKnife
 
             foreach (KnifeSocketServerFilter filter in _FilterChain)
             {
-                var endPoint = e.AcceptSocket.RemoteEndPoint;
-                filter.OnDataFetched(new DataFetchedEventArgs<EndPoint>(endPoint, data));// 触发数据到达事件
-                var session = _SessionMap[endPoint];
+                EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
+                filter.OnDataFetched(new DataFetchedEventArgs<EndPoint>(endPoint, data)); // 触发数据到达事件
+                KnifeSocketSession session = _SessionMap[endPoint];
                 filter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
                 if (!filter.ContinueNextFilter)
                     break;
@@ -460,7 +456,7 @@ namespace SocketKnife
             try
             {
                 socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-                _logger.Trace(()=>string.Format("Server.Send:{0}", data.ToHexString()));
+                _logger.Trace(() => string.Format("Server.Send:{0}", data.ToHexString()));
             }
             catch
             {
@@ -468,12 +464,12 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void WirteProtocol(ISocketSession session, IProtocol protocol)
+        protected virtual void WirteProtocol(ISocketSession session, KnifeSocketProtocol protocol)
         {
             string replay = protocol.Generate();
-            byte[] data = _Codec.Encoder.Execute(replay);
+            byte[] data = _Codec.SocketEncoder.Execute(replay);
             WirteBase(session, data);
-            _logger.Trace(string.Format("Server.Send:{0}", replay));
+            _logger.Trace(() => string.Format("Server.Send:{0}", replay));
         }
 
         #endregion

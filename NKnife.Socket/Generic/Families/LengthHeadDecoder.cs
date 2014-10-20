@@ -12,7 +12,7 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个最常用的 字符数组 => 字符串 转换器。
     /// </summary>
-    public class LengthHeadDecoder : IDatagramDecoder
+    public class LengthHeadDecoder : KnifeSocketDatagramDecoder
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -32,7 +32,7 @@ namespace SocketKnife.Generic.Families
         /// <param name="data">需解码的字节数组.</param>
         /// <param name="done">已完成解码的数组的长度.</param>
         /// <returns></returns>
-        public string[] Execute(byte[] data, out int done)
+        public override string[] Execute(byte[] data, out int done)
         {
             done = 0;
             var results = new List<string>();

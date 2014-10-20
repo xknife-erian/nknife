@@ -11,7 +11,7 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器
     /// </summary>
-    public class Byte4Encoder : IDatagramEncoder
+    public class Byte4Encoder : KnifeSocketDatagramEncoder
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -19,7 +19,7 @@ namespace SocketKnife.Generic.Families
 
         public bool EnabelCompress { get; set; }
 
-        public byte[] Execute(string replay)
+        public override byte[] Execute(string replay)
         {
             if (string.IsNullOrWhiteSpace(replay))
             {

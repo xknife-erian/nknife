@@ -40,6 +40,6 @@ namespace SocketKnife
     /// <summary>
     ///     接收到的数据解析完成后事件
     /// </summary>
-    public delegate void ReceiveDataParsedEventHandler(ReceiveDataParsedEventArgs e, EndPoint endPoint);
+    public delegate void ReceiveDataParsedEventHandler(ReceiveDataParsedEventArgs<string> e, EndPoint endPoint);
 
 }

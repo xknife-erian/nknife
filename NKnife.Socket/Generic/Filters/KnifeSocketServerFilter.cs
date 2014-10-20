@@ -12,7 +12,7 @@ namespace SocketKnife.Generic.Filters
 {
     public abstract class KnifeSocketServerFilter : ISocketServerFilter
     {
-        protected Func<KnifeProtocolFamily> _FamilyGetter;
+        protected Func<KnifeSocketProtocolFamily> _FamilyGetter;
         protected Func<KnifeSocketProtocolHandler> _HandlerGetter;
         protected Func<KnifeSocketSessionMap> _SessionMapGetter;
         protected Func<KnifeSocketCodec> _CodecGetter;
@@ -39,7 +39,7 @@ namespace SocketKnife.Generic.Filters
         public event EventHandler<ConnectionBreakEventArgs<EndPoint>> ClientBroke;
 
         public virtual void Bind(
-            Func<KnifeProtocolFamily> familyGetter,
+            Func<KnifeSocketProtocolFamily> familyGetter,
             Func<KnifeSocketProtocolHandler> handlerGetter,
             Func<KnifeSocketSessionMap> sessionMapGetter,
             Func<KnifeSocketCodec> codecFunc)
@@ -51,7 +51,7 @@ namespace SocketKnife.Generic.Filters
             OnBoundGetter(_FamilyGetter, _HandlerGetter, _SessionMapGetter, _CodecGetter);
         }
 
-        protected virtual void OnBoundGetter(Func<KnifeProtocolFamily> familyGetter, Func<KnifeSocketProtocolHandler> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter, Func<KnifeSocketCodec> codecGetter)
+        protected virtual void OnBoundGetter(Func<KnifeSocketProtocolFamily> familyGetter, Func<KnifeSocketProtocolHandler> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter, Func<KnifeSocketCodec> codecGetter)
         {
         }
 

@@ -1,62 +1,60 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using NKnife.IoC;
 using NKnife.Protocol;
 using NKnife.Tunnel;
-using SocketKnife.Interfaces;
+using SocketKnife.Generic.Protocols;
 
 namespace SocketKnife.Generic
 {
-    public abstract class KnifeSocketProtocolHandler : IProtocolHandler<EndPoint, Socket>
+    public abstract class KnifeSocketProtocolHandler : IProtocolHandler<EndPoint, Socket, string>
     {
-        protected Action<ISocketSession, byte[]> _WriteBaseMethod;
-        protected Action<ISocketSession, IProtocol> _WriteProtocolMethod;
-
-        ITunnelSessionMap<EndPoint, Socket> IProtocolHandler<EndPoint, Socket>.SessionMap
-        {
-            get { return SessionMap; }
-            set { SessionMap = (KnifeSocketSessionMap)value; }
-        }
-
-        void IProtocolHandler<EndPoint, Socket>.Recevied(ITunnelSession<EndPoint, Socket> session, IProtocol protocol)
-        {
-            Recevied((ISocketSession)session, protocol);
-        }
-
-        void IProtocolHandler<EndPoint, Socket>.Write(ITunnelSession<EndPoint, Socket> session, byte[] data)
-        {
-            Write((ISocketSession)session, data);
-        }
-
-        void IProtocolHandler<EndPoint, Socket>.Write(ITunnelSession<EndPoint, Socket> session, IProtocol data)
-        {
-            Write((ISocketSession)session, data);
-        }
-
+        protected Action<KnifeSocketSession, byte[]> _WriteBaseMethod;
+        protected Action<KnifeSocketSession, KnifeSocketProtocol> _WriteProtocolMethod;
         public KnifeSocketSessionMap SessionMap { get; set; }
 
-        public virtual void Bind(Action<ISocketSession, byte[]> sendMethod)
+        ITunnelSessionMap<EndPoint, Socket> IProtocolHandler<EndPoint, Socket, string>.SessionMap
+        {
+            get { return SessionMap; }
+            set { SessionMap = (KnifeSocketSessionMap) value; }
+        }
+
+        void IProtocolHandler<EndPoint, Socket, string>.Recevied(ITunnelSession<EndPoint, Socket> session, IProtocol<string> protocol)
+        {
+            Recevied((KnifeSocketSession) session, (KnifeSocketProtocol) protocol);
+        }
+
+        void IProtocolHandler<EndPoint, Socket, string>.Write(ITunnelSession<EndPoint, Socket> session, byte[] data)
+        {
+            Write((KnifeSocketSession) session, data);
+        }
+
+        void IProtocolHandler<EndPoint, Socket, string>.Write(ITunnelSession<EndPoint, Socket> session, IProtocol<string> data)
+        {
+            Write((KnifeSocketSession) session, (KnifeSocketProtocol) data);
+        }
+
+        public virtual void Bind(Action<KnifeSocketSession, byte[]> sendMethod)
         {
             _WriteBaseMethod = sendMethod;
         }
 
-        public virtual void Bind(Action<ISocketSession, IProtocol> sendMethod)
+        public virtual void Bind(Action<KnifeSocketSession, KnifeSocketProtocol> sendMethod)
         {
             _WriteProtocolMethod = sendMethod;
         }
 
-        public abstract void Recevied(ISocketSession session, IProtocol protocol);
+        public abstract void Recevied(KnifeSocketSession session, byte[] data);
+        public abstract void Recevied(KnifeSocketSession session, KnifeSocketProtocol protocol);
 
-        public virtual void Write(ISocketSession session, byte[] data)
+        public virtual void Write(KnifeSocketSession session, byte[] data)
         {
             _WriteBaseMethod.Invoke(session, data);
         }
 
-        public virtual void Write(ISocketSession session, IProtocol data)
+        public virtual void Write(KnifeSocketSession session, KnifeSocketProtocol data)
         {
             _WriteProtocolMethod.Invoke(session, data);
         }
-
     }
 }

@@ -155,13 +155,13 @@
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
     <Compile Include="Tunnel\Events\ReceiveDataParsedEventArgs.cs" />
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />
-    <Compile Include="Tunnel\IDatagramCommandParser.cs" />
+    <Compile Include="Tunnel\IDatagramCommandParser`.cs" />
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />
-    <Compile Include="Tunnel\IKnifeServer.cs" />
+    <Compile Include="Tunnel\IKnifeServer`.cs" />
     <Compile Include="Tunnel\ITunnelConfig.cs" />
     <Compile Include="Tunnel\ITunnelFilterChain`.cs" />
-    <Compile Include="Tunnel\ITunnelCodec.cs" />
+    <Compile Include="Tunnel\ITunnelCodec`.cs" />
     <Compile Include="Tunnel\ITunnelFilter`.cs" />
     <Compile Include="Tunnel\ITunnelSession.cs" />
     <Compile Include="Tunnel\ITunnelSessionMap.cs" />

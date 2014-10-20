@@ -9,7 +9,7 @@ using NKnife.Tunnel;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketProtocolHandler : IProtocolHandler<EndPoint, Socket>
+    public interface ISocketProtocolHandler : IProtocolHandler<EndPoint, Socket, string>
     {
     }
 }

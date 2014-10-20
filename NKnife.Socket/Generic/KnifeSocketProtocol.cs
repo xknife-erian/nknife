@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.IoC;
 using NKnife.Protocol;
-using SocketKnife.Interfaces;
+using SocketKnife.Generic.Protocols;
 
-namespace SocketKnife.Generic.Protocols
+namespace SocketKnife.Generic
 {
     /// <summary>协议的抽象实现
     /// </summary>
-    public class KnifeSocketProtocol : IProtocol
+    public class KnifeSocketProtocol : IProtocol<string>
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -37,15 +34,15 @@ namespace SocketKnife.Generic.Protocols
         public string Command { get; set; }
 
         [Inject]
-        public IProtocolPackager Packager { get; set; }
+        public IProtocolPackager<string> Packager { get; set; }
 
         [Inject]
-        public IProtocolUnPackager UnPackager { get; set; }
+        public IProtocolUnPackager<string> UnPackager { get; set; }
 
         /// <summary>协议的具体内容的容器
         /// </summary>
         [Inject]
-        IProtocolContent IProtocol.Content
+        IProtocolContent<string> IProtocol<string>.Content
         {
             get { return Content; }
             set { Content = (KnifeSocketProtocolContent) value; }
@@ -77,7 +74,7 @@ namespace SocketKnife.Generic.Protocols
             }
             try
             {
-                IProtocolContent c = Content;
+                IProtocolContent<string> c = Content;
                 UnPackager.Execute(ref c, datagram, Family, Command);
             }
             catch (Exception e)
@@ -95,7 +92,7 @@ namespace SocketKnife.Generic.Protocols
             return p;
         }
 
-        IProtocol IProtocol.NewInstance()
+        IProtocol<string> IProtocol<string>.NewInstance()
         {
             return NewInstance();
         }

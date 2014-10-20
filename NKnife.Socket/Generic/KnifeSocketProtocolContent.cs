@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Text;
 using NKnife.Protocol;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Protocols
+namespace SocketKnife.Generic
 {
     /// <summary>
     ///     一个协议的具体内容。其中：
@@ -14,7 +12,7 @@ namespace SocketKnife.Generic.Protocols
     ///     Tags:内容较大的数据，如序列化的对象等。
     ///     Infomations:固定数据，按协议规定的必须每次携带的数据。
     /// </summary>
-    public class KnifeSocketProtocolContent : IProtocolContent
+    public class KnifeSocketProtocolContent : IProtocolContent<string>
     {
         public KnifeSocketProtocolContent()
         {
@@ -52,7 +50,7 @@ namespace SocketKnife.Generic.Protocols
             return pc;
         }
 
-        IProtocolContent IProtocolContent.NewInstance()
+        IProtocolContent<string> IProtocolContent<string>.NewInstance()
         {
             return NewInstance();
         }

@@ -15,7 +15,7 @@ namespace SocketKnife.Interfaces
     public interface ISocketServerFilter : ITunnelFilter<EndPoint, Socket, string>
     {
         void Bind(
-            Func<KnifeProtocolFamily> familyGetter,
+            Func<KnifeSocketProtocolFamily> familyGetter,
             Func<KnifeSocketProtocolHandler> handlerGetter,
             Func<KnifeSocketSessionMap> sessionMapGetter,
             Func<KnifeSocketCodec> codecFunc 

@@ -7,9 +7,9 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FixedTailEncoder : IDatagramEncoder
+    public class FixedTailEncoder : KnifeSocketDatagramEncoder
     {
-        public byte[] Execute(string replay)
+        public override byte[] Execute(string replay)
         {
             throw new NotImplementedException();
         }

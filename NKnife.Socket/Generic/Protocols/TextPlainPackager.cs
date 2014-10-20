@@ -7,12 +7,12 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Protocols
 {
-    public class TextPlainPackager : IProtocolPackager
+    public class TextPlainPackager : KnifeSocketProtocolPackager
     {
-        public short Version {
+        public override short Version {
             get { return 1; }
         }
-        public string Combine(IProtocolContent c)
+        public override string Combine(KnifeSocketProtocolContent c)
         {
             var command = string.Format("{0}|{1}|", c.Command, c.CommandParam);
             var sb = new StringBuilder(command);
