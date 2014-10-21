@@ -37,11 +37,23 @@ namespace NKnife.App.SocketKit.Dialogs
 
         public IPAddress IpAddress { get; private set; }
         public int Port { get; private set; }
+        public int ReceiveBufferSize { get; set; }
+        public int MaxBufferSize { get; set; }
+        public int MaxConnectCount { get; set; }
+        public int ReceiveTimeout { get; set; }
+        public int SendTimeout { get; set; }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
             IpAddress = (IPAddress) _LocalIpBox.SelectedItem;
             Port = int.Parse(_PortTextBox.Text);
+
+            ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);
+            MaxBufferSize = int.Parse(_MaxBufferSizeTextBox.Text);
+            MaxConnectCount = int.Parse(_MaxConnectCountTextBox.Text);
+            ReceiveTimeout = int.Parse(_ReceiveTimeoutTextBox.Text);
+            SendTimeout = int.Parse(_SendTimeoutTextBox.Text);
+
             DialogResult = true;
             Close();
         }

@@ -20,7 +20,12 @@ namespace NKnife.App.SocketKit.Mvvm.Views
 
         public IPAddress IpAddress { get; set; }
         public int Port { get; set; }
-
+        public int ReceiveBufferSize { get; set; }
+        public int SendBufferSize { get; set; }
+        public int MaxBufferSize { get; set; }
+        public int MaxConnectCount { get; set; }
+        public int ReceiveTimeout { get; set; }
+        public int SendTimeout { get; set; }
 
         public TcpServerView()
         {
@@ -31,7 +36,7 @@ namespace NKnife.App.SocketKit.Mvvm.Views
         }
         private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)
         {
-            //TODO:想在这里尝试做一下最后一列的自适应宽度
+            //TODO:想在这里尝试做一下最后一列的自适应宽度,未成功
         }
 
         private void Start(object sender, RoutedEventArgs e)
@@ -52,6 +57,7 @@ namespace NKnife.App.SocketKit.Mvvm.Views
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
         {
+            _ViewModel.Config(ReceiveBufferSize, SendBufferSize, MaxBufferSize, MaxConnectCount, ReceiveTimeout, SendTimeout);
             _ViewModel.Initialize(IpAddress, Port);
         }
 

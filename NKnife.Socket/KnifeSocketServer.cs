@@ -112,14 +112,13 @@ namespace SocketKnife
             _MainSocket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _MainSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
             _MainSocket.Bind(ipEndPoint);
-            _MainSocket.ReceiveBufferSize = Config.MaxBufferSize;
-            _MainSocket.SendBufferSize = Config.MaxBufferSize;
+            _MainSocket.ReceiveBufferSize = Config.ReceiveBufferSize;
+            _MainSocket.SendBufferSize = Config.SendBufferSize;
+            _MainSocket.SendTimeout = Config.SendTimeout;
+            _MainSocket.ReceiveTimeout = Config.ReceiveTimeout;
 
             //挂起连接队列的最大长度。
-            _MainSocket.Listen(64);
-
-            Config.SendTimeout = 1000;
-            Config.ReceiveTimeout = 1000;
+            _MainSocket.Listen(Config.MaxConnectCount);
 
             _BufferContainer = new BufferContainer(Config.MaxConnectCount*Config.MaxBufferSize, Config.MaxBufferSize);
             _BufferContainer.Initialize();

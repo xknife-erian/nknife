@@ -122,7 +122,7 @@ namespace SocketKnife
                 SendTimeout = Config.SendTimeout,
                 ReceiveTimeout = Config.ReceiveTimeout,
                 SendBufferSize = Config.MaxBufferSize,
-                ReceiveBufferSize = Config.ReadBufferSize
+                ReceiveBufferSize = Config.ReceiveBufferSize
             };
             return socket;
         }
@@ -217,7 +217,7 @@ namespace SocketKnife
                         clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Break, ConnectionStatus.Normal));
                     }
 
-                    var data = new byte[Config.ReadBufferSize];
+                    var data = new byte[Config.ReceiveBufferSize];
                     e.SetBuffer(data, 0, data.Length); //设置数据包
 
                     if (!_Socket.ReceiveAsync(e)) //开始读取数据包

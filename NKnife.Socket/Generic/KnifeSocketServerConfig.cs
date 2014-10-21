@@ -4,22 +4,33 @@ namespace SocketKnife.Generic
 {
     public class KnifeSocketServerConfig : KnifeSocketConfig, ISocketServerConfig
     {
-        public void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int readBufferSize)
+        public void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int receiveBufferSize, int sendBufferSize)
         {
-            ReadBufferSize = readBufferSize;
+            ReceiveBufferSize = receiveBufferSize;
+            SendBufferSize = sendBufferSize;
             MaxBufferSize = maxBufferSize;
             MaxConnectCount = maxConnectCount;
             ReceiveTimeout = receiveTimeout;
             SendTimeout = sendTimeout;
         }
 
-        public virtual int ReadBufferSize
+        public virtual int ReceiveBufferSize
         {
             get { return int.Parse(_Map["ReadBufferSize"].ToString()); }
             set
             {
                 _Map["ReadBufferSize"] = value;
-                RaisePropertyChanged(() => ReadBufferSize);
+                RaisePropertyChanged(() => ReceiveBufferSize);
+            }
+        }
+
+        public int SendBufferSize
+        {
+            get { return int.Parse(_Map["SendBufferSize"].ToString()); }
+            set
+            {
+                _Map["SendBufferSize"] = value;
+                RaisePropertyChanged(() => ReceiveBufferSize);
             }
         }
 

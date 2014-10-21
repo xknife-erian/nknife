@@ -4,9 +4,10 @@ namespace SocketKnife.Interfaces
 {
     public interface ISocketServerConfig : ITunnelConfig
     {
-        void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int readBufferSize);
+        void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int receiveBufferSize, int sendBufferSize);
 
-        int ReadBufferSize { get; set; }
+        int ReceiveBufferSize { get; set; }
+        int SendBufferSize { get; set; }
 
         /// <summary>
         ///     接收包大小

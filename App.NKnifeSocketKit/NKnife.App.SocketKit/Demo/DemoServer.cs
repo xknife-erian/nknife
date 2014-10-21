@@ -26,10 +26,27 @@ namespace NKnife.App.SocketKit.Demo
         #endregion
 
         private IKnifeSocketServer _Server;
+        private int _ReceiveBufferSize;
+        private int _SendBufferSize;
+        private int _MaxBufferSize;
+        private int _MaxConnectCount;
+        private int _ReceiveTimeout;
+        private int _SendTimeout;
+
 
         public DemoServer()
         {
             SocketMessages = new AsyncObservableCollection<SocketMessage>();
+        }
+
+        public void Config(int receiveBufferSize, int sendBufferSize, int maxBufferSize, int maxConnectCount, int receiveTimeout, int sendTimeout)
+        {
+            _ReceiveBufferSize = receiveBufferSize;
+            _SendBufferSize = sendBufferSize;
+            _MaxBufferSize = maxBufferSize;
+            _MaxConnectCount = maxConnectCount;
+            _ReceiveTimeout = receiveTimeout;
+            _SendTimeout = sendTimeout;
         }
 
         public void Initialize(IPAddress ipAddress, int port)
@@ -37,7 +54,7 @@ namespace NKnife.App.SocketKit.Demo
             Pair<IPAddress, int> key = Pair<IPAddress, int>.Build(ipAddress, port);
 
             var config = DI.Get<KnifeSocketServerConfig>();
-            config.Initialize(1000, 1000, 1024 * 10, 32, 1024 * 10);
+            config.Initialize(_ReceiveTimeout, _SendBufferSize, _SendTimeout, _MaxBufferSize, _MaxConnectCount, _ReceiveBufferSize);
 
             var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
             heartbeatServerFilter.Interval = 1000*5;
@@ -89,5 +106,6 @@ namespace NKnife.App.SocketKit.Demo
         {
             _Server.Stop();
         }
+
     }
 }
