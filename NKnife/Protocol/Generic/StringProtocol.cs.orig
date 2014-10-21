@@ -14,10 +14,10 @@ namespace NKnife.Protocol.Generic
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         [Inject]
-        public virtual StringProtocolPacker Packer { get; set; }
+        public virtual StringProtocolPacker SocketPacker { get; set; }
 
         [Inject]
-        public virtual StringProtocolUnPacker UnPacker { get; set; }
+        public virtual StringProtocolUnPacker SocketUnPacker { get; set; }
 
         [Inject]
         public StringProtocolContent Content { get; set; }
@@ -43,14 +43,14 @@ namespace NKnife.Protocol.Generic
 
         IProtocolPacker<string> IProtocol<string>.Packer
         {
-            get { return Packer; }
-            set { Packer = (StringProtocolPacker) value; }
+            get { return SocketPacker; }
+            set { SocketPacker = (StringProtocolPacker) value; }
         }
 
         IProtocolUnPacker<string> IProtocol<string>.UnPacker
         {
-            get { return UnPacker; }
-            set { UnPacker = (StringProtocolUnPacker) value; }
+            get { return SocketUnPacker; }
+            set { SocketUnPacker = (StringProtocolUnPacker) value; }
         }
 
         /// <summary>协议的具体内容的容器
@@ -68,7 +68,7 @@ namespace NKnife.Protocol.Generic
         public string Generate()
         {
             if (Content != null)
-                return Packer.Combine(Content);
+                return SocketPacker.Combine(Content);
             return string.Empty;
         }
 
@@ -86,7 +86,7 @@ namespace NKnife.Protocol.Generic
             try
             {
                 StringProtocolContent c = Content;
-                UnPacker.Execute(c, datagram, Family, Command);
+                SocketUnPacker.Execute(c, datagram, Family, Command);
             }
             catch (Exception e)
             {
