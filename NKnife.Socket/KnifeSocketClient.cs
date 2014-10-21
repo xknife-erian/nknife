@@ -119,10 +119,10 @@ namespace SocketKnife
         {
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
             {
-//                SendTimeout = Option.Timeout,
-//                ReceiveTimeout = Option.Timeout,
-//                SendBufferSize = Option.BufferSize,
-//                ReceiveBufferSize = Option.BufferSize
+                SendTimeout = Config.SendTimeout,
+                ReceiveTimeout = Config.ReceiveTimeout,
+                SendBufferSize = Config.MaxBufferSize,
+                ReceiveBufferSize = Config.ReadBufferSize
             };
             return socket;
         }
@@ -171,7 +171,9 @@ namespace SocketKnife
                 var e = new SocketAsyncEventArgs { RemoteEndPoint = ipPoint };
                 e.Completed += CompletedEvent;
                 if (_ConnectionCount > 0)
+                {
                     _Socket = BuildSocket();
+                }
                 if (!_Socket.ConnectAsync(e))
                 {
                     CompletedEvent(this, e);
