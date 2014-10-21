@@ -204,7 +204,7 @@ namespace SocketKnife.Generic.Filters
         /// </summary>
         protected virtual void HandlerInvoke(EndPoint endpoint, StringProtocol protocol)
         {
-            KnifeSocketServerProtocolHandler[] handlers = _HandlersGetter.Invoke();
+            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSessionMap sessionMap = SessionMapGetter.Invoke();
             KnifeSocketSession session;
             if (!sessionMap.TryGetValue(endpoint, out session))
@@ -224,7 +224,7 @@ namespace SocketKnife.Generic.Filters
                 }
                 else
                 {
-                    foreach (KnifeSocketServerProtocolHandler handler in handlers)
+                    foreach (KnifeSocketProtocolHandler handler in handlers)
                     {
                         if (handler.Commands.Contains(protocol.Command))
                             handler.Recevied(session, protocol);

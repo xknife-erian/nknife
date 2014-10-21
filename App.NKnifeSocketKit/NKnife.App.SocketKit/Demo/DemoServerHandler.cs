@@ -20,6 +20,8 @@ namespace NKnife.App.SocketKit.Demo
             _SocketMessages = socketMessages;
         }
 
+        public override KnifeSocketSessionMap SessionMap { get; set; }
+
         public override List<string> Commands { get; set; }
 
         public override void Recevied(KnifeSocketSession session, StringProtocol protocol)
@@ -32,5 +34,6 @@ namespace NKnife.App.SocketKit.Demo
             _SocketMessages.Insert(0, msg);
             _logger.Info("新消息解析完成" + msg.Message);
         }
+
     }
 }

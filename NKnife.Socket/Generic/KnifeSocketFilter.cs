@@ -12,7 +12,7 @@ namespace SocketKnife.Generic
     public abstract class KnifeSocketFilter : ISocketFilter
     {
         protected Func<StringProtocolFamily> _FamilyGetter;
-        protected Func<KnifeSocketServerProtocolHandler[]> _HandlersGetter;
+        protected Func<KnifeSocketProtocolHandler[]> _HandlersGetter;
         protected Func<KnifeSocketCodec> _CodecGetter;
 
         public abstract bool ContinueNextFilter { get; }
@@ -26,7 +26,7 @@ namespace SocketKnife.Generic
 
         public event EventHandler<DataDecodedEventArgs<EndPoint>> DataDecoded;
 
-        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<KnifeSocketServerProtocolHandler[]> handlerGetter, Func<StringProtocolFamily> familyGetter)
+        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<KnifeSocketProtocolHandler[]> handlerGetter, Func<StringProtocolFamily> familyGetter)
         {
             _FamilyGetter = familyGetter;
             _HandlersGetter = handlerGetter;

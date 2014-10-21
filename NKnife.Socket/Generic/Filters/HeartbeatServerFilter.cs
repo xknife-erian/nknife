@@ -42,7 +42,7 @@ namespace SocketKnife.Generic.Filters
 
         private void BeatingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            KnifeSocketServerProtocolHandler[] handlers = _HandlersGetter.Invoke();
+            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSessionMap map = SessionMapGetter.Invoke();
 
             var list = new List<EndPoint>(0);

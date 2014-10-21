@@ -79,6 +79,7 @@
     <Compile Include="Generic\KnifeSocketCodec.cs" />
     <Compile Include="Generic\KnifeSocketDatagramDecoder.cs" />
     <Compile Include="Generic\KnifeSocketDatagramEncoder.cs" />
+    <Compile Include="Generic\KnifeSocketProtocolHandler.cs" />
     <Compile Include="Generic\KnifeSocketServerFilter.cs" />
     <Compile Include="Generic\TunnelBase.cs" />
     <Compile Include="Generic\KnifeSocketSession.cs" />

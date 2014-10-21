@@ -10,6 +10,7 @@ using NKnife.Events;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using NKnife.Utility;
@@ -97,12 +98,12 @@ namespace SocketKnife
 
         protected override void OnBound()
         {
-            foreach (KnifeSocketServerProtocolHandler handler in _Handlers)
+            foreach (KnifeSocketProtocolHandler handler in _Handlers)
             {
-                //TODO:
-//                handler.Bind(WirteProtocol);
-//                handler.Bind(WirteBase);
-//                handler.SessionMap = _SessionMap;
+                var clientHandler = (KnifeSocketClientProtocolHandler) handler;
+                clientHandler.Bind(WirteProtocol);
+                clientHandler.Bind(WirteBase);
+                clientHandler.Session = _SocketSession;
             }
         }
 
@@ -144,7 +145,7 @@ namespace SocketKnife
 
         #region 重点方法
 
-        private void AsyncConnect(IPAddress ipAddress, int port)
+        protected virtual void AsyncConnect(IPAddress ipAddress, int port)
         {
             var ipPoint = new IPEndPoint(ipAddress, port);
             try
@@ -295,22 +296,21 @@ namespace SocketKnife
 
         //**************************************************
 
-        /// <summary>
-        ///     发送数据包
-        /// </summary>
-        /// <param name="data"></param>
-        public bool Wirite(string data)
+        protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
         {
-            byte[] senddata = _Codec.SocketEncoder.Execute(data);
+            byte[] senddata = _Codec.SocketEncoder.Execute(protocol.Generate());
+            WirteBase(session, senddata);
+        }
+
+        protected virtual void WirteBase(KnifeSocketSession session, byte[] data)
+        {
             var e = new SocketAsyncEventArgs();
-            e.SetBuffer(senddata, 0, senddata.Length);
-            bool isSuceess = false;
+            e.SetBuffer(data, 0, data.Length);
             if (_Socket != null)
             {
-                isSuceess = _Socket.SendAsync(e);
+                bool isSuceess = _Socket.SendAsync(e);
                 _logger.Trace(() => string.Format("Send:{0},\r\n{1}", data, isSuceess));
             }
-            return isSuceess;
         }
 
         #endregion

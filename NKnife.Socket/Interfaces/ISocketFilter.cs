@@ -16,7 +16,7 @@ namespace SocketKnife.Interfaces
     {
         void BindGetter(
             Func<KnifeSocketCodec> codecFunc, 
-            Func<KnifeSocketServerProtocolHandler[]> handlersGetter, 
+            Func<KnifeSocketProtocolHandler[]> handlersGetter, 
             Func<StringProtocolFamily> familyGetter);
     }
 }

@@ -144,11 +144,12 @@ namespace SocketKnife
 
         protected override void OnBound()
         {
-            foreach (KnifeSocketServerProtocolHandler handler in _Handlers)
+            foreach (KnifeSocketProtocolHandler handler in _Handlers)
             {
-                handler.Bind(WirteProtocol);
-                handler.Bind(WirteBase);
-                handler.SessionMap = _SessionMap;
+                var serverHandler = (KnifeSocketServerProtocolHandler) handler;
+                serverHandler.Bind(WirteProtocol);
+                serverHandler.Bind(WirteBase);
+                serverHandler.SessionMap = _SessionMap;
             }
         }
 

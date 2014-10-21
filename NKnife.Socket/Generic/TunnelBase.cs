@@ -16,7 +16,7 @@ namespace SocketKnife.Generic
         protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
         protected KnifeSocketCodec _Codec;
         protected StringProtocolFamily _Family;
-        protected KnifeSocketServerProtocolHandler[] _Handlers;
+        protected KnifeSocketProtocolHandler[] _Handlers;
 
         protected IPAddress _IpAddress;
         protected int _Port;
@@ -28,10 +28,10 @@ namespace SocketKnife.Generic
         void ITunnel<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec, IProtocolFamily<string> protocolFamily,
             params IProtocolHandler<EndPoint, Socket, string>[] handlers)
         {
-            var hs = new KnifeSocketServerProtocolHandler[handlers.Length];
+            var hs = new KnifeSocketProtocolHandler[handlers.Length];
             for (int i = 0; i < handlers.Length; i++)
             {
-                hs[i] = (KnifeSocketServerProtocolHandler) handlers[i];
+                hs[i] = (KnifeSocketProtocolHandler) handlers[i];
             }
             Bind((KnifeSocketCodec) codec, (StringProtocolFamily) protocolFamily, hs);
         }
@@ -68,7 +68,7 @@ namespace SocketKnife.Generic
         }
 
         public virtual void Bind(KnifeSocketCodec codec, StringProtocolFamily protocolFamily,
-            params KnifeSocketServerProtocolHandler[] handlers)
+            params KnifeSocketProtocolHandler[] handlers)
         {
             _Codec = codec;
             _Family = protocolFamily;
