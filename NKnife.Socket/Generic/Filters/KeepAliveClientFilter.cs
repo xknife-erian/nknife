@@ -104,7 +104,7 @@ namespace SocketKnife.Generic.Filters
             {
                 if (string.IsNullOrWhiteSpace(dg))
                     continue;
-                string command = codec.SocketCommandParser.GetCommand(dg);
+                string command = _FamilyGetter.Invoke().CommandParser.GetCommand(dg);
                 StringProtocol protocol = _FamilyGetter.Invoke().NewProtocol(command);
                 string dgByLog = dg;
                 _logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));

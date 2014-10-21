@@ -68,11 +68,12 @@ namespace NKnife.App.SocketKit.Demo
             var register = DI.Get<Register>();
 
             var family = DI.Get<StringProtocolFamily>();
+            family.Family = "socket-kit";
 
-            family.Add(StringProtocol.Build("socket-kit", "call"));
-            family.Add(StringProtocol.Build("socket-kit", "recall"));
-            family.Add(StringProtocol.Build("socket-kit", "sing"));
-            family.Add(StringProtocol.Build("socket-kit", "dance"));
+            family.Add(family.Build("call"));
+            family.Add(family.Build("recall"));
+            family.Add(family.Build("sing"));
+            family.Add(family.Build("dance"));
             family.Add(register);
 
             return family;

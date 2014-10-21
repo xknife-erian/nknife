@@ -142,6 +142,8 @@
     <Compile Include="NIo\NoDotNetAssemblyFiles.cs" />
     <Compile Include="NIo\TextFileEncoding.cs" />
     <Compile Include="NIo\UtilityFile.cs" />
+    <Compile Include="Protocol\Generic\CommandParsers\DatagramCommandParser.cs" />
+    <Compile Include="Protocol\Generic\CommandParsers\FirstFieldCommandParser.cs" />
     <Compile Include="Protocol\Generic\Packers\XmlProtocolDataTableDeserializeUnPacker.cs" />
     <Compile Include="Protocol\Generic\Packers\XmlProtocolDeserializeUnPacker.cs" />
     <Compile Include="Protocol\Generic\Packers\XmlProtocolPacker.cs" />
@@ -160,11 +162,12 @@
     <Compile Include="Protocol\IProtocolPacker`.cs" />
     <Compile Include="Protocol\IProtocolUnPacker`.cs" />
     <Compile Include="Protocol\ProtocolExtension.cs" />
+    <Compile Include="Protocol\Generic\StringProtocolCommandParser.cs" />
     <Compile Include="Tunnel\Events\ConnectionBreakEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataDecodedEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />
-    <Compile Include="Tunnel\IDatagramCommandParser`.cs" />
+    <Compile Include="Protocol\IProtocolCommandParser.cs" />
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />
     <Compile Include="Tunnel\IKnifeClient`.cs" />

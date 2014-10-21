@@ -62,11 +62,9 @@
     <Compile Include="Common\Heartbeat.cs" />
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
-    <Compile Include="Generic\Families\FirstFieldCommandParser.cs" />
     <Compile Include="Generic\Families\FixedTailEncoder.cs" />
     <Compile Include="Generic\Families\LengthHeadDecoder.cs" />
     <Compile Include="Generic\Families\Byte4Encoder.cs" />
-    <Compile Include="Generic\Families\DatagramCommandParser.cs" />
     <Compile Include="Generic\Families\DatagramDecoder.cs" />
     <Compile Include="Generic\Families\DatagramEncoder.cs" />
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
@@ -75,7 +73,6 @@
     <Compile Include="Generic\KnifeSocketClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientFilterChain.cs" />
     <Compile Include="Generic\KnifeSocketClientProtocolHandler.cs" />
-    <Compile Include="Generic\KnifeSocketCommandParser.cs" />
     <Compile Include="Generic\KnifeSocketCodec.cs" />
     <Compile Include="Generic\KnifeSocketDatagramDecoder.cs" />
     <Compile Include="Generic\KnifeSocketDatagramEncoder.cs" />

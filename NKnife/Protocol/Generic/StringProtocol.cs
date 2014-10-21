@@ -96,7 +96,10 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocol NewInstance()
         {
-            return Build(Family, Command);
+            var protocol = DI.Get<StringProtocol>();
+            protocol.Family = Family;
+            protocol.Command = Command;
+            return protocol;
         }
 
         IProtocol<string> IProtocol<string>.NewInstance()
@@ -119,13 +122,5 @@ namespace NKnife.Protocol.Generic
         }
 
         #endregion
-
-        public static StringProtocol Build(string family, string command)
-        {
-            var protocol = DI.Get<StringProtocol>();
-            protocol.Family = family;
-            protocol.Command = command;
-            return protocol;
-        }
     }
 }

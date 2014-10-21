@@ -1,9 +1,9 @@
-﻿namespace NKnife.Tunnel
+﻿namespace NKnife.Protocol
 {
     /// <summary>
     /// 从原生消息体中获取命令字
     /// </summary>
-    public interface IDatagramCommandParser<T>
+    public interface IProtocolCommandParser<T>
     {
         /// <summary>从原生消息体中获取命令字
         /// </summary>

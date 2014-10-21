@@ -3,15 +3,13 @@ using System.IO;
 using System.Xml;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Tunnel;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Families
+namespace NKnife.Protocol.Generic.CommandParsers
 {
     /// <summary>
     /// 一个基本的从协议字符串中解析命令字的工具
     /// </summary>
-    public class DatagramCommandParser : KnifeSocketCommandParser
+    public class DatagramCommandParser : StringProtocolCommandParser
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         

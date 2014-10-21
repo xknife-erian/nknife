@@ -176,7 +176,7 @@ namespace SocketKnife.Generic.Filters
                 string command = "";
                 try
                 {
-                    command = _CodecGetter.Invoke().SocketCommandParser.GetCommand(dg);
+                    command = _FamilyGetter.Invoke().CommandParser.GetCommand(dg);
                 }
                 catch (Exception e)
                 {

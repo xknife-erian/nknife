@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Ninject;
+using NKnife.IoC;
 
 namespace NKnife.Protocol.Generic
 {
@@ -25,12 +29,21 @@ namespace NKnife.Protocol.Generic
         ///     协议族名称
         /// </summary>
         /// <value>The family.</value>
-        public string Family { get; private set; }
+        public string Family { get; set; }
+
+        [Inject]
+        public StringProtocolCommandParser CommandParser { get; set; }
 
         public StringProtocol this[string command]
         {
             get { return _Map[command]; }
             set { _Map[command] = value; }
+        }
+
+        IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
+        {
+            get { return CommandParser; }
+            set { CommandParser = (StringProtocolCommandParser) value; }
         }
 
         void IProtocolFamily<string>.Add(IProtocol<string> protocol)
@@ -68,8 +81,11 @@ namespace NKnife.Protocol.Generic
             return _Map.ContainsKey(item.Key) && _Map.ContainsValue((StringProtocol) item.Value);
         }
 
+        [Obsolete("效率不高，不建议使用. NKnife")]
         void ICollection<KeyValuePair<string, IProtocol<string>>>.CopyTo(KeyValuePair<string, IProtocol<string>>[] array, int arrayIndex)
         {
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            ((ICollection<KeyValuePair<string, IProtocol<string>>>)_Map).CopyTo(array, arrayIndex);
         }
 
         public bool Remove(string command)
@@ -125,9 +141,15 @@ namespace NKnife.Protocol.Generic
             get { return _Map.Keys; }
         }
 
+        [Obsolete("效率不高，不建议使用. NKnife")]
         ICollection<IProtocol<string>> IDictionary<string, IProtocol<string>>.Values
         {
-            get { return null; }
+            get
+            {
+                var list = new List<IProtocol<string>>(_Map.Count);
+                list.AddRange(_Map.Values);
+                return list;
+            }
         }
 
         public void Add(StringProtocol protocol)
@@ -153,6 +175,15 @@ namespace NKnife.Protocol.Generic
         public bool TryGetValue(string key, out StringProtocol value)
         {
             return _Map.TryGetValue(key, out value);
+        }
+
+        public StringProtocol Build(string command)
+        {
+            var protocol = DI.Get<StringProtocol>();
+            Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
+            protocol.Family = Family;
+            protocol.Command = command;
+            return protocol;
         }
     }
 }
