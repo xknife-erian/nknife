@@ -11,7 +11,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Protocols
 {
-    public class ProtocolXmlUnPackager : KnifeSocketProtocolUnPackager
+    public class ProtocolXmlUnPacker : KnifeSocketProtocolUnPacker
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

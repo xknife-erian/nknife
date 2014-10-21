@@ -5,7 +5,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Protocols
 {
-    public class TextPlainUnPackager : KnifeSocketProtocolUnPackager
+    public class TextPlainUnPacker : KnifeSocketProtocolUnPacker
     {
         public override short Version
         {

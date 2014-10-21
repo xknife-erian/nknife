@@ -13,8 +13,8 @@ namespace NKnife.App.SocketKit.IoC
         {
             Bind<ServerList>().ToSelf().InSingletonScope();
 
-            Bind<KnifeSocketProtocolPackager>().To<TextPlainPackager>().InSingletonScope();
-            Bind<KnifeSocketProtocolUnPackager>().To<TextPlainUnPackager>().InSingletonScope();
+            Bind<KnifeSocketProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
+            Bind<KnifeSocketProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
 
             Bind<KnifeSocketCommandParser>().To<FirstFieldCommandParser>().InSingletonScope();
             Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();

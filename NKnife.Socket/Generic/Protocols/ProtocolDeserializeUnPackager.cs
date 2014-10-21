@@ -14,7 +14,7 @@ namespace SocketKnife.Generic.Protocols
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>
-    public class ProtocolDeserializeUnPackager : ProtocolXmlUnPackager
+    public class ProtocolDeserializeUnPacker : ProtocolXmlUnPacker
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

@@ -12,7 +12,7 @@ namespace SocketKnife.Generic.Protocols
 {
     /// <summary>含有序列化对象(DataTable)的解析器
     /// </summary>
-    public class ProtocolDataTableDeserializeUnPackager : ProtocolXmlUnPackager
+    public class ProtocolDataTableDeserializeUnPacker : ProtocolXmlUnPacker
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 

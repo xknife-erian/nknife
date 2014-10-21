@@ -3,7 +3,7 @@
     /// <summary>
     /// 当通讯的一端接收到消息后，将消息进行处理的解析器
     /// </summary>
-    public interface IProtocolUnPackager<T>
+    public interface IProtocolUnPacker<T>
     {
         /// <summary>获取协议的版本号
         /// </summary>

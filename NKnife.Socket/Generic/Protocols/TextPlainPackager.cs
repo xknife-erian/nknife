@@ -7,7 +7,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Protocols
 {
-    public class TextPlainPackager : KnifeSocketProtocolPackager
+    public class TextPlainPacker : KnifeSocketProtocolPacker
     {
         public override short Version {
             get { return 1; }

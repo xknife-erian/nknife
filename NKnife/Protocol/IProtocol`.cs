@@ -14,8 +14,8 @@
         /// <value>The family.</value>
         string Family { get; set; }
 
-        IProtocolPackager<T> Packager { get; set; }
-        IProtocolUnPackager<T> UnPackager { get; set; }
+        IProtocolPacker<T> Packer { get; set; }
+        IProtocolUnPacker<T> UnPacker { get; set; }
 
         /// <summary>协议的具体内容.
         /// </summary>

@@ -11,9 +11,9 @@ namespace NKnife.App.SocketKit.Demo.Protocols
         }
 
         [Inject]
-        public override KnifeSocketProtocolPackager SocketPackager { get; set; }
+        public override KnifeSocketProtocolPacker SocketPacker { get; set; }
 
         [Inject]
-        public override KnifeSocketProtocolUnPackager SocketUnPackager { get; set; }
+        public override KnifeSocketProtocolUnPacker SocketUnPacker { get; set; }
     }
 }

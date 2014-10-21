@@ -16,10 +16,10 @@ namespace SocketKnife.Generic
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         [Inject]
-        public virtual KnifeSocketProtocolPackager SocketPackager { get; set; }
+        public virtual KnifeSocketProtocolPacker SocketPacker { get; set; }
 
         [Inject]
-        public virtual KnifeSocketProtocolUnPackager SocketUnPackager { get; set; }
+        public virtual KnifeSocketProtocolUnPacker SocketUnPacker { get; set; }
 
         [Inject]
         public KnifeSocketProtocolContent Content { get; set; }
@@ -43,16 +43,16 @@ namespace SocketKnife.Generic
 
         public string Command { get; set; }
 
-        IProtocolPackager<string> IProtocol<string>.Packager
+        IProtocolPacker<string> IProtocol<string>.Packer
         {
-            get { return SocketPackager; }
-            set { SocketPackager = (KnifeSocketProtocolPackager) value; }
+            get { return SocketPacker; }
+            set { SocketPacker = (KnifeSocketProtocolPacker) value; }
         }
 
-        IProtocolUnPackager<string> IProtocol<string>.UnPackager
+        IProtocolUnPacker<string> IProtocol<string>.UnPacker
         {
-            get { return SocketUnPackager; }
-            set { SocketUnPackager = (KnifeSocketProtocolUnPackager) value; }
+            get { return SocketUnPacker; }
+            set { SocketUnPacker = (KnifeSocketProtocolUnPacker) value; }
         }
 
         /// <summary>协议的具体内容的容器
@@ -70,7 +70,7 @@ namespace SocketKnife.Generic
         public string Generate()
         {
             if (Content != null)
-                return SocketPackager.Combine(Content);
+                return SocketPacker.Combine(Content);
             return string.Empty;
         }
 
@@ -88,7 +88,7 @@ namespace SocketKnife.Generic
             try
             {
                 KnifeSocketProtocolContent c = Content;
-                SocketUnPackager.Execute(c, datagram, Family, Command);
+                SocketUnPacker.Execute(c, datagram, Family, Command);
             }
             catch (Exception e)
             {
