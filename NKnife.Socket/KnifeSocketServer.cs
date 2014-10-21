@@ -27,6 +27,7 @@ namespace SocketKnife
         private bool _IsClose = true;
         private Socket _MainSocket;
         private SocketAsyncEventArgsPool _SocketAsynPool;
+        protected KnifeSocketSessionMap _SessionMap = DI.Get<KnifeSocketSessionMap>();
 
         #endregion
 
@@ -93,6 +94,13 @@ namespace SocketKnife
             }
         }
 
+        public override void AddFilter(KnifeSocketFilter filter)
+        {
+            base.AddFilter(filter);
+            var serverFilter = (KnifeSocketServerFilter) filter;
+            serverFilter.Bind(() => _SessionMap);
+        }
+
         protected virtual void Initialize()
         {
             if (_IsDisposed)
@@ -133,13 +141,13 @@ namespace SocketKnife
             _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
         }
 
-        public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily, params KnifeSocketProtocolHandler[] handlers)
+        protected override void OnBound()
         {
-            base.Bind(codec, protocolFamily, handlers);
-            foreach (KnifeSocketProtocolHandler handler in handlers)
+            foreach (KnifeSocketServerProtocolHandler handler in _Handlers)
             {
                 handler.Bind(WirteProtocol);
                 handler.Bind(WirteBase);
+                handler.SessionMap = _SessionMap;
             }
         }
 
@@ -366,6 +374,7 @@ namespace SocketKnife
                 var serverFilter = (KnifeSocketServerFilter) filter;
                 EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
                 serverFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
+
                 KnifeSocketSession session = _SessionMap[endPoint];
                 serverFilter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
                 if (!serverFilter.ContinueNextFilter)

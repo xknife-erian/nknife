@@ -9,8 +9,6 @@ namespace NKnife.Protocol
     {
         List<T> Commands { get; set; }
 
-        ITunnelSessionMap<TSource, TConnector> SessionMap { get; set; }
-
         void Recevied(ITunnelSession<TSource, TConnector> session, IProtocol<T> protocol);
 
         void Write(ITunnelSession<TSource, TConnector> session, byte[] data);

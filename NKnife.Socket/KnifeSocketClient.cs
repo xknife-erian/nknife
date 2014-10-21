@@ -27,11 +27,6 @@ namespace SocketKnife
         #region 成员变量
 
         /// <summary>
-        ///     接收的数据队列
-        /// </summary>
-        protected readonly ReceiveQueue _ReceiveQueue = new ReceiveQueue();
-
-        /// <summary>
         ///     释放等待线程
         /// </summary>
         protected AutoResetEvent _AutoReset;
@@ -44,14 +39,11 @@ namespace SocketKnife
         protected int _ConnectionCount;
 
         /// <summary>
-        ///     是否启动接收队列的监听
-        /// </summary>
-        protected bool _EnableReceiveQueueMonitor = true;
-
-        /// <summary>
         ///     SOCKET对象
         /// </summary>
         protected Socket _Socket;
+
+        protected KnifeSocketSession _SocketSession;
 
         protected bool _IsConnection;
 
@@ -103,37 +95,23 @@ namespace SocketKnife
             }
         }
 
-        #region Implementation of IDisposable
-
-        public override void Dispose()
+        protected override void OnBound()
         {
-            _EnableReceiveQueueMonitor = false;
-            Stop();
+            foreach (KnifeSocketServerProtocolHandler handler in _Handlers)
+            {
+                //TODO:
+//                handler.Bind(WirteProtocol);
+//                handler.Bind(WirteBase);
+//                handler.SessionMap = _SessionMap;
+            }
         }
 
-        protected override void SetFilterChain()
-        {
-            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Client");
-        }
-
-        #endregion
-
-        #endregion
-
-        #region 构造函数
-
-        /// <summary>
-        ///     初始化Sokcet对象相关
-        /// </summary>
         protected virtual void Initialize()
         {
             if (_Socket != null)
                 Stop();
             _Socket = BuildSocket();
             _AutoReset = new AutoResetEvent(false);
-
-            var thread = new Thread(ReceiveQueueMonitor);
-            thread.Start();
         }
 
         protected virtual Socket BuildSocket()
@@ -148,9 +126,23 @@ namespace SocketKnife
             return socket;
         }
 
+        protected override void SetFilterChain()
+        {
+            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Client");
+        }
+
+        #region Implementation of IDisposable
+
+        public override void Dispose()
+        {
+            Stop();
+        }
+
         #endregion
 
-        #region 内部方法
+        #endregion
+
+        #region 重点方法
 
         private void AsyncConnect(IPAddress ipAddress, int port)
         {
@@ -270,10 +262,15 @@ namespace SocketKnife
                 // 触发数据到达事件
                 foreach (var filter in _FilterChain)
                 {
+                    EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
+
                     var clientFilter = (KnifeSocketClientFilter)filter;
-                    clientFilter.OnDataFetched(new SocketDataFetchedEventArgs(e.RemoteEndPoint, data));
+                    clientFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data));
+                    clientFilter.PrcoessReceiveData(_SocketSession, data); // 调用filter对数据进行处理
+
+                    if (!clientFilter.ContinueNextFilter)
+                        break;
                 }
-                _ReceiveQueue.Enqueue(data);
             }
             catch (Exception ex)
             {
@@ -293,82 +290,7 @@ namespace SocketKnife
             }
         }
 
-        /// <summary>
-        ///     核心方法:监听 ReceiveQueue 队列
-        /// </summary>
-        protected virtual void ReceiveQueueMonitor()
-        {
-            _logger.Info("启动ReceiveQueue队列的监听。");
-            var nodone = new byte[] {};
-            while (_EnableReceiveQueueMonitor)
-            {
-                if (_ReceiveQueue.Count > 0)
-                {
-                    byte[] data = _ReceiveQueue.Dequeue();
-                    GetDataList(ref nodone, ref data);
-                }
-                else
-                {
-                    _ReceiveQueue.AutoResetEvent.WaitOne();
-                }
-            }
-        }
-
-        protected virtual void GetDataList(ref byte[] nodone, ref byte[] data)
-        {
-            if (!UtilityCollection.IsNullOrEmpty(nodone))
-            {
-                // 当有半包数据时，进行接包操作
-                int srcLen = data.Length;
-                var list = new List<byte>(data.Length + nodone.Length);
-                list.AddRange(nodone);
-                list.AddRange(data);
-                data = list.ToArray();
-                _logger.Trace(string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", nodone.Length, srcLen, data.Length));
-                nodone = new byte[] {};
-            }
-            int done;
-            DataProcessBase(null, data, out done);
-            if (data.Length > done)
-            {
-                // 暂存半包数据，留待下条队列数据接包使用
-                nodone = new byte[data.Length - done];
-                Buffer.BlockCopy(data, done, nodone, 0, nodone.Length);
-                _logger.Trace(string.Format("半包数据暂存,数据长度:{0}", nodone.Length));
-            }
-        }
-
-        /// <summary>
-        ///     处理协议数据
-        /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="data"></param>
-        /// <param name="done"></param>
-        protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
-        {
-            string[] datagram = _Codec.SocketDecoder.Execute(data, out done);
-            if (UtilityCollection.IsNullOrEmpty(datagram))
-                return;
-
-            foreach (string dg in datagram)
-            {
-                if (string.IsNullOrWhiteSpace(dg))
-                    continue;
-                string command = _Codec.SocketCommandParser.GetCommand(dg);
-                KnifeSocketProtocol protocol = _Family.NewProtocol(command);
-                string dgByLog = dg;
-                _logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
-                if (protocol != null)
-                {
-                    protocol.Parse(dg);
-                    // 触发数据基础解析后发生的数据到达事件
-                }
-            }
-        }
-
-        #endregion
-
-        #region Socket Client 重点方法
+        //**************************************************
 
         /// <summary>
         ///     异步发送数据

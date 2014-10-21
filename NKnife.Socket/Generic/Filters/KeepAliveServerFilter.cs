@@ -27,11 +27,9 @@ namespace SocketKnife.Generic.Filters
             get { return _ContinueNextFilter; }
         }
 
-        protected override void OnBoundGetter(Func<KnifeSocketProtocolFamily> familyGetter,
-            Func<KnifeSocketProtocolHandler[]> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter,
-            Func<KnifeSocketCodec> codecGetter)
+        protected override void OnBoundGetter()
         {
-            KnifeSocketSessionMap map = sessionMapGetter.Invoke();
+            KnifeSocketSessionMap map = SessionMapGetter.Invoke();
             map.Removed += SessionMap_OnRemoved;
         }
 
@@ -202,8 +200,8 @@ namespace SocketKnife.Generic.Filters
         /// </summary>
         protected virtual void HandlerInvoke(EndPoint endpoint, KnifeSocketProtocol protocol)
         {
-            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
-            KnifeSocketSessionMap sessionMap = _SessionMapGetter.Invoke();
+            KnifeSocketServerProtocolHandler[] handlers = _HandlersGetter.Invoke();
+            KnifeSocketSessionMap sessionMap = SessionMapGetter.Invoke();
             KnifeSocketSession session;
             if (!sessionMap.TryGetValue(endpoint, out session))
             {
@@ -222,7 +220,7 @@ namespace SocketKnife.Generic.Filters
                 }
                 else
                 {
-                    foreach (KnifeSocketProtocolHandler handler in handlers)
+                    foreach (KnifeSocketServerProtocolHandler handler in handlers)
                     {
                         if (handler.Commands.Contains(protocol.Command))
                             handler.Recevied(session, protocol);
