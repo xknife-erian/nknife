@@ -23,6 +23,7 @@ namespace SocketKnife.Generic
 
         public abstract ISocketConfig Config { get; set; }
         public abstract void Dispose();
+        protected abstract void SetFilterChain();
 
         void ITunnel<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec, IProtocolFamily<string> protocolFamily,
             params IProtocolHandler<EndPoint, Socket, string>[] handlers)
@@ -59,7 +60,11 @@ namespace SocketKnife.Generic
         public virtual void AddFilter(KnifeSocketFilter filter)
         {
             filter.Bind(GetFamily, GetHandle, GetSessionMap, GetCodec);
-            _FilterChain.AddLast(filter);
+
+            if (_FilterChain == null)
+                SetFilterChain();
+            if (_FilterChain != null) 
+                _FilterChain.AddLast(filter);
         }
 
         public virtual void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily,

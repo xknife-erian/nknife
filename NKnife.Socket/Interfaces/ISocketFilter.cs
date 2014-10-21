@@ -15,7 +15,7 @@ namespace SocketKnife.Interfaces
     {
         void Bind(
             Func<KnifeSocketProtocolFamily> familyGetter,
-            Func<KnifeSocketProtocolHandler[]> handlerGetter,
+            Func<KnifeSocketProtocolHandler[]> handlersGetter,
             Func<KnifeSocketSessionMap> sessionMapGetter,
             Func<KnifeSocketCodec> codecFunc 
             );

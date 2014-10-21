@@ -17,9 +17,9 @@ namespace SocketKnife.Generic
 
         public abstract bool ContinueNextFilter { get; }
 
-        void ITunnelFilter<EndPoint, Socket>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> socket, byte[] data)
+        void ITunnelFilter<EndPoint, Socket>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> session, byte[] data)
         {
-            PrcoessReceiveData((KnifeSocketSession) socket, data);
+            PrcoessReceiveData((KnifeSocketSession) session, data);
         }
 
         public event EventHandler<DataFetchedEventArgs<EndPoint>> DataFetched;
@@ -43,7 +43,7 @@ namespace SocketKnife.Generic
         {
         }
 
-        public abstract void PrcoessReceiveData(KnifeSocketSession socket, byte[] data);
+        public abstract void PrcoessReceiveData(KnifeSocketSession session, byte[] data);
 
         protected internal virtual void OnDataFetched(SocketDataFetchedEventArgs e)
         {

@@ -71,6 +71,7 @@
     <Compile Include="Generic\Families\DatagramEncoder.cs" />
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
     <Compile Include="Generic\Filters\HeartbeatServerFilter.cs" />
+    <Compile Include="Generic\Filters\KnifeSocketClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientFilterChain.cs" />
     <Compile Include="Generic\KnifeSocketCommandParser.cs" />

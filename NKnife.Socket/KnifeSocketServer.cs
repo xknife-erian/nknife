@@ -32,11 +32,6 @@ namespace SocketKnife
 
         #region ISocketServerKnife 接口实现
 
-        public KnifeSocketServer()
-        {
-            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Server");
-        }
-
         public override bool Start()
         {
             try
@@ -165,6 +160,11 @@ namespace SocketKnife
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected override void SetFilterChain()
+        {
+            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Server");
         }
 
         ~KnifeSocketServer()

@@ -8,7 +8,9 @@ using System.Threading;
 using NKnife.Adapters;
 using NKnife.Events;
 using NKnife.Interface;
+using NKnife.IoC;
 using NKnife.Protocol;
+using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using NKnife.Utility;
 using SocketKnife.Common;
@@ -107,6 +109,11 @@ namespace SocketKnife
         {
             _EnableReceiveQueueMonitor = false;
             Stop();
+        }
+
+        protected override void SetFilterChain()
+        {
+            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Client");
         }
 
         #endregion
