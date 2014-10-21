@@ -2,7 +2,7 @@ using NKnife.Tunnel;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketConfig : ITunnelConfig
+    public interface ISocketServerConfig : ITunnelConfig
     {
         void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int readBufferSize);
 

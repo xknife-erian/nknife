@@ -160,7 +160,7 @@ namespace SocketKnife
         /// </summary>
         private bool _IsDisposed;
 
-        public override ISocketConfig Config
+        public override ISocketServerConfig Config
         {
             get { return _Config; }
             set { _Config = (KnifeSocketServerConfig) value; }

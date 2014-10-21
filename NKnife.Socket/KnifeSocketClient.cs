@@ -52,7 +52,7 @@ namespace SocketKnife
 
         #region IKnifeSocketClient
 
-        public override ISocketConfig Config { get; set; }
+        public override ISocketServerConfig Config { get; set; }
 
         public override bool Start()
         {

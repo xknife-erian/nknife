@@ -21,7 +21,7 @@ namespace SocketKnife.Generic
         protected IPAddress _IpAddress;
         protected int _Port;
 
-        public abstract ISocketConfig Config { get; set; }
+        public abstract ISocketServerConfig Config { get; set; }
         public abstract void Dispose();
         protected abstract void SetFilterChain();
 
@@ -39,7 +39,7 @@ namespace SocketKnife.Generic
         ITunnelConfig ITunnel<EndPoint, Socket, string>.Config
         {
             get { return Config; }
-            set { Config = (ISocketConfig) value; }
+            set { Config = (ISocketServerConfig) value; }
         }
 
         void ITunnel<EndPoint, Socket, string>.AddFilter(ITunnelFilter<EndPoint, Socket> filter)

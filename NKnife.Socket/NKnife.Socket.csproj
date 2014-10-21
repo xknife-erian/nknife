@@ -74,6 +74,7 @@
     <Compile Include="Generic\KnifeSocketClientFilterChain.cs" />
     <Compile Include="Generic\KnifeSocketClientProtocolHandler.cs" />
     <Compile Include="Generic\KnifeSocketCodec.cs" />
+    <Compile Include="Generic\KnifeSocketConfig.cs" />
     <Compile Include="Generic\KnifeSocketDatagramDecoder.cs" />
     <Compile Include="Generic\KnifeSocketDatagramEncoder.cs" />
     <Compile Include="Generic\KnifeSocketProtocolHandler.cs" />
