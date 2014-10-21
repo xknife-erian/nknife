@@ -14,6 +14,7 @@ namespace SocketKnife.Generic
         public void Bind(Func<KnifeSocketSessionMap> sessionMapGetter)
         {
             SessionMapGetter = sessionMapGetter;
+            OnBoundGetter();
         }
 
         public event EventHandler<SocketSessionEventArgs> ClientCome;

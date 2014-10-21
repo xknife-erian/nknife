@@ -29,8 +29,11 @@ namespace SocketKnife.Generic.Filters
 
         protected override void OnBoundGetter()
         {
-            KnifeSocketSessionMap map = SessionMapGetter.Invoke();
-            map.Removed += SessionMap_OnRemoved;
+            if (SessionMapGetter != null)
+            {
+                KnifeSocketSessionMap map = SessionMapGetter.Invoke();
+                map.Removed += SessionMap_OnRemoved;
+            }
         }
 
         private void SessionMap_OnRemoved(object sender, EventArgs<EndPoint> e)
