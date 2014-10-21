@@ -22,5 +22,29 @@ namespace SocketKnife.Generic
 
         public bool WaitingForReply { get; set; }
 
+        protected bool Equals(KnifeSocketSession other)
+        {
+            return Id == other.Id && Equals(Source, other.Source) && WaitingForReply.Equals(other.WaitingForReply);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = Id.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Source != null ? Source.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Connector != null ? Connector.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ WaitingForReply.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((KnifeSocketSession) obj);
+        }
     }
 }

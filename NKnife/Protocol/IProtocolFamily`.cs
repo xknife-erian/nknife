@@ -10,6 +10,6 @@ namespace NKnife.Protocol
 
         void Add(IProtocol<T> protocol);
 
-        IProtocol<T> NewProtocol(T command);
+        IProtocol<T> Build(T command);
     }
 }

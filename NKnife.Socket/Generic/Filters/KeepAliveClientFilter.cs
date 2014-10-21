@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using NKnife.Adapters;
@@ -31,14 +32,14 @@ namespace SocketKnife.Generic.Filters
         protected internal override void OnConnectioned(ConnectionedEventArgs e)
         {
             base.OnConnectioned(e);
-
+            //当连接启动后，启动数据池监听线程
             var thread = new Thread(ReceiveQueueMonitor);
             thread.Start();
         }
 
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
-
+            _ReceiveQueue.Enqueue(data);
         }
 
         /// <summary>
@@ -97,6 +98,7 @@ namespace SocketKnife.Generic.Filters
         {
             var codec = _CodecGetter.Invoke();
             string[] datagram = codec.SocketDecoder.Execute(data, out done);
+            OnDataDecoded(new SocketDataDecodedEventArgs(endpoint, datagram));
             if (UtilityCollection.IsNullOrEmpty(datagram))
                 return;
 
@@ -105,7 +107,7 @@ namespace SocketKnife.Generic.Filters
                 if (string.IsNullOrWhiteSpace(dg))
                     continue;
                 string command = _FamilyGetter.Invoke().CommandParser.GetCommand(dg);
-                StringProtocol protocol = _FamilyGetter.Invoke().NewProtocol(command);
+                StringProtocol protocol = _FamilyGetter.Invoke().Build(command);
                 string dgByLog = dg;
                 _logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
                 if (protocol != null)
@@ -116,6 +118,36 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-
+        /// <summary>
+        ///     // 触发数据基础解析后发生的数据到达事件
+        /// </summary>
+        protected virtual void HandlerInvoke(EndPoint endpoint, StringProtocol protocol)
+        {
+            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
+            try
+            {
+                if (handlers == null || handlers.Length == 0)
+                {
+                    Debug.Fail(string.Format("Handler集合不应为空."));
+                    return;
+                }
+//                if (handlers.Length == 1)
+//                {
+//                    handlers[0].Recevied(session, protocol);
+//                }
+//                else
+//                {
+//                    foreach (KnifeSocketProtocolHandler handler in handlers)
+//                    {
+//                        if (handler.Commands.Contains(protocol.Command))
+//                            handler.Recevied(session, protocol);
+//                    }
+//                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
+            }
+        }
     }
 }

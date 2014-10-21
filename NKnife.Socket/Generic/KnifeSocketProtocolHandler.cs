@@ -12,7 +12,7 @@ namespace SocketKnife.Generic
     {
         protected Action<KnifeSocketSession, byte[]> _WriteBaseMethod;
         protected Action<KnifeSocketSession, StringProtocol> _WriteProtocolMethod;
-        public abstract List<string> Commands { get; set; }
+        public List<string> Commands { get; set; }
 
         void IProtocolHandler<EndPoint, Socket, string>.Recevied(ITunnelSession<EndPoint, Socket> session, IProtocol<string> protocol)
         {

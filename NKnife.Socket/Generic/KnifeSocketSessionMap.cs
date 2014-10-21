@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Net.Sockets;
 using NKnife.Events;
 using NKnife.Tunnel;
@@ -16,8 +18,20 @@ namespace SocketKnife.Generic
 
         public KnifeSocketSession this[EndPoint key]
         {
-            get { return _Map[key]; }
-            set { _Map[key] = value; }
+            get
+            {
+                return _Map[key];
+            }
+            set
+            {
+                var old = _Map[key];
+                _Map[key] = value;
+                if (!old.Equals(value))
+                {
+                    OnRemoved(new EventArgs<EndPoint>(key));
+                    OnAdded(new EventArgs<KnifeSocketSession>(value));
+                }
+            }
         }
 
         bool IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.TryGetValue(EndPoint key, out ITunnelSession<EndPoint, Socket> value)
@@ -60,7 +74,13 @@ namespace SocketKnife.Generic
 
         public void Clear()
         {
+            var list = new List<EndPoint>(_Map.Count);
+            list.AddRange(_Map.Keys.ToArray());
             _Map.Clear();
+            foreach (var endPoint in list)
+            {
+                OnRemoved(new EventArgs<EndPoint>(endPoint));
+            }
         }
 
         public bool ContainsKey(EndPoint key)
@@ -73,8 +93,10 @@ namespace SocketKnife.Generic
             return Contains(item.Key);
         }
 
+        [Obsolete("不推荐使用。Knife.")]
         void ICollection<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>.CopyTo(KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>[] array, int arrayIndex)
         {
+            // ReSharper disable once SuspiciousTypeConversion.Global
             ((IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>) _Map).CopyTo(array, arrayIndex);
         }
 
@@ -114,6 +136,8 @@ namespace SocketKnife.Generic
 
         public event EventHandler<EventArgs<EndPoint>> Removed;
 
+        public event EventHandler<EventArgs<KnifeSocketSession>> Added;
+
         public bool TryGetValue(EndPoint key, out KnifeSocketSession value)
         {
             KnifeSocketSession session;
@@ -129,6 +153,7 @@ namespace SocketKnife.Generic
         public void Add(EndPoint key, KnifeSocketSession value)
         {
             _Map.TryAdd(key, value);
+            OnAdded(new EventArgs<KnifeSocketSession>(value));
         }
 
         public bool Contains(EndPoint key)
@@ -143,6 +168,12 @@ namespace SocketKnife.Generic
             if (isRemoved)
                 OnRemoved(new EventArgs<EndPoint>(key));
             return isRemoved;
+        }
+
+        protected virtual void OnAdded(EventArgs<KnifeSocketSession> e)
+        {
+            EventHandler<EventArgs<KnifeSocketSession>> handler = Added;
+            if (handler != null) handler(this, e);
         }
 
         protected virtual void OnRemoved(EventArgs<EndPoint> e)

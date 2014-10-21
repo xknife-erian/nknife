@@ -166,8 +166,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        protected virtual IEnumerable<StringProtocol> ProtocolParse(StringProtocolFamily family,
-            string[] datagram)
+        protected virtual IEnumerable<StringProtocol> ProtocolParse(StringProtocolFamily family, string[] datagram)
         {
             var protocols = new List<StringProtocol>(datagram.Length);
             foreach (string dg in datagram)
@@ -184,7 +183,7 @@ namespace SocketKnife.Generic.Filters
                     continue;
                 }
                 _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
-                StringProtocol protocol = family.NewProtocol(command);
+                StringProtocol protocol = family.Build(command);
                 try
                 {
                     protocol.Parse(dg);

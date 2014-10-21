@@ -20,10 +20,6 @@ namespace NKnife.App.SocketKit.Demo
             _SocketMessages = socketMessages;
         }
 
-        public override KnifeSocketSessionMap SessionMap { get; set; }
-
-        public override List<string> Commands { get; set; }
-
         public override void Recevied(KnifeSocketSession session, StringProtocol protocol)
         {
             var msg = new SocketMessage();

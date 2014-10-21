@@ -51,9 +51,9 @@ namespace NKnife.Protocol.Generic
             Add((StringProtocol) protocol);
         }
 
-        IProtocol<string> IProtocolFamily<string>.NewProtocol(string command)
+        IProtocol<string> IProtocolFamily<string>.Build(string command)
         {
-            return NewProtocol(command);
+            return Build(command);
         }
 
         public IEnumerator GetEnumerator()
@@ -157,11 +157,6 @@ namespace NKnife.Protocol.Generic
             _Map.Add(protocol.Command, protocol);
         }
 
-        public StringProtocol NewProtocol(string command)
-        {
-            return _Map[command].NewInstance();
-        }
-
         public void Add(string key, StringProtocol value)
         {
             _Map.Add(key, value);
@@ -179,11 +174,8 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocol Build(string command)
         {
-            var protocol = DI.Get<StringProtocol>();
             Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
-            protocol.Family = Family;
-            protocol.Command = command;
-            return protocol;
+            return _Map[command].NewInstance();
         }
     }
 }
