@@ -1,8 +1,6 @@
-﻿using NKnife.Protocol;
-using SocketKnife.Generic;
-using SocketKnife.Interfaces;
+﻿using NKnife.Protocol.Generic;
 
-namespace SocketKnife
+namespace NKnife.Protocol
 {
     public static class ProtocolExtension
     {
@@ -11,7 +9,7 @@ namespace SocketKnife
         /// </summary>
         /// <param name="content"></param>
         /// <param name="value">The value.</param>
-        public static void AddTag(this KnifeSocketProtocolContent content, object value)
+        public static void AddTag(this StringProtocolContent content, object value)
         {
             content.Tags.Add(value);
         }
@@ -19,7 +17,7 @@ namespace SocketKnife
         /// <summary>
         ///     清除所有做为协议数据的对象。
         /// </summary>
-        public static void ClearTag(this KnifeSocketProtocolContent content)
+        public static void ClearTag(this StringProtocolContent content)
         {
             content.Tags.Clear();
         }
@@ -29,7 +27,7 @@ namespace SocketKnife
         /// </summary>
         /// <param name="content"></param>
         /// <param name="index">The index.</param>
-        public static void RemoveTag(this KnifeSocketProtocolContent content, int index)
+        public static void RemoveTag(this StringProtocolContent content, int index)
         {
             content.Tags.RemoveAt(index);
         }
@@ -39,7 +37,7 @@ namespace SocketKnife
         /// </summary>
         /// <param name="content"></param>
         /// <param name="obj">The obj.</param>
-        public static void SetCommandParam(this KnifeSocketProtocolContent content, string obj)
+        public static void SetCommandParam(this StringProtocolContent content, string obj)
         {
             content.CommandParam = obj;
         }
@@ -47,7 +45,7 @@ namespace SocketKnife
         /// <summary>
         ///     清除命令字参数
         /// </summary>
-        public static void ClearCommandParam(this KnifeSocketProtocolContent content)
+        public static void ClearCommandParam(this StringProtocolContent content)
         {
             content.CommandParam = null;
         }
@@ -58,7 +56,7 @@ namespace SocketKnife
         /// <param name="content"></param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        public static void AddInfo(this KnifeSocketProtocolContent content, string key, string value)
+        public static void AddInfo(this StringProtocolContent content, string key, string value)
         {
             content.Infomations.Add(key, value);
         }
@@ -68,7 +66,7 @@ namespace SocketKnife
         /// </summary>
         /// <param name="content"></param>
         /// <param name="key">The key.</param>
-        public static void RemoveInfo(this KnifeSocketProtocolContent content, string key)
+        public static void RemoveInfo(this StringProtocolContent content, string key)
         {
             content.Infomations.Remove(key);
         }
@@ -76,7 +74,7 @@ namespace SocketKnife
         /// <summary>
         ///     清除所有信息。Info:协议制定时确认必须携带的数据,如:时间,交易ID等
         /// </summary>
-        public static void ClearInfo(this KnifeSocketProtocolContent content)
+        public static void ClearInfo(this StringProtocolContent content)
         {
             content.Infomations.Clear();
         }

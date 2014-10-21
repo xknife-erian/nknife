@@ -89,16 +89,6 @@
     <Compile Include="Generic\KnifeSocketServerConfig.cs" />
     <Compile Include="Generic\Families\EndMarkDecoder.cs" />
     <Compile Include="Generic\Families\EndMarkEncoder.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolPacker.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolUnPacker.cs" />
-    <Compile Include="Generic\KnifeSocketProtocol.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolContent.cs" />
-    <Compile Include="Generic\Protocols\ProtocolDataTableDeserializeUnPacker.cs" />
-    <Compile Include="Generic\Protocols\ProtocolDeserializeUnPacker.cs" />
-    <Compile Include="Generic\Protocols\ProtocolXmlPacker.cs" />
-    <Compile Include="Generic\Protocols\ProtocolXmlUnPacker.cs" />
-    <Compile Include="Generic\Protocols\TextPlainPacker.cs" />
-    <Compile Include="Generic\Protocols\TextPlainUnPacker.cs" />
     <Compile Include="Interfaces\IKnifeSocketClient.cs" />
     <Compile Include="Interfaces\ISocketClientFilter.cs" />
     <Compile Include="Interfaces\ISocketFilter.cs" />
@@ -107,11 +97,9 @@
     <Compile Include="Interfaces\ISocketConfig.cs" />
     <Compile Include="Interfaces\IKnifeSocketServer.cs" />
     <Compile Include="IoC\DefaultModules.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolFamily.cs" />
     <Compile Include="KnifeSocketClient.cs" />
     <Compile Include="KnifeSocketServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProtocolExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife\NKnife.csproj">

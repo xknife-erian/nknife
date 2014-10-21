@@ -5,6 +5,7 @@ using System.Threading;
 using NKnife.Adapters;
 using NKnife.Events;
 using NKnife.Interface;
+using NKnife.Protocol.Generic;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Events;
@@ -104,7 +105,7 @@ namespace SocketKnife.Generic.Filters
                 if (string.IsNullOrWhiteSpace(dg))
                     continue;
                 string command = codec.SocketCommandParser.GetCommand(dg);
-                KnifeSocketProtocol protocol = _FamilyGetter.Invoke().NewProtocol(command);
+                StringProtocol protocol = _FamilyGetter.Invoke().NewProtocol(command);
                 string dgByLog = dg;
                 _logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
                 if (protocol != null)

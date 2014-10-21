@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using NKnife.IoC;
 using NKnife.Protocol;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
@@ -14,7 +15,7 @@ namespace SocketKnife.Generic
 
         protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
         protected KnifeSocketCodec _Codec;
-        protected KnifeSocketProtocolFamily _Family;
+        protected StringProtocolFamily _Family;
         protected KnifeSocketServerProtocolHandler[] _Handlers;
 
         protected IPAddress _IpAddress;
@@ -32,7 +33,7 @@ namespace SocketKnife.Generic
             {
                 hs[i] = (KnifeSocketServerProtocolHandler) handlers[i];
             }
-            Bind((KnifeSocketCodec) codec, (KnifeSocketProtocolFamily) protocolFamily, hs);
+            Bind((KnifeSocketCodec) codec, (StringProtocolFamily) protocolFamily, hs);
         }
 
         ITunnelConfig ITunnel<EndPoint, Socket, string>.Config
@@ -66,7 +67,7 @@ namespace SocketKnife.Generic
                 _FilterChain.AddLast(filter);
         }
 
-        public virtual void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily,
+        public virtual void Bind(KnifeSocketCodec codec, StringProtocolFamily protocolFamily,
             params KnifeSocketServerProtocolHandler[] handlers)
         {
             _Codec = codec;

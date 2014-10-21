@@ -8,6 +8,7 @@ using System.Threading;
 using NKnife.Adapters;
 using NKnife.Events;
 using NKnife.Interface;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Events;
 using NKnife.Utility;
 using SocketKnife.Common;
@@ -149,7 +150,7 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void DataDecoder(EndPoint endpoint, byte[] data, out int done)
         {
-            KnifeSocketProtocolFamily family = _FamilyGetter.Invoke();
+            StringProtocolFamily family = _FamilyGetter.Invoke();
             KnifeSocketCodec codec = _CodecGetter.Invoke();
             string[] datagram = codec.SocketDecoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
@@ -157,18 +158,18 @@ namespace SocketKnife.Generic.Filters
                 _logger.Debug("协议消息无内容。");
                 return;
             }
-            IEnumerable<KnifeSocketProtocol> protocols = ProtocolParse(family, datagram);
-            foreach (KnifeSocketProtocol protocol in protocols)
+            IEnumerable<StringProtocol> protocols = ProtocolParse(family, datagram);
+            foreach (StringProtocol protocol in protocols)
             {
                 // 触发数据基础解析后发生的数据到达事件
                 HandlerInvoke(endpoint, protocol);
             }
         }
 
-        protected virtual IEnumerable<KnifeSocketProtocol> ProtocolParse(KnifeSocketProtocolFamily family,
+        protected virtual IEnumerable<StringProtocol> ProtocolParse(StringProtocolFamily family,
             string[] datagram)
         {
-            var protocols = new List<KnifeSocketProtocol>(datagram.Length);
+            var protocols = new List<StringProtocol>(datagram.Length);
             foreach (string dg in datagram)
             {
                 if (string.IsNullOrWhiteSpace(dg)) continue;
@@ -183,7 +184,7 @@ namespace SocketKnife.Generic.Filters
                     continue;
                 }
                 _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
-                KnifeSocketProtocol protocol = family.NewProtocol(command);
+                StringProtocol protocol = family.NewProtocol(command);
                 try
                 {
                     protocol.Parse(dg);
@@ -201,7 +202,7 @@ namespace SocketKnife.Generic.Filters
         /// <summary>
         ///     // 触发数据基础解析后发生的数据到达事件
         /// </summary>
-        protected virtual void HandlerInvoke(EndPoint endpoint, KnifeSocketProtocol protocol)
+        protected virtual void HandlerInvoke(EndPoint endpoint, StringProtocol protocol)
         {
             KnifeSocketServerProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSessionMap sessionMap = SessionMapGetter.Invoke();

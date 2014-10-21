@@ -1,9 +1,10 @@
 ﻿using Ninject.Modules;
 using NKnife.App.SocketKit.Common;
+using NKnife.Protocol.Generic;
+using NKnife.Protocol.Generic.Packers;
 using SocketKnife;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
-using SocketKnife.Generic.Protocols;
 
 namespace NKnife.App.SocketKit.IoC
 {
@@ -13,8 +14,8 @@ namespace NKnife.App.SocketKit.IoC
         {
             Bind<ServerList>().ToSelf().InSingletonScope();
 
-            Bind<KnifeSocketProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
-            Bind<KnifeSocketProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
+            Bind<StringProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
+            Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
 
             Bind<KnifeSocketCommandParser>().To<FirstFieldCommandParser>().InSingletonScope();
             Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();

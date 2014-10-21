@@ -5,13 +5,11 @@ using System.Reflection;
 using System.Xml;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Protocol;
 using NKnife.Utility;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Protocols
+namespace NKnife.Protocol.Generic.Packers
 {
-    public class ProtocolXmlUnPacker : KnifeSocketProtocolUnPacker
+    public class XmlProtocolUnPacker : StringProtocolUnPacker
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -45,7 +43,7 @@ namespace SocketKnife.Generic.Protocols
             get { return 1; }
         }
 
-        public override void Execute(KnifeSocketProtocolContent content, string data, string family, string command)
+        public override void Execute(StringProtocolContent content, string data, string family, string command)
         {
             if (string.IsNullOrWhiteSpace(data))
             {
@@ -103,7 +101,7 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
-        protected virtual void ParseInfos(KnifeSocketProtocolContent content, XmlElement infoElement)
+        protected virtual void ParseInfos(StringProtocolContent content, XmlElement infoElement)
         {
             foreach (XmlAttribute attr in infoElement.Attributes)
             {
@@ -111,7 +109,7 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
-        protected virtual void ParseDatas(KnifeSocketProtocolContent content, XmlElement dataElement)
+        protected virtual void ParseDatas(StringProtocolContent content, XmlElement dataElement)
         {
             foreach (XmlAttribute attr in dataElement.Attributes)
             {
@@ -119,7 +117,7 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
-        protected virtual void ParseParm(KnifeSocketProtocolContent content, XmlElement docElement)
+        protected virtual void ParseParm(StringProtocolContent content, XmlElement docElement)
         {
             if (docElement.HasAttribute("Param"))
             {
@@ -127,7 +125,7 @@ namespace SocketKnife.Generic.Protocols
             }
         }
 
-        protected virtual void ParseTags(KnifeSocketProtocolContent content, XmlElement tagsElement)
+        protected virtual void ParseTags(StringProtocolContent content, XmlElement tagsElement)
         {
             content.Tags = new List<object>();
             foreach (XmlNode node in tagsElement.ChildNodes)

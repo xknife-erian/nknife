@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Events;
@@ -10,7 +11,7 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketFilter : ISocketFilter
     {
-        protected Func<KnifeSocketProtocolFamily> _FamilyGetter;
+        protected Func<StringProtocolFamily> _FamilyGetter;
         protected Func<KnifeSocketServerProtocolHandler[]> _HandlersGetter;
         protected Func<KnifeSocketCodec> _CodecGetter;
 
@@ -25,7 +26,7 @@ namespace SocketKnife.Generic
 
         public event EventHandler<DataDecodedEventArgs<EndPoint>> DataDecoded;
 
-        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<KnifeSocketServerProtocolHandler[]> handlerGetter, Func<KnifeSocketProtocolFamily> familyGetter)
+        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<KnifeSocketServerProtocolHandler[]> handlerGetter, Func<StringProtocolFamily> familyGetter)
         {
             _FamilyGetter = familyGetter;
             _HandlersGetter = handlerGetter;

@@ -7,6 +7,7 @@ using System.Threading;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using SocketKnife.Common;
 using SocketKnife.Events;
@@ -415,7 +416,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void WirteProtocol(KnifeSocketSession session, KnifeSocketProtocol protocol)
+        protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
         {
             string replay = protocol.Generate();
             byte[] data = _Codec.SocketEncoder.Execute(replay);

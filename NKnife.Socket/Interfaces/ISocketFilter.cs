@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using NKnife.Events;
 using NKnife.Protocol;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Common;
@@ -16,6 +17,6 @@ namespace SocketKnife.Interfaces
         void BindGetter(
             Func<KnifeSocketCodec> codecFunc, 
             Func<KnifeSocketServerProtocolHandler[]> handlersGetter, 
-            Func<KnifeSocketProtocolFamily> familyGetter);
+            Func<StringProtocolFamily> familyGetter);
     }
 }

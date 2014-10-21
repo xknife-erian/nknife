@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using Ninject.Modules;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
@@ -20,9 +21,9 @@ namespace SocketKnife.IoC
             Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>();
             Bind<KnifeSocketSession>().To<KnifeSocketSession>();
 
-            Bind<KnifeSocketProtocol>().To<KnifeSocketProtocol>();
-            Bind<KnifeSocketProtocolFamily>().To<KnifeSocketProtocolFamily>();
-            Bind<KnifeSocketProtocolContent>().To<KnifeSocketProtocolContent>();
+            Bind<StringProtocol>().To<StringProtocol>();
+            Bind<StringProtocolFamily>().To<StringProtocolFamily>();
+            Bind<StringProtocolContent>().To<StringProtocolContent>();
         }
     }
 }
