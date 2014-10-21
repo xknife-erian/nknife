@@ -159,6 +159,9 @@ namespace SocketKnife
                     _IsConnection = false;
                     _logger.Warn(string.Format("远程连接失败。{0}", ex.Message), ex);
                 }
+                _SocketSession = DI.Get<KnifeSocketSession>();
+                _SocketSession.Connector = _Socket;
+                _SocketSession.Source = ipPoint;
                 foreach (var filter in _FilterChain)
                 {
                     var clientFilter = (KnifeSocketClientFilter) filter;
@@ -293,21 +296,10 @@ namespace SocketKnife
         //**************************************************
 
         /// <summary>
-        ///     异步发送数据
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <returns></returns>
-        public bool SendTo(string data)
-        {
-            return SendTo(data, false);
-        }
-
-        /// <summary>
         ///     发送数据包
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="isCompress">是否将数据压缩后发送</param>
-        public bool SendTo(string data, bool isCompress)
+        public bool Wirite(string data)
         {
             byte[] senddata = _Codec.SocketEncoder.Execute(data);
             var e = new SocketAsyncEventArgs();
@@ -317,146 +309,8 @@ namespace SocketKnife
             {
                 isSuceess = _Socket.SendAsync(e);
                 _logger.Trace(() => string.Format("Send:{0},\r\n{1}", data, isSuceess));
-//                if (!isSuceess && IsCustomTryConnectionMode)
-//                {
-//                    //当发送不成功时，启动自动重新连接
-//                    _ConnectionWhileBreakTimer.Start();
-//                }
             }
             return isSuceess;
-        }
-
-        /// <summary>
-        ///     同步发送数据
-        /// </summary>
-        /// <param name="data">将要发送的数据</param>
-        /// <param name="timeout">等待超时的时长</param>
-        /// <returns></returns>
-        public string TalkTo(string data, int timeout)
-        {
-            return TalkTo(data, timeout, false);
-        }
-
-        /// <summary>
-        ///     同步发送数据
-        /// </summary>
-        /// <param name="data">将要发送的数据</param>
-        /// <param name="isCompress">是否将数据压缩后发送</param>
-        /// <returns></returns>
-        public string TalkTo(string data, bool isCompress)
-        {
-            return TalkTo(data, Config.SendTimeout, isCompress);
-        }
-
-        /// <summary>
-        ///     同步发送数据
-        /// </summary>
-        /// <param name="data">将要发送的数据</param>
-        /// <returns></returns>
-        public string TalkTo(string data)
-        {
-            return TalkTo(data, false);
-        }
-
-        /// <summary>
-        ///     同步发送数据
-        /// </summary>
-        /// <param name="data">将要发送的数据</param>
-        /// <param name="timeout">等待超时的时长</param>
-        /// <param name="isCompress">是否将数据压缩后发送</param>
-        /// <returns></returns>
-        public string TalkTo(string data, int timeout, bool isCompress)
-        {
-            return "";
-            // ++++++++++++ 发送部份
-//            if (!IsConnectionSuceess)
-//            {
-//                _logger.Warn("远程未连接，无法发送数据。");
-//                _IsTalkTo = false;
-//                Stop();
-//                return string.Empty;
-//            }
-//            byte[] senddata = Encoder.Execute(data, isCompress);
-//            if (UtilityCollection.IsNullOrEmpty(senddata))
-//            {
-//                Stop();
-//                return string.Empty;
-//            }
-//            try
-//            {
-//                _Socket.Send(senddata); //注意，这里采用的是同步
-//                _IsTalkTo = true;
-//            }
-//            catch
-//            {
-//                _IsTalkTo = false;
-//                throw; //异常交给上层来处理
-//            }
-//            _logger.Trace(() => string.Format("Client.Send: {0}", data));
-//
-//            string replay = string.Empty;
-//            if (!_IsTalkTo)
-//            {
-//                Stop();
-//                _logger.Warn(string.Format("TalkTo发送数据不成功{0}", data));
-//                return replay; //发送数据不成功
-//            }
-//
-//            // ++++++++++++ 接收部份
-//            var mainRecvBytes = new byte[Option.BufferSize];
-//            int currentOffset = 0;
-//            try
-//            {
-//                // 一次接收的临时区
-//                var oneRecvBytes = new byte[Option.TalkOneLength];
-//                int oneRecvCount;
-//
-//                // 持续接收，直到接收到为空时
-//                while ((oneRecvCount = _Socket.Receive(oneRecvBytes, 0, Option.TalkOneLength, SocketFlags.None)) > 0)
-//                {
-//                    if (currentOffset + oneRecvCount > mainRecvBytes.Length)
-//                        Array.Resize(ref mainRecvBytes, currentOffset + oneRecvCount + 1);
-//                    Array.Copy(oneRecvBytes, 0, mainRecvBytes, currentOffset, oneRecvCount);
-//                    currentOffset += oneRecvCount;
-//                    // 当接收到的数据量少于原定的一次接收缓存区，一般来讲，已接收完成
-//                    if (oneRecvCount < Option.TalkOneLength)
-//                        break;
-//                }
-//                _logger.Trace(() => string.Format("Client.Receive.Bytes.Count: {0}", currentOffset));
-//            }
-//            catch (Exception e)
-//            {
-//                _logger.Warn("TalkTo接收数据异常。", e);
-//            }
-//
-//            if (currentOffset < 1)
-//            {
-//                return string.Empty;
-//            }
-//
-//            switch (Mode)
-//            {
-//                case SocketMode.AsyncKeepAlive:
-//                case SocketMode.Talk:
-//                    break;
-//            }
-//            try
-//            {
-//                OnDataComeIn(mainRecvBytes, null); //触发字节数组数据到达事件
-//
-//                int i;
-//                string[] recvStrings = Decoder.Execute(mainRecvBytes, out i);
-//                if (recvStrings.Length > 0)
-//                {
-//                    replay = recvStrings[0].TrimEnd('\0');
-//                }
-//                _logger.Trace(() => string.Format("Client.Receive: {0}", replay));
-//            }
-//            catch (Exception e)
-//            {
-//                _logger.Warn("接收数据解析异常。", e);
-//            }
-//            return replay;
         }
 
         #endregion
