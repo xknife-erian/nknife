@@ -114,12 +114,13 @@ namespace SocketKnife.Generic.Filters
                 {
                     protocol.Parse(dg);
                     // 触发数据基础解析后发生的数据到达事件
+                    HandlerInvoke(endpoint, protocol);
                 }
             }
         }
 
         /// <summary>
-        ///     // 触发数据基础解析后发生的数据到达事件
+        ///    触发数据基础解析后发生的数据到达事件
         /// </summary>
         protected virtual void HandlerInvoke(EndPoint endpoint, StringProtocol protocol)
         {
@@ -131,22 +132,22 @@ namespace SocketKnife.Generic.Filters
                     Debug.Fail(string.Format("Handler集合不应为空."));
                     return;
                 }
-//                if (handlers.Length == 1)
-//                {
-//                    handlers[0].Recevied(session, protocol);
-//                }
-//                else
-//                {
-//                    foreach (KnifeSocketProtocolHandler handler in handlers)
-//                    {
-//                        if (handler.Commands.Contains(protocol.Command))
-//                            handler.Recevied(session, protocol);
-//                    }
-//                }
+                if (handlers.Length == 1)
+                {
+                    handlers[0].Recevied(SessionGetter.Invoke(), protocol);
+                }
+                else
+                {
+                    foreach (KnifeSocketProtocolHandler handler in handlers)
+                    {
+                        if (handler.Commands.Contains(protocol.Command))
+                            handler.Recevied(SessionGetter.Invoke(), protocol);
+                    }
+                }
             }
             catch (Exception e)
             {
-                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
+                _logger.Error(string.Format("Handler调用异常:{0}", e.Message), e);
             }
         }
     }

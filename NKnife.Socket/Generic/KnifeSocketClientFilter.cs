@@ -8,11 +8,11 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketClientFilter : KnifeSocketFilter, ISocketClientFilter
     {
-        public Func<KnifeSocketSession> SessionMapGetter { get; protected set; }
+        public Func<KnifeSocketSession> SessionGetter { get; protected set; }
 
-        public void Bind(Func<KnifeSocketSession> sessionMapGetter)
+        public void Bind(Func<KnifeSocketSession> sessionGetter)
         {
-            SessionMapGetter = sessionMapGetter;
+            SessionGetter = sessionGetter;
             OnBoundGetter();
         }
 
