@@ -226,9 +226,7 @@
     <Compile Include="Configuring\Common\OptionTableChangedEventArgs.cs" />
     <Compile Include="Configuring\Controls\AbstractOptionBoxItem.cs" />
     <Compile Include="Configuring\Controls\AbstractOptionItemBase.cs" />
-    <Compile Include="Configuring\Controls\OptionControlBase.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Configuring\Controls\OptionControlBase.cs" />
     <Compile Include="Configuring\Delegates.cs" />
     <Compile Include="Configuring\Interfaces\IOptionBoxItem.cs" />
     <Compile Include="Configuring\Interfaces\IOptionCaseManager.cs" />
@@ -244,9 +242,7 @@
     <Compile Include="Configuring\OptionCase\OptionCaseMode.cs" />
     <Compile Include="Configuring\OptionServiceCoderSetting.cs" />
     <Compile Include="Configuring\Option\AbstractOptionManager.cs" />
-    <Compile Include="Configuring\Option\OptionDataTable.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Configuring\Option\OptionDataTable.cs" />
     <Compile Include="Configuring\Option\XmlDataStore.cs" />
     <Compile Include="Configuring\Option\ZipDataStore.cs" />
     <Compile Include="Configuring\UserData\UserApplicationData.cs" />

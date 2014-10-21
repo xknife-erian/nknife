@@ -13,7 +13,7 @@ namespace NKnife.Utility
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static DataTable GetTableSchema<T>() where T : class, new()
+        public static DataTable PickUpObjectPropertiesToTableSchema<T>() where T : class, new()
         {
             var table = new DataTable(String.Format("{0}Table", typeof(T).Name));
             var type = typeof(T);
