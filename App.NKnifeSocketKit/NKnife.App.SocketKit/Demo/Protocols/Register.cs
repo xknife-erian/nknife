@@ -12,9 +12,9 @@ namespace NKnife.App.SocketKit.Demo.Protocols
         }
 
         [Inject]
-        public override StringProtocolPacker SocketPacker { get; set; }
+        public override StringProtocolPacker Packer { get; set; }
 
         [Inject]
-        public override StringProtocolUnPacker SocketUnPacker { get; set; }
+        public override StringProtocolUnPacker UnPacker { get; set; }
     }
 }
