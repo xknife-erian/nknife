@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Globalization;
-using NKnife.Protocol;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Protocols
+namespace NKnife.Protocol.Generic.Packers
 {
-    public class TextPlainUnPacker : KnifeSocketProtocolUnPacker
+    public class TextPlainUnPacker : StringProtocolUnPacker
     {
         public override short Version
         {
             get { return 1; }
         }
 
-        public override void Execute(KnifeSocketProtocolContent content, string data, string family, string command)
+        public override void Execute(StringProtocolContent content, string data, string family, string command)
         {
             string[] array = data.Split(new[] {'|', '#', '@'}, StringSplitOptions.RemoveEmptyEntries);
             content.Command = command;

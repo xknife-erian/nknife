@@ -1,20 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using NKnife.Protocol;
 
-namespace SocketKnife.Generic
+namespace NKnife.Protocol.Generic
 {
     /// <summary>
     ///     一个协议的具体内容。其中：
-    ///     Datas,Tags,Infomations均属于协议的内容。
-    ///     Datas:一般的简单数据，（一般较短）。
+    ///     Tags,Infomations均属于协议的内容。
     ///     Tags:内容较大的数据，如序列化的对象等。
     ///     Infomations:固定数据，按协议规定的必须每次携带的数据。
     /// </summary>
-    public class KnifeSocketProtocolContent : IProtocolContent<string>
+    public class StringProtocolContent : IProtocolContent<string>
     {
-        public KnifeSocketProtocolContent()
+        public StringProtocolContent()
         {
             Infomations = new Dictionary<string, string>(0);
             Tags = new List<object>(0);

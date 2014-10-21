@@ -7,6 +7,7 @@ using System.Threading;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using SocketKnife.Common;
 using SocketKnife.Events;
@@ -27,15 +28,11 @@ namespace SocketKnife
         private bool _IsClose = true;
         private Socket _MainSocket;
         private SocketAsyncEventArgsPool _SocketAsynPool;
+        protected KnifeSocketSessionMap _SessionMap = DI.Get<KnifeSocketSessionMap>();
 
         #endregion
 
         #region ISocketServerKnife 接口实现
-
-        public KnifeSocketServer()
-        {
-            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Server");
-        }
 
         public override bool Start()
         {
@@ -98,6 +95,13 @@ namespace SocketKnife
             }
         }
 
+        public override void AddFilter(KnifeSocketFilter filter)
+        {
+            base.AddFilter(filter);
+            var serverFilter = (KnifeSocketServerFilter) filter;
+            serverFilter.Bind(() => _SessionMap);
+        }
+
         protected virtual void Initialize()
         {
             if (_IsDisposed)
@@ -138,13 +142,13 @@ namespace SocketKnife
             _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
         }
 
-        public override void Bind(KnifeSocketCodec codec, KnifeSocketProtocolFamily protocolFamily, params KnifeSocketProtocolHandler[] handlers)
+        protected override void OnBound()
         {
-            base.Bind(codec, protocolFamily, handlers);
-            foreach (KnifeSocketProtocolHandler handler in handlers)
+            foreach (KnifeSocketServerProtocolHandler handler in _Handlers)
             {
                 handler.Bind(WirteProtocol);
                 handler.Bind(WirteBase);
+                handler.SessionMap = _SessionMap;
             }
         }
 
@@ -165,6 +169,11 @@ namespace SocketKnife
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected override void SetFilterChain()
+        {
+            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Server");
         }
 
         ~KnifeSocketServer()
@@ -366,6 +375,7 @@ namespace SocketKnife
                 var serverFilter = (KnifeSocketServerFilter) filter;
                 EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
                 serverFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
+
                 KnifeSocketSession session = _SessionMap[endPoint];
                 serverFilter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
                 if (!serverFilter.ContinueNextFilter)
@@ -406,7 +416,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void WirteProtocol(KnifeSocketSession session, KnifeSocketProtocol protocol)
+        protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
         {
             string replay = protocol.Generate();
             byte[] data = _Codec.SocketEncoder.Execute(replay);

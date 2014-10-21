@@ -7,6 +7,7 @@ using NKnife.Base;
 using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Mvvm;
+using NKnife.Protocol.Generic;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
@@ -44,7 +45,7 @@ namespace NKnife.App.SocketKit.Demo
 
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
             var codec = DI.Get<KnifeSocketCodec>();
-            KnifeSocketProtocolFamily protocolFamily = GetProtocolFamily();
+            StringProtocolFamily protocolFamily = GetProtocolFamily();
 
             if (!_ServerList.ContainsKey(key))
             {
@@ -62,16 +63,16 @@ namespace NKnife.App.SocketKit.Demo
             }
         }
 
-        private KnifeSocketProtocolFamily GetProtocolFamily()
+        private StringProtocolFamily GetProtocolFamily()
         {
             var register = DI.Get<Register>();
 
-            var family = DI.Get<KnifeSocketProtocolFamily>();
+            var family = DI.Get<StringProtocolFamily>();
 
-            family.Add(KnifeSocketProtocol.Build("socket-kit", "call"));
-            family.Add(KnifeSocketProtocol.Build("socket-kit", "recall"));
-            family.Add(KnifeSocketProtocol.Build("socket-kit", "sing"));
-            family.Add(KnifeSocketProtocol.Build("socket-kit", "dance"));
+            family.Add(StringProtocol.Build("socket-kit", "call"));
+            family.Add(StringProtocol.Build("socket-kit", "recall"));
+            family.Add(StringProtocol.Build("socket-kit", "sing"));
+            family.Add(StringProtocol.Build("socket-kit", "dance"));
             family.Add(register);
 
             return family;

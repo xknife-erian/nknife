@@ -6,19 +6,17 @@ using System.Xml;
 using System.Xml.Serialization;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Protocol;
 using NKnife.Utility;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Protocols
+namespace NKnife.Protocol.Generic.Packers
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>
-    public class ProtocolDeserializeUnPacker : ProtocolXmlUnPacker
+    public class XmlProtocolDeserializeUnPacker : XmlProtocolUnPacker
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        protected override void ParseTags(KnifeSocketProtocolContent content, XmlElement tagsElement)
+        protected override void ParseTags(StringProtocolContent content, XmlElement tagsElement)
         {
             content.Tags = new List<object>();
             foreach (XmlNode node in tagsElement.ChildNodes)

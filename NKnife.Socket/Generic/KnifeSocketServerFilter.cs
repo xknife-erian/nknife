@@ -9,6 +9,14 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketServerFilter : KnifeSocketFilter, ISocketServerFilter
     {
+        public Func<KnifeSocketSessionMap> SessionMapGetter { get; protected set; }
+
+        public void Bind(Func<KnifeSocketSessionMap> sessionMapGetter)
+        {
+            SessionMapGetter = sessionMapGetter;
+            OnBoundGetter();
+        }
+
         public event EventHandler<SocketSessionEventArgs> ClientCome;
 
         public event EventHandler<SocketConnectionBreakEventArgs> ClientBroke;

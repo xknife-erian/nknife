@@ -4,11 +4,12 @@ using NKnife.Adapters;
 using NKnife.App.SocketKit.Common;
 using NKnife.Collections;
 using NKnife.Interface;
+using NKnife.Protocol.Generic;
 using SocketKnife.Generic;
 
 namespace NKnife.App.SocketKit.Demo
 {
-    public class DemoServerHandler : KnifeSocketProtocolHandler
+    public class DemoServerHandler : KnifeSocketServerProtocolHandler
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
@@ -21,7 +22,7 @@ namespace NKnife.App.SocketKit.Demo
 
         public override List<string> Commands { get; set; }
 
-        public override void Recevied(KnifeSocketSession session, KnifeSocketProtocol protocol)
+        public override void Recevied(KnifeSocketSession session, StringProtocol protocol)
         {
             var msg = new SocketMessage();
             msg.Command = protocol.Command;

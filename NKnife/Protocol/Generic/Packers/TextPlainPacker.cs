@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NKnife.Protocol;
-using SocketKnife.Interfaces;
+﻿using System.Text;
 
-namespace SocketKnife.Generic.Protocols
+namespace NKnife.Protocol.Generic.Packers
 {
-    public class TextPlainPacker : KnifeSocketProtocolPacker
+    public class TextPlainPacker : StringProtocolPacker
     {
         public override short Version {
             get { return 1; }
         }
-        public override string Combine(KnifeSocketProtocolContent c)
+        public override string Combine(StringProtocolContent c)
         {
             var command = string.Format("{0}|{1}|", c.Command, c.CommandParam);
             var sb = new StringBuilder(command);

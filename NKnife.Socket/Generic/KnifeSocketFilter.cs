@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 using SocketKnife.Events;
@@ -10,40 +11,37 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketFilter : ISocketFilter
     {
-        protected Func<KnifeSocketProtocolFamily> _FamilyGetter;
-        protected Func<KnifeSocketProtocolHandler[]> _HandlersGetter;
-        protected Func<KnifeSocketSessionMap> _SessionMapGetter;
+        protected Func<StringProtocolFamily> _FamilyGetter;
+        protected Func<KnifeSocketServerProtocolHandler[]> _HandlersGetter;
         protected Func<KnifeSocketCodec> _CodecGetter;
 
         public abstract bool ContinueNextFilter { get; }
 
-        void ITunnelFilter<EndPoint, Socket>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> socket, byte[] data)
+        void ITunnelFilter<EndPoint, Socket>.PrcoessReceiveData(ITunnelSession<EndPoint, Socket> session, byte[] data)
         {
-            PrcoessReceiveData((KnifeSocketSession) socket, data);
+            PrcoessReceiveData((KnifeSocketSession) session, data);
         }
 
         public event EventHandler<DataFetchedEventArgs<EndPoint>> DataFetched;
 
         public event EventHandler<DataDecodedEventArgs<EndPoint>> DataDecoded;
 
-        public virtual void Bind(
-            Func<KnifeSocketProtocolFamily> familyGetter,
-            Func<KnifeSocketProtocolHandler[]> handlerGetter,
-            Func<KnifeSocketSessionMap> sessionMapGetter,
-            Func<KnifeSocketCodec> codecFunc)
+        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<KnifeSocketServerProtocolHandler[]> handlerGetter, Func<StringProtocolFamily> familyGetter)
         {
             _FamilyGetter = familyGetter;
             _HandlersGetter = handlerGetter;
-            _SessionMapGetter = sessionMapGetter;
             _CodecGetter = codecFunc;
-            OnBoundGetter(_FamilyGetter, _HandlersGetter, _SessionMapGetter, _CodecGetter);
+            OnBoundGetter();
         }
 
-        protected virtual void OnBoundGetter(Func<KnifeSocketProtocolFamily> familyGetter, Func<KnifeSocketProtocolHandler[]> handlerGetter, Func<KnifeSocketSessionMap> sessionMapGetter, Func<KnifeSocketCodec> codecGetter)
+        /// <summary>
+        /// 当核心对象获取器绑定完成时发生
+        /// </summary>
+        protected virtual void OnBoundGetter()
         {
         }
 
-        public abstract void PrcoessReceiveData(KnifeSocketSession socket, byte[] data);
+        public abstract void PrcoessReceiveData(KnifeSocketSession session, byte[] data);
 
         protected internal virtual void OnDataFetched(SocketDataFetchedEventArgs e)
         {

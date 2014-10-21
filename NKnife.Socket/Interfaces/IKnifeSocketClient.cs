@@ -7,5 +7,7 @@ namespace SocketKnife.Interfaces
 {
     public interface IKnifeSocketClient : ITunnel<EndPoint, Socket, string>
     {
+        void Configure(IPAddress ipAddress, int port);
+
     }
 }

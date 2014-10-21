@@ -42,8 +42,8 @@ namespace SocketKnife.Generic.Filters
 
         private void BeatingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
-            KnifeSocketSessionMap map = _SessionMapGetter.Invoke();
+            KnifeSocketServerProtocolHandler[] handlers = _HandlersGetter.Invoke();
+            KnifeSocketSessionMap map = SessionMapGetter.Invoke();
 
             var list = new List<EndPoint>(0);
             foreach (KeyValuePair<EndPoint, KnifeSocketSession> pair in map)

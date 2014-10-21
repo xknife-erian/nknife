@@ -4,30 +4,29 @@ using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.Protocol;
 
-namespace SocketKnife.Generic
+namespace NKnife.Protocol.Generic
 {
     /// <summary>协议的抽象实现
     /// </summary>
-    public class KnifeSocketProtocol : IProtocol<string>
+    public class StringProtocol : IProtocol<string>
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         [Inject]
-        public virtual KnifeSocketProtocolPacker SocketPacker { get; set; }
+        public virtual StringProtocolPacker SocketPacker { get; set; }
 
         [Inject]
-        public virtual KnifeSocketProtocolUnPacker SocketUnPacker { get; set; }
+        public virtual StringProtocolUnPacker SocketUnPacker { get; set; }
 
         [Inject]
-        public KnifeSocketProtocolContent Content { get; set; }
+        public StringProtocolContent Content { get; set; }
 
-        public KnifeSocketProtocol()
+        public StringProtocol()
         {
         }
 
-        public KnifeSocketProtocol(string family, string command)
+        public StringProtocol(string family, string command)
         {
             Family = family;
             Command = command;
@@ -45,13 +44,13 @@ namespace SocketKnife.Generic
         IProtocolPacker<string> IProtocol<string>.Packer
         {
             get { return SocketPacker; }
-            set { SocketPacker = (KnifeSocketProtocolPacker) value; }
+            set { SocketPacker = (StringProtocolPacker) value; }
         }
 
         IProtocolUnPacker<string> IProtocol<string>.UnPacker
         {
             get { return SocketUnPacker; }
-            set { SocketUnPacker = (KnifeSocketProtocolUnPacker) value; }
+            set { SocketUnPacker = (StringProtocolUnPacker) value; }
         }
 
         /// <summary>协议的具体内容的容器
@@ -59,7 +58,7 @@ namespace SocketKnife.Generic
         IProtocolContent<string> IProtocol<string>.Content
         {
             get { return Content; }
-            set { Content = (KnifeSocketProtocolContent) value; }
+            set { Content = (StringProtocolContent) value; }
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace SocketKnife.Generic
             }
             try
             {
-                KnifeSocketProtocolContent c = Content;
+                StringProtocolContent c = Content;
                 SocketUnPacker.Execute(c, datagram, Family, Command);
             }
             catch (Exception e)
@@ -95,7 +94,7 @@ namespace SocketKnife.Generic
             }
         }
 
-        public KnifeSocketProtocol NewInstance()
+        public StringProtocol NewInstance()
         {
             return Build(Family, Command);
         }
@@ -121,9 +120,9 @@ namespace SocketKnife.Generic
 
         #endregion
 
-        public static KnifeSocketProtocol Build(string family, string command)
+        public static StringProtocol Build(string family, string command)
         {
-            var protocol = DI.Get<KnifeSocketProtocol>();
+            var protocol = DI.Get<StringProtocol>();
             protocol.Family = family;
             protocol.Command = command;
             return protocol;

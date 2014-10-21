@@ -71,6 +71,7 @@
     <Compile Include="Generic\Families\DatagramEncoder.cs" />
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
     <Compile Include="Generic\Filters\HeartbeatServerFilter.cs" />
+    <Compile Include="Generic\Filters\KeepAliveClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientFilterChain.cs" />
     <Compile Include="Generic\KnifeSocketCommandParser.cs" />
@@ -83,21 +84,11 @@
     <Compile Include="Generic\KnifeSocketSessionMap.cs" />
     <Compile Include="Generic\Filters\KeepAliveServerFilter.cs" />
     <Compile Include="Generic\KnifeSocketFilter.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolHandler.cs" />
+    <Compile Include="Generic\KnifeSocketServerProtocolHandler.cs" />
     <Compile Include="Generic\KnifeSocketServerFilterChain.cs" />
     <Compile Include="Generic\KnifeSocketServerConfig.cs" />
     <Compile Include="Generic\Families\EndMarkDecoder.cs" />
     <Compile Include="Generic\Families\EndMarkEncoder.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolPacker.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolUnPacker.cs" />
-    <Compile Include="Generic\KnifeSocketProtocol.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolContent.cs" />
-    <Compile Include="Generic\Protocols\ProtocolDataTableDeserializeUnPacker.cs" />
-    <Compile Include="Generic\Protocols\ProtocolDeserializeUnPacker.cs" />
-    <Compile Include="Generic\Protocols\ProtocolXmlPacker.cs" />
-    <Compile Include="Generic\Protocols\ProtocolXmlUnPacker.cs" />
-    <Compile Include="Generic\Protocols\TextPlainPacker.cs" />
-    <Compile Include="Generic\Protocols\TextPlainUnPacker.cs" />
     <Compile Include="Interfaces\IKnifeSocketClient.cs" />
     <Compile Include="Interfaces\ISocketClientFilter.cs" />
     <Compile Include="Interfaces\ISocketFilter.cs" />
@@ -106,11 +97,9 @@
     <Compile Include="Interfaces\ISocketConfig.cs" />
     <Compile Include="Interfaces\IKnifeSocketServer.cs" />
     <Compile Include="IoC\DefaultModules.cs" />
-    <Compile Include="Generic\KnifeSocketProtocolFamily.cs" />
     <Compile Include="KnifeSocketClient.cs" />
     <Compile Include="KnifeSocketServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProtocolExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife\NKnife.csproj">

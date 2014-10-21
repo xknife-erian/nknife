@@ -1,9 +1,10 @@
 ﻿using Ninject;
+using NKnife.Protocol.Generic;
 using SocketKnife.Generic;
 
 namespace NKnife.App.SocketKit.Demo.Protocols
 {
-    class Register : KnifeSocketProtocol
+    class Register : StringProtocol
     {
         public Register() 
             : base("socket-kit", "register")
@@ -11,9 +12,9 @@ namespace NKnife.App.SocketKit.Demo.Protocols
         }
 
         [Inject]
-        public override KnifeSocketProtocolPacker SocketPacker { get; set; }
+        public override StringProtocolPacker SocketPacker { get; set; }
 
         [Inject]
-        public override KnifeSocketProtocolUnPacker SocketUnPacker { get; set; }
+        public override StringProtocolUnPacker SocketUnPacker { get; set; }
     }
 }
