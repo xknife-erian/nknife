@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Net;
+using System.Net.Sockets;
 using Ninject.Modules;
-using NKnife.Protocol;
+using NKnife.Tunnel;
 using SocketKnife.Generic;
-using SocketKnife.Generic.Families;
-using SocketKnife.Generic.Protocols;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.IoC
@@ -17,8 +13,10 @@ namespace SocketKnife.IoC
         {
             Bind<IKnifeSocketServer>().To<KnifeSocketServer>();
 
+            Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketServerFilterChain>().Named("Server");
+            Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketClientFilterChain>().Named("Client");
+
             Bind<KnifeSocketServerConfig>().To<KnifeSocketServerConfig>();
-            Bind<KnifeSocketServerFilterChain>().To<KnifeSocketServerFilterChain>();
             Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>();
             Bind<KnifeSocketSession>().To<KnifeSocketSession>();
 

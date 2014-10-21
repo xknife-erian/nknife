@@ -11,9 +11,9 @@ namespace SocketKnife.Generic
     public abstract class TunnelBase : ITunnel<EndPoint, Socket, string>
     {
         protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
-        protected ITunnelFilterChain<EndPoint, Socket> _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>();
         protected KnifeSocketSessionMap _SessionMap = DI.Get<KnifeSocketSessionMap>();
 
+        protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
         protected KnifeSocketCodec _Codec;
         protected KnifeSocketProtocolFamily _Family;
         protected KnifeSocketProtocolHandler[] _Handlers;

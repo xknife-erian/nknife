@@ -7,6 +7,7 @@ using System.Threading;
 using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
+using NKnife.Tunnel;
 using SocketKnife.Common;
 using SocketKnife.Events;
 using SocketKnife.Exceptions;
@@ -30,6 +31,11 @@ namespace SocketKnife
         #endregion
 
         #region ISocketServerKnife 接口实现
+
+        public KnifeSocketServer()
+        {
+            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Server");
+        }
 
         public override bool Start()
         {
