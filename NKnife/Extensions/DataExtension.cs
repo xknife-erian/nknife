@@ -10,7 +10,7 @@ namespace System.Data
     public static class DataExtensions
     {
 
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();  
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();  
         
         /// <summary>像Linq to DataSet中得到字段值的操作
         /// </summary>
@@ -58,7 +58,7 @@ namespace System.Data
                                              DataType = propertyInfo.PropertyType
                                          };
                         row.Table.Columns.Add(column);
-                        _Logger.Warn(String.Format("添加列。属性:{0} 没有找到对应数据列,对应表:{1}", propertyInfo.Name, row.Table.TableName));
+                        _logger.Warn(String.Format("添加列。属性:{0} 没有找到对应数据列,对应表:{1}", propertyInfo.Name, row.Table.TableName));
                     }
                     var value = propertyInfo.GetValue(obj, null) ?? DBNull.Value;
                     row[columnName] = value; //反射调用属性值填充
@@ -107,7 +107,7 @@ namespace System.Data
                         }
                         catch (Exception e)
                         {
-                            _Logger.Warn(String.Format("属性:{0}赋值失败。{1}", propertyInfo.Name, row.Table.TableName), e);
+                            _logger.Warn(String.Format("属性:{0}赋值失败。{1}", propertyInfo.Name, row.Table.TableName), e);
                         }
                         hasColumn = true;
                         break;
@@ -115,7 +115,7 @@ namespace System.Data
                 }
                 if (!hasColumn)
                 {
-                    _Logger.Warn(String.Format("数据行中的列:{0}没有找到对应的属性", dataColumn.ColumnName));
+                    _logger.Warn(String.Format("数据行中的列:{0}没有找到对应的属性", dataColumn.ColumnName));
                 }
             }
             return newobj;

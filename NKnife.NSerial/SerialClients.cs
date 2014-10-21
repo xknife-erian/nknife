@@ -12,7 +12,7 @@ namespace NKnife.NSerial
     /// </summary>
     public sealed class SerialClients : ISerialClientManager, IDisposable
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>串口管理器字典，以串口号作为键值
         /// </summary>
@@ -74,7 +74,7 @@ namespace NKnife.NSerial
             }
             catch (Exception ex)
             {
-                _Logger.Warn("SerialCommunicationManager类UnInitialize异常", ex);
+                _logger.Warn("SerialCommunicationManager类UnInitialize异常", ex);
                 return false;
             }
         }

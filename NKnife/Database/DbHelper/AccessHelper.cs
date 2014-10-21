@@ -6,7 +6,7 @@ namespace NKnife.Database.DbHelper
 {
     public class AccessHelper
     {
-        //private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        //private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         public static string _ConnString;
 
         #region "ExecuteSQL"
@@ -70,7 +70,7 @@ namespace NKnife.Database.DbHelper
             }
             catch (OleDbException ex)
             {
-                //_Logger.Warn("ExecuteSQLDataReader异常." + ex.Message, ex);
+                //_logger.Warn("ExecuteSQLDataReader异常." + ex.Message, ex);
                 cmd.Dispose();
                 conn.Close();
                 return null;
@@ -136,7 +136,7 @@ namespace NKnife.Database.DbHelper
             catch (OleDbException ex)
             {
                 //throw new Exception(ex.Message);
-                //_Logger.Warn("ExecuteSQLIntValue出现异常." + ex.Message, ex);
+                //_logger.Warn("ExecuteSQLIntValue出现异常." + ex.Message, ex);
                 return 0;
             }
             finally

@@ -17,7 +17,7 @@ namespace NKnife.Configuring.OptionCase
     /// </summary>
     public abstract class AbstractOptionCaseManager : IOptionCaseManager
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         private readonly IList<OptionCaseItem> _InnerList = new List<OptionCaseItem>();
         private readonly XmlSerializer _Serializer = new XmlSerializer(typeof (OptionCaseItem));
 
@@ -35,7 +35,7 @@ namespace NKnife.Configuring.OptionCase
             if (element == null || element.NodeType != XmlNodeType.Element || element.ChildNodes.Count <= 0)
             {
                 _InnerList.Add(OptionCaseItem.GetBase());
-                _Logger.Warn(@"初始化选项实例管理器时不可以传入空。");
+                _logger.Warn(@"初始化选项实例管理器时不可以传入空。");
                 return;
             }
             foreach (XmlElement node in element.ChildNodes)
@@ -54,7 +54,7 @@ namespace NKnife.Configuring.OptionCase
                         }
                         catch (Exception e)
                         {
-                            _Logger.Warn(string.Format("反序列化Solution对象失败。{0}", e.Message), e);
+                            _logger.Warn(string.Format("反序列化Solution对象失败。{0}", e.Message), e);
                         }
                         if (obj != null)
                         {

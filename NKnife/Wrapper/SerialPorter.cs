@@ -8,7 +8,7 @@ namespace NKnife.Wrapper
 {
     public class SerialPorter
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         private readonly SerialPort _SerialPort = new SerialPort();
 
         public bool IsOpen
@@ -38,7 +38,7 @@ namespace NKnife.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("串口初始化异常.{0}", _SerialPort.PortName), e);
+                _logger.Error(string.Format("串口初始化异常.{0}", _SerialPort.PortName), e);
                 return false;
             }
         }
@@ -79,7 +79,7 @@ namespace NKnife.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.Warn(string.Format("打印时向串口写数据异常。{0}", Encoding.Default.GetString(byteArraySrc)), e);
+                _logger.Warn(string.Format("打印时向串口写数据异常。{0}", Encoding.Default.GetString(byteArraySrc)), e);
                 return 1;
             }
         }
@@ -97,7 +97,7 @@ namespace NKnife.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.Warn(string.Format("从串口读数据异常。"), e);
+                _logger.Warn(string.Format("从串口读数据异常。"), e);
                 return -1;
             }
         }

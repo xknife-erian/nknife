@@ -13,7 +13,7 @@ namespace NKnife.NSerial
     /// </summary>
     internal class SerialClient : ISerialClient
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         private readonly bool _EnableDetialLogger;
         private readonly ManualResetEventSlim _QSendWaitEvent = new ManualResetEventSlim(false);
@@ -42,7 +42,7 @@ namespace NKnife.NSerial
             {
                 _Active = true;
                 _DataPool = new SerialDataPool();
-                _Logger.Info(string.Format("通讯串口{0}打开成功", _PortName));
+                _logger.Info(string.Format("通讯串口{0}打开成功", _PortName));
 
                 //一个端口一个线程，专门处理该端口的数据收发
                 var queryThread = new Thread(QuerySendLoop) {IsBackground = true};
@@ -50,7 +50,7 @@ namespace NKnife.NSerial
                 return true;
             }
             _Active = false;
-            _Logger.Info("通讯串口" + _PortName + "打开失败");
+            _logger.Info("通讯串口" + _PortName + "打开失败");
             return false;
         }
 
@@ -138,7 +138,7 @@ namespace NKnife.NSerial
             }
             catch (Exception e)
             {
-                _Logger.Warn("SendProcess异常", e);
+                _logger.Warn("SendProcess异常", e);
             }
         }
 
@@ -149,11 +149,11 @@ namespace NKnife.NSerial
         {
             if (_EnableDetialLogger)
             {
-                _Logger.Trace(() => string.Format("串发:{0}", package.DataToSend.ToHexString()));
+                _logger.Trace(() => string.Format("串发:{0}", package.DataToSend.ToHexString()));
             }
             else if (package.GetType() == typeof (OneWayPackage))
             {
-                _Logger.Debug(() =>
+                _logger.Debug(() =>
                               string.Format("串发:{0}, {1},{2}",
                                             package.DataToSend.ToHexString(),
                                             package.GetType().Name,
@@ -162,7 +162,7 @@ namespace NKnife.NSerial
             else if (package.GetType() == typeof (TwoWayPackage))
             {
                 var twowayPackage = (TwoWayPackage) package;
-                _Logger.Debug(() =>
+                _logger.Debug(() =>
                               string.Format("串发:{0}, {1},{2},{3}",
                                             package.DataToSend.ToHexString(),
                                             package.GetType().Name,

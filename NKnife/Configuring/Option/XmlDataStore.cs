@@ -18,7 +18,7 @@ namespace NKnife.Configuring.Option
 {
     public class XmlDataStore : IOptionDataStore
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         #region IOptionDataStore实现
 
@@ -169,16 +169,16 @@ namespace NKnife.Configuring.Option
                     }
                     else
                     {
-                        _Logger.Warn(string.Format("找不到{0}表的节点。", option.Category));
+                        _logger.Warn(string.Format("找不到{0}表的节点。", option.Category));
                         BuildNewNode(Document, option);
-                        _Logger.Info(string.Format("创建Option的{0}表的新节点。", option.Category));
+                        _logger.Info(string.Format("创建Option的{0}表的新节点。", option.Category));
                         return false;
                     }
                 }
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", option.Category, e.Message), e);
+                _logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", option.Category, e.Message), e);
                 return false;
             }
         }
@@ -205,7 +205,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("保存选项XML时异常.{0}", e.Message), e);
+                _logger.Error(string.Format("保存选项XML时异常.{0}", e.Message), e);
                 return false;
             }
         }
@@ -292,9 +292,9 @@ namespace NKnife.Configuring.Option
 //            }
 //            catch (Exception e)
 //            {
-//                _Logger.Error(string.Format("从目录中搜索选项类时异常。{0}", e.Message), e);
+//                _logger.Error(string.Format("从目录中搜索选项类时异常。{0}", e.Message), e);
 //            }
-//            _Logger.Info(string.Format("搜索所有的程序集，并找到 {0} 个IOption类型(包括基本类型和抽象类型)。", types.Count()));
+//            _logger.Info(string.Format("搜索所有的程序集，并找到 {0} 个IOption类型(包括基本类型和抽象类型)。", types.Count()));
 //            var schemas = new List<IOptionDataTableSchema>();
 //            foreach (Type type in types)
 //            {

@@ -14,7 +14,7 @@ namespace SocketKnife
     /// </summary>
     public class AsynListener : Component
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         private readonly ManualResetEvent _AllDone = new ManualResetEvent(false);
         private readonly ManualResetEvent _SendDone = new ManualResetEvent(false);
@@ -116,7 +116,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _Logger.Warn(string.Format("Listen关闭时有导常"), e);
+                _logger.Warn(string.Format("Listen关闭时有导常"), e);
             }
         }
 
@@ -135,7 +135,7 @@ namespace SocketKnife
             {
                 var listener = (Socket) ar.AsyncState;
                 client = listener.EndAccept(ar);
-                _Logger.Trace(string.Format("监听到客户端连接：{0}", client.RemoteEndPoint.ToString()));
+                _logger.Trace(string.Format("监听到客户端连接：{0}", client.RemoteEndPoint.ToString()));
                 var state = new StateObject(_BufferSize, client) {Client = client};
                 client.BeginReceive(state.Buffer, 0, _BufferSize, 0, ReadCallback, state);
             }
@@ -219,7 +219,7 @@ namespace SocketKnife
         /// <param name="data">数据</param>
         public virtual void Send(Socket client, string data)
         {
-            _Logger.Trace(string.Format("Send:{0}", data));
+            _logger.Trace(string.Format("Send:{0}", data));
             byte[] byteData = Encoding.Default.GetBytes(data);
             client.BeginSend(byteData, 0, byteData.Length, 0, SendCallback, client);
         }
@@ -240,7 +240,7 @@ namespace SocketKnife
             try
             {
                 int bytesSent = client.EndSend(ar);
-                _Logger.Debug(string.Format("Sent {0} bytes to client.", bytesSent));
+                _logger.Debug(string.Format("Sent {0} bytes to client.", bytesSent));
             }
             catch (Exception e)
             {

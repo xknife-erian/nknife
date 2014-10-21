@@ -13,7 +13,7 @@ namespace NKnife.NSerial.Wrappers
     /// </summary>
     public class SerialPortWrapperDotNet : ISerialPortWrapper
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         protected readonly ManualResetEventSlim Reset = new ManualResetEventSlim(false);
 
@@ -66,13 +66,13 @@ namespace NKnife.NSerial.Wrappers
                 }
                 IsOpen = SerialPort.IsOpen;
                 if (IsOpen)
-                    _Logger.Info(string.Format("通讯:成功打开串口:{0}。{1},{2},{3}", portName, SerialPort.BaudRate,
+                    _logger.Info(string.Format("通讯:成功打开串口:{0}。{1},{2},{3}", portName, SerialPort.BaudRate,
                                                SerialPort.ReceivedBytesThreshold, SerialPort.ReadTimeout));
                 return SerialPort.IsOpen;
             }
             catch (Exception e)
             {
-                _Logger.Warn("无法打开串口:" + portName, e);
+                _logger.Warn("无法打开串口:" + portName, e);
                 IsOpen = false;
                 return false;
             }
@@ -89,14 +89,14 @@ namespace NKnife.NSerial.Wrappers
                 if (SerialPort.IsOpen)
                 {
                     SerialPort.Close();
-                    _Logger.Info(string.Format("通讯:成功关闭串口:{0}。", SerialPort.PortName));
+                    _logger.Info(string.Format("通讯:成功关闭串口:{0}。", SerialPort.PortName));
                 }
                 IsOpen = false;
                 return true;
             }
             catch (Exception e)
             {
-                _Logger.Warn("关闭串口异常:" + SerialPort.PortName, e);
+                _logger.Warn("关闭串口异常:" + SerialPort.PortName, e);
                 return false;
             }
         }

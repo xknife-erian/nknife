@@ -12,7 +12,7 @@ namespace NKnife.NSerial.Common
     /// </summary>
     internal class SerialDataPool : ISerialDataPool
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         private readonly ConcurrentQueue<PackageBase> _OneWayPool = new ConcurrentQueue<PackageBase>();
         private readonly ConcurrentQueue<PackageBase> _QueryPool = new ConcurrentQueue<PackageBase>();
         private readonly ConcurrentQueue<PackageBase> _TwoWayPool = new ConcurrentQueue<PackageBase>();
@@ -96,7 +96,7 @@ namespace NKnife.NSerial.Common
                 if (two.AlreadySentTimes < two.SendTimes)
                 {
                     if (two.AlreadySentTimes > 0)
-                        _Logger.Trace(string.Format("[{0}/{1}]重发:,{2}", two.AlreadySentTimes + 1, two.SendTimes, two.DataToSend.ToHexString()));
+                        _logger.Trace(string.Format("[{0}/{1}]重发:,{2}", two.AlreadySentTimes + 1, two.SendTimes, two.DataToSend.ToHexString()));
                     two.AlreadySentTimes++;
                     outTwoWayPackage = package;
                     return true;

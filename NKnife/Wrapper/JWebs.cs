@@ -24,7 +24,7 @@ namespace NKnife.Wrapper
         private const string BEGIN_BOUNDARY = "--" + BOUNDARY + "\r\n";
         private const string END_BOUNDARY = "\r\n--" + BOUNDARY + "--\r\n";
 
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         private JWebClient _WebClient;
 
@@ -106,7 +106,7 @@ namespace NKnife.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.Warn("获取回复异常", e);
+                _logger.Warn("获取回复异常", e);
             }
 
             rootRequest.Abort();

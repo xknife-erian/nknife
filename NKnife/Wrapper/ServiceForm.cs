@@ -11,7 +11,7 @@ namespace NKnife.Wrapper
     /// </summary>
     public class ServiceForm
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         ///     开启窗体 使用后用 System.Windows.Forms.Application.Run(_Form);来启动窗体
@@ -48,7 +48,7 @@ namespace NKnife.Wrapper
             }
             catch (Exception e)
             {
-                _Logger.Error("弹出服务窗体异常。", e);
+                _logger.Error("弹出服务窗体异常。", e);
                 evnetLog.WriteEntry(e.ToString());
             }
         }

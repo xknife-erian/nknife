@@ -20,7 +20,7 @@ namespace NKnife.Configuring.Option
     /// </summary>
     public class ZipDataStore : IOptionDataStore
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>Gean.Configuring框架中Option部份的程序员配置
         /// </summary>
@@ -64,7 +64,7 @@ namespace NKnife.Configuring.Option
             if (string.IsNullOrWhiteSpace(_OptionWorkDateDirectory))
                 WorkDirectoryNameBuilder(fileInfo, ref _OptionWorkDirectory, ref _OptionWorkDateDirectory);
             _IsInitalizeSuccess = InitializeFiles();
-            _Logger.Info("初始化载入子选项个数：" + _DataTableMap.Count);
+            _logger.Info("初始化载入子选项个数：" + _DataTableMap.Count);
         }
 
         /// <summary>初始化过程中的选项文件的初始化，如压缩,解压,载入文件等
@@ -87,7 +87,7 @@ namespace NKnife.Configuring.Option
                     }
                     catch (Exception e)
                     {
-                        _Logger.Error("解压选项的持久化文件异常.", e);
+                        _logger.Error("解压选项的持久化文件异常.", e);
                         return false;
                     }
 
@@ -100,7 +100,7 @@ namespace NKnife.Configuring.Option
                     }
                     catch (Exception e)
                     {
-                        _Logger.Error("载入Option.info文件异常.", e);
+                        _logger.Error("载入Option.info文件异常.", e);
                         return false;
                     }
                     try
@@ -113,12 +113,12 @@ namespace NKnife.Configuring.Option
                             if (!string.IsNullOrWhiteSpace(filename))
                                 _DataTableMap.TryAdd(filename, optionTable);
                             else
-                                _Logger.Error(string.Format("无法从{0}中得出文件名。", filename));
+                                _logger.Error(string.Format("无法从{0}中得出文件名。", filename));
                         }
                     }
                     catch (Exception e)
                     {
-                        _Logger.Error("DataTable的反序列化过程异常.", e);
+                        _logger.Error("DataTable的反序列化过程异常.", e);
                         return false;
                     }
                     //激活选项载入后事件
@@ -199,7 +199,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.Error("首次创建新的选项包时异常", e);
+                _logger.Error("首次创建新的选项包时异常", e);
             }
         }
 
@@ -316,7 +316,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", option.Category, e.Message), e);
+                _logger.Error(string.Format("更新选项信息节点时异常。{0}，{1}", option.Category, e.Message), e);
                 return false;
             }
         }
@@ -346,7 +346,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.Error("持久化选项异常", e);
+                _logger.Error("持久化选项异常", e);
                 return false;
             }
         }

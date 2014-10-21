@@ -305,7 +305,7 @@ namespace NKnife.Configuring.Option
             }
 //            if (dt.Rows == null || dt.Rows.Count <= 0)
 //            {
-//                _Logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", category));
+//                _logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", category));
 //                DataRow newrow = dt.NewRow();
 //                newrow["solution"] = _CurrentCase.Name;
 //                newrow["clientId"] = CurrentClientId;
@@ -322,7 +322,7 @@ namespace NKnife.Configuring.Option
 //            }
 //            if (!row.Table.Columns.Contains(key))
 //            {
-//                _Logger.Warn(string.Format("配置中没有{0}的列", key));
+//                _logger.Warn(string.Format("配置中没有{0}的列", key));
 //                var c = new DataColumn(key);
 //                c.Caption = key;
 //                c.DataType = dataType;

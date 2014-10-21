@@ -10,7 +10,7 @@ namespace NKnife.Configuring.Controls
 {
     public class OptionControlBase : UserControl, IOptionControl
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         public OptionControlBase()
         {
@@ -59,7 +59,7 @@ namespace NKnife.Configuring.Controls
             }
             catch (Exception e)
             {
-                _Logger.Warn("初始化时为所有控件加载事件异常", e);
+                _logger.Warn("初始化时为所有控件加载事件异常", e);
             }
         }
 

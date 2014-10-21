@@ -14,7 +14,7 @@ namespace NKnife.Configuring.Option
     [Serializable]
     public class OptionDataTable : DataTable, IOption
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         public OptionDataTable()
         {
@@ -145,7 +145,7 @@ namespace NKnife.Configuring.Option
             }
             catch (Exception e)
             {
-                _Logger.Warn("解析DataTable时，获取源字符串异常", e);
+                _logger.Warn("解析DataTable时，获取源字符串异常", e);
             }
             if (sr != null)
             {
@@ -175,7 +175,7 @@ namespace NKnife.Configuring.Option
                 }
                 catch (Exception e)
                 {
-                    _Logger.Error(string.Format("table.ReadXml异常。{0}", filefullname), e);
+                    _logger.Error(string.Format("table.ReadXml异常。{0}", filefullname), e);
                 }
                 string tablename = Path.GetFileNameWithoutExtension(filefullname);
                 SetOptionTableProperties(store, tablename, table);

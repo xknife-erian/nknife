@@ -9,7 +9,7 @@ namespace NKnife.NSerial.Abstracts
     /// </summary>
     public abstract class PackageBase
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         protected PackageBase(ushort port, byte[] dataToSend, SendInterval sendInterval)
         {
@@ -51,7 +51,7 @@ namespace NKnife.NSerial.Abstracts
             }
             catch (Exception ex)
             {
-                _Logger.Warn("OnPackageSent:", ex);
+                _logger.Warn("OnPackageSent:", ex);
             }
         }
     }
