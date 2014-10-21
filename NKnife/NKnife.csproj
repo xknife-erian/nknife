@@ -146,8 +146,8 @@
     <Compile Include="Protocol\IProtocolContent`.cs" />
     <Compile Include="Protocol\IProtocolFamily`.cs" />
     <Compile Include="Protocol\IProtocolHandler`.cs" />
-    <Compile Include="Protocol\IProtocolPackager`.cs" />
-    <Compile Include="Protocol\IProtocolUnPackager`.cs" />
+    <Compile Include="Protocol\IProtocolPacker`.cs" />
+    <Compile Include="Protocol\IProtocolUnPacker`.cs" />
     <Compile Include="Tunnel\Events\ConnectionBreakEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataDecodedEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
