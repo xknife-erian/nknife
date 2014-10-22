@@ -67,6 +67,9 @@ namespace NKnife.App.SocketKit.Demo
             var family = DI.Get<StringProtocolFamily>();
             family.Family = "socket-kit";
 
+            var pro1 = DI.Get<StringProtocol>("abcd");
+            var pro2 = DI.Get<StringProtocol>();
+
             family.Add(family.Build("call"));
             family.Add(family.Build("recall"));
             family.Add(family.Build("sing"));

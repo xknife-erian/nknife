@@ -1,4 +1,5 @@
-﻿using Ninject.Modules;
+﻿using System;
+using Ninject.Modules;
 using NKnife.App.SocketKit.Common;
 using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.CommandParsers;
@@ -21,6 +22,12 @@ namespace NKnife.App.SocketKit.IoC
 
             Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();
             Bind<KnifeSocketDatagramEncoder>().To<FixedTailEncoder>();
+
+            Bind<StringProtocol>().To<MyProtocol>().Named("abcd");
+        }
+
+        public class MyProtocol : StringProtocol
+        {
         }
     }
 }

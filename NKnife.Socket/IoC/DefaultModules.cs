@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using Ninject.Activation;
 using Ninject.Modules;
+using Ninject.Planning.Bindings;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using SocketKnife.Generic;
@@ -17,13 +19,18 @@ namespace SocketKnife.IoC
             Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketServerFilterChain>().Named("Server");
             Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketClientFilterChain>().Named("Client");
 
-            Bind<KnifeSocketServerConfig>().To<KnifeSocketServerConfig>();
-            Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>();
-            Bind<KnifeSocketSession>().To<KnifeSocketSession>();
+            Bind<KnifeSocketServerConfig>().To<KnifeSocketServerConfig>().When(Request);
+            Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>().When(Request);
+            Bind<KnifeSocketSession>().To<KnifeSocketSession>().When(Request);
 
-            Bind<StringProtocol>().To<StringProtocol>();
-            Bind<StringProtocolFamily>().To<StringProtocolFamily>();
-            Bind<StringProtocolContent>().To<StringProtocolContent>();
+            Bind<StringProtocol>().To<StringProtocol>().When(Request);
+            Bind<StringProtocolFamily>().To<StringProtocolFamily>().When(Request);
+            Bind<StringProtocolContent>().To<StringProtocolContent>().When(Request);
+        }
+
+        private bool Request(IRequest request)
+        {
+            return request.IsUnique;
         }
     }
 }
