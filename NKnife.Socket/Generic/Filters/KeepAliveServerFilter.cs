@@ -103,7 +103,8 @@ namespace SocketKnife.Generic.Filters
             var pair = (KeyValuePair<EndPoint, ReceiveQueue>) obj;
             _logger.Debug(() => string.Format("启动基于{0}的ReceiveQueue队列的监听。", pair.Key));
             ReceiveQueue receiveQueue = pair.Value;
-            var undone = new byte[] {};
+
+            var unFinished = new byte[] {};
             DataMonitor dataMonitor;
             if (_DataMonitors.TryGetValue(pair.Key, out dataMonitor))
             {
@@ -112,29 +113,7 @@ namespace SocketKnife.Generic.Filters
                     if (receiveQueue.Count > 0)
                     {
                         byte[] data = receiveQueue.Dequeue();
-                        if (!UtilityCollection.IsNullOrEmpty(undone))
-                        {
-                            // 当有半包数据时，进行接包操作
-                            int srcLen = data.Length;
-                            var list = new List<byte>(data.Length + undone.Length);
-                            list.AddRange(undone);
-                            list.AddRange(data);
-                            data = list.ToArray();
-                            int length = undone.Length;
-                            _logger.Trace(
-                                () => string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", length, srcLen, data.Length));
-                            undone = new byte[] {};
-                        }
-                        int done;
-                        DataDecoder(pair.Key, data, out done);
-                        if (data.Length > done)
-                        {
-                            // 暂存半包数据，留待下条队列数据接包使用
-                            undone = new byte[data.Length - done];
-                            Buffer.BlockCopy(data, done, undone, 0, undone.Length);
-                            int length = undone.Length;
-                            _logger.Trace(() => string.Format("半包数据暂存,数据长度:{0}", length));
-                        }
+                        unFinished = ProcessDataPacket(data, unFinished, DataDecoder, pair.Key);
                     }
                     else
                     {
@@ -145,18 +124,19 @@ namespace SocketKnife.Generic.Filters
             // 当接收队列停止监听时，移除该客户端数据队列
             bool isRemoved = _DataMonitors.TryRemove(pair.Key, out dataMonitor);
             if (isRemoved)
-                _logger.Trace(() => string.Format("从数据队列池中移除该客户端{0}成功，{1}", pair.Key, _DataMonitors.Count));
+                _logger.Trace(() => string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", pair.Key, _DataMonitors.Count));
         }
 
-        protected virtual void DataDecoder(EndPoint endpoint, byte[] data, out int done)
+        protected virtual int DataDecoder(EndPoint endpoint, byte[] data)
         {
+            int done;
             StringProtocolFamily family = _FamilyGetter.Invoke();
             KnifeSocketCodec codec = _CodecGetter.Invoke();
             string[] datagram = codec.SocketDecoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _logger.Debug("协议消息无内容。");
-                return;
+                return done;
             }
             IEnumerable<StringProtocol> protocols = ProtocolParse(family, datagram);
             foreach (StringProtocol protocol in protocols)
@@ -164,6 +144,7 @@ namespace SocketKnife.Generic.Filters
                 // 触发数据基础解析后发生的数据到达事件
                 HandlerInvoke(endpoint, protocol);
             }
+            return done;
         }
 
         protected virtual IEnumerable<StringProtocol> ProtocolParse(StringProtocolFamily family, string[] datagram)
