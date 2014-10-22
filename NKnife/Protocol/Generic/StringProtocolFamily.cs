@@ -154,8 +154,7 @@ namespace NKnife.Protocol.Generic
 
         public void Add(StringProtocol protocol)
         {
-            if (!_Map.ContainsKey(protocol.Command))
-                _Map.Add(protocol.Command, protocol);
+            _Map.Add(protocol.Command, protocol);
         }
 
         public void Add(string key, StringProtocol value)
@@ -176,15 +175,10 @@ namespace NKnife.Protocol.Generic
         public StringProtocol Build(string command)
         {
             Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
-            StringProtocol protocol;
-            if (!_Map.TryGetValue(command, out protocol))
-            {
-                protocol = DI.Get<StringProtocol>();
-                protocol.Family = Family;
-                protocol.Command = command;
-                _Map.Add(command, protocol);
-            }
-            return _Map[command].NewInstance();
+            var protocol = DI.Get<StringProtocol>();
+            protocol.Family = Family;
+            protocol.Command = command;
+            return protocol;
         }
     }
 }

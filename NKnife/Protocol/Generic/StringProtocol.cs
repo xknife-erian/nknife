@@ -13,6 +13,17 @@ namespace NKnife.Protocol.Generic
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
+        public StringProtocol()
+        {
+            
+        }
+
+        protected StringProtocol(string family, string command)
+        {
+            Family = family;
+            Command = command;
+        }
+
         [Inject]
         public virtual StringProtocolPacker Packer { get; set; }
 
@@ -21,16 +32,6 @@ namespace NKnife.Protocol.Generic
 
         [Inject]
         public StringProtocolContent Content { get; set; }
-
-        public StringProtocol()
-        {
-        }
-
-        public StringProtocol(string family, string command)
-        {
-            Family = family;
-            Command = command;
-        }
 
         #region IProtocol Members
 
