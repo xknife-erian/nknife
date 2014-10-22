@@ -10,31 +10,30 @@ using System.Windows.Forms;
 namespace NKnife.GUI.WinForm.WinFormContainer
 {
     /// <summary>
-    /// 可以把其他窗体应用程序嵌入此容器
+    ///     可以把其他窗体应用程序嵌入此容器
     /// </summary>
-    [ToolboxBitmap(typeof(WinFormContainer), "WinFormContainer.bmp")]
+    [ToolboxBitmap(typeof (WinFormContainer), "WinFormContainer.bmp")]
     public partial class WinFormContainer : Panel
     {
-        readonly Action<object, EventArgs> _AppIdleAction;
-        readonly EventHandler _AppIdleEvent;
+        private readonly EventHandler _AppIdleEvent;
+
         public WinFormContainer()
         {
             InitializeComponent();
-            _AppIdleAction = ApplicationIdle;
-            _AppIdleEvent = new EventHandler(_AppIdleAction);
+            _AppIdleEvent = ApplicationIdle;
         }
 
         public WinFormContainer(IContainer container)
         {
             container.Add(this);
             InitializeComponent();
-            _AppIdleAction = ApplicationIdle;
-            _AppIdleEvent = new EventHandler(_AppIdleAction);
+            _AppIdleEvent = ApplicationIdle;
         }
+
         /// <summary>
-        /// 将属性<code>AppFilename</code>指向的应用程序打开并嵌入此容器
+        ///     将属性<code>AppFilename</code>指向的应用程序打开并嵌入此容器
         /// </summary>
-        public void Start(string appFileName,string arguments="")
+        public void Start(string appFileName, string arguments = "")
         {
             AppFilename = appFileName;
             if (_AppProcess != null)
@@ -44,11 +43,12 @@ namespace NKnife.GUI.WinForm.WinFormContainer
             try
             {
                 var info = new ProcessStartInfo(_AppFilename)
-                    {UseShellExecute = true, WindowStyle = ProcessWindowStyle.Minimized,Arguments = arguments};
+                {UseShellExecute = true, WindowStyle = ProcessWindowStyle.Minimized, Arguments = arguments};
                 //info.WindowStyle = ProcessWindowStyle.Hidden;
                 _AppProcess = Process.Start(info);
                 // Wait for process to be created and enter idle condition
-                _AppProcess.WaitForInputIdle();
+                if (_AppProcess != null) 
+                    _AppProcess.WaitForInputIdle();
                 //todo:下面这两句会引发 NullReferenceException 异常，不知道怎么回事                
                 //_AppProcess.Exited += new EventHandler(m_AppProcess_Exited);
                 //_AppProcess.EnableRaisingEvents = true;
@@ -69,14 +69,14 @@ namespace NKnife.GUI.WinForm.WinFormContainer
                     _AppProcess = null;
                 }
             }
-
         }
+
         /// <summary>
-        /// 确保应用程序嵌入此容器
+        ///     确保应用程序嵌入此容器
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void ApplicationIdle(object sender, EventArgs e)
+        private void ApplicationIdle(object sender, EventArgs e)
         {
             if (_AppProcess == null || _AppProcess.HasExited)
             {
@@ -94,26 +94,28 @@ namespace NKnife.GUI.WinForm.WinFormContainer
             //    Application.Idle -= appIdleEvent;
             //}
         }
+
         /// <summary>
-        /// 应用程序结束运行时要清除这里的标识
+        ///     应用程序结束运行时要清除这里的标识
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void AppProcessExited(object sender, EventArgs e)
+        private void AppProcessExited(object sender, EventArgs e)
         {
             _AppProcess = null;
         }
+
         //public void Start(string appFilename)
         //{
         //    this.AppFilename = AppFilename;
         //    Start();
         //}
         /// <summary>
-        /// 将属性<code>AppFilename</code>指向的应用程序关闭
+        ///     将属性<code>AppFilename</code>指向的应用程序关闭
         /// </summary>
         public void Stop()
         {
-            if (_AppProcess != null)// && _AppProcess.MainWindowHandle != IntPtr.Zero)
+            if (_AppProcess != null) // && _AppProcess.MainWindowHandle != IntPtr.Zero)
             {
                 try
                 {
@@ -148,33 +150,71 @@ namespace NKnife.GUI.WinForm.WinFormContainer
             base.OnSizeChanged(e);
         }
 
-        #region 属性
+        public void EmbedAgain()
+        {
+            EmbedProcess(_AppProcess, this);
+            MessageBox.Show("完毕");
+        }
+
         /// <summary>
-        /// application process
+        ///     将指定的程序嵌入指定的控件
+        /// </summary>
+        private void EmbedProcess(Process app, Control control)
+        {
+            // Get the main handle
+            if (app == null || app.MainWindowHandle == IntPtr.Zero || control == null) return;
+            try
+            {
+                // Put it into this form
+                SetParent(app.MainWindowHandle, control.Handle);
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                // Remove border and whatnot               
+                SetWindowLong(new HandleRef(this, app.MainWindowHandle), GWL_STYLE, WS_VISIBLE);
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                // Move the window to overlay it on this window
+                MoveWindow(app.MainWindowHandle, 0, 0, control.Width, control.Height, true);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #region 属性
+
+        /// <summary>
+        ///     要嵌入的程序文件名
+        /// </summary>
+        private string _AppFilename = "";
+
+        /// <summary>
+        ///     application process
         /// </summary>
         private Process _AppProcess;
 
         /// <summary>
-        /// 要嵌入的程序文件名
-        /// </summary>
-        private string _AppFilename = "";
-        /// <summary>
-        /// 要嵌入的程序文件名
+        ///     要嵌入的程序文件名
         /// </summary>
         [Category("Data")]
         [Description("要嵌入的程序文件名")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        [Editor(typeof(AppFileNameEditor), typeof(UITypeEditor))]
+        [Editor(typeof (AppFileNameEditor), typeof (UITypeEditor))]
         public string AppFilename
         {
-            get
-            {
-                return _AppFilename;
-            }
+            get { return _AppFilename; }
             set
             {
                 if (value == null || value == _AppFilename) return;
-                var self = Application.ExecutablePath;
+                string self = Application.ExecutablePath;
                 if (value.ToLower() == self.ToLower())
                 {
                     MessageBox.Show("不能自己嵌入自己！");
@@ -186,83 +226,24 @@ namespace NKnife.GUI.WinForm.WinFormContainer
                 }
                 if (!File.Exists(value))
                 {
-                    MessageBox.Show(string.Format("要嵌入的程序{0}不存在！",_AppFilename));
+                    MessageBox.Show(string.Format("要嵌入的程序{0}不存在！", _AppFilename));
                     return;
                 }
                 _AppFilename = value;
             }
         }
+
         /// <summary>
-        /// 标识内嵌程序是否已经启动
+        ///     标识内嵌程序是否已经启动
         /// </summary>
-        public bool IsStarted { get { return (_AppProcess != null); } }
+        public bool IsStarted
+        {
+            get { return (_AppProcess != null); }
+        }
 
         #endregion 属性
 
         #region Win32 WinApi
-        [DllImport("user32.dll", EntryPoint = "GetWindowThreadProcessId", SetLastError = true,
-             CharSet = CharSet.Unicode, ExactSpelling = true,
-             CallingConvention = CallingConvention.StdCall)]
-        private static extern long GetWindowThreadProcessId(long hWnd, long lpdwProcessId);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern long SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        [DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
-        private static extern long GetWindowLong(IntPtr hwnd, int nIndex);
-
-        public static IntPtr SetWindowLong(HandleRef hWnd, int nIndex, int dwNewLong)
-        {
-            if (IntPtr.Size == 4)
-            {
-                return SetWindowLongPtr32(hWnd, nIndex, dwNewLong);
-            }
-            return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
-        }
-        [DllImport("user32.dll", EntryPoint = "SetWindowLong", CharSet = CharSet.Auto)]
-        public static extern IntPtr SetWindowLongPtr32(HandleRef hWnd, int nIndex, int dwNewLong);
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", CharSet = CharSet.Auto)]
-        public static extern IntPtr SetWindowLongPtr64(HandleRef hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern long SetWindowPos(IntPtr hwnd, long hWndInsertAfter, long x, long y, long cx, long cy, long wFlags);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool MoveWindow(IntPtr hwnd, int x, int y, int cx, int cy, bool repaint);
-
-        [DllImport("user32.dll", EntryPoint = "PostMessageA", SetLastError = true)]
-        private static extern bool PostMessage(IntPtr hwnd, uint Msg, uint wParam, uint lParam);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr GetParent(IntPtr hwnd);
-        ///// <summary>
-        ///// ShellExecute(IntPtr.Zero, "Open", "C:/Program Files/TTPlayer/TTPlayer.exe", "", "", 1);
-        ///// </summary>
-        ///// <param name="hwnd"></param>
-        ///// <param name="lpOperation"></param>
-        ///// <param name="lpFile"></param>
-        ///// <param name="lpParameters"></param>
-        ///// <param name="lpDirectory"></param>
-        ///// <param name="nShowCmd"></param>
-        ///// <returns></returns>
-        //[DllImport("shell32.dll", EntryPoint = "ShellExecute")]
-        //public static extern int ShellExecute(
-        //IntPtr hwnd,
-        //string lpOperation,
-        //string lpFile,
-        //string lpParameters,
-        //string lpDirectory,
-        //int nShowCmd
-        //);
-        //[DllImport("kernel32.dll")]
-        //public static extern int OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId); 
-        [DllImport("user32.dll", EntryPoint = "ShowWindow", SetLastError = true)]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-
 
         private const int SWP_NOOWNERZORDER = 0x200;
         private const int SWP_NOREDRAW = 0x8;
@@ -294,44 +275,75 @@ namespace NKnife.GUI.WinForm.WinFormContainer
         private const int SW_SHOWDEFAULT = 10; //{同 SW_SHOWNORMAL}
         private const int SW_MAX = 10; //{同 SW_SHOWNORMAL}
 
+        [DllImport("user32.dll", EntryPoint = "GetWindowThreadProcessId", SetLastError = true,
+            CharSet = CharSet.Unicode, ExactSpelling = true,
+            CallingConvention = CallingConvention.StdCall)]
+        private static extern long GetWindowThreadProcessId(long hWnd, long lpdwProcessId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern long SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
+        private static extern long GetWindowLong(IntPtr hwnd, int nIndex);
+
+        public static IntPtr SetWindowLong(HandleRef hWnd, int nIndex, int dwNewLong)
+        {
+            if (IntPtr.Size == 4)
+            {
+                return SetWindowLongPtr32(hWnd, nIndex, dwNewLong);
+            }
+            return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+        }
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetWindowLongPtr32(HandleRef hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetWindowLongPtr64(HandleRef hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern long SetWindowPos(IntPtr hwnd, long hWndInsertAfter, long x, long y, long cx, long cy, long wFlags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool MoveWindow(IntPtr hwnd, int x, int y, int cx, int cy, bool repaint);
+
+        [DllImport("user32.dll", EntryPoint = "PostMessageA", SetLastError = true)]
+        private static extern bool PostMessage(IntPtr hwnd, uint Msg, uint wParam, uint lParam);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr GetParent(IntPtr hwnd);
+
+        ///// <summary>
+        ///// ShellExecute(IntPtr.Zero, "Open", "C:/Program Files/TTPlayer/TTPlayer.exe", "", "", 1);
+        ///// </summary>
+        ///// <param name="hwnd"></param>
+        ///// <param name="lpOperation"></param>
+        ///// <param name="lpFile"></param>
+        ///// <param name="lpParameters"></param>
+        ///// <param name="lpDirectory"></param>
+        ///// <param name="nShowCmd"></param>
+        ///// <returns></returns>
+        //[DllImport("shell32.dll", EntryPoint = "ShellExecute")]
+        //public static extern int ShellExecute(
+        //IntPtr hwnd,
+        //string lpOperation,
+        //string lpFile,
+        //string lpParameters,
+        //string lpDirectory,
+        //int nShowCmd
+        //);
+        //[DllImport("kernel32.dll")]
+        //public static extern int OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId); 
+        [DllImport("user32.dll", EntryPoint = "ShowWindow", SetLastError = true)]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         //const int PROCESS_ALL_ACCESS = 0x1F0FFF;
         //const int PROCESS_VM_READ = 0x0010;
         //const int PROCESS_VM_WRITE = 0x0020;     
-        #endregion Win32 WinApi
 
-        public void EmbedAgain()
-        {
-            EmbedProcess(_AppProcess, this);
-            MessageBox.Show("完毕");
-        }
-        /// <summary>
-        /// 将指定的程序嵌入指定的控件
-        /// </summary>
-        private void EmbedProcess(Process app, Control control)
-        {
-            // Get the main handle
-            if (app == null || app.MainWindowHandle == IntPtr.Zero || control == null) return;
-            try
-            {
-                // Put it into this form
-                SetParent(app.MainWindowHandle, control.Handle);
-            }
-            catch (Exception)
-            { }
-            try
-            {
-                // Remove border and whatnot               
-                SetWindowLong(new HandleRef(this, app.MainWindowHandle), GWL_STYLE, WS_VISIBLE);
-            }
-            catch (Exception)
-            { }
-            try
-            {
-                // Move the window to overlay it on this window
-                MoveWindow(app.MainWindowHandle, 0, 0, control.Width, control.Height, true);
-            }
-            catch (Exception)
-            { }
-        }
+        #endregion Win32 WinApi
     }
 }

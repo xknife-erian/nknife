@@ -21,46 +21,20 @@ namespace NKnife.Configuring.Option
             IsModified = false;
         }
 
-        /// <summary>反映表的数据是否已经发生了改变
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance is modified; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsModified { get; set; }
-
-        public string Category
-        {
-            get { return TableName; } 
-            set { TableName = value; }
-        }
-
-        public StringBuilder AsXml
-        {
-            get
-            {
-                var xml = new StringBuilder();
-                var tw = new StringWriter(xml);
-                this.WriteXml(tw, XmlWriteMode.WriteSchema);
-                tw.Flush();
-                tw.Close();
-                return xml;
-            }
-        }
-
         public DataRow this[string solution, string clientId]
         {
             get
             {
                 string exp = string.Format("solution='{0}' and clientId='{1}'", solution, clientId);
-                DataRow[] rows = this.Select(exp);
+                DataRow[] rows = Select(exp);
                 if (rows.Length > 0)
                     return rows[0];
-                else
-                    return null;
+                return null;
             }
         }
 
-        /// <summary>根据方案名返回有效数据行
+        /// <summary>
+        ///     根据方案名返回有效数据行
         /// </summary>
         /// <value></value>
         public DataRow[] this[string solution]
@@ -68,7 +42,7 @@ namespace NKnife.Configuring.Option
             get
             {
                 string exp = string.Format("solution='{0}'", solution);
-                DataRow[] rows = this.Select(exp);
+                DataRow[] rows = Select(exp);
                 if (rows.Length > 0)
                     return rows;
                 return new DataRow[] {};
@@ -81,8 +55,8 @@ namespace NKnife.Configuring.Option
         {
             get
             {
-                const string exp = "";
-                return Select(exp).Select(row => row["solution"]).Cast<string>().ToArray();
+                const string EXP = "";
+                return Select(EXP).Select(row => row["solution"]).Cast<string>().ToArray();
             }
         }
 
@@ -90,26 +64,54 @@ namespace NKnife.Configuring.Option
         {
             get
             {
-                const string exp = "";
-                return this.Select(exp).Select(row => row["clientId"]).Cast<string>().ToArray();
+                const string EXP = "";
+                return Select(EXP).Select(row => row["clientId"]).Cast<string>().ToArray();
             }
         }
 
         /// <summary>
-        /// 提交自上次调用 System.Data.DataTable.AcceptChanges() 以来对该表进行的所有更改。
-        /// 并触发 OptionTableChangedEvent 事件，以确保主从的选项信息表的同步动作。
+        ///     反映表的数据是否已经发生了改变
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is modified; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsModified { get; set; }
+
+        public string Category
+        {
+            get { return TableName; }
+            set { TableName = value; }
+        }
+
+        public StringBuilder AsXml
+        {
+            get
+            {
+                var xml = new StringBuilder();
+                var tw = new StringWriter(xml);
+                WriteXml(tw, XmlWriteMode.WriteSchema);
+                tw.Flush();
+                tw.Close();
+                return xml;
+            }
+        }
+
+        /// <summary>
+        ///     提交自上次调用 System.Data.DataTable.AcceptChanges() 以来对该表进行的所有更改。
+        ///     并触发 OptionTableChangedEvent 事件，以确保主从的选项信息表的同步动作。
         /// </summary>
         public void Update()
         {
             AcceptChanges();
             if (IsModified)
-                OnOptionTableChanged(new OptionTableChangedEventArgs(this.TableName));
+                OnOptionTableChanged(new OptionTableChangedEventArgs(TableName));
         }
 
         /// <summary>
-        /// 内部数据发生改变时的事件
+        ///     内部数据发生改变时的事件
         /// </summary>
         public event OptionTableChangedEventHandler OptionTableChangedEvent;
+
         protected virtual void OnOptionTableChanged(OptionTableChangedEventArgs e)
         {
             if (OptionTableChangedEvent != null)
@@ -118,7 +120,7 @@ namespace NKnife.Configuring.Option
 
         public override string ToString()
         {
-            return new StringBuilder(this.TableName)
+            return new StringBuilder(TableName)
                 .Append(":[")
                 .Append(Columns.Count)
                 .Append(',')
@@ -128,7 +130,7 @@ namespace NKnife.Configuring.Option
         }
 
         /// <summary>
-        /// 通过DataTable的ReadXml方法来获取OptionDataTable实例
+        ///     通过DataTable的ReadXml方法来获取OptionDataTable实例
         /// </summary>
         /// <param name="childNode">指定的包含DataTable的序列化字符串的XML节点</param>
         /// <param name="store">The store.</param>
@@ -139,7 +141,7 @@ namespace NKnife.Configuring.Option
             StringReader sr = null;
             try
             {
-                var cdata = childNode.GetCDataElement();
+                XmlCDataSection cdata = childNode.GetCDataElement();
                 string xmltext = cdata.InnerText;
                 sr = new StringReader(xmltext);
             }
@@ -151,7 +153,7 @@ namespace NKnife.Configuring.Option
             {
                 table.ReadXml(sr);
                 string tablename = string.Empty;
-                if (childNode.Attributes != null && childNode.Attributes["name"]!= null)
+                if (childNode.Attributes != null && childNode.Attributes["name"] != null)
                     tablename = childNode.Attributes["name"].InnerText;
                 SetOptionTableProperties(store, tablename, table);
             }
@@ -159,7 +161,7 @@ namespace NKnife.Configuring.Option
         }
 
         /// <summary>
-        /// 通过DataTable的ReadXml方法来获取OptionDataTable实例
+        ///     通过DataTable的ReadXml方法来获取OptionDataTable实例
         /// </summary>
         /// <param name="filefullname">指定的包含DataTable的序列化的计算机文件</param>
         /// <param name="store">The store.</param>

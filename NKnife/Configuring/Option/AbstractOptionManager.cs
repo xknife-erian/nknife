@@ -136,13 +136,11 @@ namespace NKnife.Configuring.Option
             }
             try
             {
-//                Type type = value.GetType();
-//                DataRow row = GetRow(category, key, type);
-//                row[key] = value;
-//                var table = (IOption)row.Table;
-//                return table.IsModified = true;
-                //todo:Option
-                return false;
+                Type type = value.GetType();
+                DataRow row = GetRow(category, key, type);
+                row[key] = value;
+                var table = (IOption)row.Table;
+                return table.IsModified = true;
             }
             catch (Exception e)
             {
@@ -219,20 +217,20 @@ namespace NKnife.Configuring.Option
         public virtual OptionCaseItem CopyCaseFrom(OptionCaseItem srcSolution)
         {
             var targetSolution = new OptionCaseItem();
-            foreach (IOption table in DataStore.DataTables.Values)
+            foreach (IOption option in DataStore.DataTables.Values)
             {
-//                DataRow[] rows = table[srcSolution.Name];
-//                foreach (DataRow dataRow in rows)
-//                {
-//                    DataRow newRow = table.NewRow();
-//                    for (int i = 0; i < table.Columns.Count; i++)
-//                    {
-//                        newRow[i] = dataRow[i];
-//                    }
-//                    newRow["solution"] = targetSolution.Name;
-//                    table.Rows.Add(newRow);
-//                }
-                //todo:Option
+                var table = (OptionDataTable) option;
+                DataRow[] rows = table[srcSolution.Name];
+                foreach (DataRow dataRow in rows)
+                {
+                    DataRow newRow = table.NewRow();
+                    for (int i = 0; i < table.Columns.Count; i++)
+                    {
+                        newRow[i] = dataRow[i];
+                    }
+                    newRow["solution"] = targetSolution.Name;
+                    table.Rows.Add(newRow);
+                }
                 table.Update();
             }
             targetSolution.Name = srcSolution.Name + "1";
@@ -258,13 +256,12 @@ namespace NKnife.Configuring.Option
         /// <param name="isStore"></param>
         public virtual void RemoveCase(OptionCaseItem solution, bool isStore = true)
         {
-            foreach (IOption dataTable in DataStore.DataTables.Values)
+            foreach (IOption option in DataStore.DataTables.Values)
             {
-//                DataRow row = dataTable[solution.Name, CurrentClientId];
-//                if (row != null)
-//                    dataTable.Rows.Remove(row);
-                //todo:Option
-
+                var table = (OptionDataTable)option;
+                DataRow row = table[solution.Name, CurrentClientId];
+                if (row != null)
+                    table.Rows.Remove(row);
             }
             CaseManager.Remove(solution);
             if (isStore)
@@ -291,67 +288,65 @@ namespace NKnife.Configuring.Option
         /// <returns></returns>
         protected virtual DataRow GetRow(string category, string key, Type dataType)
         {
-            IOption dt = null;
+            OptionDataTable dt = null;
             if (!DataStore.DataTables.ContainsKey(category))
             {
                 _logger.Warn(string.Format("配置存储器没有{0}的表", category));
-                dt = BuildNewDataTable(category);
+                dt = (OptionDataTable) BuildNewDataTable(category);
                 DataStore.DataTables.TryAdd(category, dt);
                 _logger.Info(string.Format("创建表名为{0}的默认表", category));
             }
             else
             {
-                dt = DataStore.DataTables[category];
+                dt = (OptionDataTable) DataStore.DataTables[category];
             }
-//            if (dt.Rows == null || dt.Rows.Count <= 0)
-//            {
-//                _logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", category));
-//                DataRow newrow = dt.NewRow();
-//                newrow["solution"] = _CurrentCase.Name;
-//                newrow["clientId"] = CurrentClientId;
-//                dt.Rows.Add(newrow);
-//                dt.AcceptChanges();
-//            }
-//            DataRow row = dt[_CurrentCase.Name, CurrentClientId];
-//            if (row == null)
-//            {
-//                row = dt.NewRow();
-//                row["solution"] = _CurrentCase.Name;
-//                row["clientId"] = CurrentClientId;
-//                dt.Rows.Add(row);
-//            }
-//            if (!row.Table.Columns.Contains(key))
-//            {
-//                _logger.Warn(string.Format("配置中没有{0}的列", key));
-//                var c = new DataColumn(key);
-//                c.Caption = key;
-//                c.DataType = dataType;
-//                dt.Columns.Add(c);
-//            }
-            //todo:Option
-            return null;// row;
+            if (dt.Rows == null || dt.Rows.Count <= 0)
+            {
+                _logger.Warn(string.Format("配置表({0})中暂无Row,即没有合适的数据", category));
+                DataRow newrow = dt.NewRow();
+                newrow["solution"] = _CurrentCase.Name;
+                newrow["clientId"] = CurrentClientId;
+                dt.Rows.Add(newrow);
+                dt.AcceptChanges();
+            }
+            DataRow row = dt[_CurrentCase.Name, CurrentClientId];
+            if (row == null)
+            {
+                row = dt.NewRow();
+                row["solution"] = _CurrentCase.Name;
+                row["clientId"] = CurrentClientId;
+                dt.Rows.Add(row);
+            }
+            if (!row.Table.Columns.Contains(key))
+            {
+                _logger.Warn(string.Format("配置中没有{0}的列", key));
+                var c = new DataColumn(key);
+                c.Caption = key;
+                c.DataType = dataType;
+                dt.Columns.Add(c);
+            }
+            return row;
         }
 
         private IOption BuildNewDataTable(string fulltableName)
         {
-            IOption dt;
+            IOption option;
             if (DefaultTableSchemaMap != null && DefaultTableSchemaMap.ContainsKey(fulltableName))
             {
-                dt = DefaultTableSchemaMap[fulltableName];
+                option = DefaultTableSchemaMap[fulltableName];
             }
             else
             {
                 _logger.Error(string.Format("默认表集合中没有{0}的表", fulltableName));
-                dt = DI.Get<IOption>();
-                dt.Category = fulltableName;
+                option = DI.Get<IOption>();
+                option.Category = fulltableName;
             }
-//            if (!dt.Columns.Contains("solution"))
-//                dt.Columns.Add("solution");
-//            if (!dt.Columns.Contains("clientId"))
-//                dt.Columns.Add("clientId");
-            //todo:Option
-
-            return dt;
+            var table = (OptionDataTable) option;
+            if (!table.Columns.Contains("solution"))
+                table.Columns.Add("solution");
+            if (!table.Columns.Contains("clientId"))
+                table.Columns.Add("clientId");
+            return option;
         }
 
         protected static string StringFunc(object obj)

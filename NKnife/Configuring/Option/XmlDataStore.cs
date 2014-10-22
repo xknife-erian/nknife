@@ -50,8 +50,7 @@ namespace NKnife.Configuring.Option
                             ele.AppendChild(subEle);
                             if (_Document.DocumentElement != null)
                                 _Document.DocumentElement.AppendChild(ele);
-                            //BuildNewDocument(_Document, FileInfo.FullName);
-                            //todo:Option
+                            BuildNewDocument(_Document, FileInfo.FullName);
                         }
                         //激活即将开始载入选项事件
                         OnOptionLoading(new OptionLoadEventArgs(FileInfo));
@@ -137,7 +136,6 @@ namespace NKnife.Configuring.Option
                     }
                     if (_OptionMap == null)
                         _OptionMap = new ConcurrentDictionary<string, IOption>();
-                    //TODO:此处应该有问题
                     foreach (IOption table in _DataSet.Tables)
                     {
                         _OptionMap.TryAdd(table.Category, table);
@@ -196,9 +194,7 @@ namespace NKnife.Configuring.Option
                     Document.Save(FileInfo.FullName);
                     foreach (DataTable dataTable in _DataSet.Tables)
                     {
-                        //todo:Option
-
-                        //((OptionDataTable) dataTable).IsModified = false;
+                        ((OptionDataTable) dataTable).IsModified = false;
                     }
                 }
                 return true;
@@ -280,44 +276,44 @@ namespace NKnife.Configuring.Option
 
         #region 一些内部方法
 
-        //todo:Option
-//
-//        private static IEnumerable<IOptionDataTableSchema> GetSchemas()
-//        {
-//            IEnumerable<Type> types = null;
-//            try
-//            {
-//                string path = AppDomain.CurrentDomain.BaseDirectory;
-//                types = UtilityType.FindTypesByDirectory(path, typeof (IOptionDataTableSchema));
-//            }
-//            catch (Exception e)
-//            {
-//                _logger.Error(string.Format("从目录中搜索选项类时异常。{0}", e.Message), e);
-//            }
-//            _logger.Info(string.Format("搜索所有的程序集，并找到 {0} 个IOption类型(包括基本类型和抽象类型)。", types.Count()));
-//            var schemas = new List<IOptionDataTableSchema>();
-//            foreach (Type type in types)
-//            {
-//                object obj = Activator.CreateInstance(type);
-//                schemas.Add((IOptionDataTableSchema) obj);
-//            }
-//            return schemas;
-//        }
-//
-//        private static void BuildNewDocument(XmlDocument document, string filepath)
-//        {
-//            IEnumerable<IOptionDataTableSchema> schemas = GetSchemas();
-//            foreach (IOptionDataTableSchema schema in schemas)
-//            {
-//                XmlElement element = document.CreateElement(_Setting.OptionDataTableFlagName);
-//                element.SetAttribute("name", schema.TableName);
-//                XmlCDataSection xcds = document.CreateCDataSection(schema.OptionDataTableSchema.AsXml.ToString());
-//                element.AppendChild(xcds);
-//                if (document.DocumentElement != null)
-//                    document.DocumentElement.AppendChild(element);
-//            }
-//            document.Save(filepath);
-//        }
+
+        private static IEnumerable<IOption> GetSchemas()
+        {
+            IEnumerable<Type> types = null;
+            try
+            {
+                string path = AppDomain.CurrentDomain.BaseDirectory;
+                types = UtilityType.FindTypesByDirectory(path, typeof (IOption));
+            }
+            catch (Exception e)
+            {
+                _logger.Error(string.Format("从目录中搜索选项类时异常。{0}", e.Message), e);
+            }
+            _logger.Info(string.Format("搜索所有的程序集，并找到 {0} 个IOption类型(包括基本类型和抽象类型)。", types.Count()));
+            var schemas = new List<IOption>();
+            foreach (Type type in types)
+            {
+                object obj = Activator.CreateInstance(type);
+                schemas.Add((IOption) obj);
+            }
+            return schemas;
+        }
+
+        private static void BuildNewDocument(XmlDocument document, string filepath)
+        {
+            IEnumerable<IOption> schemas = GetSchemas();
+            foreach (IOption schema in schemas)
+            {
+                XmlElement element = document.CreateElement(_Setting.OptionDataTableFlagName);
+                element.SetAttribute("name", schema.Category);
+                //TODO:Option,添加节点未知的一个步骤
+                //XmlCDataSection xcds = document.CreateCDataSection(((OptionDataTable)schema).OptionDataTableSchema.AsXml.ToString());
+                //element.AppendChild(xcds);
+                if (document.DocumentElement != null)
+                    document.DocumentElement.AppendChild(element);
+            }
+            document.Save(filepath);
+        }
 
         private static void BuildNewNode(XmlDocument document, IOption option)
         {
