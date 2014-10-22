@@ -92,8 +92,10 @@
     <Compile Include="Common\DockUtil.cs" />
     <Compile Include="Common\SocketMessage.cs" />
     <Compile Include="Common\SocketTools.cs" />
-    <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
-      <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
+    <Compile Include="Demo\DemoClient.cs" />
+    <Compile Include="Demo\DemoClientHandler.cs" />
+    <Compile Include="Dialogs\NewTunnelCreatorDialog.xaml.cs">
+      <DependentUpon>NewTunnelCreatorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\ServerList.cs" />
     <Compile Include="IoC\SocketModule.cs" />
@@ -110,7 +112,7 @@
     <Compile Include="Demo\DemoServer.cs" />
     <Compile Include="Mvvm\WorkbenchViewModel.cs" />
     <Compile Include="Demo\Protocols\Register.cs" />
-    <Page Include="Dialogs\NewTcpServerCreatorDialog.xaml">
+    <Page Include="Dialogs\NewTunnelCreatorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

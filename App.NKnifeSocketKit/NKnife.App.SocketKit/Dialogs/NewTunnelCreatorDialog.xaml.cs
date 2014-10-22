@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NKnife.Adapters;
 using NKnife.App.SocketKit.Common;
+using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic.CommandParsers;
@@ -27,9 +29,11 @@ namespace NKnife.App.SocketKit.Dialogs
     /// <summary>
     /// NewTcpServerCreatorDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class NewTcpServerCreatorDialog : Window
+    public partial class NewTunnelCreatorDialog : Window
     {
-        public NewTcpServerCreatorDialog()
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
+        public NewTunnelCreatorDialog()
         {
             InitializeComponent();
             var ips = UtilityNet.GetLocalIpv4();
@@ -80,16 +84,16 @@ namespace NKnife.App.SocketKit.Dialogs
             _CommandParserComboBox.SelectedItem = typeof(FirstFieldCommandParser);
         }
 
-        public IPAddress IpAddress { get; private set; }
-        public int Port { get; private set; }
         public KnifeSocketServerConfig ServerConfig { get; set; }
         public SocketTools SocketTools { get; set; }
+        public string IpAddressLabel
+        {
+            get { return _IpAddressLabel.Text; }
+            set { _IpAddressLabel.Text = value; }
+        }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            IpAddress = (IPAddress) _LocalIpBox.SelectedItem;
-            Port = int.Parse(_PortTextBox.Text);
-
             ServerConfig.ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);
             ServerConfig.SendBufferSize = int.Parse(_SendBufferSizeSizeTextBox.Text);
             ServerConfig.MaxBufferSize = int.Parse(_MaxBufferSizeTextBox.Text);
@@ -99,6 +103,10 @@ namespace NKnife.App.SocketKit.Dialogs
 
             try
             {
+                SocketTools.IpAddress = (IPAddress)_LocalIpBox.SelectedItem;
+                SocketTools.Port = int.Parse(_PortTextBox.Text);
+                _logger.Info(string.Format("用户设置:{0},{1} <<< {2}",SocketTools.IpAddress, SocketTools.Port, _PortTextBox.Text));
+
                 SocketTools.CommandParser = (Type)_CommandParserComboBox.SelectedItem;
                 SocketTools.Decoder = (Type)_DecoderComboBox.SelectedItem;
                 SocketTools.Encoder = (Type)_EncoderComboBox.SelectedItem;

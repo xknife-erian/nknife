@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -58,24 +59,37 @@ namespace NKnife.App.SocketKit.Mvvm
 
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            var win = new NewTcpServerCreatorDialog();
+            var win = new NewTunnelCreatorDialog();
+            win.Title = "新建Socket服务器";
+            win.IpAddressLabel = "本地IpAddress:";
             var drs = win.ShowDialog(this);
             if (drs != null && (bool)drs)
             {
                 var view = new TcpServerView();
-                view.IpAddress = win.IpAddress;
-                view.Port = win.Port;
                 view.ServerConfig = win.ServerConfig;
                 view.SocketTools = win.SocketTools;
-                _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.IpAddress, win.Port));
+                view.Title = string.Format("Server:{0}", new IPEndPoint(win.SocketTools.IpAddress, win.SocketTools.Port));
+                _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.SocketTools.IpAddress, win.SocketTools.Port));
                 DI.Get<DockUtil>().Documents.Add(view);
             }
         }
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new TcpClientView();
-            DI.Get<DockUtil>().Documents.Add(view);
+            var win = new NewTunnelCreatorDialog();
+            win.Title = "新建Socket客户端";
+            win.IpAddressLabel = "远程IpAddress:";
+            var drs = win.ShowDialog(this);
+            if (drs != null && (bool)drs)
+            {
+                var view = new TcpClientView();
+//                view.IpAddress = win.IpAddress;
+//                view.Port = win.Port;
+//                view.ServerConfig = win.ServerConfig;
+//                view.SocketTools = win.SocketTools;
+                _Logger.Info(string.Format("用户交互创建Client:{0},{1}", win.SocketTools.IpAddress, win.SocketTools.Port));
+                DI.Get<DockUtil>().Documents.Add(view);
+            }
         }
 
         private void OptionMenuItem_Click(object sender, ExecutedRoutedEventArgs e)

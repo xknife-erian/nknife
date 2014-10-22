@@ -1,12 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using NKnife.Adapters;
 using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Demo;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.Base;
+using NKnife.Interface;
 using NKnife.IoC;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
@@ -18,18 +21,22 @@ namespace NKnife.App.SocketKit.Mvvm.Views
     /// </summary>
     public partial class TcpServerView
     {
-        private readonly DemoServer _ViewModel = new DemoServer();
+        private readonly DemoServer _ViewModel;
 
-        public IPAddress IpAddress { get; set; }
-        public int Port { get; set; }
         public KnifeSocketServerConfig ServerConfig { get; set; }
         public SocketTools SocketTools { get; set; }
 
         public TcpServerView()
         {
             InitializeComponent();
+            _ViewModel = new DemoServer();
             _View.DataContext = _ViewModel;
-            _ViewModel.Dispatcher = this.Dispatcher;
+            _ViewModel.Dispatcher = Dispatcher;
+        }
+
+        private void View_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _ViewModel.Initialize(ServerConfig, SocketTools);
         }
         
         private void TcpServerView_OnClosing(object sender, CancelEventArgs e)
@@ -58,10 +65,6 @@ namespace NKnife.App.SocketKit.Mvvm.Views
             _ViewModel.StopServer();
         }
 
-        private void View_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            _ViewModel.Initialize(IpAddress, Port, ServerConfig, SocketTools);
-        }
 
     }
 }

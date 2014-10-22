@@ -5,7 +5,131 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              mc:Ignorable="d">
-    <Grid>
-        <ListView Width="Auto" Height="Auto"></ListView>
+    <Grid Name="_View" Loaded="View_OnLoaded">
+        <Grid.Resources>
+            <Style x:Key="StartButtonImage" TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="3" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="/Attachments/start-unable.png" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="/Attachments/start.png" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="45" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                        <Setter Property="Background" Value="#FF0CC030" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="PauseButtonImage" TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="3" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="/Attachments/pause-unable.png" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="/Attachments/pause.png" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="45" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                        <Setter Property="Background" Value="#FF0CC030" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="StopButtonImage" TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="3" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="/Attachments/stop-unable.png" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="/Attachments/stop.png" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="45" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                        <Setter Property="Background" Value="#FF0CC030" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid.Background>
+            <SolidColorBrush Color="{StaticResource {x:Static SystemColors.ControlLightColorKey}}" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="34" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="26" />
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Button Click="Start" Name="_StartButton" Style="{StaticResource StartButtonImage}" />
+            <Button Click="Stop" Name="_StopButton" IsEnabled="False" Style="{StaticResource StopButtonImage}" />
+        </ToolBar>
+        <StatusBar Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+        </StatusBar>
+        <ListView Grid.Row="1" Name="_DataGrid" ItemsSource="{Binding SocketMessages}"
+                  IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  SelectionMode="Single" Loaded="DataGrid_OnLoaded"
+                  Height="Auto" Width="Auto">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SocketDirection}" Width="70" />
+                    <GridViewColumn Header="命令字" DisplayMemberBinding="{Binding Path=Command}" Width="150" />
+                    <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="900" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </xcad:LayoutDocument>

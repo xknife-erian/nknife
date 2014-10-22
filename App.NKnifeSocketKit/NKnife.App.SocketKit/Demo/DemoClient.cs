@@ -1,5 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Windows.Threading;
 using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Demo.Protocols;
@@ -15,38 +19,23 @@ using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Demo
 {
-    public class DemoServer : NotificationObject
+    class DemoClient : NotificationObject
     {
-        #region App
-
         internal Dispatcher Dispatcher { get; set; }
 
-        private readonly ServerList _ServerList = DI.Get<ServerList>();
         public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
 
-        private Pair<IPAddress, int> _ServerListKey;
-
-        public void RemoveServer()
-        {
-            _ServerList.Remove(_ServerListKey);
-        }
-
-        #endregion
-
         private bool _IsInitialized = false;
-        private IKnifeSocketServer _Server;
+        private IKnifeSocketClient _Client;
 
-        public DemoServer()
+        public DemoClient()
         {
             SocketMessages = new AsyncObservableCollection<SocketMessage>();
         }
 
-        public void Initialize(KnifeSocketServerConfig config, SocketTools socketTools)
+        public void Initialize(KnifeSocketConfig config, SocketTools socketTools)
         {
             if (_IsInitialized) return;
-
-            Pair<IPAddress, int> key = Pair<IPAddress, int>.Build(socketTools.IpAddress, socketTools.Port);
-            _ServerListKey = key;
 
             var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
             heartbeatServerFilter.Interval = 1000*5;
@@ -63,21 +52,14 @@ namespace NKnife.App.SocketKit.Demo
             if (protocolFamily.CommandParser.GetType() != socketTools.CommandParser)
                 protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(socketTools.CommandParser);
 
-            if (!_ServerList.ContainsKey(key))
-            {
-                _Server = DI.Get<IKnifeSocketServer>();
-                _Server.Config = config;
-                if (socketTools.NeedHeartBeat)
-                    _Server.AddFilter(heartbeatServerFilter);
-                _Server.AddFilter(keepAliveFilter);
-                _Server.Configure(socketTools.IpAddress, socketTools.Port);
-                _Server.Bind(codec, protocolFamily, new DemoServerHandler(SocketMessages));
-                _ServerList.Add(key, _Server);
-            }
-            else
-            {
-                Debug.Fail(string.Format("不应出现相同IP与端口的服务器请求。{0}", key));
-            }
+            _Client = DI.Get<IKnifeSocketClient>();
+            _Client.Config = config;
+            if (socketTools.NeedHeartBeat)
+                _Client.AddFilter(heartbeatServerFilter);
+            _Client.AddFilter(keepAliveFilter);
+            _Client.Configure(socketTools.IpAddress, socketTools.Port);
+            _Client.Bind(codec, protocolFamily, new DemoClientHandler(SocketMessages));
+
             _IsInitialized = true;
         }
 
@@ -102,14 +84,14 @@ namespace NKnife.App.SocketKit.Demo
             return family;
         }
 
-        public void StartServer()
+        public void Start()
         {
-            _Server.Start();
+            _Client.Start();
         }
 
-        public void StopServer()
+        public void Stop()
         {
-            _Server.Stop();
+            _Client.Stop();
         }
 
     }
