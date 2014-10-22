@@ -2,10 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using Ninject;
-using NKnife.IoC;
 
 namespace NKnife.Protocol.Generic
 {
@@ -15,8 +12,9 @@ namespace NKnife.Protocol.Generic
     [Serializable]
     public class StringProtocolFamily : IProtocolFamily<string>
     {
-        protected Dictionary<string,StringProtocol> _SeedMap = new Dictionary<string, StringProtocol>(); 
         private readonly StringProtocol _Seed = new StringProtocol(); //用于获取实例的Build方法，因此只需要在此有一个实例
+        protected Dictionary<string, StringProtocol> _SeedMap = new Dictionary<string, StringProtocol>();
+
         public StringProtocolFamily()
         {
         }
@@ -25,12 +23,6 @@ namespace NKnife.Protocol.Generic
         {
             Family = name;
         }
-
-        /// <summary>
-        ///     协议族名称
-        /// </summary>
-        /// <value>The family.</value>
-        public string Family { get; set; }
 
         [Inject]
         public StringProtocolCommandParser CommandParser { get; set; }
@@ -50,6 +42,12 @@ namespace NKnife.Protocol.Generic
                 }
             }
         }
+
+        /// <summary>
+        ///     协议族名称
+        /// </summary>
+        /// <value>The family.</value>
+        public string Family { get; set; }
 
         IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
         {
@@ -96,7 +94,7 @@ namespace NKnife.Protocol.Generic
         void ICollection<KeyValuePair<string, IProtocol<string>>>.CopyTo(KeyValuePair<string, IProtocol<string>>[] array, int arrayIndex)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
-            ((ICollection<KeyValuePair<string, IProtocol<string>>>)_SeedMap).CopyTo(array, arrayIndex);
+            ((ICollection<KeyValuePair<string, IProtocol<string>>>) _SeedMap).CopyTo(array, arrayIndex);
         }
 
         public bool Remove(string command)
@@ -116,7 +114,7 @@ namespace NKnife.Protocol.Generic
 
         public bool IsReadOnly
         {
-            get { return ((IDictionary<string, StringProtocol>)_SeedMap).IsReadOnly; }
+            get { return ((IDictionary<string, StringProtocol>) _SeedMap).IsReadOnly; }
         }
 
         public bool ContainsKey(string key)
@@ -165,12 +163,14 @@ namespace NKnife.Protocol.Generic
 
         public void Add(StringProtocol protocol)
         {
-            _SeedMap.Add(protocol.Command, protocol);
+            if (!_SeedMap.ContainsKey(protocol.Command))
+                _SeedMap.Add(protocol.Command, protocol);
         }
 
         public void Add(string key, StringProtocol value)
         {
-            _SeedMap.Add(key, value);
+            if (!_SeedMap.ContainsKey(key))
+                _SeedMap.Add(key, value);
         }
 
         public bool Contains(KeyValuePair<string, StringProtocol> item)
@@ -186,22 +186,32 @@ namespace NKnife.Protocol.Generic
         public StringProtocol Build(string command)
         {
             Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
+            if (string.IsNullOrWhiteSpace(command))
+                throw new ArgumentNullException("command", "协议命令字不能为空");
 
             if (!_SeedMap.ContainsKey(command))
             {
-                _SeedMap.Add(command, _Seed.BuildMethod.Invoke());
+                StringProtocol protocol = _Seed.BuildMethod.Invoke();
+                protocol.Family = Family;
+                protocol.Command = command;
+                _SeedMap.Add(command, protocol);
             }
             return _SeedMap[command].BuildMethod.Invoke();
         }
 
-        public StringProtocol Build(string command,Func<StringProtocol> buildMethod)
+        public StringProtocol Build(string command, Func<StringProtocol> buildMethod)
         {
             Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
+            if (string.IsNullOrWhiteSpace(command))
+                throw new ArgumentNullException("command", "协议命令字不能为空");
 
             if (!_SeedMap.ContainsKey(command))
             {
                 _SeedMap.Add(command, _Seed.BuildMethod.Invoke());
-                _SeedMap[command].BuildMethod = buildMethod;
+                StringProtocol protocol = _Seed.BuildMethod.Invoke();
+                protocol.Family = Family;
+                protocol.Command = command;
+                _SeedMap.Add(command, protocol);
             }
             return _SeedMap[command].BuildMethod.Invoke();
         }

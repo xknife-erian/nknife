@@ -42,6 +42,7 @@ namespace NKnife.App.SocketKit.Dialogs
                 _LocalIpBox.SelectedIndex = 0;
             }
             ServerConfig = DI.Get<KnifeSocketServerConfig>();
+            SocketTools = new SocketTools();
 
             var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramDecoder<>), true);
             foreach (var decoder in decoders)
@@ -96,11 +97,19 @@ namespace NKnife.App.SocketKit.Dialogs
             ServerConfig.ReceiveTimeout = int.Parse(_ReceiveTimeoutTextBox.Text);
             ServerConfig.SendTimeout = int.Parse(_SendTimeoutTextBox.Text);
 
-            SocketTools.CommandParser = (Type) _CommandParserComboBox.SelectedItem;
-            SocketTools.Decoder = (Type) _DecoderComboBox.SelectedItem;
-            SocketTools.Encoder = (Type) _EncoderComboBox.SelectedItem;
-            SocketTools.Packer = (Type) _PackerComboBox.SelectedItem;
-            SocketTools.UnPacker = (Type) _UnPackerComboBox.SelectedItem;
+            try
+            {
+                SocketTools.CommandParser = (Type)_CommandParserComboBox.SelectedItem;
+                SocketTools.Decoder = (Type)_DecoderComboBox.SelectedItem;
+                SocketTools.Encoder = (Type)_EncoderComboBox.SelectedItem;
+                SocketTools.Packer = (Type)_PackerComboBox.SelectedItem;
+                SocketTools.UnPacker = (Type)_UnPackerComboBox.SelectedItem;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
             if (_IsHeartBeat.IsChecked != null) 
                 SocketTools.NeedHeartBeat = (bool) _IsHeartBeat.IsChecked;
             else

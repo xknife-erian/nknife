@@ -20,7 +20,6 @@ namespace NKnife.Protocol.Generic
             BuildMethod = NewInstance;
         }
 
-
         protected StringProtocol(string family, string command)
         {
             Family = family;
