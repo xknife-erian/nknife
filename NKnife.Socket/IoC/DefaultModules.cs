@@ -15,6 +15,7 @@ namespace SocketKnife.IoC
         public override void Load()
         {
             Bind<IKnifeSocketServer>().To<KnifeSocketServer>();
+            Bind<IKnifeSocketClient>().To<KnifeSocketClient>();
 
             Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketServerFilterChain>().Named("Server");
             Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketClientFilterChain>().Named("Client");

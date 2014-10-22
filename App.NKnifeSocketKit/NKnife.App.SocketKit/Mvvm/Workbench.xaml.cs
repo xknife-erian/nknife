@@ -83,10 +83,9 @@ namespace NKnife.App.SocketKit.Mvvm
             if (drs != null && (bool)drs)
             {
                 var view = new TcpClientView();
-//                view.IpAddress = win.IpAddress;
-//                view.Port = win.Port;
-//                view.ServerConfig = win.ServerConfig;
-//                view.SocketTools = win.SocketTools;
+                view.ServerConfig = win.ServerConfig;
+                view.SocketTools = win.SocketTools;
+                view.Title = string.Format("Client:{0}", new IPEndPoint(win.SocketTools.IpAddress, win.SocketTools.Port));
                 _Logger.Info(string.Format("用户交互创建Client:{0},{1}", win.SocketTools.IpAddress, win.SocketTools.Port));
                 DI.Get<DockUtil>().Documents.Add(view);
             }

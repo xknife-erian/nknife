@@ -41,7 +41,7 @@ namespace NKnife.App.SocketKit.Demo
             heartbeatServerFilter.Interval = 1000*5;
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
-            var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
+            var keepAliveFilter = DI.Get<KeepAliveClientFilter>();
             var codec = DI.Get<KnifeSocketCodec>();
             if (codec.SocketDecoder.GetType() != socketTools.Decoder)
                 codec.SocketDecoder = (KnifeSocketDatagramDecoder) DI.Get(socketTools.Decoder);
@@ -54,8 +54,8 @@ namespace NKnife.App.SocketKit.Demo
 
             _Client = DI.Get<IKnifeSocketClient>();
             _Client.Config = config;
-            if (socketTools.NeedHeartBeat)
-                _Client.AddFilter(heartbeatServerFilter);
+//            if (socketTools.NeedHeartBeat)
+//                _Client.AddFilter(heartbeatServerFilter);
             _Client.AddFilter(keepAliveFilter);
             _Client.Configure(socketTools.IpAddress, socketTools.Port);
             _Client.Bind(codec, protocolFamily, new DemoClientHandler(SocketMessages));
