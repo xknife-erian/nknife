@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Ninject;
 using NKnife.IoC;
 
@@ -14,8 +15,8 @@ namespace NKnife.Protocol.Generic
     [Serializable]
     public class StringProtocolFamily : IProtocolFamily<string>
     {
-        protected Dictionary<string, StringProtocol> _Map = new Dictionary<string, StringProtocol>();
-
+        protected Dictionary<string,StringProtocol> _SeedMap = new Dictionary<string, StringProtocol>(); 
+        private readonly StringProtocol _Seed = new StringProtocol(); //用于获取实例的Build方法，因此只需要在此有一个实例
         public StringProtocolFamily()
         {
         }
@@ -36,8 +37,18 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocol this[string command]
         {
-            get { return _Map[command]; }
-            set { _Map[command] = value; }
+            get { return _SeedMap[command].BuildMethod.Invoke(); }
+            set
+            {
+                if (!_SeedMap.ContainsKey(command))
+                {
+                    _SeedMap.Add(command, value);
+                }
+                else
+                {
+                    _SeedMap[command] = value; //更换种子
+                }
+            }
         }
 
         IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
@@ -58,7 +69,7 @@ namespace NKnife.Protocol.Generic
 
         public IEnumerator GetEnumerator()
         {
-            return _Map.GetEnumerator();
+            return _SeedMap.GetEnumerator();
         }
 
         IEnumerator<KeyValuePair<string, IProtocol<string>>> IEnumerable<KeyValuePair<string, IProtocol<string>>>.GetEnumerator()
@@ -73,24 +84,24 @@ namespace NKnife.Protocol.Generic
 
         public void Clear()
         {
-            _Map.Clear();
+            _SeedMap.Clear();
         }
 
         bool ICollection<KeyValuePair<string, IProtocol<string>>>.Contains(KeyValuePair<string, IProtocol<string>> item)
         {
-            return _Map.ContainsKey(item.Key) && _Map.ContainsValue((StringProtocol) item.Value);
+            return _SeedMap.ContainsKey(item.Key) && _SeedMap.ContainsValue(((StringProtocol) item.Value));
         }
 
         [Obsolete("效率不高，不建议使用. NKnife")]
         void ICollection<KeyValuePair<string, IProtocol<string>>>.CopyTo(KeyValuePair<string, IProtocol<string>>[] array, int arrayIndex)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
-            ((ICollection<KeyValuePair<string, IProtocol<string>>>)_Map).CopyTo(array, arrayIndex);
+            ((ICollection<KeyValuePair<string, IProtocol<string>>>)_SeedMap).CopyTo(array, arrayIndex);
         }
 
         public bool Remove(string command)
         {
-            return _Map.Remove(command);
+            return _SeedMap.Remove(command);
         }
 
         bool ICollection<KeyValuePair<string, IProtocol<string>>>.Remove(KeyValuePair<string, IProtocol<string>> item)
@@ -100,17 +111,17 @@ namespace NKnife.Protocol.Generic
 
         public int Count
         {
-            get { return _Map.Count; }
+            get { return _SeedMap.Count; }
         }
 
         public bool IsReadOnly
         {
-            get { return ((IDictionary<string, StringProtocol>)_Map).IsReadOnly; }
+            get { return ((IDictionary<string, StringProtocol>)_SeedMap).IsReadOnly; }
         }
 
         public bool ContainsKey(string key)
         {
-            return _Map.ContainsKey(key);
+            return _SeedMap.ContainsKey(key);
         }
 
         void IDictionary<string, IProtocol<string>>.Add(string key, IProtocol<string> value)
@@ -121,7 +132,7 @@ namespace NKnife.Protocol.Generic
         bool IDictionary<string, IProtocol<string>>.TryGetValue(string key, out IProtocol<string> value)
         {
             StringProtocol protocol;
-            if (_Map.TryGetValue(key, out protocol))
+            if (_SeedMap.TryGetValue(key, out protocol))
             {
                 value = protocol;
                 return true;
@@ -138,7 +149,7 @@ namespace NKnife.Protocol.Generic
 
         ICollection<string> IDictionary<string, IProtocol<string>>.Keys
         {
-            get { return _Map.Keys; }
+            get { return _SeedMap.Keys; }
         }
 
         [Obsolete("效率不高，不建议使用. NKnife")]
@@ -146,39 +157,53 @@ namespace NKnife.Protocol.Generic
         {
             get
             {
-                var list = new List<IProtocol<string>>(_Map.Count);
-                list.AddRange(_Map.Values);
+                var list = new List<IProtocol<string>>(_SeedMap.Count);
+                list.AddRange(_SeedMap.Values);
                 return list;
             }
         }
 
         public void Add(StringProtocol protocol)
         {
-            _Map.Add(protocol.Command, protocol);
+            _SeedMap.Add(protocol.Command, protocol);
         }
 
         public void Add(string key, StringProtocol value)
         {
-            _Map.Add(key, value);
+            _SeedMap.Add(key, value);
         }
 
         public bool Contains(KeyValuePair<string, StringProtocol> item)
         {
-            return _Map.ContainsKey(item.Key) && _Map.ContainsValue(item.Value);
+            return _SeedMap.ContainsKey(item.Key) && _SeedMap.ContainsValue(item.Value);
         }
 
         public bool TryGetValue(string key, out StringProtocol value)
         {
-            return _Map.TryGetValue(key, out value);
+            return _SeedMap.TryGetValue(key, out value);
         }
 
         public StringProtocol Build(string command)
         {
             Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
-            var protocol = DI.Get<StringProtocol>();
-            protocol.Family = Family;
-            protocol.Command = command;
-            return protocol;
+
+            if (!_SeedMap.ContainsKey(command))
+            {
+                _SeedMap.Add(command, _Seed.BuildMethod.Invoke());
+            }
+            return _SeedMap[command].BuildMethod.Invoke();
+        }
+
+        public StringProtocol Build(string command,Func<StringProtocol> buildMethod)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
+
+            if (!_SeedMap.ContainsKey(command))
+            {
+                _SeedMap.Add(command, _Seed.BuildMethod.Invoke());
+                _SeedMap[command].BuildMethod = buildMethod;
+            }
+            return _SeedMap[command].BuildMethod.Invoke();
         }
     }
 }
