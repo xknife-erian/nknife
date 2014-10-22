@@ -1,16 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
+using NKnife.Utility;
 using SocketKnife.Events;
+using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketFilter : ISocketFilter
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         protected Func<StringProtocolFamily> _FamilyGetter;
         protected Func<KnifeSocketProtocolHandler[]> _HandlersGetter;
         protected Func<KnifeSocketCodec> _CodecGetter;
@@ -57,5 +65,33 @@ namespace SocketKnife.Generic
                 handler(this, e);
         }
 
+        /// <summary>
+        /// 数据包处理。主要处理较异常的情况下的，半包的接包，粘包等现象
+        /// </summary>
+        /// <param name="dataPacket">当前新的数据包</param>
+        /// <param name="unFinished">未完成处理的数据</param>
+        /// <param name="dataDecoder">处理过程中的解码动作</param>
+        /// <param name="endPoint">解码动作所需要的参数</param>
+        /// <returns>未处理完成,待下个数据包到达时将要继续处理的数据(半包)</returns>
+        protected virtual byte[] ProcessDataPacket(byte[] dataPacket, byte[] unFinished, Func<EndPoint, byte[], int> dataDecoder, EndPoint endPoint)
+        {
+            if (!UtilityCollection.IsNullOrEmpty(unFinished))
+            {
+                // 当有半包数据时，进行接包操作
+                int srcLen = dataPacket.Length;
+                dataPacket = unFinished.Concat(dataPacket).ToArray();
+                _logger.Trace(string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", unFinished.Length, srcLen, dataPacket.Length));
+                unFinished = new byte[] {};
+            }
+            int done = dataDecoder(endPoint, dataPacket);
+            if (dataPacket.Length > done)
+            {
+                // 暂存半包数据，留待下条队列数据接包使用
+                unFinished = new byte[dataPacket.Length - done];
+                Buffer.BlockCopy(dataPacket, done, unFinished, 0, unFinished.Length);
+                _logger.Trace(string.Format("半包数据暂存,数据长度:{0}", unFinished.Length));
+            }
+            return unFinished;
+        }
     }
 }

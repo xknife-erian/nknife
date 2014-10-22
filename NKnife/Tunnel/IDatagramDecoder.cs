@@ -8,8 +8,8 @@
         /// 解码。将字节数组解析成字符串。
         /// </summary>
         /// <param name="data">需解码的字节数组.</param>
-        /// <param name="done">已完成解码的数组的长度.</param>
+        /// <param name="finishedIndex">已完成解码的数组的长度.</param>
         /// <returns></returns>
-        T[] Execute(byte[] data, out int done);
+        T[] Execute(byte[] data, out int finishedIndex);
     }
 }

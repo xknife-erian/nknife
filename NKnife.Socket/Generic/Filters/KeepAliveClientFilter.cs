@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using NKnife.Adapters;
@@ -48,13 +49,13 @@ namespace SocketKnife.Generic.Filters
         protected virtual void ReceiveQueueMonitor()
         {
             _logger.Info("启动ReceiveQueue队列的监听。");
-            var nodone = new byte[] { };
+            var unFinished = new byte[] { };
             while (_EnableReceiveQueueMonitor)
             {
                 if (_ReceiveQueue.Count > 0)
                 {
                     byte[] data = _ReceiveQueue.Dequeue();
-                    GetDataList(ref nodone, ref data);
+                    unFinished = ProcessDataPacket(data, unFinished, DataDecoder, SessionGetter.Invoke().Source);
                 }
                 else
                 {
@@ -63,44 +64,19 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-
-        protected virtual void GetDataList(ref byte[] nodone, ref byte[] data)
-        {
-            if (!UtilityCollection.IsNullOrEmpty(nodone))
-            {
-                // 当有半包数据时，进行接包操作
-                int srcLen = data.Length;
-                var list = new List<byte>(data.Length + nodone.Length);
-                list.AddRange(nodone);
-                list.AddRange(data);
-                data = list.ToArray();
-                _logger.Trace(string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", nodone.Length, srcLen, data.Length));
-                nodone = new byte[] { };
-            }
-            int done;
-            DataProcessBase(null, data, out done);
-            if (data.Length > done)
-            {
-                // 暂存半包数据，留待下条队列数据接包使用
-                nodone = new byte[data.Length - done];
-                Buffer.BlockCopy(data, done, nodone, 0, nodone.Length);
-                _logger.Trace(string.Format("半包数据暂存,数据长度:{0}", nodone.Length));
-            }
-        }
-
         /// <summary>
         ///     处理协议数据
         /// </summary>
         /// <param name="endpoint"></param>
         /// <param name="data"></param>
-        /// <param name="done"></param>
-        protected virtual void DataProcessBase(EndPoint endpoint, byte[] data, out int done)
+        protected virtual int DataDecoder(EndPoint endpoint, byte[] data)
         {
+            int finishedIndex;
             var codec = _CodecGetter.Invoke();
-            string[] datagram = codec.SocketDecoder.Execute(data, out done);
+            string[] datagram = codec.SocketDecoder.Execute(data, out finishedIndex);
             OnDataDecoded(new SocketDataDecodedEventArgs(endpoint, datagram));
             if (UtilityCollection.IsNullOrEmpty(datagram))
-                return;
+                return finishedIndex;
 
             foreach (string dg in datagram)
             {
@@ -117,6 +93,7 @@ namespace SocketKnife.Generic.Filters
                     HandlerInvoke(endpoint, protocol);
                 }
             }
+            return finishedIndex;
         }
 
         /// <summary>
