@@ -17,8 +17,16 @@ namespace SocketKnife.Generic.Filters
         protected bool _ContinueNextFilter = true;
         private bool _IsTimerStarted;
 
+        public HeartbeatServerFilter()
+        {
+            Heartbeat = new Heartbeat();
+            Interval = 1000*15;
+            IsStrictMode = false;
+        }
+
         public Heartbeat Heartbeat { get; set; }
         public double Interval { get; set; }
+        public bool IsStrictMode { get; set; }
 
         public override bool ContinueNextFilter
         {
@@ -81,6 +89,13 @@ namespace SocketKnife.Generic.Filters
 
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
+            if (!IsStrictMode)
+            {
+                session.WaitingForReply = false;
+                _ContinueNextFilter = true;
+                _logger.Trace(() => string.Format("收到{0}信息,关闭心跳等待.", session.Source));
+                return;
+            }
             if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
             {
                 session.WaitingForReply = false;
