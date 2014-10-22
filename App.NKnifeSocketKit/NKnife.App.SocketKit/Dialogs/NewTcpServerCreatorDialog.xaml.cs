@@ -11,8 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NKnife.IoC;
 using NKnife.Utility;
 using SocketKnife;
+using SocketKnife.Generic;
 
 namespace NKnife.App.SocketKit.Dialogs
 {
@@ -33,26 +35,24 @@ namespace NKnife.App.SocketKit.Dialogs
             {
                 _LocalIpBox.SelectedIndex = 0;
             }
+            ServerConfig = DI.Get<KnifeSocketServerConfig>();
         }
 
         public IPAddress IpAddress { get; private set; }
         public int Port { get; private set; }
-        public int ReceiveBufferSize { get; set; }
-        public int MaxBufferSize { get; set; }
-        public int MaxConnectCount { get; set; }
-        public int ReceiveTimeout { get; set; }
-        public int SendTimeout { get; set; }
+        public KnifeSocketServerConfig ServerConfig { get; set; }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
             IpAddress = (IPAddress) _LocalIpBox.SelectedItem;
             Port = int.Parse(_PortTextBox.Text);
 
-            ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);
-            MaxBufferSize = int.Parse(_MaxBufferSizeTextBox.Text);
-            MaxConnectCount = int.Parse(_MaxConnectCountTextBox.Text);
-            ReceiveTimeout = int.Parse(_ReceiveTimeoutTextBox.Text);
-            SendTimeout = int.Parse(_SendTimeoutTextBox.Text);
+            ServerConfig.ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);
+            ServerConfig.SendBufferSize = int.Parse(_SendBufferSizeSizeTextBox.Text);
+            ServerConfig.MaxBufferSize = int.Parse(_MaxBufferSizeTextBox.Text);
+            ServerConfig.MaxConnectCount = int.Parse(_MaxConnectCountTextBox.Text);
+            ServerConfig.ReceiveTimeout = int.Parse(_ReceiveTimeoutTextBox.Text);
+            ServerConfig.SendTimeout = int.Parse(_SendTimeoutTextBox.Text);
 
             DialogResult = true;
             Close();

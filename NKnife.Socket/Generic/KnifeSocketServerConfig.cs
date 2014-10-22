@@ -4,6 +4,17 @@ namespace SocketKnife.Generic
 {
     public class KnifeSocketServerConfig : KnifeSocketConfig, ISocketServerConfig
     {
+        public KnifeSocketServerConfig()
+        {
+            //默认值
+            _Map.Add("ReceiveBufferSize", 10240);
+            _Map.Add("SendBufferSize", 10240);
+            _Map.Add("MaxBufferSize", 20480);
+            _Map.Add("MaxConnectCount", 64);
+            _Map.Add("ReceiveTimeout", 1200);
+            _Map.Add("SendTimeout", 1200);
+        }
+
         public void Initialize(int receiveTimeout, int sendTimeout, int maxBufferSize, int maxConnectCount, int receiveBufferSize, int sendBufferSize)
         {
             ReceiveBufferSize = receiveBufferSize;
@@ -16,10 +27,10 @@ namespace SocketKnife.Generic
 
         public virtual int ReceiveBufferSize
         {
-            get { return int.Parse(_Map["ReadBufferSize"].ToString()); }
+            get { return int.Parse(_Map["ReceiveBufferSize"].ToString()); }
             set
             {
-                _Map["ReadBufferSize"] = value;
+                _Map["ReceiveBufferSize"] = value;
                 RaisePropertyChanged(() => ReceiveBufferSize);
             }
         }
@@ -30,7 +41,7 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["SendBufferSize"] = value;
-                RaisePropertyChanged(() => ReceiveBufferSize);
+                RaisePropertyChanged(() => SendBufferSize);
             }
         }
 

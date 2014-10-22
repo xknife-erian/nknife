@@ -65,11 +65,7 @@ namespace NKnife.App.SocketKit.Mvvm
                 var view = new TcpServerView();
                 view.IpAddress = win.IpAddress;
                 view.Port = win.Port;
-                view.ReceiveBufferSize = win.ReceiveBufferSize;
-                view.MaxBufferSize = win.MaxBufferSize;
-                view.MaxConnectCount = win.MaxConnectCount;
-                view.ReceiveTimeout = win.ReceiveTimeout;
-                view.SendTimeout = win.SendTimeout;
+                view.ServerConfig = win.ServerConfig;
                 _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.IpAddress, win.Port));
                 DI.Get<DockUtil>().Documents.Add(view);
             }

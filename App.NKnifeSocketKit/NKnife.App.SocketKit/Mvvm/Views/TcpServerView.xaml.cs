@@ -7,6 +7,7 @@ using NKnife.App.SocketKit.Demo;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.Base;
 using NKnife.IoC;
+using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 
 namespace NKnife.App.SocketKit.Mvvm.Views
@@ -20,12 +21,7 @@ namespace NKnife.App.SocketKit.Mvvm.Views
 
         public IPAddress IpAddress { get; set; }
         public int Port { get; set; }
-        public int ReceiveBufferSize { get; set; }
-        public int SendBufferSize { get; set; }
-        public int MaxBufferSize { get; set; }
-        public int MaxConnectCount { get; set; }
-        public int ReceiveTimeout { get; set; }
-        public int SendTimeout { get; set; }
+        public KnifeSocketServerConfig ServerConfig { get; set; }
 
         public TcpServerView()
         {
@@ -57,8 +53,7 @@ namespace NKnife.App.SocketKit.Mvvm.Views
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _ViewModel.Config(ReceiveBufferSize, SendBufferSize, MaxBufferSize, MaxConnectCount, ReceiveTimeout, SendTimeout);
-            _ViewModel.Initialize(IpAddress, Port);
+            _ViewModel.Initialize(IpAddress, Port, ServerConfig);
         }
 
     }

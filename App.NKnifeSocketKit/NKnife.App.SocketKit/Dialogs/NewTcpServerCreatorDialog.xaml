@@ -41,31 +41,31 @@
                  VerticalAlignment="Center" Width="120" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="读取时Buffer:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="10240" Name="_ReceiveBufferSizeTextBox"
+        <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="1024" Name="_ReceiveBufferSizeTextBox"
                  VerticalAlignment="Center" Width="80" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="85,0,0,0" TextWrapping="Wrap" Text="(字节)" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="发送时Buffer:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="10240" Name="_SendBufferSizeSizeTextBox"
+        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="1024" Name="_SendBufferSizeSizeTextBox"
                  VerticalAlignment="Center" Width="80" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="85,0,0,0" TextWrapping="Wrap" Text="(字节)" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="最大Buffer:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="20480" Name="_MaxBufferSizeTextBox"
+        <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="2048" Name="_MaxBufferSizeTextBox"
                  VerticalAlignment="Center" Width="80" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Margin="85,0,0,0" TextWrapping="Wrap" Text="(字节)" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="最大连接数:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="64" Name="_MaxConnectCountTextBox"
+        <TextBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="32" Name="_MaxConnectCountTextBox"
                  VerticalAlignment="Center" Width="80" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="接收超时:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="1000" Name="_ReceiveTimeoutTextBox"
+        <TextBox Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="400" Name="_ReceiveTimeoutTextBox"
                  VerticalAlignment="Center" Width="80" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Margin="85,0,0,0" TextWrapping="Wrap" Text="(毫秒)" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" 
                    Text="发送超时:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="1000" Name="_SendTimeoutTextBox"
+        <TextBox Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="400" Name="_SendTimeoutTextBox"
                  VerticalAlignment="Center" Width="80" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Margin="85,0,0,0" TextWrapping="Wrap" Text="(毫秒)" VerticalAlignment="Center"/>
         <!--第2列-->
