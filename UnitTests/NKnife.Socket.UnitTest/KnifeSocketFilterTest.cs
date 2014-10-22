@@ -43,11 +43,84 @@ namespace NKnife.Socket.UnitTest
         //
         #endregion
 
+        private static readonly EndPoint _endPoint = new IPEndPoint(IPAddress.Parse("192.168.0.0"), 8899);
+
         [TestMethod]
         public void ProcessDataPacketTestMethod1()
         {
             var filter = new TestKnifeSocketFilter();
-            var unFinished = filter.ProcessDataPacketMethod(null, null, null, null);
+            var dataPacket = new byte[] {};
+            var unFinished = new byte[] {};
+            var result = filter.ProcessDataPacketMethod(dataPacket, unFinished, dataDecoder1, _endPoint);
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void ProcessDataPacketTestMethod2()
+        {
+            var filter = new TestKnifeSocketFilter();
+            var dataPacket = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
+            var unFinished = new byte[] { };
+            var result = filter.ProcessDataPacketMethod(dataPacket, unFinished, dataDecoder1, _endPoint);
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void ProcessDataPacketTestMethod3()
+        {
+            var filter = new TestKnifeSocketFilter();
+            var dataPacket = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
+            var unFinished = new byte[] { };
+            var result = filter.ProcessDataPacketMethod(dataPacket, unFinished, dataDecoder2, _endPoint);
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(0x05, result[0]);
+        }
+
+        [TestMethod]
+        public void ProcessDataPacketTestMethod4()
+        {
+            var filter = new TestKnifeSocketFilter();
+            var dataPacket = new byte[] {0x01, 0x02, 0x03, 0x04, 0x05};
+            var unFinished = new byte[] {0x0a, 0x0b, 0x0c};
+            var result = filter.ProcessDataPacketMethod(dataPacket, unFinished, dataDecoder2, _endPoint);
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(0x05, result[0]);
+        }
+
+        [TestMethod]
+        public void ProcessDataPacketTestMethod5()
+        {
+            var filter = new TestKnifeSocketFilter();
+            var dataPacket = new byte[] { 0x0a, 0x0b, 0x0c };
+            var unFinished = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
+            var result = filter.ProcessDataPacketMethod(dataPacket, unFinished, dataDecoder2, _endPoint);
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(0x0c, result[0]);
+        }
+
+        [TestMethod]
+        public void ProcessDataPacketTestMethod6()
+        {
+            var filter = new TestKnifeSocketFilter();
+            var dataPacket = new byte[] { 0x0a, 0x0b, 0x0c };
+            var unFinished = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
+            var result = filter.ProcessDataPacketMethod(dataPacket, unFinished, dataDecoder2, _endPoint);
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(0x0c, result[0]);
+            dataPacket = new byte[] { 0x0a, 0x0b, 0x0c, 0x0d };
+            var result1 = filter.ProcessDataPacketMethod(dataPacket, result, dataDecoder2, _endPoint);
+            Assert.AreEqual(1, result1.Length);
+            Assert.AreEqual(0x0d, result1[0]);
+        }
+
+        private int dataDecoder1(EndPoint endPoint, byte[] data)
+        {
+            return data.Length;
+        }
+
+        private int dataDecoder2(EndPoint endPoint, byte[] data)
+        {
+            return data.Length - 1;
         }
 
         private class TestKnifeSocketFilter : KnifeSocketFilter
