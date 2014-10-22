@@ -104,6 +104,7 @@ namespace SocketKnife
                 clientHandler.Bind(WirteProtocol);
                 clientHandler.Bind(WirteBase);
                 clientHandler.Session = _SocketSession;
+                _logger.Info(string.Format("{0}绑定成功。", clientHandler.GetType().Name));
             }
         }
 

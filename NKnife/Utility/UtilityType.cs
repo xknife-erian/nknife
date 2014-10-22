@@ -15,7 +15,7 @@ namespace NKnife.Utility
         /// <summary>
         /// 每次搜索Type是比较耗时的，在这里采用一个字典进行缓存
         /// </summary>
-        private static readonly Dictionary<string, Dictionary<string, Type>> _ApplicationTypes = new Dictionary<string, Dictionary<string, Type>>();
+        private static readonly Dictionary<string, Dictionary<string, Type>> _appTypes = new Dictionary<string, Dictionary<string, Type>>();
 
         /// <summary>
         /// 从程序集中获取程序集实例中具有指定名称的 System.Type 对象。
@@ -261,14 +261,14 @@ namespace NKnife.Utility
                 throw new DirectoryNotFoundException(path + "不存在");
             }
             Dictionary<string, Type> typeMap = null;
-            if (!_ApplicationTypes.ContainsKey(path))
+            if (!_appTypes.ContainsKey(path))
             {
                 typeMap = FindTypeMap(path);
-                _ApplicationTypes.Add(path, typeMap);
+                _appTypes.Add(path, typeMap);
             }
             else
             {
-                typeMap = _ApplicationTypes[path];
+                typeMap = _appTypes[path];
             }
             if (typeMap != null && typeMap.ContainsKey(typeName))
             {
@@ -292,9 +292,9 @@ namespace NKnife.Utility
         /// <returns></returns>
         public static Dictionary<string, Type> FindTypeMap(string path)
         {
-            if (_ApplicationTypes.ContainsKey(path))
+            if (_appTypes.ContainsKey(path))
             {
-                return _ApplicationTypes[path];
+                return _appTypes[path];
             }
             if (!Directory.Exists(path))
             {
@@ -329,17 +329,22 @@ namespace NKnife.Utility
         /// <param name="path">指定的目录</param>
         /// <param name="targetType">指定接口的类型</param>
         /// <param name="isGenericTypeInterface">是否是泛型接口</param>
+        /// <param name="containAbstract">是否包含虚类型</param>
         /// <returns></returns>
-        public static IEnumerable<Type> FindTypesByDirectory(string path, Type targetType, bool isGenericTypeInterface = false)
+        public static IEnumerable<Type> FindTypesByDirectory(string path, Type targetType, bool isGenericTypeInterface = false, bool containAbstract = false)
         {
-            if (!_ApplicationTypes.ContainsKey(path))
+            if (!_appTypes.ContainsKey(path))
             {
-                _ApplicationTypes.Add(path, FindTypeMap(path));
+                _appTypes.Add(path, FindTypeMap(path));
             }
-            var typemap = _ApplicationTypes[path];
+            var typemap = _appTypes[path];
             var list = new List<Type>();
             foreach (var type in typemap.Values)
             {
+                if (!containAbstract && type.IsAbstract)
+                {
+                    continue;
+                }
                 if (!isGenericTypeInterface)
                 {
                     if (type.ContainsInterface(targetType))
@@ -411,10 +416,13 @@ namespace NKnife.Utility
                 }
                 catch (Exception e)
                 {
+                    Debug.Fail(string.Format("程序集获取Type失败。{0}", e.Message));
                     continue;
                 }
                 if (UtilityCollection.IsNullOrEmpty(types))
+                {
                     continue;
+                }
                 foreach (Type type in types)
                 {
                     object[] attrs = type.GetCustomAttributes(true);
@@ -441,8 +449,7 @@ namespace NKnife.Utility
         public static Type[] FindAttributesByDirectory(string appStartPath, Type targetAttribute)
         {
             var typeList = new List<Type>();
-            Assembly[] assArray = null;
-            assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
+            Assembly[] assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
             if (UtilityCollection.IsNullOrEmpty(assArray))
                 return typeList.ToArray();
 
@@ -455,13 +462,14 @@ namespace NKnife.Utility
                 }
                 catch (Exception e)
                 {
+                    Debug.Fail(string.Format("程序集获取Type失败。{0}", e.Message));
                     continue;
                 }
                 if (UtilityCollection.IsNullOrEmpty(types))
                     continue;
                 typeList.AddRange(from type in types
                                   let attrs = type.GetCustomAttributes(true)
-                                  where attrs.Any(attr => attr.GetType().Equals(targetAttribute))
+                                  where attrs.Any(attr => attr.GetType() == targetAttribute)
                                   select type);
             }
             return typeList.ToArray();
@@ -555,7 +563,7 @@ namespace NKnife.Utility
         public static bool ContainsCustomAttribute(this Type targetType, Type attribute)
         {
             object[] attrs = targetType.GetCustomAttributes(true);
-            return attrs.Any(attr => attr.GetType().Equals(attribute));
+            return attrs.Any(attr => attr.GetType() == attribute);
         }
 
         /// <summary>尝试获取定制特性，如该类型没有指定的定制特性，将为空值

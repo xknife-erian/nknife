@@ -4,7 +4,7 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-                     mc:Ignorable="d"
+                     mc:Ignorable="d" Closing="TcpServerView_OnClosing"
                      Title="SocketKnife服务端">
     <Grid Name="_View" Loaded="View_OnLoaded">
         <Grid.Resources>

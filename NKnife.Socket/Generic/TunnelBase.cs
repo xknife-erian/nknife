@@ -1,5 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
@@ -11,6 +13,8 @@ namespace SocketKnife.Generic
 {
     public abstract class TunnelBase : ITunnel<EndPoint, Socket, string>
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
 
         protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
@@ -71,8 +75,12 @@ namespace SocketKnife.Generic
             params KnifeSocketProtocolHandler[] handlers)
         {
             _Codec = codec;
-            _Family = protocolFamily;
             _Handlers = handlers;
+            _logger.Info(string.Format("绑定{0}个Handler成功。", _Handlers.Length));
+
+            _Family = protocolFamily;
+            _logger.Info(string.Format("协议族[{0}]中有{1}个协议绑定成功。", _Family.Family, _Family.Count));
+
             OnBound();
         }
 

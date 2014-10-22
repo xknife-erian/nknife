@@ -1,7 +1,7 @@
 ﻿<Window x:Class="NKnife.App.SocketKit.Dialogs.NewTcpServerCreatorDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="新建TcpSocket服务器" Height="400" Width="620"
+        Title="新建TcpSocket服务器" Height="400" Width="760"
         Icon="/Attachments/main_icon.ico">
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
@@ -21,14 +21,14 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="110" />
             <ColumnDefinition Width="140" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="110" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <WrapPanel Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="9">
             <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="30"
-                    Margin="140,5,0,0" Content="确定(_C)" Click="Confirm" IsDefault="True" />
+                    Margin="290,5,0,0" Content="确定(_C)" Click="Confirm" IsDefault="True" />
             <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="30"
                     Margin="5,5,0,0" Content="取消(_X)" Click="Cancel" IsCancel="True" />
         </WrapPanel>
@@ -70,8 +70,21 @@
         <TextBlock Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Margin="85,0,0,0" TextWrapping="Wrap" Text="(毫秒)" VerticalAlignment="Center"/>
         <!--第2列-->
         <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
-                   Text="Socket协议族:" VerticalAlignment="Center" Margin="0,0,5,0" />
-        <ComboBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="220"/>
+                   Text="Decoder:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <ComboBox Grid.Row="1" Grid.Column="3" Name="_DecoderComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
+                   Text="Encoder:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <ComboBox Grid.Row="2" Grid.Column="3" Name="_EncoderComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
+                   Text="Packer:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <ComboBox Grid.Row="3" Grid.Column="3" Name="_PackerComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
+                   Text="UnPacker:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <ComboBox Grid.Row="4" Grid.Column="3" Name="_UnPackerComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
+                   Text="CommandParser:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <ComboBox Grid.Row="5" Grid.Column="3" Name="_CommandParserComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
+        <CheckBox Grid.Row="6" Grid.Column="3" Name="_IsHeartBeat" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Content="心跳检测" Width="220"/>
 
     </Grid>
 </Window>

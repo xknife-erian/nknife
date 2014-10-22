@@ -19,9 +19,17 @@ namespace NKnife.App.SocketKit.Demo
     {
         #region App
 
-        private readonly ServerList _ServerList = DI.Get<ServerList>();
         internal Dispatcher Dispatcher { get; set; }
+
+        private readonly ServerList _ServerList = DI.Get<ServerList>();
         public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
+
+        private Pair<IPAddress, int> _ServerListKey;
+
+        public void RemoveServer()
+        {
+            _ServerList.Remove(_ServerListKey);
+        }
 
         #endregion
 
@@ -32,9 +40,10 @@ namespace NKnife.App.SocketKit.Demo
             SocketMessages = new AsyncObservableCollection<SocketMessage>();
         }
 
-        public void Initialize(IPAddress ipAddress, int port, KnifeSocketServerConfig config)
+        public void Initialize(IPAddress ipAddress, int port, KnifeSocketServerConfig config, SocketTools socketTools)
         {
             Pair<IPAddress, int> key = Pair<IPAddress, int>.Build(ipAddress, port);
+            _ServerListKey = key;
 
             var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
             heartbeatServerFilter.Interval = 1000*5;
@@ -42,13 +51,18 @@ namespace NKnife.App.SocketKit.Demo
 
             var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
             var codec = DI.Get<KnifeSocketCodec>();
+            codec.SocketDecoder = (KnifeSocketDatagramDecoder)DI.Get(socketTools.Decoder);
+            codec.SocketEncoder = (KnifeSocketDatagramEncoder)DI.Get(socketTools.Encoder);
+
             StringProtocolFamily protocolFamily = GetProtocolFamily();
+            protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(socketTools.CommandParser);
 
             if (!_ServerList.ContainsKey(key))
             {
                 _Server = DI.Get<IKnifeSocketServer>();
                 _Server.Config = config;
-                _Server.AddFilter(heartbeatServerFilter);
+                if (socketTools.NeedHeartBeat)
+                    _Server.AddFilter(heartbeatServerFilter);
                 _Server.AddFilter(keepAliveFilter);
                 _Server.Configure(ipAddress, port);
                 _Server.Bind(codec, protocolFamily, new DemoServerHandler(SocketMessages));
@@ -67,14 +81,16 @@ namespace NKnife.App.SocketKit.Demo
             var family = DI.Get<StringProtocolFamily>();
             family.Family = "socket-kit";
 
-            var pro1 = DI.Get<StringProtocol>("abcd");
-            var pro2 = DI.Get<StringProtocol>();
+            var custom = DI.Get<StringProtocol>("TestCustom");
+            custom.Family = family.Family;
+            custom.Command = "custom";
 
             family.Add(family.Build("call"));
             family.Add(family.Build("recall"));
             family.Add(family.Build("sing"));
             family.Add(family.Build("dance"));
             family.Add(register);
+            family.Add(custom);
 
             return family;
         }

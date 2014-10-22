@@ -46,6 +46,31 @@ namespace NKnife.IoC
         /// <summary>
         /// Gets an instance of the specified service.
         /// </summary>
+        /// <param name="type">The service to resolve.</param>
+        /// <param name="parameters">The parameters to pass to the request.</param>
+        /// <returns>An instance of the service.</returns>
+        public static object Get(Type type, params IParameter[] parameters)
+        {
+            Initialize();
+            return _CoreKernel.Get(type, parameters);
+        }
+
+        /// <summary>
+        /// Gets an instance of the specified service by using the first binding that matches the specified constraint.
+        /// </summary>
+        /// <param name="type">The service to resolve.</param>
+        /// <param name="constraint">The constraint to apply to the binding.</param>
+        /// <param name="parameters">The parameters to pass to the request.</param>
+        /// <returns>An instance of the service.</returns>
+        public static object Get(Type type, Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
+        {
+            Initialize();
+            return _CoreKernel.Get(type, constraint, parameters);
+        }
+
+        /// <summary>
+        /// Gets an instance of the specified service.
+        /// </summary>
         /// <typeparam name="T">The service to resolve.</typeparam>
         /// <param name="parameters">The parameters to pass to the request.</param>
         /// <returns>An instance of the service.</returns>

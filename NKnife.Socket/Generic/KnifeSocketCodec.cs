@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ninject;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.Protocol;
 using NKnife.Tunnel;
 using SocketKnife.Interfaces;
@@ -11,6 +13,8 @@ namespace SocketKnife.Generic
 {
     public class KnifeSocketCodec : ITunnelCodec<string>
     {
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
         [Inject]
         public virtual KnifeSocketDatagramDecoder SocketDecoder { get; set; }
 
@@ -20,13 +24,21 @@ namespace SocketKnife.Generic
         IDatagramDecoder<string> ITunnelCodec<string>.Decoder
         {
             get { return SocketDecoder; }
-            set { SocketDecoder = (KnifeSocketDatagramDecoder) value; }
+            set
+            {
+                SocketDecoder = (KnifeSocketDatagramDecoder) value;
+                _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
+            }
         }
 
         IDatagramEncoder<string> ITunnelCodec<string>.Encoder
         {
             get { return SocketEncoder; }
-            set { SocketEncoder = (KnifeSocketDatagramEncoder) value; }
+            set
+            {
+                SocketEncoder = (KnifeSocketDatagramEncoder) value;
+                _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
+            }
         }
     }
 }

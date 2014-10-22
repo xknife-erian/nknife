@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using NKnife.App.SocketKit.Common;
 using NKnife.App.SocketKit.Demo;
 using NKnife.App.SocketKit.Dialogs;
 using NKnife.Base;
@@ -22,14 +23,20 @@ namespace NKnife.App.SocketKit.Mvvm.Views
         public IPAddress IpAddress { get; set; }
         public int Port { get; set; }
         public KnifeSocketServerConfig ServerConfig { get; set; }
+        public SocketTools SocketTools { get; set; }
 
         public TcpServerView()
         {
             InitializeComponent();
             _View.DataContext = _ViewModel;
             _ViewModel.Dispatcher = this.Dispatcher;
-
         }
+        
+        private void TcpServerView_OnClosing(object sender, CancelEventArgs e)
+        {
+            _ViewModel.RemoveServer();
+        }
+
         private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)
         {
             //TODO:想在这里尝试做一下最后一列的自适应宽度,未成功
@@ -53,7 +60,7 @@ namespace NKnife.App.SocketKit.Mvvm.Views
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _ViewModel.Initialize(IpAddress, Port, ServerConfig);
+            _ViewModel.Initialize(IpAddress, Port, ServerConfig, SocketTools);
         }
 
     }

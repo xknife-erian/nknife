@@ -11,10 +11,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NKnife.App.SocketKit.Common;
 using NKnife.IoC;
+using NKnife.Protocol;
+using NKnife.Protocol.Generic.CommandParsers;
+using NKnife.Protocol.Generic.Packers;
+using NKnife.Tunnel;
 using NKnife.Utility;
 using SocketKnife;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Families;
 
 namespace NKnife.App.SocketKit.Dialogs
 {
@@ -36,11 +42,47 @@ namespace NKnife.App.SocketKit.Dialogs
                 _LocalIpBox.SelectedIndex = 0;
             }
             ServerConfig = DI.Get<KnifeSocketServerConfig>();
+
+            var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramDecoder<>), true);
+            foreach (var decoder in decoders)
+            {
+                _DecoderComboBox.Items.Add(decoder);
+            }
+            _DecoderComboBox.SelectedItem = typeof(FixedTailDecoder);
+
+            var encoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramEncoder<>), true);
+            foreach (var encoder in encoders)
+            {
+                _EncoderComboBox.Items.Add(encoder);
+            }
+            _EncoderComboBox.SelectedItem = typeof(FixedTailEncoder);
+
+            var packers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IProtocolPacker<>), true);
+            foreach (var packer in packers)
+            {
+                _PackerComboBox.Items.Add(packer);
+            }
+            _PackerComboBox.SelectedItem = typeof(TextPlainPacker);
+
+            var unpackers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IProtocolUnPacker<>), true);
+            foreach (var unpacker in unpackers)
+            {
+                _UnPackerComboBox.Items.Add(unpacker);
+            }
+            _UnPackerComboBox.SelectedItem = typeof(TextPlainUnPacker);
+
+            var commandParsers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IProtocolCommandParser<>), true);
+            foreach (var commandParser in commandParsers)
+            {
+                _CommandParserComboBox.Items.Add(commandParser);
+            }
+            _CommandParserComboBox.SelectedItem = typeof(FirstFieldCommandParser);
         }
 
         public IPAddress IpAddress { get; private set; }
         public int Port { get; private set; }
         public KnifeSocketServerConfig ServerConfig { get; set; }
+        public SocketTools SocketTools { get; set; }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
@@ -54,6 +96,15 @@ namespace NKnife.App.SocketKit.Dialogs
             ServerConfig.ReceiveTimeout = int.Parse(_ReceiveTimeoutTextBox.Text);
             ServerConfig.SendTimeout = int.Parse(_SendTimeoutTextBox.Text);
 
+            SocketTools.CommandParser = (Type) _CommandParserComboBox.SelectedItem;
+            SocketTools.Decoder = (Type) _DecoderComboBox.SelectedItem;
+            SocketTools.Encoder = (Type) _EncoderComboBox.SelectedItem;
+            SocketTools.Packer = (Type) _PackerComboBox.SelectedItem;
+            SocketTools.UnPacker = (Type) _UnPackerComboBox.SelectedItem;
+            if (_IsHeartBeat.IsChecked != null) 
+                SocketTools.NeedHeartBeat = (bool) _IsHeartBeat.IsChecked;
+            else
+                SocketTools.NeedHeartBeat = true;
             DialogResult = true;
             Close();
         }

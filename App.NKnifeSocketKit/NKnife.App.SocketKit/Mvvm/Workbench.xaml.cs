@@ -66,6 +66,7 @@ namespace NKnife.App.SocketKit.Mvvm
                 view.IpAddress = win.IpAddress;
                 view.Port = win.Port;
                 view.ServerConfig = win.ServerConfig;
+                view.SocketTools = win.SocketTools;
                 _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.IpAddress, win.Port));
                 DI.Get<DockUtil>().Documents.Add(view);
             }

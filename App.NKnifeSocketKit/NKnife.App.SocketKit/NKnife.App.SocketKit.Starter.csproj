@@ -91,6 +91,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\DockUtil.cs" />
     <Compile Include="Common\SocketMessage.cs" />
+    <Compile Include="Common\SocketTools.cs" />
     <Compile Include="Dialogs\NewTcpServerCreatorDialog.xaml.cs">
       <DependentUpon>NewTcpServerCreatorDialog.xaml</DependentUpon>
     </Compile>

@@ -23,7 +23,7 @@ namespace NKnife.App.SocketKit.IoC
             Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();
             Bind<KnifeSocketDatagramEncoder>().To<FixedTailEncoder>();
 
-            Bind<StringProtocol>().To<MyProtocol>().Named("abcd");
+            Bind<StringProtocol>().To<MyProtocol>().Named("TestCustom");
         }
 
         public class MyProtocol : StringProtocol
