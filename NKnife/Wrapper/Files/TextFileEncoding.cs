@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace NKnife.NIo
+namespace NKnife.Wrapper.Files
 {
     /// <summary>
     ///     用于取得一个文本文件的编码方式(Encoding)。

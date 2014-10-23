@@ -137,11 +137,6 @@
     <Compile Include="Maths\UtilityMath.cs" />
     <Compile Include="Mvvm\DelegateCommand`.cs" />
     <Compile Include="Entities\AssemblyWrapper.cs" />
-    <Compile Include="NIo\FileEnums.cs" />
-    <Compile Include="NIo\FileSearching.cs" />
-    <Compile Include="NIo\NoDotNetAssemblyFiles.cs" />
-    <Compile Include="NIo\TextFileEncoding.cs" />
-    <Compile Include="NIo\UtilityFile.cs" />
     <Compile Include="Protocol\Generic\CommandParsers\DatagramCommandParser.cs" />
     <Compile Include="Protocol\Generic\CommandParsers\FirstFieldCommandParser.cs" />
     <Compile Include="Protocol\Generic\Packers\XmlProtocolDataTableDeserializeUnPacker.cs" />
@@ -576,6 +571,11 @@
     <Compile Include="Wrapper\CSVFile.cs" />
     <Compile Include="Wrapper\Duration.cs" />
     <Compile Include="FTP\FtpClient.cs" />
+    <Compile Include="Wrapper\Files\FileEnums.cs" />
+    <Compile Include="Wrapper\Files\FileSearching.cs" />
+    <Compile Include="Wrapper\Files\NoDotNetAssemblyFiles.cs" />
+    <Compile Include="Wrapper\Files\TextFileEncoding.cs" />
+    <Compile Include="Utility\UtilityFile.cs" />
     <Compile Include="Wrapper\GlobalHotkey.cs" />
     <Compile Include="Interface\IAbout.cs" />
     <Compile Include="Wrapper\JWebs.cs" />

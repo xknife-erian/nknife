@@ -4,7 +4,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using NKnife.NIo;
+using NKnife.Utility;
+using NKnife.Wrapper.Files;
 
 namespace NKnife.Zip
 {

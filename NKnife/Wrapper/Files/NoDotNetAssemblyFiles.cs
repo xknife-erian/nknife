@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NKnife.NIo
+namespace NKnife.Wrapper.Files
 {
     public class NoDotNetAssemblyFiles
     {

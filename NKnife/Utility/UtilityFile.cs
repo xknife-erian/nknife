@@ -11,9 +11,9 @@ using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
 using NKnife.ShareResources;
-using NKnife.Utility;
+using NKnife.Wrapper.Files;
 
-namespace NKnife.NIo
+namespace NKnife.Utility
 {
     /// <summary>
     ///     文件与目录等System.IO下的类的扩展

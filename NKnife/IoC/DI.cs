@@ -4,7 +4,8 @@ using Ninject;
 using Ninject.Modules;
 using Ninject.Parameters;
 using Ninject.Planning.Bindings;
-using NKnife.NIo;
+using NKnife.Utility;
+using NKnife.Wrapper.Files;
 
 namespace NKnife.IoC
 {

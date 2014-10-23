@@ -4,7 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using NKnife.NIo;
+using NKnife.Utility;
+using NKnife.Wrapper.Files;
 
 namespace NKnife.Draws.Icons
 {
