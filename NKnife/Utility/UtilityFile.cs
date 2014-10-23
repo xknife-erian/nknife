@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
+using NKnife.Adapters;
+using NKnife.Interface;
 using NKnife.ShareResources;
 using NKnife.Wrapper.Files;
 
@@ -104,7 +106,7 @@ namespace NKnife.Utility
             }
             if (paths.Length >= 32)
             {
-                throw new ArgumentOutOfRangeException("路径字段太多，可能导致系统IO错误");
+                throw new ArgumentOutOfRangeException("paths", "路径字段太多，可能导致系统IO错误");
             }
 
             string result = paths[0];
@@ -845,7 +847,8 @@ namespace NKnife.Utility
                     }
                     catch(Exception e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}", e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", dllPath, e.Message));
+                        continue;
                     }
                 }
                 foreach (string exePath in exes)
@@ -857,7 +860,8 @@ namespace NKnife.Utility
                     }
                     catch (Exception e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}", e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", exePath, e.Message));
+                        continue;
                     }
                 }
             }
@@ -900,7 +904,7 @@ namespace NKnife.Utility
                     }
                     catch (Exception e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}", e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", exePath, e.Message));
                         continue;
                     }
                 }

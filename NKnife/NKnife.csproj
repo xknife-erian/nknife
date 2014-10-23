@@ -81,6 +81,9 @@
     <Compile Include="Database\Interface\IDataSetProcess.cs" />
     <Compile Include="Database\Process\ArrayProcess.cs" />
     <Compile Include="Database\Process\IntProcess.cs" />
+    <Compile Include="Domains\AppDomainProxy.cs" />
+    <Compile Include="Domains\DomainFirster.cs" />
+    <Compile Include="Domains\DynamicLoader.cs" />
     <Compile Include="Encrypt\FileMD5.cs" />
     <Compile Include="Encrypt\RSACryption.cs" />
     <Compile Include="Encrypt\SimpleCipher.cs" />
