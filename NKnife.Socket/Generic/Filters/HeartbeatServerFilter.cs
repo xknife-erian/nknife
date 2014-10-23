@@ -4,8 +4,10 @@ using System.Net;
 using System.Timers;
 using NKnife.Adapters;
 using NKnife.Interface;
+using NKnife.Wrapper;
 using SocketKnife.Common;
 using SocketKnife.Events;
+using SocketKnife.Exceptions;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
@@ -26,6 +28,11 @@ namespace SocketKnife.Generic.Filters
 
         public Heartbeat Heartbeat { get; set; }
         public double Interval { get; set; }
+        /// <summary>
+        /// 严格模式开关
+        /// true 心跳返回内容一定要和HeartBeat类中定义的_ReplayOfClient一致才算有心跳响应
+        /// false 心跳返回任何内容均算有心跳相应
+        /// </summary>
         public bool IsStrictMode { get; set; }
 
         public override bool ContinueNextFilter
@@ -60,8 +67,16 @@ namespace SocketKnife.Generic.Filters
                 KnifeSocketSession session = pair.Value;
                 if (!(session.WaitingForReply)) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
                 {
-                    handlers[0].Write(session, Heartbeat.BeatingOfServerHeart);
-                    session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
+                    try
+                    {
+                        handlers[0].Write(session, Heartbeat.BeatingOfServerHeart);
+                        session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
+                    }
+                    catch (SocketClientDisOpenedException ex) //发送异常，发不出去则立即移出
+                    {
+                        _logger.Warn(string.Format("向客户端{0}发送心跳时异常:{1}", endpoint, ex.Message), ex);
+                        RemoveEndPointFromSessionMap(endpoint);
+                    }
                 }
                 else
                 {
@@ -70,20 +85,26 @@ namespace SocketKnife.Generic.Filters
             }
             foreach (EndPoint endPoint in list)
             {
-                KnifeSocketSession session;
-                if (map.TryGetValue(endPoint, out session))
+                RemoveEndPointFromSessionMap(endPoint);
+            }
+        }
+
+        private void RemoveEndPointFromSessionMap(EndPoint endPoint)
+        {
+            KnifeSocketSessionMap map = SessionMapGetter.Invoke();
+            KnifeSocketSession session;
+            if (map.TryGetValue(endPoint, out session))
+            {
+                try
                 {
-                    try
-                    {
-                        session.Connector.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Warn(string.Format("断开客户端{0}时异常:{1}", endPoint, ex.Message), ex);
-                    }
-                    map.Remove(endPoint);
-                    _logger.Info(string.Format("心跳检查客户端{0}无响应，从SessionMap中移除之。池中:{1}", endPoint, map.Count));
+                    session.Connector.Close();
                 }
+                catch (Exception ex)
+                {
+                    _logger.Warn(string.Format("断开客户端{0}时异常:{1}", endPoint, ex.Message), ex);
+                }
+                map.Remove(endPoint);
+                _logger.Info(string.Format("心跳检查客户端{0}无响应，从SessionMap中移除之。池中:{1}", endPoint, map.Count));
             }
         }
 
