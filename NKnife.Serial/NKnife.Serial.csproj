@@ -7,8 +7,8 @@
     <ProjectGuid>{3B1BA8E0-29DD-4CFC-8593-889B9D547AB7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NKnife.NSerial</RootNamespace>
-    <AssemblyName>NKnife.NSerial</AssemblyName>
+    <RootNamespace>SerialKnife</RootNamespace>
+    <AssemblyName>SerialKnife</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

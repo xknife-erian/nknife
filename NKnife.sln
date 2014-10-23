@@ -40,7 +40,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.XPath", "App.Mis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog3", "NKnife.NLog3\NKnife.NLog3.csproj", "{3D1D08D2-46B0-4C33-A214-A5A76A998102}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NSerial", "NKnife.NSerial\NKnife.NSerial.csproj", "{3B1BA8E0-29DD-4CFC-8593-889B9D547AB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Serial", "NKnife.Serial\NKnife.Serial.csproj", "{3B1BA8E0-29DD-4CFC-8593-889B9D547AB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{6CCD23AF-807F-4E8A-9456-1788F2C89E81}"
 EndProject
