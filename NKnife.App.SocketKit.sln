@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Socket\NKnife.Socket.csproj", "{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.SocketKit.Starter", "App.NKnifeSocketKit\NKnife.App.SocketKit\NKnife.App.SocketKit.Starter.csproj", "{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NKnife", "NKnife", "{A9A2AA2C-6F24-4CF6-8528-B243096EBADD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog3", "NKnife.NLog3\NKnife.NLog3.csproj", "{3D1D08D2-46B0-4C33-A214-A5A76A998102}"
@@ -16,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.UnitTest", "UnitTests\NKnife.UnitTest\NKnife.UnitTest.csproj", "{37E93CF1-6BDD-4ADF-94C7-0BF46AF71253}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket.UnitTest", "UnitTests\NKnife.Socket.UnitTest\NKnife.Socket.UnitTest.csproj", "{1B229168-2C13-46E6-87D1-42DFA82E36EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife", "Kits\NKnife.Kits.SocketKnife\NKnife.Kits.SocketKnife.csproj", "{63081AEA-1345-4F5C-84DA-E44B2E8E290C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,16 +47,6 @@ Global
 		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}.Release|x86.ActiveCfg = Release|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DC973AA7-2F85-4C98-BF55-6BCF1A343C86}.Release|x86.ActiveCfg = Release|Any CPU
 		{3D1D08D2-46B0-4C33-A214-A5A76A998102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D1D08D2-46B0-4C33-A214-A5A76A998102}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D1D08D2-46B0-4C33-A214-A5A76A998102}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -87,6 +77,16 @@ Global
 		{1B229168-2C13-46E6-87D1-42DFA82E36EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1B229168-2C13-46E6-87D1-42DFA82E36EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1B229168-2C13-46E6-87D1-42DFA82E36EE}.Release|x86.ActiveCfg = Release|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{63081AEA-1345-4F5C-84DA-E44B2E8E290C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
