@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using System.Text;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Interface;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common
 {
     /* 国际象棋的FEN格式串
     国际象棋的FEN格式串是由6段ASCII字符串组成的代码(彼此5个空格隔开)，这6段代码的意义依次是：
@@ -504,7 +506,7 @@ namespace Gean.Module.Chess
             this.Parse(info.GetString("fen"));
         }
 
-        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("fen", this.Generator());

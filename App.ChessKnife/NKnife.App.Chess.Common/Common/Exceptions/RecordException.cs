@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Exceptions
 {
     [Serializable]
     public class RecordException : ChessException
     {
         public RecordException() { }
         public RecordException(string message) : base(message) { }
-        public RecordException(string message, Exception inner) : base(message, inner) { }
+        public RecordException(string message, System.Exception inner) : base(message, inner) { }
         protected RecordException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)

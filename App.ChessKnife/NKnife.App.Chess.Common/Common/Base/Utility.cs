@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Collections;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Base
 {
     static class Utility
     {

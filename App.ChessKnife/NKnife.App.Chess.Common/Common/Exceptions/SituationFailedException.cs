@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gean.Module.Chess
+﻿namespace NKnife.Chesses.Common.Exceptions
 {
     [global::System.Serializable]
     public class SituationFailedException : ChessException
     {
         public SituationFailedException() { }
         public SituationFailedException(string message) : base(message) { }
-        public SituationFailedException(string message, Exception inner) : base(message, inner) { }
+        public SituationFailedException(string message, System.Exception inner) : base(message, inner) { }
         protected SituationFailedException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)

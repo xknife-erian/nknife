@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Exceptions;
+using NKnife.Chesses.Common.Interface;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Pieces
 {
     public class PieceKing : Piece
     {
-        public static PieceKing NewBlackKing = new PieceKing(Enums.GameSide.Black);
-        public static PieceKing NewWhiteKing = new PieceKing(Enums.GameSide.White);
+        public static PieceKing _NewBlackKing = new PieceKing(Enums.GameSide.Black);
+        public static PieceKing _NewWhiteKing = new PieceKing(Enums.GameSide.White);
 
         public PieceKing(Enums.GameSide side) : this(side, Position.Empty) { }
         public PieceKing(Enums.GameSide side, Position position)

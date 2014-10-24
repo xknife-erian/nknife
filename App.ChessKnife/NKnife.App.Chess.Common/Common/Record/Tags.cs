@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
+using NKnife.Chesses.Common.Interface;
 using NKnife.Collections;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record
 {
     /* 标签对部分
      * 
@@ -61,7 +60,7 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 棋局记录的标签对部分
     /// </summary>
-    public class Tags : Definition, IItem
+    public class Tags : Definition, IChessItem
     {
         public override string ToString()
         {

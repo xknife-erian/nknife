@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Exceptions;
+using NKnife.Chesses.Common.Interface;
 using NKnife.Events;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Pieces
 {
     public abstract class Piece : IPiece
     {

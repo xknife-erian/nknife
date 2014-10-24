@@ -1,14 +1,17 @@
-using System;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Interface
 {
     /// <summary>
     /// This interface defines the minimum functionality that a game 
     /// parser must implement.  It does not have to have all the functionality
     /// present, but the interface must be delcared.
-    /// <seealso cref="IGameParserEvents"/>
+    /// <seealso>
+    ///     <cref>IGameParserEvents</cref>
+    /// </seealso>
     /// </summary>
-    public interface IPGNReader
+    public interface IPgnReader
     {
         /// <summary>
         /// Name of the fileto parse.
@@ -42,11 +45,11 @@ namespace Gean.Module.Chess
         /// Used to register event handlers.
         /// </summary>
         /// <param name="ievents"></param>
-        void AddEvents(IPGNReaderEvents ievents);
+        void AddEvents(IPgnReaderEvents ievents);
         /// <summary>
         /// Used to remove event handlers.
         /// </summary>
         /// <param name="ievents"></param>
-        void RemoveEvents(IPGNReaderEvents ievents);
+        void RemoveEvents(IPgnReaderEvents ievents);
     }
 }

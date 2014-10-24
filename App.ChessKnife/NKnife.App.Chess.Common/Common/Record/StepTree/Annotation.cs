@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using NKnife.Interface;
 using NKnife.ShareResources;
 using NKnife.Utility;
+using IItem = NKnife.Chesses.Common.Interface.IChessItem;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record.StepTree
 {
     /// <summary>
     /// 描述棋评的类。他被包括在一对大括号中。一般都将跟随在一个ChessStep的后面。

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Interface;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Pieces
 {
     public class PieceKnight : Piece
     {

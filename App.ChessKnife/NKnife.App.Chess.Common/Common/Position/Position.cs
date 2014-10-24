@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Interface;
 
 namespace Gean.Module.Chess
 {

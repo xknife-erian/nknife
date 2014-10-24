@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NKnife.Interface;
+﻿using IItem = NKnife.Chesses.Common.Interface.IChessItem;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record.StepTree
 {
     public class Nag : IItem
     {

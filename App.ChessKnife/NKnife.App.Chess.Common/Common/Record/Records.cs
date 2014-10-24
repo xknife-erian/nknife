@@ -1,21 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.Collections;
-using NKnife.Interface;
+using System.Collections.Generic;
+using Gean;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Exceptions;
+using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Record.StepTree;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record
 {
     /// <summary>
     /// 描述一个记载有多个棋局记录文件中的数据封装类型。
     /// 该文件将被解析成一个IList&lt;Record&gt;集合,即本类型。
     /// 该类型实现了PGN解析接口。
     /// </summary>
-    public class Records : ICollection<Record>, IPGNReaderEvents
+    public class Records : ICollection<Record>, IPgnReaderEvents
     {
 
-        private List<Record> _chessRecords = new List<Record>();
+        private readonly List<Record> _ChessRecords = new List<Record>();
 
         #region IGameReaderEvents 成员
 
@@ -23,25 +26,25 @@ namespace Gean.Module.Chess
         private string _lastNumber;
         private Step _tmpStep;
         private Annotation _tmpComment;
-        private ITree _tmpStepTree = null;
+        private IStepTree _tmpStepTree = null;
 
-        public void NewGame(IPGNReader iParser)
+        public void NewGame(IPgnReader iParser)
         {
             _states = new Stack();
             _tmpStepTree = new Record();
-            _chessRecords.Add((Record)_tmpStepTree);
+            _ChessRecords.Add((Record)_tmpStepTree);
         }
 
-        public void ExitHeader(IPGNReader iParser)
+        public void ExitHeader(IPgnReader iParser)
         {
         }
 
-        public void EnterVariation(IPGNReader iParser)
+        public void EnterVariation(IPgnReader iParser)
         {
             _states.Push(_lastNumber);
             if (_tmpStep != null)
             {
-                _tmpStep.Parent = _tmpStepTree;
+                _tmpStep.Parent = (IChessItem) _tmpStepTree;
                 _tmpStepTree = _tmpStep;
                 if (_tmpStepTree.Items == null)
                 {
@@ -52,14 +55,14 @@ namespace Gean.Module.Chess
             }
             else
             {
-                ITree tmpTree = null;
+                IStepTree tmpTree = null;
                 int i = 1;
-                while (!(_tmpStepTree.Items[_tmpStepTree.Items.Count - i] is ITree))
+                while (!(_tmpStepTree.Items[_tmpStepTree.Items.Count - i] is IStepTree))
                 {
                     i++;
                 }
-                tmpTree = (ITree)_tmpStepTree.Items[_tmpStepTree.Items.Count - i];
-                tmpTree.Parent = _tmpStepTree;
+                tmpTree = (IStepTree)_tmpStepTree.Items[_tmpStepTree.Items.Count - i];
+                tmpTree.Parent = (IChessItem) _tmpStepTree;
                 _tmpStepTree = tmpTree;
             }
             if (_tmpStepTree.Items == null)
@@ -68,24 +71,24 @@ namespace Gean.Module.Chess
             }
         }
 
-        public void ExitVariation(IPGNReader iParser)
+        public void ExitVariation(IPgnReader iParser)
         {
             if (iParser.State != Enums.PGNReaderState.Number)
                 StepParsed(iParser);
-            _tmpStepTree = (ITree)_tmpStepTree.Parent;
+            _tmpStepTree = (IStepTree)_tmpStepTree.Parent;
             _lastNumber = (string)_states.Pop();
         }
 
-        public void Starting(IPGNReader iParser)
+        public void Starting(IPgnReader iParser)
         {
         }
 
-        public void Finished(IPGNReader iParser)
+        public void Finished(IPgnReader iParser)
         {
             _states = new Stack();
         }
 
-        public void TagParsed(IPGNReader iParser)
+        public void TagParsed(IPgnReader iParser)
         {
             try
             {
@@ -97,7 +100,7 @@ namespace Gean.Module.Chess
             }
         }
 
-        public void NagParsed(IPGNReader iParser)
+        public void NagParsed(IPgnReader iParser)
         {
             if (_tmpStep != null)
             {
@@ -108,7 +111,7 @@ namespace Gean.Module.Chess
             _tmpStepTree.Items.Add(nag);
         }
 
-        public void StepParsed(IPGNReader iParser)
+        public void StepParsed(IPgnReader iParser)
         {
             if (iParser.State == Enums.PGNReaderState.Number)
             {
@@ -134,13 +137,13 @@ namespace Gean.Module.Chess
             }
         }
 
-        public void CommentParsed(IPGNReader iParser)
+        public void CommentParsed(IPgnReader iParser)
         {
             _tmpComment = Annotation.Parse(iParser.Value);
             _tmpStepTree.Items.Add(_tmpComment);
         }
 
-        public void EndMarker(IPGNReader iParser)
+        public void EndMarker(IPgnReader iParser)
         {
             GameResult end = GameResult.Parse(iParser.Value);
             _tmpStepTree.Items.Add(end);
@@ -152,7 +155,7 @@ namespace Gean.Module.Chess
 
         public IEnumerator<Record> GetEnumerator()
         {
-            return _chessRecords.GetEnumerator();
+            return _ChessRecords.GetEnumerator();
         }
 
         #endregion
@@ -161,21 +164,21 @@ namespace Gean.Module.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return _chessRecords.GetEnumerator();
+            return _ChessRecords.GetEnumerator();
         }
 
         #endregion
 
         public Record this[int index]
         {
-            get { return _chessRecords[index]; }
+            get { return _ChessRecords[index]; }
         }
 
         #region ICollection<Record> 成员
 
         public int Count
         {
-            get { return _chessRecords.Count; }
+            get { return _ChessRecords.Count; }
         }
 
         public void Add(Record item)

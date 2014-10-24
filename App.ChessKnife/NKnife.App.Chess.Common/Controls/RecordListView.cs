@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using Gean.Module.Chess;
+using NKnife.Chesses.Common.Record;
 
 namespace Gean.Gui.ChessControl
 {

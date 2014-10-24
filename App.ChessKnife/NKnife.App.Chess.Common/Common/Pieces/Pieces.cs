@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Exceptions;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Pieces
 {
     /// <summary>
     /// 一个描述棋子集合的类型
@@ -192,10 +195,10 @@ namespace Gean.Module.Chess
             pieces.Add(PieceBishop.Bishop06);
             pieces.Add(PieceBishop.Bishop59);
             pieces.Add(PieceBishop.Bishop62);
-            pieces.Add(PieceQueen.NewWhiteQueen);
-            pieces.Add(PieceQueen.NewBlackQueen);
-            pieces.Add(PieceKing.NewWhiteKing);
-            pieces.Add(PieceKing.NewBlackKing);
+            pieces.Add(PieceQueen._NewWhiteQueen);
+            pieces.Add(PieceQueen._NewBlackQueen);
+            pieces.Add(PieceKing._NewWhiteKing);
+            pieces.Add(PieceKing._NewBlackKing);
             return pieces;
         }
 

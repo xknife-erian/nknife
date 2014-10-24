@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using System.Collections;
-using NKnife.Interface;
+using IItem = NKnife.Chesses.Common.Interface.IChessItem;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record.StepTree
 {
     /// <summary>
     /// 描述棋局中的回合序列(实现IList接口)。

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Controls.Resource;
 
 namespace Gean.Gui.ChessControl

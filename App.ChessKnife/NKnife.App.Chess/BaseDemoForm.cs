@@ -5,6 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using NKnife.Chesses.Common;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Record;
 
 namespace Gean.Module.Chess.Demo
 {
@@ -91,7 +95,7 @@ namespace Gean.Module.Chess.Demo
 
         void _RecordTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (!(e.Node.Tag is ITree))
+            if (!(e.Node.Tag is IStepTree))
                 return;
             _StepTree.Nodes.Clear();
             Record record = e.Node.Tag as Record;
@@ -107,9 +111,9 @@ namespace Gean.Module.Chess.Demo
             _textBox2.Text = record.ToString();
         }
 
-        private void MarkNode(ITree tree, TreeNode node, StringBuilder text)
+        private void MarkNode(IStepTree tree, TreeNode node, StringBuilder text)
         {
-            foreach (IItem item in tree.Items)
+            foreach (IChessItem item in tree.Items)
             {
                 TreeNode subnode = new TreeNode();
                 if (item is Step)
@@ -126,9 +130,9 @@ namespace Gean.Module.Chess.Demo
                         subnode.Text = text.ToString();
                         node.Nodes.Add(subnode);
                     }
-                    if (item is ITree)
+                    if (item is IStepTree)
                     {
-                        ITree subtree = (ITree)item;
+                        IStepTree subtree = (IStepTree)item;
                         if (subtree.HasChildren)
                         {
                             MarkNode(subtree, subnode, new StringBuilder());

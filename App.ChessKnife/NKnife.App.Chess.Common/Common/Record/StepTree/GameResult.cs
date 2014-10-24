@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NKnife.Interface;
+﻿using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using IItem = NKnife.Chesses.Common.Interface.IChessItem;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record.StepTree
 {
     /// <summary>
     /// 棋局结果
     /// </summary>
-    public class GameResult : Gean.IItem
+    public class GameResult : IItem
     {
         public Enums.Result Result 
         {
-            get { return this._result; }
+            get { return this._Result; }
             internal set
             {
-                _result = value;
+                _Result = value;
                 this.Value = Enums.FromResult(value);
             }
         }
-        private Enums.Result _result;
+        private Enums.Result _Result;
 
         /// <summary>
         /// 1-0
