@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows.Threading;
 
 namespace System.Windows
 {
@@ -19,9 +15,16 @@ namespace System.Windows
             win.Topmost = true;
             win.ResizeMode = ResizeMode.NoResize;
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            //win.Background = "{DynamicResource {x:Static SystemColors.ControlBrushKey}}";
             win.Owner = owner;
             return win.ShowDialog();
         }
+
+        public static void DispatcherInvoke(this Window window, InvokeHandler handler)
+        {
+            window.Dispatcher.Invoke(DispatcherPriority.Normal, handler);
+        }
     }
+
+    public delegate void InvokeHandler();
+
 }
