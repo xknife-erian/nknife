@@ -86,10 +86,10 @@ namespace NKnife.Kits.SocketKnife.Demo
             var register = DI.Get<Register>();
 
             var family = DI.Get<StringProtocolFamily>();
-            family.Family = "socket-kit";
+            family.FamilyName = "socket-kit";
 
             var custom = DI.Get<StringProtocol>("TestCustom");
-            custom.Family = family.Family;
+            custom.Family = family.FamilyName;
             custom.Command = "custom";
 
             family.Add(family.Build("call"));
