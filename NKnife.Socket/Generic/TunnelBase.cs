@@ -79,7 +79,7 @@ namespace SocketKnife.Generic
             _logger.Info(string.Format("绑定{0}个Handler成功。", _Handlers.Length));
 
             _Family = protocolFamily;
-            _logger.Info(string.Format("协议族[{0}]中有{1}个协议绑定成功。", _Family.Family, _Family.Count));
+            _logger.Info(string.Format("协议族[{0}]中有{1}个协议绑定成功。", _Family.FamilyName, _Family.Count));
 
             OnBound();
         }

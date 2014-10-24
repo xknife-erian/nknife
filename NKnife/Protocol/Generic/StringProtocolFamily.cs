@@ -21,7 +21,7 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocolFamily(string name)
         {
-            Family = name;
+            FamilyName = name;
         }
 
         [Inject]
@@ -47,7 +47,7 @@ namespace NKnife.Protocol.Generic
         ///     协议族名称
         /// </summary>
         /// <value>The family.</value>
-        public string Family { get; set; }
+        public string FamilyName { get; set; }
 
         IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
         {
@@ -185,14 +185,14 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocol Build(string command)
         {
-            Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
+            Debug.Assert(!string.IsNullOrEmpty(FamilyName), "未设置协议族名称");
             if (string.IsNullOrWhiteSpace(command))
                 throw new ArgumentNullException("command", "协议命令字不能为空");
 
             if (!_SeedMap.ContainsKey(command))
             {
                 StringProtocol protocol = _Seed.BuildMethod.Invoke();
-                protocol.Family = Family;
+                protocol.Family = FamilyName;
                 protocol.Command = command;
                 _SeedMap.Add(command, protocol);
             }
@@ -201,7 +201,7 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocol Build(string command, Func<StringProtocol> buildMethod)
         {
-            Debug.Assert(!string.IsNullOrEmpty(Family), "未设置协议族名称");
+            Debug.Assert(!string.IsNullOrEmpty(FamilyName), "未设置协议族名称");
             if (string.IsNullOrWhiteSpace(command))
                 throw new ArgumentNullException("command", "协议命令字不能为空");
 
@@ -209,7 +209,7 @@ namespace NKnife.Protocol.Generic
             {
                 _SeedMap.Add(command, _Seed.BuildMethod.Invoke());
                 StringProtocol protocol = _Seed.BuildMethod.Invoke();
-                protocol.Family = Family;
+                protocol.Family = FamilyName;
                 protocol.Command = command;
                 _SeedMap.Add(command, protocol);
             }

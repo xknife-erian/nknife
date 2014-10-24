@@ -4,7 +4,7 @@ namespace NKnife.Protocol
 {
     public interface IProtocolFamily<T> : IDictionary<string, IProtocol<T>>
     {
-        string Family { get; set; }
+        string FamilyName { get; set; }
 
         IProtocolCommandParser<T> CommandParser { get; set; }
 

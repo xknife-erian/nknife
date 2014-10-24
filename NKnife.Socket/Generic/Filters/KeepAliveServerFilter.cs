@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -164,10 +165,17 @@ namespace SocketKnife.Generic.Filters
                     continue;
                 }
                 _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
-                StringProtocol protocol = family.Build(command);
+
+                StringProtocol protocol;
                 try
                 {
+                    protocol = family.Build(command);
                     protocol.Parse(dg);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    _logger.Warn(string.Format("协议分装异常。内容:{0};命令字:{1}。{2}", dg, command, ex.Message), ex);
+                    continue;
                 }
                 catch (Exception ex)
                 {

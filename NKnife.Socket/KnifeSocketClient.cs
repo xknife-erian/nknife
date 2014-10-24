@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -87,6 +88,13 @@ namespace SocketKnife
             {
                 if (_Socket != null)
                     _Socket.Close();
+
+                foreach (var filter in _FilterChain)
+                {
+                    var clientFilter = (KnifeSocketClientFilter)filter;
+                    clientFilter.OnConnectionBroke(new ConnectionedEventArgs(false, "Connection Stopped."));
+                }
+
                 return true;
             }
             catch (Exception e)
@@ -94,6 +102,8 @@ namespace SocketKnife
                 _logger.Warn("关闭Socket客户端异常。", e);
                 return false;
             }
+
+
         }
 
         protected override void OnBound()
@@ -110,6 +120,8 @@ namespace SocketKnife
 
         protected virtual void Initialize()
         {
+            if (_IsDisposed)
+                throw new ObjectDisposedException(GetType().FullName + " is Disposed");
             if (_Socket != null)
                 Stop();
             _Socket = BuildSocket();
@@ -134,10 +146,30 @@ namespace SocketKnife
         }
 
         #region Implementation of IDisposable
+        /// <summary>
+        ///     用来确定是否以释放
+        /// </summary>
+        private bool _IsDisposed;
 
         public override void Dispose()
         {
-            Stop();
+            
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~KnifeSocketClient()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_IsDisposed || disposing)
+            {
+                Stop();
+                _IsDisposed = true;
+            }
         }
 
         #endregion

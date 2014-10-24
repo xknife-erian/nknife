@@ -38,6 +38,14 @@ namespace SocketKnife.Generic.Filters
             thread.Start();
         }
 
+        protected internal override void OnConnectionBroke(ConnectionedEventArgs e)
+        {
+            base.OnConnectionBroke(e);
+            _EnableReceiveQueueMonitor = false; //停止监听
+            _ReceiveQueue.AutoResetEvent.Set();
+
+        }
+
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
             _ReceiveQueue.Enqueue(data);
@@ -62,6 +70,7 @@ namespace SocketKnife.Generic.Filters
                     _ReceiveQueue.AutoResetEvent.WaitOne();
                 }
             }
+            _logger.Info("退出ReceiveQueue队列的监听。");
         }
 
         /// <summary>
