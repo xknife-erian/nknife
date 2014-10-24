@@ -1,0 +1,76 @@
+﻿<Window x:Class="NKnife.Kits.SocketKnife.Mvvm.Workbench"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mvvm="clr-namespace:NKnife.Kits.SocketKnife.Mvvm"
+        mc:Ignorable="d"
+        Title="NKnife@Socket测试工具" Height="350" Width="525" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ServerCreator}" Executed="ServerCreatorMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ClientCreator}" Executed="ClientCreatorMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Option}" Executed="OptionMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.Exit}" Executed="ExitMenuItem_Click" />
+        <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.About}" Executed="AboutMenuItem_Click" />
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="26"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Width="Auto">
+            <MenuItem Name="_FileMenu" Padding="11,7,11,0" Height="30" VerticalAlignment="Center" Header="文件(_F)">
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.ServerCreator}" Name="_ServerCreator"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.ClientCreator}" Name="_ClientCreator"/>
+                <Separator Padding="0" Margin="0"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.Option}" Name="_Option"/>
+                <Separator Padding="0" Margin="0"/>
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.Exit}" Name="_Exit"/>
+            </MenuItem>
+            <MenuItem Padding="11,7,11,0" Height="30" Header="帮助(_H)">
+                <MenuItem Padding="8,2,0,0" Margin="0,0,0,-2" Command="{x:Static mvvm:WorkbenchViewModel.About}" Name="_About"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar Grid.Row="2" Height="Auto" Width="Auto">
+            <StatusBarItem Content="1.0.11.2345"></StatusBarItem>
+        </StatusBar>
+        <xcad:DockingManager Grid.Row="1" x:Name="_DockingManager">
+            <xcad:DockingManager.Theme>
+                <xcad:VS2010Theme />
+                <!--<xcad:AeroTheme/>-->
+                <!--<xcad:ExpressionDarkTheme/>-->
+                <!--<xcad:ExpressionLightTheme/>-->
+                <!--<xcad:GenericTheme/>-->
+                <!--<xcad:MetroTheme/>-->
+            </xcad:DockingManager.Theme>
+
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane/>
+                    </xcad:LayoutDocumentPaneGroup>
+
+                    <xcad:LayoutAnchorablePaneGroup x:Name="_RightPaneGroup" DockWidth="260" DockHeight="*">
+                        <xcad:LayoutAnchorablePane x:Name="_RightPane">
+                            <xcad:LayoutAnchorable ContentId="WatchView" Title="监视">
+                                <ListView></ListView>
+                            </xcad:LayoutAnchorable>
+                        </xcad:LayoutAnchorablePane>
+                    </xcad:LayoutAnchorablePaneGroup>
+                </xcad:LayoutPanel>
+                <xcad:LayoutRoot.BottomSide>
+                    <xcad:LayoutAnchorSide>
+                        <xcad:LayoutAnchorGroup>
+                        </xcad:LayoutAnchorGroup>
+                    </xcad:LayoutAnchorSide>
+                </xcad:LayoutRoot.BottomSide>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    </Grid>
+</Window>

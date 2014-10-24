@@ -4,18 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3D1D08D2-46B0-4C33-A214-A5A76A998102}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{262BE29F-B360-42CA-83FE-F2910CC6500B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NKnife.NLog3</RootNamespace>
-    <AssemblyName>NKnife.NLog3</AssemblyName>
+    <RootNamespace>NKnife.Kits.StarterKit</RootNamespace>
+    <AssemblyName>NKnife.Kits.StarterKit</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -33,15 +33,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\.library\Simplified Chinese Pin-Yin Conversion Library\ChnCharInfo.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net40\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -49,84 +46,76 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IoC\NLogModules.cs" />
-    <Compile Include="Logging\Base\LoggerForm.cs">
+    <Compile Include="Forms\ChineseCharUseFrequency.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logging\Base\LoggerForm.Designer.cs">
-      <DependentUpon>LoggerForm.cs</DependentUpon>
+    <Compile Include="Forms\ChineseCharUseFrequency.Designer.cs">
+      <DependentUpon>ChineseCharUseFrequency.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logging\Base\LoggerInfoDetailForm.cs">
+    <Compile Include="Forms\ImagesPanelDemo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logging\Base\NLogListView.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Forms\ImagesPanelDemo.Designer.cs">
+      <DependentUpon>ImagesPanelDemo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logging\LoggerWPFControl\LoggerWpfControlTarget.cs" />
-    <Compile Include="Logging\LoggerWPFControl\LogMessage.cs" />
-    <Compile Include="Logging\LoggerWPFControl\LogMessageCollection.cs" />
-    <Compile Include="Logging\LogPanel\LogPanel.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Forms\LoggingStarterForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logging\LogPanel\LogPanel.Designer.cs">
-      <DependentUpon>LogPanel.cs</DependentUpon>
+    <Compile Include="Forms\LoggingStarterForm.Designer.cs">
+      <DependentUpon>LoggingStarterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logging\LogPanel\ShowLogPanelTarget.cs" />
-    <Compile Include="NLogLoggerFactory.cs" />
+    <Compile Include="KitListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KitListForm.Designer.cs">
+      <DependentUpon>KitListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Logging\Base\LoggerForm.resx">
-      <DependentUpon>LoggerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ChineseCharUseFrequency.resx">
+      <DependentUpon>ChineseCharUseFrequency.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.en-US.resx">
-      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ImagesPanelDemo.resx">
+      <DependentUpon>ImagesPanelDemo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.resx">
-      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\LoggingStarterForm.resx">
+      <DependentUpon>LoggingStarterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.zh-CN.resx">
-      <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
+    <EmbeddedResource Include="KitListForm.resx">
+      <DependentUpon>KitListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.en-US.resx">
-      <DependentUpon>LogPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.resx">
-      <DependentUpon>LogPanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.zh-CN.resx">
-      <DependentUpon>LogPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\OwnResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>OwnResources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\OwnResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>OwnResources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Properties\nlog_wpf_config.config" />
-    <None Include="Properties\nlog_winform_config.config" />
-    <None Include="Logging\NLog.config.template">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NKnife\NKnife.csproj">
+    <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
+      <Project>{3D1D08D2-46B0-4C33-A214-A5A76A998102}</Project>
+      <Name>NKnife.NLog3</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
