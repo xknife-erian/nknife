@@ -45,6 +45,9 @@ namespace NKnife.Socket.UnitTest
 
         private static readonly EndPoint _endPoint = new IPEndPoint(IPAddress.Parse("192.168.0.0"), 8899);
 
+        /*
+         以下ProcessDataPacketTestMethod方法，主要测试异常的情况下的，半包的接包，粘包等现象
+         */
         [TestMethod]
         public void ProcessDataPacketTestMethod1()
         {
