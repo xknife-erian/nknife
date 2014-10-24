@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections.Specialized;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NKnife.Base;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Base
 {
     internal static class Servicer
     {
         static Servicer()
         {
-            List<Pair<AsStep, Regex>> regexs = new List<Pair<AsStep, Regex>>();
+            var regexs = new List<Pair<AsStep, Regex>>();
             regexs.Add(Pair<AsStep, Regex>.Build(AsStep.As_e4, new Regex(@"^[a-h][1-8]$", RegexOptions.Compiled)));
             regexs.Add(Pair<AsStep, Regex>.Build(AsStep.As_Rd7, new Regex(@"^[RNBQK][a-h][1-8]$", RegexOptions.Compiled)));
             regexs.Add(Pair<AsStep, Regex>.Build(AsStep.As_Rxa2, new Regex(@"^[RNBQK]x[a-h][1-8]$", RegexOptions.Compiled)));

@@ -3,6 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Gean.Module.Chess;
+using NKnife.Chesses.Common.Record;
+using NKnife.Chesses.Common.Record.PGN;
 using NKnife.Interface;
 using NKnife.Wrapper;
 
@@ -52,7 +54,7 @@ namespace Gean.Gui.ChessControl.Demo
             this.Cursor = Cursors.WaitCursor;
             Duration duration = new Duration();
             duration.Start();
-            PGNReader reader = new PGNReader();
+            PgnReader reader = new PgnReader();
             reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, PGNFile)); 
             reader.AddEvents(_records);
             reader.Parse();

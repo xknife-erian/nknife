@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
+using System.Text;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Interface;
 using NKnife.Interface;
 using NKnife.Utility;
+using IItem = NKnife.Chesses.Common.Interface.IChessItem;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common
 {
     /// <summary>
     /// 描述棋局中的单方的一步棋。如："Nc6"代表马走到c6格。
     /// 对于这步棋，绑定了一个注释的集合，一个变招的集合（变招也是每一步棋的集合）。
     /// </summary>
     [Serializable]
-    public class Step : MarshalByRefObject, Gean.ITree, Gean.IItem, IParse, IGenerator, ICloneable, ISerializable
+    public class Step : MarshalByRefObject, IStepTree, IChessItem, IParse, IGenerator, ICloneable, ISerializable
     {
         #region Property
 
@@ -85,7 +86,7 @@ namespace Gean.Module.Chess
 
         #region ITree
 
-        public object Parent { get; set; }
+        public IChessItem Parent { get; set; }
 
         public IList<IItem> Items { get; set; }
 

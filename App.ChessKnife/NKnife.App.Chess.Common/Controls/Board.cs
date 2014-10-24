@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Collections.Specialized;
 using System.Drawing.Text;
+using NKnife.Chesses.Common;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Pieces;
 using NKnife.Events;
 
 namespace Gean.Gui.ChessControl

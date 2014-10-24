@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Pieces;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Interface
 {
     /// <summary>
     /// 一个描述棋子移动时方法的接口

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Exceptions;
+using NKnife.Chesses.Common.Record.StepTree;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Base
 {
     public class Enums
     {

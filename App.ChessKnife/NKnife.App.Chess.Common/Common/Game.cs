@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Pieces;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common
 {
     [Serializable]
     public class Game : Situation, IGame
@@ -12,8 +15,8 @@ namespace Gean.Module.Chess
 
         public Game()
         {
-            this.ActivedPieces = new Pieces();
-            this.MovedPieces = new Pieces();
+            this.ActivedPieces = new Pieces.Pieces();
+            this.MovedPieces = new Pieces.Pieces();
             this.PlayMode = Enums.PlayMode.ReplayGame;
         }
 
@@ -78,12 +81,12 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 可以使用的棋子(未被俘获)
         /// </summary>
-        public Pieces ActivedPieces { get; private set; }
+        public Pieces.Pieces ActivedPieces { get; private set; }
 
         /// <summary>
         /// 已被俘获的棋子
         /// </summary>
-        public Pieces MovedPieces { get; private set; }
+        public Pieces.Pieces MovedPieces { get; private set; }
 
         /// <summary>
         /// 当前棋局的模式

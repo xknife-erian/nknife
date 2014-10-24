@@ -1,82 +1,111 @@
 using System;
-using System.Text.RegularExpressions;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
-using NKnife.NIo;
+using System.Text.RegularExpressions;
+using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+using NKnife.Chesses.Common.Interface;
+using NKnife.Wrapper.Files;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record.PGN
 {
     /// <summary>
-    /// Provides the parsing of the PGN standard game notation files
-    /// as defined by the standard.
+    ///     Provides the parsing of the PGN standard game notation files
+    ///     as defined by the standard.
     /// </summary>
-    public class PGNReader : IPGNReader
+    public class PgnReader : IPgnReader
     {
-
         #region  ===== delegate -> event =====
 
-        public delegate void newGame(IPGNReader iParser);
-        public event newGame EventNewGame;
-        public delegate void exitHeader(IPGNReader iParser);
-        public event exitHeader EventExitHeader;
-        public delegate void enterVariation(IPGNReader iParser);
-        public event enterVariation EventEnterVariation;
-        public delegate void exitVariation(IPGNReader iParser);
-        public event exitVariation EventExitVariation;
-        public delegate void starting(IPGNReader iParser);
-        public event starting EventStarting;
-        public delegate void finished(IPGNReader iParser);
-        public event finished EventFinished;
-        public delegate void tagParsed(IPGNReader iParser);
-        public event tagParsed EventTagParsed;
-        public delegate void nagParsed(IPGNReader iParser);
-        public event nagParsed EventNagParsed;
-        public delegate void moveParsed(IPGNReader iParser);
-        public event moveParsed EventMoveParsed;
-        public delegate void commentParsed(IPGNReader iParser);
-        public event commentParsed EventCommentParsed;
-        public delegate void endMarkerParsed(IPGNReader iParser);
-        public event endMarkerParsed EventendMarkerParsed;
+        public delegate void CommentParsed(IPgnReader iParser);
+
+        public delegate void EndMarkerParsed(IPgnReader iParser);
+
+        public delegate void EnterVariation(IPgnReader iParser);
+
+        public delegate void ExitHeader(IPgnReader iParser);
+
+        public delegate void ExitVariation(IPgnReader iParser);
+
+        public delegate void Finished(IPgnReader iParser);
+
+        public delegate void MoveParsed(IPgnReader iParser);
+
+        public delegate void NagParsed(IPgnReader iParser);
+
+        public delegate void NewGame(IPgnReader iParser);
+
+        public delegate void Starting(IPgnReader iParser);
+
+        public delegate void TagParsed(IPgnReader iParser);
+
+        public event NewGame EventNewGame;
+
+        public event ExitHeader EventExitHeader;
+
+        public event EnterVariation EventEnterVariation;
+
+        public event ExitVariation EventExitVariation;
+
+        public event Starting EventStarting;
+
+        public event Finished EventFinished;
+
+        public event TagParsed EventTagParsed;
+
+        public event NagParsed EventNagParsed;
+
+        public event MoveParsed EventMoveParsed;
+
+        public event CommentParsed EventCommentParsed;
+
+        public event EndMarkerParsed EventendMarkerParsed;
 
         #endregion
 
-        private Regex _Regex;
-        private StringBuilder _Value;
+        private readonly Regex _Regex;
+
+        /// <summary>
+        ///     Saves the state of the parser as it enter into a variation.
+        /// </summary>
+        private readonly Stack _SaveState;
+
+        private readonly StringBuilder _Value;
         private string _Data;
         private bool _NextGame;
         private int _PeriodCount;
 
-        /// <summary>
-        /// Saves the state of the parser as it enter into a variation.
-        /// </summary>
-        private Stack _SaveState;
-
-        /// <summary>
-        /// Allows access to the current state of the parser
-        /// when an event has been fired.
-        /// </summary>
-        public Enums.PGNReaderState State
-        {
-            get { return this._State; }
-            set { this._State = value; }
-        }
-        private Enums.PGNReaderState _State;
         private Enums.PGNReaderState _PrevState;
 
         /// <summary>
-        /// Contains the PGN tag information.
+        ///     Constructor the initializes our parser.
         /// </summary>
-        public string Tag
+        public PgnReader()
         {
-            get { return _Tag; }
+            _Regex = new Regex("^\\[([A-Za-z]*) \"(.*)\"", RegexOptions.Compiled);
+            _Value = new StringBuilder();
+            State = Enums.PGNReaderState.Header;
+            _SaveState = new Stack();
+            _PeriodCount = 0;
         }
-        private string _Tag;
 
         /// <summary>
-        /// Contains the values currently parsed, normally this
-        /// is accessed from the event listeners as the parses
-        /// signals it has found something.
+        ///     Allows access to the current state of the parser
+        ///     when an event has been fired.
+        /// </summary>
+        public Enums.PGNReaderState State { get; set; }
+
+        /// <summary>
+        ///     Contains the PGN tag information.
+        /// </summary>
+        public string Tag { get; private set; }
+
+        /// <summary>
+        ///     Contains the values currently parsed, normally this
+        ///     is accessed from the event listeners as the parses
+        ///     signals it has found something.
         /// </summary>
         public string Value
         {
@@ -84,100 +113,85 @@ namespace Gean.Module.Chess
         }
 
         /// <summary>
-        /// File name to open and parse.
+        ///     File name to open and parse.
         /// </summary>
-        public string Filename
-        {
-            get { return _filename; }
-            set { _filename = value; }
-        }
-        private string _filename;
+        public string Filename { get; set; }
 
         /// <summary>
-        /// Constructor the initializes our parser.
-        /// </summary>
-        public PGNReader()
-        {
-            _Regex = new Regex("^\\[([A-Za-z]*) \"(.*)\"", RegexOptions.Compiled);
-            _Value = new StringBuilder();
-            _State = Enums.PGNReaderState.Header;
-            _SaveState = new Stack();
-            _PeriodCount = 0;
-        }
-
-        /// <summary>
-        /// Adds a specific listner to the events fired by the parsing
-        /// of the PGN data.
+        ///     Adds a specific listner to the events fired by the parsing
+        ///     of the PGN data.
         /// </summary>
         /// <param name="ievents"></param>
-        public void AddEvents(IPGNReaderEvents ievents)
+        public void AddEvents(IPgnReaderEvents ievents)
         {
-            EventNewGame += new newGame(ievents.NewGame);
-            EventExitHeader += new exitHeader(ievents.ExitHeader);
-            EventEnterVariation += new enterVariation(ievents.EnterVariation);
-            EventExitVariation += new exitVariation(ievents.ExitVariation);
-            EventStarting += new starting(ievents.Starting);
-            EventFinished += new finished(ievents.Finished);
-            EventTagParsed += new tagParsed(ievents.TagParsed);
-            EventNagParsed += new nagParsed(ievents.NagParsed);
-            EventMoveParsed += new moveParsed(ievents.StepParsed);
-            EventCommentParsed += new commentParsed(ievents.CommentParsed);
-            EventendMarkerParsed += new endMarkerParsed(ievents.EndMarker);
+            EventNewGame += ievents.NewGame;
+            EventExitHeader += ievents.ExitHeader;
+            EventEnterVariation += ievents.EnterVariation;
+            EventExitVariation += ievents.ExitVariation;
+            EventStarting += ievents.Starting;
+            EventFinished += ievents.Finished;
+            EventTagParsed += ievents.TagParsed;
+            EventNagParsed += ievents.NagParsed;
+            EventMoveParsed += ievents.StepParsed;
+            EventCommentParsed += ievents.CommentParsed;
+            EventendMarkerParsed += ievents.EndMarker;
         }
 
         /// <summary>
-        /// Remove a specific listner from the events fired by the parsing
-        /// of the PGN data.
+        ///     Remove a specific listner from the events fired by the parsing
+        ///     of the PGN data.
         /// </summary>
         /// <param name="ievents"></param>
-        public void RemoveEvents(IPGNReaderEvents ievents)
+        public void RemoveEvents(IPgnReaderEvents ievents)
         {
-            EventNewGame -= new newGame(ievents.NewGame);
-            EventExitHeader += new exitHeader(ievents.ExitHeader);
-            EventEnterVariation -= new enterVariation(ievents.EnterVariation);
-            EventExitVariation -= new exitVariation(ievents.ExitVariation);
-            EventStarting += new starting(ievents.Starting);
-            EventFinished -= new finished(ievents.Finished);
-            EventTagParsed -= new tagParsed(ievents.TagParsed);
-            EventNagParsed -= new nagParsed(ievents.NagParsed);
-            EventMoveParsed -= new moveParsed(ievents.StepParsed);
-            EventCommentParsed -= new commentParsed(ievents.CommentParsed);
-            EventendMarkerParsed -= new endMarkerParsed(ievents.EndMarker);
+            EventNewGame -= ievents.NewGame;
+            EventExitHeader += ievents.ExitHeader;
+            EventEnterVariation -= ievents.EnterVariation;
+            EventExitVariation -= ievents.ExitVariation;
+            EventStarting += ievents.Starting;
+            EventFinished -= ievents.Finished;
+            EventTagParsed -= ievents.TagParsed;
+            EventNagParsed -= ievents.NagParsed;
+            EventMoveParsed -= ievents.StepParsed;
+            EventCommentParsed -= ievents.CommentParsed;
+            EventendMarkerParsed -= ievents.EndMarker;
         }
 
         /// <summary>
-        /// Responsible for the main driver loop of the parser.  Here we read
-        /// in the PGN file and produce events for the listening parties.
+        ///     Responsible for the main driver loop of the parser.  Here we read
+        ///     in the PGN file and produce events for the listening parties.
         /// </summary>
         public void Parse()
         {
-            StringBuilder builder = new StringBuilder(1024);
+            var builder = new StringBuilder(1024);
             StreamReader reader = null;
 
             if (EventStarting != null)
                 EventStarting(this);
             try
             {
-                Encoding fileEncoding = TextFileEncoding.GetEncoding(_filename);
-                reader = new StreamReader(_filename, fileEncoding);
+                Encoding fileEncoding = TextFileEncoding.GetEncoding(Filename);
+                reader = new StreamReader(Filename, fileEncoding);
 
                 while (!reader.EndOfStream)
                 {
                     #region while
-                    char aChar = (char)reader.Read();
+
+                    var aChar = (char) reader.Read();
                     switch (aChar)
                     {
-                        #region case
+                            #region case
+
                         case '\n':
                             _Data = builder.ToString();
                             builder.Length = 0;
                             if (_Data.Length > 0)
                             {
-                                if (_State != Enums.PGNReaderState.Comment && Regex.IsMatch(_Data, "^\\["))
+                                if (State != Enums.PGNReaderState.Comment && Regex.IsMatch(_Data, "^\\["))
                                 {
                                     if (_NextGame == false)
                                     {
-                                        CallEvent(_State);
+                                        CallEvent(State);
 
                                         _NextGame = true;
                                         if (EventNewGame != null)
@@ -185,7 +199,7 @@ namespace Gean.Module.Chess
                                             EventNewGame(this);
                                         }
                                     }
-                                    _State = Enums.PGNReaderState.Header;
+                                    State = Enums.PGNReaderState.Header;
                                     ParseTag(_Data);
                                     _Value.Length = 0;
                                 }
@@ -212,16 +226,18 @@ namespace Gean.Module.Chess
                                 goto case '\n';
                             }
                             break;
-                        #endregion
+
+                            #endregion
                     }
+
                     #endregion
+                } //while
 
-                }//while
-
-                CallEvent(_State);
+                CallEvent(State);
             }
-            catch (ApplicationException)
+            catch (ApplicationException e)
             {
+                Debug.Fail(string.Format("µ÷ÊÔÆÚÒì³£"), e.Message);
                 throw;
             }
             finally
@@ -237,7 +253,7 @@ namespace Gean.Module.Chess
         }
 
         /// <summary>
-        /// Parses out the PGN tag and value from the game header.
+        ///     Parses out the PGN tag and value from the game header.
         /// </summary>
         /// <param name="line"></param>
         public void ParseTag(string line)
@@ -251,7 +267,7 @@ namespace Gean.Module.Chess
                 // Call the events with the tag and tag value.
                 if (EventTagParsed != null)
                 {
-                    _Tag = regMatch.Groups[1].Value;
+                    Tag = regMatch.Groups[1].Value;
                     _Value.Length = 0;
                     _Value.Append(regMatch.Groups[2].Value);
                     EventTagParsed(this);
@@ -260,7 +276,7 @@ namespace Gean.Module.Chess
         }
 
         /// <summary>
-        /// Handles the parsing of the actual game notation of the PGN file.
+        ///     Handles the parsing of the actual game notation of the PGN file.
         /// </summary>
         /// <param name="line"></param>
         public void ParseDetail(string line)
@@ -268,12 +284,12 @@ namespace Gean.Module.Chess
             foreach (char aChar in line)
             {
                 // Handle any special processing of our text.
-                switch (_State)
+                switch (State)
                 {
                     case Enums.PGNReaderState.Comment:
                         if (aChar == '}')
                         {
-                            CallEvent(_State);
+                            CallEvent(State);
                         }
                         else
                             _Value.Append(aChar);
@@ -284,7 +300,7 @@ namespace Gean.Module.Chess
                             _Value.Append(aChar);
                         else
                         {
-                            CallEvent(_State);
+                            CallEvent(State);
                             HandleChar(aChar);
                         }
                         break;
@@ -298,11 +314,11 @@ namespace Gean.Module.Chess
                             _Value.Length = 0;
                             if (_PeriodCount == 1)
                             {
-                                _State = Enums.PGNReaderState.White;
+                                State = Enums.PGNReaderState.White;
                             }
                             else if (_PeriodCount > 1)
                             {
-                                _State = Enums.PGNReaderState.Black;
+                                State = Enums.PGNReaderState.Black;
                             }
                             HandleChar(aChar);
                             _PeriodCount = 0;
@@ -315,15 +331,15 @@ namespace Gean.Module.Chess
                 }
             }
             // Ensure we add a space between comment lines that are broken appart.
-            if (_State == Enums.PGNReaderState.Comment)
+            if (State == Enums.PGNReaderState.Comment)
                 _Value.Append(' ');
             else
-                CallEvent(_State);
+                CallEvent(State);
         }
 
         /// <summary>
-        /// Handles individual charaters which may signal a change in the
-        /// parser's state.
+        ///     Handles individual charaters which may signal a change in the
+        ///     parser's state.
         /// </summary>
         /// <param name="aChar"></param>
         private void HandleChar(char aChar)
@@ -331,57 +347,57 @@ namespace Gean.Module.Chess
             switch (aChar)
             {
                 case '{':
-                    CallEvent(_State);
-                    _PrevState = _State;
-                    _State = Enums.PGNReaderState.Comment;
+                    CallEvent(State);
+                    _PrevState = State;
+                    State = Enums.PGNReaderState.Comment;
                     break;
                 case '(':
                     if (EventEnterVariation != null)
                         EventEnterVariation(this);
                     _Value.Length = 0;
-                    _SaveState.Push(_State);
+                    _SaveState.Push(State);
                     break;
                 case ')':
                     if (EventExitVariation != null)
                         EventExitVariation(this);
                     _Value.Length = 0;
-                    _State = (Enums.PGNReaderState)_SaveState.Pop();
+                    State = (Enums.PGNReaderState) _SaveState.Pop();
                     break;
                 case ' ':
                     // Only if we have some data do we want to fire an event.
-                    CallEvent(_State);
+                    CallEvent(State);
                     break;
                 case '.':
                     // We may have come across 6. e4 6... d5 as in our example data.
-                    _State = Enums.PGNReaderState.Number;
-                    CallEvent(_State);
+                    State = Enums.PGNReaderState.Number;
+                    CallEvent(State);
                     _PeriodCount = 1;
                     break;
                 case '$':
-                    CallEvent(_State);
-                    _PrevState = _State;
-                    _State = Enums.PGNReaderState.Nags;
+                    CallEvent(State);
+                    _PrevState = State;
+                    State = Enums.PGNReaderState.Nags;
                     break;
                 case '!':
                 case '?':
-                    if (_State != Enums.PGNReaderState.ConvertNag)
+                    if (State != Enums.PGNReaderState.ConvertNag)
                     {
-                        CallEvent(_State);
-                        _PrevState = _State;
-                        _State = Enums.PGNReaderState.ConvertNag;
+                        CallEvent(State);
+                        _PrevState = State;
+                        State = Enums.PGNReaderState.ConvertNag;
                     }
                     _Value.Append(aChar);
                     break;
                 case '-':
-                    if (_State != Enums.PGNReaderState.EndMarker && _Value.Length >= 1)
+                    if (State != Enums.PGNReaderState.EndMarker && _Value.Length >= 1)
                     {
                         if ("012".IndexOf(_Value[_Value.Length - 1]) >= 0)
-                            _State = Enums.PGNReaderState.EndMarker;
+                            State = Enums.PGNReaderState.EndMarker;
                     }
                     _Value.Append(aChar);
                     break;
                 case '*':
-                    _State = Enums.PGNReaderState.EndMarker;
+                    State = Enums.PGNReaderState.EndMarker;
                     _Value.Append(aChar);
                     break;
                 case '\t':
@@ -393,7 +409,7 @@ namespace Gean.Module.Chess
         }
 
         /// <summary>
-        /// Calls the correct event based on the parsers state.
+        ///     Calls the correct event based on the parsers state.
         /// </summary>
         /// <param name="state"></param>
         private void CallEvent(Enums.PGNReaderState state)
@@ -405,12 +421,12 @@ namespace Gean.Module.Chess
                     case Enums.PGNReaderState.Comment:
                         if (EventCommentParsed != null)
                             EventCommentParsed(this);
-                        _State = _PrevState;
+                        State = _PrevState;
                         break;
                     case Enums.PGNReaderState.Nags:
                         if (EventNagParsed != null)
                             EventNagParsed(this);
-                        _State = _PrevState;
+                        State = _PrevState;
                         break;
                     case Enums.PGNReaderState.ConvertNag:
                         string nag = _Value.ToString();
@@ -431,33 +447,32 @@ namespace Gean.Module.Chess
                             _Value.Append('0');
                         if (EventNagParsed != null)
                             EventNagParsed(this);
-                        _State = _PrevState;
+                        State = _PrevState;
                         break;
                     case Enums.PGNReaderState.Number:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.PGNReaderState.Color;
+                        State = Enums.PGNReaderState.Color;
                         break;
                     case Enums.PGNReaderState.White:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.PGNReaderState.Black;
+                        State = Enums.PGNReaderState.Black;
                         break;
                     case Enums.PGNReaderState.Black:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.PGNReaderState.Number;
+                        State = Enums.PGNReaderState.Number;
                         break;
                     case Enums.PGNReaderState.EndMarker:
                         if (EventendMarkerParsed != null)
                             EventendMarkerParsed(this);
-                        _State = Enums.PGNReaderState.Header;
+                        State = Enums.PGNReaderState.Header;
                         break;
                 }
             }
             // Always clear out our data as the handler should have used this value during the event.
             _Value.Length = 0;
         }
-
     }
 }

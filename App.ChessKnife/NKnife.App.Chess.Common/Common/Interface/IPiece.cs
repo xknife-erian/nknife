@@ -1,5 +1,7 @@
-﻿using System;
-namespace Gean.Module.Chess
+﻿using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
+
+namespace NKnife.Chesses.Common.Interface
 {
     public interface IPiece
     {

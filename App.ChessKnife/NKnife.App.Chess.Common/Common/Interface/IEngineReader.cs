@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gean.Module.Chess
+﻿namespace NKnife.Chesses.Common.Interface
 {
     public interface IEngineReader
     {

@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Gean.Gui.ChessControl.Demo;
+using NKnife.Chesses.Common.Record;
+using NKnife.Chesses.Common.Record.PGN;
 
 namespace Gean.Module.Chess.Demo
 {
@@ -54,7 +56,7 @@ namespace Gean.Module.Chess.Demo
             watch.Start();
             records = new Records();
             MyDemoDialog.Clear();
-            PGNReader reader = new PGNReader();
+            PgnReader reader = new PgnReader();
             //reader.Filename = Program.PGNFile_CHS_Game;
             reader.Filename = Program.PGNFile_Test_2_Game;
             //reader.Filename = @"e:\ChessBase\Bases\08a.pgn";

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Gean.Module.Chess;
+using NKnife.Chesses.Common.Base;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Interface
 {
     public interface IFenNotation
     {

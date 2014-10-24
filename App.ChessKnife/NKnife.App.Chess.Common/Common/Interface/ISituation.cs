@@ -1,7 +1,7 @@
-﻿
+﻿using NKnife.Chesses.Common.Base;
 using NKnife.Interface;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Interface
 {
     /// <summary>
     /// 描述一局棋的当前局面

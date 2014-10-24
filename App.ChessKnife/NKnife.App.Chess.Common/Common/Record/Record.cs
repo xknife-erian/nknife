@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using System.Collections;
-using NKnife.Interface;
+using NKnife.Chesses.Common.Interface;
 using NKnife.Utility;
+using IItem = NKnife.Chesses.Common.Interface.IChessItem;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Record
 {
     /// <summary>
     /// 描述一局棋的记录，该记录可能与更多的棋局记录保存在一个PGN文件中
     /// </summary>
-    public class Record : Gean.ITree, IEnumerable<Step>
+    public class Record : IStepTree, IEnumerable<Step>
     {
         public Record()
         {
@@ -22,7 +23,7 @@ namespace Gean.Module.Chess
 
         #region ITree 成员
 
-        public object Parent { get; set; }
+        public IChessItem Parent { get; set; }
 
         public bool HasChildren
         {
@@ -70,6 +71,7 @@ namespace Gean.Module.Chess
 
         #endregion
 
+        /*
         //#region IEnumerable
 
         //#region IEnumerable<Step> 成员
@@ -141,7 +143,8 @@ namespace Gean.Module.Chess
         //    #endregion
         //}
 
-        //#endregion
+        #endregion
+        */
 
         #region IEnumerable<Step> 成员
 
