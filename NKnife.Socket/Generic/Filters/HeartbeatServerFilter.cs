@@ -1,29 +1,40 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Timers;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Wrapper;
 using SocketKnife.Common;
 using SocketKnife.Events;
-using SocketKnife.Exceptions;
-using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
-    public class HeartbeatServerFilter : HeartbeatFilter
+    public class HeartbeatServerFilter : KnifeSocketServerFilter
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+
+        protected bool _ContinueNextFilter = true;
+        private bool _IsTimerStarted;
 
         public HeartbeatServerFilter()
         {
             Heartbeat = new Heartbeat();
-            Interval = 1000*15;
+            Interval = 1000 * 15;
             IsStrictMode = false;
         }
+
+        public Heartbeat Heartbeat { get; set; }
+        public double Interval { get; set; }
+
+        /// <summary>
+        /// ÑÏ¸ñÄ£Ê½¿ª¹Ø
+        /// </summary>
+        /// <returns>
+        /// true  ĞÄÌø·µ»ØÄÚÈİÒ»¶¨ÒªºÍHeartBeatÀàÖĞ¶¨ÒåµÄReplayOfClientÒ»ÖÂ²ÅËãÓĞĞÄÌøÏìÓ¦
+        /// false ĞÄÌø·µ»ØÈÎºÎÄÚÈİ¾ùËãÓĞĞÄÌøÏàÓ¦
+        /// </returns>
+        public bool IsStrictMode { get; set; }
 
         public override bool ContinueNextFilter
         {
@@ -36,26 +47,26 @@ namespace SocketKnife.Generic.Filters
             Start();
         }
 
-        protected override void BeatingTimerElapsed(object sender, EventArgs e)
+        protected void BeatingTimerElapsed(object sender, EventArgs e)
         {
             KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSessionMap map = SessionMapGetter.Invoke();
 
-            var todoList = new List<EndPoint>(0);//å¾…ç§»é™¤
+            var todoList = new List<EndPoint>(0);//´ıÒÆ³ı
             foreach (KeyValuePair<EndPoint, KnifeSocketSession> pair in map)
             {
                 EndPoint endpoint = pair.Key;
                 KnifeSocketSession session = pair.Value;
-                if (!(session.WaitingForReply)) //ä¸¤ç§æƒ…å†µï¼š1.ç¬¬ä¸€æ¬¡æ£€æŸ¥æ—¶ä¸ºéç­‰å¾…çŠ¶æ€ï¼Œ2.å¿ƒè·³åæ”¶åˆ°å›å¤åå›å†™ä¸ºéç­‰å¾…çŠ¶æ€
+                if (!(session.WaitingForReply)) //Á½ÖÖÇé¿ö£º1.µÚÒ»´Î¼ì²éÊ±Îª·ÇµÈ´ı×´Ì¬£¬2.ĞÄÌøºóÊÕµ½»Ø¸´ºó»ØĞ´Îª·ÇµÈ´ı×´Ì¬
                 {
                     try
                     {
                         handlers[0].Write(session, Heartbeat.BeatingOfServerHeart);
-                        session.WaitingForReply = true; //åœ¨PrcoessReceiveDataæ–¹æ³•é‡Œï¼Œå½“æ”¶åˆ°å›å¤æ—¶ä¼šå›å†™ä¸ºfalse
+                        session.WaitingForReply = true; //ÔÚPrcoessReceiveData·½·¨Àï£¬µ±ÊÕµ½»Ø¸´Ê±»á»ØĞ´Îªfalse
                     }
-                    catch (Exception ex) //å‘é€å¼‚å¸¸ï¼Œå‘ä¸å‡ºå»åˆ™ç«‹å³ç§»å‡º
+                    catch (Exception ex) //·¢ËÍÒì³££¬·¢²»³öÈ¥ÔòÁ¢¼´ÒÆ³ö
                     {
-                        _logger.Warn(string.Format("å‘å®¢æˆ·ç«¯{0}å‘é€å¿ƒè·³æ—¶å¼‚å¸¸:{1}", endpoint, ex.Message), ex);
+                        _logger.Warn(string.Format("Ïò¿Í»§¶Ë{0}·¢ËÍĞÄÌøÊ±Òì³£:{1}", endpoint, ex.Message), ex);
                         RemoveEndPointFromSessionMap(endpoint);
                     }
                 }
@@ -70,7 +81,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        protected override byte[] GetReplay()
+        protected byte[] GetReplay()
         {
             return Heartbeat.ReplayOfClient;
         }
@@ -88,48 +99,16 @@ namespace SocketKnife.Generic.Filters
                 }
                 catch (Exception ex)
                 {
-                    _logger.Warn(string.Format("æ–­å¼€å®¢æˆ·ç«¯{0}æ—¶å¼‚å¸¸:{1}", endPoint, ex.Message), ex);
+                    _logger.Warn(string.Format("¶Ï¿ª¿Í»§¶Ë{0}Ê±Òì³£:{1}", endPoint, ex.Message), ex);
                 }
                 map.Remove(endPoint);
-                _logger.Info(string.Format("å¿ƒè·³æ£€æŸ¥å®¢æˆ·ç«¯{0}æ— å“åº”ï¼Œä»SessionMapä¸­ç§»é™¤ä¹‹ã€‚æ± ä¸­:{1}", endPoint, map.Count));
+                _logger.Info(string.Format("ĞÄÌø¼ì²é¿Í»§¶Ë{0}ÎŞÏìÓ¦£¬´ÓSessionMapÖĞÒÆ³ıÖ®¡£³ØÖĞ:{1}", endPoint, map.Count));
             }
-        }
-    }
-
-    public abstract class HeartbeatFilter : KnifeSocketServerFilter
-    {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
-
-        protected bool _ContinueNextFilter = true;
-        private bool _IsTimerStarted;
-
-        protected HeartbeatFilter()
-        {
-            Heartbeat = new Heartbeat();
-            Interval = 1000 * 15;
-            IsStrictMode = false;
-        }
-
-        public Heartbeat Heartbeat { get; set; }
-        public double Interval { get; set; }
-
-        /// <summary>
-        /// ä¸¥æ ¼æ¨¡å¼å¼€å…³
-        /// </summary>
-        /// <returns>
-        /// true  å¿ƒè·³è¿”å›å†…å®¹ä¸€å®šè¦å’ŒHeartBeatç±»ä¸­å®šä¹‰çš„ReplayOfClientä¸€è‡´æ‰ç®—æœ‰å¿ƒè·³å“åº”
-        /// false å¿ƒè·³è¿”å›ä»»ä½•å†…å®¹å‡ç®—æœ‰å¿ƒè·³ç›¸åº”
-        /// </returns>
-        public bool IsStrictMode { get; set; }
-
-        public override bool ContinueNextFilter
-        {
-            get { return _ContinueNextFilter; }
         }
 
         protected internal void Start()
         {
-            if (!_IsTimerStarted) //ç¬¬ä¸€æ¬¡ç›‘å¬åˆ°æ—¶å¯åŠ¨
+            if (!_IsTimerStarted) //µÚÒ»´Î¼àÌıµ½Ê±Æô¶¯
             {
                 _IsTimerStarted = true;
 
@@ -137,34 +116,30 @@ namespace SocketKnife.Generic.Filters
                 beatingTimer.Elapsed += BeatingTimerElapsed;
                 beatingTimer.Interval = Interval;
                 beatingTimer.Start();
-                _logger.Info(string.Format("æœåŠ¡å™¨å¿ƒè·³å¯åŠ¨ã€‚é—´éš”:{0}", Interval));
+                _logger.Info(string.Format("·şÎñÆ÷ĞÄÌøÆô¶¯¡£¼ä¸ô:{0}", Interval));
                 var handlers = _HandlersGetter.Invoke();
-                Debug.Assert(handlers != null && handlers.Length > 0, "Handleræœªè®¾ç½®");
+                Debug.Assert(handlers != null && handlers.Length > 0, "HandlerÎ´ÉèÖÃ");
             }
         }
-
-        protected abstract void BeatingTimerElapsed(object sender, EventArgs e);
 
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
             if (!IsStrictMode)
-            {//éä¸¥æ ¼æ¨¡å¼
+            {//·ÇÑÏ¸ñÄ£Ê½
                 session.WaitingForReply = false;
-                _logger.Trace(() => string.Format("æ”¶åˆ°{0}ä¿¡æ¯,å…³é—­å¿ƒè·³ç­‰å¾….", session.Source));
+                _logger.Trace(() => string.Format("ÊÕµ½{0}ĞÅÏ¢,¹Ø±ÕĞÄÌøµÈ´ı.", session.Source));
             }
             if (data.IndexOf(GetReplay()) == 0)
             {
                 session.WaitingForReply = false;
                 _ContinueNextFilter = false;
-                _logger.Trace(() => string.Format("æ”¶åˆ°{0}å¿ƒè·³å›å¤.", session.Source));
+                _logger.Trace(() => string.Format("ÊÕµ½{0}ĞÄÌø»Ø¸´.", session.Source));
             }
             else
             {
                 _ContinueNextFilter = true;
             }
         }
-
-        protected abstract byte[] GetReplay();
 
     }
 }
