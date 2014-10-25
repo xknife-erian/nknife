@@ -333,12 +333,12 @@ namespace SocketKnife
 
         protected virtual void RemoveSession(SocketAsyncEventArgs e)
         {
-            EndPoint iep = e.AcceptSocket.RemoteEndPoint;
             _logger.Trace(() => string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
             if (!e.AcceptSocket.Connected)
             {
                 return;
             }
+            EndPoint iep = e.AcceptSocket.RemoteEndPoint;
             _logger.Info(() => string.Format("Server: >> 客户端:{0}, 连接中断.", iep));
 
             foreach (var filter in _FilterChain)

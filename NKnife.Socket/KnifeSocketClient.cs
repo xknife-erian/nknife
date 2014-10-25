@@ -30,11 +30,6 @@ namespace SocketKnife
         /// </summary>
         protected AutoResetEvent _AutoReset;
 
-        /// <summary>
-        ///     重连计数
-        /// </summary>
-        protected int _ConnectionCount;
-
         protected bool _IsConnection;
 
         /// <summary>
@@ -138,7 +133,7 @@ namespace SocketKnife
         /// </summary>
         protected virtual void OnFilterConnectionBroken(object sender, ConnectionBrokenEventArgs e)
         {
-            if (e.BrokenCause != BrokenCause.Initiative)
+            if (e.BrokenCause != BrokenCause.Initiative)//当非主动断开时，启动断线重连
             {
             }
         }
@@ -207,7 +202,6 @@ namespace SocketKnife
                 try
                 {
                     _Socket.Connect(ipPoint);
-                    _IsConnection = true;
                 }
                 catch (Exception ex)
                 {
@@ -224,10 +218,6 @@ namespace SocketKnife
                 }
                 var e = new SocketAsyncEventArgs {RemoteEndPoint = ipPoint};
                 e.Completed += CompletedEvent;
-                if (_ConnectionCount > 0)
-                {
-                    _Socket = BuildSocket();
-                }
                 if (!_Socket.ConnectAsync(e))
                 {
                     CompletedEvent(this, e);
@@ -260,7 +250,6 @@ namespace SocketKnife
             {
                 try
                 {
-                    _ConnectionCount++;
                     _IsConnection = true;
                     _AutoReset.Set();
 
