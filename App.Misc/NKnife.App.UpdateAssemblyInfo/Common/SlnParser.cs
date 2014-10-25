@@ -7,6 +7,9 @@ using NKnife.Interface;
 
 namespace NKnife.App.UpdateAssemblyInfo.Common
 {
+    /// <summary>
+    /// 对VisualStudio的解决方案文件（*.sln）进行解析的解析器。
+    /// </summary>
     public class SlnParser : IParser<FileInfo, string[]>
     {
         public string[] Parse(FileInfo source)

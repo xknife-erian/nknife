@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="Common\CsprojParser.cs" />
     <Compile Include="Common\FileSearcher.cs" />
-    <Compile Include="Common\Finder.cs" />
     <Compile Include="Common\SlnParser.cs" />
     <Compile Include="KernelForm.cs">
       <SubType>Form</SubType>
