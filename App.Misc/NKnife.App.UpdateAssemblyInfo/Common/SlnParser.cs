@@ -18,6 +18,11 @@ namespace NKnife.App.UpdateAssemblyInfo.Common
             return (from line in lines let mv = GetMatchValue(line) where string.IsNullOrEmpty(mv) select GetMatchValue(line)).ToArray();
         }
 
+        /// <summary>
+        /// 通过对SLN文件解析得到所有的项目文件及其路径
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         protected static string GetMatchValue(string line)
         {
             line = line.Replace("  ", " ");

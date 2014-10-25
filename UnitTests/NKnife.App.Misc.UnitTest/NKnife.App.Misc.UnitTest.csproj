@@ -58,6 +58,10 @@
       <Project>{8417c17c-9272-4ab2-95bc-ef816a491c46}</Project>
       <Name>NKnife.App.UpdateAssemblyInfo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NKnife\NKnife.csproj">
+      <Project>{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}</Project>
+      <Name>NKnife</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

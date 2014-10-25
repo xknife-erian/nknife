@@ -2,7 +2,7 @@
 {
     public class FileSearcher
     {
-        public static string[] Search(string path)
+        public static string[] SearchCsprojectFile(string[] path)
         {
             return null;
         }

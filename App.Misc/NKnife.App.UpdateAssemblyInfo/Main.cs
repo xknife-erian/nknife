@@ -22,8 +22,6 @@ namespace NKnife.App.UpdateAssemblyInfo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Regex.CacheSize = 100;
-
             Application.Run(new KernelForm());
         }
     }
