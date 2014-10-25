@@ -20,6 +20,9 @@ namespace SocketKnife.Generic
         public EndPoint Source { get; set; }
         public Socket Connector { get; set; }
 
+        /// <summary>
+        /// 心跳时等待回复
+        /// </summary>
         public bool WaitingForReply { get; set; }
 
         protected bool Equals(KnifeSocketSession other)
