@@ -9,6 +9,7 @@ using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Dialogs;
 using NKnife.Kits.SocketKnife.Mvvm.Views;
+using SocketKnife.Generic;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 using Xceed.Wpf.AvalonDock.Themes;
@@ -55,13 +56,14 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var win = new NewTunnelCreatorDialog();
+            win.Config = DI.Get<KnifeSocketConfig>("Server");
             win.Title = "新建Socket服务器";
             win.IpAddressLabel = "本地IpAddress:";
             var drs = win.ShowDialog(this);
             if (drs != null && (bool)drs)
             {
                 var view = new TcpServerView();
-                view.ServerConfig = win.ServerConfig;
+                view.Config = win.Config;
                 view.SocketTools = win.SocketTools;
                 view.Title = string.Format("Server:{0}", new IPEndPoint(win.SocketTools.IpAddress, win.SocketTools.Port));
                 _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.SocketTools.IpAddress, win.SocketTools.Port));
@@ -72,13 +74,14 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var win = new NewTunnelCreatorDialog();
+            win.Config = DI.Get<KnifeSocketConfig>("Client");
             win.Title = "新建Socket客户端";
             win.IpAddressLabel = "远程IpAddress:";
             var drs = win.ShowDialog(this);
             if (drs != null && (bool)drs)
             {
                 var view = new TcpClientView();
-                view.ServerConfig = win.ServerConfig;
+                view.Config = win.Config;
                 view.SocketTools = win.SocketTools;
                 view.Title = string.Format("Client:{0}", new IPEndPoint(win.SocketTools.IpAddress, win.SocketTools.Port));
                 _Logger.Info(string.Format("用户交互创建Client:{0},{1}", win.SocketTools.IpAddress, win.SocketTools.Port));

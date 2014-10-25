@@ -20,7 +20,9 @@ namespace SocketKnife.IoC
             Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketServerFilterChain>().Named("Server");
             Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketClientFilterChain>().Named("Client");
 
-            Bind<KnifeSocketServerConfig>().To<KnifeSocketServerConfig>().When(Request);
+            Bind<KnifeSocketConfig>().To<KnifeSocketServerConfig>().Named("Server");
+            Bind<KnifeSocketConfig>().To<KnifeSocketClientConfig>().Named("Client");
+
             Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>().When(Request);
             Bind<KnifeSocketSession>().To<KnifeSocketSession>().When(Request);
 

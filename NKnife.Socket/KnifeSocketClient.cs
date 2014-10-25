@@ -23,6 +23,8 @@ namespace SocketKnife
 
         protected readonly AutoResetEvent _ConnectionAutoReset = new AutoResetEvent(false);
 
+        protected KnifeSocketClientConfig _Config = DI.Get<KnifeSocketClientConfig>();
+
         /// <summary>
         ///     释放等待线程
         /// </summary>
@@ -47,8 +49,6 @@ namespace SocketKnife
         #endregion 成员变量
 
         #region IKnifeSocketClient
-
-        public override ISocketServerConfig Config { get; set; }
 
         public override bool Start()
         {
@@ -126,6 +126,23 @@ namespace SocketKnife
             _EndPoint = new IPEndPoint(ipAddress, port);
         }
 
+        public override void AddFilter(KnifeSocketFilter filter)
+        {
+            base.AddFilter(filter);
+            var clientFilter = (KnifeSocketClientFilter) filter;
+            clientFilter.ConnectionBroken += OnFilterConnectionBroken;
+        }
+
+        /// <summary>
+        /// 当非主动断开连接时，启动断线重连
+        /// </summary>
+        protected virtual void OnFilterConnectionBroken(object sender, ConnectionBrokenEventArgs e)
+        {
+            if (e.BrokenCause != BrokenCause.Initiative)
+            {
+            }
+        }
+
         protected virtual Socket BuildSocket()
         {
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
@@ -149,6 +166,12 @@ namespace SocketKnife
         ///     用来确定是否以释放
         /// </summary>
         private bool _IsDisposed;
+
+        public override KnifeSocketConfig Config
+        {
+            get { return _Config; }
+            set { _Config = (KnifeSocketClientConfig)value; }
+        }
 
         public override void Dispose()
         {

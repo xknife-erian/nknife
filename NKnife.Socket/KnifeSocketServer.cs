@@ -29,6 +29,7 @@ namespace SocketKnife
         private Socket _MainSocket;
         private SocketAsyncEventArgsPool _SocketAsynPool;
         protected KnifeSocketSessionMap _SessionMap = DI.Get<KnifeSocketSessionMap>();
+        protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
 
         #endregion
 
@@ -160,7 +161,7 @@ namespace SocketKnife
         /// </summary>
         private bool _IsDisposed;
 
-        public override ISocketServerConfig Config
+        public override KnifeSocketConfig Config
         {
             get { return _Config; }
             set { _Config = (KnifeSocketServerConfig) value; }

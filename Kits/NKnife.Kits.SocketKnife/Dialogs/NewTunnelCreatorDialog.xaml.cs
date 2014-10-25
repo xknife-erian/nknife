@@ -35,7 +35,6 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             {
                 _LocalIpBox.SelectedIndex = 0;
             }
-            ServerConfig = DI.Get<KnifeSocketServerConfig>();
             SocketTools = new SocketTools();
 
             var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramDecoder<>), true);
@@ -74,7 +73,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             _CommandParserComboBox.SelectedItem = typeof(FirstFieldCommandParser);
         }
 
-        public KnifeSocketServerConfig ServerConfig { get; set; }
+        public KnifeSocketConfig Config { get; set; }
         public SocketTools SocketTools { get; set; }
         public string IpAddressLabel
         {
@@ -84,12 +83,12 @@ namespace NKnife.Kits.SocketKnife.Dialogs
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            ServerConfig.ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);
-            ServerConfig.SendBufferSize = int.Parse(_SendBufferSizeSizeTextBox.Text);
-            ServerConfig.MaxBufferSize = int.Parse(_MaxBufferSizeTextBox.Text);
-            ServerConfig.MaxConnectCount = int.Parse(_MaxConnectCountTextBox.Text);
-            ServerConfig.ReceiveTimeout = int.Parse(_ReceiveTimeoutTextBox.Text);
-            ServerConfig.SendTimeout = int.Parse(_SendTimeoutTextBox.Text);
+            Config.ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);
+            Config.SendBufferSize = int.Parse(_SendBufferSizeSizeTextBox.Text);
+            Config.MaxBufferSize = int.Parse(_MaxBufferSizeTextBox.Text);
+            Config.MaxConnectCount = int.Parse(_MaxConnectCountTextBox.Text);
+            Config.ReceiveTimeout = int.Parse(_ReceiveTimeoutTextBox.Text);
+            Config.SendTimeout = int.Parse(_SendTimeoutTextBox.Text);
 
             try
             {

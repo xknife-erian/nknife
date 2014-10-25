@@ -13,7 +13,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     {
         private readonly DemoServer _ViewModel;
 
-        public KnifeSocketServerConfig ServerConfig { get; set; }
+        public KnifeSocketConfig Config { get; set; }
         public SocketTools SocketTools { get; set; }
 
         public TcpServerView()
@@ -26,7 +26,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _ViewModel.Initialize(ServerConfig, SocketTools);
+            _ViewModel.Initialize(Config, SocketTools);
         }
         
         private void TcpServerView_OnClosing(object sender, CancelEventArgs e)

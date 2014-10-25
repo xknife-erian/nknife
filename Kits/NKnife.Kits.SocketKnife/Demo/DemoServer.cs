@@ -41,7 +41,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             SocketMessages = new AsyncObservableCollection<SocketMessage>();
         }
 
-        public void Initialize(KnifeSocketServerConfig config, SocketTools socketTools)
+        public void Initialize(KnifeSocketConfig config, SocketTools socketTools)
         {
             if (_IsInitialized) return;
 

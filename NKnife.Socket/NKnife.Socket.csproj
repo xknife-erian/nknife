@@ -72,6 +72,7 @@
     <Compile Include="Generic\Filters\HeartbeatClientFilter.cs" />
     <Compile Include="Generic\Filters\HeartbeatServerFilter.cs" />
     <Compile Include="Generic\Filters\KeepAliveClientFilter.cs" />
+    <Compile Include="Generic\KnifeSocketClientConfig.cs" />
     <Compile Include="Generic\KnifeSocketClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientFilterChain.cs" />
     <Compile Include="Generic\KnifeSocketClientProtocolHandler.cs" />
@@ -92,8 +93,10 @@
     <Compile Include="Generic\Families\EndMarkDecoder.cs" />
     <Compile Include="Generic\Families\EndMarkEncoder.cs" />
     <Compile Include="Interfaces\IKnifeSocketClient.cs" />
+    <Compile Include="Interfaces\ISocketClientConfig.cs" />
     <Compile Include="Interfaces\ISocketClientFilter.cs" />
     <Compile Include="Interfaces\ISocketFilter.cs" />
+    <Compile Include="Interfaces\ISocketServerConfig.cs" />
     <Compile Include="Interfaces\ISocketServerFilter.cs" />
     <Compile Include="Interfaces\ISocketSessionMap.cs" />
     <Compile Include="Interfaces\ISocketConfig.cs" />

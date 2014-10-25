@@ -15,8 +15,6 @@ namespace SocketKnife.Generic
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
-
         protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
         protected KnifeSocketCodec _Codec;
         protected StringProtocolFamily _Family;
@@ -25,7 +23,7 @@ namespace SocketKnife.Generic
         protected IPAddress _IpAddress;
         protected int _Port;
 
-        public abstract ISocketServerConfig Config { get; set; }
+        public abstract KnifeSocketConfig Config { get; set; }
         public abstract void Dispose();
         protected abstract void SetFilterChain();
 
@@ -43,7 +41,7 @@ namespace SocketKnife.Generic
         ITunnelConfig ITunnel<EndPoint, Socket, string>.Config
         {
             get { return Config; }
-            set { Config = (ISocketServerConfig) value; }
+            set { Config = (KnifeSocketConfig)value; }
         }
 
         void ITunnel<EndPoint, Socket, string>.AddFilter(ITunnelFilter<EndPoint, Socket> filter)
@@ -69,9 +67,6 @@ namespace SocketKnife.Generic
                 SetFilterChain();
             if (_FilterChain != null)
                 _FilterChain.AddLast(filter);
-
-            var clientFilter = (KnifeSocketClientFilter) filter;
-//            clientFilter.
         }
 
         public virtual void Bind(KnifeSocketCodec codec, StringProtocolFamily protocolFamily,
