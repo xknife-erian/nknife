@@ -1,6 +1,6 @@
 ﻿namespace NKnife.App.UpdateAssemblyInfo
 {
-    partial class DoorForm
+    partial class KernelForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -37,7 +37,7 @@
             "5",
             "6",
             "7"}, -1);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DoorForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KernelForm));
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._ListView = new System.Windows.Forms.ListView();
@@ -99,10 +99,12 @@
             this.columnHeader7,
             this.columnHeader8});
             this._ListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._ListView.FullRowSelect = true;
             listViewItem1.StateImageIndex = 0;
             this._ListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
             this._ListView.Location = new System.Drawing.Point(0, 0);
+            this._ListView.MultiSelect = false;
             this._ListView.Name = "_ListView";
             this._ListView.Size = new System.Drawing.Size(884, 495);
             this._ListView.TabIndex = 0;
@@ -117,7 +119,7 @@
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 0;
             // 
-            // Form1
+            // KernelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -125,7 +127,7 @@
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "KernelForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "程序集信息管理器";
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);

@@ -59,5 +59,23 @@ namespace NKnife.App.UpdateAssemblyInfo.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Project\(&quot;{.*}&quot;\)\s*=\s*&quot;.*&quot;,\s*&quot;.*\.csproj&quot;,\s*&quot;.*&quot; 的本地化字符串。
+        /// </summary>
+        internal static string GetProjectBySlnFile {
+            get {
+                return ResourceManager.GetString("GetProjectBySlnFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ,\s*&quot;.*\.csproj&quot; 的本地化字符串。
+        /// </summary>
+        internal static string GetProjectBySlnResult {
+            get {
+                return ResourceManager.GetString("GetProjectBySlnResult", resourceCulture);
+            }
+        }
     }
 }

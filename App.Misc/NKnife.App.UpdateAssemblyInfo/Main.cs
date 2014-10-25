@@ -1,21 +1,31 @@
-ï»¿using System;
-using System.Collections.Generic;
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace NKnife.App.UpdateAssemblyInfo
 {
     static class Program
     {
         /// <summary>
-        /// åº”ç”¨ç¨‹åºçš„ä¸»å…¥å£ç‚¹ã€‚
+        /// Ó¦ÓÃ³ÌĞòµÄÖ÷Èë¿Úµã¡£
         /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DoorForm());
+
+            Regex.CacheSize = 100;
+
+            Application.Run(new KernelForm());
         }
     }
+    
 }

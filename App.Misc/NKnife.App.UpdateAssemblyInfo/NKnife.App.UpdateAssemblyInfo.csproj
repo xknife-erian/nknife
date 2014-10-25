@@ -11,7 +11,8 @@
     <RootNamespace>NKnife.App.UpdateAssemblyInfo</RootNamespace>
     <AssemblyName>NKnife.App.UpdateAssemblyInfo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -36,6 +37,9 @@
   <PropertyGroup>
     <ApplicationIcon>Common\Res\main.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,16 +53,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoorForm.cs">
+    <Compile Include="Common\CsprojParser.cs" />
+    <Compile Include="Common\FileSearcher.cs" />
+    <Compile Include="Common\Finder.cs" />
+    <Compile Include="Common\SlnParser.cs" />
+    <Compile Include="KernelForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DoorForm.Designer.cs">
-      <DependentUpon>DoorForm.cs</DependentUpon>
+    <Compile Include="KernelForm.Designer.cs">
+      <DependentUpon>KernelForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DoorForm.resx">
-      <DependentUpon>DoorForm.cs</DependentUpon>
+    <EmbeddedResource Include="KernelForm.resx">
+      <DependentUpon>KernelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\OwnResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -73,6 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\Res\main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NKnife\NKnife.csproj">
+      <Project>{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}</Project>
+      <Name>NKnife</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

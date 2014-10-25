@@ -135,6 +135,7 @@
     <Compile Include="GUI\WinForm\WinFormContainer\WinFormContainer.Designer.cs">
       <DependentUpon>WinFormContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IParser.cs" />
     <Compile Include="Maths\BigInteger.cs" />
     <Compile Include="Maths\Combinations.cs" />
     <Compile Include="Maths\Permutations.cs" />
