@@ -10,12 +10,12 @@ namespace SocketKnife.Interfaces
         /// <summary>
         ///     即将连接事件
         /// </summary>
-        event EventHandler<ConnectioningEventArgs> Connectioning;
+        event EventHandler<ConnectingEventArgs> Connecting;
 
         /// <summary>
         ///     连接成功后事件
         /// </summary>
-        event EventHandler<ConnectionedEventArgs> Connectioned;
+        event EventHandler<ConnectedEventArgs> Connected;
 
         /// <summary>
         ///     Sokcet连接的状态发生改变后的事件
@@ -25,6 +25,6 @@ namespace SocketKnife.Interfaces
         /// <summary>
         ///     当连接断开后发生的事件
         /// </summary>
-        event EventHandler<ConnectionedEventArgs> ConnectionBroke;
+        event EventHandler<ConnectionBrokenEventArgs> ConnectionBroken;
     }
 }

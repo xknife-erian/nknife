@@ -19,7 +19,7 @@ namespace SocketKnife.Generic
 
         public event EventHandler<SocketSessionEventArgs> ClientCome;
 
-        public event EventHandler<SocketConnectionBreakEventArgs> ClientBroke;
+        public event EventHandler<ConnectionBrokenEventArgs> ClientBroken;
 
         protected internal virtual void OnClientCome(SocketSessionEventArgs e)
         {
@@ -28,9 +28,9 @@ namespace SocketKnife.Generic
                 handler(this, e);
         }
 
-        protected internal virtual void OnClientBroke(SocketConnectionBreakEventArgs e)
+        protected internal virtual void OnClientBroken(ConnectionBrokenEventArgs e)
         {
-            EventHandler<SocketConnectionBreakEventArgs> handler = ClientBroke;
+            EventHandler<ConnectionBrokenEventArgs> handler = ClientBroken;
             if (handler != null)
                 handler(this, e);
         }

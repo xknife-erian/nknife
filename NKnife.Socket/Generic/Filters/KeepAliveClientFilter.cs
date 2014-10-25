@@ -30,17 +30,17 @@ namespace SocketKnife.Generic.Filters
         protected bool _ContinueNextFilter = true;
         public override bool ContinueNextFilter { get { return _ContinueNextFilter; } }
 
-        protected internal override void OnConnectioned(ConnectionedEventArgs e)
+        protected internal override void OnConnected(ConnectedEventArgs e)
         {
-            base.OnConnectioned(e);
+            base.OnConnected(e);
             //当连接启动后，启动数据池监听线程
             var thread = new Thread(ReceiveQueueMonitor);
             thread.Start();
         }
 
-        protected internal override void OnConnectionBroke(ConnectionedEventArgs e)
+        protected internal override void OnConnectionBroken(ConnectionBrokenEventArgs e)
         {
-            base.OnConnectionBroke(e);
+            base.OnConnectionBroken(e);
             _EnableReceiveQueueMonitor = false; //停止监听
             _ReceiveQueue.AutoResetEvent.Set();
 

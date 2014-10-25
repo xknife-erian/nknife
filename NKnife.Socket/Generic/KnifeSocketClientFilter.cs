@@ -16,24 +16,24 @@ namespace SocketKnife.Generic
             OnBoundGetter();
         }
 
-        public event EventHandler<ConnectioningEventArgs> Connectioning;
+        public event EventHandler<ConnectingEventArgs> Connecting;
 
-        public event EventHandler<ConnectionedEventArgs> Connectioned;
+        public event EventHandler<ConnectedEventArgs> Connected;
 
         public event EventHandler<ChangedEventArgs<ConnectionStatus>> SocketStatusChanged;
 
-        public event EventHandler<ConnectionedEventArgs> ConnectionBroke;
+        public event EventHandler<ConnectionBrokenEventArgs> ConnectionBroken;
 
-        protected internal virtual void OnConnectioning(ConnectioningEventArgs e)
+        protected internal virtual void OnConnecting(ConnectingEventArgs e)
         {
-            EventHandler<ConnectioningEventArgs> handler = Connectioning;
+            EventHandler<ConnectingEventArgs> handler = Connecting;
             if (handler != null)
                 handler(this, e);
         }
 
-        protected internal virtual void OnConnectioned(ConnectionedEventArgs e)
+        protected internal virtual void OnConnected(ConnectedEventArgs e)
         {
-            EventHandler<ConnectionedEventArgs> handler = Connectioned;
+            EventHandler<ConnectedEventArgs> handler = Connected;
             if (handler != null)
                 handler(this, e);
         }
@@ -45,9 +45,9 @@ namespace SocketKnife.Generic
                 handler(this, e);
         }
 
-        protected internal virtual void OnConnectionBroke(ConnectionedEventArgs e)
+        protected internal virtual void OnConnectionBroken(ConnectionBrokenEventArgs e)
         {
-            EventHandler<ConnectionedEventArgs> handler = ConnectionBroke;
+            EventHandler<ConnectionBrokenEventArgs> handler = ConnectionBroken;
             if (handler != null)
                 handler(this, e);
         }

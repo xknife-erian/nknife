@@ -41,13 +41,13 @@ namespace SocketKnife.Generic.Filters
             get { return _ContinueNextFilter; }
         }
 
-        protected internal override void OnConnectioned(ConnectionedEventArgs e)
+        protected internal override void OnConnected(ConnectedEventArgs e)
         {
-            base.OnConnectioned(e);
+            base.OnConnected(e);
             Start();
         }
 
-        protected void BeatingTimerElapsed(object sender, EventArgs e)
+        protected virtual void BeatingTimerElapsed(object sender, EventArgs e)
         {
             KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSession session = SessionGetter.Invoke();
@@ -61,17 +61,29 @@ namespace SocketKnife.Generic.Filters
                 }
                 catch (Exception ex) //发送异常，发不出去则立即移出
                 {
-                    _logger.Warn(string.Format("向客户端{0}发送心跳时异常:{1}", session.Source, ex.Message), ex);
+                    _logger.Warn(string.Format("向服务器{0}发送心跳时异常:{1}", session.Source, ex.Message), ex);
+                    _logger.Info("准备重连服务器......");
+                    Reconnects(session);
                 }
+            }
+            else
+            {
+                _logger.Warn("在一定时间内，服务器未反应，准备重连服务器......");
+                Reconnects(session);
             }
         }
 
-        protected byte[] GetReplay()
+        protected virtual void Reconnects(KnifeSocketSession session)
+        {
+            OnConnectionBroken(new ConnectionBrokenEventArgs(session.Source, BrokenCause.LoseHeartbeat));
+        }
+
+        protected virtual byte[] GetReplay()
         {
             return Heartbeat.ReplayOfServer;
         }
 
-        protected internal void Start()
+        protected internal virtual void Start()
         {
             if (!_IsTimerStarted) //第一次监听到时启动
             {

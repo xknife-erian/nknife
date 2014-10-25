@@ -332,19 +332,18 @@ namespace SocketKnife
 
         protected virtual void RemoveSession(SocketAsyncEventArgs e)
         {
+            EndPoint iep = e.AcceptSocket.RemoteEndPoint;
             _logger.Trace(() => string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
             if (!e.AcceptSocket.Connected)
             {
                 return;
             }
-            string message = string.Format("Server: >> 客户端:{0}, 连接中断.", e.AcceptSocket.RemoteEndPoint);
-            _logger.Info(message);
+            _logger.Info(() => string.Format("Server: >> 客户端:{0}, 连接中断.", iep));
 
-            EndPoint iep = e.AcceptSocket.RemoteEndPoint;
             foreach (var filter in _FilterChain)
             {
                 var serverFilter = (KnifeSocketServerFilter)filter;
-                serverFilter.OnClientBroke(new SocketConnectionBreakEventArgs(iep, message));
+                serverFilter.OnClientBroken(new ConnectionBrokenEventArgs(iep, BrokenCause.Passive));
             }
 
             if (iep != null)

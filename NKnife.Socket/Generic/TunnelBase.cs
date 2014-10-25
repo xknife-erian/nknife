@@ -69,6 +69,9 @@ namespace SocketKnife.Generic
                 SetFilterChain();
             if (_FilterChain != null)
                 _FilterChain.AddLast(filter);
+
+            var clientFilter = (KnifeSocketClientFilter) filter;
+//            clientFilter.
         }
 
         public virtual void Bind(KnifeSocketCodec codec, StringProtocolFamily protocolFamily,

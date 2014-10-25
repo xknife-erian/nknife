@@ -47,7 +47,7 @@ namespace SocketKnife.Generic.Filters
             Start();
         }
 
-        protected void BeatingTimerElapsed(object sender, EventArgs e)
+        protected virtual void BeatingTimerElapsed(object sender, EventArgs e)
         {
             KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
             KnifeSocketSessionMap map = SessionMapGetter.Invoke();
@@ -81,12 +81,12 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        protected byte[] GetReplay()
+        protected virtual byte[] GetReplay()
         {
             return Heartbeat.ReplayOfClient;
         }
 
-        private void RemoveEndPointFromSessionMap(EndPoint endPoint)
+        protected virtual void RemoveEndPointFromSessionMap(EndPoint endPoint)
         {
             KnifeSocketSessionMap map = SessionMapGetter.Invoke();
             KnifeSocketSession session;
@@ -106,7 +106,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        protected internal void Start()
+        protected internal virtual void Start()
         {
             if (!_IsTimerStarted) //第一次监听到时启动
             {

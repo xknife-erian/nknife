@@ -43,9 +43,9 @@ namespace SocketKnife.Generic.Filters
             ClearByEndPoint(e.Item);
         }
 
-        protected internal override void OnClientBroke(SocketConnectionBreakEventArgs e)
+        protected internal override void OnClientBroken(ConnectionBrokenEventArgs e)
         {
-            base.OnClientBroke(e);
+            base.OnClientBroken(e);
             ClearByEndPoint(e.EndPoint);
         }
 

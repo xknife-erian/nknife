@@ -18,6 +18,6 @@ namespace SocketKnife.Interfaces
         /// <summary>
         ///     连接出错或断开触发事件
         /// </summary>
-        event EventHandler<SocketConnectionBreakEventArgs> ClientBroke;
+        event EventHandler<ConnectionBrokenEventArgs> ClientBroken;
     }
 }
