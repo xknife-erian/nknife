@@ -73,6 +73,8 @@ namespace SocketKnife.Generic
             params KnifeSocketProtocolHandler[] handlers)
         {
             _Codec = codec;
+            _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.SocketDecoder.GetType().Name, _Codec.SocketEncoder.GetType().Name));
+
             _Handlers = handlers;
             _logger.Info(string.Format("绑定{0}个Handler成功。", _Handlers.Length));
 

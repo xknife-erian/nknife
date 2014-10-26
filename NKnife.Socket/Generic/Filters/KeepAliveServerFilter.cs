@@ -107,14 +107,15 @@ namespace SocketKnife.Generic.Filters
 
             var unFinished = new byte[] {};
             DataMonitor dataMonitor;
-            if (_DataMonitors.TryGetValue(pair.Key, out dataMonitor))
+            EndPoint endPoint = pair.Key;
+            if (_DataMonitors.TryGetValue(endPoint, out dataMonitor))
             {
                 while (dataMonitor.IsMonitor)
                 {
                     if (receiveQueue.Count > 0)
                     {
                         byte[] data = receiveQueue.Dequeue();
-                        unFinished = ProcessDataPacket(data, unFinished, DataDecoder, pair.Key);
+                        unFinished = ProcessDataPacket(data, unFinished, DataDecoder, endPoint);
                     }
                     else
                     {
@@ -123,9 +124,9 @@ namespace SocketKnife.Generic.Filters
                 }
             }
             // 当接收队列停止监听时，移除该客户端数据队列
-            bool isRemoved = _DataMonitors.TryRemove(pair.Key, out dataMonitor);
+            bool isRemoved = _DataMonitors.TryRemove(endPoint, out dataMonitor);
             if (isRemoved)
-                _logger.Trace(() => string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", pair.Key, _DataMonitors.Count));
+                _logger.Trace(() => string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", endPoint, _DataMonitors.Count));
         }
 
         protected virtual int DataDecoder(EndPoint endpoint, byte[] data)

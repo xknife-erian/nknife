@@ -48,12 +48,17 @@ namespace SocketKnife
         public override bool Start()
         {
             Initialize();
+            var thread = new Thread(ThreadConnect);
+            thread.Start();
+            return true;
+        }
 
+        private void ThreadConnect()
+        {
             AsyncConnect(_IpAddress, _Port);
             _AutoReset.WaitOne();
             _AutoReset.Reset();
             _ConnectionAutoReset.Reset();
-            return true;
         }
 
         public override bool ReStart()
@@ -67,7 +72,7 @@ namespace SocketKnife
         {
             try
             {
-                if (_Socket != null)
+                if (_Socket != null && _Socket.Connected)
                     _Socket.Shutdown(SocketShutdown.Both);
             }
             catch (Exception e)
@@ -125,6 +130,7 @@ namespace SocketKnife
         {
             base.AddFilter(filter);
             var clientFilter = (KnifeSocketClientFilter) filter;
+            clientFilter.Bind(() => _SocketSession);
             clientFilter.ConnectionBroken += OnFilterConnectionBroken;
         }
 
@@ -199,15 +205,17 @@ namespace SocketKnife
             var ipPoint = new IPEndPoint(ipAddress, port);
             try
             {
-                try
-                {
-                    _Socket.Connect(ipPoint);
-                }
-                catch (Exception ex)
-                {
-                    _IsConnection = false;
-                    _logger.Warn(string.Format("远程连接失败。{0}", ex.Message), ex);
-                }
+                _Socket.Connect(ipPoint);
+            }
+            catch (Exception ex)
+            {
+                _IsConnection = false;
+                _logger.Warn(string.Format("远程连接失败。{0}", ex.Message), ex);
+                return;
+            }
+            try
+            {
+
                 _SocketSession = DI.Get<KnifeSocketSession>();
                 _SocketSession.Connector = _Socket;
                 _SocketSession.Source = ipPoint;
@@ -246,49 +254,57 @@ namespace SocketKnife
 
         protected virtual void ProcessConnect(SocketAsyncEventArgs e)
         {
-            if (e.SocketError == SocketError.Success)
+            switch (e.SocketError)
             {
-                try
+                case SocketError.Success:
+                case SocketError.IsConnected:
                 {
-                    _IsConnection = true;
-                    _AutoReset.Set();
-
-                    foreach (var filter in _FilterChain)
+                    try
                     {
-                        var clientFilter = (KnifeSocketClientFilter) filter;
-                        clientFilter.OnConnected(new ConnectedEventArgs(true, "Connection Success."));
-                        clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Break, ConnectionStatus.Normal));
+                        _logger.Debug(string.Format("当前SocketAsyncEventArgs工作状态:{0}", e.SocketError));
+                        _IsConnection = true;
+                        _AutoReset.Set();
+
+                        foreach (var filter in _FilterChain)
+                        {
+                            var clientFilter = (KnifeSocketClientFilter) filter;
+                            clientFilter.OnConnected(new ConnectedEventArgs(true, "Connection Success."));
+                            clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Break, ConnectionStatus.Normal));
+                        }
+
+                        var data = new byte[Config.ReceiveBufferSize];
+                        e.SetBuffer(data, 0, data.Length); //设置数据包
+
+                        if (!_Socket.ReceiveAsync(e)) //开始读取数据包
+                            CompletedEvent(this, e);
                     }
-
-                    var data = new byte[Config.ReceiveBufferSize];
-                    e.SetBuffer(data, 0, data.Length); //设置数据包
-
-                    if (!_Socket.ReceiveAsync(e)) //开始读取数据包
-                        CompletedEvent(this, e);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error("当成功连接时的处理发生异常.", ex);
-                }
-            }
-            else
-            {
-                try
-                {
-                    _logger.Debug(string.Format("当前SocketAsyncEventArgs工作状态:{0}", e.SocketError));
-                    _IsConnection = false;
-                    _AutoReset.Set();
-
-                    foreach (var filter in _FilterChain)
+                    catch (Exception ex)
                     {
-                        var clientFilter = (KnifeSocketClientFilter) filter;
-                        clientFilter.OnConnected(new ConnectedEventArgs(false, "Connection FAIL."));
-                        clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Normal, ConnectionStatus.Break));
+                        _logger.Error("当成功连接时的处理发生异常.", ex);
                     }
+                    break;
                 }
-                catch (Exception ex)
+                default:
                 {
-                    _logger.Error("当连接未成功时的处理发生异常.", ex);
+                    try
+                    {
+                        _logger.Debug(string.Format("当前SocketAsyncEventArgs工作状态:{0}", e.SocketError));
+                        _logger.Warn(string.Format("连接失败:{0}", e.SocketError));
+                        _IsConnection = false;
+                        _AutoReset.Set();
+
+                        foreach (var filter in _FilterChain)
+                        {
+                            var clientFilter = (KnifeSocketClientFilter) filter;
+                            clientFilter.OnConnected(new ConnectedEventArgs(false, "Connection FAIL."));
+                            clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Normal, ConnectionStatus.Break));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error("当连接未成功时的处理发生异常.", ex);
+                    }
+                    break;
                 }
             }
             _ConnectionAutoReset.Set();
@@ -296,9 +312,16 @@ namespace SocketKnife
 
         protected virtual void BeginReceive(SocketAsyncEventArgs e)
         {
-            if (e.SocketError == SocketError.Success && e.BytesTransferred > 0)
+            switch (e.SocketError)
             {
-                PrcessReceiveData(e);
+                case SocketError.Success:
+                {
+                    if (e.BytesTransferred > 0)
+                        PrcessReceiveData(e);
+                    break;
+                }
+                default:
+                    break;
             }
         }
 
@@ -311,10 +334,8 @@ namespace SocketKnife
                 // 触发数据到达事件
                 foreach (var filter in _FilterChain)
                 {
-                    EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
-
                     var clientFilter = (KnifeSocketClientFilter) filter;
-                    clientFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data));
+                    clientFilter.OnDataFetched(new SocketDataFetchedEventArgs(_SocketSession.Source, data));
                     clientFilter.PrcoessReceiveData(_SocketSession, data); // 调用filter对数据进行处理
 
                     if (!clientFilter.ContinueNextFilter)
