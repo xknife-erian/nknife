@@ -112,9 +112,7 @@
       <Name>NKnife</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include=".old\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

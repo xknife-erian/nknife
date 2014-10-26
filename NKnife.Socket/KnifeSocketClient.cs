@@ -349,7 +349,7 @@ namespace SocketKnife
 
             try
             {
-                if (_Socket != null && _Socket.Connected) //继续异步从服务端 Socket 接收数据
+                if (_Socket != null) //继续异步从服务端 Socket 接收数据
                     _Socket.ReceiveAsync(e);
                 else
                     _logger.Warn("Client -> 继续异步从服务端 Socket 接收数据时 Socket 无效。");
