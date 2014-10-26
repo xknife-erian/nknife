@@ -30,7 +30,7 @@ namespace NKnife.Kits.SocketKnife.Demo
         {
             if (_IsInitialized) return;
 
-            var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
+            var heartbeatServerFilter = DI.Get<HeartbeatClientFilter>();
             heartbeatServerFilter.Interval = 1000*5;
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
@@ -47,8 +47,8 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             _Client = DI.Get<IKnifeSocketClient>();
             _Client.Config = config;
-//            if (socketTools.NeedHeartBeat)
-//                _Client.AddFilter(heartbeatServerFilter);
+            if (socketTools.NeedHeartBeat)
+                _Client.AddFilter(heartbeatServerFilter);
             _Client.AddFilter(keepAliveFilter);
             _Client.Configure(socketTools.IpAddress, socketTools.Port);
             _Client.Bind(codec, protocolFamily, new DemoClientHandler(SocketMessages));

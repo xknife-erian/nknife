@@ -93,7 +93,7 @@ namespace SocketKnife.Generic.Filters
                 beatingTimer.Elapsed += BeatingTimerElapsed;
                 beatingTimer.Interval = Interval;
                 beatingTimer.Start();
-                _logger.Info(string.Format("服务器心跳启动。间隔:{0}", Interval));
+                _logger.Info(string.Format("客户端心跳启动。间隔:{0}", Interval));
                 var handlers = _HandlersGetter.Invoke();
                 Debug.Assert(handlers != null && handlers.Length > 0, "Handler未设置");
             }

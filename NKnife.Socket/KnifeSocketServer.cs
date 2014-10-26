@@ -369,19 +369,24 @@ namespace SocketKnife
         {
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
-
-            foreach (var filter in _FilterChain)
+            if (!e.AcceptSocket.Connected)
             {
-                var serverFilter = (KnifeSocketServerFilter) filter;
-                EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
-                serverFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
-
-                KnifeSocketSession session = _SessionMap[endPoint];
-                serverFilter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
-                if (!serverFilter.ContinueNextFilter)
-                    break;
+                _logger.Debug(string.Format("连接丢失，有{0}数据未处理.", e.BytesTransferred));
             }
+            else
+            {
+                foreach (var filter in _FilterChain)
+                {
+                    var serverFilter = (KnifeSocketServerFilter) filter;
+                    EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
+                    serverFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
 
+                    KnifeSocketSession session = _SessionMap[endPoint];
+                    serverFilter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
+                    if (!serverFilter.ContinueNextFilter)
+                        break;
+                }
+            }
             if (!e.AcceptSocket.ReceiveAsync(e))
                 BeginReceive(e);
         }
