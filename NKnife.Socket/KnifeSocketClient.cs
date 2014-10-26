@@ -70,6 +70,11 @@ namespace SocketKnife
 
         public override bool Stop()
         {
+            foreach (var filter in _FilterChain)
+            {
+                var clientFilter = (KnifeSocketClientFilter)filter;
+                clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Initiative));
+            }
             try
             {
                 if (_Socket != null && _Socket.Connected)
@@ -83,12 +88,6 @@ namespace SocketKnife
             {
                 if (_Socket != null)
                     _Socket.Close();
-
-                foreach (var filter in _FilterChain)
-                {
-                    var clientFilter = (KnifeSocketClientFilter) filter;
-                    clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Initiative));
-                }
                 return true;
             }
             catch (Exception e)
@@ -124,6 +123,12 @@ namespace SocketKnife
         {
             base.Configure(ipAddress, port);
             _EndPoint = new IPEndPoint(ipAddress, port);
+        }
+
+        public override KnifeSocketConfig Config
+        {
+            get { return _Config; }
+            set { _Config = (KnifeSocketClientConfig)value; }
         }
 
         public override void AddFilter(KnifeSocketFilter filter)
@@ -167,12 +172,6 @@ namespace SocketKnife
         ///     用来确定是否以释放
         /// </summary>
         private bool _IsDisposed;
-
-        public override KnifeSocketConfig Config
-        {
-            get { return _Config; }
-            set { _Config = (KnifeSocketClientConfig)value; }
-        }
 
         public override void Dispose()
         {
@@ -269,7 +268,6 @@ namespace SocketKnife
                         {
                             var clientFilter = (KnifeSocketClientFilter) filter;
                             clientFilter.OnConnected(new ConnectedEventArgs(true, "Connection Success."));
-                            clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Break, ConnectionStatus.Normal));
                         }
 
                         var data = new byte[Config.ReceiveBufferSize];
@@ -297,7 +295,6 @@ namespace SocketKnife
                         {
                             var clientFilter = (KnifeSocketClientFilter) filter;
                             clientFilter.OnConnected(new ConnectedEventArgs(false, "Connection FAIL."));
-                            clientFilter.OnSocketStatusChanged(new ChangedEventArgs<ConnectionStatus>(ConnectionStatus.Normal, ConnectionStatus.Break));
                         }
                     }
                     catch (Exception ex)
@@ -317,11 +314,26 @@ namespace SocketKnife
                 case SocketError.Success:
                 {
                     if (e.BytesTransferred > 0)
+                    {
                         PrcessReceiveData(e);
+                    }
+                    else
+                    {
+                        _logger.Info(string.Format("Client监测到来自Server的断开连接活动。被动连接中断。"));
+                        _IsConnection = false;
+                        foreach (var filter in _FilterChain)
+                        {
+                            var clientFilter = (KnifeSocketClientFilter) filter;
+                            clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Passive));
+                        }
+                    }
                     break;
                 }
                 default:
+                {
+                    _logger.Trace(string.Format("未处理的Socket状态:{0}", e.SocketError));
                     break;
+                }
             }
         }
 

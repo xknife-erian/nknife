@@ -11,7 +11,6 @@ using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using SocketKnife.Common;
 using SocketKnife.Events;
-using SocketKnife.Exceptions;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 
@@ -65,7 +64,6 @@ namespace SocketKnife
             {
                 _MainAutoReset.Reset();
                 _IsClose = true;
-                _MainSocket.Close();
                 foreach (KeyValuePair<EndPoint, KnifeSocketSession> pair in _SessionMap)
                 {
                     Socket client = pair.Value.Connector;
@@ -86,6 +84,7 @@ namespace SocketKnife
                     async.AcceptSocket.Close();
                 }
                 _SocketAsynPool.Clear();
+                _MainSocket.Close();
                 _logger.Info(string.Format("SocketServer关闭。"));
                 return true;
             }
@@ -406,15 +405,8 @@ namespace SocketKnife
         protected virtual void WirteBase(KnifeSocketSession session, byte[] data)
         {
             Socket socket = session.Connector;
-            try
-            {
-                socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-                _logger.Trace(() => string.Format("Server.Send:{0}", data.ToHexString()));
-            }
-            catch
-            {
-                throw new SocketClientDisOpenedException(string.Format("TRY-DisOpened,远端无法连接."));
-            }
+            socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
+            _logger.Trace(() => string.Format("Server.Send:{0}", data.ToHexString()));
         }
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)

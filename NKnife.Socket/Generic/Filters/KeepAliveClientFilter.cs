@@ -43,7 +43,7 @@ namespace SocketKnife.Generic.Filters
             base.OnConnectionBroken(e);
             _EnableReceiveQueueMonitor = false; //停止监听
             _ReceiveQueue.AutoResetEvent.Set();
-
+            _ReceiveQueue.Clear();
         }
 
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)

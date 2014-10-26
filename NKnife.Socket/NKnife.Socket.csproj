@@ -51,7 +51,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Common\BufferContainer.cs" />
-    <Compile Include="Common\ConnectionStatus.cs" />
     <Compile Include="Common\BrokenCause.cs" />
     <Compile Include="Events\ConnectionBrokenEventArgs.cs" />
     <Compile Include="Events\ConnectedEventArgs.cs" />
@@ -59,7 +58,6 @@
     <Compile Include="Events\SocketDataDecodedEventArgs.cs" />
     <Compile Include="Events\SocketDataFetchedEventArgs.cs" />
     <Compile Include="Events\SocketSessionEventArgs.cs" />
-    <Compile Include="Exceptions\SocketClientDisOpenedException.cs" />
     <Compile Include="Common\Heartbeat.cs" />
     <Compile Include="Common\ReceiveQueue.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />

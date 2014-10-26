@@ -18,11 +18,6 @@ namespace SocketKnife.Interfaces
         event EventHandler<ConnectedEventArgs> Connected;
 
         /// <summary>
-        ///     Sokcet连接的状态发生改变后的事件
-        /// </summary>
-        event EventHandler<ChangedEventArgs<ConnectionStatus>> SocketStatusChanged;
-
-        /// <summary>
         ///     当连接断开后发生的事件
         /// </summary>
         event EventHandler<ConnectionBrokenEventArgs> ConnectionBroken;

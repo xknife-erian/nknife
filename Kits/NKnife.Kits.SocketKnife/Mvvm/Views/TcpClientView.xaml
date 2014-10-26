@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-             mc:Ignorable="d">
+             mc:Ignorable="d" Closing="TcpClientView_OnClosing">
     <Grid Name="_View" Loaded="View_OnLoaded">
         <Grid.Resources>
             <Style x:Key="StartButtonImage" TargetType="{x:Type Button}">

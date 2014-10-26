@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo;
 using SocketKnife.Generic;
@@ -30,6 +31,11 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _ViewModel.Initialize(Config, SocketTools);
         }
 
+        private void TcpClientView_OnClosing(object sender, CancelEventArgs e)
+        {
+            _ViewModel.Stop();
+        }
+
         private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)
         {
         }
@@ -43,5 +49,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _ViewModel.Stop();
         }
+
     }
 }

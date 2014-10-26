@@ -20,8 +20,6 @@ namespace SocketKnife.Generic
 
         public event EventHandler<ConnectedEventArgs> Connected;
 
-        public event EventHandler<ChangedEventArgs<ConnectionStatus>> SocketStatusChanged;
-
         public event EventHandler<ConnectionBrokenEventArgs> ConnectionBroken;
 
         protected internal virtual void OnConnecting(ConnectingEventArgs e)
@@ -34,13 +32,6 @@ namespace SocketKnife.Generic
         protected internal virtual void OnConnected(ConnectedEventArgs e)
         {
             EventHandler<ConnectedEventArgs> handler = Connected;
-            if (handler != null)
-                handler(this, e);
-        }
-
-        protected internal virtual void OnSocketStatusChanged(ChangedEventArgs<ConnectionStatus> e)
-        {
-            EventHandler<ChangedEventArgs<ConnectionStatus>> handler = SocketStatusChanged;
             if (handler != null)
                 handler(this, e);
         }
