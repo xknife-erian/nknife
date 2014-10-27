@@ -81,11 +81,6 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        protected virtual byte[] GetReplay()
-        {
-            return Heartbeat.ReplayOfClient;
-        }
-
         protected virtual void RemoveEndPointFromSessionMap(EndPoint endPoint)
         {
             KnifeSocketSessionMap map = SessionMapGetter.Invoke();
@@ -127,13 +122,20 @@ namespace SocketKnife.Generic.Filters
             if (!IsStrictMode)
             {//非严格模式
                 session.WaitingForReply = false;
-                _logger.Trace(() => string.Format("收到{0}信息,关闭心跳等待.", session.Source));
+                _logger.Trace(() => string.Format("Server收到{0}信息,关闭心跳等待.", session.Source));
             }
-            if (data.IndexOf(GetReplay()) == 0)
+            if (data.IndexOf(Heartbeat.BeatingOfClientHeart) == 0)
+            {
+                _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplayOfServer);
+                _ContinueNextFilter = false;
+                _logger.Trace(() => string.Format("Server收到{0}心跳.回复完成.", session.Source));
+                return;
+            }
+            if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
             {
                 session.WaitingForReply = false;
                 _ContinueNextFilter = false;
-                _logger.Trace(() => string.Format("收到{0}心跳回复.", session.Source));
+                _logger.Trace(() => string.Format("Server收到{0}心跳回复.", session.Source));
             }
             else
             {

@@ -14,6 +14,7 @@ namespace SocketKnife.Generic.Filters
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
+        protected Timer _BeatingTimer;
         protected bool _ContinueNextFilter = true;
         private bool _IsTimerStarted;
 
@@ -68,6 +69,9 @@ namespace SocketKnife.Generic.Filters
             }
             else
             {
+                _IsTimerStarted = false;
+                _BeatingTimer.Stop();//关闭心跳，等待重新连接上后，再次启动。
+
                 _logger.Warn("在一定时间内，服务器未反应，准备重连服务器......");
                 Reconnects(session);
             }
@@ -78,21 +82,16 @@ namespace SocketKnife.Generic.Filters
             OnConnectionBroken(new ConnectionBrokenEventArgs(session.Source, BrokenCause.LoseHeartbeat));
         }
 
-        protected virtual byte[] GetReplay()
-        {
-            return Heartbeat.ReplayOfServer;
-        }
-
         protected internal virtual void Start()
         {
             if (!_IsTimerStarted) //第一次监听到时启动
             {
                 _IsTimerStarted = true;
 
-                var beatingTimer = new Timer();
-                beatingTimer.Elapsed += BeatingTimerElapsed;
-                beatingTimer.Interval = Interval;
-                beatingTimer.Start();
+                _BeatingTimer = new Timer();
+                _BeatingTimer.Elapsed += BeatingTimerElapsed;
+                _BeatingTimer.Interval = Interval;
+                _BeatingTimer.Start();
                 _logger.Info(string.Format("客户端心跳启动。间隔:{0}", Interval));
                 var handlers = _HandlersGetter.Invoke();
                 Debug.Assert(handlers != null && handlers.Length > 0, "Handler未设置");
@@ -102,15 +101,22 @@ namespace SocketKnife.Generic.Filters
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
             if (!IsStrictMode)
-            {//非严格模式
+            {   //非严格模式
                 session.WaitingForReply = false;
-                _logger.Trace(() => string.Format("收到{0}信息,关闭心跳等待.", session.Source));
+                _logger.Trace(() => string.Format("客户端收到{0}信息,关闭心跳等待.", session.Source));
             }
-            if (data.IndexOf(GetReplay()) == 0)
+            if (data.IndexOf(Heartbeat.BeatingOfServerHeart) == 0)
+            {
+                _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplayOfClient);
+                _ContinueNextFilter = false;
+                _logger.Trace(() => string.Format("客户端收到{0}心跳.回复完成.", session.Source));
+                return;
+            } 
+            if (data.IndexOf(Heartbeat.ReplayOfServer) == 0)
             {
                 session.WaitingForReply = false;
                 _ContinueNextFilter = false;
-                _logger.Trace(() => string.Format("收到{0}心跳回复.", session.Source));
+                _logger.Trace(() => string.Format("客户端收到{0}心跳回复.", session.Source));
             }
             else
             {

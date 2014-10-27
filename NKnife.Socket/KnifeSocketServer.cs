@@ -211,7 +211,7 @@ namespace SocketKnife
 
         #endregion
 
-        #region 内部方法
+        #region 监听
 
         protected virtual void AsynCompleted(object sender, SocketAsyncEventArgs e) // SocketAsyncEventArgs的Completed事件
         {
@@ -407,11 +407,15 @@ namespace SocketKnife
             }
         }
 
+        #endregion
+
+        #region 发送消息
+
         protected virtual void WirteBase(KnifeSocketSession session, byte[] data)
         {
             Socket socket = session.Connector;
             socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-            _logger.Trace(() => string.Format("Server.Send:{0}", data.ToHexString()));
+            _logger.Trace(() => string.Format("ServerSend:{0}", data.ToHexString()));
         }
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
@@ -419,7 +423,7 @@ namespace SocketKnife
             string replay = protocol.Generate();
             byte[] data = _Codec.SocketEncoder.Execute(replay);
             WirteBase(session, data);
-            _logger.Trace(() => string.Format("Server.Send:{0}", replay));
+            _logger.Trace(() => string.Format("ServerSend:{0}", replay));
         }
 
         #endregion

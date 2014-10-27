@@ -197,7 +197,7 @@ namespace SocketKnife
 
         #endregion
 
-        #region 重点方法
+        #region 监听
 
         protected virtual void AsyncConnect(IPAddress ipAddress, int port)
         {
@@ -372,7 +372,9 @@ namespace SocketKnife
             }
         }
 
-        //**************************************************
+        #endregion
+
+        #region 发送消息
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
         {
@@ -387,7 +389,7 @@ namespace SocketKnife
             if (_Socket != null)
             {
                 bool isSuceess = _Socket.SendAsync(e);
-                _logger.Trace(() => string.Format("Send:{0},\r\n{1}", data, isSuceess));
+                _logger.Trace(() => string.Format("ClientSend:{0},{1}", data.ToHexString(), isSuceess));
             }
         }
 
