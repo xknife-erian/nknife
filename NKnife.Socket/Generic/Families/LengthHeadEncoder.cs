@@ -11,7 +11,7 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     /// 一个最常用的回复消息的字节数组生成器
     /// </summary>
-    public class Byte4Encoder : KnifeSocketDatagramEncoder
+    public class LengthHeadEncoder : KnifeSocketDatagramEncoder
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
