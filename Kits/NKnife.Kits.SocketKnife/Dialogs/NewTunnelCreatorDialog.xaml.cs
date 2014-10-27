@@ -7,8 +7,7 @@ using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol;
-using NKnife.Protocol.Generic.CommandParsers;
-using NKnife.Protocol.Generic.Packers;
+using NKnife.Protocol.Generic.TextPlain;
 using NKnife.Tunnel;
 using NKnife.Utility;
 using SocketKnife.Generic;
@@ -70,7 +69,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             {
                 _CommandParserComboBox.Items.Add(commandParser);
             }
-            _CommandParserComboBox.SelectedItem = typeof(FirstFieldCommandParser);
+            _CommandParserComboBox.SelectedItem = typeof(TextPlainFirstFieldCommandParser);
         }
 
         public KnifeSocketConfig Config { get; set; }

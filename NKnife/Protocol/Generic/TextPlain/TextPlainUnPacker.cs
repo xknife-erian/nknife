@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Globalization;
 
-namespace NKnife.Protocol.Generic.Packers
+namespace NKnife.Protocol.Generic.TextPlain
 {
     public class TextPlainUnPacker : StringProtocolUnPacker
     {
-        public override short Version
-        {
-            get { return 1; }
-        }
-
         public override void Execute(StringProtocolContent content, string data, string family, string command)
         {
             string[] array = data.Split(new[] {'|', '#', '@'}, StringSplitOptions.RemoveEmptyEntries);

@@ -2,9 +2,7 @@ namespace NKnife.Protocol.Generic
 {
     public abstract class StringProtocolUnPacker : IProtocolUnPacker<string>
     {
-        public abstract short Version { get; }
-
-        void IProtocolUnPacker<string>.Execute(ref IProtocolContent<string> content, string data, string family, string command)
+        void IProtocolUnPacker<string>.Execute(IProtocolContent<string> content, string data, string family, string command)
         {
             Execute((StringProtocolContent)content, data, family, command);
         }

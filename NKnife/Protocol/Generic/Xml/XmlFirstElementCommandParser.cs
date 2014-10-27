@@ -4,12 +4,12 @@ using System.Xml;
 using NKnife.Adapters;
 using NKnife.Interface;
 
-namespace NKnife.Protocol.Generic.CommandParsers
+namespace NKnife.Protocol.Generic.Xml
 {
     /// <summary>
     /// 一个基本的从协议字符串中解析命令字的工具
     /// </summary>
-    public class DatagramCommandParser : StringProtocolCommandParser
+    public class XmlFirstElementCommandParser : StringProtocolCommandParser
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
         

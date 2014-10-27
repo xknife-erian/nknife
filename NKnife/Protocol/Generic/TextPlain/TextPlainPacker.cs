@@ -1,12 +1,9 @@
 ﻿using System.Text;
 
-namespace NKnife.Protocol.Generic.Packers
+namespace NKnife.Protocol.Generic.TextPlain
 {
     public class TextPlainPacker : StringProtocolPacker
     {
-        public override short Version {
-            get { return 1; }
-        }
         public override string Combine(StringProtocolContent c)
         {
             var command = string.Format("{0}|{1}|", c.Command, c.CommandParam);

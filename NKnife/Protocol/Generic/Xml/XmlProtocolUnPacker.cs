@@ -7,7 +7,7 @@ using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.Utility;
 
-namespace NKnife.Protocol.Generic.Packers
+namespace NKnife.Protocol.Generic.Xml
 {
     public class XmlProtocolUnPacker : StringProtocolUnPacker
     {
@@ -35,14 +35,6 @@ namespace NKnife.Protocol.Generic.Packers
 
         #region IProtocolParser Members
 
-        /// <summary>获取协议的版本号
-        /// </summary>
-        /// <value>The version.</value>
-        public override short Version
-        {
-            get { return 1; }
-        }
-
         public override void Execute(StringProtocolContent content, string data, string family, string command)
         {
             if (string.IsNullOrWhiteSpace(data))
@@ -60,7 +52,6 @@ namespace NKnife.Protocol.Generic.Packers
             }
             try
             {
-                ParseVersion(doc.DocumentElement);
                 ParseParm(content, doc.DocumentElement);
                 if (doc.DocumentElement != null)
                 {
@@ -82,24 +73,6 @@ namespace NKnife.Protocol.Generic.Packers
         }
 
         #endregion
-
-        protected virtual void ParseVersion(XmlElement element)
-        {
-            string v = element.GetAttribute(VersionLocalName);
-            int version = -1;
-            if (!int.TryParse(v, out version))
-            {
-                return;
-            }
-            if (version < Version)
-            {
-                _logger.Info(string.Format("协议版本有差。解析器版本：{1}，协议数据版本：{0}。", version, Version));
-            }
-            else if (version > Version)
-            {
-                _logger.Warn(string.Format("协议版本有差。解析器版本：{1}，协议数据版本：{0}。", version, Version));
-            }
-        }
 
         protected virtual void ParseInfos(StringProtocolContent content, XmlElement infoElement)
         {
@@ -137,13 +110,13 @@ namespace NKnife.Protocol.Generic.Packers
                 Type type = UtilityType.FindType(itemElement.GetAttribute("class"));
                 try
                 {
-                    const BindingFlags bf = 
-                        BindingFlags.CreateInstance |
+                    const BindingFlags bf = BindingFlags.CreateInstance |
                         (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
                     obj = Activator.CreateInstance(type, bf, null, null, null);
-                    if (obj is IXml)
+                    var xml = obj as IXml;
+                    if (xml != null)
                     {
-                        ((IXml)obj).Parse(itemElement);
+                        xml.Parse(itemElement);
                     }
                 }
                 catch (Exception e)

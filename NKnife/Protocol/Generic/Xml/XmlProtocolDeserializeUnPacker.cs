@@ -8,7 +8,7 @@ using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.Utility;
 
-namespace NKnife.Protocol.Generic.Packers
+namespace NKnife.Protocol.Generic.Xml
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>

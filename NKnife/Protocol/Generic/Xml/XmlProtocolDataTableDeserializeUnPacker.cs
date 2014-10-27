@@ -6,7 +6,7 @@ using System.Xml;
 using NKnife.Adapters;
 using NKnife.Interface;
 
-namespace NKnife.Protocol.Generic.Packers
+namespace NKnife.Protocol.Generic.Xml
 {
     /// <summary>含有序列化对象(DataTable)的解析器
     /// </summary>

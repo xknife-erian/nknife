@@ -1,8 +1,7 @@
 ﻿using Ninject.Modules;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol.Generic;
-using NKnife.Protocol.Generic.CommandParsers;
-using NKnife.Protocol.Generic.Packers;
+using NKnife.Protocol.Generic.TextPlain;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
 
@@ -16,7 +15,7 @@ namespace NKnife.Kits.SocketKnife.IoC
 
             Bind<StringProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
             Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
-            Bind<StringProtocolCommandParser>().To<FirstFieldCommandParser>().InSingletonScope();
+            Bind<StringProtocolCommandParser>().To<TextPlainFirstFieldCommandParser>().InSingletonScope();
 
             Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();
             Bind<KnifeSocketDatagramEncoder>().To<FixedTailEncoder>();

@@ -9,7 +9,7 @@ using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.Utility;
 
-namespace NKnife.Protocol.Generic.Packers
+namespace NKnife.Protocol.Generic.Xml
 {
     /// <summary>
     /// 描述一个将协议内容按指定的格式组装成一个指定类型(一般是字符串，但也可以是任何，如文件)
@@ -19,15 +19,6 @@ namespace NKnife.Protocol.Generic.Packers
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         #region IProtocolPackage Members
-
-        /// <summary>
-        /// 当前IProtocolPackage实现类型的版本。
-        /// </summary>
-        /// <value>The version.</value>
-        public override short Version
-        {
-            get { return 1; }
-        }
 
         /// <summary>
         /// Combines the specified content.
@@ -134,8 +125,6 @@ namespace NKnife.Protocol.Generic.Packers
         protected virtual void WriteRoot(StringProtocolContent content, XmlWriter writer)
         {
             writer.WriteStartElement(content.Command);
-            //协议版本号
-            writer.WriteAttributeString("version", Version.ToString());
             if (content.CommandParam != null)
             {
                 //命令参数

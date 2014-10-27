@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace NKnife.Protocol.Generic.CommandParsers
+namespace NKnife.Protocol.Generic.TextPlain
 {
-    public class FirstFieldCommandParser : StringProtocolCommandParser
+    public class TextPlainFirstFieldCommandParser : StringProtocolCommandParser
     {
         public override string GetCommand(string datagram)
         {

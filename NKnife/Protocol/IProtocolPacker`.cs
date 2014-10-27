@@ -5,7 +5,6 @@
     /// </summary>
     public interface IProtocolPacker<T>
     {
-        short Version { get; }
         T Combine(IProtocolContent<T> content);
     }
 }
