@@ -46,7 +46,7 @@ namespace NKnife.Collections
             }
             catch (Exception e)
             {
-                Debug.Fail("线程异常:{0}", e.Message);
+                Debug.Fail(string.Format("线程异常:{0}", e.Message));
             }
         }
 
