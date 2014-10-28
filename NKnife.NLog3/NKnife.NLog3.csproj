@@ -67,9 +67,9 @@
     <Compile Include="Controls\NLogListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\WPF\LoggerWpfControlTarget.cs" />
+    <Compile Include="Controls\WPF\ObservableCollectionTarget.cs" />
     <Compile Include="Controls\WPF\LogMessage.cs" />
-    <Compile Include="Controls\WPF\LogMessageCollection.cs" />
+    <Compile Include="Controls\WPF\LogMessageObservableCollection.cs" />
     <Compile Include="Controls\LogPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

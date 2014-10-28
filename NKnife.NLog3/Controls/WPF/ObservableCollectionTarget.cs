@@ -12,7 +12,7 @@ namespace NKnife.NLog3.Controls.WPF
     /// 这是一个基于NLog的自定义的输出目标（Target），这个输出目标是一个WPF控件可绑定的ObservableCollection
     /// </summary>
     [Target("Log_Collection")]
-    public class LoggerWpfControlTarget : TargetWithLayout
+    public class ObservableCollectionTarget : TargetWithLayout
     {
         private readonly ObservableCollection<LogMessage> _LogList = DI.Get<ObservableCollection<LogMessage>>();
         protected override void Write(LogEventInfo logEvent)

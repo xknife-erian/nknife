@@ -49,7 +49,7 @@ namespace NKnife.NLog3.IoC
             }
 
             Bind<ILoggerFactory>().To<NLogLoggerFactory>().InSingletonScope();
-            Bind<ObservableCollection<LogMessage>>().To<LogMessageCollection>().InSingletonScope();
+            Bind<ObservableCollection<LogMessage>>().To<LogMessageObservableCollection>().InSingletonScope();
             Bind<LogPanel>().To<LogPanel>().InSingletonScope();
             Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
         }

@@ -2,7 +2,7 @@
 
 namespace NKnife.NLog3.Controls.WPF
 {
-    public sealed class LogMessageCollection : ObservableCollection<LogMessage>
+    public sealed class LogMessageObservableCollection : ObservableCollection<LogMessage>
     {
     }
 }
