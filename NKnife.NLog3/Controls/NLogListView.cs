@@ -7,7 +7,7 @@ using NKnife.ShareResources;
 using NKnife.Utility;
 using NLog;
 
-namespace NKnife.NLog3.Logging.Base
+namespace NKnife.NLog3.Controls
 {
     /// <summary>展示日志的具体ListView，同时双缓冲解决闪烁
     /// </summary>

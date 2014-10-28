@@ -7,7 +7,7 @@ using NKnife.ShareResources;
 using NKnife.Utility;
 using NLog;
 
-namespace NKnife.NLog3.Logging.Base
+namespace NKnife.NLog3.Controls
 {
     /// <summary>日志详细信息展现窗体
     /// </summary>

@@ -1,6 +1,6 @@
-﻿namespace NKnife.NLog3.Logging.Base
+﻿namespace NKnife.NLog3.Controls
 {
-    partial class LoggerForm
+    partial class NLogForm
     {
         /// <summary>
         /// Required designer variable.

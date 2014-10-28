@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3D1D08D2-46B0-4C33-A214-A5A76A998102}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NKnife.NLog3</RootNamespace>
     <AssemblyName>NKnife.NLog3</AssemblyName>
@@ -55,51 +55,50 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IoC\NLogModules.cs" />
-    <Compile Include="Logging\Base\LoggerForm.cs">
+    <Compile Include="Controls\NLogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logging\Base\LoggerForm.Designer.cs">
-      <DependentUpon>LoggerForm.cs</DependentUpon>
+    <Compile Include="Controls\NLogForm.Designer.cs">
+      <DependentUpon>NLogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logging\Base\LoggerInfoDetailForm.cs">
+    <Compile Include="Controls\LoggerInfoDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logging\Base\NLogListView.cs">
+    <Compile Include="Controls\NLogListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Logging\LoggerWPFControl\LoggerWpfControlTarget.cs" />
-    <Compile Include="Logging\LoggerWPFControl\LogMessage.cs" />
-    <Compile Include="Logging\LoggerWPFControl\LogMessageCollection.cs" />
-    <Compile Include="Logging\LogPanel\LogPanel.cs">
+    <Compile Include="Controls\WPF\LoggerWpfControlTarget.cs" />
+    <Compile Include="Controls\WPF\LogMessage.cs" />
+    <Compile Include="Controls\WPF\LogMessageCollection.cs" />
+    <Compile Include="Controls\LogPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Logging\LogPanel\LogPanel.Designer.cs">
+    <Compile Include="Controls\LogPanel.Designer.cs">
       <DependentUpon>LogPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logging\LogPanel\ShowLogPanelTarget.cs" />
+    <Compile Include="Controls\ShowLogPanelTarget.cs" />
     <Compile Include="NLogLoggerFactory.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Logging\Base\LoggerForm.resx">
-      <DependentUpon>LoggerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\NLogForm.resx">
+      <DependentUpon>NLogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.en-US.resx">
+    <EmbeddedResource Include="Controls\LoggerInfoDetailForm.en-US.resx">
       <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.resx">
+    <EmbeddedResource Include="Controls\LoggerInfoDetailForm.resx">
       <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\Base\LoggerInfoDetailForm.zh-CN.resx">
+    <EmbeddedResource Include="Controls\LoggerInfoDetailForm.zh-CN.resx">
       <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.en-US.resx">
+    <EmbeddedResource Include="Controls\LogPanel.en-US.resx">
       <DependentUpon>LogPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.resx">
+    <EmbeddedResource Include="Controls\LogPanel.resx">
       <DependentUpon>LogPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logging\LogPanel\LogPanel.zh-CN.resx">
+    <EmbeddedResource Include="Controls\LogPanel.zh-CN.resx">
       <DependentUpon>LogPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\OwnResources.resx">
@@ -114,7 +113,7 @@
     </Compile>
     <None Include="Properties\nlog_wpf_config.config" />
     <None Include="Properties\nlog_winform_config.config" />
-    <None Include="Logging\NLog.config.template">
+    <None Include="NLog.config.template">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

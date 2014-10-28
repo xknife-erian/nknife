@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace NKnife.NLog3.Logging.LoggerWPFControl
+namespace NKnife.NLog3.Controls.WPF
 {
     public struct LogMessage
     {

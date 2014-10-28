@@ -3,9 +3,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using Ninject.Modules;
 using NKnife.Adapters;
-using NKnife.NLog3.Logging.Base;
-using NKnife.NLog3.Logging.LoggerWPFControl;
-using NKnife.NLog3.Logging.LogPanel;
+using NKnife.NLog3.Controls;
+using NKnife.NLog3.Controls.WPF;
 using NKnife.NLog3.Properties;
 
 namespace NKnife.NLog3.IoC
@@ -19,7 +18,12 @@ namespace NKnife.NLog3.IoC
         }
 
         private const string CONFIG_FILE_NAME = "nlog.config";
-        public static AppStyle Style = AppStyle.WinForm;
+        public static AppStyle Style { get; set; }
+
+        static NLogModules()
+        {
+            Style = AppStyle.WinForm;
+        }
 
         public override void Load()
         {

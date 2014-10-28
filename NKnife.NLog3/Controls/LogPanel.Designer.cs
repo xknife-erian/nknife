@@ -1,6 +1,4 @@
-﻿using NKnife.NLog3.Logging.Base;
-
-namespace NKnife.NLog3.Logging.LogPanel
+﻿namespace NKnife.NLog3.Controls
 {
     sealed partial class LogPanel
     {

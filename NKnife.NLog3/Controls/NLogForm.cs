@@ -5,16 +5,16 @@ using System.Windows.Forms;
 using NKnife.IoC;
 using NKnife.ShareResources;
 
-namespace NKnife.NLog3.Logging.Base
+namespace NKnife.NLog3.Controls
 {
-    public partial class LoggerForm : Form
+    public partial class NLogForm : Form
     {
-        public LoggerForm()
+        public NLogForm()
         {
             InitializeComponent();
             Icon = IconBoxResource.Restart;
             Padding = new Padding(3);
-            var logPanel = DI.Get<LogPanel.LogPanel>();
+            var logPanel = DI.Get<LogPanel>();
             logPanel.Dock = DockStyle.Fill;
             logPanel.Font = new Font("Tahoma", 8.25F);
             logPanel.HeaderStyle = ColumnHeaderStyle.Clickable;

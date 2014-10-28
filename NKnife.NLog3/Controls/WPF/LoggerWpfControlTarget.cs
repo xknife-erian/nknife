@@ -6,7 +6,7 @@ using NKnife.IoC;
 using NLog;
 using NLog.Targets;
 
-namespace NKnife.NLog3.Logging.LoggerWPFControl
+namespace NKnife.NLog3.Controls.WPF
 {
     /// <summary>
     /// 这是一个基于NLog的自定义的输出目标（Target），这个输出目标是一个WPF控件可绑定的ObservableCollection
