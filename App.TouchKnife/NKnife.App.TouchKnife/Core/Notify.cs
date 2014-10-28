@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using NKnife.App.TouchKnife.Properties;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.NLog3.Logging.Base;
+using NKnife.NLog3.Controls;
 using NKnife.Utility;
 
 namespace NKnife.App.TouchKnife.Core
@@ -132,8 +132,7 @@ namespace NKnife.App.TouchKnife.Core
             ToolStripItem logger = new ToolStripMenuItem("日志");
             logger.Click += delegate
             {
-                var loggerForm = new LoggerForm();
-                loggerForm.ShowInTaskbar = false;
+                var loggerForm = new NLogForm {ShowInTaskbar = false};
                 loggerForm.Show();
             };
 
