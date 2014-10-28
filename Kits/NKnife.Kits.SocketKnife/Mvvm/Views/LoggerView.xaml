@@ -4,21 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+             xmlns:nlogControl="clr-namespace:NKnife.NLog3.Controls.WPF;assembly=NKnife.NLog3"
              mc:Ignorable="d"
              Title="系统日志" AutoHideHeight="250" IconSource="/Attachments/logger-view-icon.png">
-    <Grid>
-        <ListView Name="_LoggerGrid"
-                  IsSynchronizedWithCurrentItem="True" 
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single" 
-                  Height="Auto" Width="Auto">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
-                    <GridViewColumn Header="级别" DisplayMemberBinding="{Binding Path=Level}" Width="60" />
-                    <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="600" />
-                    <GridViewColumn Header="日志源" DisplayMemberBinding="{Binding Path=Source}" Width="180" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+    <nlogControl:NLogWpfGrid/>
 </xcad:LayoutAnchorable>

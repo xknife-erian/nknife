@@ -13,7 +13,7 @@ namespace NKnife.NLog3.Controls.WPF
                     ? logEvent.LoggerName.Substring(logEvent.LoggerName.LastIndexOf('.') + 1)
                     : logEvent.LoggerName,
                 Message = logEvent.FormattedMessage,
-                Level = logEvent.Level
+                Level = logEvent.Level.ToString()
             };
             if (logEvent.HasStackTrace)
                 lm.Message += logEvent.StackTrace.ToString();
@@ -22,6 +22,6 @@ namespace NKnife.NLog3.Controls.WPF
         public string Time { get; set; }
         public string Message { get; set; }
         public string Source { get; set; }
-        public LogLevel Level { get; set; }
+        public string Level { get; set; }
     }
 }

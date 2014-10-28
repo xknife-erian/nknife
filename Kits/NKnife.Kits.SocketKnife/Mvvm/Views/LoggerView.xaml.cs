@@ -13,7 +13,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         public LoggerView()
         {
             InitializeComponent();
-            _LoggerGrid.ItemsSource = DI.Get<ObservableCollection<LogMessage>>();
         }
 
     }
