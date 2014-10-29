@@ -19,12 +19,14 @@ namespace SocketKnife.Generic
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        private readonly string _Id;
-
         protected KnifeSocketFilter()
         {
             _Id = Guid.NewGuid().ToString();
         }
+
+        #region Equals
+
+        private readonly string _Id;
 
         public override bool Equals(object obj)
         {
@@ -43,6 +45,8 @@ namespace SocketKnife.Generic
         {
             return (_Id != null ? _Id.GetHashCode() : 0);
         }
+
+        #endregion
 
         protected Func<StringProtocolFamily> _FamilyGetter;
         protected Func<IList<KnifeSocketProtocolHandler>> _HandlersGetter;

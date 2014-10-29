@@ -12,8 +12,6 @@ namespace NKnife.Kits.SocketKnife.Demo
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
-        public override KnifeSocketSession Session { get; set; }
-
         private readonly AsyncObservableCollection<SocketMessage> _SocketMessages;
 
         public DemoClientHandler(AsyncObservableCollection<SocketMessage> socketMessages)
@@ -31,6 +29,14 @@ namespace NKnife.Kits.SocketKnife.Demo
             _SocketMessages.Insert(0, msg);
             _logger.Info("新消息解析完成" + msg.Message);
         }
+    }
 
+    class MyClass
+    {
+        public MyClass()
+        {
+            KnifeSocketClientProtocolHandler handler = new DemoClientHandler(null);
+            handler.Write(new StringProtocol());
+        } 
     }
 }
