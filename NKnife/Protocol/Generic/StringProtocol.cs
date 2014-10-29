@@ -17,11 +17,13 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocol()
         {
+            Content = DI.Get<StringProtocolContent>();
             BuildMethod = NewInstance;
         }
 
         protected StringProtocol(string family, string command)
         {
+            Content = DI.Get<StringProtocolContent>();
             Family = family;
             Command = command;
         }
@@ -32,7 +34,6 @@ namespace NKnife.Protocol.Generic
         [Inject]
         public virtual StringProtocolUnPacker UnPacker { get; set; }
 
-        [Inject]
         public StringProtocolContent Content { get; set; }
 
         #region IProtocol Members
@@ -42,7 +43,11 @@ namespace NKnife.Protocol.Generic
         /// <value>The family.</value>
         public string Family { get; set; }
 
-        public string Command { get; set; }
+        public string Command
+        {
+            get { return Content.Command; }
+            set { Content.Command = value; } 
+        }
 
         IProtocolPacker<string> IProtocol<string>.Packer
         {
