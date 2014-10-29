@@ -167,6 +167,15 @@ namespace NKnife.Protocol.Generic
                 _SeedMap.Add(protocol.Command, protocol);
         }
 
+        public void AddRange(StringProtocol[] protocols)
+        {
+            foreach (var protocol in protocols)
+            {
+                if (!_SeedMap.ContainsKey(protocol.Command))
+                    _SeedMap.Add(protocol.Command, protocol);
+            }
+        }
+
         public void Add(string key, StringProtocol value)
         {
             if (!_SeedMap.ContainsKey(key))
