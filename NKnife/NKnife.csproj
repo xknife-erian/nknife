@@ -577,7 +577,6 @@
     <Compile Include="FTP\FtpClient.cs" />
     <Compile Include="Wrapper\Files\FileEnums.cs" />
     <Compile Include="Wrapper\Files\FileSearching.cs" />
-    <Compile Include="Wrapper\Files\NoDotNetAssemblyFiles.cs" />
     <Compile Include="Wrapper\Files\TextFileEncoding.cs" />
     <Compile Include="Utility\UtilityFile.cs" />
     <Compile Include="Wrapper\GlobalHotkey.cs" />
