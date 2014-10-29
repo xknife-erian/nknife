@@ -36,26 +36,28 @@
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="28" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <ToolBarTray Grid.Column="0" Orientation="Vertical">
-            <ToolBar VerticalAlignment="Top" HorizontalAlignment="Center">
-                <Button Content="OK" Background="#FFAE3737"></Button>
-                <Button Content="OK"></Button>
-                <Button Content="OK"></Button>
-            </ToolBar>
-        </ToolBarTray>
-        <DataGrid Grid.Column="1" x:Name="_LoggerGrid" AutoGenerateColumns="False" RowStyle="{StaticResource LoggerRowStyle}" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+        <DataGrid x:Name="_LoggerGrid" AutoGenerateColumns="False" 
+                  RowStyle="{StaticResource LoggerRowStyle}" 
+                  HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
+                  VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="日志等级">
+                        <MenuItem Header="Trace" IsChecked="True" Click="LevelMenuItem_OnClick"></MenuItem>
+                        <MenuItem Header="Debug" IsChecked="True" Click="LevelMenuItem_OnClick"></MenuItem>
+                        <MenuItem Header="Info" IsChecked="True" Click="LevelMenuItem_OnClick"></MenuItem>
+                        <MenuItem Header="Warn" IsChecked="True" Click="LevelMenuItem_OnClick"></MenuItem>
+                        <MenuItem Header="Error" IsChecked="True" Click="LevelMenuItem_OnClick"></MenuItem>
+                        <MenuItem Header="Fatal" IsChecked="True" Click="LevelMenuItem_OnClick"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="清除" Click="ClearMenuItem_OnClick"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="时间" Binding="{Binding Path=Time}" Width="90" />
-                <DataGridTextColumn Header="级别" Binding="{Binding Path=Level}" Width="60" />
-                <DataGridTextColumn Header="日志" Binding="{Binding Path=Message}" Width="600" />
-                <DataGridTextColumn Header="日志源" Binding="{Binding Path=Source}" Width="180" />
+                <DataGridTextColumn Header="时间" Binding="{Binding Path=Time, Mode=OneWay}" Width="90" />
+                <DataGridTextColumn Header="级别" Binding="{Binding Path=Level, Mode=OneWay}" Width="60" />
+                <DataGridTextColumn Header="日志" Binding="{Binding Path=Message, Mode=OneWay}" Width="600" />
+                <DataGridTextColumn Header="日志源" Binding="{Binding Path=Source, Mode=OneWay}" Width="180" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

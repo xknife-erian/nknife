@@ -847,7 +847,7 @@ namespace NKnife.Utility
                     }
                     catch(Exception e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", dllPath, e.Message));
+                        //Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", dllPath, e.Message));
                         continue;
                     }
                 }
@@ -860,7 +860,7 @@ namespace NKnife.Utility
                     }
                     catch (Exception e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", exePath, e.Message));
+                        //Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", exePath, e.Message));
                         continue;
                     }
                 }

@@ -41,7 +41,8 @@ namespace NKnife.NLog3.Controls.WPF
         protected void AddLogMessage(LogEventInfo logEvent)
         {
             TrimLogMessageCollection();
-            _LogList.Insert(0, LogMessage.Build(logEvent));
+            if (DI.Get<LogMessageFilter>().Contains(logEvent.Level))
+                _LogList.Insert(0, LogMessage.Build(logEvent));
         }
 
         private void TrimLogMessageCollection()

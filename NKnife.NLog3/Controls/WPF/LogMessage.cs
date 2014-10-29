@@ -19,9 +19,9 @@ namespace NKnife.NLog3.Controls.WPF
                 lm.Message += logEvent.StackTrace.ToString();
             return lm;
         }
-        public string Time { get; set; }
-        public string Message { get; set; }
-        public string Source { get; set; }
-        public string Level { get; set; }
+        public string Time { get; private set; }
+        public string Message { get; private set; }
+        public string Source { get; private set; }
+        public string Level { get; private set; }
     }
 }
