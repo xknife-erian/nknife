@@ -49,6 +49,7 @@ namespace SocketKnife
         {
             Initialize();
             var thread = new Thread(ThreadConnect);
+            thread.Name = string.Format("SocketClient:{0}", _Socket.LocalEndPoint);
             thread.Start();
             return true;
         }

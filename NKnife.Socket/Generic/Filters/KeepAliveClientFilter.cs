@@ -23,6 +23,8 @@ namespace SocketKnife.Generic.Filters
         /// </summary>
         protected bool _EnableReceiveQueueMonitor = true;
 
+        protected Thread _Thread;
+
         /// <summary>
         ///     接收的数据队列
         /// </summary>
@@ -34,16 +36,18 @@ namespace SocketKnife.Generic.Filters
         {
             base.OnConnected(e);
             //当连接启动后，启动数据池监听线程
-            var thread = new Thread(ReceiveQueueMonitor);
-            thread.Start();
+            _Thread = new Thread(ReceiveQueueMonitor);
+            var local = SessionGetter.Invoke().Connector.LocalEndPoint.ToString();
+            _Thread.Name = string.Format("ClientReceive{0}", local.Substring(local.IndexOf(':')));
+            _Thread.Start();
         }
 
         protected internal override void OnConnectionBroken(ConnectionBrokenEventArgs e)
         {
             base.OnConnectionBroken(e);
-            _EnableReceiveQueueMonitor = false; //停止监听
-            _ReceiveQueue.AutoResetEvent.Set();
             _ReceiveQueue.Clear();
+            _ReceiveQueue.AutoResetEvent.Set();
+            _EnableReceiveQueueMonitor = false; //停止监听
         }
 
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)

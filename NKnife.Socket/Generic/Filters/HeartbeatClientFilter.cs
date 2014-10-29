@@ -69,10 +69,8 @@ namespace SocketKnife.Generic.Filters
             }
             else
             {
-                _IsTimerStarted = false;
-                _BeatingTimer.Stop();//关闭心跳，等待重新连接上后，再次启动。
 
-                _logger.Warn("在一定时间内，服务器未反应，准备重连服务器......");
+                _logger.Warn(string.Format("Filter在间隔时间({0})内，服务器心跳未反应，以事件OnConnectionBroken通知Client实例......", Interval));
                 Reconnects(session);
             }
         }
@@ -80,6 +78,14 @@ namespace SocketKnife.Generic.Filters
         protected virtual void Reconnects(KnifeSocketSession session)
         {
             OnConnectionBroken(new ConnectionBrokenEventArgs(session.Source, BrokenCause.LoseHeartbeat));
+        }
+
+        protected internal override void OnConnectionBroken(ConnectionBrokenEventArgs e)
+        {
+            base.OnConnectionBroken(e);
+            _IsTimerStarted = false;
+            if (_BeatingTimer != null)
+                _BeatingTimer.Stop(); //关闭心跳，等待重新连接上后，再次启动。
         }
 
         protected internal virtual void Start()

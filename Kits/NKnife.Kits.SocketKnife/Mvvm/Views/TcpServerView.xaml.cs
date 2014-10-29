@@ -28,10 +28,12 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _ViewModel.Initialize(Config, SocketTools);
         }
-        
-        private void TcpServerView_OnClosing(object sender, CancelEventArgs e)
+
+        protected override void OnClosed()
         {
+            base.OnClosed();
             _ViewModel.RemoveServer();
+            _ViewModel.StopServer();
         }
 
         private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)

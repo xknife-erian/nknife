@@ -36,9 +36,9 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         protected override void OnClosing(CancelEventArgs e)
         {
             var docs = DI.Get<DockUtil>().Documents;
-            for (int i = 0; i < docs.Count; i++)
+            while (docs.Count > 0)
             {
-                docs[i].Close();
+                docs[0].Close();
             }
 
             base.OnClosing(e);

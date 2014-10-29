@@ -31,8 +31,9 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _ViewModel.Initialize(Config, SocketTools);
         }
 
-        private void TcpClientView_OnClosing(object sender, CancelEventArgs e)
+        protected override void OnClosed()
         {
+            base.OnClosed();
             _ViewModel.Stop();
         }
 
@@ -42,11 +43,17 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         private void Start(object sender, RoutedEventArgs e)
         {
+            _StartButton.IsEnabled = false;
+            _StopButton.IsEnabled = true;
+
             _ViewModel.Start();
         }
 
         private void Stop(object sender, RoutedEventArgs e)
         {
+            _StartButton.IsEnabled = true;
+            _StopButton.IsEnabled = false;
+
             _ViewModel.Stop();
         }
 

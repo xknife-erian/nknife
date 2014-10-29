@@ -10,10 +10,5 @@ namespace NKnife.Kits.SocketKnife.Demo.Protocols
         {
         }
 
-        [Inject]
-        public override StringProtocolPacker Packer { get; set; }
-
-        [Inject]
-        public override StringProtocolUnPacker UnPacker { get; set; }
     }
 }
