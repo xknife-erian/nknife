@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
@@ -29,7 +30,7 @@ namespace NKnife.Utility
 
         private static string _applicationRootPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         private static readonly char[] _separators = {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar};
-        private static StringCollection _assemblyFiles;
+        private static IList<string> _assemblyFiles;
         private static Assembly[] _assemblies;
         public static readonly int MaxPathLength = 260;
 
@@ -829,59 +830,53 @@ namespace NKnife.Utility
         /// </summary>
         /// <param name="directory">指定目录.</param>
         /// <returns></returns>
-        public static StringCollection SearchAssemblyFileByDirectory(string directory)
+        public static IList<string> SearchAssemblyFileByDirectory(string directory)
         {
             if (_assemblyFiles == null)
             {
-                StringCollection dlls = SearchDirectory(directory, ".dll", true, true);
-                StringCollection exes = SearchDirectory(directory, ".exe", true, true);
-                _assemblyFiles = new StringCollection();
-                foreach (string dllPath in dlls)
+                IList<string> dllList = SearchDirectory(directory, "*.dll", true, true);
+                IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
+                _assemblyFiles = new List<string>();
+                Parallel.ForEach(dllList, (dll) =>
                 {
                     try
                     {
-                        AssemblyName.GetAssemblyName(dllPath);
-                        _assemblyFiles.Add(dllPath);
+                        AssemblyName.GetAssemblyName(dll);
+                        _assemblyFiles.Add(dll);
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dllPath, e.Message));
-                        continue;
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
                     }
                     catch (BadImageFormatException e)
                     {
-                        Console.WriteLine("{0} is not an Assembly.", dllPath);
-                        continue;
+                        Console.WriteLine("{0} is not an Assembly.", dll);
                     }
                     catch (FileLoadException e)
                     {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dllPath, e.Message);
-                        continue;
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
                     }
-                }
-                foreach (string exePath in exes)
+                });
+                Parallel.ForEach(exeList, (exe) =>
                 {
                     try
                     {
-                        AssemblyName.GetAssemblyName(exePath);
-                        _assemblyFiles.Add(exePath);
+                        AssemblyName.GetAssemblyName(exe);
+                        _assemblyFiles.Add(exe);
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exePath, e.Message));
-                        continue;
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
                     }
                     catch (BadImageFormatException e)
                     {
-                        Console.WriteLine("{0} is not an Assembly.", exePath);
-                        continue;
+                        Console.WriteLine("{0} is not an Assembly.", exe);
                     }
                     catch (FileLoadException e)
                     {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exePath, e.Message);
-                        continue;
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exe, e.Message);
                     }
-                }
+                });
             }
             return _assemblyFiles;
         }
@@ -895,55 +890,49 @@ namespace NKnife.Utility
         {
             if (UtilityCollection.IsNullOrEmpty(_assemblies))
             {
-                StringCollection dlls = SearchDirectory(directory, "*.dll", true, true);
-                StringCollection exes = SearchDirectory(directory, "*.exe", true, true);
+                IList<string> dllList = SearchDirectory(directory, "*.dll", true, true);
+                IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
                 var result = new List<Assembly>();
-                foreach (string dllPath in dlls)
+                Parallel.ForEach(dllList, (dll) =>
                 {
                     try
                     {
-                        Assembly asse = Assembly.LoadFile(dllPath);
+                        Assembly asse = Assembly.LoadFile(dll);
                         result.Add(asse);
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dllPath, e.Message));
-                        continue;
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
                     }
                     catch (BadImageFormatException e)
                     {
-                        Console.WriteLine("{0} is not an Assembly.", dllPath);
-                        continue;
+                        Console.WriteLine("{0} is not an Assembly.", dll);
                     }
                     catch (FileLoadException e)
                     {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dllPath, e.Message);
-                        continue;
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
                     }
-                }
-                foreach (string exePath in exes)
+                });
+                Parallel.ForEach(exeList, (exe) =>
                 {
                     try
                     {
-                        Assembly asse = Assembly.LoadFile(exePath);
+                        Assembly asse = Assembly.LoadFile(exe);
                         result.Add(asse);
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exePath, e.Message));
-                        continue;
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
                     }
                     catch (BadImageFormatException e)
                     {
-                        Console.WriteLine("{0} is not an Assembly.", exePath);
-                        continue;
+                        Console.WriteLine("{0} is not an Assembly.", exe);
                     }
                     catch (FileLoadException e)
                     {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exePath, e.Message);
-                        continue;
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exe, e.Message);
                     }
-                }
+                });
                 _assemblies = result.ToArray();
             }
             return _assemblies;
@@ -957,9 +946,9 @@ namespace NKnife.Utility
         /// <param name="searchSubdirectories">if set to <c>true</c> [search subdirectories].</param>
         /// <param name="ignoreHidden">if set to <c>true</c> [ignore hidden].</param>
         /// <returns></returns>
-        public static StringCollection SearchDirectory(string directory, string filemask, bool searchSubdirectories, bool ignoreHidden)
+        public static IList<string> SearchDirectory(string directory, string filemask, bool searchSubdirectories, bool ignoreHidden)
         {
-            var collection = new StringCollection();
+            var collection = new List<string>();
             SearchDirectory(directory, filemask, collection, searchSubdirectories, ignoreHidden);
             return collection;
         }
@@ -971,7 +960,7 @@ namespace NKnife.Utility
         /// <param name="filemask">The filemask.</param>
         /// <param name="searchSubdirectories">if set to <c>true</c> [search subdirectories].</param>
         /// <returns></returns>
-        public static StringCollection SearchDirectory(string directory, string filemask, bool searchSubdirectories)
+        public static IList<string> SearchDirectory(string directory, string filemask, bool searchSubdirectories)
         {
             return SearchDirectory(directory, filemask, searchSubdirectories, true);
         }
@@ -982,7 +971,7 @@ namespace NKnife.Utility
         /// <param name="directory">The directory.</param>
         /// <param name="filemask">The filemask.</param>
         /// <returns></returns>
-        public static StringCollection SearchDirectory(string directory, string filemask)
+        public static IList<string> SearchDirectory(string directory, string filemask)
         {
             return SearchDirectory(directory, filemask, true, true);
         }
@@ -1000,7 +989,7 @@ namespace NKnife.Utility
         /// <param name="collection">The collection.</param>
         /// <param name="searchSubdirectories">if set to <c>true</c> [search subdirectories].</param>
         /// <param name="ignoreHidden">if set to <c>true</c> [ignore hidden].</param>
-        private static void SearchDirectory(string directory, string filemask, StringCollection collection, bool searchSubdirectories, bool ignoreHidden)
+        private static void SearchDirectory(string directory, string filemask, IList<string> collection, bool searchSubdirectories, bool ignoreHidden)
         {
             // If Directory.GetFiles() searches the 8.3 name as well as the full name so if the filemask is 
             // "*.xpt" it will return "Template.xpt~"
