@@ -50,7 +50,7 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void BeatingTimerElapsed(object sender, EventArgs e)
         {
-            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
+            IList<KnifeSocketProtocolHandler> handlers = _HandlersGetter.Invoke();
             KnifeSocketSession session = SessionGetter.Invoke();
 
             if (!(session.WaitingForReply)) //两种情况：1.第一次检查时为非等待状态，2.心跳后收到回复后回写为非等待状态
@@ -94,7 +94,7 @@ namespace SocketKnife.Generic.Filters
                 _BeatingTimer.Start();
                 _logger.Info(string.Format("客户端心跳启动。间隔:{0}", Interval));
                 var handlers = _HandlersGetter.Invoke();
-                Debug.Assert(handlers != null && handlers.Length > 0, "Handler未设置");
+                Debug.Assert(handlers != null && handlers.Count > 0, "Handler未设置");
             }
         }
 

@@ -19,8 +19,33 @@ namespace SocketKnife.Generic
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
+        private readonly string _Id;
+
+        protected KnifeSocketFilter()
+        {
+            _Id = Guid.NewGuid().ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((KnifeSocketFilter) obj);
+        }
+
+        protected bool Equals(KnifeSocketFilter other)
+        {
+            return string.Equals(_Id, other._Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_Id != null ? _Id.GetHashCode() : 0);
+        }
+
         protected Func<StringProtocolFamily> _FamilyGetter;
-        protected Func<KnifeSocketProtocolHandler[]> _HandlersGetter;
+        protected Func<IList<KnifeSocketProtocolHandler>> _HandlersGetter;
         protected Func<KnifeSocketCodec> _CodecGetter;
 
         public abstract bool ContinueNextFilter { get; }
@@ -34,7 +59,7 @@ namespace SocketKnife.Generic
 
         public event EventHandler<DataDecodedEventArgs<EndPoint>> DataDecoded;
 
-        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<KnifeSocketProtocolHandler[]> handlerGetter, Func<StringProtocolFamily> familyGetter)
+        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<IList<KnifeSocketProtocolHandler>> handlerGetter, Func<StringProtocolFamily> familyGetter)
         {
             _FamilyGetter = familyGetter;
             _HandlersGetter = handlerGetter;

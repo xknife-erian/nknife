@@ -68,10 +68,11 @@ namespace NKnife.Kits.SocketKnife.Demo
                 _Server = DI.Get<IKnifeSocketServer>();
                 _Server.Config = config;
                 if (socketTools.NeedHeartBeat)
-                    _Server.AddFilter(heartbeatServerFilter);
-                _Server.AddFilter(keepAliveFilter);
+                    _Server.AddFilters(heartbeatServerFilter);
+                _Server.AddFilters(keepAliveFilter);
                 _Server.Configure(socketTools.IpAddress, socketTools.Port);
-                _Server.Bind(codec, protocolFamily, new DemoServerHandler(SocketMessages));
+                _Server.Bind(codec, protocolFamily);
+                _Server.AddHandlers(new DemoServerHandler(SocketMessages));
                 _ServerList.Add(key, _Server);
             }
             else

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
 using NKnife.Adapters;
 using NKnife.Interface;
@@ -18,7 +19,7 @@ namespace SocketKnife.Generic
         protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
         protected KnifeSocketCodec _Codec;
         protected StringProtocolFamily _Family;
-        protected KnifeSocketProtocolHandler[] _Handlers;
+        protected List<KnifeSocketProtocolHandler> _Handlers = new List<KnifeSocketProtocolHandler>();
 
         protected IPAddress _IpAddress;
         protected int _Port;
@@ -27,15 +28,33 @@ namespace SocketKnife.Generic
         public abstract void Dispose();
         protected abstract void SetFilterChain();
 
-        void ITunnel<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec, IProtocolFamily<string> protocolFamily,
-            params IProtocolHandler<EndPoint, Socket, string>[] handlers)
+        void ITunnel<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec, IProtocolFamily<string> protocolFamily)
         {
-            var hs = new KnifeSocketProtocolHandler[handlers.Length];
-            for (int i = 0; i < handlers.Length; i++)
+            Bind((KnifeSocketCodec) codec, (StringProtocolFamily) protocolFamily);
+        }
+
+        void ITunnel<EndPoint, Socket, string>.AddHandlers(params IProtocolHandler<EndPoint, Socket, string>[] handlers)
+        {
+            foreach (var handler in handlers)
             {
-                hs[i] = (KnifeSocketProtocolHandler) handlers[i];
+                AddHandlers((KnifeSocketProtocolHandler)handler);
             }
-            Bind((KnifeSocketCodec) codec, (StringProtocolFamily) protocolFamily, hs);
+        }
+
+        public void AddHandlers(params KnifeSocketProtocolHandler[] handlers)
+        {
+            _Handlers.AddRange(handlers);
+            OnBound(handlers);
+        }
+
+        void ITunnel<EndPoint, Socket, string>.RemoveHandler(IProtocolHandler<EndPoint, Socket, string> handler)
+        {
+            RemoveHandler((KnifeSocketProtocolHandler) handler);
+        }
+
+        public void RemoveHandler(KnifeSocketProtocolHandler handler)
+        {
+            _Handlers.Remove(handler);
         }
 
         ITunnelConfig ITunnel<EndPoint, Socket, string>.Config
@@ -44,9 +63,17 @@ namespace SocketKnife.Generic
             set { Config = (KnifeSocketConfig)value; }
         }
 
-        void ITunnel<EndPoint, Socket, string>.AddFilter(ITunnelFilter<EndPoint, Socket> filter)
+        void ITunnel<EndPoint, Socket, string>.AddFilters(params ITunnelFilter<EndPoint, Socket>[] filters)
         {
-            AddFilter((KnifeSocketFilter)filter);
+            foreach (var filter in filters)
+            {
+                AddFilters((KnifeSocketFilter) filter);
+            }
+        }
+
+        public void RemoveFilter(ITunnelFilter<EndPoint, Socket> filter)
+        {
+            _FilterChain.Remove(filter);
         }
 
         public abstract bool Start();
@@ -59,31 +86,28 @@ namespace SocketKnife.Generic
             _Port = port;
         }
 
-        public virtual void AddFilter(KnifeSocketFilter filter)
+        public virtual void AddFilters(params KnifeSocketFilter[] filters)
         {
-            filter.BindGetter(() => _Codec, () => _Handlers, () => _Family);
+            foreach (var filter in filters)
+            {
+                filter.BindGetter(() => _Codec, () => _Handlers, () => _Family);
 
-            if (_FilterChain == null)
-                SetFilterChain();
-            if (_FilterChain != null)
-                _FilterChain.AddLast(filter);
+                if (_FilterChain == null)
+                    SetFilterChain();
+                if (_FilterChain != null)
+                    _FilterChain.AddLast(filter);
+            }
         }
 
-        public virtual void Bind(KnifeSocketCodec codec, StringProtocolFamily protocolFamily,
-            params KnifeSocketProtocolHandler[] handlers)
+        public virtual void Bind(KnifeSocketCodec codec, StringProtocolFamily protocolFamily)
         {
             _Codec = codec;
             _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.SocketDecoder.GetType().Name, _Codec.SocketEncoder.GetType().Name));
 
-            _Handlers = handlers;
-            _logger.Info(string.Format("绑定{0}个Handler成功。", _Handlers.Length));
-
             _Family = protocolFamily;
             _logger.Info(string.Format("协议族[{0}]中有{1}个协议绑定成功。", _Family.FamilyName, _Family.Count));
-
-            OnBound();
         }
 
-        protected abstract void OnBound();
+        protected abstract void OnBound(params KnifeSocketProtocolHandler[] handlers);
     }
 }

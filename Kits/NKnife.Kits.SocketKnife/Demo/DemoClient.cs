@@ -48,10 +48,11 @@ namespace NKnife.Kits.SocketKnife.Demo
             _Client = DI.Get<IKnifeSocketClient>();
             _Client.Config = config;
             if (socketTools.NeedHeartBeat)
-                _Client.AddFilter(heartbeatServerFilter);
-            _Client.AddFilter(keepAliveFilter);
+                _Client.AddFilters(heartbeatServerFilter);
+            _Client.AddFilters(keepAliveFilter);
             _Client.Configure(socketTools.IpAddress, socketTools.Port);
-            _Client.Bind(codec, protocolFamily, new DemoClientHandler(SocketMessages));
+            _Client.Bind(codec, protocolFamily);
+            _Client.AddHandlers(new DemoClientHandler(SocketMessages));
 
             _IsInitialized = true;
         }

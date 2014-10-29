@@ -95,11 +95,14 @@ namespace SocketKnife
             }
         }
 
-        public override void AddFilter(KnifeSocketFilter filter)
+        public override void AddFilters(params KnifeSocketFilter[] filters)
         {
-            base.AddFilter(filter);
-            var serverFilter = (KnifeSocketServerFilter) filter;
-            serverFilter.Bind(() => _SessionMap);
+            base.AddFilters(filters);
+            foreach (var filter in filters)
+            {
+                var serverFilter = (KnifeSocketServerFilter)filter;
+                serverFilter.Bind(() => _SessionMap);
+            }
         }
 
         protected virtual void Initialize()
@@ -141,9 +144,9 @@ namespace SocketKnife
             _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
         }
 
-        protected override void OnBound()
+        protected override void OnBound(params KnifeSocketProtocolHandler[] handlers)
         {
-            foreach (KnifeSocketProtocolHandler handler in _Handlers)
+            foreach (KnifeSocketProtocolHandler handler in handlers)
             {
                 var serverHandler = (KnifeSocketServerProtocolHandler) handler;
                 serverHandler.Bind(WirteProtocol);

@@ -163,6 +163,9 @@
     <Compile Include="Protocol\IProtocolUnPacker`.cs" />
     <Compile Include="Protocol\ProtocolExtension.cs" />
     <Compile Include="Protocol\Generic\StringProtocolCommandParser.cs" />
+    <Compile Include="Tests\ITestCase.cs" />
+    <Compile Include="Tests\TestCaseAttribute.cs" />
+    <Compile Include="Tests\TestMode.cs" />
     <Compile Include="Tunnel\Events\DataDecodedEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />

@@ -36,6 +36,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\2014.Pansoft\driver-engine-java\trunk\driver-engine-csharp\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

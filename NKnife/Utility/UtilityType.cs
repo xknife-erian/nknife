@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Xml;
 using NKnife.Base;
 using NKnife.Wrapper.Files;
@@ -367,12 +368,11 @@ namespace NKnife.Utility
         public static T[] FindAttributes<T>(string appStartPath) where T : Attribute
         {
             var typeList = new List<T>();
-            Assembly[] assArray = null;
-            assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
+            Assembly[] assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
             if (UtilityCollection.IsNullOrEmpty(assArray))
                 return typeList.ToArray();
 
-            foreach (Assembly ass in assArray)
+            Parallel.ForEach(assArray, ass =>
             {
                 Type[] types = null;
                 try
@@ -381,16 +381,17 @@ namespace NKnife.Utility
                 }
                 catch (Exception e)
                 {
-                    continue;
+                    Debug.Fail(string.Format("Assembly.GetTypes()异常:{0}", e.Message));
                 }
-                if (UtilityCollection.IsNullOrEmpty(types))
-                    continue;
-                foreach (Type type in types)
+                if (!UtilityCollection.IsNullOrEmpty(types))
                 {
-                    object[] attrs = type.GetCustomAttributes(true);
-                    typeList.AddRange(attrs.Where(attr => attr.GetType().Equals(typeof (T))).Cast<T>());
+                    Parallel.ForEach(types, type =>
+                    {
+                        object[] attrs = type.GetCustomAttributes(true);
+                        typeList.AddRange(attrs.Where(attr => attr.GetType() == typeof (T)).Cast<T>());
+                    });
                 }
-            }
+            });
             return typeList.ToArray();
         }
 
@@ -402,14 +403,13 @@ namespace NKnife.Utility
         public static List<Pair<T, Type>> FindAttributeMap<T>(string appStartPath) where T : Attribute
         {
             var list = new List<Pair<T, Type>>();
-            Assembly[] assArray = null;
-            assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
+            Assembly[] assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
             if (UtilityCollection.IsNullOrEmpty(assArray))
                 return list;
 
-            foreach (Assembly ass in assArray)
+            Parallel.ForEach(assArray, ass =>
             {
-                Type[] types;
+                Type[] types = null;
                 try
                 {
                     types = ass.GetTypes();
@@ -417,26 +417,25 @@ namespace NKnife.Utility
                 catch (Exception e)
                 {
                     Debug.Fail(string.Format("程序集获取Type失败。{0}", e.Message));
-                    continue;
                 }
-                if (UtilityCollection.IsNullOrEmpty(types))
+                if (!UtilityCollection.IsNullOrEmpty(types))
                 {
-                    continue;
-                }
-                foreach (Type type in types)
-                {
-                    object[] attrs = type.GetCustomAttributes(true);
-                    if (!UtilityCollection.IsNullOrEmpty(attrs))
+                    Parallel.ForEach(types, type =>
                     {
-                        list.AddRange(from attr in attrs
-                                     where attr.GetType() == typeof (T)
-                                     select new Pair<T, Type>()
-                                            {
-                                                First = (T) attr, Second = type
-                                            });
-                    }
+                        object[] attrs = type.GetCustomAttributes(true);
+                        if (!UtilityCollection.IsNullOrEmpty(attrs))
+                        {
+                            list.AddRange(from attr in attrs
+                                where attr.GetType() == typeof (T)
+                                select new Pair<T, Type>()
+                                {
+                                    First = (T) attr,
+                                    Second = type
+                                });
+                        }
+                    });
                 }
-            }
+            });
             return list;
         }
 
@@ -453,7 +452,7 @@ namespace NKnife.Utility
             if (UtilityCollection.IsNullOrEmpty(assArray))
                 return typeList.ToArray();
 
-            foreach (Assembly ass in assArray)
+            Parallel.ForEach(assArray, ass =>
             {
                 Type[] types = null;
                 try
@@ -463,15 +462,15 @@ namespace NKnife.Utility
                 catch (Exception e)
                 {
                     Debug.Fail(string.Format("程序集获取Type失败。{0}", e.Message));
-                    continue;
                 }
-                if (UtilityCollection.IsNullOrEmpty(types))
-                    continue;
-                typeList.AddRange(from type in types
-                                  let attrs = type.GetCustomAttributes(true)
-                                  where attrs.Any(attr => attr.GetType() == targetAttribute)
-                                  select type);
-            }
+                if (!UtilityCollection.IsNullOrEmpty(types))
+                {
+                    typeList.AddRange(from type in types
+                        let attrs = type.GetCustomAttributes(true)
+                        where attrs.Any(attr => attr.GetType() == targetAttribute)
+                        select type);
+                }
+            });
             return typeList.ToArray();
         }
 
@@ -487,14 +486,15 @@ namespace NKnife.Utility
             {
                 assemblies = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory);
             }
-            foreach (Assembly assembly in assemblies)
+
+            Parallel.ForEach(assemblies, assembly =>
             {
                 var attributes = (T[]) assembly.GetCustomAttributes(typeof (T), false);
                 if (attributes.Length > 0)
                 {
                     list.AddRange(attributes);
                 }
-            }
+            });
             return list.ToArray();
         }
 

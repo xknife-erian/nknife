@@ -97,9 +97,9 @@ namespace SocketKnife
             }
         }
 
-        protected override void OnBound()
+        protected override void OnBound(params KnifeSocketProtocolHandler[] handlers)
         {
-            foreach (KnifeSocketProtocolHandler handler in _Handlers)
+            foreach (KnifeSocketProtocolHandler handler in handlers)
             {
                 var clientHandler = (KnifeSocketClientProtocolHandler) handler;
                 clientHandler.Bind(WirteProtocol);
@@ -131,12 +131,15 @@ namespace SocketKnife
             set { _Config = (KnifeSocketClientConfig)value; }
         }
 
-        public override void AddFilter(KnifeSocketFilter filter)
+        public override void AddFilters(params KnifeSocketFilter[] filters)
         {
-            base.AddFilter(filter);
-            var clientFilter = (KnifeSocketClientFilter) filter;
-            clientFilter.Bind(() => _SocketSession);
-            clientFilter.ConnectionBroken += OnFilterConnectionBroken;
+            base.AddFilters(filters);
+            foreach (var filter in filters)
+            {
+                var clientFilter = (KnifeSocketClientFilter)filter;
+                clientFilter.Bind(() => _SocketSession);
+                clientFilter.ConnectionBroken += OnFilterConnectionBroken;
+            }
         }
 
         /// <summary>

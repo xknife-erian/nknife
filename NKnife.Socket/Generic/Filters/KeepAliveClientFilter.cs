@@ -110,15 +110,15 @@ namespace SocketKnife.Generic.Filters
         /// </summary>
         protected virtual void HandlerInvoke(EndPoint endpoint, StringProtocol protocol)
         {
-            KnifeSocketProtocolHandler[] handlers = _HandlersGetter.Invoke();
+            IList<KnifeSocketProtocolHandler> handlers = _HandlersGetter.Invoke();
             try
             {
-                if (handlers == null || handlers.Length == 0)
+                if (handlers == null || handlers.Count == 0)
                 {
                     Debug.Fail(string.Format("Handler集合不应为空."));
                     return;
                 }
-                if (handlers.Length == 1)
+                if (handlers.Count == 1)
                 {
                     handlers[0].Recevied(SessionGetter.Invoke(), protocol);
                 }

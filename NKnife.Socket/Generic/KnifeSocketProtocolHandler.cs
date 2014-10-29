@@ -10,6 +10,31 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketProtocolHandler : IProtocolHandler<EndPoint, Socket, string>
     {
+        private readonly string _Id;
+
+        protected KnifeSocketProtocolHandler()
+        {
+            _Id = Guid.NewGuid().ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((KnifeSocketProtocolHandler) obj);
+        }
+
+        protected bool Equals(KnifeSocketProtocolHandler other)
+        {
+            return string.Equals(_Id, other._Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_Id != null ? _Id.GetHashCode() : 0);
+        }
+
         protected Action<KnifeSocketSession, byte[]> _WriteBaseMethod;
         protected Action<KnifeSocketSession, StringProtocol> _WriteProtocolMethod;
         public List<string> Commands { get; set; }

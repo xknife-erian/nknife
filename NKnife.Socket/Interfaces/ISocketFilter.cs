@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using NKnife.Events;
@@ -15,8 +16,8 @@ namespace SocketKnife.Interfaces
     public interface ISocketFilter : ITunnelFilter<EndPoint, Socket>
     {
         void BindGetter(
-            Func<KnifeSocketCodec> codecFunc, 
-            Func<KnifeSocketProtocolHandler[]> handlersGetter, 
+            Func<KnifeSocketCodec> codecFunc,
+            Func<IList<KnifeSocketProtocolHandler>> handlersGetter, 
             Func<StringProtocolFamily> familyGetter);
     }
 }
