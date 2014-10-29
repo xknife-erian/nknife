@@ -325,7 +325,7 @@ namespace NKnife.Utility
             return typeMap;
         }
 
-        /// <summary>从指定的目录中找到所有的.Net程序集，并遍历所有程序集找到所有实现了指定接口的类型
+        /// <summary>从指定的目录中找到所有的.Net程序集，并遍历所有程序集找到所有实现了指定接口或基类的类型
         /// </summary>
         /// <param name="path">指定的目录</param>
         /// <param name="targetType">指定接口的类型</param>
@@ -349,6 +349,8 @@ namespace NKnife.Utility
                 if (!isGenericTypeInterface)
                 {
                     if (type.ContainsInterface(targetType))
+                        list.Add(type);
+                    else if(type.IsSubclassOf(targetType))
                         list.Add(type);
                 }
                 else

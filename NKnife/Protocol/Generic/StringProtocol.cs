@@ -18,21 +18,23 @@ namespace NKnife.Protocol.Generic
         public StringProtocol()
         {
             Content = DI.Get<StringProtocolContent>();
+            Packer = DI.Get<StringProtocolPacker>();
+            UnPacker = DI.Get<StringProtocolUnPacker>();
             BuildMethod = NewInstance;
         }
 
         protected StringProtocol(string family, string command)
         {
             Content = DI.Get<StringProtocolContent>();
+            Packer = DI.Get<StringProtocolPacker>();
+            UnPacker = DI.Get<StringProtocolUnPacker>();
             Family = family;
             Command = command;
         }
 
-        [Inject]
-        public virtual StringProtocolPacker Packer { get; set; }
+        public StringProtocolPacker Packer { get; set; }
 
-        [Inject]
-        public virtual StringProtocolUnPacker UnPacker { get; set; }
+        public StringProtocolUnPacker UnPacker { get; set; }
 
         public StringProtocolContent Content { get; set; }
 
