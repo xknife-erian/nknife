@@ -840,14 +840,22 @@ namespace NKnife.Utility
                 {
                     try
                     {
-                        if (!NoDotNetAssemblyFiles.IsDotNetAssembly(dllPath))
-                            continue;
-                        Assembly.LoadFile(dllPath);
+                        AssemblyName.GetAssemblyName(dllPath);
                         _assemblyFiles.Add(dllPath);
                     }
-                    catch(Exception e)
+                    catch (FileNotFoundException e)
                     {
-                        //Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", dllPath, e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dllPath, e.Message));
+                        continue;
+                    }
+                    catch (BadImageFormatException e)
+                    {
+                        Console.WriteLine("{0} is not an Assembly.", dllPath);
+                        continue;
+                    }
+                    catch (FileLoadException e)
+                    {
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dllPath, e.Message);
                         continue;
                     }
                 }
@@ -855,12 +863,22 @@ namespace NKnife.Utility
                 {
                     try
                     {
-                        Assembly.LoadFile(exePath);
+                        AssemblyName.GetAssemblyName(exePath);
                         _assemblyFiles.Add(exePath);
                     }
-                    catch (Exception e)
+                    catch (FileNotFoundException e)
                     {
-                        //Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", exePath, e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exePath, e.Message));
+                        continue;
+                    }
+                    catch (BadImageFormatException e)
+                    {
+                        Console.WriteLine("{0} is not an Assembly.", exePath);
+                        continue;
+                    }
+                    catch (FileLoadException e)
+                    {
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exePath, e.Message);
                         continue;
                     }
                 }
@@ -884,14 +902,22 @@ namespace NKnife.Utility
                 {
                     try
                     {
-                        if (!NoDotNetAssemblyFiles.IsDotNetAssembly(dllPath))
-                            continue;
                         Assembly asse = Assembly.LoadFile(dllPath);
                         result.Add(asse);
                     }
-                    catch (Exception e)
+                    catch (FileNotFoundException e)
                     {
-                        //Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", dllPath, e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dllPath, e.Message));
+                        continue;
+                    }
+                    catch (BadImageFormatException e)
+                    {
+                        Console.WriteLine("{0} is not an Assembly.", dllPath);
+                        continue;
+                    }
+                    catch (FileLoadException e)
+                    {
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dllPath, e.Message);
                         continue;
                     }
                 }
@@ -902,9 +928,19 @@ namespace NKnife.Utility
                         Assembly asse = Assembly.LoadFile(exePath);
                         result.Add(asse);
                     }
-                    catch (Exception e)
+                    catch (FileNotFoundException e)
                     {
-                        //Debug.Fail(string.Format("Assembly.LoadFile导常，{0}\r\n{1}", exePath, e.Message));
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exePath, e.Message));
+                        continue;
+                    }
+                    catch (BadImageFormatException e)
+                    {
+                        Console.WriteLine("{0} is not an Assembly.", exePath);
+                        continue;
+                    }
+                    catch (FileLoadException e)
+                    {
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exePath, e.Message);
                         continue;
                     }
                 }
