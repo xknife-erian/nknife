@@ -13,7 +13,6 @@ namespace NKnife.Protocol.Generic
     public class StringProtocol : IProtocol<string>
     {
         private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
-
         public Func<StringProtocol> BuildMethod { get; set; }
 
         public StringProtocol()

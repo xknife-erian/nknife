@@ -13,17 +13,71 @@ namespace NKnife.Utility
         /// <param name="methodName"></param>
         /// <param name="paramList"></param>
         /// <param name="bindingFlags"></param>
-        public static void InvokeMethod(object target, string methodName, object[] paramList, BindingFlags bindingFlags)
+        public static object InvokeMethod(object target, string methodName, object[] paramList, BindingFlags bindingFlags)
         {
             MethodInfo methodInfo = target.GetType().GetMethod(methodName, bindingFlags);
             if (methodInfo == null)
                 throw new Exception(string.Format("找不到方法 '{0}'.", methodName));
-            methodInfo.Invoke(target, paramList);
+            return methodInfo.Invoke(target, paramList);
         }
 
-        public static void InvokePrivateMethod(object target, string methodName, object[] paramList)
+        /// <summary>
+        ///     通过反射执行指定对象的指定静态方法
+        /// </summary>
+        /// <param name="targetType"></param>
+        /// <param name="methodName"></param>
+        /// <param name="paramList"></param>
+        /// <param name="bindingFlags"></param>
+        public static object InvokeStaticMethod(Type targetType, string methodName, object[] paramList, BindingFlags bindingFlags)
         {
-            InvokeMethod(target, methodName, paramList, BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo methodInfo = targetType.GetMethod(methodName, bindingFlags);
+            if (methodInfo == null)
+                throw new Exception(string.Format("找不到方法 '{0}'.", methodName));
+            return methodInfo.Invoke(null,paramList);
+        }
+
+        /// <summary>
+        /// 执行类的私有静态方法
+        /// </summary>
+        /// <param name="targetType"></param>
+        /// <param name="methodName"></param>
+        /// <param name="paramList"></param>
+        public static object InvokePrivateStaticMethod(Type targetType, string methodName, object[] paramList)
+        {
+            return InvokeStaticMethod(targetType, methodName, paramList, BindingFlags.NonPublic | BindingFlags.Static);
+        }
+
+        /// <summary>
+        /// 执行类的公有静态方法
+        /// </summary>
+        /// <param name="targetType"></param>
+        /// <param name="methodName"></param>
+        /// <param name="paramList"></param>
+        public static object InvokePublicStaticMethod(Type targetType, string methodName, object[] paramList)
+        {
+            return InvokeStaticMethod(targetType, methodName, paramList, BindingFlags.Public | BindingFlags.Static);
+        }
+
+        /// <summary>
+        /// 执行类的私有实例方法
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="methodName"></param>
+        /// <param name="paramList"></param>
+        public static object InvokePrivateMethod(object target, string methodName, object[] paramList)
+        {
+            return InvokeMethod(target, methodName, paramList, BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        /// <summary>
+        /// 执行类的公有实例方法
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="methodName"></param>
+        /// <param name="paramList"></param>
+        public static void InvokePublicMethod(object target, string methodName, object[] paramList)
+        {
+            InvokeMethod(target, methodName, paramList, BindingFlags.Public | BindingFlags.Instance);
         }
 
         /// <summary>
