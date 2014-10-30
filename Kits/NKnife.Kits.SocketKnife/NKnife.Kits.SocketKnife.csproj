@@ -77,6 +77,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\ProtocolEditorDialog.xaml.cs">
+      <DependentUpon>ProtocolEditorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mvvm\Workbench.xaml.cs">
       <DependentUpon>Workbench.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
     </Compile>
     <Compile Include="IoC\SocketModule.cs" />
     <Compile Include="IoC\UIModule.cs" />
+    <Page Include="Dialogs\ProtocolEditorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Mvvm\Views\LoggerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

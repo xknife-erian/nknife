@@ -118,7 +118,7 @@
                         <RowDefinition Height="24"></RowDefinition>
                         <RowDefinition Height="30"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Content="协议生成"></Button>
+                    <Button Grid.Row="0" Content="协议生成" Name="_BuildProtocolButton" Click="_BuildProtocolButton_OnClick"></Button>
                     <TextBox Grid.Row="1" Margin="0,2,0,0"></TextBox>
                     <CheckBox Grid.Row="2" Content="全部客户端" Margin="0,3,0,0"></CheckBox>
                     <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">

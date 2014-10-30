@@ -2,6 +2,7 @@
 using System.Windows;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo;
+using NKnife.Kits.SocketKnife.Dialogs;
 using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
@@ -58,5 +59,10 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         }
 
 
+        private void _BuildProtocolButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ProtocolEditorDialog();
+            dialog.Show();
+        }
     }
 }

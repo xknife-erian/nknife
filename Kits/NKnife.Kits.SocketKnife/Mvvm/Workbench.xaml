@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mvvm="clr-namespace:NKnife.Kits.SocketKnife.Mvvm"
         mc:Ignorable="d"
-        Title="NKnife@Socket测试工具" Height="350" Width="525" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
+        Title="NKnife@Socket测试工具" Height="690" Width="960" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ServerCreator}" Executed="ServerCreatorMenuItem_Click" />
         <CommandBinding Command="{x:Static mvvm:WorkbenchViewModel.ClientCreator}" Executed="ClientCreatorMenuItem_Click" />
