@@ -59,7 +59,12 @@ namespace SocketKnife.Generic
 
         ICollection<ITunnelSession<EndPoint, Socket>> IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.Values
         {
-            get { return (ICollection<ITunnelSession<EndPoint, Socket>>) _Map.Values; }
+            get { return (ICollection<ITunnelSession<EndPoint, Socket>>) Values(); }
+        }
+
+        public ICollection<KnifeSocketSession> Values()
+        {
+            return _Map.Values;
         }
 
         void IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.Add(EndPoint key, ITunnelSession<EndPoint, Socket> value)
