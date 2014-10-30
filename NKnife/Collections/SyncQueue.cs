@@ -34,7 +34,7 @@ namespace NKnife.Collections
 
         public AutoResetEvent AutoResetEvent { get; protected set; }
 
-        public virtual void Clear()
+        public void Clear()
         {
             while (_Q.Count > 0)
             {
@@ -42,7 +42,7 @@ namespace NKnife.Collections
             }
         }
 
-        public virtual T Dequeue()
+        public T Dequeue()
         {
             T r = default(T);
             if (_Q.Count > 0)
@@ -58,7 +58,7 @@ namespace NKnife.Collections
         /// <summary>向队列中压入一条指定类型的数据
         /// </summary>
         /// <param name="item"></param>
-        public virtual void Enqueue(T item)
+        public void Enqueue(T item)
         {
             lock (_Lock)
             {
@@ -67,7 +67,7 @@ namespace NKnife.Collections
             AutoResetEvent.Set();
         }
 
-        public virtual T Peek()
+        public T Peek()
         {
             T t = default(T);
             if (_Q.Count > 0)
@@ -80,7 +80,7 @@ namespace NKnife.Collections
             return t;
         }
 
-        public virtual T[] ToArray()
+        public T[] ToArray()
         {
             lock (_Lock)
             {
@@ -88,7 +88,7 @@ namespace NKnife.Collections
             }
         }
 
-        public virtual void TrimExcess()
+        public void TrimExcess()
         {
             lock (_Lock)
             {
@@ -158,18 +158,18 @@ namespace NKnife.Collections
         /// 获取一个可用于同步对 <see cref="T:System.Collections.ICollection"/> 的访问的对象。
         /// </summary>
         /// <returns>可用于同步对 <see cref="T:System.Collections.ICollection"/> 的访问的对象。</returns>
-        public object SyncRoot
+        object ICollection.SyncRoot
         {
-            get { return this; }
+            get { return ((ICollection)_Q).SyncRoot; }
         }
 
         /// <summary>
         /// 获取一个值，该值指示是否同步对 <see cref="T:System.Collections.ICollection"/> 的访问（线程安全）。
         /// </summary>
         /// <returns>如果对 <see cref="T:System.Collections.ICollection"/> 的访问是同步的（线程安全），则为 true；否则为 false。</returns>
-        public bool IsSynchronized
+        bool ICollection.IsSynchronized
         {
-            get { return true; }
+            get { return ((ICollection)_Q).IsSynchronized; }
         }
 
         #endregion
