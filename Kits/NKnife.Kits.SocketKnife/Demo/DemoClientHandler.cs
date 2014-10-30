@@ -19,7 +19,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             _SocketMessages = socketMessages;
         }
 
-        public override void Recevied(KnifeSocketSession session, StringProtocol protocol)
+        public override void Received(StringProtocol protocol)
         {
             var msg = new SocketMessage();
             msg.Command = protocol.Command;
