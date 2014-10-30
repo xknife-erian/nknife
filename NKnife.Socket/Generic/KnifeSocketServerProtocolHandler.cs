@@ -5,7 +5,7 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketServerProtocolHandler : KnifeSocketProtocolHandler
     {
-        public KnifeSocketSessionMap SessionMap { get; set; }
+        public virtual KnifeSocketSessionMap SessionMap { get; set; }
 
         public virtual void WriteAll(byte[] data)
         {
