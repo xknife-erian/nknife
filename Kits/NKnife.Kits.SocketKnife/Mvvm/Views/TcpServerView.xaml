@@ -39,38 +39,6 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <Style x:Key="PauseButtonImage" TargetType="{x:Type Button}">
-                <Setter Property="Margin" Value="3" />
-                <Style.Triggers>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Image Source="/Attachments/pause-unable.png" />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                    <Trigger Property="IsEnabled" Value="True">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Image Source="/Attachments/pause.png" />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="RenderTransform">
-                            <Setter.Value>
-                                <RotateTransform Angle="45" />
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-                        <Setter Property="Background" Value="#FF0CC030" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
             <Style x:Key="StopButtonImage" TargetType="{x:Type Button}">
                 <Setter Property="Margin" Value="3" />
                 <Style.Triggers>
@@ -118,18 +86,63 @@
         </ToolBar>
         <StatusBar Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
         </StatusBar>
-        <ListView Grid.Row="1" Name="_DataGrid" ItemsSource="{Binding SocketMessages}"
-                  IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                  SelectionMode="Single" Loaded="DataGrid_OnLoaded"
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListView Grid.Column="0" Name="_DataGrid" Margin="1,1,3,1"
+                      ItemsSource="{Binding SocketMessages}"
+                      IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      SelectionMode="Single" Loaded="DataGrid_OnLoaded"
                   Height="Auto" Width="Auto">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SocketDirection}" Width="70" />
-                    <GridViewColumn Header="命令字" DisplayMemberBinding="{Binding Path=Command}" Width="150" />
-                    <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="900" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=SocketDirection}" Width="50" />
+                        <GridViewColumn Header="命令字" DisplayMemberBinding="{Binding Path=Command}" Width="160" />
+                        <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="650" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="260"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="0,1,3,1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="24"></RowDefinition>
+                        <RowDefinition Height="24"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Content="协议生成"></Button>
+                    <TextBox Grid.Row="1" Margin="0,2,0,0"></TextBox>
+                    <CheckBox Grid.Row="2" Content="全部客户端" Margin="0,3,0,0"></CheckBox>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <RadioButton Content="仅一次" IsChecked="True" Margin="3,3,7,3"></RadioButton>
+                        <RadioButton Content="定时间隔" Margin="3,3,4,0"></RadioButton>
+                        <TextBox Margin="0,0,5,0" Width="45" IsEnabled="False" Text="200"></TextBox>
+                        <RadioButton Content="随机间隔" Margin="3,3,4,3"></RadioButton>
+                        <TextBox Margin="0,0,0,0" Width="45" IsEnabled="False" Text="50"></TextBox>
+                        <TextBlock Text=" ~ " Margin="-1,3"></TextBlock>
+                        <TextBox Margin="0,0,2,0" Width="45" IsEnabled="False" Text="1000"></TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Content="停止" Width="60" Margin="3,0" IsEnabled="False"></Button>
+                        <Button Content="回复" Width="60" Margin="3,0,0,0" IsEnabled="False"></Button>
+                    </StackPanel>
+                </Grid>
+                <DataGrid Grid.Row="1" Margin="0,7,3,1">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Width="50"></DataGridCheckBoxColumn>
+                        <DataGridTextColumn Header="客户端" Binding="{Binding Path=Time, Mode=OneWay}" Width="*" />
+                        <DataGridCheckBoxColumn Header="自动回复" Width="65"></DataGridCheckBoxColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
 </xcad:LayoutDocument>

@@ -56,7 +56,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="时间" Binding="{Binding Path=Time, Mode=OneWay}" Width="90" />
                 <DataGridTextColumn Header="级别" Binding="{Binding Path=Level, Mode=OneWay}" Width="60" />
-                <DataGridTextColumn Header="日志" Binding="{Binding Path=Message, Mode=OneWay}" Width="600" />
+                <DataGridTextColumn Header="日志" Binding="{Binding Path=Message, Mode=OneWay}" Width="*" />
                 <DataGridTextColumn Header="日志源" Binding="{Binding Path=Source, Mode=OneWay}" Width="180" />
             </DataGrid.Columns>
         </DataGrid>

@@ -418,7 +418,7 @@ namespace SocketKnife
         {
             Socket socket = session.Connector;
             socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-            _logger.Trace(() => string.Format("ServerSend:{0}", data.ToHexString()));
+            _logger.Info(() => string.Format("ServerSend:{0}", data.ToHexString()));
         }
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
@@ -426,7 +426,7 @@ namespace SocketKnife
             string replay = protocol.Generate();
             byte[] data = _Codec.SocketEncoder.Execute(replay);
             WirteBase(session, data);
-            _logger.Trace(() => string.Format("ServerSend:{0}", replay));
+            _logger.Debug(() => string.Format("ServerSend:{0}", replay));
         }
 
         #endregion

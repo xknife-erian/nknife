@@ -393,7 +393,7 @@ namespace SocketKnife
             if (_Socket != null)
             {
                 bool isSuceess = _Socket.SendAsync(e);
-                _logger.Trace(() => string.Format("ClientSend:{0},{1}", data.ToHexString(), isSuceess));
+                _logger.Info(() => string.Format("ClientSend:{0},{1}", data.ToHexString(), isSuceess));
             }
         }
 
