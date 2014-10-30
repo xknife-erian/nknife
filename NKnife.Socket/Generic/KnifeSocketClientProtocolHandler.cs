@@ -15,5 +15,12 @@ namespace SocketKnife.Generic
         {
             _WriteProtocolMethod.Invoke(Session, data);
         }
+
+        public override void Recevied(KnifeSocketSession session, StringProtocol protocol)
+        {
+            Received(protocol);
+        }
+
+        public abstract void Received(StringProtocol protocol);
     }
 }

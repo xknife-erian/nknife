@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ninject;
+﻿using Ninject;
 using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.Protocol;
 using NKnife.Tunnel;
-using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
