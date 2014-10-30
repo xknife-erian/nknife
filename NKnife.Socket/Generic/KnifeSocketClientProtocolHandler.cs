@@ -5,16 +5,16 @@ namespace SocketKnife.Generic
 {
     public abstract class KnifeSocketClientProtocolHandler : KnifeSocketProtocolHandler
     {
-        public Func<KnifeSocketSession> SessionGetter { get; set; } //在OnBound函数中被赋值
+        public KnifeSocketSession Session { get; set; } //在OnBound函数中被赋值
 
         public virtual void Write(byte[] data)
         {
-            _WriteBaseMethod.Invoke(SessionGetter.Invoke(), data);
+            _WriteBaseMethod.Invoke(Session, data);
         }
 
         public virtual void Write(StringProtocol data)
         {
-            _WriteProtocolMethod.Invoke(SessionGetter.Invoke(), data);
+            _WriteProtocolMethod.Invoke(Session, data);
         }
 
         public override void Recevied(KnifeSocketSession session, StringProtocol protocol)

@@ -151,7 +151,7 @@ namespace SocketKnife
                 var serverHandler = (KnifeSocketServerProtocolHandler) handler;
                 serverHandler.Bind(WirteProtocol);
                 serverHandler.Bind(WirteBase);
-                serverHandler.SessionMapGetter = () => _SessionMap;
+                serverHandler.SessionMap = _SessionMap;
                 _logger.Info(string.Format("{0}绑定成功。", serverHandler.GetType().Name));
             }
         }
