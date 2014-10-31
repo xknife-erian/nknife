@@ -97,7 +97,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         private void AboutMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var dialog = new ProtocolEditorDialog();
-            dialog.Show();
+            dialog.ShowDialog(this);
         }
 
         public static void ChangeTheme(DockingManager dockingManager, ThemeStyle themeStyle)

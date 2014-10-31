@@ -193,6 +193,13 @@
   <ItemGroup>
     <Resource Include="Attachments\main_icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Attachments\ProtocolBuilder\add.png" />
+    <Resource Include="Attachments\ProtocolBuilder\down.png" />
+    <Resource Include="Attachments\ProtocolBuilder\edit.png" />
+    <Resource Include="Attachments\ProtocolBuilder\remove.png" />
+    <Resource Include="Attachments\ProtocolBuilder\up.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
