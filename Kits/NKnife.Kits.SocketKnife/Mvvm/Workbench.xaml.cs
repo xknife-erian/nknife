@@ -66,7 +66,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
                 var view = new TcpServerView();
                 view.Config = win.Config;
                 view.SocketTools = win.SocketTools;
-                view.Title = string.Format("Server:{0}", new IPEndPoint(win.SocketTools.IpAddress, win.SocketTools.Port));
+                view.Title = string.Format("Server: {0}", win.SocketTools.Port);
                 _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.SocketTools.IpAddress, win.SocketTools.Port));
                 DI.Get<DockUtil>().Documents.Add(view);
             }
@@ -84,7 +84,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
                 var view = new TcpClientView();
                 view.Config = win.Config;
                 view.SocketTools = win.SocketTools;
-                view.Title = string.Format("Client:{0}", new IPEndPoint(win.SocketTools.IpAddress, win.SocketTools.Port));
+                view.Title = string.Format("Client: {0}", new IPEndPoint(win.SocketTools.IpAddress, win.SocketTools.Port));
                 _Logger.Info(string.Format("用户交互创建Client:{0},{1}", win.SocketTools.IpAddress, win.SocketTools.Port));
                 DI.Get<DockUtil>().Documents.Add(view);
             }

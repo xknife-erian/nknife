@@ -72,9 +72,11 @@
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
+        
         <Grid.Background>
             <SolidColorBrush Color="{StaticResource {x:Static SystemColors.ControlLightColorKey}}" />
         </Grid.Background>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
@@ -91,20 +93,16 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="400"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" Name="_DataGrid" Margin="1,1,3,1"
-                      ItemsSource="{Binding SocketMessages}"
-                      IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                      SelectionMode="Single" Loaded="DataGrid_OnLoaded"
-                  Height="Auto" Width="Auto">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=SocketDirection}" Width="50" />
-                        <GridViewColumn Header="命令字" DisplayMemberBinding="{Binding Path=Command}" Width="160" />
-                        <GridViewColumn Header="日志" DisplayMemberBinding="{Binding Path=Message}" Width="650" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <DataGrid Grid.Column="0" Margin="1,1,3,1" ItemsSource="{Binding SocketMessages}" AutoGenerateColumns="False"
+                      HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
+                      VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="时间" Binding="{Binding Path=Time, Mode=OneWay}" Width="90" />
+                    <DataGridTextColumn Binding="{Binding Path=SocketDirection, Mode=OneWay}" Width="60" />
+                    <DataGridTextColumn Header="命令字" Binding="{Binding Path=Command, Mode=OneWay}" Width="160" />
+                    <DataGridTextColumn Header="数据" Binding="{Binding Path=Message, Mode=OneWay}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="260"></RowDefinition>

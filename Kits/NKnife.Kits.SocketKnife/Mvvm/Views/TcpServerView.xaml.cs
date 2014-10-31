@@ -37,11 +37,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _ViewModel.StopServer();
         }
 
-        private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            //TODO:想在这里尝试做一下最后一列的自适应宽度,未成功
-        }
-
         private void Start(object sender, RoutedEventArgs e)
         {
             _StartButton.IsEnabled = false;
