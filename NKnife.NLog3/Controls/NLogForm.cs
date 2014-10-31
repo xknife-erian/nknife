@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using NKnife.IoC;
+using NKnife.NLog3.Properties;
 using NKnife.ShareResources;
 
 namespace NKnife.NLog3.Controls
@@ -12,7 +13,7 @@ namespace NKnife.NLog3.Controls
         public NLogForm()
         {
             InitializeComponent();
-            Icon = IconBoxResource.Restart;
+            Icon = OwnResources.NLogForm;
             Padding = new Padding(3);
             var logPanel = DI.Get<LogPanel>();
             logPanel.Dock = DockStyle.Fill;

@@ -91,16 +91,26 @@ namespace NKnife.NLog3.Properties {
         ///  &lt;/extensions&gt;
         ///  &lt;targets async=&quot;true&quot;&gt;
         ///    &lt;!--在主程序的界面上显示日志--&gt;
-        ///    &lt;target name=&quot;logpanel&quot; xsi:type=&quot;LogPanel&quot; /&gt;
+        ///    &lt;target name=&quot;wpf_logger_collection&quot; xsi:type=&quot;Log_Collection&quot; /&gt;
         ///    &lt;!--记录详细日志彩色控制台--&gt;
         ///    &lt;target name=&quot;console&quot; xsi:type=&quot;ColoredConsole&quot; layout=&quot;${date:format=mm\:ss\.fff} : ${message}&quot; /&gt;
         ///  &lt;/targets&gt;
         ///  &lt;rules&gt;
-        ///    &lt;logger name=&quot;*&quot; minLev [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &lt;log [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string nlog_wpf_config {
             get {
                 return ResourceManager.GetString("nlog_wpf_config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon NLogForm {
+            get {
+                object obj = ResourceManager.GetObject("NLogForm", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }
