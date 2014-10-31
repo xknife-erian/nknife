@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using NKnife.IoC;
 using NKnife.NLog3.Properties;
-using NKnife.ShareResources;
 
 namespace NKnife.NLog3.Controls
 {
