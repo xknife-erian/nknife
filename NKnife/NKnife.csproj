@@ -301,11 +301,6 @@
     <Compile Include="Extensions\SocketExtension.cs" />
     <Compile Include="Extensions\StringBuilderExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="ShareResources\IconBoxResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IconBoxResource.resx</DependentUpon>
-    </Compile>
     <Compile Include="ShareResources\StringResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -384,57 +379,6 @@
     </Compile>
     <Compile Include="GUI\WinForm\GroupboxPro\RadioGroupBox.Designer.cs">
       <DependentUpon>RadioGroupBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\AddBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\AlertBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\BackBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\BluetoothBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\CloseBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\DeleteBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\DownloadBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\ForwardBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\IconBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\InfoBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\LogOffBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\MusicBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\PrivateBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\PublicBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\RefreshBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\RestartBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IconBox\ShutdownBox.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\WinForm\ImageButton.cs">
       <SubType>Component</SubType>
@@ -677,10 +621,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ShareResources\IconBoxResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>IconBoxResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\RegexString.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
@@ -705,22 +645,6 @@
     <Content Include="Configuring\readme.txt" />
     <EmbeddedResource Include="GUI\WinForm\Grouper\Grouper.bmp" />
     <EmbeddedResource Include="GUI\WinForm\WinFormContainer\WinFormContainer.bmp" />
-    <Content Include="ShareResources\BaseActionIcon\Add.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Alert.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Back.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Bluetooth.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Close.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Delete.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Download.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Forward.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Info.ico" />
-    <Content Include="ShareResources\BaseActionIcon\LogOff.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Music.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Private.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Public.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Refresh.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Restart.ico" />
-    <Content Include="ShareResources\BaseActionIcon\Shutdown.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
