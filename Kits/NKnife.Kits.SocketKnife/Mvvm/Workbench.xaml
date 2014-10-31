@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mvvm="clr-namespace:NKnife.Kits.SocketKnife.Mvvm"
+        xmlns:views="clr-namespace:NKnife.Kits.SocketKnife.Mvvm.Views"
         mc:Ignorable="d"
         Title="NKnife@Socket测试工具" Height="690" Width="960" WindowState="Maximized" Icon="/Attachments/main_icon.ico">
     <Window.CommandBindings>
@@ -58,18 +59,9 @@
 
                     <xcad:LayoutAnchorablePaneGroup x:Name="_RightPaneGroup" DockWidth="260" DockHeight="*">
                         <xcad:LayoutAnchorablePane x:Name="_RightPane">
-                            <xcad:LayoutAnchorable ContentId="WatchView" Title="监视">
-                                <ListView></ListView>
-                            </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
                     </xcad:LayoutAnchorablePaneGroup>
                 </xcad:LayoutPanel>
-                <xcad:LayoutRoot.BottomSide>
-                    <xcad:LayoutAnchorSide>
-                        <xcad:LayoutAnchorGroup>
-                        </xcad:LayoutAnchorGroup>
-                    </xcad:LayoutAnchorSide>
-                </xcad:LayoutRoot.BottomSide>
             </xcad:LayoutRoot>
         </xcad:DockingManager>
     </Grid>

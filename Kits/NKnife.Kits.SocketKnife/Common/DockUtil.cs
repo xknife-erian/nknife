@@ -87,7 +87,7 @@ namespace NKnife.Kits.SocketKnife.Common
                     if (_Right == null)
                     {
                         _Right = new LayoutAnchorGroup();
-                        _DockingManager.Layout.BottomSide.Children.Add(_Right);
+                        _DockingManager.Layout.RightSide.Children.Add(_Right);
                     }
                 }
                 return _Right;

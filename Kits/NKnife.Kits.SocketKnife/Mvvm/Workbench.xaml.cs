@@ -26,10 +26,11 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         public Workbench()
         {
             InitializeComponent();
-            DI.Get<DockUtil>().Init(_DockingManager);
 
-            var view = new LoggerView();
-            DI.Get<DockUtil>().Buttom.Children.Add(view);
+            DI.Get<DockUtil>().Init(_DockingManager);
+            DI.Get<DockUtil>().Buttom.Children.Add(new LoggerView());
+            _RightPane.Children.Add(new ProtocolsView());
+
             _Logger.Info("主窗体构造完成");
         }
 

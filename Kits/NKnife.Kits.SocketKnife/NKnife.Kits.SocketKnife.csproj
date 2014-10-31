@@ -80,6 +80,9 @@
     <Compile Include="Dialogs\ProtocolEditorDialog.xaml.cs">
       <DependentUpon>ProtocolEditorDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mvvm\Views\ProtocolsView.xaml.cs">
+      <DependentUpon>ProtocolsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mvvm\Workbench.xaml.cs">
       <DependentUpon>Workbench.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,10 @@
     <Page Include="Mvvm\Views\LoggerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mvvm\Views\ProtocolsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mvvm\Views\TcpClientView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -199,6 +206,9 @@
     <Resource Include="Attachments\ProtocolBuilder\edit.png" />
     <Resource Include="Attachments\ProtocolBuilder\remove.png" />
     <Resource Include="Attachments\ProtocolBuilder\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Attachments\protocols-view-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
