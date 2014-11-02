@@ -12,6 +12,7 @@ using SocketKnife.Common;
 using SocketKnife.Events;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
+using Timer = System.Timers.Timer;
 
 namespace SocketKnife
 {
@@ -23,14 +24,17 @@ namespace SocketKnife
 
         protected readonly AutoResetEvent _ConnectionAutoReset = new AutoResetEvent(false);
 
-        protected KnifeSocketClientConfig _Config = DI.Get<KnifeSocketClientConfig>();
-
         /// <summary>
         ///     释放等待线程
         /// </summary>
         protected AutoResetEvent _AutoReset;
 
+        protected KnifeSocketClientConfig _Config = DI.Get<KnifeSocketClientConfig>();
+        protected EndPoint _EndPoint;
+
         protected bool _IsConnection;
+        protected bool _OnReconnected = false;//当重连时
+        protected Timer _ReconnectTimer;
 
         /// <summary>
         ///     SOCKET对象
@@ -39,29 +43,21 @@ namespace SocketKnife
 
         protected KnifeSocketSession _SocketSession;
 
-        protected EndPoint _EndPoint;
-
-        protected System.Timers.Timer _ReconnectTimer;
-
-        protected bool _OnReconnected = false;
-
         #endregion 成员变量
 
         #region IKnifeSocketClient
 
-        public override bool Start()
+        public override KnifeSocketConfig Config
         {
-            var thread = new Thread(ThreadConnect) { Name = string.Format("SocketClient:{0}:{1}", _IpAddress, _Port) };
-            thread.Start();
-            return true;
+            get { return _Config; }
+            set { _Config = (KnifeSocketClientConfig) value; }
         }
 
-        protected virtual void ThreadConnect()
+        public override bool Start()
         {
-            AsyncConnect(_IpAddress, _Port);
-            _AutoReset.WaitOne();
-            _AutoReset.Reset();
-            _ConnectionAutoReset.Reset();
+            var thread = new Thread(ThreadConnect) {Name = string.Format("SocketClient:{0}:{1}", _IpAddress, _Port)};
+            thread.Start();
+            return true;
         }
 
         public override bool ReStart()
@@ -73,16 +69,12 @@ namespace SocketKnife
 
         public override bool Stop()
         {
-<<<<<<< HEAD
             if (_ReconnectTimer != null)
             {
                 _ReconnectTimer.Stop();
                 _ReconnectTimer.Close();
             }
-            foreach (var filter in _FilterChain)
-=======
             if (_FilterChain != null)
->>>>>>> ac8a2d25eb19d8cf25d940c2bde5b256a1eed571
             {
                 foreach (var filter in _FilterChain)
                 {
@@ -112,6 +104,20 @@ namespace SocketKnife
             }
         }
 
+        public override void Configure(IPAddress ipAddress, int port)
+        {
+            base.Configure(ipAddress, port);
+            _EndPoint = new IPEndPoint(ipAddress, port);
+        }
+
+        protected virtual void ThreadConnect()
+        {
+            AsyncConnect(_IpAddress, _Port);
+            _AutoReset.WaitOne();
+            _AutoReset.Reset();
+            _ConnectionAutoReset.Reset();
+        }
+
         protected override void OnBound(params KnifeSocketProtocolHandler[] handlers)
         {
             foreach (KnifeSocketProtocolHandler handler in handlers)
@@ -134,37 +140,26 @@ namespace SocketKnife
             _AutoReset = new AutoResetEvent(false);
         }
 
-        public override void Configure(IPAddress ipAddress, int port)
-        {
-            base.Configure(ipAddress, port);
-            _EndPoint = new IPEndPoint(ipAddress, port);
-        }
-
-        public override KnifeSocketConfig Config
-        {
-            get { return _Config; }
-            set { _Config = (KnifeSocketClientConfig)value; }
-        }
-
         public override void AddFilters(params KnifeSocketFilter[] filters)
         {
             base.AddFilters(filters);
-            foreach (var filter in filters)
+            foreach (KnifeSocketFilter filter in filters)
             {
-                var clientFilter = (KnifeSocketClientFilter)filter;
+                var clientFilter = (KnifeSocketClientFilter) filter;
                 clientFilter.Bind(() => _SocketSession);
                 clientFilter.ConnectionBroken += OnFilterConnectionBroken;
             }
         }
 
         /// <summary>
-        /// 当非主动断开连接时，启动断线重连
+        ///     当非主动断开连接时，启动断线重连
         /// </summary>
         protected virtual void OnFilterConnectionBroken(object sender, ConnectionBrokenEventArgs e)
         {
-            if (e.BrokenCause != BrokenCause.Initiative)//当非主动断开时，启动断线重连
+            if (e.BrokenCause != BrokenCause.Initiative) //当非主动断开时，启动断线重连
             {
-                Reconnect();
+                if (_Config.EnableReconnect)
+                    Reconnect();
             }
         }
 
@@ -172,12 +167,12 @@ namespace SocketKnife
         {
             Stop();
             _OnReconnected = true;
-            _ReconnectTimer = new System.Timers.Timer { Interval = _Config.ReconnectTime };
-            _ReconnectTimer.Elapsed += Reconnect;
+            _ReconnectTimer = new Timer {Interval = _Config.ReconnectTime};
+            _ReconnectTimer.Elapsed += TimerReconnect;
             _ReconnectTimer.Start();
         }
 
-        protected virtual void Reconnect(object sender, ElapsedEventArgs e)
+        protected virtual void TimerReconnect(object sender, ElapsedEventArgs e)
         {
             AsyncConnect(_IpAddress, _Port);
         }
@@ -247,7 +242,7 @@ namespace SocketKnife
             {
                 _IsConnection = false;
                 _logger.Warn(string.Format("连接Server失败。{0}", e.Message), e);
-                if (!_OnReconnected)
+                if (_Config.EnableReconnect && !_OnReconnected)
                     Reconnect();
                 return;
             }
@@ -271,7 +266,7 @@ namespace SocketKnife
                 }
                 var asyncEventArgs = new SocketAsyncEventArgs {RemoteEndPoint = ipPoint};
                 asyncEventArgs.Completed += CompletedEvent;
-                if (!_Socket.ConnectAsync(asyncEventArgs))
+                if (_Socket != null && !_Socket.ConnectAsync(asyncEventArgs))
                 {
                     CompletedEvent(this, asyncEventArgs);
                 }

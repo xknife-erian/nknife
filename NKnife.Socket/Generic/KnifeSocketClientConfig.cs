@@ -10,7 +10,8 @@ namespace SocketKnife.Generic
     {
         public KnifeSocketClientConfig()
         {
-            _Map.Add("ReconnectTime", 1000*6);
+            _Map.Add("ReconnectTime", 1000 * 6);
+            _Map.Add("EnableReconnect", true);
         }
 
         public int ReconnectTime
@@ -19,6 +20,16 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["ReconnectTime"] = value;
+                RaisePropertyChanged(() => ReceiveBufferSize);
+            }
+        }
+
+        public bool EnableReconnect
+        {
+            get { return bool.Parse(_Map["EnableReconnect"].ToString()); }
+            set
+            {
+                _Map["EnableReconnect"] = value;
                 RaisePropertyChanged(() => ReceiveBufferSize);
             }
         }
