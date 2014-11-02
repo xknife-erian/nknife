@@ -62,15 +62,14 @@ namespace SocketKnife.Generic.Filters
                 }
                 catch (Exception ex) //发送异常，发不出去则立即移出
                 {
-                    _logger.Warn(string.Format("向服务器{0}发送心跳时异常:{1}", session.Source, ex.Message), ex);
-                    _logger.Info("准备重连服务器......");
+                    _logger.Warn(string.Format("向Server{0}发送心跳时异常:{1}", session.Source, ex.Message), ex);
+                    _logger.Info("准备重连Server......");
                     Reconnects(session);
                 }
             }
             else
             {
-
-                _logger.Warn(string.Format("Filter在间隔时间({0})内，服务器心跳未反应，以事件OnConnectionBroken通知Client实例......", Interval));
+                _logger.Warn(string.Format("Filter在间隔时间({0})内，Server心跳未反应，以事件OnConnectionBroken通知Client实例......", Interval));
                 Reconnects(session);
             }
         }
@@ -98,7 +97,7 @@ namespace SocketKnife.Generic.Filters
                 _BeatingTimer.Elapsed += BeatingTimerElapsed;
                 _BeatingTimer.Interval = Interval;
                 _BeatingTimer.Start();
-                _logger.Info(string.Format("客户端心跳启动。间隔:{0}", Interval));
+                _logger.Info(string.Format("Client心跳启动。间隔:{0}", Interval));
                 var handlers = _HandlersGetter.Invoke();
                 Debug.Assert(handlers != null && handlers.Count > 0, "Handler未设置");
             }
@@ -109,20 +108,20 @@ namespace SocketKnife.Generic.Filters
             if (!IsStrictMode)
             {   //非严格模式
                 session.WaitingForReply = false;
-                _logger.Trace(() => string.Format("客户端收到{0}信息,关闭心跳等待.", session.Source));
+                _logger.Trace(() => string.Format("Client收到{0}信息,关闭心跳等待.", session.Source));
             }
             if (data.IndexOf(Heartbeat.BeatingOfServerHeart) == 0)
             {
                 _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplayOfClient);
                 _ContinueNextFilter = false;
-                _logger.Trace(() => string.Format("客户端收到{0}心跳.回复完成.", session.Source));
+                _logger.Trace(() => string.Format("Client收到{0}心跳.回复完成.", session.Source));
                 return;
             } 
             if (data.IndexOf(Heartbeat.ReplayOfServer) == 0)
             {
                 session.WaitingForReply = false;
                 _ContinueNextFilter = false;
-                _logger.Trace(() => string.Format("客户端收到{0}心跳回复.", session.Source));
+                _logger.Trace(() => string.Format("Client收到{0}心跳回复.", session.Source));
             }
             else
             {

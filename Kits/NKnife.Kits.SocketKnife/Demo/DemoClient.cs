@@ -80,13 +80,14 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void Start()
         {
-            _Client.Start();
+            if (_Client != null)
+                _Client.Start();
         }
 
         public void Stop()
         {
-            _Client.Stop();
+            if (_Client != null)
+                _Client.Stop();
         }
-
     }
 }

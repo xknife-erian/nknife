@@ -2,8 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Timers;
 using NKnife.Adapters;
-using NKnife.Events;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol.Generic;
@@ -41,6 +41,8 @@ namespace SocketKnife
 
         protected EndPoint _EndPoint;
 
+        protected System.Timers.Timer _ReconnectTimer;
+
         #endregion 成员变量
 
         #region IKnifeSocketClient
@@ -48,13 +50,12 @@ namespace SocketKnife
         public override bool Start()
         {
             Initialize();
-            var thread = new Thread(ThreadConnect);
-            thread.Name = string.Format("SocketClient:{0}", _Socket.LocalEndPoint);
+            var thread = new Thread(ThreadConnect) {Name = string.Format("SocketClient:{0}", _Socket.LocalEndPoint)};
             thread.Start();
             return true;
         }
 
-        private void ThreadConnect()
+        protected virtual void ThreadConnect()
         {
             AsyncConnect(_IpAddress, _Port);
             _AutoReset.WaitOne();
@@ -71,6 +72,8 @@ namespace SocketKnife
 
         public override bool Stop()
         {
+            if (_ReconnectTimer != null)
+                _ReconnectTimer.Stop();
             foreach (var filter in _FilterChain)
             {
                 var clientFilter = (KnifeSocketClientFilter)filter;
@@ -150,7 +153,16 @@ namespace SocketKnife
         {
             if (e.BrokenCause != BrokenCause.Initiative)//当非主动断开时，启动断线重连
             {
+                _ReconnectTimer = new System.Timers.Timer { Interval = 2 * 1000 };
+                _ReconnectTimer.Elapsed += Reconnect;
+                _ReconnectTimer.Start();
             }
+        }
+
+        private void Reconnect(object sender, ElapsedEventArgs e)
+        {
+            if (AsyncConnect(_IpAddress, _Port))
+                _ReconnectTimer.Stop();
         }
 
         protected virtual Socket BuildSocket()
@@ -203,22 +215,28 @@ namespace SocketKnife
 
         #region 监听
 
-        protected virtual void AsyncConnect(IPAddress ipAddress, int port)
+        protected virtual bool AsyncConnect(IPAddress ipAddress, int port)
         {
             var ipPoint = new IPEndPoint(ipAddress, port);
             try
             {
+                if (_Socket.IsBound)
+                {
+                    _Socket.Disconnect(false);
+                    _Socket.Close();
+                    Initialize();
+                }
                 _Socket.Connect(ipPoint);
+                _logger.Debug(string.Format("连接Server[{0}:{1}]完成。", ipAddress, port));
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 _IsConnection = false;
-                _logger.Warn(string.Format("远程连接失败。{0}", ex.Message), ex);
-                return;
+                _logger.Warn(string.Format("连接Server失败。{0}", e.Message), e);
+                return false;
             }
             try
             {
-
                 _SocketSession = DI.Get<KnifeSocketSession>();
                 _SocketSession.Connector = _Socket;
                 _SocketSession.Source = ipPoint;
@@ -227,17 +245,19 @@ namespace SocketKnife
                     var clientFilter = (KnifeSocketClientFilter) filter;
                     clientFilter.OnConnecting(new ConnectingEventArgs(ipPoint));
                 }
-                var e = new SocketAsyncEventArgs {RemoteEndPoint = ipPoint};
-                e.Completed += CompletedEvent;
-                if (!_Socket.ConnectAsync(e))
+                var asyncEventArgs = new SocketAsyncEventArgs {RemoteEndPoint = ipPoint};
+                asyncEventArgs.Completed += CompletedEvent;
+                if (!_Socket.ConnectAsync(asyncEventArgs))
                 {
-                    CompletedEvent(this, e);
+                    CompletedEvent(this, asyncEventArgs);
                 }
             }
             catch (Exception e)
             {
                 _logger.Error("客户端异步连接远端时异常.{0}", e);
+                return false;
             }
+            return true;
         }
 
         protected virtual void CompletedEvent(object sender, SocketAsyncEventArgs e)
