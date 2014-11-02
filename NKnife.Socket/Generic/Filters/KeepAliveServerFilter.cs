@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using NKnife.Adapters;
 using NKnife.Events;
 using NKnife.Interface;
@@ -90,10 +91,10 @@ namespace SocketKnife.Generic.Filters
 
         protected virtual void InitializeDataMonitor(KeyValuePair<EndPoint, ReceiveQueue> pair)
         {
-            var thread = new Thread(ReceiveQueueMonitor) {IsBackground = true};
-            var dm = new DataMonitor {IsMonitor = true, ReceiveQueue = pair.Value, Thread = thread};
+            var task = new Task(ReceiveQueueMonitor, pair);
+            var dm = new DataMonitor { IsMonitor = true, ReceiveQueue = pair.Value, Task = task };
             _DataMonitors.TryAdd(pair.Key, dm);
-            thread.Start(pair);
+            task.Start();
         }
 
         /// <summary>
@@ -229,7 +230,7 @@ namespace SocketKnife.Generic.Filters
         protected class DataMonitor
         {
             public bool IsMonitor { get; set; }
-            public Thread Thread { get; set; }
+            public Task Task { get; set; }
             public ReceiveQueue ReceiveQueue { get; set; }
         }
 

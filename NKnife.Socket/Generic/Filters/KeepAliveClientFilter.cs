@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using NKnife.Adapters;
 using NKnife.Events;
 using NKnife.Interface;
@@ -35,10 +36,9 @@ namespace SocketKnife.Generic.Filters
         protected internal override void OnConnected(ConnectedEventArgs e)
         {
             base.OnConnected(e);
+            _EnableReceiveQueueMonitor = true;
             //当连接启动后，启动数据池监听线程
             _Thread = new Thread(ReceiveQueueMonitor);
-            var local = SessionGetter.Invoke().Connector.LocalEndPoint.ToString();
-            _Thread.Name = string.Format("ClientReceive{0}", local.Substring(local.IndexOf(':')));
             _Thread.Start();
         }
 
