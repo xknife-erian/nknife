@@ -73,15 +73,22 @@ namespace SocketKnife
 
         public override bool Stop()
         {
+<<<<<<< HEAD
             if (_ReconnectTimer != null)
             {
                 _ReconnectTimer.Stop();
                 _ReconnectTimer.Close();
             }
             foreach (var filter in _FilterChain)
+=======
+            if (_FilterChain != null)
+>>>>>>> ac8a2d25eb19d8cf25d940c2bde5b256a1eed571
             {
-                var clientFilter = (KnifeSocketClientFilter)filter;
-                clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Initiative));
+                foreach (var filter in _FilterChain)
+                {
+                    var clientFilter = (KnifeSocketClientFilter) filter;
+                    clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Initiative));
+                }
             }
             try
             {
