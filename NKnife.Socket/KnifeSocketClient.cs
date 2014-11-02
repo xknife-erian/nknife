@@ -71,10 +71,13 @@ namespace SocketKnife
 
         public override bool Stop()
         {
-            foreach (var filter in _FilterChain)
+            if (_FilterChain != null)
             {
-                var clientFilter = (KnifeSocketClientFilter)filter;
-                clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Initiative));
+                foreach (var filter in _FilterChain)
+                {
+                    var clientFilter = (KnifeSocketClientFilter) filter;
+                    clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Initiative));
+                }
             }
             try
             {
