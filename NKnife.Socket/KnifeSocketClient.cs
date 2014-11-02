@@ -43,14 +43,15 @@ namespace SocketKnife
 
         protected System.Timers.Timer _ReconnectTimer;
 
+        protected bool _OnReconnected = false;
+
         #endregion 成员变量
 
         #region IKnifeSocketClient
 
         public override bool Start()
         {
-            Initialize();
-            var thread = new Thread(ThreadConnect) {Name = string.Format("SocketClient:{0}", _Socket.LocalEndPoint)};
+            var thread = new Thread(ThreadConnect) { Name = string.Format("SocketClient:{0}:{1}", _IpAddress, _Port) };
             thread.Start();
             return true;
         }
@@ -73,7 +74,10 @@ namespace SocketKnife
         public override bool Stop()
         {
             if (_ReconnectTimer != null)
+            {
                 _ReconnectTimer.Stop();
+                _ReconnectTimer.Close();
+            }
             foreach (var filter in _FilterChain)
             {
                 var clientFilter = (KnifeSocketClientFilter)filter;
@@ -118,7 +122,7 @@ namespace SocketKnife
             if (_IsDisposed)
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
             if (_Socket != null)
-                Stop();
+                _Socket.Close();
             _Socket = BuildSocket();
             _AutoReset = new AutoResetEvent(false);
         }
@@ -153,16 +157,22 @@ namespace SocketKnife
         {
             if (e.BrokenCause != BrokenCause.Initiative)//当非主动断开时，启动断线重连
             {
-                _ReconnectTimer = new System.Timers.Timer { Interval = 2 * 1000 };
-                _ReconnectTimer.Elapsed += Reconnect;
-                _ReconnectTimer.Start();
+                Reconnect();
             }
         }
 
-        private void Reconnect(object sender, ElapsedEventArgs e)
+        protected virtual void Reconnect()
         {
-            if (AsyncConnect(_IpAddress, _Port))
-                _ReconnectTimer.Stop();
+            Stop();
+            _OnReconnected = true;
+            _ReconnectTimer = new System.Timers.Timer { Interval = _Config.ReconnectTime };
+            _ReconnectTimer.Elapsed += Reconnect;
+            _ReconnectTimer.Start();
+        }
+
+        protected virtual void Reconnect(object sender, ElapsedEventArgs e)
+        {
+            AsyncConnect(_IpAddress, _Port);
         }
 
         protected virtual Socket BuildSocket()
@@ -215,26 +225,33 @@ namespace SocketKnife
 
         #region 监听
 
-        protected virtual bool AsyncConnect(IPAddress ipAddress, int port)
+        protected virtual void AsyncConnect(IPAddress ipAddress, int port)
         {
+            Initialize();
             var ipPoint = new IPEndPoint(ipAddress, port);
             try
             {
-                if (_Socket.IsBound)
+                if (_Socket != null)
                 {
-                    _Socket.Disconnect(false);
-                    _Socket.Close();
-                    Initialize();
+                    _Socket.Connect(ipPoint);
                 }
-                _Socket.Connect(ipPoint);
-                _logger.Debug(string.Format("连接Server[{0}:{1}]完成。", ipAddress, port));
             }
             catch (Exception e)
             {
                 _IsConnection = false;
                 _logger.Warn(string.Format("连接Server失败。{0}", e.Message), e);
-                return false;
+                if (!_OnReconnected)
+                    Reconnect();
+                return;
             }
+            if (_ReconnectTimer != null)
+            {
+                _ReconnectTimer.Stop();
+                _ReconnectTimer.Close();
+                _logger.Debug("监视重连的Timer关闭...");
+            }
+            _logger.Info(string.Format("连接Server[{0}:{1}]完成。", ipAddress, port));
+            _OnReconnected = false;
             try
             {
                 _SocketSession = DI.Get<KnifeSocketSession>();
@@ -255,9 +272,7 @@ namespace SocketKnife
             catch (Exception e)
             {
                 _logger.Error("客户端异步连接远端时异常.{0}", e);
-                return false;
             }
-            return true;
         }
 
         protected virtual void CompletedEvent(object sender, SocketAsyncEventArgs e)
@@ -355,7 +370,7 @@ namespace SocketKnife
                 }
                 default:
                 {
-                    _logger.Trace(string.Format("未处理的Socket状态:{0}", e.SocketError));
+                    _logger.Debug(string.Format("当BeginReceive时，未处理的Socket状态:{0}", e.SocketError));
                     break;
                 }
             }
