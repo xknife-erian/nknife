@@ -103,28 +103,27 @@ namespace NKnife.Kits.SocketKnife.Demo
                 }
                 catch (Exception e)
                 {
-                    string error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
+                    string error = string.Format("异步集合控制发生异常.{0}{1}", e.Message, e.StackTrace);
                     Debug.Fail(error);
                 }
             };
             _KeepAliveFilter.SessionMapGetter.Invoke().Removed += (sender, args) =>
             {
-                var session = ((KnifeSocketSessionMap) sender)[args.Item];
                 try
                 {
                     if (Dispatcher.CheckAccess())
                     {
-                        RemoveSession(session);
+                        RemoveSession(args.Item);
                     }
                     else
                     {
                         var sessionDelegate = new SessionRemover(RemoveSession);
-                        Dispatcher.BeginInvoke(sessionDelegate, new object[] { session });
+                        Dispatcher.BeginInvoke(sessionDelegate, new object[] { args.Item });
                     }
                 }
                 catch (Exception e)
                 {
-                    string error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
+                    string error = string.Format("异步集合控制发生异常.{0}{1}", e.Message, e.StackTrace);
                     Debug.Fail(error);
                 }
             };
@@ -134,12 +133,19 @@ namespace NKnife.Kits.SocketKnife.Demo
         {
             Sessions.Add(session);
         }
-        protected void RemoveSession(KnifeSocketSession session)
+        protected void RemoveSession(EndPoint endPoint)
         {
-            Sessions.Remove(session);
+            for (int i = 0; i < Sessions.Count; i++)
+            {
+                if (Sessions[i].Source == endPoint)
+                {
+                    Sessions.RemoveAt(i);
+                    break;
+                }
+            }
         }
 
-        private delegate void SessionRemover(KnifeSocketSession session);
+        private delegate void SessionRemover(EndPoint endPoint);
         private delegate void SessionAdder(KnifeSocketSession session);
 
         private StringProtocolFamily GetProtocolFamily()

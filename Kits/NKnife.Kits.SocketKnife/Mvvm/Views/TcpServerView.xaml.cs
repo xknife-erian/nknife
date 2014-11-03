@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo;
@@ -25,6 +26,20 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _ViewModel.Dispatcher = Dispatcher;
 
             _SessionDataGrid.ItemsSource = _ViewModel.Sessions;
+
+            _OnlyOnceRadioButton.Checked += ReplayModeRadioButtonOnClick;
+            _FixTimeRadioButton.Checked += ReplayModeRadioButtonOnClick;
+            _RandomRadioButton.Checked += ReplayModeRadioButtonOnClick;
+        }
+
+        private void ReplayModeRadioButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (_FixTimeRadioButton.IsChecked != null)
+                _FixTimeTextBox.IsEnabled = (bool) _FixTimeRadioButton.IsChecked;
+            if (_RandomRadioButton.IsChecked != null)
+                _RandomMinTimeTextBox.IsEnabled = (bool) _RandomRadioButton.IsChecked;
+            if (_RandomRadioButton.IsChecked != null)
+                _RandomMaxTimeTextBox.IsEnabled = (bool) _RandomRadioButton.IsChecked;
         }
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
