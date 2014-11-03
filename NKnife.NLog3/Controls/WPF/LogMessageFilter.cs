@@ -33,7 +33,8 @@ namespace NKnife.NLog3.Controls.WPF
 
         public void Add(LogLevel item)
         {
-            _Levels.Add(item);
+            if (!_Levels.Contains(item))
+                _Levels.Add(item);
         }
 
         public void Clear()

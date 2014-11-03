@@ -9,7 +9,7 @@ using NLog.Targets;
 namespace NKnife.NLog3.Controls.WPF
 {
     /// <summary>
-    /// 这是一个基于NLog的自定义的输出目标（Target），这个输出目标是一个WPF控件可绑定的ObservableCollection
+    ///     这是一个基于NLog的自定义的输出目标（Target），这个输出目标是一个WPF控件可绑定的ObservableCollection
     /// </summary>
     [Target("Log_Collection")]
     public class ObservableCollectionTarget : TargetWithLayout
@@ -17,6 +17,7 @@ namespace NKnife.NLog3.Controls.WPF
         private const int LOGGER_VIEW_COUNT = 500;
 
         private readonly ObservableCollection<LogMessage> _LogList = DI.Get<ObservableCollection<LogMessage>>();
+
         protected override void Write(LogEventInfo logEvent)
         {
             try
@@ -35,7 +36,7 @@ namespace NKnife.NLog3.Controls.WPF
             }
             catch (Exception e)
             {
-                var error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
+                string error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
                 Debug.Fail(error);
             }
         }
