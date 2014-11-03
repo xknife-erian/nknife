@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net;
+using System.Windows;
 using System.Windows.Threading;
 using NKnife.Base;
 using NKnife.Collections;
@@ -8,6 +11,7 @@ using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo.Protocols;
 using NKnife.Mvvm;
 using NKnife.Protocol.Generic;
+using SocketKnife;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
@@ -22,7 +26,8 @@ namespace NKnife.Kits.SocketKnife.Demo
         internal Dispatcher Dispatcher { get; set; }
 
         private readonly ServerList _ServerList = DI.Get<ServerList>();
-        public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
+        public ObservableCollection<SocketMessage> SocketMessages { get; set; }
+        public ObservableCollection<KnifeSocketSession> Sessions { get; set; }
 
         private Pair<IPAddress, int> _ServerListKey;
 
@@ -34,11 +39,13 @@ namespace NKnife.Kits.SocketKnife.Demo
         #endregion
 
         private bool _IsInitialized = false;
-        private IKnifeSocketServer _Server;
+        private KnifeSocketServer _Server;
+        KeepAliveServerFilter _KeepAliveFilter = DI.Get<KeepAliveServerFilter>();
 
         public DemoServer()
         {
-            SocketMessages = new AsyncObservableCollection<SocketMessage>();
+            SocketMessages = new ObservableCollection<SocketMessage>();
+            Sessions = new ObservableCollection<KnifeSocketSession>();
         }
 
         public void Initialize(KnifeSocketConfig config, SocketTools socketTools)
@@ -52,7 +59,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             heartbeatServerFilter.Interval = 1000*5;
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
-            var keepAliveFilter = DI.Get<KeepAliveServerFilter>();
+            _KeepAliveFilter = DI.Get<KeepAliveServerFilter>();
             var codec = DI.Get<KnifeSocketCodec>();
             if (codec.SocketDecoder.GetType() != socketTools.Decoder)
                 codec.SocketDecoder = (KnifeSocketDatagramDecoder) DI.Get(socketTools.Decoder);
@@ -65,14 +72,14 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             if (!_ServerList.ContainsKey(key))
             {
-                _Server = DI.Get<IKnifeSocketServer>();
+                _Server = DI.Get<KnifeSocketServer>();
                 _Server.Config = config;
                 if (socketTools.NeedHeartBeat)
                     _Server.AddFilters(heartbeatServerFilter);
-                _Server.AddFilters(keepAliveFilter);
+                _Server.AddFilters(_KeepAliveFilter);
                 _Server.Configure(socketTools.IpAddress, socketTools.Port);
                 _Server.Bind(codec, protocolFamily);
-                _Server.AddHandlers(new DemoServerHandler(SocketMessages));
+                _Server.AddHandlers(new DemoServerHandler(SocketMessages, Dispatcher));
                 _ServerList.Add(key, _Server);
             }
             else
@@ -80,7 +87,60 @@ namespace NKnife.Kits.SocketKnife.Demo
                 Debug.Fail(string.Format("不应出现相同IP与端口的服务器请求。{0}", key));
             }
             _IsInitialized = true;
+            _KeepAliveFilter.SessionMapGetter.Invoke().Added += (sender, args) =>
+            {
+                try
+                {
+                    if (Dispatcher.CheckAccess())
+                    {
+                        AddSession(args.Item);
+                    }
+                    else
+                    {
+                        var sessionDelegate = new SessionAdder(AddSession);
+                        Dispatcher.BeginInvoke(sessionDelegate, new object[] { args.Item });
+                    }
+                }
+                catch (Exception e)
+                {
+                    string error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
+                    Debug.Fail(error);
+                }
+            };
+            _KeepAliveFilter.SessionMapGetter.Invoke().Removed += (sender, args) =>
+            {
+                var session = ((KnifeSocketSessionMap) sender)[args.Item];
+                try
+                {
+                    if (Dispatcher.CheckAccess())
+                    {
+                        RemoveSession(session);
+                    }
+                    else
+                    {
+                        var sessionDelegate = new SessionRemover(RemoveSession);
+                        Dispatcher.BeginInvoke(sessionDelegate, new object[] { session });
+                    }
+                }
+                catch (Exception e)
+                {
+                    string error = string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace);
+                    Debug.Fail(error);
+                }
+            };
         }
+
+        protected void AddSession(KnifeSocketSession session)
+        {
+            Sessions.Add(session);
+        }
+        protected void RemoveSession(KnifeSocketSession session)
+        {
+            Sessions.Remove(session);
+        }
+
+        private delegate void SessionRemover(KnifeSocketSession session);
+        private delegate void SessionAdder(KnifeSocketSession session);
 
         private StringProtocolFamily GetProtocolFamily()
         {

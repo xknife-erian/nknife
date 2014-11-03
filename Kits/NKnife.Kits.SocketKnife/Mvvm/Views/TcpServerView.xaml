@@ -133,10 +133,10 @@
                         <Button Content="回复" Width="60" Margin="3,0,0,0" IsEnabled="False"></Button>
                     </StackPanel>
                 </Grid>
-                <DataGrid Grid.Row="1" Margin="0,7,3,1">
+                <DataGrid Grid.Row="1" Name="_SessionDataGrid" Margin="0,7,3,1" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Width="50"></DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="客户端" Binding="{Binding Path=Time, Mode=OneWay}" Width="*" />
+                        <DataGridTextColumn Header="客户端" Binding="{Binding Path=Source, Mode=OneWay}" Width="*" />
                         <DataGridCheckBoxColumn Header="自动回复" Width="65"></DataGridCheckBoxColumn>
                     </DataGrid.Columns>
                 </DataGrid>

@@ -23,6 +23,8 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _ViewModel = new DemoServer();
             _View.DataContext = _ViewModel;
             _ViewModel.Dispatcher = Dispatcher;
+
+            _SessionDataGrid.ItemsSource = _ViewModel.Sessions;
         }
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
@@ -41,7 +43,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _StartButton.IsEnabled = false;
             _StopButton.IsEnabled = true;
-
             _ViewModel.StartServer();
         }
 
@@ -49,7 +50,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _StartButton.IsEnabled = true;
             _StopButton.IsEnabled = false;
-
             _ViewModel.StopServer();
         }
 

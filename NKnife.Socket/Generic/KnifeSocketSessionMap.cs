@@ -20,7 +20,7 @@ namespace SocketKnife.Generic
         {
             get
             {
-                return _Map[key];
+                return _Map.ContainsKey(key) ? _Map[key] : null;
             }
             set
             {
