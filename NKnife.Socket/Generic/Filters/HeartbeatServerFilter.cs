@@ -145,7 +145,6 @@ namespace SocketKnife.Generic.Filters
 #if DEBUG
                 _logger.Trace(() => string.Format("Server收到{0}信息,关闭心跳等待（非严格模式）.", session.Source));
 #endif
-                return;
             }
 
             if (data.IndexOf(Heartbeat.RequestOfHeartBeat) == 0)
