@@ -96,8 +96,15 @@ namespace SocketKnife.Generic.Filters
                 if (string.IsNullOrWhiteSpace(dg))
                     continue;
                 string command = _FamilyGetter.Invoke().CommandParser.GetCommand(dg);
-                StringProtocol protocol = _FamilyGetter.Invoke().Build(command);
                 string dgByLog = dg;
+                if (string.IsNullOrWhiteSpace(command))
+                {
+                    _logger.Warn(() => string.Format("From:命令字为空,数据包:{0}", dgByLog));
+                    continue;
+                }
+
+                StringProtocol protocol = _FamilyGetter.Invoke().Build(command);
+
                 _logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
                 if (protocol != null)
                 {

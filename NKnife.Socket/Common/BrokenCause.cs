@@ -8,7 +8,7 @@
         /// <summary>
         /// 主动断开
         /// </summary>
-        Initiative, 
+        Aggressive, 
         /// <summary>
         /// 被动断开
         /// </summary>

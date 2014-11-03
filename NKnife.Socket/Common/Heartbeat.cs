@@ -7,34 +7,20 @@ namespace SocketKnife.Common
 {
     public class Heartbeat
     {
-        private byte[] _BeatingOfServerHeart = Encoding.Default.GetBytes(string.Format("[[SOCKET >>> This is beating of server heart.]]"));
-        private byte[] _ReplayOfServer = Encoding.Default.GetBytes(string.Format("[[SOCKET >>> The server is normal.]]"));
-
-        private byte[] _BeatingOfClientHeart = Encoding.Default.GetBytes(string.Format("[[SOCKET <<< This is beating of client heart.]]"));
-        private byte[] _ReplayOfClient = Encoding.Default.GetBytes(string.Format("[[SOCKET <<< The client is normal.]]"));
-
-        public byte[] BeatingOfServerHeart
+        public Heartbeat()
+            : this("HeartBeater")
         {
-            get { return _BeatingOfServerHeart; }
-            set { _BeatingOfServerHeart = value; }
         }
 
-        public byte[] ReplayOfServer
+
+        public Heartbeat(string senderDescription)
         {
-            get { return _ReplayOfServer; }
-            set { _ReplayOfServer = value; }
+            RequestOfHeartBeat = Encoding.Default.GetBytes(string.Format("[[SOCKET >>> This is beating of {0} heart.]]", senderDescription));
+            ReplyOfHeartBeat = Encoding.Default.GetBytes(string.Format("[[SOCKET >>> The {0} is normal.]]",senderDescription));
         }
 
-        public byte[] BeatingOfClientHeart
-        {
-            get { return _BeatingOfClientHeart; }
-            set { _BeatingOfClientHeart = value; }
-        }
+        public byte[] RequestOfHeartBeat { get; set; }
 
-        public byte[] ReplayOfClient
-        {
-            get { return _ReplayOfClient; }
-            set { _ReplayOfClient = value; }
-        }
+        public byte[] ReplyOfHeartBeat { get; set; }
     }
 }

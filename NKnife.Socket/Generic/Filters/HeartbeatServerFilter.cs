@@ -21,7 +21,8 @@ namespace SocketKnife.Generic.Filters
         {
             Heartbeat = new Heartbeat();
             Interval = 1000 * 15;
-            IsStrictMode = false;
+            EnableStrictMode = false;
+            EnableAggressiveMode = true;
         }
 
         public Heartbeat Heartbeat { get; set; }
@@ -34,7 +35,12 @@ namespace SocketKnife.Generic.Filters
         /// true  心跳返回内容一定要和HeartBeat类中定义的ReplayOfClient一致才算有心跳响应
         /// false 心跳返回任何内容均算有心跳相应
         /// </returns>
-        public bool IsStrictMode { get; set; }
+        public bool EnableStrictMode { get; set; }
+
+        /// <summary>
+        /// 主动模式
+        /// </summary>
+        public bool EnableAggressiveMode { get; set; }
 
         public override bool ContinueNextFilter
         {
@@ -61,8 +67,11 @@ namespace SocketKnife.Generic.Filters
                 {
                     try
                     {
-                        handlers[0].Write(session, Heartbeat.BeatingOfServerHeart);
+                        handlers[0].Write(session, Heartbeat.RequestOfHeartBeat);
                         session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
+#if DEBUG
+                        _logger.Trace(() => string.Format("Server发出{0}心跳.", session.Source));
+#endif
                     }
                     catch (Exception ex) //发送异常，发不出去则立即移出
                     {
@@ -103,7 +112,7 @@ namespace SocketKnife.Generic.Filters
 
         protected internal virtual void Start()
         {
-            if (!_IsTimerStarted) //第一次监听到时启动
+            if (EnableAggressiveMode && !_IsTimerStarted) //第一次监听到时启动
             {
                 _IsTimerStarted = true;
 
@@ -119,23 +128,31 @@ namespace SocketKnife.Generic.Filters
 
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
-            if (!IsStrictMode)
+            if (!EnableStrictMode)
             {//非严格模式
                 session.WaitingForReply = false;
-                _logger.Trace(() => string.Format("Server收到{0}信息,关闭心跳等待.", session.Source));
+#if DEBUG
+                _logger.Trace(() => string.Format("Server收到{0}信息,关闭心跳等待（非严格模式）.", session.Source));
+#endif 
             }
-            if (data.IndexOf(Heartbeat.BeatingOfClientHeart) == 0)
+            if (data.IndexOf(Heartbeat.RequestOfHeartBeat) == 0)
             {
-                _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplayOfServer);
+                _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplyOfHeartBeat);
+
                 _ContinueNextFilter = false;
+#if DEBUG
                 _logger.Trace(() => string.Format("Server收到{0}心跳.回复完成.", session.Source));
+#endif
                 return;
             }
-            if (data.IndexOf(Heartbeat.ReplayOfClient) == 0)
+
+            if (data.IndexOf(Heartbeat.ReplyOfHeartBeat) == 0)
             {
                 session.WaitingForReply = false;
                 _ContinueNextFilter = false;
+#if DEBUG
                 _logger.Trace(() => string.Format("Server收到{0}心跳回复.", session.Source));
+#endif
             }
             else
             {

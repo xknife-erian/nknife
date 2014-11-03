@@ -79,7 +79,7 @@ namespace SocketKnife
                 foreach (var filter in _FilterChain)
                 {
                     var clientFilter = (KnifeSocketClientFilter) filter;
-                    clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Initiative));
+                    clientFilter.OnConnectionBroken(new ConnectionBrokenEventArgs(_EndPoint, BrokenCause.Aggressive));
                 }
             }
             try
@@ -156,7 +156,7 @@ namespace SocketKnife
         /// </summary>
         protected virtual void OnFilterConnectionBroken(object sender, ConnectionBrokenEventArgs e)
         {
-            if (e.BrokenCause != BrokenCause.Initiative) //当非主动断开时，启动断线重连
+            if (e.BrokenCause != BrokenCause.Aggressive) //当非主动断开时，启动断线重连
             {
                 if (_Config.EnableReconnect)
                     Reconnect();
