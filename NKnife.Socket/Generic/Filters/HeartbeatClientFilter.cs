@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Sockets;
 using System.Timers;
 using NKnife.Adapters;
 using NKnife.Interface;
@@ -24,6 +25,9 @@ namespace SocketKnife.Generic.Filters
             Interval = 1000 * 15;
             IsStrictMode = false;
             EnableAggressiveMode = true;
+
+            _BeatingTimer = new Timer();
+            _BeatingTimer.Elapsed += BeatingTimerElapsed;
         }
 
         public Heartbeat Heartbeat { get; set; }
@@ -69,7 +73,7 @@ namespace SocketKnife.Generic.Filters
                     _logger.Trace(() => string.Format("Client发出{0}心跳.", session.Source));
 #endif
                 }
-                catch (Exception ex) //发送异常，发不出去则立即移出
+                catch (SocketException ex) //发送异常，发不出去则立即移出
                 {
                     _logger.Warn(string.Format("向Server{0}发送心跳时异常:{1}", session.Source, ex.Message), ex);
                     _logger.Info("准备重连Server......");
@@ -101,9 +105,6 @@ namespace SocketKnife.Generic.Filters
             if (EnableAggressiveMode && !_IsTimerStarted) //第一次监听到时启动
             {
                 _IsTimerStarted = true;
-
-                _BeatingTimer = new Timer();
-                _BeatingTimer.Elapsed += BeatingTimerElapsed;
                 _BeatingTimer.Interval = Interval;
                 _BeatingTimer.Start();
                 _logger.Info(string.Format("Client心跳启动。间隔:{0}", Interval));
@@ -123,11 +124,20 @@ namespace SocketKnife.Generic.Filters
             }
             if (data.IndexOf(Heartbeat.RequestOfHeartBeat) == 0)
             {
-                _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplyOfHeartBeat);
-                _ContinueNextFilter = false;
+                try
+                {
+                    _ContinueNextFilter = false;
+                    _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplyOfHeartBeat);
 #if DEBUG
-                _logger.Trace(() => string.Format("Client收到{0}心跳.回复完成.", session.Source));
+                    _logger.Trace(() => string.Format("Client收到{0}心跳.回复完成.", session.Source));
 #endif
+                }
+                catch (SocketException ex)
+                {
+                    _logger.Trace(() => string.Format("Client收到{0}心跳.回复时socket异常：{1}.", session.Source,ex.Message));
+                    _logger.Info("准备重连Server......");
+                    Reconnects(session);
+                }
                 return;
             } 
             if (data.IndexOf(Heartbeat.ReplyOfHeartBeat) == 0)

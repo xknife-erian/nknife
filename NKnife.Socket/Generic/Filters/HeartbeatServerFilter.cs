@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Sockets;
 using System.Timers;
 using NKnife.Adapters;
 using NKnife.Interface;
@@ -16,6 +17,7 @@ namespace SocketKnife.Generic.Filters
 
         protected bool _ContinueNextFilter = true;
         private bool _IsTimerStarted;
+        private readonly Timer _BeatingTimer;
 
         public HeartbeatServerFilter()
         {
@@ -23,6 +25,10 @@ namespace SocketKnife.Generic.Filters
             Interval = 1000 * 15;
             EnableStrictMode = false;
             EnableAggressiveMode = true;
+
+            //初始化Timer
+            _BeatingTimer = new Timer();
+            _BeatingTimer.Elapsed += BeatingTimerElapsed;
         }
 
         public Heartbeat Heartbeat { get; set; }
@@ -51,6 +57,14 @@ namespace SocketKnife.Generic.Filters
         {
             base.OnClientCome(e);
             Start();
+        }
+
+        protected internal override void OnClientBroken(ConnectionBrokenEventArgs e)
+        {
+            base.OnClientBroken(e);
+            //停止心跳timer
+            _BeatingTimer.Stop();
+            _IsTimerStarted = false;
         }
 
         protected virtual void BeatingTimerElapsed(object sender, EventArgs e)
@@ -115,11 +129,8 @@ namespace SocketKnife.Generic.Filters
             if (EnableAggressiveMode && !_IsTimerStarted) //第一次监听到时启动
             {
                 _IsTimerStarted = true;
-
-                var beatingTimer = new Timer();
-                beatingTimer.Elapsed += BeatingTimerElapsed;
-                beatingTimer.Interval = Interval;
-                beatingTimer.Start();
+                _BeatingTimer.Interval = Interval;
+                _BeatingTimer.Start();
                 _logger.Info(string.Format("服务器心跳启动。间隔:{0}", Interval));
                 var handlers = _HandlersGetter.Invoke();
                 Debug.Assert(handlers != null && handlers.Count > 0, "Handler未设置");
@@ -129,20 +140,29 @@ namespace SocketKnife.Generic.Filters
         public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
         {
             if (!EnableStrictMode)
-            {//非严格模式
+            {//非严格模式，收到任何数据，均认为心跳正常
                 session.WaitingForReply = false;
 #if DEBUG
                 _logger.Trace(() => string.Format("Server收到{0}信息,关闭心跳等待（非严格模式）.", session.Source));
-#endif 
+#endif
+                return;
             }
+
             if (data.IndexOf(Heartbeat.RequestOfHeartBeat) == 0)
             {
-                _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplyOfHeartBeat);
-
-                _ContinueNextFilter = false;
+                try
+                {
+                    _ContinueNextFilter = false;
+                    _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplyOfHeartBeat);
 #if DEBUG
-                _logger.Trace(() => string.Format("Server收到{0}心跳.回复完成.", session.Source));
+                    _logger.Trace(() => string.Format("Server收到{0}心跳.回复完成.", session.Source));
 #endif
+                }
+                catch (SocketException ex)
+                {
+                    _logger.Trace(() => string.Format("Server收到{0}心跳.回复时socket异常.", session.Source));
+                    RemoveEndPointFromSessionMap(session.Source);
+                }
                 return;
             }
 
