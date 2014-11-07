@@ -38,49 +38,30 @@
         <TextBlock Grid.Row="2" Grid.Column="0" Text="键值对数据" VerticalAlignment="Bottom" Margin="26,0,4,0"></TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="顺序数据" VerticalAlignment="Bottom" Margin="4,0,26,0"></TextBlock>
         <StackPanel Grid.Row="3" Grid.Column="0" Margin="26,0,4,0" Orientation="Horizontal" VerticalAlignment="Bottom">
-            <Button Width="30" Height="30">
-                <Image Width="19" Height="19" Source="../Attachments/ProtocolBuilder/add.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/edit.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/remove.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/up.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/down.png"></Image>
-            </Button>
+            <Button Width="30" Height="30" Click="AddPair_OnClick"><Image Width="19" Height="19" Source="../Attachments/ProtocolBuilder/add.png" /></Button>
+            <Button Width="30" Height="30" Click="EditPair_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/edit.png" /></Button>
+            <Button Width="30" Height="30" Click="RemovePair_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/remove.png" /></Button>
+            <Button Width="30" Height="30" Click="UpPair_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/up.png" /></Button>
+            <Button Width="30" Height="30" Click="DownPair_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/down.png" /></Button>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="1" Margin="4,0,26,0" Orientation="Horizontal" VerticalAlignment="Bottom">
-            <Button Width="30" Height="30">
-                <Image Width="19" Height="19" Source="../Attachments/ProtocolBuilder/add.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/edit.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/remove.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/up.png"></Image>
-            </Button>
-            <Button Width="30" Height="30">
-                <Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/down.png"></Image>
-            </Button>
+            <Button Width="30" Height="30" Click="Add_OnClick"><Image Width="19" Height="19" Source="../Attachments/ProtocolBuilder/add.png" /></Button>
+            <Button Width="30" Height="30" Click="Edit_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/edit.png" /></Button>
+            <Button Width="30" Height="30" Click="Remove_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/remove.png" /></Button>
+            <Button Width="30" Height="30" Click="Up_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/up.png" /></Button>
+            <Button Width="30" Height="30" Click="Down_OnClick"><Image Width="18" Height="18" Source="../Attachments/ProtocolBuilder/down.png" /></Button>
         </StackPanel>
-        <ListBox Grid.Row="4" Grid.Column="1" Margin="4,0,26,0"></ListBox>
-        <ListView Grid.Row="4" Grid.Column="0" Margin="26,0,4,0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="键" DisplayMemberBinding="{Binding Path=Time}" Width="90" />
-                    <GridViewColumn Header="值" DisplayMemberBinding="{Binding Path=Message}" Width="150" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Grid Grid.Row="5" Grid.ColumnSpan="2" Margin="26,8,26,8">
+        <ListBox Grid.Row="4" Grid.Column="1" Margin="4,0,26,0" ItemsSource="{Binding Values}"></ListBox>
+        <DataGrid Grid.Row="4" Grid.Column="0" Margin="26,0,4,0" ItemsSource="{Binding PairDatas}"
+                      AutoGenerateColumns="False" IsReadOnly="True" Name="_PairDataGrid"
+                      HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+                      VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="键" Binding="{Binding Path=Key, Mode=OneWay}" Width="70" />
+                <DataGridTextColumn Header="值" Binding="{Binding Path=Value, Mode=OneWay}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Margin="26,8,26,8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>

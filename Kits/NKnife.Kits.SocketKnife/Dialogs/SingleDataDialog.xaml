@@ -19,10 +19,10 @@
             <ColumnDefinition Width="40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Text="Value:" VerticalAlignment="Center" Margin="0,0,3,0"></TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="2" Height="25"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="2" Height="25" Name="_ValueTextBox"></TextBox>
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="90" Height="30" Content="确认(_C)" IsDefault="True" Margin="5,0" ></Button>
-            <Button Width="90" Height="30" Content="取消(_X)" IsCancel="True"></Button>
+            <Button Width="90" Height="30" Content="确认(_C)" IsDefault="True" Margin="5,0" Name="_ConfirmButton" Click="_ConfirmButton_OnClick"></Button>
+            <Button Width="90" Height="30" Content="取消(_X)" IsCancel="True" Name="_CancelButton" Click="_CancelButton_OnClick"></Button>
         </StackPanel>
     </Grid>
 </Window>

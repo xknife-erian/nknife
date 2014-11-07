@@ -22,5 +22,27 @@ namespace NKnife.Kits.SocketKnife.Dialogs
         {
             InitializeComponent();
         }
+
+        public string Key
+        {
+            get { return _KeyTextBox.Text; }
+            set { _KeyTextBox.Text = value; }
+        }
+
+        public string Value
+        {
+            get { return _ValueTextBox.Text; }
+            set { _ValueTextBox.Text = value; }
+        }
+
+        private void _ConfirmButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
+        private void _CancelButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
     }
 }
