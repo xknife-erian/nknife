@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Data;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo;
 using NKnife.Kits.SocketKnife.Dialogs;
@@ -29,17 +32,17 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
             _OnlyOnceRadioButton.Checked += ReplayModeRadioButtonOnClick;
             _FixTimeRadioButton.Checked += ReplayModeRadioButtonOnClick;
-            _RandomRadioButton.Checked += ReplayModeRadioButtonOnClick;
+            _RandomTimeRadioButton.Checked += ReplayModeRadioButtonOnClick;
         }
 
-        private void ReplayModeRadioButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
+        private void ReplayModeRadioButtonOnClick(object sender, RoutedEventArgs routedEventArgs)//切换回复模式时界面的变化
         {
             if (_FixTimeRadioButton.IsChecked != null)
                 _FixTimeTextBox.IsEnabled = (bool) _FixTimeRadioButton.IsChecked;
-            if (_RandomRadioButton.IsChecked != null)
-                _RandomMinTimeTextBox.IsEnabled = (bool) _RandomRadioButton.IsChecked;
-            if (_RandomRadioButton.IsChecked != null)
-                _RandomMaxTimeTextBox.IsEnabled = (bool) _RandomRadioButton.IsChecked;
+            if (_RandomTimeRadioButton.IsChecked != null)
+                _RandomMinTimeTextBox.IsEnabled = (bool)_RandomTimeRadioButton.IsChecked;
+            if (_RandomTimeRadioButton.IsChecked != null)
+                _RandomMaxTimeTextBox.IsEnabled = (bool)_RandomTimeRadioButton.IsChecked;
         }
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
@@ -59,6 +62,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _StartButton.IsEnabled = false;
             _StopButton.IsEnabled = true;
             _ViewModel.StartServer();
+            _StartReplayButton.IsEnabled = true;
         }
 
         private void Stop(object sender, RoutedEventArgs e)
@@ -66,13 +70,39 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _StartButton.IsEnabled = true;
             _StopButton.IsEnabled = false;
             _ViewModel.StopServer();
+            _StartReplayButton.IsEnabled = false;
+            _StopReplayButton.IsEnabled = false;
         }
-
 
         private void _BuildProtocolButton_OnClick(object sender, RoutedEventArgs e)
         {
             var dialog = new ProtocolEditorDialog();
             dialog.Show();
+        }
+
+        private void _SelectAllClientCheckBox_OnClick(object sender, RoutedEventArgs e)
+        {
+            var isChecked = ((CheckBox) sender).IsChecked;
+            foreach (var session in _ViewModel.Sessions)
+            {
+                if (isChecked != null) 
+                    session.IsSelected = (bool) isChecked;
+            }
+        }
+
+        private void _StopReplayButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            _StopReplayButton.IsEnabled = false;
+            _StartReplayButton.IsEnabled = true;
+        }
+
+        private void _StartReplayButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_ViewModel.IsFixTime || _ViewModel.IsRandomTime)
+            {
+                _StartReplayButton.IsEnabled = false;
+                _StopReplayButton.IsEnabled = true;
+            }
         }
     }
 }

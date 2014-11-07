@@ -93,7 +93,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="400"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" Margin="1,1,3,1" ItemsSource="{Binding SocketMessages}" AutoGenerateColumns="False"
+            <DataGrid Grid.Column="0" Margin="1,1,3,1" ItemsSource="{Binding SocketMessages}" AutoGenerateColumns="False" IsReadOnly="True"
                       HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
                       VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                 <DataGrid.Columns>
@@ -118,26 +118,46 @@
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Name="_BuildProtocolButton" Content="协议生成" Click="_BuildProtocolButton_OnClick"></Button>
                     <TextBox Grid.Row="1" Name="_ProtocolTextBox" Margin="0,2,0,0"></TextBox>
-                    <CheckBox Grid.Row="2" Name="_SelectAllClientCheckBox" Content="全部客户端" Margin="0,3,0,0"></CheckBox>
+                    <CheckBox Grid.Row="2" Name="_SelectAllClientCheckBox" Content="全部客户端" Margin="0,3,0,0" Click="_SelectAllClientCheckBox_OnClick" />
                     <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <RadioButton Name="_OnlyOnceRadioButton" Content="仅一次" IsChecked="True" Margin="3,3,7,3"></RadioButton>
-                        <RadioButton Name="_FixTimeRadioButton" Content="定时间隔" Margin="3,3,4,0"></RadioButton>
-                        <TextBox Name="_FixTimeTextBox" Margin="0,0,5,0" Width="45" IsEnabled="False" Text="200"></TextBox>
-                        <RadioButton Name="_RandomRadioButton" Content="随机间隔" Margin="3,3,4,3"></RadioButton>
-                        <TextBox Name="_RandomMinTimeTextBox" Margin="0,0,0,0" Width="45" IsEnabled="False" Text="50"></TextBox>
+                        <RadioButton Name="_OnlyOnceRadioButton" Content="仅一次" IsChecked="{Binding Path=IsOnlyOnce, Mode=TwoWay}" Margin="3,3,7,3"></RadioButton>
+                        <RadioButton Name="_FixTimeRadioButton" Content="定时间隔" IsChecked="{Binding Path=IsFixTime, Mode=TwoWay}" Margin="3,3,4,0"></RadioButton>
+                        <TextBox Name="_FixTimeTextBox" Margin="0,0,5,0" Width="45" IsEnabled="False" Text="{Binding Path=FixTime, Mode=TwoWay}"></TextBox>
+                        <RadioButton Name="_RandomTimeRadioButton" Content="随机间隔" IsChecked="{Binding Path=IsRandomTime, Mode=TwoWay}" Margin="3,3,4,3"></RadioButton>
+                        <TextBox Name="_RandomMinTimeTextBox" Margin="0,0,0,0" Width="45" IsEnabled="False" Text="{Binding Path=RandomMinTime, Mode=TwoWay}"></TextBox>
                         <TextBlock Text=" ~ " Margin="-1,3"></TextBlock>
-                        <TextBox Name="_RandomMaxTimeTextBox" Margin="0,0,2,0" Width="45" IsEnabled="False" Text="1000"></TextBox>
+                        <TextBox Name="_RandomMaxTimeTextBox" Margin="0,0,2,0" Width="45" IsEnabled="False" Text="{Binding Path=RandomMaxTime, Mode=TwoWay}"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button Name="_StopReplayButton" Content="停止" Width="60" Margin="3,0" IsEnabled="False"></Button>
-                        <Button Name="_StartReplayButton" Content="回复" Width="60" Margin="3,0,0,0" IsEnabled="False"></Button>
+                        <Button Name="_StopReplayButton" Content="停止" Width="60" Margin="3,0" IsEnabled="False" Click="_StopReplayButton_OnClick"></Button>
+                        <Button Name="_StartReplayButton" Content="回复" Width="60" Margin="3,0,0,0" IsEnabled="False" Click="_StartReplayButton_OnClick"></Button>
                     </StackPanel>
                 </Grid>
-                <DataGrid Grid.Row="1" Name="_SessionDataGrid" Margin="0,7,3,1" AutoGenerateColumns="False">
+                <DataGrid Grid.Row="1" Name="_SessionDataGrid" Margin="0,7,3,1" AutoGenerateColumns="False"
+                          CanUserAddRows="False" CanUserDeleteRows="True"
+                          HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
+                          VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Width="50"></DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="客户端" Binding="{Binding Path=Source, Mode=OneWay}" Width="*" />
-                        <DataGridCheckBoxColumn Header="自动回复" Width="65"></DataGridCheckBoxColumn>
+                        <!--为了可以单击选中，用模板的方式重新定义-->
+                        <DataGridTemplateColumn Width="30">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="客户端" Binding="{Binding Path=EndPoint, Mode=OneWay}" IsReadOnly="True" Width="*" />
+                        <DataGridTemplateColumn Header="自动回复" Width="65">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <CheckBox IsChecked="{Binding Path=EnableAutoReplay, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

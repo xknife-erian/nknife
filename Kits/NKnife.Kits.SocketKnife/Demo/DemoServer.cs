@@ -2,10 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
-using System.Windows;
 using System.Windows.Threading;
 using NKnife.Base;
-using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo.Protocols;
@@ -15,37 +13,109 @@ using SocketKnife;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
-using SocketKnife.Interfaces;
 
 namespace NKnife.Kits.SocketKnife.Demo
 {
     public class DemoServer : NotificationObject
     {
-        #region App
+        #region 界面绑定
 
-        internal Dispatcher Dispatcher { get; set; }
+        private StringProtocol _Protocol;
+        private bool _IsOnlyOnce = true;
+        private bool _IsFixTime = false;
+        private bool _IsRandomTime = false;
+        private uint _FixTime = 200;
+        private uint _RandomMinTime = 50;
+        private uint _RandomMaxTime = 500;
 
         private readonly ServerList _ServerList = DI.Get<ServerList>();
-        public ObservableCollection<SocketMessage> SocketMessages { get; set; }
-        public ObservableCollection<KnifeSocketSession> Sessions { get; set; }
-
         private Pair<IPAddress, int> _ServerListKey;
+        internal Dispatcher Dispatcher { get; set; }
+        public ObservableCollection<SocketMessage> SocketMessages { get; set; }
+        public SessionList Sessions { get; set; }
 
-        public void RemoveServer()
+        public StringProtocol CurrentProtocol
         {
-            _ServerList.Remove(_ServerListKey);
+            get { return _Protocol; }
+            set
+            {
+                _Protocol = value;
+                RaisePropertyChanged(() => CurrentProtocol);
+            }
+        }
+
+        public bool IsOnlyOnce
+        {
+            get { return _IsOnlyOnce; }
+            set
+            {
+                _IsOnlyOnce = value;
+                RaisePropertyChanged(() => IsOnlyOnce);
+            }
+        }
+
+        public bool IsFixTime
+        {
+            get { return _IsFixTime; }
+            set
+            {
+                _IsFixTime = value;
+                RaisePropertyChanged(() => IsFixTime);
+            }
+        }
+
+        public bool IsRandomTime
+        {
+            get { return _IsRandomTime; }
+            set
+            {
+                _IsRandomTime = value;
+                RaisePropertyChanged(() => IsRandomTime);
+            }
+        }
+
+        public uint FixTime
+        {
+            get { return _FixTime; }
+            set
+            {
+                _FixTime = value;
+                RaisePropertyChanged(() => FixTime);
+            }
+        }
+
+        public uint RandomMinTime
+        {
+            get { return _RandomMinTime; }
+            set
+            {
+                _RandomMinTime = value;
+                RaisePropertyChanged(() => RandomMinTime);
+            }
+        }
+
+        public uint RandomMaxTime
+        {
+            get { return _RandomMaxTime; }
+            set
+            {
+                _RandomMaxTime = value;
+                RaisePropertyChanged(() => RandomMaxTime);
+            }
         }
 
         #endregion
 
-        private bool _IsInitialized = false;
+        #region Sokcet相关
+
+        private bool _IsInitialized;
+        private KeepAliveServerFilter _KeepAliveFilter = DI.Get<KeepAliveServerFilter>();
         private KnifeSocketServer _Server;
-        KeepAliveServerFilter _KeepAliveFilter = DI.Get<KeepAliveServerFilter>();
 
         public DemoServer()
         {
             SocketMessages = new ObservableCollection<SocketMessage>();
-            Sessions = new ObservableCollection<KnifeSocketSession>();
+            Sessions = new SessionList();
         }
 
         public void Initialize(KnifeSocketConfig config, SocketTools socketTools)
@@ -98,7 +168,7 @@ namespace NKnife.Kits.SocketKnife.Demo
                     else
                     {
                         var sessionDelegate = new SessionAdder(AddSession);
-                        Dispatcher.BeginInvoke(sessionDelegate, new object[] { args.Item });
+                        Dispatcher.BeginInvoke(sessionDelegate, new object[] {args.Item});
                     }
                 }
                 catch (Exception e)
@@ -118,7 +188,7 @@ namespace NKnife.Kits.SocketKnife.Demo
                     else
                     {
                         var sessionDelegate = new SessionRemover(RemoveSession);
-                        Dispatcher.BeginInvoke(sessionDelegate, new object[] { args.Item });
+                        Dispatcher.BeginInvoke(sessionDelegate, new object[] {args.Item});
                     }
                 }
                 catch (Exception e)
@@ -131,22 +201,20 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         protected void AddSession(KnifeSocketSession session)
         {
-            Sessions.Add(session);
+            Sessions.Add(new SessionByView {EndPoint = session.Source.ToString()});
         }
+
         protected void RemoveSession(EndPoint endPoint)
         {
             for (int i = 0; i < Sessions.Count; i++)
             {
-                if (Sessions[i].Source == endPoint)
+                if (Sessions[i].EndPoint == endPoint.ToString())
                 {
                     Sessions.RemoveAt(i);
                     break;
                 }
             }
         }
-
-        private delegate void SessionRemover(EndPoint endPoint);
-        private delegate void SessionAdder(KnifeSocketSession session);
 
         private StringProtocolFamily GetProtocolFamily()
         {
@@ -174,10 +242,76 @@ namespace NKnife.Kits.SocketKnife.Demo
             _Server.Start();
         }
 
+        public void RemoveServer()
+        {
+            _ServerList.Remove(_ServerListKey);
+        }
+
         public void StopServer()
         {
             _Server.Stop();
         }
+
+        #endregion
+
+        #region 内部类
+
+        public class SessionByView : NotificationObject
+        {
+            private bool _EnableAutoReplay;
+            private string _EndPoint;
+            private bool _IsSelected;
+
+            public SessionByView()
+            {
+                IsSelected = false;
+                EnableAutoReplay = false;
+            }
+
+            public bool IsSelected
+            {
+                get { return _IsSelected; }
+                set
+                {
+                    _IsSelected = value;
+                    RaisePropertyChanged(() => IsSelected);
+                }
+            }
+
+            public string EndPoint
+            {
+                get { return _EndPoint; }
+                set
+                {
+                    _EndPoint = value;
+                    RaisePropertyChanged(() => EndPoint);
+                }
+            }
+
+            public bool EnableAutoReplay
+            {
+                get { return _EnableAutoReplay; }
+                set
+                {
+                    _EnableAutoReplay = value;
+                    RaisePropertyChanged(() => EnableAutoReplay);
+                }
+            }
+        }
+
+        public class SessionList : ObservableCollection<SessionByView>
+        {
+        }
+
+        #endregion
+
+        #region 界面委托
+
+        private delegate void SessionRemover(EndPoint endPoint);
+
+        private delegate void SessionAdder(KnifeSocketSession session);
+
+        #endregion
 
     }
 }
