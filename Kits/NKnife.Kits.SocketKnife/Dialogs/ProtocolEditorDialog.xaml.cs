@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.Dialogs
 {
@@ -22,5 +23,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
         {
             InitializeComponent();
         }
+
+        public StringProtocol CurrentProtocol { get; set; }
     }
 }

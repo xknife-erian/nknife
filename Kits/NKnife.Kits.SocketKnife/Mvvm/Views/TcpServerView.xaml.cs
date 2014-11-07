@@ -77,7 +77,17 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         private void _BuildProtocolButton_OnClick(object sender, RoutedEventArgs e)
         {
             var dialog = new ProtocolEditorDialog();
+            dialog.Closed += ProtocolEditorDialog_Closed;
             dialog.Show();
+        }
+
+        void ProtocolEditorDialog_Closed(object sender, EventArgs e)
+        {
+            var dialog = sender as ProtocolEditorDialog;
+            if (dialog != null && dialog.CurrentProtocol != null)
+            {
+                _ViewModel.CurrentProtocol = dialog.CurrentProtocol;
+            }
         }
 
         private void _SelectAllClientCheckBox_OnClick(object sender, RoutedEventArgs e)

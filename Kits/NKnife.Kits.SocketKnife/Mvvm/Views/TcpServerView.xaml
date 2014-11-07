@@ -4,6 +4,7 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+                     xmlns:common="clr-namespace:NKnife.Kits.SocketKnife.Common"
                      mc:Ignorable="d" Title="SocketKnife服务端">
     <Grid Name="_View" Loaded="View_OnLoaded">
         <Grid.Resources>
@@ -71,6 +72,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            <common:ProtocolConverter x:Key="_ProtocolConverter" />
         </Grid.Resources>
         
         <Grid.Background>
@@ -117,7 +119,7 @@
                         <RowDefinition Height="30"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Name="_BuildProtocolButton" Content="协议生成" Click="_BuildProtocolButton_OnClick"></Button>
-                    <TextBox Grid.Row="1" Name="_ProtocolTextBox" Margin="0,2,0,0"></TextBox>
+                    <TextBox Grid.Row="1" Name="_ProtocolTextBox" Margin="0,2,0,0" Text="{Binding Path=CurrentProtocol, Converter={StaticResource _ProtocolConverter},Mode=OneWay}" />
                     <CheckBox Grid.Row="2" Name="_SelectAllClientCheckBox" Content="全部客户端" Margin="0,3,0,0" Click="_SelectAllClientCheckBox_OnClick" />
                     <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <RadioButton Name="_OnlyOnceRadioButton" Content="仅一次" IsChecked="{Binding Path=IsOnlyOnce, Mode=TwoWay}" Margin="3,3,7,3"></RadioButton>

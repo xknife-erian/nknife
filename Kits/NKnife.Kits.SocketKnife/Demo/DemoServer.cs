@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net;
+using System.Windows.Data;
 using System.Windows.Threading;
 using NKnife.Base;
 using NKnife.IoC;
@@ -314,4 +316,6 @@ namespace NKnife.Kits.SocketKnife.Demo
         #endregion
 
     }
+
+
 }
