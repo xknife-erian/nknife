@@ -45,6 +45,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -78,8 +80,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\ProtocolConverter.cs" />
+    <Compile Include="Dialogs\PairDataDialog.xaml.cs">
+      <DependentUpon>PairDataDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ProtocolEditorDialog.xaml.cs">
       <DependentUpon>ProtocolEditorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SingleDataDialog.xaml.cs">
+      <DependentUpon>SingleDataDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mvvm\Views\ProtocolsView.xaml.cs">
       <DependentUpon>ProtocolsView.xaml</DependentUpon>
@@ -110,7 +118,15 @@
     </Compile>
     <Compile Include="IoC\SocketModule.cs" />
     <Compile Include="IoC\UIModule.cs" />
+    <Page Include="Dialogs\PairDataDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ProtocolEditorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SingleDataDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

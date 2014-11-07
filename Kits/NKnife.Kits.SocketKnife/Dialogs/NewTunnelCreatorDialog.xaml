@@ -69,20 +69,15 @@
                  VerticalAlignment="Center" Width="80" Margin="0" VerticalContentAlignment="Center" FontSize="12" />
         <TextBlock Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Margin="85,0,0,0" TextWrapping="Wrap" Text="(毫秒)" VerticalAlignment="Center"/>
         <!--第2列-->
-        <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
-                   Text="Decoder:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Text="Decoder:" VerticalAlignment="Center" Margin="0,0,5,0" />
         <ComboBox Grid.Row="1" Grid.Column="3" Name="_DecoderComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
-        <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
-                   Text="Encoder:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Text="Encoder:" VerticalAlignment="Center" Margin="0,0,5,0" />
         <ComboBox Grid.Row="2" Grid.Column="3" Name="_EncoderComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
-        <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
-                   Text="Packer:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Text="Packer:" VerticalAlignment="Center" Margin="0,0,5,0" />
         <ComboBox Grid.Row="3" Grid.Column="3" Name="_PackerComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
-        <TextBlock Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
-                   Text="UnPacker:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <TextBlock Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Text="UnPacker:" VerticalAlignment="Center" Margin="0,0,5,0" />
         <ComboBox Grid.Row="4" Grid.Column="3" Name="_UnPackerComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
-        <TextBlock Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" TextWrapping="Wrap" 
-                   Text="CommandParser:" VerticalAlignment="Center" Margin="0,0,5,0" />
+        <TextBlock Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Text="CommandParser:" VerticalAlignment="Center" Margin="0,0,5,0" />
         <ComboBox Grid.Row="5" Grid.Column="3" Name="_CommandParserComboBox" HorizontalAlignment="Left" VerticalAlignment="Center" Width="360"/>
         <CheckBox Grid.Row="6" Grid.Column="3" Name="_IsHeartBeat" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Content="心跳检测" Width="220"/>
 
