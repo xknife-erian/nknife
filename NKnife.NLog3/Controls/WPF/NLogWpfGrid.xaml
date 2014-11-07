@@ -36,7 +36,7 @@
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
-        <DataGrid x:Name="_LoggerGrid" AutoGenerateColumns="False" 
+        <DataGrid x:Name="_LoggerGrid" AutoGenerateColumns="False" IsReadOnly="True"
                   RowStyle="{StaticResource LoggerRowStyle}" 
                   HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
                   VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
