@@ -892,7 +892,7 @@ namespace NKnife.Utility
             {
                 IList<string> dllList = SearchDirectory(directory, "*.dll", true, true);
                 IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
-                var result = new List<Assembly>();
+                var result = new System.Collections.Concurrent.ConcurrentBag<Assembly>();
                 Parallel.ForEach(dllList, (dll) =>
                 {
                     try
