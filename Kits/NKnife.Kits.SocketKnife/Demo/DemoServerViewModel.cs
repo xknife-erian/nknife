@@ -2,9 +2,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
+using System.Timers;
 using System.Windows;
 using System.Windows.Threading;
-using NKnife.Base;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Mvvm;
@@ -24,8 +24,10 @@ namespace NKnife.Kits.SocketKnife.Demo
         private uint _RandomMaxTime = 500;
 
         private IPEndPoint _CurrentServerPoint;
+        private DemoServerHandler _Handler;
         private readonly ServerMap _ServerMap = DI.Get<ServerMap>();
         private readonly DemoServer _Server = new DemoServer();
+        private Timer _Timer = new Timer();
 
         internal Dispatcher Dispatcher { get; set; }
 
@@ -111,14 +113,14 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         protected void AddSession(KnifeSocketSession session)
         {
-            Sessions.Add(new SessionByView {EndPoint = session.Source.ToString()});
+            Sessions.Add(new SessionByView {EndPoint = (IPEndPoint) session.Source});
         }
 
         protected void RemoveSession(EndPoint endPoint)
         {
             for (int i = 0; i < Sessions.Count; i++)
             {
-                if (Sessions[i].EndPoint == endPoint.ToString())
+                if (Equals(Sessions[i].EndPoint, endPoint))
                 {
                     Sessions.RemoveAt(i);
                     break;
@@ -128,10 +130,10 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void StartServer(KnifeSocketConfig config, SocketTools tools)
         {
-            var handler = new DemoServerHandler(SocketMessages);
+            _Handler = new DemoServerHandler(SocketMessages);
             _CurrentServerPoint = new IPEndPoint(tools.IpAddress, tools.Port);
             _ServerMap.Add(_CurrentServerPoint, _Server.GetSocketServer());
-            _Server.Initialize(config, tools, handler);
+            _Server.Initialize(config, tools, _Handler);
 
             var filter = _Server.GetSocketServerFilter();
             filter.SessionMapGetter.Invoke().Added += (sender, args) =>
@@ -179,8 +181,39 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void StopServer()
         {
+            if (_Timer != null)
+                _Timer.Stop();
             _ServerMap.Remove(_CurrentServerPoint);
             _Server.StopServer();
+        }
+
+        public void Replay()
+        {
+            if (IsOnlyOnce)
+            {
+                WriteCurrentProtocol();
+            }
+            else if (IsFixTime)
+            {
+                _Timer.Interval = _FixTime;
+                _Timer.Elapsed += (s, e) => WriteCurrentProtocol();
+                _Timer.Start();
+            }
+            else if (IsRandomTime)
+            {
+            }
+        }
+
+        private void WriteCurrentProtocol()
+        {
+            if (CurrentProtocol != null)
+            {
+                foreach (var session in Sessions)
+                {
+                    if (session.IsSelected)
+                        _Handler.Write(_Handler.SessionMap[session.EndPoint], CurrentProtocol);
+                }
+            }
         }
 
         #region ÄÚ²¿Àà
@@ -188,7 +221,7 @@ namespace NKnife.Kits.SocketKnife.Demo
         public class SessionByView : NotificationObject
         {
             private bool _EnableAutoReplay;
-            private string _EndPoint;
+            private IPEndPoint _EndPoint;
             private bool _IsSelected;
 
             public SessionByView()
@@ -207,7 +240,7 @@ namespace NKnife.Kits.SocketKnife.Demo
                 }
             }
 
-            public string EndPoint
+            public IPEndPoint EndPoint
             {
                 get { return _EndPoint; }
                 set

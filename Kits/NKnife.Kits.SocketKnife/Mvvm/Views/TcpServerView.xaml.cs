@@ -111,6 +111,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 _StartReplayButton.IsEnabled = false;
                 _StopReplayButton.IsEnabled = true;
             }
+            _ViewModel.Replay();
         }
     }
 }
