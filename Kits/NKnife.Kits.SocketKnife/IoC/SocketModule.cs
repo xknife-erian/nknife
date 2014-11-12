@@ -11,7 +11,7 @@ namespace NKnife.Kits.SocketKnife.IoC
     {
         public override void Load()
         {
-            Bind<ServerList>().ToSelf().InSingletonScope();
+            Bind<ServerMap>().ToSelf().InSingletonScope();
 
             Bind<StringProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
             Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();

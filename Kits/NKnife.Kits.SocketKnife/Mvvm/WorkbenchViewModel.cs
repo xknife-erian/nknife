@@ -5,6 +5,8 @@ namespace NKnife.Kits.SocketKnife.Mvvm
 {
     public class WorkbenchViewModel : NotificationObject
     {
+        #region 菜单命令
+        
         public static RoutedUICommand ServerCreator = new RoutedUICommand("新建服务器(_S)...", "ServerCreator",
             typeof (WorkbenchViewModel), new InputGestureCollection(new InputGesture[] {new KeyGesture(Key.F3)}));
 
@@ -31,5 +33,8 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         public static RoutedUICommand About = new RoutedUICommand("关于(_A)...", "About",
             typeof (WorkbenchViewModel),
             new InputGestureCollection(new InputGesture[] {}));
+
+        #endregion
+
     }
 }
