@@ -16,7 +16,7 @@ namespace NKnife.NLog3.Controls.WPF
     {
         private const int LOGGER_VIEW_COUNT = 500;
 
-        private readonly ObservableCollection<LogMessage> _LogList = DI.Get<ObservableCollection<LogMessage>>();
+        private readonly LogMessageObservableCollection _LogList = LogMessageObservableCollection.Instance;
 
         protected override void Write(LogEventInfo logEvent)
         {

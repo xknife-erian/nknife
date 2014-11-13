@@ -2,8 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
-using NKnife.Adapters;
-using NKnife.Interface;
+using Common.Logging;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol.Generic;
 using SocketKnife.Generic;
@@ -12,7 +11,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 {
     public class DemoServerHandler : KnifeSocketServerProtocolHandler
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ObservableCollection<SocketMessage> _SocketMessages;
 

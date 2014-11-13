@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using Common.Logging;
 using Common.Logging.Configuration;
 using Common.Logging.NLog;
 using Ninject.Modules;
-using Common.Logging;
 using NKnife.NLog3.Controls;
 using NKnife.NLog3.Controls.WPF;
 using NKnife.NLog3.Properties;
@@ -20,12 +20,15 @@ namespace NKnife.NLog3.IoC
         }
 
         private const string CONFIG_FILE_NAME = "nlog.config";
-        public static AppStyle Style { get; set; }
 
         static NLogModules()
         {
             Style = AppStyle.WinForm;
+        }
 
+        public NLogModules()
+        {
+            //当发现程序目录中无NLog的配置文件时，根据程序的模式（WinForm或者WPF）自动释放不同NLog的配置文件
             string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIG_FILE_NAME);
             if (!File.Exists(file))
             {
@@ -47,21 +50,20 @@ namespace NKnife.NLog3.IoC
                 }
             }
 
+            //配置Common.Logging适配器
             var properties = new NameValueCollection();
             properties["configType"] = "FILE";
-            properties["configFile"] = "~/NLog.config";
+            properties["configFile"] = string.Format("~/{0}", CONFIG_FILE_NAME);
             LogManager.Adapter = new NLogLoggerFactoryAdapter(properties);
         }
 
+        public static AppStyle Style { get; set; }
+
         public override void Load()
         {
-
-
-                Bind<ObservableCollection<LogMessage>>().To<LogMessageObservableCollection>().InSingletonScope();
-                Bind<LogPanel>().To<LogPanel>().InSingletonScope();
-                Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
-                Bind<LogMessageFilter>().ToSelf().InSingletonScope();
-            
+            Bind<LogPanel>().To<LogPanel>().InSingletonScope();
+            Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
+            Bind<LogMessageFilter>().ToSelf().InSingletonScope();
         }
     }
 }
