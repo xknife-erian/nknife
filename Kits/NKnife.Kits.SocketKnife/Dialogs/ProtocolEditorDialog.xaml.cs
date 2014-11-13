@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NKnife.IoC;
 using NKnife.Mvvm;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
@@ -47,6 +48,36 @@ namespace NKnife.Kits.SocketKnife.Dialogs
         }
 
         public StringProtocol CurrentProtocol { get; set; }
+
+        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ConfirmButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (CurrentProtocol == null)
+                CurrentProtocol = new StringProtocol();
+            CurrentProtocol.Command = _CommandTextBox.Text;
+            CurrentProtocol.Content.CommandParam = _CommandParamTextBox.Text;
+            CurrentProtocol.Content.Infomations.Clear();
+            foreach (var data in _ViewModel.PairDatas)
+            {
+                CurrentProtocol.Content.Infomations.Add(data.Key, data.Value);
+            }
+            CurrentProtocol.Content.Tags.Clear();
+            foreach (var data in _ViewModel.Values)
+            {
+               CurrentProtocol.Content.Tags.Add(data);
+            }
+            var packer = (Type)_PackerComboBox.SelectedValue;
+            if (CurrentProtocol.Packer.GetType() != packer)
+                CurrentProtocol.Packer = (StringProtocolPacker)DI.Get(packer);
+            var unPacker = (Type)_UnPackerComboBox.SelectedValue;
+            if (CurrentProtocol.UnPacker.GetType() != unPacker)
+                CurrentProtocol.UnPacker = (StringProtocolUnPacker)DI.Get(unPacker);
+            Close();
+        }
 
         private void AddPair_OnClick(object sender, RoutedEventArgs e)
         {
@@ -155,6 +186,5 @@ namespace NKnife.Kits.SocketKnife.Dialogs
                 }
             }
         }
-
     }
 }
