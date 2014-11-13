@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Misc.UnitTest", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Jsons", "NKnife.Jsons\NKnife.Jsons.csproj", "{CE93A48B-6DBB-4206-87FB-A1C28621D483}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.MongoDb", "NKnife.MongoDb\NKnife.MongoDb.csproj", "{7BC3BF4E-5908-4AC2-A04C-70F731A44928}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -254,6 +256,16 @@ Global
 		{CE93A48B-6DBB-4206-87FB-A1C28621D483}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CE93A48B-6DBB-4206-87FB-A1C28621D483}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CE93A48B-6DBB-4206-87FB-A1C28621D483}.Release|x86.ActiveCfg = Release|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7BC3BF4E-5908-4AC2-A04C-70F731A44928}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
