@@ -84,6 +84,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\ProtocolConverter.cs" />
+    <Compile Include="Demo\DemoServerViewModel.cs" />
     <Compile Include="Dialogs\PairDataDialog.xaml.cs">
       <DependentUpon>PairDataDialog.xaml</DependentUpon>
     </Compile>
@@ -108,7 +109,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\DockUtil.cs" />
-    <Compile Include="Common\ServerList.cs" />
+    <Compile Include="Common\ServerMap.cs" />
     <Compile Include="Common\SocketMessage.cs" />
     <Compile Include="Common\SocketTools.cs" />
     <Compile Include="Common\ViewCollection.cs" />

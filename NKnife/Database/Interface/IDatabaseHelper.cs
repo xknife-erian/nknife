@@ -3,7 +3,7 @@ using System.Data;
 
 namespace NKnife.Database.Interface
 {
-    /// <summary>针对数据库的操作帮助类。来自Geansoft的设计。
+    /// <summary>针对数据库的操作帮助类。来自nknife的设计。
     /// </summary>
     public interface IDataBaseHelper
     {

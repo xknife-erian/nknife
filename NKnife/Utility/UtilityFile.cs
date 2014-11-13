@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
-using Common.Logging;
+using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.ShareResources;
 using NKnife.Wrapper.Files;

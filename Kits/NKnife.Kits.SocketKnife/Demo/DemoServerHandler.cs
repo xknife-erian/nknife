@@ -2,13 +2,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Threading;
-using Common.Logging;
-using NKnife.Collections;
+using NKnife.Adapters;
 using NKnife.Interface;
-using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
-using NKnife.NLog3.Controls.WPF;
 using NKnife.Protocol.Generic;
 using SocketKnife.Generic;
 
@@ -16,11 +12,11 @@ namespace NKnife.Kits.SocketKnife.Demo
 {
     public class DemoServerHandler : KnifeSocketServerProtocolHandler
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         private readonly ObservableCollection<SocketMessage> _SocketMessages;
 
-        public DemoServerHandler(ObservableCollection<SocketMessage> socketMessages, Dispatcher dispatcher)
+        public DemoServerHandler(ObservableCollection<SocketMessage> socketMessages)
         {
             _SocketMessages = socketMessages;
         }
@@ -57,9 +53,9 @@ namespace NKnife.Kits.SocketKnife.Demo
             }
         }
 
-        protected void AddSocketMessage(SocketMessage logEvent)
+        protected void AddSocketMessage(SocketMessage socketMessage)
         {
-            _SocketMessages.Insert(0, logEvent);
+            _SocketMessages.Insert(0, socketMessage);
         }
 
         private delegate void SocketMessageInserter(SocketMessage socketMessage);

@@ -16,7 +16,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class TcpServerView
     {
-        private readonly DemoServer _ViewModel;
+        private readonly DemoServerViewModel _ViewModel;
 
         public KnifeSocketConfig Config { get; set; }
         public SocketTools SocketTools { get; set; }
@@ -24,7 +24,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         public TcpServerView()
         {
             InitializeComponent();
-            _ViewModel = new DemoServer();
+            _ViewModel = new DemoServerViewModel();
             _View.DataContext = _ViewModel;
             _ViewModel.Dispatcher = Dispatcher;
 
@@ -47,13 +47,11 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         private void View_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _ViewModel.Initialize(Config, SocketTools);
         }
 
         protected override void OnClosed()
         {
             base.OnClosed();
-            _ViewModel.RemoveServer();
             _ViewModel.StopServer();
         }
 
@@ -61,7 +59,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _StartButton.IsEnabled = false;
             _StopButton.IsEnabled = true;
-            _ViewModel.StartServer();
+            _ViewModel.StartServer(Config, SocketTools);
             _StartReplayButton.IsEnabled = true;
         }
 
@@ -78,7 +76,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             var dialog = new ProtocolEditorDialog();
             dialog.Closed += ProtocolEditorDialog_Closed;
-            dialog.Show();
+            dialog.ShowDialog();
         }
 
         void ProtocolEditorDialog_Closed(object sender, EventArgs e)
@@ -113,6 +111,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 _StartReplayButton.IsEnabled = false;
                 _StopReplayButton.IsEnabled = true;
             }
+            _ViewModel.Replay();
         }
     }
 }

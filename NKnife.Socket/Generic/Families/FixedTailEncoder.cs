@@ -9,9 +9,17 @@ namespace SocketKnife.Generic.Families
 {
     public class FixedTailEncoder : KnifeSocketDatagramEncoder
     {
+        private static readonly byte[] _tail = Encoding.Default.GetBytes("\r\n");
+
+        protected virtual byte[] GetTail()
+        {
+            return _tail;
+        }
+
         public override byte[] Execute(string replay)
         {
-            throw new NotImplementedException();
+            var r = Encoding.Default.GetBytes(replay);
+            return r.Concat(GetTail()).ToArray();
         }
     }
 }

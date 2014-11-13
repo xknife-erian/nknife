@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
-using Common.Logging;
+using NKnife.Adapters;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol.Generic;
@@ -18,7 +18,7 @@ namespace SocketKnife
 {
     public class KnifeSocketClient : TunnelBase, IKnifeSocketClient
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
 
         #region 成员变量
 
@@ -429,8 +429,8 @@ namespace SocketKnife
             e.SetBuffer(data, 0, data.Length);
             if (_Socket != null)
             {
-                bool isSuceess = _Socket.SendAsync(e);
-                _logger.Info(string.Format("ClientSend:{0},{1}", data.ToHexString(), isSuceess));
+                _Socket.SendAsync(e);
+                _logger.Info(() => string.Format("ClientSend:{0}", data.ToHexString()));
             }
         }
 
