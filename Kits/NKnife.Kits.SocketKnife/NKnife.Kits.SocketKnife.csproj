@@ -84,7 +84,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\ProtocolConverter.cs" />
-    <Compile Include="Demo\DemoServerViewModel.cs" />
+    <Compile Include="Mvvm\Views\TcpServerViewModel.cs" />
     <Compile Include="Dialogs\PairDataDialog.xaml.cs">
       <DependentUpon>PairDataDialog.xaml</DependentUpon>
     </Compile>

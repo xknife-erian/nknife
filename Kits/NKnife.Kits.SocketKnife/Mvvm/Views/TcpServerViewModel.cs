@@ -2,16 +2,19 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
-using System.Timers;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
+using NKnife.Kits.SocketKnife.Demo;
 using NKnife.Mvvm;
 using NKnife.Protocol.Generic;
+using NKnife.Utility;
 using SocketKnife.Generic;
+using Timer = System.Timers.Timer;
 
-namespace NKnife.Kits.SocketKnife.Demo
+namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
     public class DemoServerViewModel : NotificationObject
     {
@@ -22,12 +25,15 @@ namespace NKnife.Kits.SocketKnife.Demo
         private uint _FixTime = 200;
         private uint _RandomMinTime = 50;
         private uint _RandomMaxTime = 500;
+        private bool _OnRandomTimeReplay = true;
 
         private IPEndPoint _CurrentServerPoint;
         private DemoServerHandler _Handler;
+
         private readonly ServerMap _ServerMap = DI.Get<ServerMap>();
         private readonly DemoServer _Server = new DemoServer();
-        private Timer _Timer = new Timer();
+        private readonly Timer _Timer = new Timer();
+        private readonly UtilityRandom _Random = new UtilityRandom();
 
         internal Dispatcher Dispatcher { get; set; }
 
@@ -102,6 +108,16 @@ namespace NKnife.Kits.SocketKnife.Demo
             {
                 _RandomMaxTime = value;
                 RaisePropertyChanged(() => RandomMaxTime);
+            }
+        }
+
+        public bool OnRandomTimeReplay
+        {
+            get { return _OnRandomTimeReplay; }
+            set
+            {
+                _OnRandomTimeReplay = value;
+                RaisePropertyChanged(() => OnRandomTimeReplay);
             }
         }
 
@@ -190,6 +206,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void Replay()
         {
+            _OnRandomTimeReplay = true;
             if (IsOnlyOnce)
             {
                 WriteCurrentProtocol();
@@ -202,7 +219,25 @@ namespace NKnife.Kits.SocketKnife.Demo
             }
             else if (IsRandomTime)
             {
+                var thread = new Thread(() =>
+                {
+                    while (_OnRandomTimeReplay)
+                    {
+                        WriteCurrentProtocol();
+                        Thread.Sleep(_Random.Next((int) _RandomMinTime, (int) _RandomMaxTime));
+                    }
+                });
+                thread.Name = "RandomReplayThread";
+                thread.IsBackground = true;
+                thread.Start();
             }
+        }
+
+        public void StopReplay()
+        {
+            if (_Timer != null)
+                _Timer.Stop();
+            _OnRandomTimeReplay = false;
         }
 
         private void WriteCurrentProtocol()

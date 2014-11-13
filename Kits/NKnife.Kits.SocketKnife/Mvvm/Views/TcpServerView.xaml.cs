@@ -102,6 +102,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _StopReplayButton.IsEnabled = false;
             _StartReplayButton.IsEnabled = true;
+            _ViewModel.StopReplay();
         }
 
         private void _StartReplayButton_OnClick(object sender, RoutedEventArgs e)

@@ -88,12 +88,14 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void StartServer()
         {
-            _Server.Start();
+            if (_Server != null)
+                _Server.Start();
         }
 
         public void StopServer()
         {
-            _Server.Stop();
+            if (_Server != null)
+                _Server.Stop();
         }
     }
 }
