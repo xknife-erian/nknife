@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Configuring.Common;
 using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
@@ -14,7 +14,7 @@ namespace NKnife.Configuring.Option
     [Serializable]
     public class OptionDataTable : DataTable, IOption
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         public OptionDataTable()
         {

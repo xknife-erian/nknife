@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Windows;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
@@ -20,7 +20,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
     /// </summary>
     public partial class NewTunnelCreatorDialog : Window
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         public NewTunnelCreatorDialog()
         {

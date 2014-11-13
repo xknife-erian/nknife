@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 
 namespace NKnife.Domains
@@ -23,7 +23,7 @@ namespace NKnife.Domains
             }
             catch (Exception e)
             {
-                var logger = LogFactory.GetCurrentClassLogger();
+                var logger = LogManager.GetCurrentClassLogger();
                 logger.Fatal("主服务域的启动方法异常", e);
             }
         }

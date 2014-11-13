@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.NLog3.Controls;
@@ -12,7 +12,7 @@ namespace NKnife.Kits.StarterKit.Forms
 {
     public partial class LoggingStarterForm : Form
     {
-        private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private readonly ILog _Logger = LogManager.GetCurrentClassLogger();
 
         private Thread _Thread;
         private bool _IsLogger = true;

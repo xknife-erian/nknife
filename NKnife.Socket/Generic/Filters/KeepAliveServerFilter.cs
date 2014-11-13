@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Events;
 using NKnife.Interface;
 using NKnife.Protocol.Generic;
@@ -21,7 +21,7 @@ namespace SocketKnife.Generic.Filters
 {
     public class KeepAliveServerFilter : KnifeSocketServerFilter
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected bool _ContinueNextFilter = true;
 
@@ -103,7 +103,7 @@ namespace SocketKnife.Generic.Filters
         protected virtual void ReceiveQueueMonitor(object obj)
         {
             var pair = (KeyValuePair<EndPoint, ReceiveQueue>) obj;
-            _logger.Debug(() => string.Format("启动基于{0}的ReceiveQueue队列的监听。", pair.Key));
+            _logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", pair.Key));
             ReceiveQueue receiveQueue = pair.Value;
 
             var unFinished = new byte[] {};
@@ -127,7 +127,7 @@ namespace SocketKnife.Generic.Filters
             // 当接收队列停止监听时，移除该客户端数据队列
             bool isRemoved = _DataMonitors.TryRemove(endPoint, out dataMonitor);
             if (isRemoved)
-                _logger.Trace(() => string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", endPoint, _DataMonitors.Count));
+                _logger.Trace(string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", endPoint, _DataMonitors.Count));
         }
 
         protected virtual int DataDecoder(EndPoint endpoint, byte[] data)

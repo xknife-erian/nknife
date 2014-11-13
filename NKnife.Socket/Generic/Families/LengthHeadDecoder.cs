@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.Tunnel;
 using NKnife.Utility;
@@ -14,7 +14,7 @@ namespace SocketKnife.Generic.Families
     /// </summary>
     public class LengthHeadDecoder : KnifeSocketDatagramDecoder
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected bool _NeedReverse = false;
 

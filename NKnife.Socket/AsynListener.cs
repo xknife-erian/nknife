@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 
 namespace SocketKnife
@@ -14,7 +14,7 @@ namespace SocketKnife
     /// </summary>
     public class AsynListener : Component
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ManualResetEvent _AllDone = new ManualResetEvent(false);
         private readonly ManualResetEvent _SendDone = new ManualResetEvent(false);

@@ -1,6 +1,6 @@
 using System;
 using System.Windows.Forms;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.IoC;
 
 namespace NKnife.Domains
@@ -19,7 +19,7 @@ namespace NKnife.Domains
 
             DI.Initialize();
 
-            var logger = LogFactory.GetCurrentClassLogger();
+            var logger = LogManager.GetCurrentClassLogger();
             logger.Info("IoC框架的初始化完成。");
 
             //开启当前程序作用域下的 ApplicationContext 实例

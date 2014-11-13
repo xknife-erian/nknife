@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 using Ninject;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
 
@@ -12,7 +12,7 @@ namespace NKnife.Protocol.Generic
     /// </summary>
     public class StringProtocol : IProtocol<string>
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         public Func<StringProtocol> BuildMethod { get; set; }
 
         public StringProtocol()
@@ -100,7 +100,7 @@ namespace NKnife.Protocol.Generic
             }
             catch (Exception e)
             {
-                _logger.Error(() => string.Format("协议字符串无法解析.{0}..{1}", e.Message, datagram));
+                _logger.Error(string.Format("协议字符串无法解析.{0}..{1}", e.Message, datagram));
             }
         }
 
@@ -126,7 +126,7 @@ namespace NKnife.Protocol.Generic
             }
             catch (Exception e)
             {
-                _logger.Warn(() => string.Format("调用协议的ToString方法联动Generate()方法时异常。{0}", e.Message));
+                _logger.Warn(string.Format("调用协议的ToString方法联动Generate()方法时异常。{0}", e.Message));
             }
             return str;
         }

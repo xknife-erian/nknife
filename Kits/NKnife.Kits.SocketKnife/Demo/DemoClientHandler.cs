@@ -1,5 +1,5 @@
 ﻿using System;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Collections;
 using NKnife.Interface;
 using NKnife.Kits.SocketKnife.Common;
@@ -10,7 +10,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 {
     public class DemoClientHandler : KnifeSocketClientProtocolHandler
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         private readonly AsyncObservableCollection<SocketMessage> _SocketMessages;
 

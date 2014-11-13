@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.Tunnel;
 using NKnife.Zip;
@@ -13,7 +13,7 @@ namespace SocketKnife.Generic.Families
     /// </summary>
     public class LengthHeadEncoder : KnifeSocketDatagramEncoder
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         #region IDatagramEncoder Members
 

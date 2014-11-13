@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol.Generic;
@@ -18,7 +18,7 @@ namespace SocketKnife
 {
     public class KnifeSocketServer : TunnelBase, IKnifeSocketServer
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         #region 成员变量
 
@@ -335,13 +335,13 @@ namespace SocketKnife
 
         protected virtual void RemoveSession(SocketAsyncEventArgs e)
         {
-            _logger.Trace(() => string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
+            _logger.Trace(string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
             if (!e.AcceptSocket.Connected)
             {
                 return;
             }
             EndPoint iep = e.AcceptSocket.RemoteEndPoint;
-            _logger.Info(() => string.Format("Server: >> 客户端:{0}, 连接中断.", iep));
+            _logger.Info(string.Format("Server: >> 客户端:{0}, 连接中断.", iep));
 
             foreach (var filter in _FilterChain)
             {
@@ -418,7 +418,7 @@ namespace SocketKnife
         {
             Socket socket = session.Connector;
             socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-            _logger.Info(() => string.Format("ServerSend:{0}", data.ToHexString()));
+            _logger.Info(string.Format("ServerSend:{0}", data.ToHexString()));
         }
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
@@ -426,7 +426,7 @@ namespace SocketKnife
             string replay = protocol.Generate();
             byte[] data = _Codec.SocketEncoder.Execute(replay);
             WirteBase(session, data);
-            _logger.Debug(() => string.Format("ServerSend:{0}", replay));
+            _logger.Debug(string.Format("ServerSend:{0}", replay));
         }
 
         #endregion

@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.Utility;
 
@@ -14,7 +14,7 @@ namespace NKnife.Protocol.Generic.Xml
     /// </summary>
     public class XmlProtocolDeserializeUnPacker : XmlProtocolUnPacker
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected override void ParseTags(StringProtocolContent content, XmlElement tagsElement)
         {

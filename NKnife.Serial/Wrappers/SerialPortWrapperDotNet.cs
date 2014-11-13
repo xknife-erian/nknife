@@ -2,7 +2,7 @@
 using System.IO;
 using System.IO.Ports;
 using System.Threading;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.NSerial.Interfaces;
 
@@ -13,7 +13,7 @@ namespace NKnife.NSerial.Wrappers
     /// </summary>
     public class SerialPortWrapperDotNet : ISerialPortWrapper
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected readonly ManualResetEventSlim Reset = new ManualResetEventSlim(false);
 

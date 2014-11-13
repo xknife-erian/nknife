@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 
 namespace NKnife.Protocol.Generic.Xml
@@ -11,7 +11,7 @@ namespace NKnife.Protocol.Generic.Xml
     /// </summary>
     public class XmlFirstElementCommandParser : StringProtocolCommandParser
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         
         public override string GetCommand(string protocolString)
         {

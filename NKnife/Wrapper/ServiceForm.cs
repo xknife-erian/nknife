@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 
 namespace NKnife.Wrapper
@@ -11,7 +11,7 @@ namespace NKnife.Wrapper
     /// </summary>
     public class ServiceForm
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         ///     开启窗体 使用后用 System.Windows.Forms.Application.Run(_Form);来启动窗体

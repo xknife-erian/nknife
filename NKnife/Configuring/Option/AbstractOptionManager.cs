@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Configuring.Interfaces;
 using NKnife.Configuring.OptionCase;
 using NKnife.Interface;
@@ -14,7 +14,7 @@ namespace NKnife.Configuring.Option
     /// </summary>
     public abstract class AbstractOptionManager : IOptionManager
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         #region 成员/属性定义
 

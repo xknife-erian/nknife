@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.NSerial.Abstracts;
 using NKnife.NSerial.Interfaces;
@@ -12,7 +12,7 @@ namespace NKnife.NSerial.Common
     /// </summary>
     internal class SerialDataPool : ISerialDataPool
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private readonly ConcurrentQueue<PackageBase> _OneWayPool = new ConcurrentQueue<PackageBase>();
         private readonly ConcurrentQueue<PackageBase> _QueryPool = new ConcurrentQueue<PackageBase>();
         private readonly ConcurrentQueue<PackageBase> _TwoWayPool = new ConcurrentQueue<PackageBase>();

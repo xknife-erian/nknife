@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using Common.Logging.Configuration;
+using Common.Logging.NLog;
 using Ninject.Modules;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.NLog3.Controls;
 using NKnife.NLog3.Controls.WPF;
 using NKnife.NLog3.Properties;
@@ -23,10 +25,7 @@ namespace NKnife.NLog3.IoC
         static NLogModules()
         {
             Style = AppStyle.WinForm;
-        }
 
-        public override void Load()
-        {
             string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIG_FILE_NAME);
             if (!File.Exists(file))
             {
@@ -48,11 +47,21 @@ namespace NKnife.NLog3.IoC
                 }
             }
 
-            Bind<ILoggerFactory>().To<NLogLoggerFactory>().InSingletonScope();
-            Bind<ObservableCollection<LogMessage>>().To<LogMessageObservableCollection>().InSingletonScope();
-            Bind<LogPanel>().To<LogPanel>().InSingletonScope();
-            Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
-            Bind<LogMessageFilter>().ToSelf().InSingletonScope();
+            var properties = new NameValueCollection();
+            properties["configType"] = "FILE";
+            properties["configFile"] = "~/NLog.config";
+            LogManager.Adapter = new NLogLoggerFactoryAdapter(properties);
+        }
+
+        public override void Load()
+        {
+
+
+                Bind<ObservableCollection<LogMessage>>().To<LogMessageObservableCollection>().InSingletonScope();
+                Bind<LogPanel>().To<LogPanel>().InSingletonScope();
+                Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
+                Bind<LogMessageFilter>().ToSelf().InSingletonScope();
+            
         }
     }
 }

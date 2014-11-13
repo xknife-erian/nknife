@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.NSerial.Abstracts;
 using NKnife.NSerial.Common;
@@ -12,7 +12,7 @@ namespace NKnife.NSerial
     /// </summary>
     public sealed class SerialClients : ISerialClientManager, IDisposable
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>串口管理器字典，以串口号作为键值
         /// </summary>

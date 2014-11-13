@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Text;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 
 namespace NKnife.Wrapper
 {
     public class SerialPorter
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private readonly SerialPort _SerialPort = new SerialPort();
 
         public bool IsOpen

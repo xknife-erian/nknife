@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.Tunnel;
 using NKnife.Utility;

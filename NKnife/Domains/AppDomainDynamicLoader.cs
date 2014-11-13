@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
-using NKnife.Adapters;
+using Common.Logging;
 
 namespace NKnife.Domains
 {
@@ -39,7 +39,7 @@ namespace NKnife.Domains
             }
             catch (Exception e)
             {
-                var logger = LogFactory.GetCurrentClassLogger();
+                var logger = LogManager.GetCurrentClassLogger();
                 logger.Fatal("呼叫主服务域异常", e);
             }
         }
@@ -58,7 +58,7 @@ namespace NKnife.Domains
             }
             catch (CannotUnloadAppDomainException ex)
             {
-                var logger = LogFactory.GetCurrentClassLogger();
+                var logger = LogManager.GetCurrentClassLogger();
                 logger.Error("Cannot Unload AppDomain Exception!", ex);
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Database.Interface;
 using NKnife.Interface;
 
@@ -11,7 +11,7 @@ namespace NKnife.Database.Common
 {
     public abstract class DatabaseHelper : IDataBaseHelper
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         #region IDataBaseHelper Members
 

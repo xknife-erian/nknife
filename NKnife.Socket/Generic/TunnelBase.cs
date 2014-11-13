@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Protocol;
@@ -14,7 +14,7 @@ namespace SocketKnife.Generic
 {
     public abstract class TunnelBase : ITunnel<EndPoint, Socket, string>
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
         protected KnifeSocketCodec _Codec;

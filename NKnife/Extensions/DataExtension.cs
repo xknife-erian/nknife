@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Attributes;
 using NKnife.Interface;
 
@@ -10,7 +10,7 @@ namespace System.Data
     public static class DataExtensions
     {
 
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();  
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();  
         
         /// <summary>像Linq to DataSet中得到字段值的操作
         /// </summary>

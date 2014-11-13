@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Input;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
@@ -21,7 +21,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
     /// </summary>
     public partial class Workbench : Window
     {
-        private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private readonly ILog _Logger = LogManager.GetCurrentClassLogger();
 
         public Workbench()
         {

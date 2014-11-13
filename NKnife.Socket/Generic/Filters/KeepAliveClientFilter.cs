@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Events;
 using NKnife.Interface;
 using NKnife.Protocol.Generic;
@@ -18,7 +18,7 @@ namespace SocketKnife.Generic.Filters
 {
     public class KeepAliveClientFilter : KnifeSocketClientFilter
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         ///     是否启动接收队列的监听
         /// </summary>
@@ -99,13 +99,13 @@ namespace SocketKnife.Generic.Filters
                 string dgByLog = dg;
                 if (string.IsNullOrWhiteSpace(command))
                 {
-                    _logger.Warn(() => string.Format("From:命令字为空,数据包:{0}", dgByLog));
+                    _logger.Warn(string.Format("From:命令字为空,数据包:{0}", dgByLog));
                     continue;
                 }
 
                 StringProtocol protocol = _FamilyGetter.Invoke().Build(command);
 
-                _logger.Trace(() => string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
+                _logger.Trace(string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
                 if (protocol != null)
                 {
                     protocol.Parse(dg);

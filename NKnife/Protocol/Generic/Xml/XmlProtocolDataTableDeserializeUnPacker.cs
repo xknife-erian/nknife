@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Xml;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 
 namespace NKnife.Protocol.Generic.Xml
@@ -12,7 +12,7 @@ namespace NKnife.Protocol.Generic.Xml
     /// </summary>
     public class XmlProtocolDataTableDeserializeUnPacker : XmlProtocolUnPacker
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected override void ParseTags(StringProtocolContent content, XmlElement tagsElement)
         {

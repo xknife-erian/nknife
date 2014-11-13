@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Timers;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.Interface;
 using SocketKnife.Common;
 using SocketKnife.Events;
@@ -13,7 +13,7 @@ namespace SocketKnife.Generic.Filters
 {
     public class HeartbeatClientFilter : KnifeSocketClientFilter
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected Timer _BeatingTimer;
         protected bool _ContinueNextFilter = true;
@@ -70,7 +70,7 @@ namespace SocketKnife.Generic.Filters
                     handlers[0].Write(session, Heartbeat.RequestOfHeartBeat);
                     session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
 #if DEBUG
-                    _logger.Trace(() => string.Format("Client发出{0}心跳.", session.Source));
+                    _logger.Trace(string.Format("Client发出{0}心跳.", session.Source));
 #endif
                 }
                 catch (SocketException ex) //发送异常，发不出去则立即移出
@@ -119,7 +119,7 @@ namespace SocketKnife.Generic.Filters
             {   //非严格模式
                 session.WaitingForReply = false;
 #if DEBUG
-                _logger.Trace(() => string.Format("Client收到{0}信息,关闭心跳等待.", session.Source));
+                _logger.Trace(string.Format("Client收到{0}信息,关闭心跳等待.", session.Source));
 #endif
             }
             if (data.IndexOf(Heartbeat.RequestOfHeartBeat) == 0)
@@ -129,12 +129,12 @@ namespace SocketKnife.Generic.Filters
                     _ContinueNextFilter = false;
                     _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplyOfHeartBeat);
 #if DEBUG
-                    _logger.Trace(() => string.Format("Client收到{0}心跳.回复完成.", session.Source));
+                    _logger.Trace(string.Format("Client收到{0}心跳.回复完成.", session.Source));
 #endif
                 }
                 catch (SocketException ex)
                 {
-                    _logger.Trace(() => string.Format("Client收到{0}心跳.回复时socket异常：{1}.", session.Source,ex.Message));
+                    _logger.Trace(string.Format("Client收到{0}心跳.回复时socket异常：{1}.", session.Source,ex.Message));
                     _logger.Info("准备重连Server......");
                     Reconnects(session);
                 }
@@ -145,7 +145,7 @@ namespace SocketKnife.Generic.Filters
                 session.WaitingForReply = false;
                 _ContinueNextFilter = false;
 #if DEBUG
-                _logger.Trace(() => string.Format("Client收到{0}心跳回复.", session.Source));
+                _logger.Trace(string.Format("Client收到{0}心跳回复.", session.Source));
 #endif
             }
             else

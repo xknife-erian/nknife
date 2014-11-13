@@ -6,7 +6,7 @@ namespace NKnife.Database.DbHelper
 {
     public class AccessHelper
     {
-        //private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        //private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         public static string _ConnString;
 
         #region "ExecuteSQL"
