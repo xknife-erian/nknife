@@ -29,15 +29,14 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.控件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.图片浏览容器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._MultiLanguageLoPanleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._LogPanelTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.汉字使用频率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.控件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.图片浏览容器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,9 +48,24 @@
             this.iMEToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(784, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1008, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 控件ToolStripMenuItem
+            // 
+            this.控件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.图片浏览容器ToolStripMenuItem});
+            this.控件ToolStripMenuItem.Name = "控件ToolStripMenuItem";
+            this.控件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.控件ToolStripMenuItem.Text = "控件";
+            // 
+            // 图片浏览容器ToolStripMenuItem
+            // 
+            this.图片浏览容器ToolStripMenuItem.Name = "图片浏览容器ToolStripMenuItem";
+            this.图片浏览容器ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.图片浏览容器ToolStripMenuItem.Text = "图片浏览容器";
+            this.图片浏览容器ToolStripMenuItem.Click += new System.EventHandler(this.图片浏览容器ToolStripMenuItem_Click);
             // 
             // loggingToolStripMenuItem
             // 
@@ -79,8 +93,7 @@
             // iMEToolStripMenuItem
             // 
             this.iMEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.汉字使用频率ToolStripMenuItem,
-            this.toolStripSeparator1});
+            this.汉字使用频率ToolStripMenuItem});
             this.iMEToolStripMenuItem.Name = "iMEToolStripMenuItem";
             this.iMEToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.iMEToolStripMenuItem.Text = "杂项";
@@ -92,38 +105,18 @@
             this.汉字使用频率ToolStripMenuItem.Text = "汉字使用频率";
             this.汉字使用频率ToolStripMenuItem.Click += new System.EventHandler(this.汉字使用频率ToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 708);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
             this.statusStrip1.TabIndex = 0;
-            // 
-            // 控件ToolStripMenuItem
-            // 
-            this.控件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.图片浏览容器ToolStripMenuItem});
-            this.控件ToolStripMenuItem.Name = "控件ToolStripMenuItem";
-            this.控件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.控件ToolStripMenuItem.Text = "控件";
-            // 
-            // 图片浏览容器ToolStripMenuItem
-            // 
-            this.图片浏览容器ToolStripMenuItem.Name = "图片浏览容器ToolStripMenuItem";
-            this.图片浏览容器ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.图片浏览容器ToolStripMenuItem.Text = "图片浏览容器";
-            this.图片浏览容器ToolStripMenuItem.Click += new System.EventHandler(this.图片浏览容器ToolStripMenuItem_Click);
             // 
             // KitListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1008, 730);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Calibri", 8.25F);
@@ -148,7 +141,6 @@
         private System.Windows.Forms.ToolStripMenuItem _MultiLanguageLoPanleMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iMEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 汉字使用频率ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 控件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 图片浏览容器ToolStripMenuItem;
     }

@@ -183,7 +183,8 @@ namespace NKnife.Kits.SocketKnife.Demo
         {
             if (_Timer != null)
                 _Timer.Stop();
-            _ServerMap.Remove(_CurrentServerPoint);
+            if (_CurrentServerPoint != null)
+                _ServerMap.Remove(_CurrentServerPoint);
             _Server.StopServer();
         }
 

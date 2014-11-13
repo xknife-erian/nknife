@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
+using Common.Logging;
 using NKnife.Kits.StarterKit.Forms;
 
 namespace NKnife.Kits.StarterKit
 {
     public partial class KitListForm : Form
     {
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+
         public KitListForm()
         {
             InitializeComponent();
@@ -13,6 +16,7 @@ namespace NKnife.Kits.StarterKit
             {
                 _MultiLanguageLoPanleMenuItem.Text = _MultiLanguageLoPanleMenuItem.Checked ? "英文LogPanel" : "中文LogPanel";
             };
+            _logger.InfoFormat("{1}-{0}", this.Name, this.GetType().Name);
         }
 
         private void _LogPanelTestMenuItem_Click(object sender, EventArgs e)

@@ -18,7 +18,6 @@ namespace NKnife.Kits.StarterKit
             DI.Initialize();
 
             Application.Run(new KitListForm());
-
         }
     }
 }

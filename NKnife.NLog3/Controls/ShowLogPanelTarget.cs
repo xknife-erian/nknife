@@ -13,7 +13,7 @@ namespace NKnife.NLog3.Controls
     {
         public ShowLogPanelTarget()
         {
-            LogPanel = DI.Get<LogPanel>();
+            LogPanel = LogPanel.Instance;
         }
 
         protected LogPanel LogPanel { get; private set; }

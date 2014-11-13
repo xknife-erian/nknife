@@ -10,7 +10,22 @@ namespace NKnife.NLog3.Controls
     /// </summary>
     public sealed partial class LogPanel : UserControl
     {
-        public LogPanel()
+        #region 单件实例
+
+        /// <summary>
+        /// 获得一个本类型的单件实例.
+        /// </summary>
+        /// <value>The instance.</value>
+        public static LogPanel Instance
+        {
+            get { return _instance.Value; }
+        }
+
+        private static readonly Lazy<LogPanel> _instance = new Lazy<LogPanel>(() => new LogPanel());
+
+        #endregion
+
+        private LogPanel()
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Global.Culture);
             SetStyle
