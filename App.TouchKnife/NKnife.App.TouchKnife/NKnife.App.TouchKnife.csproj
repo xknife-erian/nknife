@@ -49,6 +49,9 @@
     <Reference Include="ChnCharInfo">
       <HintPath>..\..\.library\Simplified Chinese Pin-Yin Conversion Library\ChnCharInfo.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\packages\Common.Logging.2.3.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="IACore">
       <HintPath>..\..\.library\InkAnalyer\IACore.dll</HintPath>
     </Reference>

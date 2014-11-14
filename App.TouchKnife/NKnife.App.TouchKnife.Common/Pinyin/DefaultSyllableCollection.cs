@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NKnife.Adapters;
-using NKnife.Interface;
+using Common.Logging;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     public class DefaultSyllableCollection : ISyllableCollection
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         private static readonly ReadOnlyCollection<string> _syllableList;
 

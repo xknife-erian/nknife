@@ -4,8 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using NKnife.Adapters;
-using NKnife.Interface;
+using Common.Logging;
 using NKnife.IoC;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
@@ -15,7 +14,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
     /// </summary>
     public class PinyinAlternateCollection : ObservableCollection<string>
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         private const int WORD_COUNT = 10;
 

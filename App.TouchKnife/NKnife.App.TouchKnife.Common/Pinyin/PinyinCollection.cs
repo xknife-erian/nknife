@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using NKnife.Adapters;
-using NKnife.Interface;
+using Common.Logging;
 using NKnife.IoC;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
@@ -13,7 +12,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
     /// </summary>
     public class PinyinCollection : ObservableCollection<string>
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         private readonly PinyinSeparator _Separator;
         private readonly StringBuilder _StringBuilder = new StringBuilder();

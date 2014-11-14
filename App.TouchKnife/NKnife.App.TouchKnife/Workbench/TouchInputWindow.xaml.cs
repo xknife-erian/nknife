@@ -7,7 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.App.TouchKnife.Common;
 using NKnife.App.TouchKnife.Common.HandWritten;
 using NKnife.App.TouchKnife.Common.Pinyin;
@@ -26,7 +26,7 @@ namespace NKnife.App.TouchKnife.Workbench
     /// </summary>
     public partial class TouchInputWindow : Window, ITouchInput
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         #region 类成员变量
 

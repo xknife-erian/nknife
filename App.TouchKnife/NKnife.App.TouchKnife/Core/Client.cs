@@ -2,8 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using NKnife.Adapters;
-using NKnife.Interface;
+using Common.Logging;
 
 namespace NKnife.App.TouchKnife.Core
 {
@@ -14,7 +13,8 @@ namespace NKnife.App.TouchKnife.Core
 
         private const string HOST = "127.0.0.1";
         private const int PORT = 22033;
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         ///     与服务器的连接
@@ -46,7 +46,7 @@ namespace NKnife.App.TouchKnife.Core
         public void Connect()
         {
             _Socket.Connect(IPAddress.Parse(HOST), PORT);
-            _Logger.Info(string.Format("连接{0}:{1}成功", HOST, PORT));
+            _logger.Info(string.Format("连接{0}:{1}成功", HOST, PORT));
         }
 
         private static System.Net.Sockets.Socket BuildSocket(int timeout = 0)
@@ -74,7 +74,7 @@ namespace NKnife.App.TouchKnife.Core
             }
             catch (Exception e)
             {
-                _Logger.Warn(string.Format("发送数据异常:{0}", command), e);
+                _logger.Warn(string.Format("发送数据异常:{0}", command), e);
             }
         }
     }
