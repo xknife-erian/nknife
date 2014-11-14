@@ -23,7 +23,7 @@ namespace NKnife.NLog3.Controls.WPF
     /// </summary>
     public partial class NLogWpfGrid : UserControl
     {
-        private static readonly ObservableCollection<LogMessage> _logMessages = DI.Get<ObservableCollection<LogMessage>>();
+        private static readonly LogMessageObservableCollection _logMessages = LogMessageObservableCollection.Instance;
 
         public NLogWpfGrid()
         {

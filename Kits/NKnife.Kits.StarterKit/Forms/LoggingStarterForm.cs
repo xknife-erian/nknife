@@ -21,7 +21,7 @@ namespace NKnife.Kits.StarterKit.Forms
         {
             InitializeComponent();
 
-            var logPanel = DI.Get<LogPanel>();//重点, LogPanel是单例的, 所以LogPanel的初始化是特殊的.
+            var logPanel = LogPanel.Instance;
             logPanel.Dock = DockStyle.Fill;
             logPanel.Font = new Font("Tahoma", 8.25F);         
             Controls.Add(logPanel);
