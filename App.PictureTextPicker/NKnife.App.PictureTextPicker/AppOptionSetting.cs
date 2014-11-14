@@ -6,9 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.App.PictureTextPicker.Common.Base;
-using NKnife.Interface;
 using NKnife.IoC;
 
 namespace NKnife.App.PictureTextPicker
@@ -16,7 +15,7 @@ namespace NKnife.App.PictureTextPicker
     public partial class AppOptionSetting : Form
     {
         private IAppOption _AppOption = DI.Get<IAppOption>();
-        private ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private ILog _Logger = LogManager.GetCurrentClassLogger();
         public AppOptionSetting()
         {
             InitializeComponent();

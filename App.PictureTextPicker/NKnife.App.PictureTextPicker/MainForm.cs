@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Permissions;
 using System.Windows.Forms;
-using NKnife.Adapters;
+using Common.Logging;
 using NKnife.App.PictureTextPicker.Common;
 using NKnife.App.PictureTextPicker.Common.Base;
 using NKnife.App.PictureTextPicker.Common.Controls;
@@ -22,7 +22,7 @@ namespace NKnife.App.PictureTextPicker
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class MainForm : Form
     {
-        private readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private readonly ILog _Logger = LogManager.GetCurrentClassLogger();
 
         private readonly string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
         private readonly DockPanel _DockPanel = new DockPanel();

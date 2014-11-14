@@ -3,14 +3,13 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using NKnife.Adapters;
-using NKnife.Interface;
+using Common.Logging;
 
 namespace NKnife.App.PictureTextPicker.Common
 {
     public class ThumbNailHelper
     {
-        private static readonly ILogger _Logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// 指定目录下的所有图片生成缩略图,缩略图在参数thumbNailDirectory文件夹中(生成后的尺寸以参数按比例缩小)
@@ -25,7 +24,7 @@ namespace NKnife.App.PictureTextPicker.Common
         {
             if (!Directory.Exists(pictureDirectory))
             {
-                _Logger.Warn("指定图片目录不存在");
+                _logger.Warn("指定图片目录不存在");
                 return;
             }
             if (Directory.Exists(thumbNailDirectory))
@@ -36,7 +35,7 @@ namespace NKnife.App.PictureTextPicker.Common
                 }
                 catch (IOException)
                 {
-                    _Logger.Error("缩略图片目录正在使用中，无法重建");
+                    _logger.Error("缩略图片目录正在使用中，无法重建");
                     return;
                 }
             }
@@ -62,7 +61,7 @@ namespace NKnife.App.PictureTextPicker.Common
         {
             if (!File.Exists(fullFilePath))
             {
-                _Logger.Warn("指定图片不存在");
+                _logger.Warn("指定图片不存在");
                 return;
             }
             if (!Directory.Exists(thumbNailDirectory))
@@ -85,19 +84,19 @@ namespace NKnife.App.PictureTextPicker.Common
             }
             catch (FileNotFoundException)
             {
-                _Logger.Error("图片不存在");
+                _logger.Error("图片不存在");
                 if (image != null) image.Dispose();
                 return;
             }
             catch (OutOfMemoryException)
             {
-                _Logger.Error("图片太大，内存不足无法读取");
+                _logger.Error("图片太大，内存不足无法读取");
                 if (image != null) image.Dispose();
                 return;
             }
             catch (ArgumentException)
             {
-                _Logger.Error("指定的图片路径错误");
+                _logger.Error("指定的图片路径错误");
                 if (image != null) image.Dispose();
                 return;
             }
