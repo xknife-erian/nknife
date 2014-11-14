@@ -388,7 +388,7 @@ namespace SocketKnife
                 {
                     var clientFilter = (KnifeSocketClientFilter) filter;
                     clientFilter.OnDataFetched(new SocketDataFetchedEventArgs(_SocketSession.Source, data));
-                    clientFilter.PrcoessReceiveData(_SocketSession, data); // 调用filter对数据进行处理
+                    clientFilter.PrcoessReceiveData(_SocketSession, ref data); // 调用filter对数据进行处理
 
                     if (!clientFilter.ContinueNextFilter)
                         break;

@@ -133,7 +133,7 @@ namespace NKnife.Socket.UnitTest
                 get { return true; }
             }
 
-            public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
+            public override void PrcoessReceiveData(KnifeSocketSession session, ref byte[] data)
             {
             }
 

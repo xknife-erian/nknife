@@ -385,7 +385,7 @@ namespace SocketKnife
                     serverFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
 
                     KnifeSocketSession session = _SessionMap[endPoint];
-                    serverFilter.PrcoessReceiveData(session, data); // 调用filter对数据进行处理
+                    serverFilter.PrcoessReceiveData(session, ref data); // 调用filter对数据进行处理
                     if (!serverFilter.ContinueNextFilter)
                         break;
                 }

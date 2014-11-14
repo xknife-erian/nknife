@@ -8,10 +8,11 @@ using Common.Logging;
 using NKnife.Interface;
 using SocketKnife.Common;
 using SocketKnife.Events;
+using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
-    public class HeartbeatServerFilter : KnifeSocketServerFilter
+    public class HeartbeatServerFilter : KnifeSocketServerFilter, IHeartbeatFilter
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -137,46 +138,46 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
+        public override void PrcoessReceiveData(KnifeSocketSession session, ref byte[] data)
         {
+            int sourceLength = data.Length;
             if (!EnableStrictMode)
-            {//非严格模式，收到任何数据，均认为心跳正常
+            {
+                //非严格模式，收到任何数据，均认为心跳正常
                 session.WaitingForReply = false;
 #if DEBUG
-                _logger.Trace(string.Format("Server收到{0}信息,关闭心跳等待（非严格模式）.", session.Source));
+                _logger.TraceFormat("Server收到{0}信息,关闭心跳等待（非严格模式）.", session.Source);
 #endif
             }
 
-            if (data.IndexOf(Heartbeat.RequestOfHeartBeat) == 0)
+            if (Compare(ref data, Heartbeat.RequestOfHeartBeat))
             {
                 try
                 {
-                    _ContinueNextFilter = false;
+                    _ContinueNextFilter = data.Length < sourceLength;
                     _HandlersGetter.Invoke()[0].Write(session, Heartbeat.ReplyOfHeartBeat);
 #if DEBUG
-                    _logger.Trace(string.Format("Server收到{0}心跳.回复完成.", session.Source));
+                    _logger.TraceFormat("Server收到{0}心跳请求.回复完成.", session.Source);
 #endif
                 }
                 catch (SocketException ex)
                 {
-                    _logger.Trace(string.Format("Server收到{0}心跳.回复时socket异常.", session.Source));
+                    _logger.WarnFormat("Server收到{0}心跳请求.回复时发生Socket异常.", session.Source);
                     RemoveEndPointFromSessionMap(session.Source);
                 }
                 return;
             }
 
-            if (data.IndexOf(Heartbeat.ReplyOfHeartBeat) == 0)
+            if (Compare(ref data, Heartbeat.ReplyOfHeartBeat))
             {
                 session.WaitingForReply = false;
-                _ContinueNextFilter = false;
+                _ContinueNextFilter = data.Length < sourceLength;
 #if DEBUG
-                _logger.Trace(string.Format("Server收到{0}心跳回复.", session.Source));
+                _logger.TraceFormat("Server收到{0}心跳回复.", session.Source);
 #endif
+                return;
             }
-            else
-            {
-                _ContinueNextFilter = true;
-            }
+            _ContinueNextFilter = true;
         }
 
     }

@@ -67,7 +67,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
+        public override void PrcoessReceiveData(KnifeSocketSession session, ref byte[] data)
         {
             EndPoint endPoint = session.Source;
             ReceiveQueue receive = null;

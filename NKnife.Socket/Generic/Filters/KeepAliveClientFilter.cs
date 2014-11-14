@@ -50,7 +50,7 @@ namespace SocketKnife.Generic.Filters
             _EnableReceiveQueueMonitor = false; //停止监听
         }
 
-        public override void PrcoessReceiveData(KnifeSocketSession session, byte[] data)
+        public override void PrcoessReceiveData(KnifeSocketSession session, ref byte[] data)
         {
             _ReceiveQueue.Enqueue(data);
         }
