@@ -70,6 +70,7 @@
     <Compile Include="Algrithm\IAsyncOperation.cs" />
     <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="API\API.Kernel32.cs" />
+    <Compile Include="Attributes\EnvironmentItemAttribute.cs" />
     <Compile Include="Collections\AsyncObservableCollection`.cs" />
     <Compile Include="Converts\Converting.cs" />
     <Compile Include="Converts\UtilityConvert.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="GUI\WinForm\WinFormContainer\WinFormContainer.Designer.cs">
       <DependentUpon>WinFormContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IInitializer.cs" />
     <Compile Include="Interface\IParser.cs" />
     <Compile Include="Maths\BigInteger.cs" />
     <Compile Include="Maths\Combinations.cs" />
