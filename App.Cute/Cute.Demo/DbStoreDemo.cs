@@ -2,23 +2,22 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Common.Logging;
 using Didaku;
-using Didaku.Data;
-using Didaku.Data.MongoDb;
 using Didaku.Engine.Timeaxis.Base.Interfaces;
 using Didaku.Engine.Timeaxis.Data;
 using Didaku.Engine.Timeaxis.Data.Stores;
 using Didaku.Engine.Timeaxis.Implement.Industry.Bank;
 using Didaku.Engine.Timeaxis.Kernel.IoC;
-using Didaku.Wrapper;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
+using NKnife.Database;
 
 namespace Timeaxis.Demo
 {
     class DbStoreDemo
     {
-        private static readonly NLog.Logger _Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly ILog _Logger = LogManager.GetCurrentClassLogger();
         private static readonly Stopwatch _Watch = new Stopwatch();
         private static readonly MongoStore<ITransaction, string> _Store = Core.Singleton<Datas>().Transactions;
         private const int DEMO_SIZE = 5 * 10000;

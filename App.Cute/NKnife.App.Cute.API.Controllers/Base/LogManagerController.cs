@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Web.Http;
 using AttributeRouting.Web.Http;
-using Didaku.Data.MongoDb;
 using Didaku.Engine.Timeaxis.Data;
 using Didaku.Engine.Timeaxis.Kernel;
 using Didaku.Engine.Timeaxis.Kernel.IoC;
 using MongoDB.Driver.Builders;
+using NKnife.Database;
 
 namespace Didaku.Engine.Timeaxis.API.Controllers.Base
 {

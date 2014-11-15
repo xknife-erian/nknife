@@ -4,6 +4,7 @@ using Didaku;
 using Didaku.Engine.Timeaxis.Implement.Environment;
 using Didaku.Engine.Timeaxis.Kernel;
 using Didaku.Engine.Timeaxis.Kernel.IoC;
+using NKnife.Utility;
 
 namespace Timeaxis.Demo
 {

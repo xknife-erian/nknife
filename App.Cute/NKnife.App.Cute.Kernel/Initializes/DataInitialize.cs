@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Common;
 using System.Xml;
 using Common.Logging;
 using Didaku.Engine.Timeaxis.Data;
