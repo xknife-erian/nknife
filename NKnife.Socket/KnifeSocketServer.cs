@@ -85,7 +85,7 @@ namespace SocketKnife
                 }
                 _SocketAsynPool.Clear();
                 _MainSocket.Close();
-                _logger.Info(string.Format("SocketServer关闭。"));
+                _logger.Info("SocketServer关闭。");
                 return true;
             }
             catch (Exception e)
@@ -138,10 +138,10 @@ namespace SocketKnife
 
             Accept();
 
-            _logger.Info(string.Format("== {0} 已启动。端口:{1}", GetType().Name, _Port));
-            _logger.Info(string.Format("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout));
-            _logger.Info(string.Format("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout));
-            _logger.Info(string.Format("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount));
+            _logger.InfoFormat("== {0} 已启动。端口:{1}", GetType().Name, _Port);
+            _logger.InfoFormat("发送缓冲区:大小:{0}，超时:{1}", _MainSocket.SendBufferSize, _MainSocket.SendTimeout);
+            _logger.InfoFormat("接收缓冲区:大小:{0}，超时:{1}", _MainSocket.ReceiveBufferSize, _MainSocket.ReceiveTimeout);
+            _logger.InfoFormat("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount);
         }
 
         protected override void OnBound(params KnifeSocketProtocolHandler[] handlers)
@@ -152,7 +152,7 @@ namespace SocketKnife
                 serverHandler.Bind(WirteProtocol);
                 serverHandler.Bind(WirteBase);
                 serverHandler.SessionMap = _SessionMap;
-                _logger.Info(string.Format("{0}绑定成功。", serverHandler.GetType().Name));
+                _logger.InfoFormat("{0}绑定成功。", serverHandler.GetType().Name);
             }
         }
 
@@ -274,7 +274,7 @@ namespace SocketKnife
                                 session.Source = iep;
                                 session.Connector = e.AcceptSocket;
                                 _SessionMap.Add(iep, session);
-                                _logger.Info(string.Format("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count));
+                                _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, _SessionMap.Count);
                                 foreach (var filter in _FilterChain)
                                 {
                                     var serverFilter = (KnifeSocketServerFilter) filter;
@@ -297,7 +297,7 @@ namespace SocketKnife
                     {
                         e.AcceptSocket = null;
                         _SocketAsynPool.Push(e);
-                        _logger.Warn(string.Format("服务端:未处理状态,{0}", e.SocketError));
+                        _logger.WarnFormat("服务端:未处理状态,{0}", e.SocketError);
                         break;
                     }
                 }
@@ -335,13 +335,13 @@ namespace SocketKnife
 
         protected virtual void RemoveSession(SocketAsyncEventArgs e)
         {
-            _logger.Trace(string.Format("当RemoveSession时，Socket状态：{0}", e.SocketError));
+            _logger.TraceFormat("当RemoveSession时，Socket状态：{0}", e.SocketError);
             if (!e.AcceptSocket.Connected)
             {
                 return;
             }
             EndPoint iep = e.AcceptSocket.RemoteEndPoint;
-            _logger.Info(string.Format("Server: >> 客户端:{0}, 连接中断.", iep));
+            _logger.InfoFormat("Server: >> 客户端:{0}, 连接中断.", iep);
 
             foreach (var filter in _FilterChain)
             {
@@ -355,16 +355,16 @@ namespace SocketKnife
                 if (_SessionMap.ContainsKey(iep))
                 {
                     _SessionMap.Remove(iep);
-                    _logger.Info(string.Format("服务端:IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count));
+                    _logger.InfoFormat("服务端:IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count);
                 }
                 else
                 {
-                    _logger.Warn(string.Format("服务端:打算清理IP地址{0}时，该地址未在池中。{1}", ip, _SessionMap.Count));
+                    _logger.WarnFormat("服务端:打算清理IP地址{0}时，该地址未在池中。{1}", ip, _SessionMap.Count);
                 }
             }
             else
             {
-                _logger.Warn(string.Format("e.AcceptSocket.RemoteEndPoint不是正确的IPEndPoint：null"));
+                _logger.WarnFormat("e.AcceptSocket.RemoteEndPoint不是正确的IPEndPoint：null");
             }
         }
 
@@ -406,7 +406,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _logger.Warn(string.Format("结束挂起的异步发送异常.{0}", e.Message));
+                _logger.WarnFormat("结束挂起的异步发送异常.{0}", e.Message);
             }
         }
 
@@ -417,8 +417,11 @@ namespace SocketKnife
         protected virtual void WirteBase(KnifeSocketSession session, byte[] data)
         {
             Socket socket = session.Connector;
-            socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-            _logger.Info(string.Format("ServerSend:{0}", data.ToHexString()));
+            if (socket.Connected)
+            {
+                socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
+                _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
+            }
         }
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
@@ -426,7 +429,7 @@ namespace SocketKnife
             string replay = protocol.Generate();
             byte[] data = _Codec.SocketEncoder.Execute(replay);
             WirteBase(session, data);
-            _logger.Debug(string.Format("ServerSend:{0}", replay));
+            _logger.DebugFormat("ServerSend:{0}", replay);
         }
 
         #endregion

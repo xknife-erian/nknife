@@ -13,14 +13,12 @@ namespace NKnife.Protocol.Generic
     public class StringProtocol : IProtocol<string>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+
         public Func<StringProtocol> BuildMethod { get; set; }
 
-        public StringProtocol()
+        public StringProtocol() 
+            : this(string.Empty, string.Empty)
         {
-            Content = DI.Get<StringProtocolContent>();
-            Packer = DI.Get<StringProtocolPacker>();
-            UnPacker = DI.Get<StringProtocolUnPacker>();
-            BuildMethod = NewInstance;
         }
 
         protected StringProtocol(string family, string command)
@@ -28,6 +26,7 @@ namespace NKnife.Protocol.Generic
             Content = DI.Get<StringProtocolContent>();
             Packer = DI.Get<StringProtocolPacker>();
             UnPacker = DI.Get<StringProtocolUnPacker>();
+            BuildMethod = NewInstance;
             Family = family;
             Command = command;
         }
