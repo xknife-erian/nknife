@@ -96,6 +96,7 @@
     <Compile Include="Encrypt\SoftwareSN.cs" />
     <Compile Include="Encrypt\TripleDESHelper.cs" />
     <Compile Include="Encrypt\UtilityEncrypt.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="GUI\WinForm\Grouper\Constants.cs" />
     <Compile Include="GUI\WinForm\Grouper\Grouper.cs">
       <SubType>UserControl</SubType>
