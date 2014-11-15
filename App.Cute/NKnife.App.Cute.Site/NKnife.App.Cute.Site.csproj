@@ -55,9 +55,6 @@
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Configuration" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
@@ -244,8 +241,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife.App.Cute.API.Controllers\NKnife.App.Cute.API.Controllers.csproj">
-      <Project>{1fdb8205-edf3-4938-869b-79725f149040}</Project>
+      <Project>{1FDB8205-EDF3-4938-869B-79725F149040}</Project>
       <Name>NKnife.App.Cute.API.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NKnife.App.Cute.Site.Manager\NKnife.App.Cute.Site.Manager.csproj">
+      <Project>{300086F3-B458-472A-99E6-208C14324216}</Project>
+      <Name>NKnife.App.Cute.Site.Manager</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
