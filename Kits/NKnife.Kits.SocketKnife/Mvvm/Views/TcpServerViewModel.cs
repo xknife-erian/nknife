@@ -32,6 +32,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         private readonly ServerMap _ServerMap = DI.Get<ServerMap>();
         private readonly DemoServer _Server = new DemoServer();
+        private readonly ProtocolViewModel _ProtocolViewModel = DI.Get<ProtocolViewModel>();
         private readonly Timer _Timer = new Timer();
         private readonly UtilityRandom _Random = new UtilityRandom();
 
@@ -125,6 +126,11 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             SocketMessages = new ObservableCollection<SocketMessage>();
             Sessions = new SessionList();
+            _ProtocolViewModel.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "SelectedProtocol")
+                    CurrentProtocol = _ProtocolViewModel.SelectedProtocol;
+            };
         }
 
         protected void AddSession(KnifeSocketSession session)
@@ -193,7 +199,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 }
             };
             _Server.StartServer();
-            DI.Get<ProtocolViewModel>().SetFamily(_Server.GetFamily());
+            _ProtocolViewModel.SetFamily(_Server.GetFamily());
         }
 
         public void StopServer()

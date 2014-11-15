@@ -10,7 +10,8 @@
         <DataGrid Name="_ProtocolsGrid" AutoGenerateColumns="False"
                           CanUserAddRows="False" CanUserDeleteRows="True"
                           HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
-                          VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                          VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                          SelectionChanged="ProtocolsGrid_OnSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="16" />
                 <DataGridTextColumn Header="命令字" Binding="{Binding Path=Command, Mode=OneWay}" Width="*" />

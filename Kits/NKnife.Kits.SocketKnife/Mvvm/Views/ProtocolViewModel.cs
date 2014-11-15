@@ -11,12 +11,24 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
     public class ProtocolViewModel : NotificationObject
     {
+        private StringProtocol _SelectedProtocol;
+
         public ProtocolViewModel()
         {
             Protocols = new ObservableCollection<SimpleProtocol>();
         }
 
         public ObservableCollection<SimpleProtocol> Protocols { get; set; }
+
+        public StringProtocol SelectedProtocol
+        {
+            get { return _SelectedProtocol; }
+            set
+            {
+                _SelectedProtocol = value;
+                RaisePropertyChanged(() => SelectedProtocol);
+            }
+        }
 
         public void SetFamily(StringProtocolFamily family)
         {
@@ -25,7 +37,8 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 var p = new SimpleProtocol
                 {
                     Command = pair.Value.Command,
-                    CommandParam = pair.Value.Content.CommandParam
+                    CommandParam = pair.Value.Content.CommandParam,
+                    Protocol = pair.Value
                 };
                 Protocols.Add(p);
             }
@@ -55,6 +68,8 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                     RaisePropertyChanged(() => CommandParam);
                 }
             }
+
+            public StringProtocol Protocol { get; set; }
         }
     }
 }

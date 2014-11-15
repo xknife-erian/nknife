@@ -27,5 +27,16 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _MainGrid.DataContext = _ViewModel;
             _ProtocolsGrid.ItemsSource = _ViewModel.Protocols;
         }
+
+        private void ProtocolsGrid_OnSelected(object sender, RoutedEventArgs e)
+        {
+            if (_ProtocolsGrid.SelectedItem == null)
+                return;
+            var protocol = _ProtocolsGrid.SelectedItem as ProtocolViewModel.SimpleProtocol;
+            if (protocol != null)
+            {
+                _ViewModel.SelectedProtocol = protocol.Protocol;
+            }
+        }
     }
 }
