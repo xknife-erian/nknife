@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Didaku.Engine.Timeaxis.Data;
-using Didaku.Engine.Timeaxis.Implement.Environment;
-using Didaku.Engine.Timeaxis.Implement.Industry.Bank;
-using Ninject.Modules;
+﻿using Ninject.Modules;
+using NKnife.App.Cute.Implement.Environment;
 
-namespace Didaku.Engine.Timeaxis.Kernel.IoC
+namespace NKnife.App.Cute.Kernel.IoC
 {
     public class SingletonModule : NinjectModule
     {
@@ -18,7 +12,7 @@ namespace Didaku.Engine.Timeaxis.Kernel.IoC
         /// </summary>
         public override void Load()
         {
-            Bind<Datas>().ToSelf().InSingletonScope();
+            Bind<Datas.Datas>().ToSelf().InSingletonScope();
             Bind<ActivityPool>().ToSelf().InSingletonScope();
             Bind<IdentifierGeneratorPool>().ToSelf().InSingletonScope();
             Bind<ServiceQueuePool>().ToSelf().InSingletonScope();

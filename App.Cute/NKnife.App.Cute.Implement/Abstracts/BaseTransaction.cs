@@ -1,7 +1,7 @@
 using System;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>交易信息。
     /// </summary>

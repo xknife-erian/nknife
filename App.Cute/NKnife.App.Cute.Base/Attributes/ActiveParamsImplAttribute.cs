@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Didaku.Engine.Timeaxis.Base.Attributes
+namespace NKnife.App.Cute.Base.Attributes
 {
     /// <summary>一个描述活动请求参数类型的实现类型的定制特性
     /// </summary>

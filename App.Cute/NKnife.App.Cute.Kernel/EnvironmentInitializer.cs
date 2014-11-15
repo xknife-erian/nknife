@@ -6,13 +6,13 @@ using NKnife.Attributes;
 using NKnife.Interface;
 using NKnife.Utility;
 
-namespace Didaku.Engine.Timeaxis.Kernel
+namespace NKnife.App.Cute.Kernel
 {
     /// <summary>描述SDF应用程序的环境，以及环境的相关启动函数
     /// </summary>
     public class EnvironmentInitializer : IInitializer
     {
-        private static readonly ILog _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         private readonly List<EnvironmentItemAttribute> _ItemList = new List<EnvironmentItemAttribute>();
 
@@ -53,12 +53,12 @@ namespace Didaku.Engine.Timeaxis.Kernel
                         }
                         catch (Exception e)
                         {
-                            _Logger.Warn(string.Format("寻找启动时的应用程序服务项异常."), e);
+                            _logger.Warn(string.Format("寻找启动时的应用程序服务项异常."), e);
                         }
                     }
                 }
                 string info = string.Format("找到应用程序环境服务项{0}个。", _ItemMap.Count);
-                _Logger.Info(info);
+                _logger.Info(info);
                 if (_ItemMap.Count > 0)
                 {
                     //按定义的顺序进行排序
@@ -72,22 +72,22 @@ namespace Didaku.Engine.Timeaxis.Kernel
                             EnvironmentItemAttribute attr = _ItemList[i];
                             _ItemMap[attr].Initialize();
                             info = string.Format("启动\"{0}\"服务完成。-- {1}", attr.Description, i);
-                            _Logger.Info(info);
+                            _logger.Info(info);
                         }
                         catch (Exception e)
                         {
-                            _Logger.Warn(string.Format("应用程序服务项初始化异常."), e);
+                            _logger.Warn(string.Format("应用程序服务项初始化异常."), e);
                         }
                     }
                 }
                 IsInitialized = true;
-                _Logger.Info("应用程序环境的初始化完成。");
+                _logger.Info("应用程序环境的初始化完成。");
                 OnInitialized(EventArgs.Empty);
                 return true;
             }
             catch (Exception e)
             {
-                _Logger.Fatal("应用程序环境的初始化异常", e);
+                _logger.Fatal("应用程序环境的初始化异常", e);
                 return false;
             }
         }

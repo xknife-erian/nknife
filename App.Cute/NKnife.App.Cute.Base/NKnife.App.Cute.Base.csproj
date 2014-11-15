@@ -8,8 +8,8 @@
     <ProjectGuid>{09BCD5DB-3235-4DE3-B2BE-BACFF73A34F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Didaku.Engine.Timeaxis.Base</RootNamespace>
-    <AssemblyName>Didaku.Engine.Timeaxis.Base</AssemblyName>
+    <RootNamespace>NKnife.App.Cute.Base</RootNamespace>
+    <AssemblyName>NKnife.App.Cute.Base</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -50,13 +50,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Didaku.Engine.Timeaxis.Base.Enums
+namespace NKnife.App.Cute.Base.Enums
 {
     /// <summary>交易的状态
     /// </summary>

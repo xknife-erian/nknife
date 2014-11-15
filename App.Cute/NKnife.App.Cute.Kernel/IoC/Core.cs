@@ -2,31 +2,31 @@
 using System.Linq;
 using System.Reflection;
 using Common.Logging;
-using Didaku.Engine.Timeaxis.Implement.Environment;
-using Didaku.Engine.Timeaxis.Implement.Industry.Bank;
 using Ninject;
 using Ninject.Modules;
+using NKnife.App.Cute.Implement.Environment;
+using NKnife.App.Cute.Implement.Industry.Bank;
 
-namespace Didaku.Engine.Timeaxis.Kernel.IoC
+namespace NKnife.App.Cute.Kernel.IoC
 {
     /// <summary>本框架的核心管理器
     /// </summary>
     public static class Core
     {
-        private static readonly ILog _Logger = LogManager.GetCurrentClassLogger();
-        private static readonly StandardKernel _Kernel = new StandardKernel();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly StandardKernel _kernel = new StandardKernel();
 
         static Core()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            _Kernel.Load(assembly);
+            _kernel.Load(assembly);
 
             //将自动载入的Module打印到日志，以便调试框架。
-            var modules = _Kernel.GetModules();
+            var modules = _kernel.GetModules();
             var ms = modules as INinjectModule[] ?? modules.ToArray();
-            _Logger.Info(string.Format("Ninject共载入{0}个Module。", ms.Count()));
+            _logger.Info(string.Format("Ninject共载入{0}个Module。", ms.Count()));
             foreach (var module in ms)
-                _Logger.Info(string.Format("Ninject已载入:{0}", module.GetType().Name));
+                _logger.Info(string.Format("Ninject已载入:{0}", module.GetType().Name));
 
             UserPoolDemo();
         }
@@ -37,7 +37,7 @@ namespace Didaku.Engine.Timeaxis.Kernel.IoC
         /// <returns>单建实例</returns>
         public static T Singleton<T>()
         {
-            return _Kernel.Get<T>();
+            return _kernel.Get<T>();
         }
 
         private static void UserPoolDemo()

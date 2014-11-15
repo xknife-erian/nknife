@@ -1,4 +1,4 @@
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     public interface IEngineOption
     {

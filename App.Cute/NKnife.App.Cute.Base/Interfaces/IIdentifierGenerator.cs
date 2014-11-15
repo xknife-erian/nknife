@@ -1,4 +1,4 @@
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>描述一个识别符的生成器
     /// </summary>

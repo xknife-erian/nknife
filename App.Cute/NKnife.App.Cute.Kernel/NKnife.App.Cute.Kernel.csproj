@@ -7,8 +7,8 @@
     <ProjectGuid>{88B0A550-1693-4E22-8E50-53491496B183}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Didaku.Engine.Timeaxis.Kernel</RootNamespace>
-    <AssemblyName>Didaku.Engine.Timeaxis.Kernel</AssemblyName>
+    <RootNamespace>NKnife.App.Cute.Kernel</RootNamespace>
+    <AssemblyName>NKnife.App.Cute.Kernel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>

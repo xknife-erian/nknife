@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Didaku.Engine.Timeaxis.Base.Common;
+using NKnife.App.Cute.Base.Common;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>领域核心定义:系统的用户。这个用户的概念比较宽，可以是个人，银行网点，餐馆等等。
     /// </summary>

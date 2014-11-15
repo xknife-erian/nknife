@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Didaku.Engine.Timeaxis.Site.Manager
+namespace NKnife.App.Cute.Site.Manager
 {
     public class RouteConfig
     {

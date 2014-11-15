@@ -7,8 +7,8 @@
     <ProjectGuid>{1FDB8205-EDF3-4938-869B-79725F149040}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Didaku.Engine.Timeaxis.API.Controllers</RootNamespace>
-    <AssemblyName>Didaku.Engine.Timeaxis.API.Controllers</AssemblyName>
+    <RootNamespace>NKnife.App.Cute.API.Controllers</RootNamespace>
+    <AssemblyName>NKnife.App.Cute.API.Controllers</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>

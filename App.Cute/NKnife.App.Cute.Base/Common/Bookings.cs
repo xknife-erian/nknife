@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Base.Common
+namespace NKnife.App.Cute.Base.Common
 {
     /// <summary>用户存在的预约
     /// </summary>

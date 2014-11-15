@@ -1,6 +1,4 @@
-using System;
-
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>活动的参数
     /// </summary>

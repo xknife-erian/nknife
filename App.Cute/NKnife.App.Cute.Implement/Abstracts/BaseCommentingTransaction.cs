@@ -1,6 +1,4 @@
-using System;
-
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>«Î«Û∆¿º€
     /// </summary>

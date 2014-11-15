@@ -1,8 +1,4 @@
-using Didaku.Engine.Timeaxis.Data;
-using Didaku.Engine.Timeaxis.Data.Base;
-using Didaku.Engine.Timeaxis.Kernel.IoC;
-
-namespace Didaku.Engine.Timeaxis.Kernel.Common
+namespace NKnife.App.Cute.Kernel.Common
 {
 //    class MongoDatabaseTarget : TargetWithLayout
 //    {

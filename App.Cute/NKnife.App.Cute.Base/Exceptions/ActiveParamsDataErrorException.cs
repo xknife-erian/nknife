@@ -1,6 +1,4 @@
-using System;
-
-namespace Didaku.Engine.Timeaxis.Base.Exceptions
+namespace NKnife.App.Cute.Base.Exceptions
 {
     public class ActiveParamsDataErrorException : TimeaxisException
     {

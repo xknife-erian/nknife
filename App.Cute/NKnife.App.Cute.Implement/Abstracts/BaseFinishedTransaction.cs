@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+﻿namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>结束的交易。记录了整个预约的事件发生的各个时间节点，和结束的时间。
     /// </summary>

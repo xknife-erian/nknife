@@ -1,6 +1,6 @@
-﻿using Didaku.Engine.Timeaxis.Base.Interfaces;
+﻿using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Data.Stores
+namespace NKnife.App.Cute.Datas.Stores
 {
     class TransactionStore : MongoStore<ITransaction, string>
     {

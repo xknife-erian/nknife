@@ -1,6 +1,7 @@
-﻿using Didaku.Engine.Timeaxis.Base.Interfaces.Services;
+﻿using Didaku.Engine.Timeaxis.Base.Interfaces;
+using Didaku.Engine.Timeaxis.Base.Interfaces.Services;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>一个描述单体组织时间管理模型的引擎接口
     /// </summary>

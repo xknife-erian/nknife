@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Didaku.Engine.Timeaxis.Base.Attributes;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.Attributes;
+using NKnife.App.Cute.Base.Interfaces;
 using NKnife.Interface;
 using NKnife.Utility;
 
-namespace Didaku.Engine.Timeaxis.Implement.Environment
+namespace NKnife.App.Cute.Implement.Environment
 {
     /// <summary>工作流动作管理器的管理池
     /// </summary>

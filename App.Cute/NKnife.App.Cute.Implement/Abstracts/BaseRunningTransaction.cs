@@ -1,6 +1,4 @@
-using System;
-
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>正在运作的预约事件的交易信息
     /// </summary>

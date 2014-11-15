@@ -1,6 +1,6 @@
 using System;
 
-namespace Didaku.Engine.Timeaxis.Base.Attributes
+namespace NKnife.App.Cute.Base.Attributes
 {
     /// <summary>一个描述交易类型的实现类型的定制特性
     /// </summary>

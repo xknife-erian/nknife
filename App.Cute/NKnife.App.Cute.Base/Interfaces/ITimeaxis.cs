@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>领域核心定义:时间轴。这是本系统领域中最关键的概念。他代表任意一个需要进行时间管理的事实存在，如：柜台，人，餐桌，诊台等等。
     /// </summary>

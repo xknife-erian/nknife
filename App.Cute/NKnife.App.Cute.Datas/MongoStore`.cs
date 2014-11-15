@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NKnife.MongoDb;
+﻿using NKnife.MongoDb;
 
-namespace Didaku.Engine.Timeaxis.Data
+namespace NKnife.App.Cute.Datas
 {
     public class MongoStore<T, TId> : AbstractMongoDbStore<T, TId>
     {

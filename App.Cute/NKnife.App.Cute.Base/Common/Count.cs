@@ -1,6 +1,6 @@
 using System;
 
-namespace Didaku.Engine.Timeaxis.Base.Common
+namespace NKnife.App.Cute.Base.Common
 {
     /// <summary>统计数量
     /// </summary>

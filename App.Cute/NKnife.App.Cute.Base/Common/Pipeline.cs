@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Didaku.Engine.Timeaxis.Base.Common
+namespace NKnife.App.Cute.Base.Common
 {
     /// <summary>工作流水线。内部的值代表Activity的Kind值。
     /// </summary>

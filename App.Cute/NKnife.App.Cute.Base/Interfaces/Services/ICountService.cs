@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using Didaku.Engine.Timeaxis.Base.Common;
+using NKnife.App.Cute.Base.Common;
+using NKnife.App.Cute.Base.Interfaces;
 
 namespace Didaku.Engine.Timeaxis.Base.Interfaces.Services
 {

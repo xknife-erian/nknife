@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Didaku.Engine.Timeaxis.API.Controllers
+namespace NKnife.App.Cute.API.Controllers
 {
     public class JqGridParam
     {

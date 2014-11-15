@@ -7,8 +7,8 @@
     <ProjectGuid>{300086F3-B458-472A-99E6-208C14324216}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Didaku.Engine.Timeaxis.Site.Manager</RootNamespace>
-    <AssemblyName>Didaku.Engine.Timeaxis.Site.Manager</AssemblyName>
+    <RootNamespace>NKnife.App.Cute.Site.Manager</RootNamespace>
+    <AssemblyName>NKnife.App.Cute.Site.Manager</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

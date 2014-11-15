@@ -1,6 +1,6 @@
-using System;
+using Didaku.Engine.Timeaxis.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>描述一个活动，这是做为一个预约及预约产生的工作的各个节点的触发动作。它是一个描述动作的对象。
     /// 在排队系统中，它可以是一个“呼叫”，“转移”等动作。

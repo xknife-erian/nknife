@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Didaku.Engine.Timeaxis.Base.Attributes;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>本系统领域中的关键特征的管理池
     /// </summary>

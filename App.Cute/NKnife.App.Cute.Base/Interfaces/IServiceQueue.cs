@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Didaku.Engine.Timeaxis.Base.Common;
-using Didaku.Engine.Timeaxis.Base.EventArg;
+using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.EventArg;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>描述一个服务队列
     /// </summary>

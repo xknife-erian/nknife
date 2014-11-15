@@ -1,6 +1,4 @@
-using System;
-
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>一个描述指定类型可做一个排队队列的先决要素。如业务类型、客户类别均可以做为队列的先决要素。
     /// </summary>

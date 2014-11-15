@@ -1,7 +1,7 @@
 using System;
-using Didaku.Engine.Timeaxis.Base.Common;
+using NKnife.App.Cute.Base.Common;
 
-namespace Didaku.Engine.Timeaxis.Base.EventArg
+namespace NKnife.App.Cute.Base.EventArg
 {
     /// <summary>
     /// 当统计数量发生改变时包含事件数据的类

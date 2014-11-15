@@ -1,6 +1,6 @@
 using System;
 
-namespace Didaku.Engine.Timeaxis.Base.Exceptions
+namespace NKnife.App.Cute.Base.Exceptions
 {
     /// <summary>描述一个异常：错误的Activity请求参数类型
     /// </summary>

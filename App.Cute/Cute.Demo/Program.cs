@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Threading;
-using Didaku;
-using Didaku.Engine.Timeaxis.Implement.Environment;
-using Didaku.Engine.Timeaxis.Kernel;
-using Didaku.Engine.Timeaxis.Kernel.IoC;
+using NKnife.App.Cute.Implement.Environment;
+using NKnife.App.Cute.Kernel;
+using NKnife.App.Cute.Kernel.IoC;
 using NKnife.Utility;
 
-namespace Timeaxis.Demo
+namespace Cute.Demo
 {
     class Program
     {
-        private static bool _IsStop;
+        private static bool _isStop;
 
         static Program()
         {
@@ -45,7 +43,7 @@ namespace Timeaxis.Demo
 
             Tip();
 
-            while (!_IsStop)
+            while (!_isStop)
             {
                 string key = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(key))
@@ -59,10 +57,10 @@ namespace Timeaxis.Demo
                         BankDemo.Run();
                         break;
                     case "x":
-                        _IsStop = true;
+                        _isStop = true;
                         break;
                 }
-                if (!_IsStop)
+                if (!_isStop)
                     Tip();
             }
 

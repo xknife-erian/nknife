@@ -7,8 +7,8 @@
     <ProjectGuid>{2244C3D2-34C4-48EE-AE11-D70A574B9901}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Timeaxis.Demo</RootNamespace>
-    <AssemblyName>Timeaxis.Demo</AssemblyName>
+    <RootNamespace>Cute.Demo</RootNamespace>
+    <AssemblyName>Cute.Demo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>

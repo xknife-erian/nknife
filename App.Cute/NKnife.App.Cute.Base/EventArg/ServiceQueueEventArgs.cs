@@ -1,7 +1,7 @@
 using System;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Base.EventArg
+namespace NKnife.App.Cute.Base.EventArg
 {
     public delegate void ServiceQueueEventHandler(IServiceQueue serviceQueue, ServiceQueueEventArgs e);
 

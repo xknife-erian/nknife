@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NKnife.Exceptions;
 
-namespace Didaku.Engine.Timeaxis.Base.Exceptions
+namespace NKnife.App.Cute.Base.Exceptions
 {
     /// <summary>Timeaxis项目的异常基类
     /// </summary>

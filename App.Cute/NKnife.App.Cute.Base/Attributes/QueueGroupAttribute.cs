@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Didaku.Engine.Timeaxis.Base.Common
+namespace NKnife.App.Cute.Base.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
     public sealed class QueueGroupAttribute : Attribute

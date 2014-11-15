@@ -1,9 +1,9 @@
 using System;
-using Didaku.Engine.Timeaxis.Base.Exceptions;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.Exceptions;
+using NKnife.App.Cute.Base.Interfaces;
 using NKnife.Utility;
 
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+namespace NKnife.App.Cute.Implement.Abstracts
 {
     public abstract class BaseActiveParams : IActiveParams
     {

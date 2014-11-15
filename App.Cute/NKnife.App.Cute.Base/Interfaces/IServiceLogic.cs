@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Didaku.Engine.Timeaxis.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>服务的逻辑。一个逻辑中会包括多个队列:<see cref="IServiceQueue"/>。
     /// </summary>

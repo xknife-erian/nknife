@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.Interfaces;
 using NKnife.Interface;
 
-namespace Didaku.Engine.Timeaxis.Implement.Environment
+namespace NKnife.App.Cute.Implement.Environment
 {
     /// <summary>本系统的应用者(应用者可以是:商家，企业，组织，个人等)管理池
     /// </summary>

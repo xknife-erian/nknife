@@ -1,6 +1,6 @@
 using System;
 
-namespace Didaku.Engine.Timeaxis.Base.Attributes
+namespace NKnife.App.Cute.Base.Attributes
 {
     /// <summary>一个描述活动类型的实现类型定制特性
     /// 以下是基本约定：

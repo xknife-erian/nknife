@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Didaku.Engine.Timeaxis.Base.Attributes;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+﻿using NKnife.App.Cute.Base.Attributes;
 
-namespace Didaku.Engine.Timeaxis.Data.Stores
+namespace NKnife.App.Cute.Datas.Stores
 {
     class ActivityStore : MongoStore<ActivityImplAttribute, string>
     {

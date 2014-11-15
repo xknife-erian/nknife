@@ -1,18 +1,19 @@
 using System;
-using Didaku.Engine.Timeaxis.Implement.Environment;
-using Didaku.Engine.Timeaxis.Implement.Industry.Bank;
-using Didaku.Engine.Timeaxis.Kernel;
-using Didaku.Engine.Timeaxis.Kernel.IoC;
+using NKnife.App.Cute.Implement.Environment;
+using NKnife.App.Cute.Implement.Industry.Bank;
+using NKnife.App.Cute.Kernel.IoC;
 
-namespace Timeaxis.Demo
+namespace Cute.Demo
 {
     class Initializer
     {
         public static void Run()
         {
-            var user = new UserAsBank();
-            user.Id = "abc-user";
-            user.BookingActivity = new LocaleByQueueMachineBookingActivity();
+            var user = new UserAsBank
+            {
+                Id = "abc-user", 
+                BookingActivity = new LocaleByQueueMachineBookingActivity()
+            };
 
             if (!Core.Singleton<UserPool>().ContainsKey(user.Id))
                 Core.Singleton<UserPool>().Add(user.Id, user);

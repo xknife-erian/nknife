@@ -1,6 +1,6 @@
 using System;
 
-namespace Didaku.Engine.Timeaxis.Base.Exceptions
+namespace NKnife.App.Cute.Base.Exceptions
 {
     /// <summary>构建请求参数类型时数据转换为参数类型内部数据时异常
     /// </summary>

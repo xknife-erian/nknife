@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Didaku.Engine.Timeaxis.Data.Base;
+﻿using NKnife.App.Cute.Datas.Base;
 
-namespace Didaku.Engine.Timeaxis.Data.Stores
+namespace NKnife.App.Cute.Datas.Stores
 {
     class LogEventInfoStore : MongoStore<LogInfo, string>
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Didaku.Engine.Timeaxis.Data.Base
+﻿namespace NKnife.App.Cute.Datas.Base
 {
     /// <summary>对应NLog的日志体对象的一个简单对象。
     /// </summary>

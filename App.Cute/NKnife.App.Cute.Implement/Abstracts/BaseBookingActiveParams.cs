@@ -1,6 +1,4 @@
-using Didaku.Engine.Timeaxis.Base.Interfaces;
-
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>预约的动作参数
     /// </summary>

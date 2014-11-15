@@ -4,10 +4,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Didaku.Engine.Timeaxis.Base.EventArg;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.EventArg;
+using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>描述营业厅的一个窗口(柜台)服务队列的属性特征类型。
     /// 它将被包括在一个窗口(柜台)所拥有的<see cref="IServiceLogic"/>队列组中。

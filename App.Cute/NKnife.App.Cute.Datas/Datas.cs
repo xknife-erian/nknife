@@ -1,10 +1,10 @@
 ﻿using System;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
-using Didaku.Engine.Timeaxis.Data.Base;
-using Didaku.Engine.Timeaxis.Data.Stores;
+using NKnife.App.Cute.Base.Interfaces;
+using NKnife.App.Cute.Datas.Base;
+using NKnife.App.Cute.Datas.Stores;
 using NKnife.Interface;
 
-namespace Didaku.Engine.Timeaxis.Data
+namespace NKnife.App.Cute.Datas
 {
     public class Datas : IInitializer
     {

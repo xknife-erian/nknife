@@ -1,6 +1,6 @@
-﻿using Didaku.Engine.Timeaxis.Base.Interfaces;
+﻿using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Implement.Abstracts
+namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>对一次预约或预约产生的交易进行了评论
     /// </summary>

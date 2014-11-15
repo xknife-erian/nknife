@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Didaku.Engine.Timeaxis.Base.Common;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+﻿using System.Collections.Generic;
+using NKnife.App.Cute.Base.Common;
+using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Implement.Industry.Bank
+namespace NKnife.App.Cute.Implement.Industry.Bank
 {
     /// <summary>当银行行业的营业网点作为用户时。
     /// </summary>

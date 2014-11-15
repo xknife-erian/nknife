@@ -1,9 +1,10 @@
 using System.Web.Http;
 using AttributeRouting.Web.Http.WebHost;
+using NKnife.App.Cute.API.Controllers;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(Didaku.Engine.Timeaxis.API.Controllers.AttributeRoutingHttpConfig), "Start")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(AttributeRoutingHttpConfig), "Start")]
 
-namespace Didaku.Engine.Timeaxis.API.Controllers 
+namespace NKnife.App.Cute.API.Controllers 
 {
     public static class AttributeRoutingHttpConfig
 	{

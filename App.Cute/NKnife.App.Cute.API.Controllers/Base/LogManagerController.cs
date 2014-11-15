@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Http;
+﻿using System.Web.Http;
 using AttributeRouting.Web.Http;
-using Didaku.Engine.Timeaxis.Data;
-using Didaku.Engine.Timeaxis.Kernel;
-using Didaku.Engine.Timeaxis.Kernel.IoC;
 using MongoDB.Driver.Builders;
+using NKnife.App.Cute.Kernel.IoC;
 using NKnife.Database;
 
-namespace Didaku.Engine.Timeaxis.API.Controllers.Base
+namespace NKnife.App.Cute.API.Controllers.Base
 {
     public class LogManagerController : ApiController
     {
         [POST("Log/List")]
         public JqGridResult List(JqGridParam param)
         {
-            var logs = Core.Singleton<Datas>().Logs;
+            var logs = Core.Singleton<Datas.Datas>().Logs;
 
             var query = Query.Null;
             var pager = new PagerInfo

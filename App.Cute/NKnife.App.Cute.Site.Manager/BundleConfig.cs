@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Didaku.Engine.Timeaxis.Site.Manager
+namespace NKnife.App.Cute.Site.Manager
 {
     public class BundleConfig
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
+using NKnife.App.Cute.Base.Interfaces;
 using NKnife.Interface;
 
-namespace Didaku.Engine.Timeaxis.Implement.Environment
+namespace NKnife.App.Cute.Implement.Environment
 {
     /// <summary>标识符生成器的管理池
     /// </summary>

@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
-using Didaku.Engine.Timeaxis.Implement;
-using Didaku.Engine.Timeaxis.Implement.Environment;
-using Didaku.Engine.Timeaxis.Kernel;
-using Didaku.Engine.Timeaxis.Kernel.IoC;
+using NKnife.App.Cute.Base.Interfaces;
+using NKnife.App.Cute.Implement.Environment;
+using NKnife.App.Cute.Kernel.IoC;
 
-namespace Timeaxis.Demo
+namespace Cute.Demo
 {
     class BankDemo
     {

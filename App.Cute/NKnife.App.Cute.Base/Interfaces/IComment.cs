@@ -1,4 +1,6 @@
-namespace Didaku.Engine.Timeaxis.Base.Interfaces
+using Didaku.Engine.Timeaxis.Base.Interfaces;
+
+namespace NKnife.App.Cute.Base.Interfaces
 {
     /// <summary>领域核心实体：评论
     /// </summary>

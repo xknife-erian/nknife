@@ -1,9 +1,9 @@
-﻿using Didaku.Engine.Timeaxis.Base.Attributes;
-using Didaku.Engine.Timeaxis.Base.Exceptions;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
-using Didaku.Engine.Timeaxis.Implement.Abstracts;
+﻿using NKnife.App.Cute.Base.Attributes;
+using NKnife.App.Cute.Base.Exceptions;
+using NKnife.App.Cute.Base.Interfaces;
+using NKnife.App.Cute.Implement.Abstracts;
 
-namespace Didaku.Engine.Timeaxis.Implement.Industry.Bank
+namespace NKnife.App.Cute.Implement.Industry.Bank
 {
     [ActivityImpl(1001, "在银行使用传统排队时，在取号机上进行现场预约的动作")]
     public class LocaleByQueueMachineBookingActivity : BaseBookingActivity

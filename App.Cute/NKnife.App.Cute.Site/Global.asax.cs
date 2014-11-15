@@ -2,10 +2,10 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Didaku.Engine.Timeaxis.API.Controllers;
-using Didaku.Engine.Timeaxis.Site.Manager;
+using NKnife.App.Cute.API.Controllers;
+using NKnife.App.Cute.Site.Manager;
 
-namespace Didaku.Engine.Timeaxis.Site
+namespace NKnife.App.Cute.Site
 {
     public class WebApiApplication : HttpApplication
     {

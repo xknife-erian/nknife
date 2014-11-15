@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
 using AttributeRouting.Web.Http;
-using Didaku.Engine.Timeaxis.Base.Attributes;
-using Didaku.Engine.Timeaxis.Implement.Environment;
-using Didaku.Engine.Timeaxis.Kernel.IoC;
+using NKnife.App.Cute.Implement.Environment;
+using NKnife.App.Cute.Kernel.IoC;
 
-namespace Didaku.Engine.Timeaxis.API.Controllers.Base
+namespace NKnife.App.Cute.API.Controllers.Base
 {
     public class ActivityManagerController : ApiController
     {

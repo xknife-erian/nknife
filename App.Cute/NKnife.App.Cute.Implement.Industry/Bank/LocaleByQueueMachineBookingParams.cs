@@ -1,7 +1,7 @@
 ﻿using System;
-using Didaku.Engine.Timeaxis.Implement.Abstracts;
+using NKnife.App.Cute.Implement.Abstracts;
 
-namespace Didaku.Engine.Timeaxis.Implement.Industry.Bank
+namespace NKnife.App.Cute.Implement.Industry.Bank
 {
     public class LocaleByQueueMachineBookingParams : BaseActiveParams
     {

@@ -8,8 +8,8 @@
     <ProjectGuid>{39CDB60A-F188-400B-ADAA-2EF6B967B5A9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Didaku.Engine.Timeaxis.Data</RootNamespace>
-    <AssemblyName>Didaku.Engine.Timeaxis.Data</AssemblyName>
+    <RootNamespace>NKnife.App.Cute.Datas</RootNamespace>
+    <AssemblyName>NKnife.App.Cute.Datas</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>

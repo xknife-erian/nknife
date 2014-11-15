@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Didaku.Engine.Timeaxis.Base.EventArg;
+using NKnife.App.Cute.Base.EventArg;
 
-namespace Didaku.Engine.Timeaxis.Base.Common
+namespace NKnife.App.Cute.Base.Common
 {
     public class CountMap : IDictionary<string, Count>
     {
