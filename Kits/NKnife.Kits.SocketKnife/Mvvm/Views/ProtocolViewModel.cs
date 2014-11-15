@@ -1,12 +1,60 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using NKnife.Mvvm;
+using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
-    class ProtocolViewModel : NotificationObject
+    public class ProtocolViewModel : NotificationObject
     {
+        public ProtocolViewModel()
+        {
+            Protocols = new ObservableCollection<SimpleProtocol>();
+        }
+
+        public ObservableCollection<SimpleProtocol> Protocols { get; set; }
+
+        public void SetFamily(StringProtocolFamily family)
+        {
+            foreach (KeyValuePair<string, StringProtocol> pair in family)
+            {
+                var p = new SimpleProtocol
+                {
+                    Command = pair.Value.Command,
+                    CommandParam = pair.Value.Content.CommandParam
+                };
+                Protocols.Add(p);
+            }
+        }
+
+        public class SimpleProtocol : NotificationObject
+        {
+            private string _Command;
+            private string _CommandParam;
+
+            public string Command
+            {
+                get { return _Command; }
+                set
+                {
+                    _Command = value;
+                    RaisePropertyChanged(() => Command);
+                }
+            }
+
+            public string CommandParam
+            {
+                get { return _CommandParam; }
+                set
+                {
+                    _CommandParam = value;
+                    RaisePropertyChanged(() => CommandParam);
+                }
+            }
+        }
     }
 }

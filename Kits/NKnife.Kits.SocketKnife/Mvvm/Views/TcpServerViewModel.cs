@@ -193,6 +193,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 }
             };
             _Server.StartServer();
+            DI.Get<ProtocolViewModel>().SetFamily(_Server.GetFamily());
         }
 
         public void StopServer()
