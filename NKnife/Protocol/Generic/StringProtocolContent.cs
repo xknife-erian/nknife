@@ -41,5 +41,33 @@ namespace NKnife.Protocol.Generic
         public string CommandParam { get; set; }
         public Dictionary<string, string> Infomations { get; private set; }
         public List<object> Tags { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((StringProtocolContent) obj);
+        }
+
+        protected bool Equals(StringProtocolContent other)
+        {
+            return string.Equals(Command, other.Command) 
+                && string.Equals(CommandParam, other.CommandParam)
+                && Infomations.Compare(other.Infomations)
+                && Tags.Compare(other.Tags);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (Command != null ? Command.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (CommandParam != null ? CommandParam.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Infomations != null ? Infomations.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Tags != null ? Tags.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }

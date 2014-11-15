@@ -117,6 +117,36 @@ namespace NKnife.Protocol.Generic
             return NewInstance();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((StringProtocol) obj);
+        }
+
+        protected bool Equals(StringProtocol other)
+        {
+            return string.Equals(Family, other.Family) &&
+                Packer.GetType() == other.Packer.GetType() &&
+                UnPacker.GetType() == other.UnPacker.GetType() && 
+                Equals(Content, other.Content) &&
+                Equals(BuildMethod, other.BuildMethod);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (BuildMethod != null ? BuildMethod.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Packer != null ? Packer.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (UnPacker != null ? UnPacker.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Content != null ? Content.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Family != null ? Family.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+
         public override string ToString()
         {
             string str = string.Empty;
