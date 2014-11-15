@@ -25,7 +25,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             InitializeComponent();
             _ViewModel = new DemoServerViewModel();
-            _View.DataContext = _ViewModel;
+            _MainGrid.DataContext = _ViewModel;
             _ViewModel.Dispatcher = Dispatcher;
 
             _SessionDataGrid.ItemsSource = _ViewModel.Sessions;

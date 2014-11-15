@@ -12,7 +12,7 @@ namespace NKnife.Socket.UnitTest
     /// KnifeSocketFilterTest 的摘要说明
     /// </summary>
     [TestClass]
-    public class KnifeSocketFilterTest
+    public class KnifeSocketFilterTest1
     {
 
         #region 附加测试特性

@@ -6,8 +6,7 @@
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              mc:Ignorable="d" AutoHideMinWidth="320"
              Title="协议管理器" IconSource="/Attachments/protocols-view-icon.png">
-    <Grid>
-        
+    <Grid Name="_MainGrid">
         <DataGrid>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Time, Mode=OneWay}" Width="30" />

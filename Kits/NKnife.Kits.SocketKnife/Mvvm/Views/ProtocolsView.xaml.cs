@@ -18,9 +18,12 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class ProtocolsView
     {
+        private readonly ProtocolViewModel _ViewModel = new ProtocolViewModel();
+
         public ProtocolsView()
         {
             InitializeComponent();
+            _MainGrid.DataContext = _ViewModel;
         }
     }
 }
