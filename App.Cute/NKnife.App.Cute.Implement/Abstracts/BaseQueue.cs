@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using NKnife.App.Cute.Base.EventArg;
 using NKnife.App.Cute.Base.Interfaces;
+using NKnife.App.Cute.Datas;
+using NKnife.IoC;
 
 namespace NKnife.App.Cute.Implement.Abstracts
 {
@@ -88,7 +90,7 @@ namespace NKnife.App.Cute.Implement.Abstracts
         /// </summary>
         public bool TryFind(out ITransaction transaction, Func<IQueryable<ITransaction>, ITransaction> func)
         {
-            transaction = null; // func.Invoke(Datas.Instance.Transactions);
+            transaction = null;//func.Invoke(DI.Get<DataService>().Transactions);
             return transaction != null;
         }
 
@@ -131,9 +133,7 @@ namespace NKnife.App.Cute.Implement.Abstracts
         /// </summary>
         public IEnumerator<ITransaction> GetEnumerator()
         {
-// ReSharper disable AssignNullToNotNullAttribute
             return _Trans.GetEnumerator();
-// ReSharper restore AssignNullToNotNullAttribute
         }
 
         #endregion
@@ -251,9 +251,10 @@ namespace NKnife.App.Cute.Implement.Abstracts
         {
             return trans =>
             {
-                if (trans == null || !trans.Any())
+                var transactions = trans as ITransaction[] ?? trans.ToArray();
+                if (trans == null || !transactions.Any())
                     return null;
-                IOrderedEnumerable<ITransaction> result = from tran in trans
+                IOrderedEnumerable<ITransaction> result = from tran in transactions
                                                           orderby
                                                               tran.Time
                                                           select tran;

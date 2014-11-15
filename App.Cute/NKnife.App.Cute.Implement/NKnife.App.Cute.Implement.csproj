@@ -85,6 +85,10 @@
       <Project>{09bcd5db-3235-4de3-b2be-bacff73a34f1}</Project>
       <Name>NKnife.App.Cute.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NKnife.App.Cute.Datas\NKnife.App.Cute.Datas.csproj">
+      <Project>{39CDB60A-F188-400B-ADAA-2EF6B967B5A9}</Project>
+      <Name>NKnife.App.Cute.Datas</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

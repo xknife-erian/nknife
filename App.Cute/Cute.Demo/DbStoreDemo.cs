@@ -16,7 +16,7 @@ namespace Cute.Demo
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private static readonly Stopwatch _watch = new Stopwatch();
-        private static readonly MongoStore<ITransaction, string> _store = Core.Singleton<Datas>().Transactions;
+        private static readonly MongoStore<ITransaction, string> _store = Core.Singleton<DataService>().Transactions;
         private const int DEMO_SIZE = 5 * 10000;
 
         public static void Run()

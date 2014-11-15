@@ -6,7 +6,7 @@ using NKnife.Interface;
 
 namespace NKnife.App.Cute.Datas
 {
-    public class Datas : IInitializer
+    public class DataService : IInitializer
     {
         /// <summary>Transaction集合的存储
         /// </summary>

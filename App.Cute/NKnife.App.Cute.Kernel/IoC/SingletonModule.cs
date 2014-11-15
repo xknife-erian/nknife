@@ -12,7 +12,7 @@ namespace NKnife.App.Cute.Kernel.IoC
         /// </summary>
         public override void Load()
         {
-            Bind<Datas.Datas>().ToSelf().InSingletonScope();
+            Bind<Datas.DataService>().ToSelf().InSingletonScope();
             Bind<ActivityPool>().ToSelf().InSingletonScope();
             Bind<IdentifierGeneratorPool>().ToSelf().InSingletonScope();
             Bind<ServiceQueuePool>().ToSelf().InSingletonScope();

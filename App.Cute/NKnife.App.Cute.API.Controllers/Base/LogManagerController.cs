@@ -11,7 +11,7 @@ namespace NKnife.App.Cute.API.Controllers.Base
         [POST("Log/List")]
         public JqGridResult List(JqGridParam param)
         {
-            var logs = Core.Singleton<Datas.Datas>().Logs;
+            var logs = Core.Singleton<Datas.DataService>().Logs;
 
             var query = Query.Null;
             var pager = new PagerInfo
