@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using NKnife.App.Cute.Base.Common;
-using NKnife.App.Cute.Base.Interfaces;
 
-namespace Didaku.Engine.Timeaxis.Base.Interfaces.Services
+namespace NKnife.App.Cute.Base.Interfaces.Services
 {
     public interface ICountService
     {

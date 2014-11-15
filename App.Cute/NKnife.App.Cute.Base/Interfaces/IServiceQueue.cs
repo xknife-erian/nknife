@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Didaku.Engine.Timeaxis.Base.Interfaces;
 using NKnife.App.Cute.Base.EventArg;
 
 namespace NKnife.App.Cute.Base.Interfaces

@@ -1,5 +1,4 @@
-﻿using Didaku.Engine.Timeaxis.Base.Interfaces;
-using Didaku.Engine.Timeaxis.Base.Interfaces.Services;
+﻿using NKnife.App.Cute.Base.Interfaces.Services;
 
 namespace NKnife.App.Cute.Base.Interfaces
 {
