@@ -394,7 +394,7 @@ namespace SocketKnife
                 BeginReceive(e);
         }
 
-        protected virtual void AsynCallBackSend(IAsyncResult result)
+        protected virtual void AsynEndSend(IAsyncResult result)
         {
             try
             {
@@ -419,8 +419,15 @@ namespace SocketKnife
             Socket socket = session.Connector;
             if (socket.Connected)
             {
-                socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynCallBackSend, socket);
-                _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
+                try
+                {
+                    socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
+                    _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
+                }
+                catch (SocketException e)
+                {
+                    _logger.WarnFormat("发送异常.{0},{1}. {2}", session.Source, data.ToHexString(), e.Message);
+                }
             }
         }
 
