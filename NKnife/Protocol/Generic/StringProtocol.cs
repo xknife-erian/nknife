@@ -130,7 +130,7 @@ namespace NKnife.Protocol.Generic
             return string.Equals(Family, other.Family) &&
                 Packer.GetType() == other.Packer.GetType() &&
                 UnPacker.GetType() == other.UnPacker.GetType() && 
-                Equals(Content, other.Content) &&
+                Content.Equals(other.Content) &&
                 Equals(BuildMethod, other.BuildMethod);
         }
 
