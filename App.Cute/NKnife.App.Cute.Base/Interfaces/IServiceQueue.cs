@@ -42,7 +42,7 @@ namespace NKnife.App.Cute.Base.Interfaces
         /// <returns></returns>
         int Calculate(int minKind, int maxKind);
 
-        /// <summary>生成一条新的起始交易<see cref="ITransaction"/>
+        /// <summary>生成一条新的起始交易。这是时间轴的时间资源块的起点。<see cref="ITransaction"/>
         /// </summary>
         /// <returns>起始交易<see cref="ITransaction"/></returns>
         ITransaction GetBookingTransaction();

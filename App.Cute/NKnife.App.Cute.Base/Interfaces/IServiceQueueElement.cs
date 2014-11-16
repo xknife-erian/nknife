@@ -7,7 +7,7 @@ namespace NKnife.App.Cute.Base.Interfaces
         /// <summary>获得本元素的IdName
         /// </summary>
         /// <returns></returns>
-        string GetIdName();
+        string Id { get; set; }
 
         /// <summary>队列的元素是否是可用状态。如，业务类型可能不在工作时间范围之内。
         /// </summary>
