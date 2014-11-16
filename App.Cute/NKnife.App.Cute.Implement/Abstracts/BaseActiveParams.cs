@@ -24,7 +24,7 @@ namespace NKnife.App.Cute.Implement.Abstracts
         /// <summary>解析传入的参数集合并填充本类型
         /// </summary>
         /// <param name="args">传入的参数集合</param>
-        public virtual IActiveParams Parse(params object[] args)
+        public virtual IActiveParams Pack(params object[] args)
         {
             if (UtilityCollection.IsNullOrEmpty(args) || args.Length != 3)
                 throw new ActiveParamsDataErrorException("构建请求参数类型时数据不符合要求");

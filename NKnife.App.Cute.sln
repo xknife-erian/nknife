@@ -31,6 +31,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Site", "App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Site.Manager", "App.Cute\NKnife.App.Cute.Site.Manager\NKnife.App.Cute.Site.Manager.csproj", "{300086F3-B458-472A-99E6-208C14324216}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{32DF691E-8B12-4FC6-BF12-2A849086437B}"
+	ProjectSection(SolutionItems) = preProject
+		App.Cute\Documents\Todo.txt = App.Cute\Documents\Todo.txt
+		App.Cute\Documents\设计方案.ppt = App.Cute\Documents\设计方案.ppt
+		App.Cute\Documents\领域分析.ppt = App.Cute\Documents\领域分析.ppt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

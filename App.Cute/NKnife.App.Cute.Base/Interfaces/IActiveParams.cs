@@ -19,6 +19,6 @@ namespace NKnife.App.Cute.Base.Interfaces
         /// <summary>解析传入的参数集合并填充本类型
         /// </summary>
         /// <param name="args"></param>
-        IActiveParams Parse(params object[] args);
+        IActiveParams Pack(params object[] args);
     }
 }
