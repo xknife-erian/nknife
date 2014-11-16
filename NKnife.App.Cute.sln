@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Site.Manage
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{32DF691E-8B12-4FC6-BF12-2A849086437B}"
 	ProjectSection(SolutionItems) = preProject
-		App.Cute\Documents\Todo.txt = App.Cute\Documents\Todo.txt
+		App.Cute\Documents\development-process.txt = App.Cute\Documents\development-process.txt
 		App.Cute\Documents\设计方案.ppt = App.Cute\Documents\设计方案.ppt
 		App.Cute\Documents\领域分析.ppt = App.Cute\Documents\领域分析.ppt
 	EndProjectSection
