@@ -1,5 +1,6 @@
 ﻿using System;
 using NKnife.App.Cute.Implement.Environment;
+using NKnife.App.Cute.Implement.Industry.Bank;
 using NKnife.App.Cute.Kernel;
 using NKnife.App.Cute.Kernel.IoC;
 using NKnife.IoC;
@@ -39,10 +40,7 @@ namespace Cute.Demo
             var initializer = new EnvironmentInitializer();
             initializer.Initialize();
 
-            Console.WriteLine(Core.Singleton<ActivityPool>());
-            Console.WriteLine(Core.Singleton<IdentifierGeneratorPool>());
-            Console.WriteLine(Core.Singleton<ServiceQueuePool>());
-            Console.WriteLine(Core.Singleton<UserPool>());
+            UserPoolDemo();
 
             Tip();
 
@@ -69,6 +67,21 @@ namespace Cute.Demo
 
             Console.WriteLine("--NKnife.App.Cute的演示完成------------");
             Console.ReadKey();
+        }
+
+        static void UserPoolDemo()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                var user = new UserAsBank();
+                user.Id = Guid.NewGuid().ToString("N").ToUpper();
+                user.LoginName = user.Id.Substring(2, 10);
+                user.Name = user.Id.Substring(5, 10);
+                user.Number = user.Id.Substring(10, 18);
+                user.Email = user.Id.Substring(7, 15) + "@icbc.com.cn";
+                user.MobilePhone = user.Id.Substring(4, 15);
+                DI.Get<UserPool>().Add(user.Id, user);
+            }
         }
     }
 }

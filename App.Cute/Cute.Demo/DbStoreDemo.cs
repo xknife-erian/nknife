@@ -9,6 +9,7 @@ using NKnife.App.Cute.Datas;
 using NKnife.App.Cute.Implement.Industry.Bank;
 using NKnife.App.Cute.Kernel.IoC;
 using NKnife.Database;
+using NKnife.IoC;
 
 namespace Cute.Demo
 {
@@ -16,7 +17,7 @@ namespace Cute.Demo
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private static readonly Stopwatch _watch = new Stopwatch();
-        private static readonly MongoStore<ITransaction, string> _store = Core.Singleton<DataService>().Transactions;
+        private static readonly MongoStore<ITransaction, string> _store = DI.Get<DataService>().Transactions;
         private const int DEMO_SIZE = 5 * 1000;
 
         public static void Run()

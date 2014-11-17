@@ -1,4 +1,5 @@
 ﻿using Ninject.Modules;
+using NKnife.App.Cute.Datas;
 using NKnife.App.Cute.Implement.Environment;
 
 namespace NKnife.App.Cute.Kernel.IoC
@@ -12,7 +13,7 @@ namespace NKnife.App.Cute.Kernel.IoC
         /// </summary>
         public override void Load()
         {
-            Bind<Datas.DataService>().ToSelf().InSingletonScope();
+            Bind<DataService>().ToSelf().InSingletonScope();
             Bind<ActivityPool>().ToSelf().InSingletonScope();
             Bind<IdentifierGeneratorPool>().ToSelf().InSingletonScope();
             Bind<ServiceQueuePool>().ToSelf().InSingletonScope();

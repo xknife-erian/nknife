@@ -61,7 +61,6 @@
     <Compile Include="Initializes\DataInitialize.cs" />
     <Compile Include="EnvironmentInitializer.cs" />
     <Compile Include="Initializes\OptionInitialize.cs" />
-    <Compile Include="IoC\Core.cs" />
     <Compile Include="IoC\SingletonModule.cs" />
     <Compile Include="Common\MongoDatabaseTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

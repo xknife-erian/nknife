@@ -2,6 +2,7 @@
 using NKnife.App.Cute.Base.Interfaces;
 using NKnife.App.Cute.Implement.Environment;
 using NKnife.App.Cute.Kernel.IoC;
+using NKnife.IoC;
 
 namespace Cute.Demo
 {
@@ -26,7 +27,7 @@ namespace Cute.Demo
             const string QUEUE_ID = "mn-queue";
 
             Console.WriteLine("1.1.找到属于这个【用户】的BookingActivity");
-            var activity = Core.Singleton<UserPool>()[USER_ID].BookingActivity;
+            var activity = DI.Get<UserPool>()[USER_ID].BookingActivity;
 
             Console.WriteLine("1.2.将传入的参数封装到IActiveParams中");
             var param = activity.Find().Pack(ASKER, USER_ID, QUEUE_ID);
@@ -47,7 +48,7 @@ namespace Cute.Demo
             const string USER_ID = "abc-user";
             const string QUEUE_ID = "mn-queue";
 
-            var user = Core.Singleton<UserPool>()[USER_ID];
+            var user = DI.Get<UserPool>()[USER_ID];
 
             //由【用户】进行预约的分配，返出一个交易
             ITransaction tran;
@@ -55,14 +56,14 @@ namespace Cute.Demo
             if (tran == null)
                 return;//如果没有预约，退出
 
-            var queue = Core.Singleton<ServiceQueuePool>()[QUEUE_ID];
+            var queue = DI.Get<ServiceQueuePool>()[QUEUE_ID];
             var pipeline = user.Pipelines[queue.PipelineId];
             var node = pipeline.FindLast(tran.Owner);
             if (node != null)
             {
                 var activityKind = node.Value;
 
-                var activity = Core.Singleton<ActivityPool>()[activityKind];
+                var activity = DI.Get<ActivityPool>()[activityKind];
                 var param = activity.Find().Pack(ASKER, USER_ID, QUEUE_ID, tran);
                 ITransaction transaction;
                 activity.Ask(param, out transaction);

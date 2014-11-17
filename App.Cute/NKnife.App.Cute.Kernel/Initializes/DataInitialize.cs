@@ -5,6 +5,7 @@ using NKnife.App.Cute.Datas;
 using NKnife.App.Cute.Kernel.IoC;
 using NKnife.Attributes;
 using NKnife.Interface;
+using NKnife.IoC;
 
 namespace NKnife.App.Cute.Kernel.Initializes
 {
@@ -37,9 +38,9 @@ namespace NKnife.App.Cute.Kernel.Initializes
                         return false;
 
                     var dbConnection = source.SelectSingleNode("DbConnection");
-                    Core.Singleton<DataService>().DbConnection = (dbConnection != null) ? dbConnection.InnerText : "mongodb://localhost/?safe=true";
+                    DI.Get<DataService>().DbConnection = (dbConnection != null) ? dbConnection.InnerText : "mongodb://localhost/?safe=true";
 
-                    Core.Singleton<DataService>().Initialize();
+                    DI.Get<DataService>().Initialize();
                     IsInitialized = true;
                     OnInitialized(EventArgs.Empty);
                 }
