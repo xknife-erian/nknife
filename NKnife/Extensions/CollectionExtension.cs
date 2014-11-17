@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace System.Collections.Generic
 {
     public static class CollectionExtension
     {
-        public static void Add<TK, TV>(this Dictionary<TK, TV> dictionary, KeyValuePair<TK, TV> pair)
+        public static bool Compare<T>(this ICollection<T> source, ICollection<T> target)
         {
-            dictionary.Add(pair.Key, pair.Value);
+            if (source.Count != target.Count)
+                return false;
+            return !source.Where((t, i) => !target.ElementAt(i).Equals(source.ElementAt(i))).Any();
         }
 
         public static DataTable ToDataTable<T>(this IEnumerable<T> enumerable)
         {
             var dataTable = new DataTable();
-            foreach (PropertyDescriptor pd in TypeDescriptor.GetProperties(typeof(T)))
+            foreach (PropertyDescriptor pd in TypeDescriptor.GetProperties(typeof (T)))
             {
                 dataTable.Columns.Add(pd.Name, pd.PropertyType);
             }
             foreach (T item in enumerable)
             {
-                var row = dataTable.NewRow();
-                foreach (PropertyDescriptor pd in TypeDescriptor.GetProperties(typeof(T)))
+                DataRow row = dataTable.NewRow();
+                foreach (PropertyDescriptor pd in TypeDescriptor.GetProperties(typeof (T)))
                 {
                     row[pd.Name] = pd.GetValue(item);
                 }
@@ -35,19 +33,19 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Execute action on each item in enumeration.
+        ///     Execute action on each item in enumeration.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
         /// <param name="action"></param>
         public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
         {
-            foreach (var item in items)
+            foreach (T item in items)
                 action(item);
         }
 
         /// <summary>
-        /// Converts an enumerable collection to an delimited string.
+        ///     Converts an enumerable collection to an delimited string.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
@@ -59,19 +57,19 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Check for any nulls.
+        ///     Check for any nulls.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
         /// <returns></returns>
-        public static unsafe bool HasAnyNulls<T>(this IEnumerable<T> items) where T : class
+        public static bool HasAnyNulls<T>(this IEnumerable<T> items) where T : class
         {
             return IsTrueForAny(items, t => t == null);
         }
 
 
         /// <summary>
-        /// Check if any of the items in the collection satisfied by the condition.
+        ///     Check if any of the items in the collection satisfied by the condition.
         /// </summary>
         /// <param name="items"></param>
         /// <param name="executor"></param>
@@ -83,7 +81,7 @@ namespace System.Collections.Generic
 
 
         /// <summary>
-        /// Check if all of the items in the collection satisfied by the condition.
+        ///     Check if all of the items in the collection satisfied by the condition.
         /// </summary>
         /// <param name="items"></param>
         /// <param name="executor"></param>
@@ -95,7 +93,7 @@ namespace System.Collections.Generic
 
 
         /// <summary>
-        /// Check if all of the items in the collection satisfied by the condition.
+        ///     Check if all of the items in the collection satisfied by the condition.
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
@@ -108,6 +106,5 @@ namespace System.Collections.Generic
             }
             return dict;
         }
-
     }
 }

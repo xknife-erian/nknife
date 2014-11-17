@@ -15,6 +15,7 @@ namespace NKnife.App.TouchKnife.Core
     public class Kernel
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+
         private AsynListener _Listener;
         private ITouchInput _TouchInput;
 
@@ -61,7 +62,7 @@ namespace NKnife.App.TouchKnife.Core
         private void Listener_ReceivedData(object sender, AsynListener.ReceivedDataEventArgs e)
         {
             _logger.Info(string.Format("收到控制:{0}", e.Data.ToLower()));
-            string command = e.Data.ToLower().Replace(_Listener.Tail.ToString(), "");
+            string command = e.Data.ToLower().Replace("@", "");
             if (command.IndexOf("keepalivetestfromclient", StringComparison.Ordinal)>=0)
             {
                 const string RESPONSE = "KeepAliveTestFromServer@";
@@ -75,19 +76,7 @@ namespace NKnife.App.TouchKnife.Core
                 return;
             }
 
-            short mode;
-            int x;
-            int y;
-            if (Parse(command, out mode, out x, out y)) 
-                return;
-
-            ThreadPool.QueueUserWorkItem(CallTouchInput, Command.Build(mode, x, y));
-        }
-
-        private static bool Parse(string command, out short mode, out int x, out int y)
-        {
-            x = y = 0;
-            mode = short.Parse(command[1].ToString(CultureInfo.InvariantCulture));
+            short mode = short.Parse(command[1].ToString(CultureInfo.InvariantCulture));
 
             int xw = int.Parse(command[3].ToString(CultureInfo.InvariantCulture));
             int yw = int.Parse(command[5].ToString(CultureInfo.InvariantCulture));
@@ -95,27 +84,28 @@ namespace NKnife.App.TouchKnife.Core
             if (xw > 4 || yw > 4)
             {
                 _logger.Warn(string.Format("不识别的指令:{0}", command));
-                return true;
+                return;
             }
 
             string xs = command.Substring(7, xw);
-            string ysSrc = command.Substring(command.Length - yw, yw);
+            string ysc = command.Substring(command.Length - yw, yw);
             var sb = new StringBuilder(yw);
-            for (int i = ysSrc.Length - 1; i >= 0; i--)
+            for (int i = ysc.Length - 1; i >= 0; i--)
             {
-                sb.Append(ysSrc[i]);
+                sb.Append(ysc[i]);
             }
 
             string ys = sb.ToString();
 
-            x = 0;
-            y = 0;
+            int x = 0;
+            int y = 0;
             if (command.Length >= 3)
             {
                 int.TryParse(xs, out x);
                 int.TryParse(ys, out y);
             }
-            return false;
+
+            ThreadPool.QueueUserWorkItem(CallTouchInput, Command.Build(mode, x, y));
         }
 
         private void CallTouchInput(object state)
@@ -149,6 +139,26 @@ namespace NKnife.App.TouchKnife.Core
         {
             command.X += int.Parse(DI.Get<IOptionManager>().GetOptionValue("", "OffsetX"));
             command.Y += int.Parse(DI.Get<IOptionManager>().GetOptionValue("", "OffsetY"));
+            //            var x = command.X;
+//            var screenH = Screen.PrimaryScreen.WorkingArea.Height;
+//            command.Y += 54;
+//            switch (command.Mode)
+//            {
+//                case 1:
+//                    command.X += 118;
+//                    break;
+//                case 2:
+//                    command.X += 95;
+//                    break;
+//                default:
+//                    command.X += 50;
+//                    break;
+//            }
+//            var tih = _TouchInput.OwnSize.Height;
+//            if ((screenH - command.X + 65) < tih)
+//            {
+//                command.X = (int) (x - tih);
+//            }
         }
 
         private class Command

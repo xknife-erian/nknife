@@ -1,0 +1,14 @@
+﻿
+/*jqGrid的一些Hack*/
+.ui-jqgrid .ui-jqgrid-htable th div {
+    height: 18px;
+    margin-top: 1px;
+}  
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    margin-top: 2px;
+}
+.ui-jqgrid-titlebar {
+    height: 25px;
+    font-size: 14px;
+    color: maroon;
+}

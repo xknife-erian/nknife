@@ -14,7 +14,7 @@ namespace NKnife.NLog3.Controls
             InitializeComponent();
             Icon = OwnResources.NLogForm;
             Padding = new Padding(3);
-            var logPanel = DI.Get<LogPanel>();
+            var logPanel = LogPanel.Instance;
             logPanel.Dock = DockStyle.Fill;
             logPanel.Font = new Font("Tahoma", 8.25F);
             logPanel.HeaderStyle = ColumnHeaderStyle.Clickable;

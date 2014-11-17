@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<options>
+  
+  <!--关于数据持久化相关的设置-->
+  <option class="Didaku.Data.MongoDb.DbOption">
+    <DbConnection>mongodb://localhost/?safe=true</DbConnection>
+  </option>
+
+</options>

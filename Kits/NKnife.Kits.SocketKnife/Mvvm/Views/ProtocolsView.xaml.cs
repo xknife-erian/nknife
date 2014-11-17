@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NKnife.IoC;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
@@ -18,9 +19,24 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class ProtocolsView
     {
+        private readonly ProtocolViewModel _ViewModel = DI.Get<ProtocolViewModel>();
+
         public ProtocolsView()
         {
             InitializeComponent();
+            _MainGrid.DataContext = _ViewModel;
+            _ProtocolsGrid.ItemsSource = _ViewModel.Protocols;
+        }
+
+        private void ProtocolsGrid_OnSelected(object sender, RoutedEventArgs e)
+        {
+            if (_ProtocolsGrid.SelectedItem == null)
+                return;
+            var protocol = _ProtocolsGrid.SelectedItem as ProtocolViewModel.SimpleProtocol;
+            if (protocol != null)
+            {
+                _ViewModel.SelectedProtocol = protocol.Protocol;
+            }
         }
     }
 }

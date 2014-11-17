@@ -1,0 +1,16 @@
+time,message,logger,level
+121119 11:35:10.397,找到应用程序环境服务项3个。,Didaku.Engine.Timeaxis.Kernel.EnvironmentInitializer,Info
+121119 11:35:10.407,检查配置:ApplicationOption.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.OptionInitialize,Debug
+121119 11:35:10.407,配置文件正常:ApplicationOption.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.OptionInitialize,Debug
+121119 11:35:10.407,"启动""项目选项初始化。""服务完成。-- 0",Didaku.Engine.Timeaxis.Kernel.EnvironmentInitializer,Info
+121119 11:35:10.497,Ninject共载入1个Module。,Didaku.Engine.Timeaxis.Kernel.IoC.Core,Info
+121119 11:35:10.497,Ninject已载入:SingletonModule,Didaku.Engine.Timeaxis.Kernel.IoC.Core,Info
+121119 11:35:10.587,"启动""启动数据持久化层服务。""服务完成。-- 1",Didaku.Engine.Timeaxis.Kernel.EnvironmentInitializer,Info
+time,message,logger,level
+121119 11:37:51.265,找到应用程序环境服务项3个。,Didaku.Engine.Timeaxis.Kernel.EnvironmentInitializer,Info
+121119 11:37:51.275,检查配置:ApplicationOption.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.OptionInitialize,Debug
+121119 11:37:51.275,配置文件正常:ApplicationOption.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.OptionInitialize,Debug
+121119 11:37:51.275,"启动""项目选项初始化。""服务完成。-- 0",Didaku.Engine.Timeaxis.Kernel.EnvironmentInitializer,Info
+121119 11:37:51.345,Ninject共载入1个Module。,Didaku.Engine.Timeaxis.Kernel.IoC.Core,Info
+121119 11:37:51.345,Ninject已载入:SingletonModule,Didaku.Engine.Timeaxis.Kernel.IoC.Core,Info
+121119 11:37:51.435,"启动""启动数据持久化层服务。""服务完成。-- 1",Didaku.Engine.Timeaxis.Kernel.EnvironmentInitializer,Info

@@ -13,14 +13,12 @@ namespace NKnife.Protocol.Generic
     public class StringProtocol : IProtocol<string>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+
         public Func<StringProtocol> BuildMethod { get; set; }
 
-        public StringProtocol()
+        public StringProtocol() 
+            : this(string.Empty, string.Empty)
         {
-            Content = DI.Get<StringProtocolContent>();
-            Packer = DI.Get<StringProtocolPacker>();
-            UnPacker = DI.Get<StringProtocolUnPacker>();
-            BuildMethod = NewInstance;
         }
 
         protected StringProtocol(string family, string command)
@@ -28,6 +26,7 @@ namespace NKnife.Protocol.Generic
             Content = DI.Get<StringProtocolContent>();
             Packer = DI.Get<StringProtocolPacker>();
             UnPacker = DI.Get<StringProtocolUnPacker>();
+            BuildMethod = NewInstance;
             Family = family;
             Command = command;
         }
@@ -115,6 +114,36 @@ namespace NKnife.Protocol.Generic
         IProtocol<string> IProtocol<string>.NewInstance()
         {
             return NewInstance();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((StringProtocol) obj);
+        }
+
+        protected bool Equals(StringProtocol other)
+        {
+            return string.Equals(Family, other.Family) &&
+                Packer.GetType() == other.Packer.GetType() &&
+                UnPacker.GetType() == other.UnPacker.GetType() && 
+                Content.Equals(other.Content) &&
+                Equals(BuildMethod, other.BuildMethod);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (BuildMethod != null ? BuildMethod.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Packer != null ? Packer.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (UnPacker != null ? UnPacker.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Content != null ? Content.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Family != null ? Family.GetHashCode() : 0);
+                return hashCode;
+            }
         }
 
         public override string ToString()

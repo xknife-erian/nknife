@@ -13,6 +13,7 @@ namespace NKnife.App.TouchKnife.Core
 
         private const string HOST = "127.0.0.1";
         private const int PORT = 22033;
+
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>

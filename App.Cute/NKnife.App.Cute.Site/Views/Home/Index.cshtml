@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+    ViewBag.Title = "DiDaKu Queue Engine Cloud";
+}
+
+    <div class="page-body">
+        <div class="page-body-rightpanel">
+            <div class="panel">
+            </div>
+        </div>
+        <div class="page-body-leftmenu">
+            <!--启动引擎功能-->
+            <div class="page-body-leftmenu-items" id="menulist-enginestater">
+                <ul>
+                    <li id="action-engine-start"><span>启动引擎</span></li>
+                    <li id="action-engine-restart"><span>重启引擎</span></li>
+                    <li id="action-engine-stop"><span>关闭引擎</span></li>
+                </ul>
+            </div>
+            <!--机构设置功能-->
+            <div class="page-body-leftmenu-items" id="menulist-clientoption">
+                <ul>
+                    <li id="action-user-manager"><span>用户管理</span></li>
+                    <li id="action-activity-manager"><span>流水线动作管理</span></li>
+                    <li><span>业务模板</span></li>
+                    <li><span>队列模板</span></li>
+                    <li><span>客户分类模板</span></li>
+                    <li><span>员工设置</span></li>
+                    <li><span>柜台分区设置</span></li>
+                    <li><span>柜台设置</span></li>
+                    <li><span>业务设置</span></li>
+                    <li><span>队列逻辑设置</span></li>
+                </ul>
+            </div>
+            <!--运行日志功能-->
+            <div class="page-body-leftmenu-items" id="menulist-loggerview">
+                <ul>
+                    <li id="action-log-list"><span>刷新日志</span></li>
+                    <li><span>导出日志</span></li>
+                    <li><span>日志管理</span></li>
+                </ul>
+            </div>
+            <!--引擎选项功能-->
+            <div class="page-body-leftmenu-items" id="menulist-engineoption">
+                <ul>
+                    <li><span>基本</span></li>
+                    <li><span>高级</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+@section scripts{
+    <script src="~/Scripts/Date.format.js"></script>
+    <script src="~/Scripts/jquery.jqGrid/js/i18n/grid.locale-cn.js"></script>
+    <script src="~/Scripts/jquery.jqGrid/js/jquery.jqGrid.min.js"></script>
+}
+@section styles{
+    <link href="~/Scripts/jquery.jqGrid/css/ui.jqgrid.css" rel="stylesheet" />
+}

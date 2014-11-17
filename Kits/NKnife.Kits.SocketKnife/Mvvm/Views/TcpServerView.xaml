@@ -6,7 +6,7 @@
                      xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
                      xmlns:common="clr-namespace:NKnife.Kits.SocketKnife.Common"
                      mc:Ignorable="d" Title="SocketKnife服务端">
-    <Grid Name="_View" Loaded="View_OnLoaded">
+    <Grid Name="_MainGrid" Loaded="View_OnLoaded">
         <Grid.Resources>
             <Style x:Key="StartButtonImage" TargetType="{x:Type Button}">
                 <Setter Property="Margin" Value="3" />

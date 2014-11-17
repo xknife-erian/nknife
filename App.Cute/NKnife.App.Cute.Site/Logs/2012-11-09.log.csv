@@ -1,0 +1,24 @@
+time,message,logger,level
+121109 17:59:51.838,找到应用程序环境服务项3个。,Didaku.Engine.Timeaxis.Kernel.DtEnvironment,Info
+121109 17:59:51.838,检查配置:dboption.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.ConfigurationFilesInitialize,Debug
+121109 17:59:51.838,配置文件正常:dboption.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.ConfigurationFilesInitialize,Debug
+121109 17:59:51.838,检查配置:poolmanager.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.ConfigurationFilesInitialize,Debug
+121109 17:59:51.838,配置文件正常:poolmanager.codersetting,Didaku.Engine.Timeaxis.Kernel.Initializes.ConfigurationFilesInitialize,Debug
+121109 17:59:51.838,"启动""配置文件的初始化""服务完成。-- 0",Didaku.Engine.Timeaxis.Kernel.DtEnvironment,Info
+121109 17:59:51.855,程序员配置文件：2,Didaku.CoderSetting.CoderSettingService,Info
+121109 17:59:51.918,开始初始化CoderSettingService,Didaku.CoderSetting.CoderSettingService,Info
+121109 17:59:51.918,遍历节点个数:0,Didaku.CoderSetting.CoderSettingService,Trace
+121109 17:59:51.918,得到有效节点:1,Didaku.CoderSetting.CoderSettingService,Trace
+121109 17:59:51.918,遍历节点个数:0,Didaku.CoderSetting.CoderSettingService,Trace
+121109 17:59:51.918,得到有效节点:1,Didaku.CoderSetting.CoderSettingService,Trace
+121109 17:59:51.918,从Option的配置Xml文件中找到 2 个Option配置节点,Didaku.CoderSetting.CoderSettingService,Info
+121109 17:59:52.662,搜索所有的程序集，并找到 2 个ICoderSetting类型(包括基本类型和抽象类型)。,Didaku.CoderSetting.CoderSettingService,Debug
+121109 17:59:52.662,程序的 DbOption 程序员配置类型初始化成功。,Didaku.CoderSetting.CoderSettingService,Info
+121109 17:59:52.676,创建Activities类型成功0,Didaku.Engine.Timeaxis.Kernel.Configurations.PoolsOption,Info
+121109 17:59:52.676,创建IdentifierGenerators类型成功0,Didaku.Engine.Timeaxis.Kernel.Configurations.PoolsOption,Info
+121109 17:59:52.676,创建Users类型成功0,Didaku.Engine.Timeaxis.Kernel.Configurations.PoolsOption,Info
+121109 17:59:52.676,创建ServiceQueues类型成功0,Didaku.Engine.Timeaxis.Kernel.Configurations.PoolsOption,Info
+121109 17:59:52.676,程序的 PoolsOption 程序员配置类型初始化成功。,Didaku.CoderSetting.CoderSettingService,Info
+121109 17:59:52.676,"启动""项目选项初始化。""服务完成。-- 1",Didaku.Engine.Timeaxis.Kernel.DtEnvironment,Info
+121109 17:59:52.676,"启动""启动数据持久化层服务。""服务完成。-- 2",Didaku.Engine.Timeaxis.Kernel.DtEnvironment,Info
+121109 17:59:52.676,应用程序环境的初始化完成。,Didaku.Engine.Timeaxis.Kernel.DtEnvironment,Info

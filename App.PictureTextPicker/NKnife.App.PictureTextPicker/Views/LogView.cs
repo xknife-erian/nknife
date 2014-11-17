@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NKnife.IoC;
-using NKnife.NLog3.Logging.LogPanel;
+using NKnife.NLog3.Controls;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.App.PictureTextPicker.Views
@@ -18,7 +18,7 @@ namespace NKnife.App.PictureTextPicker.Views
         }
         private void InitializeComponent()
         {
-            this._LogPanel = DI.Get<LogPanel>();
+            this._LogPanel = LogPanel.Instance;
             this.SuspendLayout();
             // 
             // _LogPanel

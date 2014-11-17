@@ -6,13 +6,16 @@
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              mc:Ignorable="d" AutoHideMinWidth="320"
              Title="协议管理器" IconSource="/Attachments/protocols-view-icon.png">
-    <Grid>
-        
-        <DataGrid>
+    <Grid Name="_MainGrid">
+        <DataGrid Name="_ProtocolsGrid" AutoGenerateColumns="False"
+                          CanUserAddRows="False" CanUserDeleteRows="True"
+                          HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+                          VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                          SelectionChanged="ProtocolsGrid_OnSelected">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Time, Mode=OneWay}" Width="30" />
-                <DataGridTextColumn Header="命令字" Binding="{Binding Path=Level, Mode=OneWay}" Width="*" />
-                <DataGridTextColumn Header="参数" Binding="{Binding Path=Message, Mode=OneWay}" Width="70" />
+                <DataGridTextColumn Width="16" />
+                <DataGridTextColumn Header="命令字" Binding="{Binding Path=Command, Mode=OneWay}" Width="*" />
+                <DataGridTextColumn Header="参数" Binding="{Binding Path=CommandParam, Mode=OneWay}" Width="70" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -14,6 +14,11 @@ namespace NKnife.Kits.SocketKnife
             base.OnStartup(e);
             NLogModules.Style = NLogModules.AppStyle.WPF;
             DI.Initialize();
+
+//            var properties = new NameValueCollection();
+//            properties["configType"] = "FILE";
+//            properties["configFile"] = "~/NLog.config";//string.Format("~/{0}", CONFIG_FILE_NAME);
+//            LogManager.Adapter = new NLogLoggerFactoryAdapter(properties);
         }
     }
 }

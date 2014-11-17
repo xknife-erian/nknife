@@ -13,7 +13,7 @@ namespace SocketKnife.Generic
 
         protected KnifeSocketProtocolHandler()
         {
-            _Id = Guid.NewGuid().ToString();
+            _Id = Guid.NewGuid().ToString("N").ToUpper();
         }
 
         #region Equals

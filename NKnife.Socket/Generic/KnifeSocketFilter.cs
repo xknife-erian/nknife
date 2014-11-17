@@ -127,13 +127,14 @@ namespace SocketKnife.Generic
         }
 
         /// <summary>
-        /// 比较收到的数据中是否有待比较的数据(一般是心跳数据)。如果收到的数据中不光是心跳协议时（粘包时）,会将心跳协议进行剔除；
+        /// 比较收到的数据中是否有待比较的数据(一般是心跳数据)。如果收到的数据中不光是心跳协议时（粘包时）,会将心跳协议进行剔除。
         /// </summary>
         /// <param name="data">源数据</param>
         /// <param name="toCompare">待比较的数据(一般是心跳数据)</param>
         /// <returns>当True时,收到的数据中有待比较的数据,反之Flase</returns>
         protected virtual bool Compare(ref byte[] data, byte[] toCompare)
         {
+            var srcLength = data.Length;
             var index = data.IndexOf(toCompare);
             if (index < 0)
                 return false;
@@ -142,7 +143,7 @@ namespace SocketKnife.Generic
                 var tmpData = data.ToArray();
                 data = new byte[data.Length - toCompare.Length];
                 Buffer.BlockCopy(tmpData, 0, data, 0, index);
-                Buffer.BlockCopy(tmpData, index + toCompare.Length, data, index, data.Length - index - toCompare.Length);
+                Buffer.BlockCopy(tmpData, index + toCompare.Length, data, index, srcLength - index - toCompare.Length);
             }
             return true;
         }
