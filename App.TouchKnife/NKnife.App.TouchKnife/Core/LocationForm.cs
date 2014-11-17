@@ -50,7 +50,7 @@ namespace NKnife.App.TouchKnife.Core
             sb.Append(random.Next(1, 9));
             sb.Append(y.PadLeft(4, random.Next(1, 9).ToString()[0]));
 
-            sb.Append('@');
+            sb.Append('`');
 
             Command = sb.ToString();
             DialogResult = DialogResult.OK;

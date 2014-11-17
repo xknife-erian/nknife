@@ -12,7 +12,7 @@ namespace SocketKnife
     /// <summary>
     ///     一个应用在较简单场景且压力较小情况下的SocketServer。
     /// </summary>
-    public class AsynListener : Component
+    public class AsynListener : IDisposable
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -59,6 +59,11 @@ namespace SocketKnife
         {
             get { return _Listener.Connected; }
         }
+
+        /// <summary>
+        /// 结束符
+        /// </summary>
+        public char Tail { get; set; }
 
         #endregion
 
@@ -205,7 +210,7 @@ namespace SocketKnife
         {
             state.StringBuilder.Append(Encoding.Default.GetString(state.Buffer, 0, bytesRead));
             content = state.StringBuilder.ToString();
-            return content.IndexOf("@", StringComparison.Ordinal) > -1;
+            return content.IndexOf(Tail) > -1;
         }
 
         #endregion
@@ -259,32 +264,14 @@ namespace SocketKnife
         /// <summary>
         ///     构造函数 带参数
         /// </summary>
-        /// <param name="container"></param>
-        public AsynListener(IContainer container)
-        {
-            container.Add(this);
-            InitializeComponent();
-        }
-
-        /// <summary>
-        ///     构造函数
-        /// </summary>
         public AsynListener()
         {
-            InitializeComponent();
+            Tail = '`';
         }
 
-        /// <summary>
-        ///     重写Dispose函数
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
             EndListening();
-        }
-
-        private void InitializeComponent()
-        {
         }
 
         #endregion
@@ -388,5 +375,6 @@ namespace SocketKnife
         }
 
         #endregion
+
     }
 }

@@ -181,7 +181,7 @@ namespace NKnife.App.TouchKnife.Core
 
             sb.Append(_Random.Next(10000, 99999));
             sb.Append(_Random.Next(10000, 99999));
-            sb.Append("@");
+            sb.Append("`");
             string command = sb.ToString();
             return command;
         }

@@ -50,9 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsynListener.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="AsynListener.cs" />
     <Compile Include="Common\BufferContainer.cs" />
     <Compile Include="Common\BrokenCause.cs" />
     <Compile Include="Events\ConnectionBrokenEventArgs.cs" />

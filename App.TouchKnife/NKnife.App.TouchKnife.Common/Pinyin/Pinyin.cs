@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Logging;
 using Microsoft.International.Converters.PinYinConverter;
-using NKnife.Adapters;
 using NKnife.Chinese;
-using NKnife.Interface;
 
 namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     public class Pinyin
     {
-        private static readonly ILogger _logger = LogFactory.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// 获取指定拼音的汉字集合
