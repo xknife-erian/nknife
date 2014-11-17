@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
@@ -15,6 +16,8 @@ namespace NKnife.MongoDb
     /// <typeparam name="TId">实体的Id的类型</typeparam>
     public abstract class AbstractMongoDbStore<T, TId> : IMongoDbStore<T, TId>
     {
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+
         private readonly MongoDatabase _Database;
         private readonly MongoServer _Mongo;
 
@@ -33,6 +36,21 @@ namespace NKnife.MongoDb
             _Database = _Mongo.GetDatabase(Database); //获取数据库或者创建数据库（不存在的话）。
         }
 
+        protected virtual IDisposable Connect(out bool isConnectSuccess)
+        {
+            isConnectSuccess = true;
+            try
+            {
+                return _Mongo.RequestStart(_Database);
+            }
+            catch (Exception e)
+            {
+                _logger.WarnFormat("连接出现异常：{0}", e.Message);
+                isConnectSuccess = false;
+                return null;
+            }
+        }
+
         #region Implementation of IDbStore<T,in TId>
 
         /// <summary>
@@ -42,8 +60,11 @@ namespace NKnife.MongoDb
         {
             if (null == entities)
                 return true;
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return false;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 WriteConcernResult[] safeResults = c.InsertBatch(entities).ToArray();
                 return safeResults[0] != null && safeResults[0].Ok;
@@ -55,8 +76,11 @@ namespace NKnife.MongoDb
         /// </summary>
         public virtual bool Remove(params TId[] entityIds)
         {
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return false;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 var safeResults = new List<SafeModeResult>(entityIds.Length);
                 safeResults.AddRange(entityIds.Select(id => c.Remove(Query.EQ("_id", id.ToString()))));
@@ -69,8 +93,11 @@ namespace NKnife.MongoDb
         /// </summary>
         public virtual bool Clear()
         {
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return false;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 WriteConcernResult result = c.RemoveAll();
                 return result != null && result.Ok;
@@ -82,8 +109,11 @@ namespace NKnife.MongoDb
         /// </summary>
         public virtual bool Update(params T[] entity)
         {
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return false;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 WriteConcernResult result = c.Save(entity);
                 return result != null && result.Ok;
@@ -103,8 +133,11 @@ namespace NKnife.MongoDb
         /// </summary>
         public virtual T Find(TId entityId)
         {
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return default(T);
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 var result = c.FindOneAs<T>(Query.EQ("_id", entityId.ToString()));
                 return result;
@@ -121,8 +154,11 @@ namespace NKnife.MongoDb
 
             IMongoQuery query = Query.And(Query.In("_id", BsonArray.Create(entityIds)));
             var result = new List<T>(entityIds.Length);
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return null;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 MongoCursor<T> cursor = c.FindAs<T>(query);
                 result.AddRange(cursor);
@@ -159,8 +195,11 @@ namespace NKnife.MongoDb
         {
             if (mongoQuery == null)
                 throw new ArgumentNullException("mongoQuery", "查询条件未定义");
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return false;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 var result = c.Remove(mongoQuery);
                 return result.DocumentsAffected == 1;
@@ -172,8 +211,11 @@ namespace NKnife.MongoDb
         /// </summary>
         public long Count(IMongoQuery mongoQuery)
         {
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return -1;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 return mongoQuery == null ? c.Count() : c.Count(mongoQuery);
             }
@@ -290,8 +332,11 @@ namespace NKnife.MongoDb
         public virtual IEnumerable<T> Find(IMongoQuery mongoQuery, PagerInfo pagerInfo, IMongoSortBy sortBy, params string[] fields)
         {
             var result = new List<T>();
-            using (_Mongo.RequestStart(_Database))
+            bool isConnectSuccess = false;
+            using (Connect(out isConnectSuccess))
             {
+                if (!isConnectSuccess)
+                    return null;
                 MongoCollection<BsonDocument> c = _Database.GetCollection<BsonDocument>(Collection);
                 MongoCursor<T> cursor = c.FindAs<T>(mongoQuery);
 

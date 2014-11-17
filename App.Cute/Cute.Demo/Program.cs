@@ -2,6 +2,7 @@
 using NKnife.App.Cute.Implement.Environment;
 using NKnife.App.Cute.Kernel;
 using NKnife.App.Cute.Kernel.IoC;
+using NKnife.IoC;
 using NKnife.Utility;
 
 namespace Cute.Demo
@@ -30,8 +31,10 @@ namespace Cute.Demo
 
         public static void Main(string[] args)
         {
+            DI.Initialize();
+
             Console.WriteLine();
-            Console.WriteLine("--Didaku.MongoDb.Store的演示开始------------");
+            Console.WriteLine("--NKnife.App.Cute的演示------------");
 
             var initializer = new EnvironmentInitializer();
             initializer.Initialize();
@@ -64,7 +67,7 @@ namespace Cute.Demo
                     Tip();
             }
 
-            Console.WriteLine("--Didaku.MongoDb.Store的演示完成------------");
+            Console.WriteLine("--NKnife.App.Cute的演示完成------------");
             Console.ReadKey();
         }
     }

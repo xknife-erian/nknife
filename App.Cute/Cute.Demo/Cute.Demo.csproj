@@ -73,6 +73,10 @@
       <Project>{7BC3BF4E-5908-4AC2-A04C-70F731A44928}</Project>
       <Name>NKnife.MongoDb</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
+      <Project>{3d1d08d2-46b0-4c33-a214-a5a76a998102}</Project>
+      <Name>NKnife.NLog3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}</Project>
       <Name>NKnife</Name>

@@ -17,7 +17,7 @@ namespace Cute.Demo
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private static readonly Stopwatch _watch = new Stopwatch();
         private static readonly MongoStore<ITransaction, string> _store = Core.Singleton<DataService>().Transactions;
-        private const int DEMO_SIZE = 5 * 10000;
+        private const int DEMO_SIZE = 5 * 1000;
 
         public static void Run()
         {
@@ -87,10 +87,13 @@ namespace Cute.Demo
             var multiTran = _store.Find(ids);
             _watch.Stop();
             int k = 0;
-            foreach (var tran in multiTran)
+            if (multiTran != null)
             {
-                _logger.Info(string.Format("({0}):{1}", k, tran));
-                k++;
+                foreach (var tran in multiTran)
+                {
+                    _logger.Info(string.Format("({0}):{1}", k, tran));
+                    k++;
+                }
             }
             _logger.Info("[3]组查询完成。" + _watch.ElapsedMilliseconds);
             Console.WriteLine();
