@@ -16,9 +16,9 @@ namespace NKnife.App.TouchKnife.Core
             switch (key)
             {
                 case "OffsetX":
-                    return 100.ToString();
+                    return 0.ToString();
                 case "OffsetY":
-                    return 50.ToString();
+                    return 0.ToString();
             }
             return string.Empty;
         }

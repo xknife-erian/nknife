@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 using Common.Logging;
 using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
@@ -62,7 +63,7 @@ namespace NKnife.App.TouchKnife.Core
         private void Listener_ReceivedData(object sender, AsynListener.ReceivedDataEventArgs e)
         {
             _logger.Info(string.Format("收到控制:{0}", e.Data.ToLower()));
-            string command = e.Data.ToLower().Replace("@", "");
+            string command = e.Data.ToLower().Replace(_Listener.Tail.ToString(), "");
             if (command.IndexOf("keepalivetestfromclient", StringComparison.Ordinal)>=0)
             {
                 const string RESPONSE = "KeepAliveTestFromServer@";
@@ -139,7 +140,7 @@ namespace NKnife.App.TouchKnife.Core
         {
             command.X += int.Parse(DI.Get<IOptionManager>().GetOptionValue("", "OffsetX"));
             command.Y += int.Parse(DI.Get<IOptionManager>().GetOptionValue("", "OffsetY"));
-            //            var x = command.X;
+//            var x = command.X;
 //            var screenH = Screen.PrimaryScreen.WorkingArea.Height;
 //            command.Y += 54;
 //            switch (command.Mode)
