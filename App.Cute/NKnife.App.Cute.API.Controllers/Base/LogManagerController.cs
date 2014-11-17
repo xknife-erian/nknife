@@ -1,8 +1,10 @@
 ﻿using System.Web.Http;
 using AttributeRouting.Web.Http;
 using MongoDB.Driver.Builders;
+using NKnife.App.Cute.Datas;
 using NKnife.App.Cute.Kernel.IoC;
 using NKnife.Database;
+using NKnife.IoC;
 
 namespace NKnife.App.Cute.API.Controllers.Base
 {
@@ -11,7 +13,7 @@ namespace NKnife.App.Cute.API.Controllers.Base
         [POST("Log/List")]
         public JqGridResult List(JqGridParam param)
         {
-            var logs = Core.Singleton<Datas.DataService>().Logs;
+            var logs = DI.Get<DataService>().Logs;
 
             var query = Query.Null;
             var pager = new PagerInfo

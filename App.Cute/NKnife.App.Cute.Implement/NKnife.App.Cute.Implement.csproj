@@ -69,6 +69,7 @@
     <Compile Include="Environment\IdentifierGeneratorPool.cs" />
     <Compile Include="Environment\UserPool.cs" />
     <Compile Include="Environment\ServiceQueuePool.cs" />
+    <Compile Include="IoC\PoolsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Abstracts\BaseQueue.cs" />
     <Compile Include="Abstracts\BaseBookingTransaction.cs" />
