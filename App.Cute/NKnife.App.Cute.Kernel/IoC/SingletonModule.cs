@@ -17,7 +17,6 @@ namespace NKnife.App.Cute.Kernel.IoC
             Bind<ActivityPool>().ToSelf().InSingletonScope();
             Bind<IdentifierGeneratorPool>().ToSelf().InSingletonScope();
             Bind<ServiceQueuePool>().ToSelf().InSingletonScope();
-            Bind<UserPool>().ToSelf().InSingletonScope();
         }
 
         #endregion
