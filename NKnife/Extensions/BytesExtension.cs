@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using NKnife.Utility;
 
 namespace System
 {
@@ -179,32 +180,27 @@ namespace System
         /// <returns>索引值。为-1时，指无匹配项。</returns>
         public static int Find(this byte[] data, byte[] target, int position = 0)
         {
-            if (position >= data.Length)
-            {
+            if (UtilityCollection.IsNullOrEmpty(target))
                 return -1;
-            }
-            for (int i = position; i < data.Length; i++)
+            int i;
+
+            for (i = position; i < data.Length; i++)
             {
-                if (target.Length + i <= data.Length)
+                if (i + target.Length <= data.Length)
                 {
-                    bool ok = false;
-                    for (int j = 0; j < target.Length; j++)
+                    int j;
+                    for (j = 0; j < target.Length; j++)
                     {
-                        if (target[j] != data[i + j])
-                        {
-                            ok = false;
+                        if (data[i + j] != target[j]) 
                             break;
-                        }
-                        ok = true;
                     }
-                    if (ok)
-                    {
+
+                    if (j == target.Length)
                         return i;
-                    }
                 }
                 else
                 {
-                    return -1;
+                    break;
                 }
             }
             return -1;

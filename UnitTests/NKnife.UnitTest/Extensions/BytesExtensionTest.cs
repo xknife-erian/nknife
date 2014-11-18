@@ -132,5 +132,34 @@ namespace NKnife.UnitTest.Extensions
             int actual = source.Find(target);
             Assert.AreEqual(-1, actual);
         }
+
+        [TestMethod]
+        public void IndexOfTestMethod10()
+        {
+            var source = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x00, 0x01, 0x02, 0x03, 0x00, 0x01, 0x02, 0x03 };
+            var target = new byte[] { 0x02, 0x03 };
+
+            int actual = source.Find(target);
+            Assert.AreEqual(2, actual);
+
+            actual = source.Find(target, 2);
+            Assert.AreEqual(2, actual);
+
+            actual = source.Find(target, 3);
+            Assert.AreEqual(6, actual);
+
+            actual = source.Find(target, 6);
+            Assert.AreEqual(6, actual);
+
+            actual = source.Find(target, 7);
+            Assert.AreEqual(10, actual);
+
+            actual = source.Find(target, 10);
+            Assert.AreEqual(10, actual);
+
+            actual = source.Find(target, 11);
+            Assert.AreEqual(-1, actual);
+        }
+
     }
 }

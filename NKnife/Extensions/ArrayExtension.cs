@@ -29,10 +29,11 @@ namespace System
         /// <param name="list"></param>
         /// <param name="removeSelected">选后是否删除选中的，默认不删除</param>
         /// <returns></returns>
-        public static T GetRandomItem<T>(this List<T> list,bool removeSelected = false)
+        public static T GetRandomItem<T>(this List<T> list, bool removeSelected = false)
         {
             var count = list.Count;
-            if(count == 0) return default(T);
+            if(count == 0) 
+                return default(T);
             var index = _Random.Next(count);
             if (removeSelected)
             {
@@ -43,6 +44,9 @@ namespace System
             return list[index];
         }
 
+        /// <summary>
+        /// 从集合中随机选取一个
+        /// </summary>
         public static T GetRandomItem<T>(this T[] array)
         {
             var count = array.Length;

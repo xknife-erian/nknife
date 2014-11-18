@@ -10,12 +10,12 @@ using SocketKnife.Generic.Families;
 namespace NKnife.Socket.UnitTest
 {
     [TestClass]
-    public class FixedTailDecoderTest1
+    public class FixedTailDecoderTest2
     {
         [TestMethod]
         public void ExecuteTestMethod0()//一条完整的数据
         {
-            var decoder = new FixedTailDecoder();
+            var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
             const int COUNT = 1;
             var src = new List<byte>();
             for (int i = 0; i < COUNT; i++)
@@ -37,7 +37,7 @@ namespace NKnife.Socket.UnitTest
         [TestMethod]
         public void ExecuteTestMethod1()//多条完整的数据
         {
-            var decoder = new FixedTailDecoder();
+            var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
             const int COUNT = 5;
             var src = new List<byte>();
             for (int i = 0; i < COUNT; i++)
@@ -59,7 +59,7 @@ namespace NKnife.Socket.UnitTest
         [TestMethod]
         public void ExecuteTestMethod2()//高数据量数据
         {
-            var decoder = new FixedTailDecoder();
+            var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
             const int COUNT = 1000;
             var src = new List<byte>();
             for (int i = 0; i < COUNT; i++)
@@ -88,7 +88,7 @@ namespace NKnife.Socket.UnitTest
         [TestMethod]
         public void ExecuteTestMethod3()//有数据但是是不完整的数据
         {
-            var decoder = new FixedTailDecoder();
+            var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
             var src = GetAnyBytes();
             int index;
             var protocols = decoder.Execute(src.ToArray(), out index);
@@ -99,7 +99,7 @@ namespace NKnife.Socket.UnitTest
         [TestMethod]
         public void ExecuteTestMethod4() //多条完整的数据，但同时最后有不完整的数据
         {
-            var decoder = new FixedTailDecoder();
+            var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
             const int COUNT = 10;
             var src = new List<byte>();
             for (int i = 0; i < COUNT; i++)

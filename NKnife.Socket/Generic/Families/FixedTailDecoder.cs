@@ -12,11 +12,12 @@ namespace SocketKnife.Generic.Families
 {
     public class FixedTailDecoder : KnifeSocketDatagramDecoder
     {
-        private static readonly byte[] _tail = Encoding.Default.GetBytes("\r\n");
+        private byte[] _Tail = Encoding.Default.GetBytes("\r\n");
 
-        public virtual byte[] GetTail()
+        public virtual byte[] Tail
         {
-            return _tail;
+            get { return _Tail; }
+            set { _Tail = value; }
         }
 
         protected virtual string GetString(byte[] data, int index, int count)
@@ -33,7 +34,7 @@ namespace SocketKnife.Generic.Families
         public override string[] Execute(byte[] data, out int finishedIndex)
         {
             var start = 0;
-            var end = data.Find(_tail);
+            var end = data.Find(_Tail);
             if (end < 0)
             {
                 finishedIndex = 0;
@@ -42,12 +43,16 @@ namespace SocketKnife.Generic.Families
             var result = new List<string>();
             while (end > 0)
             {
-                string src = GetString(data, start, end);
+                int location = start;
+                if (start != 0)
+                    location = start + _Tail.Length;
+                string src = GetString(data, location, end - location);
                 result.Add(src);
                 start = end;
-                end = data.Find(_tail, end);
+                if (end + _Tail.Length <= data.Length)
+                    end = data.Find(_Tail, end + _Tail.Length);
             }
-            finishedIndex = start;
+            finishedIndex = start + _Tail.Length;
             return result.ToArray();
         }
     }
