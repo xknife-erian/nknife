@@ -21,6 +21,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
     public partial class NewTunnelCreatorDialog : Window
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private bool _IsServer;
 
         public NewTunnelCreatorDialog()
         {
@@ -30,50 +31,72 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             {
                 _LocalIpBox.Items.Add(ipAddress);
             }
+            if (ips.Length > 0)
+                _RemoteIpBox.Text = ips[0].ToString();
             if (ips.Any())
             {
                 _LocalIpBox.SelectedIndex = 0;
             }
             SocketTools = new SocketTools();
 
-            var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramDecoder<>), true);
+            var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IDatagramDecoder<>), true);
             foreach (var decoder in decoders)
             {
                 _DecoderComboBox.Items.Add(decoder);
             }
-            _DecoderComboBox.SelectedItem = typeof(FixedTailDecoder);
+            _DecoderComboBox.SelectedItem = typeof (FixedTailDecoder);
 
-            var encoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramEncoder<>), true);
+            var encoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IDatagramEncoder<>), true);
             foreach (var encoder in encoders)
             {
                 _EncoderComboBox.Items.Add(encoder);
             }
-            _EncoderComboBox.SelectedItem = typeof(FixedTailEncoder);
+            _EncoderComboBox.SelectedItem = typeof (FixedTailEncoder);
 
-            var packers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IProtocolPacker<>), true);
+            var packers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IProtocolPacker<>), true);
             foreach (var packer in packers)
             {
                 _PackerComboBox.Items.Add(packer);
             }
-            _PackerComboBox.SelectedItem = typeof(TextPlainPacker);
+            _PackerComboBox.SelectedItem = typeof (TextPlainPacker);
 
-            var unpackers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IProtocolUnPacker<>), true);
+            var unpackers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IProtocolUnPacker<>), true);
             foreach (var unpacker in unpackers)
             {
                 _UnPackerComboBox.Items.Add(unpacker);
             }
-            _UnPackerComboBox.SelectedItem = typeof(TextPlainUnPacker);
+            _UnPackerComboBox.SelectedItem = typeof (TextPlainUnPacker);
 
-            var commandParsers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IProtocolCommandParser<>), true);
+            var commandParsers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IProtocolCommandParser<>), true);
             foreach (var commandParser in commandParsers)
             {
                 _CommandParserComboBox.Items.Add(commandParser);
             }
-            _CommandParserComboBox.SelectedItem = typeof(TextPlainFirstFieldCommandParser);
+            _CommandParserComboBox.SelectedItem = typeof (TextPlainFirstFieldCommandParser);
         }
 
         public KnifeSocketConfig Config { get; set; }
         public SocketTools SocketTools { get; set; }
+
+        public bool IsServer
+        {
+            get { return _IsServer; }
+            set
+            {
+                _IsServer = value;
+                if (!value)
+                {
+                    _RemoteIpBox.Visibility = Visibility.Visible;
+                    _LocalIpBox.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    _RemoteIpBox.Visibility = Visibility.Hidden;
+                    _LocalIpBox.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
         public string IpAddressLabel
         {
             get { return _IpAddressLabel.Text; }
@@ -91,19 +114,22 @@ namespace NKnife.Kits.SocketKnife.Dialogs
 
             try
             {
-                SocketTools.IpAddress = (IPAddress)_LocalIpBox.SelectedItem;
+                if (IsServer)
+                    SocketTools.IpAddress = (IPAddress) _LocalIpBox.SelectedItem;
+                else
+                    SocketTools.IpAddress = IPAddress.Parse(_RemoteIpBox.Text);
                 SocketTools.Port = int.Parse(_PortTextBox.Text);
-                _logger.Info(string.Format("用户设置:{0},{1} <<< {2}",SocketTools.IpAddress, SocketTools.Port, _PortTextBox.Text));
+                _logger.Info(string.Format("用户设置:{0},{1} <<< {2}", SocketTools.IpAddress, SocketTools.Port, _PortTextBox.Text));
 
-                SocketTools.CommandParser = (Type)_CommandParserComboBox.SelectedItem;
-                SocketTools.Decoder = (Type)_DecoderComboBox.SelectedItem;
-                SocketTools.Encoder = (Type)_EncoderComboBox.SelectedItem;
-                SocketTools.Packer = (Type)_PackerComboBox.SelectedItem;
-                SocketTools.UnPacker = (Type)_UnPackerComboBox.SelectedItem;
+                SocketTools.CommandParser = (Type) _CommandParserComboBox.SelectedItem;
+                SocketTools.Decoder = (Type) _DecoderComboBox.SelectedItem;
+                SocketTools.Encoder = (Type) _EncoderComboBox.SelectedItem;
+                SocketTools.Packer = (Type) _PackerComboBox.SelectedItem;
+                SocketTools.UnPacker = (Type) _UnPackerComboBox.SelectedItem;
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.ErrorFormat("创建Socket异常", ex.Message);
             }
 
             if (_IsHeartBeat.IsChecked != null) 

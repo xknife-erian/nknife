@@ -70,6 +70,11 @@
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
     <Compile Include="Generic\Filters\HeartbeatClientFilter.cs" />
     <Compile Include="Generic\Filters\HeartbeatServerFilter.cs" />
+    <Compile Include="Generic\Protocol\JsonCommandParser.cs" />
+    <Compile Include="Generic\Protocol\JsonDecoder.cs" />
+    <Compile Include="Generic\Protocol\JsonEncoder.cs" />
+    <Compile Include="Generic\Protocol\JsonPacker.cs" />
+    <Compile Include="Generic\Protocol\JsonUnPacker.cs" />
     <Compile Include="Interfaces\IHeartbeatFilter.cs" />
     <Compile Include="Generic\Filters\KeepAliveClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientConfig.cs" />

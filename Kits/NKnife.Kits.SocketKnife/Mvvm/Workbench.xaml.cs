@@ -60,6 +60,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
             win.Config = DI.Get<KnifeSocketConfig>("Server");
             win.Title = "新建Socket服务器";
             win.IpAddressLabel = "本地IpAddress:";
+            win.IsServer = true;
             var drs = win.ShowDialog(this);
             if (drs != null && (bool)drs)
             {
@@ -78,6 +79,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
             win.Config = DI.Get<KnifeSocketConfig>("Client");
             win.Title = "新建Socket客户端";
             win.IpAddressLabel = "远程IpAddress:";
+            win.IsServer = false;
             var drs = win.ShowDialog(this);
             if (drs != null && (bool)drs)
             {

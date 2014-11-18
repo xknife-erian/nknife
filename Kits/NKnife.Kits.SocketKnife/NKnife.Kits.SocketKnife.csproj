@@ -202,10 +202,6 @@
     <Resource Include="Attachments\stop.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NKnife.Jsons\NKnife.Jsons.csproj">
-      <Project>{ce93a48b-6dbb-4206-87fb-a1c28621d483}</Project>
-      <Name>NKnife.Jsons</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
       <Project>{3d1d08d2-46b0-4c33-a214-a5a76a998102}</Project>
       <Name>NKnife.NLog3</Name>
