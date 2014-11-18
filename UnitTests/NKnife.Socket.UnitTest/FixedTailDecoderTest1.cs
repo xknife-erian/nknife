@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SocketKnife.Generic.Families;
+
+namespace NKnife.Socket.UnitTest
+{
+    [TestClass]
+    public class FixedTailDecoderTest1
+    {
+        [TestMethod]
+        public void ExecuteTestMethod0()//一条完整的数据
+        {
+            var decoder = new FixedTailDecoder();
+            const int COUNT = 1;
+            var src = new List<byte>();
+            for (int i = 0; i < COUNT; i++)
+            {
+                src.AddRange(GetAnyBytes());
+                src.AddRange(decoder.GetTail());
+            }
+            int index;
+            var protocols = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(src.Count, index);
+            var bs = Encoding.Default.GetString(GetAnyBytes());
+            foreach (var protocol in protocols)
+            {
+                Assert.AreEqual(bs, protocol);
+            }
+        }
+
+        [TestMethod]
+        public void ExecuteTestMethod1()//多条完整的数据
+        {
+            var decoder = new FixedTailDecoder();
+            const int COUNT = 10;
+            var src = new List<byte>();
+            for (int i = 0; i < COUNT; i++)
+            {
+                src.AddRange(GetAnyBytes());
+                src.AddRange(decoder.GetTail());
+            }
+            int index;
+            var protocols = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(src.Count, index);
+            var bs = Encoding.Default.GetString(GetAnyBytes());
+            foreach (var protocol in protocols)
+            {
+                Assert.AreEqual(bs, protocol);
+            }
+        }
+
+        [TestMethod]
+        public void ExecuteTestMethod2()//高数据量数据
+        {
+            var decoder = new FixedTailDecoder();
+            const int COUNT = 500;
+            var src = new List<byte>();
+            for (int i = 0; i < COUNT; i++)
+            {
+                src.AddRange(GetAnyBytes());
+                src.AddRange(decoder.GetTail());
+            }
+            int index;
+
+            var watch = new Stopwatch();
+            watch.Start();
+            var protocols = decoder.Execute(src.ToArray(), out index);
+            watch.Stop();
+            var ms = watch.ElapsedMilliseconds;
+            Assert.IsTrue(ms < 5);//解析速度小于5毫秒
+
+            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(src.Count, index);
+            var bs = Encoding.Default.GetString(GetAnyBytes());
+            foreach (var protocol in protocols)
+            {
+                Assert.AreEqual(bs, protocol);
+            }
+        }
+
+        [TestMethod]
+        public void ExecuteTestMethod3()//有数据但是是不完整的数据
+        {
+            var decoder = new FixedTailDecoder();
+            var src = GetAnyBytes();
+            int index;
+            var protocols = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(0, protocols.Length);
+            Assert.AreEqual(0, index);
+        }
+
+        [TestMethod]
+        public void ExecuteTestMethod4() //多条完整的数据，但同时最后有不完整的数据
+        {
+            var decoder = new FixedTailDecoder();
+            const int COUNT = 10;
+            var src = new List<byte>();
+            for (int i = 0; i < COUNT; i++)
+            {
+                src.AddRange(GetAnyBytes());
+                src.AddRange(decoder.GetTail());
+            }
+            src.Add(0xAB);
+            int index;
+            var protocols = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(src.Count - 1, index);
+            var bs = Encoding.Default.GetString(GetAnyBytes());
+            foreach (var protocol in protocols)
+            {
+                Assert.AreEqual(bs, protocol);
+            }
+        }
+
+        protected byte[] GetAnyBytes()
+        {
+            return Encoding.Default.GetBytes("ABCDEFG");
+        }
+    }
+}

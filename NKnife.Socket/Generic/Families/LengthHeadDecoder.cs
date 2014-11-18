@@ -18,14 +18,6 @@ namespace SocketKnife.Generic.Families
 
         protected bool _NeedReverse = false;
 
-        protected virtual int GetLengthHead(byte[] lenArray)
-        {
-            if (_NeedReverse)
-                Array.Reverse(lenArray);
-            int protocolLength = BitConverter.ToInt32(lenArray, 0);
-            return protocolLength;
-        }
-
         /// <summary>
         /// 解码。将字节数组解析成字符串。
         /// </summary>
@@ -90,6 +82,14 @@ namespace SocketKnife.Generic.Families
             return data.Length > done;
         }
 
+        protected virtual int GetLengthHead(byte[] lenArray)
+        {
+            if (_NeedReverse)
+                Array.Reverse(lenArray);
+            int protocolLength = BitConverter.ToInt32(lenArray, 0);
+            return protocolLength;
+        }
+
         protected virtual string TidyString(byte[] protocol)
         {
             if (CompressHelper.IsCompressed(protocol))//采用Gzip进行了压缩
@@ -99,6 +99,5 @@ namespace SocketKnife.Generic.Families
             }
             return UtilityString.TidyUTF8(protocol);
         }
-
     }
 }

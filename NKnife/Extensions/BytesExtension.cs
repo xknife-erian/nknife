@@ -171,13 +171,13 @@ namespace System
         }
 
         /// <summary>
-        /// 报告指定的字节数组在源数组中的第一个匹配项的索引
+        /// 报告指定的字节数组在源数组中的第一个匹配项的索引.nknife
         /// </summary>
         /// <param name="data">源数组</param>
         /// <param name="target">指定的字节数组</param>
         /// <param name="position">开始匹配的位置</param>
         /// <returns>索引值。为-1时，指无匹配项。</returns>
-        public static int IndexOf(this byte[] data, byte[] target, int position = 0)
+        public static int Find(this byte[] data, byte[] target, int position = 0)
         {
             if (position >= data.Length)
             {

@@ -135,7 +135,7 @@ namespace SocketKnife.Generic
         protected virtual bool Compare(ref byte[] data, byte[] toCompare)
         {
             var srcLength = data.Length;
-            var index = data.IndexOf(toCompare);
+            var index = data.Find(toCompare);
             if (index < 0)
                 return false;
             if (toCompare.Length < data.Length) //当源数据中包含待比较数据以外的数据时，将待比较数据移除

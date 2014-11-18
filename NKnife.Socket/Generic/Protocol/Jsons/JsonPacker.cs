@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 
-namespace NKnife.Jsons.Protocol
+namespace SocketKnife.Generic.Protocol.Jsons
 {
     public class JsonPacker : StringProtocolPacker
     {

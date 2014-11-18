@@ -14,7 +14,7 @@ namespace SocketKnife.Generic.Families
     {
         private static readonly byte[] _tail = Encoding.Default.GetBytes("\r\n");
 
-        protected virtual byte[] GetTail()
+        public virtual byte[] GetTail()
         {
             return _tail;
         }
@@ -24,18 +24,31 @@ namespace SocketKnife.Generic.Families
             return Encoding.Default.GetString(data, index, count);
         }
 
-        public override string[] Execute(byte[] data, out int done)
+        /// <summary>
+        /// 解码。将字节数组解析成字符串。
+        /// </summary>
+        /// <param name="data">需解码的字节数组.</param>
+        /// <param name="finishedIndex">已完成解码的数组的长度.</param>
+        /// <returns>字符串结果数组</returns>
+        public override string[] Execute(byte[] data, out int finishedIndex)
         {
-            done = data.Length;
-            var index = data.IndexOf(_tail);
-            if (index < 0)
+            var start = 0;
+            var end = data.Find(_tail);
+            if (end < 0)
             {
-                done = 0;
+                finishedIndex = 0;
                 return new string[0];
             }
-            string src = GetString(data, 0, index);
-            var result = new[] {src};
-            return result;
+            var result = new List<string>();
+            while (end > 0)
+            {
+                string src = GetString(data, start, end);
+                result.Add(src);
+                start = end;
+                end = data.Find(_tail, end);
+            }
+            finishedIndex = start;
+            return result.ToArray();
         }
     }
 }

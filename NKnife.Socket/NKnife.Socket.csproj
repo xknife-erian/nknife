@@ -65,16 +65,14 @@
     <Compile Include="Generic\Families\FixedTailEncoder.cs" />
     <Compile Include="Generic\Families\LengthHeadDecoder.cs" />
     <Compile Include="Generic\Families\LengthHeadEncoder.cs" />
-    <Compile Include="Generic\Families\DatagramDecoder.cs" />
-    <Compile Include="Generic\Families\DatagramEncoder.cs" />
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
     <Compile Include="Generic\Filters\HeartbeatClientFilter.cs" />
     <Compile Include="Generic\Filters\HeartbeatServerFilter.cs" />
-    <Compile Include="Generic\Protocol\JsonCommandParser.cs" />
-    <Compile Include="Generic\Protocol\JsonDecoder.cs" />
-    <Compile Include="Generic\Protocol\JsonEncoder.cs" />
-    <Compile Include="Generic\Protocol\JsonPacker.cs" />
-    <Compile Include="Generic\Protocol\JsonUnPacker.cs" />
+    <Compile Include="Generic\Protocol\Jsons\JsonCommandParser.cs" />
+    <Compile Include="Generic\Protocol\Jsons\JsonDecoder.cs" />
+    <Compile Include="Generic\Protocol\Jsons\JsonEncoder.cs" />
+    <Compile Include="Generic\Protocol\Jsons\JsonPacker.cs" />
+    <Compile Include="Generic\Protocol\Jsons\JsonUnPacker.cs" />
     <Compile Include="Interfaces\IHeartbeatFilter.cs" />
     <Compile Include="Generic\Filters\KeepAliveClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientConfig.cs" />
@@ -95,8 +93,6 @@
     <Compile Include="Generic\KnifeSocketServerProtocolHandler.cs" />
     <Compile Include="Generic\KnifeSocketServerFilterChain.cs" />
     <Compile Include="Generic\KnifeSocketServerConfig.cs" />
-    <Compile Include="Generic\Families\EndMarkDecoder.cs" />
-    <Compile Include="Generic\Families\EndMarkEncoder.cs" />
     <Compile Include="Interfaces\IKnifeSocketClient.cs" />
     <Compile Include="Interfaces\ISocketClientConfig.cs" />
     <Compile Include="Interfaces\ISocketClientFilter.cs" />
@@ -120,6 +116,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

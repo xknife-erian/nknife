@@ -60,7 +60,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
             var target = new byte[] {0x02, 0x03};
-            int actual = source.IndexOf(target);
+            int actual = source.Find(target);
             Assert.AreEqual(2, actual);
         }
 
@@ -69,7 +69,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
             var target = new byte[] {0x02, 0x04};
-            int actual = source.IndexOf(target);
+            int actual = source.Find(target);
             Assert.AreEqual(-1, actual);
         }
 
@@ -78,7 +78,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
             var target = new byte[] {};
-            int actual = source.IndexOf(target);
+            int actual = source.Find(target);
             Assert.AreEqual(-1, actual);
         }
 
@@ -87,11 +87,11 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
             var target1 = new byte[] {0x00};
-            int actual = source.IndexOf(target1);
+            int actual = source.Find(target1);
             Assert.AreEqual(0, actual);
 
             var target2 = new byte[] {0x09};
-            actual = source.IndexOf(target2);
+            actual = source.Find(target2);
             Assert.AreEqual(9, actual);
         }
 
@@ -100,9 +100,9 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] {0x02, 0x03};
             var target = new byte[] {0x02, 0x03};
-            int actual = source.IndexOf(target);
+            int actual = source.Find(target);
             Assert.AreEqual(0, actual);
-            actual = source.IndexOf(source);
+            actual = source.Find(source);
             Assert.AreEqual(0, actual);
         }
 
@@ -111,7 +111,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
             var target = new byte[] {0x08, 0x09};
-            int actual = source.IndexOf(target);
+            int actual = source.Find(target);
             Assert.AreEqual(8, actual);
         }
 
@@ -120,7 +120,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09 };
             var target = new byte[] { 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09 };
-            int actual = source.IndexOf(target);
+            int actual = source.Find(target);
             Assert.AreEqual(3, actual);
         }
 
@@ -129,7 +129,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var source = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09 };
             var target = new byte[] { 0x03, 0x04, 0x05, 0x06, 0x07, 0x09 };
-            int actual = source.IndexOf(target);
+            int actual = source.Find(target);
             Assert.AreEqual(-1, actual);
         }
     }
