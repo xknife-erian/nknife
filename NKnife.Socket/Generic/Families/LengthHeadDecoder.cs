@@ -16,17 +16,25 @@ namespace SocketKnife.Generic.Families
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-        protected bool _NeedReverse = false;
+        /// <summary>
+        /// 长度头的数组是否需要反转
+        /// </summary>
+        public bool NeedReverse { get; set; }
+
+        /// <summary>
+        /// 是否启用Gzip压缩
+        /// </summary>
+        public bool EnabelCompress { get; set; }
 
         /// <summary>
         /// 解码。将字节数组解析成字符串。
         /// </summary>
         /// <param name="data">需解码的字节数组.</param>
-        /// <param name="done">已完成解码的数组的长度.</param>
+        /// <param name="finishedIndex">已完成解码的数组的长度.</param>
         /// <returns></returns>
-        public override string[] Execute(byte[] data, out int done)
+        public override string[] Execute(byte[] data, out int finishedIndex)
         {
-            done = 0;
+            finishedIndex = 0;
             var results = new List<string>();
             try
             {
@@ -34,8 +42,9 @@ namespace SocketKnife.Generic.Families
                 while (inComplete)
                 {
                     if (results.Count > 1)
-                        _logger.Trace(string.Format("粘包处理,总长度:{0},已解析:{1},得到结果:{2}", data.Length, done, results.Count));
-                    inComplete = ExecuteSubMethod(data, done, ref results, ref done);
+                        _logger.Trace(string.Format("粘包处理,总长度:{0},已解析:{1},得到结果:{2}", data.Length, finishedIndex, results.Count));
+                    var start = finishedIndex;//finishedIndex不等于0时，代表有粘包
+                    inComplete = ExecuteSubMethod(data, start, ref results, ref finishedIndex);
                 }
                 return results.ToArray();
             }
@@ -46,45 +55,45 @@ namespace SocketKnife.Generic.Families
             }
         }
 
-        private bool ExecuteSubMethod(byte[] data, int index, ref List<string> results, ref int done)
+        private bool ExecuteSubMethod(byte[] data, int start, ref List<string> results, ref int finishedIndex)
         {
             if (UtilityCollection.IsNullOrEmpty(data))
                 return false;
             if (data.Length <= 4)
                 return false;
-            var protocolBytes = new byte[] {};
+            var protocol = new byte[] {};
             try
             {
-                var lenArray = new byte[4];
-                Buffer.BlockCopy(data, index, lenArray, 0, 4);
-                var protocolLength = GetLengthHead(lenArray);
-                if (index + 4 + protocolLength > data.Length)//这时又出现了半包现象
+                var lengthHead = new byte[4];
+                Buffer.BlockCopy(data, start, lengthHead, 0, 4);
+                var protocolLength = GetLengthHead(lengthHead);
+                if (start + 4 + protocolLength > data.Length)//这时又出现了半包现象
                 {
-                    _logger.Trace(string.Format("处理粘包时出现半包:起点:{0},计算得到的长度:{1},源数据长度:{2}", index, protocolLength, data.Length));
+                    _logger.Trace(string.Format("处理粘包时出现半包:起点:{0},计算得到的长度:{1},源数据长度:{2}", start, protocolLength, data.Length));
                     return false;
                 }
 
-                protocolBytes = new byte[protocolLength];
-                Buffer.BlockCopy(data, index + 4, protocolBytes, 0, protocolLength);
+                protocol = new byte[protocolLength];
+                Buffer.BlockCopy(data, start + 4, protocol, 0, protocolLength);
             }
             catch (Exception e)
             {
                 _logger.Error("解码异常", e);
             }
 
-            if (!UtilityCollection.IsNullOrEmpty(protocolBytes))
+            if (!UtilityCollection.IsNullOrEmpty(protocol))
             {
-                string tidyString = TidyString(protocolBytes);
+                string tidyString = TidyString(EnabelCompress ? CompressHelper.Decompress(protocol) : protocol);
                 results.Add(tidyString);
             }
-            done = index + 4 + protocolBytes.Length;
+            finishedIndex = start + 4 + protocol.Length;
 
-            return data.Length > done;
+            return data.Length > finishedIndex;
         }
 
         protected virtual int GetLengthHead(byte[] lenArray)
         {
-            if (_NeedReverse)
+            if (NeedReverse)
                 Array.Reverse(lenArray);
             int protocolLength = BitConverter.ToInt32(lenArray, 0);
             return protocolLength;

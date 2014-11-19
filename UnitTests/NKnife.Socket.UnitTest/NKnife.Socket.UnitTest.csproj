@@ -65,6 +65,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KnifeSocketFilterTest2.cs" />
     <Compile Include="FixedTailDecoderTest1.cs" />
+    <Compile Include="FixedTailEncoderTest1.cs" />
+    <Compile Include="LengthHeadDecoderTest1.cs" />
+    <Compile Include="LengthHeadEncoderTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">

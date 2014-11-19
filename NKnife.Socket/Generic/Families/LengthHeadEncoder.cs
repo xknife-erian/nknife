@@ -17,6 +17,9 @@ namespace SocketKnife.Generic.Families
 
         #region IDatagramEncoder Members
 
+        /// <summary>
+        /// 是否启用Gzip压缩
+        /// </summary>
         public bool EnabelCompress { get; set; }
 
         public override byte[] Execute(string replay)
