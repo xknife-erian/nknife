@@ -9,7 +9,7 @@ namespace NKnife.Protocol.Generic.TextPlain
         public override void Execute(StringProtocolContent content, string data, string family, string command)
         {
             content.Command = command;
-            string[] array = data.Split(new[] { TextPlainFlag.SplitFlag }, StringSplitOptions.RemoveEmptyEntries);
+            string[] array = data.Split(new[] { TextPlainProtocolFlags.SplitFlag }, StringSplitOptions.RemoveEmptyEntries);
             if (array.Length > 1)
             {
                 content.CommandParam = array[1];
@@ -19,13 +19,13 @@ namespace NKnife.Protocol.Generic.TextPlain
                 for (int i = 2; i < array.Length; i++)
                 {
                     var node = array[i];
-                    if (!node.Contains(TextPlainFlag.InfomationSplitFlag))
+                    if (!node.Contains(TextPlainProtocolFlags.InfomationSplitFlag))
                     {
                         content.AddTag(node);
                     }
                     else
                     {
-                        var vam = node.Split(new[] { TextPlainFlag.InfomationSplitFlag }, StringSplitOptions.RemoveEmptyEntries);
+                        var vam = node.Split(new[] { TextPlainProtocolFlags.InfomationSplitFlag }, StringSplitOptions.RemoveEmptyEntries);
                         if (vam.Length >= 2)
                         {
                             content.AddInfo(vam[0], vam[1]);

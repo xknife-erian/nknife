@@ -6,18 +6,18 @@ namespace NKnife.Protocol.Generic.TextPlain
     {
         public override string Combine(StringProtocolContent c)
         {
-            var command = string.Format("{0}{2}{1}{2}", c.Command, c.CommandParam, TextPlainFlag.SplitFlag);
+            var command = string.Format("{0}{2}{1}{2}", c.Command, c.CommandParam, TextPlainProtocolFlags.SplitFlag);
             var sb = new StringBuilder(command);
             foreach (var tag in c.Tags)
             {
-                sb.Append(tag).Append(TextPlainFlag.SplitFlag);
+                sb.Append(tag).Append(TextPlainProtocolFlags.SplitFlag);
             }
             foreach (var info in c.Infomations)
             {
                 sb.Append(info.Key)
-                    .Append(TextPlainFlag.InfomationSplitFlag)
+                    .Append(TextPlainProtocolFlags.InfomationSplitFlag)
                     .Append(info.Value)
-                    .Append(TextPlainFlag.SplitFlag);
+                    .Append(TextPlainProtocolFlags.SplitFlag);
             }
             return sb.Remove(sb.Length - 1, 1).ToString();
         }

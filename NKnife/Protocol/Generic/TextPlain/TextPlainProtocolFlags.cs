@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NKnife.Protocol.Generic.TextPlain
 {
-    public class TextPlainFlag
+    class TextPlainProtocolFlags
     {
         public static char _SplitFlag = '|';
         public static string _InfomationSplitFlag = "<~>";
