@@ -6,10 +6,10 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using Common.Logging;
-using NKnife.Interface;
+using NKnife.Protocol.Generic;
 using NKnife.Utility;
 
-namespace NKnife.Protocol.Generic.Xml
+namespace SocketKnife.Generic.Protocol.Xmls
 {
     /// <summary>
     /// 描述一个将协议内容按指定的格式组装成一个指定类型(一般是字符串，但也可以是任何，如文件)
@@ -69,7 +69,7 @@ namespace NKnife.Protocol.Generic.Xml
 
         protected virtual void WriteTags(StringProtocolContent content, XmlWriter writer)
         {
-            // Datas,Tags,Infomations均属于协议的内容。
+            // Tags,Infomations均属于协议的内容。
             // Tags:内容较大的数据，如序列化的对象等。
             if (null != content.Tags && content.Tags.Count > 0)
             {

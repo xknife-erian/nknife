@@ -5,9 +5,10 @@ using System.Reflection;
 using System.Xml;
 using Common.Logging;
 using NKnife.Interface;
+using NKnife.Protocol.Generic;
 using NKnife.Utility;
 
-namespace NKnife.Protocol.Generic.Xml
+namespace SocketKnife.Generic.Protocol.Xmls
 {
     public class XmlProtocolUnPacker : StringProtocolUnPacker
     {

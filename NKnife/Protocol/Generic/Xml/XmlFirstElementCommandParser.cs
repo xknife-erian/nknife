@@ -7,16 +7,18 @@ using NKnife.Interface;
 namespace NKnife.Protocol.Generic.Xml
 {
     /// <summary>
-    /// 一个基本的从协议字符串中解析命令字的工具
+    /// 定义协议XML节点中，根节点的节点名是协议的命令字
     /// </summary>
     public class XmlFirstElementCommandParser : StringProtocolCommandParser
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         
-        public override string GetCommand(string protocolString)
+        public override string GetCommand(string protocol)
         {
             string command = string.Empty;
-            using (var reader = new XmlTextReader(new StringReader(protocolString)))
+            //使用XML的Reader方式进行流模式的读取，避免以DOM的方式进行XML的整体加载，以加快读取的速度
+            //这种方式不对XML进行验证，当流读取出第一个XML节点后即退出
+            using (var reader = new XmlTextReader(new StringReader(protocol)))
             {
                 try
                 {
@@ -31,7 +33,7 @@ namespace NKnife.Protocol.Generic.Xml
                 }
                 catch (Exception e)
                 {
-                    _logger.Warn(string.Format("无法解析的协议字符串。{0}，异常：{1}", protocolString, e));
+                    _logger.Warn(string.Format("无法解析的协议字符串。{0}，异常：{1}", protocol, e));
                 }
             }
             return command;

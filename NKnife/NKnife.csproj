@@ -159,10 +159,6 @@
     <Compile Include="Protocol\Generic\TextPlain\TextPlainFlag.cs" />
     <Compile Include="Protocol\Generic\TextPlain\TextPlainUnPacker.cs" />
     <Compile Include="Protocol\Generic\Xml\XmlFirstElementCommandParser.cs" />
-    <Compile Include="Protocol\Generic\Xml\XmlProtocolDataTableDeserializeUnPacker.cs" />
-    <Compile Include="Protocol\Generic\Xml\XmlProtocolDeserializeUnPacker.cs" />
-    <Compile Include="Protocol\Generic\Xml\XmlProtocolPacker.cs" />
-    <Compile Include="Protocol\Generic\Xml\XmlProtocolUnPacker.cs" />
     <Compile Include="Protocol\IProtocol`.cs" />
     <Compile Include="Protocol\IProtocolContent`.cs" />
     <Compile Include="Protocol\IProtocolFamily`.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace NKnife.Protocol.Generic.TextPlain
@@ -7,8 +8,8 @@ namespace NKnife.Protocol.Generic.TextPlain
     {
         public override void Execute(StringProtocolContent content, string data, string family, string command)
         {
-            string[] array = data.Split(new[] { TextPlainFlag.SplitFlag }, StringSplitOptions.RemoveEmptyEntries);
             content.Command = command;
+            string[] array = data.Split(new[] { TextPlainFlag.SplitFlag }, StringSplitOptions.RemoveEmptyEntries);
             if (array.Length > 1)
             {
                 content.CommandParam = array[1];
@@ -17,17 +18,21 @@ namespace NKnife.Protocol.Generic.TextPlain
             {
                 for (int i = 2; i < array.Length; i++)
                 {
-                    var v = array[i];
-                    if (!v.Contains(TextPlainFlag.InfomationSplitFlag))
+                    var node = array[i];
+                    if (!node.Contains(TextPlainFlag.InfomationSplitFlag))
                     {
-                        content.AddTag(v);
+                        content.AddTag(node);
                     }
                     else
                     {
-                        var vam = v.Split(new[] { TextPlainFlag.InfomationSplitFlag }, StringSplitOptions.RemoveEmptyEntries);
-                        if (vam.Length == 2)
+                        var vam = node.Split(new[] { TextPlainFlag.InfomationSplitFlag }, StringSplitOptions.RemoveEmptyEntries);
+                        if (vam.Length >= 2)
                         {
                             content.AddInfo(vam[0], vam[1]);
+                        }
+                        else
+                        {
+                            Debug.Fail("协议数据异常", node);
                         }
                     }
                 }

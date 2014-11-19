@@ -14,8 +14,10 @@ namespace NKnife.Protocol.Generic.TextPlain
             }
             foreach (var info in c.Infomations)
             {
-                sb.Append(info.Key).Append(TextPlainFlag.InfomationSplitFlag)
-                    .Append(info.Value).Append(TextPlainFlag.SplitFlag);
+                sb.Append(info.Key)
+                    .Append(TextPlainFlag.InfomationSplitFlag)
+                    .Append(info.Value)
+                    .Append(TextPlainFlag.SplitFlag);
             }
             return sb.Remove(sb.Length - 1, 1).ToString();
         }

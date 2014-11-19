@@ -5,10 +5,11 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using Common.Logging;
-using NKnife.Interface;
+using NKnife.Protocol.Generic;
+using NKnife.Protocol.Generic.Xml;
 using NKnife.Utility;
 
-namespace NKnife.Protocol.Generic.Xml
+namespace SocketKnife.Generic.Protocol.Xmls
 {
     /// <summary>含有序列化对象的解析器
     /// </summary>
