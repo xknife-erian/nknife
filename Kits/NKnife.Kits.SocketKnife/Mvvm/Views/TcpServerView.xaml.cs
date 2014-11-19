@@ -19,14 +19,13 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         private readonly DemoServerViewModel _ViewModel;
 
         public KnifeSocketConfig Config { get; set; }
-        public SocketTools SocketTools { get; set; }
+        internal SocketCustomSetting CustomSetting { get; set; }
 
         public TcpServerView()
         {
             InitializeComponent();
             _ViewModel = new DemoServerViewModel();
             _MainGrid.DataContext = _ViewModel;
-            _ViewModel.Dispatcher = Dispatcher;
 
             _SessionDataGrid.ItemsSource = _ViewModel.Sessions;
 
@@ -59,7 +58,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _StartButton.IsEnabled = false;
             _StopButton.IsEnabled = true;
-            _ViewModel.StartServer(Config, SocketTools);
+            _ViewModel.StartServer(Config, CustomSetting);
             _StartReplayButton.IsEnabled = true;
         }
 

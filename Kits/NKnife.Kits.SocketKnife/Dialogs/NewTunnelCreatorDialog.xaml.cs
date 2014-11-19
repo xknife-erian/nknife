@@ -12,6 +12,7 @@ using NKnife.Tunnel;
 using NKnife.Utility;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace NKnife.Kits.SocketKnife.Dialogs
 {
@@ -37,7 +38,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             {
                 _LocalIpBox.SelectedIndex = 0;
             }
-            SocketTools = new SocketTools();
+            CustomSetting = new SocketCustomSetting();
 
             var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IDatagramDecoder<>), true);
             foreach (var decoder in decoders)
@@ -76,7 +77,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
         }
 
         public KnifeSocketConfig Config { get; set; }
-        public SocketTools SocketTools { get; set; }
+        internal SocketCustomSetting CustomSetting { get; set; }
 
         public bool IsServer
         {
@@ -105,6 +106,19 @@ namespace NKnife.Kits.SocketKnife.Dialogs
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
+            var localIpAddress = (IPAddress)_LocalIpBox.SelectedItem;
+            int port;
+            if (!int.TryParse(_PortTextBox.Text, out port))
+            {
+                MessageBox.Show("请输入正确的端口号。");
+                return;
+            }
+            if (DI.Get<ServerMap>().ContainsKey(new IPEndPoint(localIpAddress, port)))
+            {
+                MessageBox.Show("已启动相同端口号的服务端，请重新选择。");
+                return;
+            }
+
             Config.ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);
             Config.SendBufferSize = int.Parse(_SendBufferSizeSizeTextBox.Text);
             Config.MaxBufferSize = int.Parse(_MaxBufferSizeTextBox.Text);
@@ -115,17 +129,26 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             try
             {
                 if (IsServer)
-                    SocketTools.IpAddress = (IPAddress) _LocalIpBox.SelectedItem;
+                {
+                    CustomSetting.IpAddress = localIpAddress;
+                }
                 else
-                    SocketTools.IpAddress = IPAddress.Parse(_RemoteIpBox.Text);
-                SocketTools.Port = int.Parse(_PortTextBox.Text);
-                _logger.Info(string.Format("用户设置:{0},{1} <<< {2}", SocketTools.IpAddress, SocketTools.Port, _PortTextBox.Text));
+                {
+                    IPAddress clientIpAddress;
+                    if (!IPAddress.TryParse(_RemoteIpBox.Text, out clientIpAddress))
+                    {
+                        MessageBox.Show("请输入正确的Server端IP地址。");
+                    }
+                    CustomSetting.IpAddress = IPAddress.Parse(_RemoteIpBox.Text);
+                }
+                CustomSetting.Port = port;
+                _logger.Info(string.Format("用户设置:{0},{1} <<< {2}", CustomSetting.IpAddress, CustomSetting.Port, _PortTextBox.Text));
 
-                SocketTools.CommandParser = (Type) _CommandParserComboBox.SelectedItem;
-                SocketTools.Decoder = (Type) _DecoderComboBox.SelectedItem;
-                SocketTools.Encoder = (Type) _EncoderComboBox.SelectedItem;
-                SocketTools.Packer = (Type) _PackerComboBox.SelectedItem;
-                SocketTools.UnPacker = (Type) _UnPackerComboBox.SelectedItem;
+                CustomSetting.CommandParser = (Type) _CommandParserComboBox.SelectedItem;
+                CustomSetting.Decoder = (Type) _DecoderComboBox.SelectedItem;
+                CustomSetting.Encoder = (Type) _EncoderComboBox.SelectedItem;
+                CustomSetting.Packer = (Type) _PackerComboBox.SelectedItem;
+                CustomSetting.UnPacker = (Type) _UnPackerComboBox.SelectedItem;
             }
             catch (Exception ex)
             {
@@ -133,9 +156,9 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             }
 
             if (_IsHeartBeat.IsChecked != null) 
-                SocketTools.NeedHeartBeat = (bool) _IsHeartBeat.IsChecked;
+                CustomSetting.NeedHeartBeat = (bool) _IsHeartBeat.IsChecked;
             else
-                SocketTools.NeedHeartBeat = true;
+                CustomSetting.NeedHeartBeat = true;
             DialogResult = true;
             Close();
         }

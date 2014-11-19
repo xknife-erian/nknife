@@ -74,7 +74,7 @@ namespace NKnife.Socket.UnitTest
             var protocols = decoder.Execute(src.ToArray(), out index);
             watch.Stop();
             var ms = watch.ElapsedMilliseconds;
-            Assert.IsTrue(ms < 2);//解析速度小于5毫秒
+            Assert.IsTrue(ms < 2, string.Format("函数运算速度:{0}", ms));//解析速度小于5毫秒
 
             Assert.AreEqual(COUNT, protocols.Length);
             Assert.AreEqual(src.Count, index);

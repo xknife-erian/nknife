@@ -8,6 +8,7 @@
                      mc:Ignorable="d" Title="SocketKnife服务端">
     <Grid Name="_MainGrid" Loaded="View_OnLoaded">
         <Grid.Resources>
+            <common:ProtocolConverter x:Key="ProtocolConverter" />
             <Style x:Key="StartButtonImage" TargetType="{x:Type Button}">
                 <Setter Property="Margin" Value="3" />
                 <Style.Triggers>
@@ -72,7 +73,6 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <common:ProtocolConverter x:Key="ProtocolConverter" />
         </Grid.Resources>
 
         <Grid.Background>

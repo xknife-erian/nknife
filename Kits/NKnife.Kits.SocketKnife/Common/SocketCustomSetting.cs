@@ -3,7 +3,7 @@ using System.Net;
 
 namespace NKnife.Kits.SocketKnife.Common
 {
-    public class SocketTools
+    internal class SocketCustomSetting 
     {
         public IPAddress IpAddress { get; set; }
         public int Port { get; set; }

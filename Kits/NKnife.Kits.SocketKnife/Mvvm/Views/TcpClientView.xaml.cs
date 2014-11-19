@@ -12,41 +12,31 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class TcpClientView
     {
-        private readonly DemoClient _ViewModel;
+        private readonly TcpClientViewModel _ViewModel;
 
         public KnifeSocketConfig Config { get; set; }
-        public SocketTools SocketTools { get; set; }
+        internal SocketCustomSetting CustomSetting { get; set; }
 
         public TcpClientView()
         {
             InitializeComponent();
             Title = "SocketKnife客户端";
-            _ViewModel = new DemoClient();
+            _ViewModel = new TcpClientViewModel();
             _View.DataContext = _ViewModel;
-            _ViewModel.Dispatcher = Dispatcher;
-        }
-
-        private void View_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            _ViewModel.Initialize(Config, SocketTools);
         }
 
         protected override void OnClosed()
         {
             base.OnClosed();
-            _ViewModel.Stop();
-        }
-
-        private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)
-        {
+            _ViewModel.StopClient();
         }
 
         private void Start(object sender, RoutedEventArgs e)
         {
             _StartButton.IsEnabled = false;
             _StopButton.IsEnabled = true;
-
-            _ViewModel.Start();
+            _ViewModel.StartClient(Config, CustomSetting);
+            _StartReplayButton.IsEnabled = true;
         }
 
         private void Stop(object sender, RoutedEventArgs e)
@@ -54,8 +44,27 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _StartButton.IsEnabled = true;
             _StopButton.IsEnabled = false;
 
-            _ViewModel.Stop();
+            _ViewModel.StopClient();
         }
 
+        private void _BuildProtocolButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void _SelectAllClientCheckBox_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void _StopReplayButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void _StartReplayButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Family;
         }
 
-        public void Initialize(KnifeSocketConfig config, SocketTools socketTools, KnifeSocketServerProtocolHandler handler)
+        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, KnifeSocketServerProtocolHandler handler)
         {
             if (_IsInitialized) 
                 return;
@@ -48,14 +48,15 @@ namespace NKnife.Kits.SocketKnife.Demo
             heartbeatServerFilter.Interval = 1000*5;
             heartbeatServerFilter.Heartbeat = new Heartbeat();
 
+            StringProtocolFamily protocolFamily = GetProtocolFamily();
+
             _KeepAliveFilter = DI.Get<KeepAliveServerFilter>();
             var codec = DI.Get<KnifeSocketCodec>();
+
             if (codec.SocketDecoder.GetType() != socketTools.Decoder)
                 codec.SocketDecoder = (KnifeSocketDatagramDecoder) DI.Get(socketTools.Decoder);
             if (codec.SocketEncoder.GetType() != socketTools.Encoder)
                 codec.SocketEncoder = (KnifeSocketDatagramEncoder) DI.Get(socketTools.Encoder);
-
-            StringProtocolFamily protocolFamily = GetProtocolFamily();
             if (protocolFamily.CommandParser.GetType() != socketTools.CommandParser)
                 protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(socketTools.CommandParser);
 

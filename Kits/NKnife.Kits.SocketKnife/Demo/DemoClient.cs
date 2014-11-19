@@ -14,8 +14,6 @@ namespace NKnife.Kits.SocketKnife.Demo
 {
     class DemoClient : NotificationObject
     {
-        internal Dispatcher Dispatcher { get; set; }
-
         public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
 
         private bool _IsInitialized = false;
@@ -26,7 +24,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             SocketMessages = new AsyncObservableCollection<SocketMessage>();
         }
 
-        public void Initialize(KnifeSocketConfig config, SocketTools socketTools)
+        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting)
         {
             if (_IsInitialized) return;
 
@@ -36,21 +34,21 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             var keepAliveFilter = DI.Get<KeepAliveClientFilter>();
             var codec = DI.Get<KnifeSocketCodec>();
-            if (codec.SocketDecoder.GetType() != socketTools.Decoder)
-                codec.SocketDecoder = (KnifeSocketDatagramDecoder) DI.Get(socketTools.Decoder);
-            if (codec.SocketEncoder.GetType() != socketTools.Encoder)
-                codec.SocketEncoder = (KnifeSocketDatagramEncoder) DI.Get(socketTools.Encoder);
+            if (codec.SocketDecoder.GetType() != customSetting.Decoder)
+                codec.SocketDecoder = (KnifeSocketDatagramDecoder) DI.Get(customSetting.Decoder);
+            if (codec.SocketEncoder.GetType() != customSetting.Encoder)
+                codec.SocketEncoder = (KnifeSocketDatagramEncoder) DI.Get(customSetting.Encoder);
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
-            if (protocolFamily.CommandParser.GetType() != socketTools.CommandParser)
-                protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(socketTools.CommandParser);
+            if (protocolFamily.CommandParser.GetType() != customSetting.CommandParser)
+                protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(customSetting.CommandParser);
 
             _Client = DI.Get<IKnifeSocketClient>();
             _Client.Config = config;
-            if (socketTools.NeedHeartBeat)
+            if (customSetting.NeedHeartBeat)
                 _Client.AddFilters(heartbeatServerFilter);
             _Client.AddFilters(keepAliveFilter);
-            _Client.Configure(socketTools.IpAddress, socketTools.Port);
+            _Client.Configure(customSetting.IpAddress, customSetting.Port);
             _Client.Bind(codec, protocolFamily);
             _Client.AddHandlers(new DemoClientHandler(SocketMessages));
 

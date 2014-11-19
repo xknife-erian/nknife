@@ -12,6 +12,7 @@ using NKnife.Mvvm;
 using NKnife.Protocol.Generic;
 using NKnife.Utility;
 using SocketKnife.Generic;
+using MessageBox = System.Windows.Forms.MessageBox;
 using Timer = System.Timers.Timer;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
@@ -35,8 +36,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         private readonly ProtocolViewModel _ProtocolViewModel = DI.Get<ProtocolViewModel>();
         private readonly Timer _Timer = new Timer();
         private readonly UtilityRandom _Random = new UtilityRandom();
-
-        internal Dispatcher Dispatcher { get; set; }
 
         public ObservableCollection<SocketMessage> SocketMessages { get; set; }
 
@@ -150,12 +149,17 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             }
         }
 
-        public void StartServer(KnifeSocketConfig config, SocketTools tools)
+        internal void StartServer(KnifeSocketConfig config, SocketCustomSetting customSetting)
         {
             _Handler = new DemoServerHandler(SocketMessages);
-            _CurrentServerPoint = new IPEndPoint(tools.IpAddress, tools.Port);
+            _CurrentServerPoint = new IPEndPoint(customSetting.IpAddress, customSetting.Port);
+            if (DI.Get<ServerMap>().ContainsKey(_CurrentServerPoint))
+            {
+                MessageBox.Show("已启动相同端口号的Server端，请关闭后，重新选择后启动。");
+                return;
+            }
             _ServerMap.Add(_CurrentServerPoint, _Server.GetSocketServer());
-            _Server.Initialize(config, tools, _Handler);
+            _Server.Initialize(config, customSetting, _Handler);
 
             var filter = _Server.GetSocketServerFilter();
             filter.SessionMapGetter.Invoke().Added += (sender, args) =>
