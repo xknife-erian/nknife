@@ -75,8 +75,6 @@
     <Compile Include="Generic\Protocol\Jsons\JsonUnPacker.cs" />
     <Compile Include="Generic\Protocol\Xmls\XmlProtocolDataTableDeserializeUnPacker.cs" />
     <Compile Include="Generic\Protocol\Xmls\XmlProtocolDeserializeUnPacker.cs" />
-    <Compile Include="Generic\Protocol\Xmls\XmlProtocolPacker.cs" />
-    <Compile Include="Generic\Protocol\Xmls\XmlProtocolUnPacker.cs" />
     <Compile Include="Interfaces\IHeartbeatFilter.cs" />
     <Compile Include="Generic\Filters\KeepAliveClientFilter.cs" />
     <Compile Include="Generic\KnifeSocketClientConfig.cs" />
