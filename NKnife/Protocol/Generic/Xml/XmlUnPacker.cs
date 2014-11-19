@@ -84,9 +84,9 @@ namespace NKnife.Protocol.Generic.Xml
                 Type type = UtilityType.FindType(itemElement.GetAttribute("class"));
                 try
                 {
-                    const BindingFlags bf = BindingFlags.CreateInstance |
+                    const BindingFlags BF = BindingFlags.CreateInstance |
                                             (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
-                    obj = Activator.CreateInstance(type, bf, null, null, null);
+                    obj = Activator.CreateInstance(type, BF, null, null, null);
                     var xml = obj as IXml;
                     if (xml != null)
                     {
