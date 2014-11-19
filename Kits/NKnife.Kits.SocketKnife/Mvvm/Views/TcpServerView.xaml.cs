@@ -16,7 +16,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class TcpServerView
     {
-        private readonly DemoServerViewModel _ViewModel;
+        private readonly TcpServerViewModel _ViewModel;
 
         public KnifeSocketConfig Config { get; set; }
         internal SocketCustomSetting CustomSetting { get; set; }
@@ -24,7 +24,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         public TcpServerView()
         {
             InitializeComponent();
-            _ViewModel = new DemoServerViewModel();
+            _ViewModel = new TcpServerViewModel();
             _MainGrid.DataContext = _ViewModel;
 
             _SessionDataGrid.ItemsSource = _ViewModel.Sessions;

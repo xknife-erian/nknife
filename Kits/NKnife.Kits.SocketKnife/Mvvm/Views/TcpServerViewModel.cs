@@ -17,7 +17,7 @@ using Timer = System.Timers.Timer;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
-    public class DemoServerViewModel : NotificationObject
+    public class TcpServerViewModel : NotificationObject
     {
         private StringProtocol _Protocol;
         private bool _IsOnlyOnce = true;
@@ -121,7 +121,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             }
         }
 
-        public DemoServerViewModel()
+        public TcpServerViewModel()
         {
             SocketMessages = new ObservableCollection<SocketMessage>();
             Sessions = new SessionList();
@@ -203,7 +203,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 }
             };
             _Server.StartServer();
-            _ProtocolViewModel.SetFamily(_Server.GetFamily());
+            _ProtocolViewModel.AddFamily(_Server.GetFamily());
         }
 
         public void StopServer()

@@ -30,7 +30,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             }
         }
 
-        public void SetFamily(StringProtocolFamily family)
+        public void AddFamily(StringProtocolFamily family)
         {
             foreach (KeyValuePair<string, StringProtocol> pair in family)
             {

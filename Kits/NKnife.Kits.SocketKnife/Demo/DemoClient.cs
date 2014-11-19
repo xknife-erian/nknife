@@ -14,17 +14,16 @@ namespace NKnife.Kits.SocketKnife.Demo
 {
     class DemoClient : NotificationObject
     {
-        public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
-
         private bool _IsInitialized = false;
         private IKnifeSocketClient _Client;
+        private StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
-        public DemoClient()
+        public StringProtocolFamily GetFamily()
         {
-            SocketMessages = new AsyncObservableCollection<SocketMessage>();
+            return _Family;
         }
 
-        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting)
+        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting, KnifeSocketClientProtocolHandler handler)
         {
             if (_IsInitialized) return;
 
@@ -50,7 +49,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             _Client.AddFilters(keepAliveFilter);
             _Client.Configure(customSetting.IpAddress, customSetting.Port);
             _Client.Bind(codec, protocolFamily);
-            _Client.AddHandlers(new DemoClientHandler(SocketMessages));
+            _Client.AddHandlers(handler);
 
             _IsInitialized = true;
         }
@@ -59,21 +58,20 @@ namespace NKnife.Kits.SocketKnife.Demo
         {
             var register = DI.Get<Register>();
 
-            var family = DI.Get<StringProtocolFamily>();
-            family.FamilyName = "socket-kit";
+            _Family.FamilyName = "socket-kit";
 
             var custom = DI.Get<StringProtocol>("TestCustom");
-            custom.Family = family.FamilyName;
+            custom.Family = _Family.FamilyName;
             custom.Command = "custom";
 
-            family.Add(family.Build("call"));
-            family.Add(family.Build("recall"));
-            family.Add(family.Build("sing"));
-            family.Add(family.Build("dance"));
-            family.Add(register);
-            family.Add(custom);
+            _Family.Add(_Family.Build("call"));
+            _Family.Add(_Family.Build("recall"));
+            _Family.Add(_Family.Build("sing"));
+            _Family.Add(_Family.Build("dance"));
+            _Family.Add(register);
+            _Family.Add(custom);
 
-            return family;
+            return _Family;
         }
 
         public void Start()
@@ -87,5 +85,6 @@ namespace NKnife.Kits.SocketKnife.Demo
             if (_Client != null)
                 _Client.Stop();
         }
+
     }
 }
