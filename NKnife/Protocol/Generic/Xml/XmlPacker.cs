@@ -39,7 +39,7 @@ namespace NKnife.Protocol.Generic.Xml
         {
             using (var stream = new MemoryStream())
             {
-                using (XmlWriter writer = new XmlTextWriter(stream, Encoding.UTF8))
+                using (var writer = new XmlTextWriter(stream, Encoding.Default))
                 {
                     try
                     {
@@ -55,7 +55,8 @@ namespace NKnife.Protocol.Generic.Xml
                     writer.Flush();
                     var data = new byte[stream.Length];
                     Array.Copy(stream.GetBuffer(), data, stream.Length);
-                    return Encoding.Default.GetString(data);
+                    var c = Encoding.Default.GetString(data);
+                    return c;
                 }
             }
         }

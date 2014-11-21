@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Common.Logging;
 using NKnife.Utility;
 using NKnife.Zip;
@@ -17,6 +18,7 @@ namespace SocketKnife.Generic.Families
         {
             NeedReverse = false;
             EnabelCompress = false;
+            Encoding = Encoding.UTF8;
         }
 
         /// <summary>
@@ -28,6 +30,8 @@ namespace SocketKnife.Generic.Families
         ///     是否启用Gzip压缩
         /// </summary>
         public bool EnabelCompress { get; set; }
+
+        public Encoding Encoding { get; set; }
 
         /// <summary>
         ///     解码。将字节数组解析成字符串。
@@ -107,9 +111,11 @@ namespace SocketKnife.Generic.Families
             if (CompressHelper.IsCompressed(protocol)) //采用Gzip进行了压缩
             {
                 byte[] decompress = CompressHelper.Decompress(protocol);
-                return UtilityString.TidyUTF8(decompress);
+                return Encoding.GetString(decompress);
+                //return UtilityString.TidyUTF8(decompress);
             }
-            return UtilityString.TidyUTF8(protocol);
+            return Encoding.GetString(protocol);
+            //return UtilityString.TidyUTF8(protocol);
         }
     }
 }

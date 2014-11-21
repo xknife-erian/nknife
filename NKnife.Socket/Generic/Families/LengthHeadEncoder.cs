@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Common.Logging;
 using NKnife.Zip;
@@ -16,6 +17,7 @@ namespace SocketKnife.Generic.Families
         {
             NeedReverse = false;
             EnabelCompress = false;
+            Encoding = Encoding.UTF8;
         }
 
         #region IDatagramEncoder Members
@@ -30,6 +32,8 @@ namespace SocketKnife.Generic.Families
         /// </summary>
         public bool EnabelCompress { get; set; }
 
+        public Encoding Encoding { get; set; }
+
         public override byte[] Execute(string replay)
         {
             if (string.IsNullOrWhiteSpace(replay))
@@ -41,23 +45,20 @@ namespace SocketKnife.Generic.Families
             byte[] reBytes;
             if (EnabelCompress)
             {
-                byte[] src = Encoding.UTF8.GetBytes(replay);
+                byte[] src = Encoding.GetBytes(replay);
                 reBytes = CompressHelper.Compress(src);
                 _logger.Trace(string.Format("发送字符串压缩:原始:{0},压缩后:{1}", src.Length, reBytes.Length));
             }
             else
             {
-                reBytes = Encoding.UTF8.GetBytes(replay);
+                reBytes = Encoding.GetBytes(replay);
             }
             //得到将要发送的数据的长度
             byte[] head = BitConverter.GetBytes(reBytes.Length);
             if (NeedReverse)
                 Array.Reverse(head);
 
-            var bs = new byte[head.Length + reBytes.Length];
-            Array.Copy(head, bs, head.Length);
-            Array.Copy(reBytes, 0, bs, head.Length, reBytes.Length);
-            return bs;
+            return head.Concat(reBytes).ToArray();
         }
 
         #endregion
