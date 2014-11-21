@@ -1,33 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Logging;
-using NKnife.Interface;
-using NKnife.Tunnel;
 using NKnife.Utility;
 using NKnife.Zip;
-using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
     /// <summary>
-    /// 一个最常用的 字符数组 => 字符串 转换器。
+    ///     一个最常用的 字符数组 => 字符串 转换器。
     /// </summary>
     public class LengthHeadDecoder : KnifeSocketDatagramDecoder
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
+        public LengthHeadDecoder()
+        {
+            NeedReverse = false;
+            EnabelCompress = false;
+        }
+
         /// <summary>
-        /// 长度头的数组是否需要反转
+        ///     长度头的数组是否需要反转
         /// </summary>
         public bool NeedReverse { get; set; }
 
         /// <summary>
-        /// 是否启用Gzip压缩
+        ///     是否启用Gzip压缩
         /// </summary>
         public bool EnabelCompress { get; set; }
 
         /// <summary>
-        /// 解码。将字节数组解析成字符串。
+        ///     解码。将字节数组解析成字符串。
         /// </summary>
         /// <param name="data">需解码的字节数组.</param>
         /// <param name="finishedIndex">已完成解码的数组的长度.</param>
@@ -38,12 +41,12 @@ namespace SocketKnife.Generic.Families
             var results = new List<string>();
             try
             {
-                bool inComplete = true;//解析未完成标记
+                bool inComplete = true; //解析未完成标记
                 while (inComplete)
                 {
                     if (results.Count > 1)
                         _logger.Trace(string.Format("粘包处理,总长度:{0},已解析:{1},得到结果:{2}", data.Length, finishedIndex, results.Count));
-                    var start = finishedIndex;//finishedIndex不等于0时，代表有粘包
+                    int start = finishedIndex; //finishedIndex不等于0时，代表有粘包
                     inComplete = ExecuteSubMethod(data, start, ref results, ref finishedIndex);
                 }
                 return results.ToArray();
@@ -66,8 +69,8 @@ namespace SocketKnife.Generic.Families
             {
                 var lengthHead = new byte[4];
                 Buffer.BlockCopy(data, start, lengthHead, 0, 4);
-                var protocolLength = GetLengthHead(lengthHead);
-                if (start + 4 + protocolLength > data.Length)//这时又出现了半包现象
+                int protocolLength = GetLengthHead(lengthHead);
+                if (start + 4 + protocolLength > data.Length) //这时又出现了半包现象
                 {
                     _logger.Trace(string.Format("处理粘包时出现半包:起点:{0},计算得到的长度:{1},源数据长度:{2}", start, protocolLength, data.Length));
                     return false;
@@ -101,9 +104,9 @@ namespace SocketKnife.Generic.Families
 
         protected virtual string TidyString(byte[] protocol)
         {
-            if (CompressHelper.IsCompressed(protocol))//采用Gzip进行了压缩
+            if (CompressHelper.IsCompressed(protocol)) //采用Gzip进行了压缩
             {
-                var decompress = CompressHelper.Decompress(protocol);
+                byte[] decompress = CompressHelper.Decompress(protocol);
                 return UtilityString.TidyUTF8(decompress);
             }
             return UtilityString.TidyUTF8(protocol);

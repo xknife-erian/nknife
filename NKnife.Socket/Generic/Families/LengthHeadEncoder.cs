@@ -1,24 +1,32 @@
 ﻿using System;
 using System.Text;
 using Common.Logging;
-using NKnife.Interface;
-using NKnife.Tunnel;
 using NKnife.Zip;
-using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
     /// <summary>
-    /// 一个最常用的回复消息的字节数组生成器
+    ///     一个最常用的回复消息的字节数组生成器
     /// </summary>
     public class LengthHeadEncoder : KnifeSocketDatagramEncoder
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
+        public LengthHeadEncoder()
+        {
+            NeedReverse = false;
+            EnabelCompress = false;
+        }
+
         #region IDatagramEncoder Members
 
         /// <summary>
-        /// 是否启用Gzip压缩
+        ///     长度头的数组是否需要反转
+        /// </summary>
+        public bool NeedReverse { get; set; }
+
+        /// <summary>
+        ///     是否启用Gzip压缩
         /// </summary>
         public bool EnabelCompress { get; set; }
 
@@ -33,7 +41,7 @@ namespace SocketKnife.Generic.Families
             byte[] reBytes;
             if (EnabelCompress)
             {
-                var src = Encoding.UTF8.GetBytes(replay);
+                byte[] src = Encoding.UTF8.GetBytes(replay);
                 reBytes = CompressHelper.Compress(src);
                 _logger.Trace(string.Format("发送字符串压缩:原始:{0},压缩后:{1}", src.Length, reBytes.Length));
             }
@@ -42,7 +50,9 @@ namespace SocketKnife.Generic.Families
                 reBytes = Encoding.UTF8.GetBytes(replay);
             }
             //得到将要发送的数据的长度
-            var head = BitConverter.GetBytes(reBytes.Length);
+            byte[] head = BitConverter.GetBytes(reBytes.Length);
+            if (NeedReverse)
+                Array.Reverse(head);
 
             var bs = new byte[head.Length + reBytes.Length];
             Array.Copy(head, bs, head.Length);
