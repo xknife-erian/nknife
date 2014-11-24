@@ -66,7 +66,7 @@ namespace NKnife.App.TouchKnife.Core
             string command = e.Data.ToLower().Replace(_Listener.Tail.ToString(), "");
             if (command.IndexOf("keepalivetestfromclient", StringComparison.Ordinal)>=0)
             {
-                const string RESPONSE = "KeepAliveTestFromServer@";
+                const string RESPONSE = "KeepAliveTestFromServer`";
                 _Listener.Send(e.Client, RESPONSE);
                 _logger.Trace(string.Format("心跳回复:{0}", RESPONSE));
                 return;
