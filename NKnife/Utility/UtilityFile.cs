@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -892,35 +893,93 @@ namespace NKnife.Utility
                 IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
                 var result = new List<Assembly>();
 
-                result.AddRange(LoadFilesByTask(dllList));
-
-//                foreach (var dll in dllList)
-//                {
-//                    try
-//                    {
-//                        //Assembly asse = LoadFileByMemStream(dll);
-//                        Assembly asse = Assembly.LoadFile(dll);
-//                        result.Add(asse);
-//                    }
-//                    catch (FileNotFoundException e)
-//                    {
-//                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
-//                    }
-//                    catch (BadImageFormatException e)
-//                    {
-//                        Console.WriteLine("{0} is not an Assembly.", dll);
-//                    }
-//                    catch (FileLoadException e)
-//                    {
-//                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
-//                    }
-//                };
+                foreach (var dll in dllList)
+                {
+                    try
+                    {
+                        Assembly asse = Assembly.LoadFile(dll);
+                        result.Add(asse);
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
+                    }
+                    catch (BadImageFormatException e)
+                    {
+                        Console.WriteLine("{0} is not an Assembly.", dll);
+                    }
+                    catch (FileLoadException e)
+                    {
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
+                    }
+                };
                 foreach (var exe in exeList)
                 {
                     try
                     {
                         Assembly asse = Assembly.LoadFile(exe);
                         result.Add(asse);
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
+                    }
+                    catch (BadImageFormatException e)
+                    {
+                        Console.WriteLine("{0} is not an Assembly.", exe);
+                    }
+                    catch (FileLoadException e)
+                    {
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exe, e.Message);
+                    }
+                };
+                _assemblies = result.ToArray();
+            }
+            return _assemblies;
+        }
+
+        public static Assembly[] SearchAssemblyByDirectory(string directory,string[] nameFilters)
+        {
+            if (nameFilters == null)
+                return SearchAssemblyByDirectory(directory);
+            if (UtilityCollection.IsNullOrEmpty(_assemblies))
+            {
+                IList<string> dllList = SearchDirectory(directory, "*.dll", true, true);
+                IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
+                var result = new List<Assembly>();
+
+                foreach (var dll in dllList)
+                {
+                    try
+                    {
+                        if (!dll.MatchFilters(nameFilters))
+                        {
+                            Assembly asse = Assembly.LoadFile(dll);
+                            result.Add(asse);
+                        }
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
+                    }
+                    catch (BadImageFormatException e)
+                    {
+                        Console.WriteLine("{0} is not an Assembly.", dll);
+                    }
+                    catch (FileLoadException e)
+                    {
+                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
+                    }
+                };
+                foreach (var exe in exeList)
+                {
+                    try
+                    {
+                        if (!exe.MatchFilters(nameFilters))
+                        {
+                            Assembly asse = Assembly.LoadFile(exe);
+                            result.Add(asse);
+                        }
                     }
                     catch (FileNotFoundException e)
                     {
@@ -958,39 +1017,36 @@ namespace NKnife.Utility
             return Assembly.Load(memStream.ToArray());
         }
 
-        public static Assembly[] LoadFilesByTask(IList<string> dllList)
+        public static Assembly LoadFilesByTask(string dll)
         {
-            var result = new ConcurrentBag<Assembly>();
-            var factory = new TaskFactory();
-            List<Task> list = new List<Task>();
-            foreach (var dll in dllList)
+            var tokenSource = new CancellationTokenSource();
+            Assembly asse = null;
+            var t = Task.Factory.StartNew(() =>
             {
-                list.Add(factory.StartNew(() =>
+                try
                 {
-                    try
-                    {
-                        //Assembly asse = LoadFileByMemStream(dll);
-                        Assembly asse = Assembly.LoadFile(dll);
-                        result.Add(asse);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
-                    }
-                    catch (BadImageFormatException e)
-                    {
-                        Console.WriteLine("{0} is not an Assembly.", dll);
-                    }
-                    catch (FileLoadException e)
-                    {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
-                    }
-                }))
-;
-            };
+                    asse = Assembly.LoadFile(dll);
+                }
+                catch (FileNotFoundException e)
+                {
+                    Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
+                }
+                catch (BadImageFormatException e)
+                {
+                    Console.WriteLine("{0} is not an Assembly.", dll);
+                }
+                catch (FileLoadException e)
+                {
+                    Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
+                }
+            },tokenSource.Token);
+            if (!t.Wait(5000, tokenSource.Token))
+            {
+                //有无法捕获的异常
+                tokenSource.Cancel();
+            }
 
-            Task.WaitAll(list.ToArray(), 5000);
-            return result.ToArray();
+            return asse;
         }
 
         /// <summary>

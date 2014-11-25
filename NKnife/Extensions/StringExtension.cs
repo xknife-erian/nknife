@@ -350,5 +350,38 @@ namespace System
             }
             return false;
         }
+
+        /// <summary>
+        /// 判断字符串是否能被(filters)过滤
+        /// strictMatch=true时，是严格过滤模式，src必须完全等于filters中的某一项，才算Match，return true
+        /// strictMatch=false时，是宽松过滤模式，src只要包含filters中的某一项，算Match，return true
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="filters"></param>
+        /// <param name="strictMatch"></param>
+        /// <returns></returns>
+        public static bool MatchFilters(this string src, string[] filters, bool strictMatch = false)
+        {
+            if (filters == null)
+                return false;
+            foreach (var filter in filters)
+            {
+                if (strictMatch)
+                {
+                    if (src.Equals(filter))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (src.IndexOf(filter, StringComparison.Ordinal) > -1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

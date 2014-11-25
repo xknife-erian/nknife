@@ -24,12 +24,13 @@ namespace NKnife.IoC
             }
         }
 
+        public static string[] AssmeblyNameFilters { get; set; }
+
         public static void Initialize()
         {
             if (_initialized) 
                 return;
-
-            var assems = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            var assems = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory, AssmeblyNameFilters);
 
             _coreKernel = new CoreKernel();
             _coreKernel.Load(assems);
