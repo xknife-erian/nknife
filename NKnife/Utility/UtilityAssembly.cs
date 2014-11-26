@@ -11,7 +11,8 @@ namespace NKnife.Utility
     public class UtilityAssembly
     {
         private static IList<string> _assemblyFiles;
-        private static Assembly[] _assemblies;
+        private static readonly Dictionary<string, Assembly[]> _assembliesMap 
+            = new Dictionary<string, Assembly[]>(1); 
 
         /// <summary>
         ///     搜索指定目录下所有.Net的程序集文件(Dll,Exe)
@@ -76,11 +77,12 @@ namespace NKnife.Utility
         /// <returns></returns>
         public static Assembly[] SearchAssemblyByDirectory(string directory)
         {
-            if (UtilityCollection.IsNullOrEmpty(_assemblies))
+            Assembly[] assemblies;
+            if (!_assembliesMap.TryGetValue(directory, out assemblies))
             {
+                var result = new ConcurrentBag<Assembly>();
                 IList<string> dllList = UtilityFile.SearchDirectory(directory, "*.dll", true, true);
                 IList<string> exeList = UtilityFile.SearchDirectory(directory, "*.exe", true, true);
-                var result = new ConcurrentBag<Assembly>();
                 Parallel.ForEach(dllList, dll =>
                 {
                     try
@@ -121,9 +123,13 @@ namespace NKnife.Utility
                         Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exe, e.Message);
                     }
                 });
-                _assemblies = result.ToArray();
+                if (result.Count > 0)
+                {
+                    assemblies = result.ToArray();
+                    _assembliesMap.Add(directory, assemblies);
+                }
             }
-            return _assemblies;
+            return assemblies;
         }
     }
 }
