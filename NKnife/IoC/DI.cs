@@ -30,7 +30,7 @@ namespace NKnife.IoC
         {
             if (_initialized) 
                 return;
-            var assems = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory, AssmeblyNameFilters);
+            var assems = UtilityAssembly.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory, AssmeblyNameFilters);
 
             _coreKernel = new CoreKernel();
             _coreKernel.Load(assems);

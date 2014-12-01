@@ -302,7 +302,7 @@ namespace NKnife.Utility
                 throw new DirectoryNotFoundException(path + "目录不存在。");
             }
             var typeMap = new Dictionary<string, Type>();
-            var assemblys = UtilityFile.SearchAssemblyByDirectory(path);
+            var assemblys = UtilityAssembly.SearchAssemblyByDirectory(path);
             foreach (var assembly in assemblys)
             {
                 Type[] types;
@@ -370,7 +370,7 @@ namespace NKnife.Utility
         public static T[] FindAttributes<T>(string appStartPath) where T : Attribute
         {
             var typeList = new List<T>();
-            Assembly[] assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
+            Assembly[] assArray = UtilityAssembly.SearchAssemblyByDirectory(appStartPath);
             if (UtilityCollection.IsNullOrEmpty(assArray))
                 return typeList.ToArray();
 
@@ -405,7 +405,7 @@ namespace NKnife.Utility
         public static List<Pair<T, Type>> FindAttributeMap<T>(string appStartPath) where T : Attribute
         {
             var list = new List<Pair<T, Type>>();
-            Assembly[] assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
+            Assembly[] assArray = UtilityAssembly.SearchAssemblyByDirectory(appStartPath);
             if (UtilityCollection.IsNullOrEmpty(assArray))
                 return list;
 
@@ -450,7 +450,7 @@ namespace NKnife.Utility
         public static Type[] FindAttributesByDirectory(string appStartPath, Type targetAttribute)
         {
             var typeList = new List<Type>();
-            Assembly[] assArray = UtilityFile.SearchAssemblyByDirectory(appStartPath);
+            Assembly[] assArray = UtilityAssembly.SearchAssemblyByDirectory(appStartPath);
             if (UtilityCollection.IsNullOrEmpty(assArray))
                 return typeList.ToArray();
 
@@ -486,7 +486,7 @@ namespace NKnife.Utility
             var list = new List<T>();
             if (assemblies == null)
             {
-                assemblies = UtilityFile.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory);
+                assemblies = UtilityAssembly.SearchAssemblyByDirectory(AppDomain.CurrentDomain.BaseDirectory);
             }
 
             Parallel.ForEach(assemblies, assembly =>

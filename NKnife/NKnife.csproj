@@ -187,6 +187,7 @@
     <Compile Include="Tunnel\ITunnelFilter`.cs" />
     <Compile Include="Tunnel\ITunnelSession.cs" />
     <Compile Include="Tunnel\ITunnelSessionMap.cs" />
+    <Compile Include="Utility\UtilityAssembly.cs" />
     <Compile Include="Utility\UtilityWebService.cs" />
     <Compile Include="Wrapper\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />

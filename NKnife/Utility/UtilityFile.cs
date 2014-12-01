@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -29,8 +27,6 @@ namespace NKnife.Utility
 
         private static string _applicationRootPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         private static readonly char[] _separators = {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar};
-        private static IList<string> _assemblyFiles;
-        private static Assembly[] _assemblies;
         public static readonly int MaxPathLength = 260;
 
         /// <summary>
@@ -822,231 +818,6 @@ namespace NKnife.Utility
                 var aNewDirectory = new DirectoryInfo(newDirectoryFullName);
                 CopyDirectory(aOldDirectory, aNewDirectory);
             }
-        }
-
-        /// <summary>
-        ///     搜索指定目录下所有.Net的程序集文件(Dll,Exe)
-        /// </summary>
-        /// <param name="directory">指定目录.</param>
-        /// <returns></returns>
-        public static IList<string> SearchAssemblyFileByDirectory(string directory)
-        {
-            if (_assemblyFiles == null)
-            {
-                IList<string> dllList = SearchDirectory(directory, "*.dll", true, true);
-                IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
-                _assemblyFiles = new List<string>();
-                Parallel.ForEach(dllList, (dll) =>
-                {
-                    try
-                    {
-                        AssemblyName.GetAssemblyName(dll);
-                        _assemblyFiles.Add(dll);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
-                    }
-                    catch (BadImageFormatException e)
-                    {
-                        Console.WriteLine("{0} is not an Assembly.", dll);
-                    }
-                    catch (FileLoadException e)
-                    {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
-                    }
-                });
-                Parallel.ForEach(exeList, (exe) =>
-                {
-                    try
-                    {
-                        AssemblyName.GetAssemblyName(exe);
-                        _assemblyFiles.Add(exe);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
-                    }
-                    catch (BadImageFormatException e)
-                    {
-                        Console.WriteLine("{0} is not an Assembly.", exe);
-                    }
-                    catch (FileLoadException e)
-                    {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exe, e.Message);
-                    }
-                });
-            }
-            return _assemblyFiles;
-        }
-
-        /// <summary>
-        ///     搜索指定目录下所有.Net的程序集("*.dll","*.exe")
-        /// </summary>
-        /// <param name="directory">指定目录.</param>
-        /// <returns></returns>
-        public static Assembly[] SearchAssemblyByDirectory(string directory)
-        {
-            if (UtilityCollection.IsNullOrEmpty(_assemblies))
-            {
-                IList<string> dllList = SearchDirectory(directory, "*.dll", true, true);
-                IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
-                var result = new List<Assembly>();
-
-                foreach (var dll in dllList)
-                {
-                    try
-                    {
-                        Assembly asse = Assembly.LoadFile(dll);
-                        result.Add(asse);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
-                    }
-                    catch (BadImageFormatException e)
-                    {
-                        Console.WriteLine("{0} is not an Assembly.", dll);
-                    }
-                    catch (FileLoadException e)
-                    {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
-                    }
-                };
-                foreach (var exe in exeList)
-                {
-                    try
-                    {
-                        Assembly asse = Assembly.LoadFile(exe);
-                        result.Add(asse);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
-                    }
-                    catch (BadImageFormatException e)
-                    {
-                        Console.WriteLine("{0} is not an Assembly.", exe);
-                    }
-                    catch (FileLoadException e)
-                    {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exe, e.Message);
-                    }
-                };
-                _assemblies = result.ToArray();
-            }
-            return _assemblies;
-        }
-
-        public static Assembly[] SearchAssemblyByDirectory(string directory,string[] nameFilters)
-        {
-            if (nameFilters == null)
-                return SearchAssemblyByDirectory(directory);
-            if (UtilityCollection.IsNullOrEmpty(_assemblies))
-            {
-                IList<string> dllList = SearchDirectory(directory, "*.dll", true, true);
-                IList<string> exeList = SearchDirectory(directory, "*.exe", true, true);
-                var result = new List<Assembly>();
-
-                foreach (var dll in dllList)
-                {
-                    try
-                    {
-                        if (!dll.MatchFilters(nameFilters))
-                        {
-                            Assembly asse = Assembly.LoadFile(dll);
-                            result.Add(asse);
-                        }
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
-                    }
-                    catch (BadImageFormatException e)
-                    {
-                        Console.WriteLine("{0} is not an Assembly.", dll);
-                    }
-                    catch (FileLoadException e)
-                    {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
-                    }
-                };
-                foreach (var exe in exeList)
-                {
-                    try
-                    {
-                        if (!exe.MatchFilters(nameFilters))
-                        {
-                            Assembly asse = Assembly.LoadFile(exe);
-                            result.Add(asse);
-                        }
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
-                    }
-                    catch (BadImageFormatException e)
-                    {
-                        Console.WriteLine("{0} is not an Assembly.", exe);
-                    }
-                    catch (FileLoadException e)
-                    {
-                        Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", exe, e.Message);
-                    }
-                };
-                _assemblies = result.ToArray();
-            }
-            return _assemblies;
-        }
-
-        public static Assembly LoadFileByMemStream(string path)
-        {
-            MemoryStream memStream;
-            using (var stream = new FileStream(path, FileMode.Open,FileAccess.Read,FileShare.Read))
-            {
-                using (memStream = new MemoryStream())
-                {
-                    int res;
-                    var b = new byte[4096];
-                    while ((res = stream.Read(b, 0, b.Length)) > 0)
-                    {
-                        memStream.Write(b, 0, b.Length);
-                    }
-                }
-            }
-            return Assembly.Load(memStream.ToArray());
-        }
-
-        public static Assembly LoadFilesByTask(string dll)
-        {
-            var tokenSource = new CancellationTokenSource();
-            Assembly asse = null;
-            var t = Task.Factory.StartNew(() =>
-            {
-                try
-                {
-                    asse = Assembly.LoadFile(dll);
-                }
-                catch (FileNotFoundException e)
-                {
-                    Debug.Fail(string.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
-                }
-                catch (BadImageFormatException e)
-                {
-                    Console.WriteLine("{0} is not an Assembly.", dll);
-                }
-                catch (FileLoadException e)
-                {
-                    Console.WriteLine("Assembly.LoadFile导常，{0}has already been loaded\r\n{1}", dll, e.Message);
-                }
-            },tokenSource.Token);
-            if (!t.Wait(5000, tokenSource.Token))
-            {
-                //有无法捕获的异常
-                tokenSource.Cancel();
-            }
-
-            return asse;
         }
 
         /// <summary>
