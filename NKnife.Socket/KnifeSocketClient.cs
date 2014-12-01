@@ -428,8 +428,15 @@ namespace SocketKnife
             e.SetBuffer(data, 0, data.Length);
             if (_Socket != null)
             {
-                _Socket.SendAsync(e);
-                _logger.Info(string.Format("ClientSend:{0}", data.ToHexString()));
+                try
+                {
+                    _Socket.SendAsync(e);
+                    _logger.Info(string.Format("ClientSend:{0}", data.ToHexString()));
+                }
+                catch (ObjectDisposedException ex)
+                {
+                    _logger.Warn(string.Format("socket连接已释放:{0}", ex.Message));
+                }
             }
         }
 
