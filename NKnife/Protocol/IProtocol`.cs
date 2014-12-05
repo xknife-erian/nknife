@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NKnife.Protocol
 {
@@ -11,27 +12,32 @@ namespace NKnife.Protocol
         /// <value>The command.</value>
         T Command { get; set; }
 
+        /// <summary>
+        ///     协议命令字参数
+        /// </summary>
+        /// <value>The command param.</value>
+        T CommandParam { get; set; }
+
+        /// <summary>
+        ///     获取协议的固定数据
+        ///     Infomations,Tags均属于协议的内容
+        ///     Infomations:固定数据，按协议规定的必须每次携带的数据
+        ///     Tags:内容较大的数据,一般为可序列化的对象
+        /// </summary>
+        Dictionary<string, T> Infomations { get; }
+
+        /// <summary>
+        ///     获取协议的大数据
+        ///     Infomations,Tags均属于协议的内容
+        ///     Infomations:固定数据，按协议规定的必须每次携带的数据
+        ///     Tags:内容较大的数据,一般为可序列化的对象
+        /// </summary>
+        List<object> Tags { get; set; }
+
         /// <summary>本协议的家族.
         /// </summary>
         /// <value>The family.</value>
         string Family { get; set; }
-
-        IProtocolPacker<T> Packer { get; set; }
-        IProtocolUnPacker<T> UnPacker { get; set; }
-
-        /// <summary>协议的具体内容.
-        /// </summary>
-        /// <value>The content.</value>
-        IProtocolContent<T> Content { get; set; }
-
-        /// <summary>根据当前实例生成协议的原生字符串表达
-        /// </summary>
-        T Generate();
-
-        /// <summary>
-        /// 根据远端得到的数据包解析，将数据填充到本实例中
-        /// </summary>
-        void Parse(T datagram);
 
         IProtocol<T> NewInstance();
     }

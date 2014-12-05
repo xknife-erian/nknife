@@ -15,7 +15,7 @@ namespace NKnife.Protocol.Generic.Xml
 
         #region IProtocolParser Members
 
-        public override void Execute(StringProtocolContent content, string data, string family, string command)
+        public override void Execute(StringProtocol content, string data, string family, string command)
         {
             if (string.IsNullOrWhiteSpace(data))
             {
@@ -51,7 +51,7 @@ namespace NKnife.Protocol.Generic.Xml
 
         #endregion
 
-        protected virtual void ParseInfos(StringProtocolContent content, XmlElement infoElement)
+        protected virtual void ParseInfos(StringProtocol content, XmlElement infoElement)
         {
             foreach (XmlNode node in infoElement.ChildNodes)
             {
@@ -64,7 +64,7 @@ namespace NKnife.Protocol.Generic.Xml
             }
         }
 
-        protected virtual void ParseParm(StringProtocolContent content, XmlElement docElement)
+        protected virtual void ParseParm(StringProtocol content, XmlElement docElement)
         {
             if (docElement.HasAttribute(XmlProtocolNames.Param))
             {
@@ -72,7 +72,7 @@ namespace NKnife.Protocol.Generic.Xml
             }
         }
 
-        protected virtual void ParseTags(StringProtocolContent content, XmlElement tagsElement)
+        protected virtual void ParseTags(StringProtocol content, XmlElement tagsElement)
         {
             content.Tags = new List<object>();
             foreach (XmlNode node in tagsElement.ChildNodes)

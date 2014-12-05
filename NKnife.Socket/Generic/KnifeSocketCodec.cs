@@ -1,6 +1,8 @@
-﻿using Ninject;
+﻿using System.Collections.Generic;
+using Ninject;
 using Common.Logging;
 using NKnife.Interface;
+using NKnife.IoC;
 using NKnife.Tunnel;
 
 namespace SocketKnife.Generic
@@ -9,11 +11,58 @@ namespace SocketKnife.Generic
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-        [Inject]
-        public virtual KnifeSocketDatagramDecoder SocketDecoder { get; set; }
+        public KnifeSocketCodec()
+        {
+            
+        }
 
-        [Inject]
-        public virtual KnifeSocketDatagramEncoder SocketEncoder { get; set; }
+        public KnifeSocketCodec(string codecName)
+        {
+            CodecName = codecName;
+        }
+
+        public string CodecName { get; set; }
+
+        private KnifeSocketDatagramDecoder _SocketDecoder;
+        private bool _HasSetSocketDecoder;
+        public virtual KnifeSocketDatagramDecoder SocketDecoder
+        {
+            get
+            {
+                if (!_HasSetSocketDecoder)
+                {
+                    return string.IsNullOrEmpty(CodecName)
+                        ? DI.Get<KnifeSocketDatagramDecoder>()
+                        : DI.Get<KnifeSocketDatagramDecoder>(CodecName);
+                }
+                return _SocketDecoder;
+            }
+            set
+            {
+                _SocketDecoder = value;
+                _HasSetSocketDecoder = true;
+            }
+        }
+
+        private KnifeSocketDatagramEncoder _SocketEncoder;
+        private bool _HasSetSocketEncoder;
+
+        public virtual KnifeSocketDatagramEncoder SocketEncoder
+        {
+            get
+            {
+                if (!_HasSetSocketEncoder)
+                {
+                    return string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeSocketDatagramEncoder>() : DI.Get<KnifeSocketDatagramEncoder>(CodecName);
+                }
+                return _SocketEncoder;
+            }
+            set
+            {
+                _SocketEncoder = value;
+                _HasSetSocketEncoder = true;
+            }
+        }
 
         IDatagramDecoder<string> ITunnelCodec<string>.Decoder
         {

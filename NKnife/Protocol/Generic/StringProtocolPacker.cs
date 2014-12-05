@@ -2,11 +2,11 @@
 {
     public abstract class StringProtocolPacker : IProtocolPacker<string>
     {
-        string IProtocolPacker<string>.Combine(IProtocolContent<string> content)
+        string IProtocolPacker<string>.Combine(IProtocol<string> content)
         {
-            return Combine((StringProtocolContent) content);
+            return Combine((StringProtocol) content);
         }
 
-        public abstract string Combine(StringProtocolContent content);
+        public abstract string Combine(StringProtocol content);
     }
 }

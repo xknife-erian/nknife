@@ -434,7 +434,7 @@ namespace SocketKnife
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
         {
-            string replay = protocol.Generate();
+            string replay = _Family.Generate(protocol);
             byte[] data = _Codec.SocketEncoder.Execute(replay);
             WirteBase(session, data);
             _logger.DebugFormat("ServerSend:{0}", replay);

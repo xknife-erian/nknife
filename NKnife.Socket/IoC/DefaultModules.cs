@@ -28,7 +28,6 @@ namespace SocketKnife.IoC
 
             Bind<StringProtocol>().To<StringProtocol>().When(Request);
             Bind<StringProtocolFamily>().To<StringProtocolFamily>().When(Request);
-            Bind<StringProtocolContent>().To<StringProtocolContent>().When(Request);
         }
 
         private bool Request(IRequest request)

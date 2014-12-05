@@ -6,7 +6,7 @@ namespace NKnife.Protocol.Generic.TextPlain
 {
     public class TextPlainUnPacker : StringProtocolUnPacker
     {
-        public override void Execute(StringProtocolContent content, string data, string family, string command)
+        public override void Execute(StringProtocol content, string data, string family, string command)
         {
             content.Command = command;
             string[] array = data.Split(new[] { TextPlainProtocolFlags.SplitFlag }, StringSplitOptions.RemoveEmptyEntries);

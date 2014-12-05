@@ -103,15 +103,11 @@ namespace SocketKnife.Generic.Filters
                     continue;
                 }
 
-                StringProtocol protocol = _FamilyGetter.Invoke().Build(command);
-
                 _logger.Trace(string.Format("From:命令字:{0},数据包:{1}", command, dgByLog));
-                if (protocol != null)
-                {
-                    protocol.Parse(dg);
-                    // 触发数据基础解析后发生的数据到达事件
-                    HandlerInvoke(endpoint, protocol);
-                }
+
+                StringProtocol protocol = _FamilyGetter.Invoke().Parse(command,dg);
+                // 触发数据基础解析后发生的数据到达事件
+                HandlerInvoke(endpoint, protocol);
             }
             return finishedIndex;
         }

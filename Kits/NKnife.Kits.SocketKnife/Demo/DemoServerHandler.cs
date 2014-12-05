@@ -12,10 +12,10 @@ namespace NKnife.Kits.SocketKnife.Demo
     public class DemoServerHandler : KnifeSocketServerProtocolHandler
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-
+        private StringProtocolFamily _Family;
         private readonly ObservableCollection<SocketMessage> _SocketMessages;
 
-        public DemoServerHandler(ObservableCollection<SocketMessage> socketMessages)
+        public DemoServerHandler(StringProtocolFamily family,ObservableCollection<SocketMessage> socketMessages)
         {
             _SocketMessages = socketMessages;
         }
@@ -25,8 +25,8 @@ namespace NKnife.Kits.SocketKnife.Demo
             var socketMessage = new SocketMessage
             {
                 Command = protocol.Command, 
-                SocketDirection = SocketDirection.Receive, 
-                Message = protocol.Generate(), 
+                SocketDirection = SocketDirection.Receive,
+                Message = _Family.Generate(protocol), 
                 Time = DateTime.Now.ToString("HH:mm:ss.fff")
             };
             _logger.Info("新消息解析完成" + socketMessage.Message);

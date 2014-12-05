@@ -7,6 +7,6 @@
     {
         /// <summary>开始执行协议的解析
         /// </summary>
-        void Execute(IProtocolContent<T> content, T data, string family, T command);
+        void Execute(IProtocol<T> content, T data, string family, T command);
     }
 }

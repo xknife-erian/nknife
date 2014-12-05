@@ -151,7 +151,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         internal void StartServer(KnifeSocketConfig config, SocketCustomSetting customSetting)
         {
-            _Handler = new DemoServerHandler(SocketMessages);
+            _Handler = new DemoServerHandler(_Server.GetFamily(),SocketMessages);
             _CurrentServerPoint = new IPEndPoint(customSetting.IpAddress, customSetting.Port);
             if (DI.Get<ServerMap>().ContainsKey(_CurrentServerPoint))
             {
@@ -203,7 +203,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 }
             };
             _Server.StartServer();
-            _ProtocolViewModel.AddFamily(_Server.GetFamily());
+            //_ProtocolViewModel.AddFamily(_Server.GetFamily());
         }
 
         public void StopServer()

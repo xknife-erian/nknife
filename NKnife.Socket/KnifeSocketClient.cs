@@ -418,7 +418,7 @@ namespace SocketKnife
 
         protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
         {
-            byte[] senddata = _Codec.SocketEncoder.Execute(protocol.Generate());
+            byte[] senddata = _Codec.SocketEncoder.Execute(_Family.Generate(protocol));
             WirteBase(session, senddata);
         }
 

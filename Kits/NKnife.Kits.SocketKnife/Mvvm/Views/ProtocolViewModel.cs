@@ -30,19 +30,20 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             }
         }
 
-        public void AddFamily(StringProtocolFamily family)
-        {
-            foreach (KeyValuePair<string, StringProtocol> pair in family)
-            {
-                var p = new SimpleProtocol
-                {
-                    Command = pair.Value.Command,
-                    CommandParam = pair.Value.Content.CommandParam,
-                    Protocol = pair.Value
-                };
-                Protocols.Add(p);
-            }
-        }
+        //TODO:没有必要了
+//        public void AddFamily(StringProtocolFamily family)
+//        {
+//            foreach (KeyValuePair<string, StringProtocol> pair in family)
+//            {
+//                var p = new SimpleProtocol
+//                {
+//                    Command = pair.Value.Command,
+//                    CommandParam = pair.Value.CommandParam,
+//                    Protocol = pair.Value
+//                };
+//                Protocols.Add(p);
+//            }
+//        }
 
         public class SimpleProtocol : NotificationObject
         {

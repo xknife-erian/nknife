@@ -5,7 +5,7 @@ namespace SocketKnife.Generic.Protocol.Jsons
 {
     public class JsonPacker : StringProtocolPacker
     {
-        public override string Combine(StringProtocolContent content)
+        public override string Combine(StringProtocol content)
         {
             throw new NotImplementedException();
         }

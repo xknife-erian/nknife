@@ -59,23 +59,25 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             if (CurrentProtocol == null)
                 CurrentProtocol = new StringProtocol();
             CurrentProtocol.Command = _CommandTextBox.Text;
-            CurrentProtocol.Content.CommandParam = _CommandParamTextBox.Text;
-            CurrentProtocol.Content.Infomations.Clear();
+            CurrentProtocol.CommandParam = _CommandParamTextBox.Text;
+            CurrentProtocol.Infomations.Clear();
             foreach (var data in _ViewModel.PairDatas)
             {
-                CurrentProtocol.Content.Infomations.Add(data.Key, data.Value);
+                CurrentProtocol.Infomations.Add(data.Key, data.Value);
             }
-            CurrentProtocol.Content.Tags.Clear();
+            CurrentProtocol.Tags.Clear();
             foreach (var data in _ViewModel.Values)
             {
-               CurrentProtocol.Content.Tags.Add(data);
+               CurrentProtocol.Tags.Add(data);
             }
-            var packer = (Type)_PackerComboBox.SelectedValue;
-            if (CurrentProtocol.Packer.GetType() != packer)
-                CurrentProtocol.Packer = (StringProtocolPacker)DI.Get(packer);
-            var unPacker = (Type)_UnPackerComboBox.SelectedValue;
-            if (CurrentProtocol.UnPacker.GetType() != unPacker)
-                CurrentProtocol.UnPacker = (StringProtocolUnPacker)DI.Get(unPacker);
+
+            //TODO:packer unpacker不再是protocol的属性了
+//            var packer = (Type)_PackerComboBox.SelectedValue;
+//            if (CurrentProtocol.Packer.GetType() != packer)
+//                CurrentProtocol.Packer = (StringProtocolPacker)DI.Get(packer);
+//            var unPacker = (Type)_UnPackerComboBox.SelectedValue;
+//            if (CurrentProtocol.UnPacker.GetType() != unPacker)
+//                CurrentProtocol.UnPacker = (StringProtocolUnPacker)DI.Get(unPacker);
             Close();
         }
 

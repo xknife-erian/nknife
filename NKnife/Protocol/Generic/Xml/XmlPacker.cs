@@ -35,7 +35,7 @@ namespace NKnife.Protocol.Generic.Xml
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns></returns>
-        public override string Combine(StringProtocolContent content)
+        public override string Combine(StringProtocol content)
         {
             using (var stream = new MemoryStream())
             {
@@ -63,7 +63,7 @@ namespace NKnife.Protocol.Generic.Xml
 
         #endregion
 
-        protected virtual void WriteInformation(StringProtocolContent content, XmlWriter writer)
+        protected virtual void WriteInformation(StringProtocol content, XmlWriter writer)
         {
             if (content.Infomations.Count > 0)
             {
@@ -76,7 +76,7 @@ namespace NKnife.Protocol.Generic.Xml
             }
         }
 
-        protected virtual void WriteTags(StringProtocolContent content, XmlWriter writer)
+        protected virtual void WriteTags(StringProtocol content, XmlWriter writer)
         {
             if (null != content.Tags && content.Tags.Count > 0)
             {
@@ -120,7 +120,7 @@ namespace NKnife.Protocol.Generic.Xml
             }
         }
 
-        protected virtual void WriteRoot(StringProtocolContent content, XmlWriter writer)
+        protected virtual void WriteRoot(StringProtocol content, XmlWriter writer)
         {
             writer.WriteStartElement(content.Command);
             if (content.CommandParam != null)

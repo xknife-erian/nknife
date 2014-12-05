@@ -42,10 +42,10 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         internal void StartClient(KnifeSocketConfig config, SocketCustomSetting customSetting)
         {
-            _Handler = new DemoClientHandler(SocketMessages);
+            _Handler = new DemoClientHandler(_Client.GetFamily(),SocketMessages);
             _Client.Initialize(config, customSetting, _Handler);
             _Client.Start();
-            _ProtocolViewModel.AddFamily(_Client.GetFamily());
+            //_ProtocolViewModel.AddFamily(_Client.GetFamily());
         }
 
         public void StopClient()

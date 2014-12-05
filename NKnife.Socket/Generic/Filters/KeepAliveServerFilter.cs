@@ -171,8 +171,7 @@ namespace SocketKnife.Generic.Filters
                 StringProtocol protocol;
                 try
                 {
-                    protocol = family.Build(command);
-                    protocol.Parse(dg);
+                    protocol = family.Parse(command,dg);
                 }
                 catch (ArgumentNullException ex)
                 {

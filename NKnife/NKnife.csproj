@@ -150,7 +150,6 @@
     <Compile Include="Mvvm\DelegateCommand`.cs" />
     <Compile Include="Entities\AssemblyWrapper.cs" />
     <Compile Include="Protocol\Generic\StringProtocol.cs" />
-    <Compile Include="Protocol\Generic\StringProtocolContent.cs" />
     <Compile Include="Protocol\Generic\StringProtocolFamily.cs" />
     <Compile Include="Protocol\Generic\StringProtocolPacker.cs" />
     <Compile Include="Protocol\Generic\StringProtocolUnPacker.cs" />
@@ -163,7 +162,6 @@
     <Compile Include="Protocol\Generic\Xml\XmlProtocolNames.cs" />
     <Compile Include="Protocol\Generic\Xml\XmlUnPacker.cs" />
     <Compile Include="Protocol\IProtocol`.cs" />
-    <Compile Include="Protocol\IProtocolContent`.cs" />
     <Compile Include="Protocol\IProtocolFamily`.cs" />
     <Compile Include="Protocol\IProtocolHandler`.cs" />
     <Compile Include="Protocol\IProtocolPacker`.cs" />

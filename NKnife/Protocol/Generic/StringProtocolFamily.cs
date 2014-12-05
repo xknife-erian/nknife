@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
 using Ninject;
+using NKnife.IoC;
 
 namespace NKnife.Protocol.Generic
 {
@@ -12,8 +14,12 @@ namespace NKnife.Protocol.Generic
     [Serializable]
     public class StringProtocolFamily : IProtocolFamily<string>
     {
-        private readonly StringProtocol _Seed = new StringProtocol(); //用于获取实例的Build方法，因此只需要在此有一个实例
-        protected Dictionary<string, StringProtocol> _SeedMap = new Dictionary<string, StringProtocol>();
+        protected Func<string, StringProtocol> _DefaultProtocolBuilder;
+        protected Dictionary<string, Func<string, StringProtocol>> _ProtocolBuilderMap = new Dictionary<string, Func<string, StringProtocol>>();
+        protected Func<string, StringProtocolPacker> _DefaultProtocolPackerGetter;
+        protected Dictionary<string,Func<string,StringProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<string, Func<string, StringProtocolPacker>>();
+        protected Func<string, StringProtocolUnPacker> _DefaultProtocolUnPackerGetter;
+        protected Dictionary<string,Func<string,StringProtocolUnPacker>> _ProtocolUnPackerGetterMap = new Dictionary<string, Func<string, StringProtocolUnPacker>>();
 
         public StringProtocolFamily()
         {
@@ -24,73 +30,42 @@ namespace NKnife.Protocol.Generic
             FamilyName = name;
         }
 
-        [Inject]
-        public StringProtocolCommandParser CommandParser { get; set; }
-
-        public StringProtocol this[string command]
-        {
-            get { return _SeedMap[command].BuildMethod.Invoke(); }
-            set
-            {
-                if (!_SeedMap.ContainsKey(command))
-                    _SeedMap.Add(command, value);
-                else
-                    _SeedMap[command] = value; //更换种子
-            }
-        }
-
-        #region 隐式实现
-        
         public string FamilyName { get; set; }
 
-        void IDictionary<string, IProtocol<string>>.Add(string key, IProtocol<string> value)
-        {
-            Add(key, (StringProtocol)value);
-        }
-
-        bool IDictionary<string, IProtocol<string>>.TryGetValue(string key, out IProtocol<string> value)
-        {
-            StringProtocol protocol;
-            if (_SeedMap.TryGetValue(key, out protocol))
-            {
-                value = protocol;
-                return true;
-            }
-            value = null;
-            return false;
-        }
-
-        IProtocol<string> IDictionary<string, IProtocol<string>>.this[string key]
-        {
-            get { return this[key]; }
-            set { this[key] = (StringProtocol)value; }
-        }
-
-        ICollection<string> IDictionary<string, IProtocol<string>>.Keys
-        {
-            get { return _SeedMap.Keys; }
-        }
-
-        [Obsolete("效率不高，不建议使用. NKnife")]
-        ICollection<IProtocol<string>> IDictionary<string, IProtocol<string>>.Values
+        private StringProtocolCommandParser _CommandParser;
+        private bool _HasSetCommandParser;
+        public StringProtocolCommandParser CommandParser
         {
             get
             {
-                var list = new List<IProtocol<string>>(_SeedMap.Count);
-                list.AddRange(_SeedMap.Values);
-                return list;
+                if (!_HasSetCommandParser)
+                {
+                    try
+                    {
+                        return string.IsNullOrEmpty(FamilyName)
+                            ? DI.Get<StringProtocolCommandParser>()
+                            : DI.Get<StringProtocolCommandParser>(FamilyName);
+                    }
+                    catch (ActivationException ex)
+                    {
+                        return DI.Get<StringProtocolCommandParser>();
+                    }
+                }
+                return _CommandParser;
+            }
+            set
+            {
+                _CommandParser = value;
+                _HasSetCommandParser = true;
             }
         }
 
+
+        #region 隐式实现
         IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
         {
             get { return CommandParser; }
             set { CommandParser = (StringProtocolCommandParser) value; }
-        }
-
-        void IProtocolFamily<string>.Add(IProtocol<string> protocol)
-        {
-            Add((StringProtocol) protocol);
         }
 
         IProtocol<string> IProtocolFamily<string>.Build(string command)
@@ -98,95 +73,21 @@ namespace NKnife.Protocol.Generic
             return Build(command);
         }
 
-        void ICollection<KeyValuePair<string, IProtocol<string>>>.Add(KeyValuePair<string, IProtocol<string>> item)
+        string IProtocolFamily<string>.Generate(IProtocol<string> protocol)
         {
-            Add(item.Key, (StringProtocol) item.Value);
+            return Generate((StringProtocol)protocol);
         }
 
-        bool ICollection<KeyValuePair<string, IProtocol<string>>>.Contains(KeyValuePair<string, IProtocol<string>> item)
+        void IProtocolFamily<string>.AddPackerGetter(Func<string, IProtocolPacker<string>> func)
         {
-            return _SeedMap.ContainsKey(item.Key) && _SeedMap.ContainsValue(((StringProtocol) item.Value));
+            AddPackerGetter((Func<string, StringProtocolPacker>) func);
         }
 
-        [Obsolete("效率不高，不建议使用. NKnife")]
-        void ICollection<KeyValuePair<string, IProtocol<string>>>.CopyTo(KeyValuePair<string, IProtocol<string>>[] array, int arrayIndex)
+        void IProtocolFamily<string>.AddPackerGetter(string command, Func<string, IProtocolPacker<string>> func)
         {
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            ((ICollection<KeyValuePair<string, IProtocol<string>>>) _SeedMap).CopyTo(array, arrayIndex);
+            AddPackerGetter(command,(Func<string, StringProtocolPacker>) func);
         }
-
-        bool ICollection<KeyValuePair<string, IProtocol<string>>>.Remove(KeyValuePair<string, IProtocol<string>> item)
-        {
-            return Remove(item.Key);
-        }
-
-        IEnumerator<KeyValuePair<string, IProtocol<string>>> IEnumerable<KeyValuePair<string, IProtocol<string>>>.GetEnumerator()
-        {
-            return (IEnumerator<KeyValuePair<string, IProtocol<string>>>)GetEnumerator();
-        }
-
         #endregion
-
-        public IEnumerator GetEnumerator()
-        {
-            return _SeedMap.GetEnumerator();
-        }
-
-        public bool Remove(string command)
-        {
-            return _SeedMap.Remove(command);
-        }
-
-        public void Clear()
-        {
-            _SeedMap.Clear();
-        }
-
-        public int Count
-        {
-            get { return _SeedMap.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return ((IDictionary<string, StringProtocol>) _SeedMap).IsReadOnly; }
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return _SeedMap.ContainsKey(key);
-        }
-
-        public void Add(StringProtocol protocol)
-        {
-            if (!_SeedMap.ContainsKey(protocol.Command))
-                _SeedMap.Add(protocol.Command, protocol);
-        }
-
-        public void AddRange(StringProtocol[] protocols)
-        {
-            foreach (var protocol in protocols)
-            {
-                if (!_SeedMap.ContainsKey(protocol.Command))
-                    _SeedMap.Add(protocol.Command, protocol);
-            }
-        }
-
-        public void Add(string key, StringProtocol value)
-        {
-            if (!_SeedMap.ContainsKey(key))
-                _SeedMap.Add(key, value);
-        }
-
-        public bool Contains(KeyValuePair<string, StringProtocol> item)
-        {
-            return _SeedMap.ContainsKey(item.Key) && _SeedMap.ContainsValue(item.Value);
-        }
-
-        public bool TryGetValue(string key, out StringProtocol value)
-        {
-            return _SeedMap.TryGetValue(key, out value);
-        }
 
         public StringProtocol Build(string command)
         {
@@ -194,14 +95,120 @@ namespace NKnife.Protocol.Generic
             if (string.IsNullOrWhiteSpace(command))
                 throw new ArgumentNullException("command", "协议命令字不能为空");
 
-            if (!_SeedMap.ContainsKey(command))
+            if (_ProtocolBuilderMap.ContainsKey(command))
             {
-                StringProtocol protocol = _Seed.BuildMethod.Invoke();
+                StringProtocol protocol = _ProtocolBuilderMap[command].Invoke(command);
                 protocol.Family = FamilyName;
                 protocol.Command = command;
-                _SeedMap.Add(command, protocol);
+                return protocol;
             }
-            return _SeedMap[command].BuildMethod.Invoke();
+            return _DefaultProtocolBuilder == null ? DI.Get<StringProtocol>() : _DefaultProtocolBuilder.Invoke(command);
+        }
+
+        public void AddProtocolBuilder(Func<string, StringProtocol> func)
+        {
+            _DefaultProtocolBuilder = func;
+        }
+
+        public void AddProtocolBuilder(string command, Func<string, StringProtocol> func)
+        {
+            if (_ProtocolBuilderMap.ContainsKey(command))
+            {
+                _ProtocolBuilderMap[command] = func;
+            }
+            else
+            {
+                _ProtocolBuilderMap.Add(command, func);
+            }
+        }
+
+        /// <summary>
+        /// 根据远端得到的数据包解析，将数据填充到本实例中，与Generate方法相对
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="datagram">The datas.</param>
+        public StringProtocol Parse(string command, string datagram)
+        {
+            var protocol = Build(command);
+            if (string.IsNullOrWhiteSpace(datagram))
+            {
+                Debug.Fail("空数据无法进行协议的解析");
+            }
+            try
+            {
+                if (_ProtocolUnPackerGetterMap.ContainsKey(command))
+                {
+                    _ProtocolUnPackerGetterMap[command].Invoke(command).Execute(protocol,datagram,FamilyName,command);
+                }
+                else 
+                {
+                    if (_DefaultProtocolUnPackerGetter == null)
+                    {
+                        DI.Get<StringProtocolUnPacker>().Execute(protocol,datagram,FamilyName,command);
+                    }
+                    else
+                    {
+                        _DefaultProtocolUnPackerGetter.Invoke(command).Execute(protocol,datagram,FamilyName,command);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Fail(string.Format("协议字符串无法解析.{0}..{1}", e.Message, datagram));
+            }
+            return protocol;
+        }
+
+        /// <summary>
+        /// 将protocol实例转换成字符串，与Parse方法相对
+        /// </summary>
+        /// <param name="protocol"></param>
+        /// <returns></returns>
+        public string Generate(StringProtocol protocol)
+        {
+            var command = protocol.Command;
+            if(_ProtocolPackerGetterMap.ContainsKey(command))
+            {
+                return _ProtocolPackerGetterMap[command].Invoke(command).Combine(protocol);
+            }
+            return _DefaultProtocolPackerGetter == null ? 
+                DI.Get<StringProtocolPacker>().Combine(protocol) : 
+                _DefaultProtocolPackerGetter.Invoke(command).Combine(protocol);
+        }
+
+        /// <summary>
+        /// 将protocol实例转换成字符串，与Parse方法相对
+        /// </summary>
+        /// <param name="protocol"></param>
+        /// <param name="param">PackerGetter的参数，默认使用command作为参数</param>
+        /// <returns></returns>
+        public string Generate(StringProtocol protocol,string param)
+        {
+            var command = protocol.Command;
+            if (_ProtocolPackerGetterMap.ContainsKey(command))
+            {
+                return _ProtocolPackerGetterMap[command].Invoke(param).Combine(protocol);
+            }
+            return _DefaultProtocolPackerGetter == null ?
+                DI.Get<StringProtocolPacker>().Combine(protocol) :
+                _DefaultProtocolPackerGetter.Invoke(param).Combine(protocol);
+        }
+
+        public void AddPackerGetter(Func<string, StringProtocolPacker> func)
+        {
+            _DefaultProtocolPackerGetter = func;
+        }
+
+        public void AddPackerGetter(string command, Func<string, StringProtocolPacker> func)
+        {
+            if (_ProtocolPackerGetterMap.ContainsKey(command))
+            {
+                _ProtocolPackerGetterMap[command] = func;
+            }
+            else
+            {
+                _ProtocolPackerGetterMap.Add(command,func);   
+            }
         }
     }
 }

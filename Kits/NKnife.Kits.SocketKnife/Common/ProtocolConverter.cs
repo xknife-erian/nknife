@@ -16,8 +16,9 @@ namespace NKnife.Kits.SocketKnife.Common
             if (value == null)
                 return string.Empty;
             var protocol = value as StringProtocol;
-            if (protocol != null)
-                return protocol.Generate();
+            //TODO:Generate不再是protocol的方法了，
+//            if (protocol != null)
+//                return protocol.Generate();
             return string.Empty;
         }
 

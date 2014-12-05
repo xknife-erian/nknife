@@ -82,13 +82,14 @@ namespace NKnife.Kits.SocketKnife.Demo
             custom.Family = _Family.FamilyName;
             custom.Command = "custom";
 
-            _Family.Add(_Family.Build("call"));
-            _Family.Add(_Family.Build("recall"));
-            _Family.Add(_Family.Build("sing"));
-            _Family.Add(_Family.Build("dance"));
-            _Family.Add(register);
-            _Family.Add(custom);
 
+            //Func<string, StringProtocolPacker> func = s => DI.Get<StringProtocolPacker>(s);
+
+            //_Family.AddPackerGetter(func);
+            //_Family.AddPackerGetter("call", func);
+
+            _Family.Build("command");
+           
             return _Family;
         }
 

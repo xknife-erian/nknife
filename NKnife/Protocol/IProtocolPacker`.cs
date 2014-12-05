@@ -5,6 +5,6 @@
     /// </summary>
     public interface IProtocolPacker<T>
     {
-        T Combine(IProtocolContent<T> content);
+        T Combine(IProtocol<T> content);
     }
 }
