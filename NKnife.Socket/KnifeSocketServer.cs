@@ -222,10 +222,10 @@ namespace SocketKnife
             switch (e.LastOperation)
             {
                 case SocketAsyncOperation.Accept:
-                    BeginAccept(e);
+                    ProcessAccept(e);
                     break;
                 case SocketAsyncOperation.Receive:
-                    BeginReceive(e);
+                    ProcessReceive(e);
                     break;
             }
         }
@@ -241,7 +241,7 @@ namespace SocketKnife
             {
                 SocketAsyncEventArgs sockAsyn = _SocketAsynPool.Pop();
                 if (!_MainSocket.AcceptAsync(sockAsyn))
-                    BeginAccept(sockAsyn);
+                    ProcessAccept(sockAsyn);
             }
             else
             {
@@ -249,7 +249,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void BeginAccept(SocketAsyncEventArgs e)
+        protected virtual void ProcessAccept(SocketAsyncEventArgs e)
         {
             try
             {
@@ -262,7 +262,7 @@ namespace SocketKnife
                         if (_BufferContainer.SetBuffer(e))
                         {
                             if (!e.AcceptSocket.ReceiveAsync(e))
-                                BeginReceive(e);
+                                ProcessReceive(e);
                         }
                         //如果选用长连接服务时，将相应的连接置入一个Map以做处理
                         var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
@@ -309,7 +309,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void BeginReceive(SocketAsyncEventArgs e)
+        protected virtual void ProcessReceive(SocketAsyncEventArgs e)
         {
             if (_IsClose)
             {
@@ -392,7 +392,7 @@ namespace SocketKnife
                 }
             }
             if (!e.AcceptSocket.ReceiveAsync(e))
-                BeginReceive(e);
+                ProcessReceive(e);
         }
 
         protected virtual void AsynEndSend(IAsyncResult result)

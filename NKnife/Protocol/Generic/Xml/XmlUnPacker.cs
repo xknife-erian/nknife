@@ -77,27 +77,40 @@ namespace NKnife.Protocol.Generic.Xml
             content.Tags = new List<object>();
             foreach (XmlNode node in tagsElement.ChildNodes)
             {
-                if (node.NodeType != XmlNodeType.Element)
+
+                if ((node.FirstChild.NodeType != XmlNodeType.Element) && (node.FirstChild.NodeType != XmlNodeType.CDATA))
                     continue;
-                var itemElement = (XmlElement) node;
-                object obj = null;
-                Type type = UtilityType.FindType(itemElement.GetAttribute("class"));
+
+                var itemElement = (XmlElement)node;
+                var typeName = itemElement.GetAttribute("type");
+                if(string.IsNullOrEmpty(typeName))
+                    typeName= itemElement.GetAttribute("class");
+                Type type = UtilityType.FindType(typeName);
                 try
                 {
-                    const BindingFlags BF = BindingFlags.CreateInstance |
-                                            (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
-                    obj = Activator.CreateInstance(type, BF, null, null, null);
-                    var xml = obj as IXml;
-                    if (xml != null)
+                    if (node.FirstChild.NodeType == XmlNodeType.Element)
                     {
-                        xml.Parse(itemElement);
+                        const BindingFlags BF = BindingFlags.CreateInstance |
+                                                (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
+                        object obj = Activator.CreateInstance(type, BF, null, null, null);
+                        var xml = obj as IXml;
+                        if (xml != null)
+                        {
+                            xml.Parse(itemElement);
+                        }
+ 
+                        content.Tags.Add(obj);
+                    }
+                    if (node.FirstChild.NodeType == XmlNodeType.CDATA)
+                    {
+                        object e = UtilitySerialize.Deserialize(node.InnerText, type);
+                        content.Tags.Add(e);
                     }
                 }
                 catch (Exception e)
                 {
                     Debug.Fail("从Tag创建对象时异常", e.Message);
                 }
-                content.Tags.Add(obj);
             }
         }
     }

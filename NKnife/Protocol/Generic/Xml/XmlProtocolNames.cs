@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NKnife.Protocol.Generic.Xml
 {
-    class XmlProtocolNames
+    public class XmlProtocolNames
     {
         public static string Infos
         {

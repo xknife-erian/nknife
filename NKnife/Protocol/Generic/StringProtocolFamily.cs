@@ -95,14 +95,18 @@ namespace NKnife.Protocol.Generic
             if (string.IsNullOrWhiteSpace(command))
                 throw new ArgumentNullException("command", "协议命令字不能为空");
 
+            StringProtocol result;
             if (_ProtocolBuilderMap.ContainsKey(command))
             {
-                StringProtocol protocol = _ProtocolBuilderMap[command].Invoke(command);
-                protocol.Family = FamilyName;
-                protocol.Command = command;
-                return protocol;
+                result = _ProtocolBuilderMap[command].Invoke(command);
             }
-            return _DefaultProtocolBuilder == null ? DI.Get<StringProtocol>() : _DefaultProtocolBuilder.Invoke(command);
+            else 
+            {
+                result = _DefaultProtocolBuilder == null ? DI.Get<StringProtocol>() : _DefaultProtocolBuilder.Invoke(command);
+            }
+            result.Family = FamilyName;
+            result.Command = command;
+            return result;
         }
 
         public void AddProtocolBuilder(Func<string, StringProtocol> func)
@@ -208,6 +212,23 @@ namespace NKnife.Protocol.Generic
             else
             {
                 _ProtocolPackerGetterMap.Add(command,func);   
+            }
+        }
+
+        public void AddUnPackerGetter(Func<string, StringProtocolUnPacker> func)
+        {
+            _DefaultProtocolUnPackerGetter = func;
+        }
+
+        public void AddUnPackerGetter(string command, Func<string, StringProtocolUnPacker> func)
+        {
+            if (_ProtocolUnPackerGetterMap.ContainsKey(command))
+            {
+                _ProtocolUnPackerGetterMap[command] = func;
+            }
+            else
+            {
+                _ProtocolUnPackerGetterMap.Add(command, func);
             }
         }
     }

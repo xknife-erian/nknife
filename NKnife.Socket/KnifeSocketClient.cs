@@ -245,7 +245,7 @@ namespace SocketKnife
                     Reconnect();
                 return;
             }
-            if (_ReconnectTimer != null)
+            if (_ReconnectTimer != null) //连上了则关闭重连Timer
             {
                 _ReconnectTimer.Stop();
                 _ReconnectTimer.Close();
@@ -264,10 +264,10 @@ namespace SocketKnife
                     clientFilter.OnConnecting(new ConnectingEventArgs(ipPoint));
                 }
                 var asyncEventArgs = new SocketAsyncEventArgs {RemoteEndPoint = ipPoint};
-                asyncEventArgs.Completed += CompletedEvent;
+                asyncEventArgs.Completed += AsynCompleted;
                 if (_Socket != null && !_Socket.ConnectAsync(asyncEventArgs))
                 {
-                    CompletedEvent(this, asyncEventArgs);
+                    AsynCompleted(this, asyncEventArgs);
                 }
             }
             catch (Exception e)
@@ -276,7 +276,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void CompletedEvent(object sender, SocketAsyncEventArgs e)
+        protected virtual void AsynCompleted(object sender, SocketAsyncEventArgs e)
         {
             if (null == e)
                 return;
@@ -286,7 +286,7 @@ namespace SocketKnife
                     ProcessConnect(e);
                     break;
                 case SocketAsyncOperation.Receive:
-                    BeginReceive(e);
+                    ProcessReceive(e);
                     break;
             }
         }
@@ -314,7 +314,7 @@ namespace SocketKnife
                         e.SetBuffer(data, 0, data.Length); //设置数据包
 
                         if (!_Socket.ReceiveAsync(e)) //开始读取数据包
-                            CompletedEvent(this, e);
+                            AsynCompleted(this, e);
                     }
                     catch (Exception ex)
                     {
@@ -347,7 +347,7 @@ namespace SocketKnife
             _ConnectionAutoReset.Set();
         }
 
-        protected virtual void BeginReceive(SocketAsyncEventArgs e)
+        protected virtual void ProcessReceive(SocketAsyncEventArgs e)
         {
             switch (e.SocketError)
             {

@@ -85,9 +85,10 @@ namespace NKnife.Protocol.Generic.Xml
                 {
                     if (tag == null)
                         continue;
+                    writer.WriteStartElement(XmlProtocolNames.Tag);
                     if (EnableQuickCombine || tag is string)
                     {
-                        writer.WriteElementString(XmlProtocolNames.Tag, tag.ToString());
+                        writer.WriteValue(tag.ToString());
                     }
                     else if (tag is IEnumerable<object>)
                     {
@@ -110,11 +111,18 @@ namespace NKnife.Protocol.Generic.Xml
                         writer.WriteAttributeString(XmlProtocolNames.Type, tag.GetType().FullName);
                         writer.WriteCData(serializeString);
                     }
+                    else if (tag.GetType().IsSerializable)
+                    {
+                        string serializeString = UtilitySerialize.Serialize(tag);
+                        writer.WriteAttributeString(XmlProtocolNames.Type, tag.GetType().FullName);
+                        writer.WriteCData(serializeString);
+                    }
                     else
                     {
                         writer.WriteAttributeString(XmlProtocolNames.Type, tag.GetType().FullName);
                         writer.WriteCData(tag.ToString());
                     }
+                    writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
             }

@@ -49,7 +49,10 @@ namespace NKnife.Collections
             {
                 lock (_Lock)
                 {
-                    r = _Q.Dequeue();
+                    if (_Q.Count > 0) //锁内还需有判断，因为有可能进入锁的时候Queue已经没数据了
+                    {
+                        r = _Q.Dequeue();
+                    }
                 }
             }
             return r;
@@ -74,7 +77,10 @@ namespace NKnife.Collections
             {
                 lock (_Lock)
                 {
-                    t = _Q.Peek();
+                    if (_Q.Count > 0) //锁内还需有判断，因为有可能进入锁的时候Queue已经没数据了
+                    {
+                        t = _Q.Peek();
+                    }
                 }
             }
             return t;

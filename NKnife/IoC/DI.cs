@@ -116,7 +116,7 @@ namespace NKnife.IoC
         public static T TryGet<T>(params IParameter[] parameters)
         {
             Initialize();
-            return _coreKernel.Get<T>(parameters);
+            return _coreKernel.TryGet<T>(parameters);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace NKnife.IoC
         public static T TryGet<T>(string name, params IParameter[] parameters)
         {
             Initialize();
-            return _coreKernel.Get<T>(name, parameters);
+            return _coreKernel.TryGet<T>(name, parameters);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace NKnife.IoC
         public static T TryGet<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
         {
             Initialize();
-            return _coreKernel.Get<T>(constraint, parameters);
+            return _coreKernel.TryGet<T>(constraint, parameters);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace NKnife.IoC
         public static T TryGetAndThrowOnInvalidBinding<T>(params IParameter[] parameters)
         {
             Initialize();
-            return _coreKernel.Get<T>(parameters);
+            return _coreKernel.TryGetAndThrowOnInvalidBinding<T>(parameters);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace NKnife.IoC
         public static T TryGetAndThrowOnInvalidBinding<T>(string name, params IParameter[] parameters)
         {
             Initialize();
-            return _coreKernel.Get<T>(name, parameters);
+            return _coreKernel.TryGetAndThrowOnInvalidBinding<T>(name, parameters);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace NKnife.IoC
         public static T TryGetAndThrowOnInvalidBinding<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
         {
             Initialize();
-            return _coreKernel.Get<T>(constraint, parameters);
+            return _coreKernel.TryGetAndThrowOnInvalidBinding<T>(constraint, parameters);
         }
 
         /// <summary>
