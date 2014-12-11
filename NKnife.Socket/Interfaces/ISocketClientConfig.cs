@@ -1,10 +1,10 @@
-namespace SocketKnife.Interfaces
+ï»¿namespace SocketKnife.Interfaces
 {
     public interface ISocketClientConfig : ISocketConfig
     {
         /// <summary>
-        /// ÖØÁ¬µÄ¼ä¸ôÊ±¼ä
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ê±ï¿½ï¿½
         /// </summary>
-        int ReconnectTime { get; set; }
+        int ReconnectInterval { get; set; }
     }
 }

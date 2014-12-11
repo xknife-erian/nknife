@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.Events;
-using NKnife.Interface;
 using NKnife.Protocol.Generic;
-using NKnife.Tunnel.Events;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Events;
-using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Filters
 {
@@ -23,7 +17,7 @@ namespace SocketKnife.Generic.Filters
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-        protected bool _ContinueNextFilter = true;
+        protected bool _ContinueNextFilter = true; 
 
         public override bool ContinueNextFilter
         {
