@@ -66,7 +66,8 @@
     <Compile Include="Generic\Families\LengthHeadEncoder.cs" />
     <Compile Include="Generic\Families\FixedTailDecoder.cs" />
     <Compile Include="Generic\Filters\HeartbeatFilter.cs" />
-    <Compile Include="Generic\KnifeSocketServerFilterChain.cs">
+    <Compile Include="Generic\Filters\LogFilter.cs" />
+    <Compile Include="Generic\KnifeTunnelFilterChain.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generic\KnifeTunnelSession.cs" />

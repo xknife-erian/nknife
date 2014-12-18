@@ -87,7 +87,7 @@ namespace SocketKnife.Generic.Filters
                 {
                     if (EnableAggressiveMode) //主动模式需要发出心跳请求，并进入等待状态
                     {
-                        Listener.ProcessHeartReply(session.SessionId, Heartbeat.RequestOfHeartBeat);
+                        Listener.ProcessHeartBeatRequestOrReply(session.SessionId, Heartbeat.RequestOfHeartBeat);
                         session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
 #if DEBUG
                         _logger.Trace(string.Format("Server发出{0}心跳.", session.SessionId));
@@ -168,7 +168,7 @@ namespace SocketKnife.Generic.Filters
                 {
                     heartSession.WaitingForReply = false;
                 }
-                Listener.ProcessHeartReply(session.Id, Heartbeat.ReplyOfHeartBeat);
+                Listener.ProcessHeartBeatRequestOrReply(session.Id, Heartbeat.ReplyOfHeartBeat);
 #if DEBUG
                 _logger.TraceFormat("Server收到{0}心跳请求.回复完成.", session.Id);
 #endif
@@ -281,9 +281,9 @@ namespace SocketKnife.Generic.Filters
                 _SessionProvider.KillSession(id);
             }
 
-            public void ProcessHeartReply(EndPoint sessionId, byte[] requestOfHeartBeat)
+            public void ProcessHeartBeatRequestOrReply(EndPoint sessionId, byte[] requestOrReply)
             {
-                _SessionProvider.Send(sessionId,requestOfHeartBeat);
+                _SessionProvider.Send(sessionId, requestOrReply);
             }
         }
 

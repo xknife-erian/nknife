@@ -16,7 +16,6 @@ namespace SocketKnife.Generic
             //通过EnableDisconnectAfterReceive和EnableDisconnectAfterSend这两个属性，
             //可以控制长连接或短连接，如果两个属性均为false，则为长连接
             _Map.Add("EnableDisconnectAfterReceive",false); //默认接收后不主动断开连接
-            _Map.Add("EnableDisconnectAfterSend",false); //默认发送后不主动断开连接
         }
 
         public int ReconnectInterval
@@ -51,19 +50,6 @@ namespace SocketKnife.Generic
             {
                 _Map["EnableDisconnectAfterReceive"] = value;
                 RaisePropertyChanged(() => EnableDisconnectAfterReceive);
-            }
-        }
-
-        /// <summary>
-        /// 是否发送后自动断开连接（客户端断开）
-        /// </summary>
-        public bool EnableDisconnectAfterSend
-        {
-            get { return bool.Parse(_Map["EnableDisconnectAfterSend"].ToString()); }
-            set
-            {
-                _Map["EnableDisconnectAfterSend"] = value;
-                RaisePropertyChanged(() => EnableDisconnectAfterSend);
             }
         }
     }

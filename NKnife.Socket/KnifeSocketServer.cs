@@ -377,20 +377,20 @@ namespace SocketKnife
                     e.AcceptSocket.Close();
                 return;
             }
-            if (e.SocketError == SocketError.Success) //连接正常
+            if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success) //连接正常
             {
-                if (e.BytesTransferred > 0) //收到数据了
-                {
+//                if (e.BytesTransferred > 0) //收到数据了
+//                {
                     PrcoessReceivedData(e);
-                }
-                else //没收到数据，但连接正常，继续收
-                {
-                    if (e.AcceptSocket != null && e.AcceptSocket.Connected)
-                    {
-                        if (!e.AcceptSocket.ReceiveAsync(e))
-                            ProcessReceive(e);
-                    }
-                }
+//                }
+//                else //没收到数据，但连接正常，继续收
+//                {
+//                    if (e.AcceptSocket != null && e.AcceptSocket.Connected)
+//                    {
+//                        if (!e.AcceptSocket.ReceiveAsync(e))
+//                            ProcessReceive(e);
+//                    }
+//                }
             }
             else //连接不正常
             {

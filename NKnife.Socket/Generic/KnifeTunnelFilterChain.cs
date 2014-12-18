@@ -7,7 +7,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketServerFilterChain : ITunnelFilterChain<byte[], EndPoint>
+    public class KnifeTunnelFilterChain : ITunnelFilterChain<byte[], EndPoint>
     {
         private readonly LinkedList<ITunnelFilter<byte[], EndPoint>> _Filters = new LinkedList<ITunnelFilter<byte[], EndPoint>>();
 
