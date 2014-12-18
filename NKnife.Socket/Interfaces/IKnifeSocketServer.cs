@@ -8,8 +8,9 @@ using SocketKnife.Generic.Filters;
 
 namespace SocketKnife.Interfaces
 {
-    public interface IKnifeSocketServer : ITunnel<EndPoint, Socket, string>
+    public interface IKnifeSocketServer : IDataConnector<byte[], EndPoint>
     {
+        KnifeSocketConfig Config { get; set; }
         void Configure(IPAddress ipAddress, int port);
     }
 }

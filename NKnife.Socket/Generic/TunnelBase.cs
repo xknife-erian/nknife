@@ -7,6 +7,7 @@ using NKnife.IoC;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Generic;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
@@ -17,7 +18,7 @@ namespace SocketKnife.Generic
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
         protected ITunnelFilterChain<EndPoint, Socket> _FilterChain;
-        protected KnifeSocketCodec _Codec;
+        protected KnifeStringCodec _Codec;
         protected StringProtocolFamily _Family;
         protected List<KnifeSocketProtocolHandler> _Handlers = new List<KnifeSocketProtocolHandler>();
 
@@ -30,7 +31,7 @@ namespace SocketKnife.Generic
 
         void ITunnel<EndPoint, Socket, string>.Bind(ITunnelCodec<string> codec, IProtocolFamily<string> protocolFamily)
         {
-            Bind((KnifeSocketCodec) codec, (StringProtocolFamily) protocolFamily);
+            Bind((KnifeStringCodec) codec, (StringProtocolFamily) protocolFamily);
         }
 
         void ITunnel<EndPoint, Socket, string>.AddHandlers(params IProtocolHandler<EndPoint, Socket, string>[] handlers)
@@ -99,10 +100,10 @@ namespace SocketKnife.Generic
             }
         }
 
-        public virtual void Bind(KnifeSocketCodec codec, StringProtocolFamily protocolFamily)
+        public virtual void Bind(KnifeStringCodec codec, StringProtocolFamily protocolFamily)
         {
             _Codec = codec;
-            _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.SocketDecoder.GetType().Name, _Codec.SocketEncoder.GetType().Name));
+            _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.StringDecoder.GetType().Name, _Codec.StringEncoder.GetType().Name));
 
             _Family = protocolFamily;
             _logger.Info(string.Format("协议族[{0}]绑定成功。", _Family.FamilyName));

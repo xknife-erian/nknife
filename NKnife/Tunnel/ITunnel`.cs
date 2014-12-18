@@ -4,16 +4,14 @@ using NKnife.Protocol;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnel<TSource, TConnector, TCommand> : IDisposable
+    public interface ITunnel<TData, TSessionId> : IDisposable
     {
-        void Bind(ITunnelCodec<TCommand> codec, IProtocolFamily<TCommand> protocolFamily);
-        void AddHandlers(params IProtocolHandler<TSource, TConnector, TCommand>[] handlers);
-        void RemoveHandler(IProtocolHandler<TSource, TConnector, TCommand> handler);
         ITunnelConfig Config { get; set; }
-        void AddFilters(params ITunnelFilter<TSource, TConnector>[] filter);
-        void RemoveFilter(ITunnelFilter<TSource, TConnector> filter);
+        void AddFilters(params ITunnelFilter<TData, TSessionId>[] filter);
+        void RemoveFilter(ITunnelFilter<TData, TSessionId> filter);
         bool Start();
         bool ReStart();
         bool Stop();
+        void BindDataConnector(IDataConnector<TData, TSessionId> dataConnector);
     }
 }

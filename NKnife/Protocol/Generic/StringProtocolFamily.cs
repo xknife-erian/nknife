@@ -73,6 +73,11 @@ namespace NKnife.Protocol.Generic
             return Build(command);
         }
 
+        IProtocol<string> IProtocolFamily<string>.Parse(string command, string datagram)
+        {
+            return Parse(command, datagram);
+        }
+
         string IProtocolFamily<string>.Generate(IProtocol<string> protocol)
         {
             return Generate((StringProtocol)protocol);
@@ -125,6 +130,7 @@ namespace NKnife.Protocol.Generic
                 _ProtocolBuilderMap.Add(command, func);
             }
         }
+ 
 
         /// <summary>
         /// 根据远端得到的数据包解析，将数据填充到本实例中，与Generate方法相对

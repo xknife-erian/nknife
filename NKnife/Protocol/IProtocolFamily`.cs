@@ -13,6 +13,8 @@ namespace NKnife.Protocol
 
         IProtocol<T> Build(T command);
 
+        IProtocol<T> Parse(T command, T datagram);
+
         /// <summary>根据当前实例生成协议的原生字符串表达
         /// </summary>
         T Generate(IProtocol<T> protocol);

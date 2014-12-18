@@ -5,14 +5,14 @@ using NKnife.Tunnel;
 
 namespace NKnife.Protocol
 {
-    public interface IProtocolHandler<TSource, TConnector, T>
+    public interface IProtocolHandler<TData, TSessionId, T>
     {
         List<T> Commands { get; set; }
 
-        void Recevied(ITunnelSession<TSource, TConnector> session, IProtocol<T> protocol);
+        void Recevied(TSessionId session, IProtocol<T> protocol);
 
-        void Write(ITunnelSession<TSource, TConnector> session, byte[] data);
+        void Write(TSessionId session, TData data);
 
-        void Write(ITunnelSession<TSource, TConnector> session, IProtocol<T> data);
+        void Write(TSessionId session, IProtocol<T> data);
     }
 }

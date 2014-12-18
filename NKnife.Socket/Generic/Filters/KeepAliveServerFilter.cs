@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.Events;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel;
+using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Events;
@@ -128,8 +130,8 @@ namespace SocketKnife.Generic.Filters
         {
             int done;
             StringProtocolFamily family = _FamilyGetter.Invoke();
-            KnifeSocketCodec codec = _CodecGetter.Invoke();
-            string[] datagram = codec.SocketDecoder.Execute(data, out done);
+            KnifeStringCodec codec = _CodecGetter.Invoke();
+            string[] datagram = codec.StringDecoder.Execute(data, out done);
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
                 _logger.Debug("协议消息无内容。");

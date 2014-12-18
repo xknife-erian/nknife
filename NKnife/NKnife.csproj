@@ -149,6 +149,7 @@
     <Compile Include="Maths\UtilityMath.cs" />
     <Compile Include="Mvvm\DelegateCommand`.cs" />
     <Compile Include="Entities\AssemblyWrapper.cs" />
+    <Compile Include="Protocol\Generic\KnifeProtocolHandlerBase.cs" />
     <Compile Include="Protocol\Generic\StringProtocol.cs" />
     <Compile Include="Protocol\Generic\StringProtocolFamily.cs" />
     <Compile Include="Protocol\Generic\StringProtocolPacker.cs" />
@@ -175,9 +176,18 @@
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />
     <Compile Include="Protocol\IProtocolCommandParser.cs" />
+    <Compile Include="Tunnel\Filters\SocketProtocolFilter.cs" />
+    <Compile Include="Tunnel\Generic\KnifeStringCodec.cs" />
+    <Compile Include="Tunnel\Generic\KnifeStringDatagramDecoder.cs" />
+    <Compile Include="Tunnel\Generic\KnifeStringDatagramEncoder.cs" />
+    <Compile Include="Tunnel\Generic\ProtocolProcessorBase.cs" />
+    <Compile Include="Tunnel\Generic\TunnelBase.cs" />
+    <Compile Include="Tunnel\IDataConnector.cs" />
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />
+    <Compile Include="Tunnel\IFilterListener.cs" />
     <Compile Include="Tunnel\IKnifeClient`.cs" />
+    <Compile Include="Tunnel\ISessionProvider.cs" />
     <Compile Include="Tunnel\ITunnel`.cs" />
     <Compile Include="Tunnel\ITunnelConfig.cs" />
     <Compile Include="Tunnel\ITunnelFilterChain`.cs" />
@@ -185,6 +195,8 @@
     <Compile Include="Tunnel\ITunnelFilter`.cs" />
     <Compile Include="Tunnel\ITunnelSession.cs" />
     <Compile Include="Tunnel\ITunnelSessionMap.cs" />
+    <Compile Include="Tunnel\KnifeTunnel.cs" />
+    <Compile Include="Tunnel\ReceiveQueue.cs" />
     <Compile Include="Utility\UtilityAssembly.cs" />
     <Compile Include="Utility\UtilityWebService.cs" />
     <Compile Include="Wrapper\ClassLoader.cs" />

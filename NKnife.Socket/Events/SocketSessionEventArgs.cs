@@ -11,7 +11,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Events
 {
-    public class SocketSessionEventArgs : SessionEventArgs<EndPoint, Socket>
+    public class SocketSessionEventArgs : SessionEventArgs<byte[], EndPoint>
     {
         public SocketSessionEventArgs(KnifeSocketSession item) 
             : base(item)

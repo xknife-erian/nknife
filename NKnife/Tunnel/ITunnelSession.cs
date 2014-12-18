@@ -7,12 +7,9 @@ using System.Text;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelSession<TSource, TConnector>
+    public interface ITunnelSession<TData, TSessionId>
     {
-        long Id { get; }
-
-        TSource Source { get; set; }
-
-        TConnector Connector { get; set; }
+        TSessionId Id { get; }
+        TData Data { get; }
     }
 }

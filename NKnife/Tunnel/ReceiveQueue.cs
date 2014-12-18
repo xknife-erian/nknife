@@ -1,6 +1,6 @@
 ﻿using NKnife.Collections;
 
-namespace SocketKnife.Common
+namespace NKnife.Tunnel
 {
     public class ReceiveQueue : SyncQueue<byte[]>
     {

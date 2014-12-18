@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Generic;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FixedTailEncoder : KnifeSocketDatagramEncoder
+    public class FixedTailEncoder : KnifeStringDatagramEncoder
     {
         private byte[] _Tail = Encoding.Default.GetBytes("\r\n");
 

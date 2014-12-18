@@ -2,12 +2,12 @@
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelFilterChain<TSource, TConnector> : ICollection<ITunnelFilter<TSource, TConnector>>
+    public interface ITunnelFilterChain<TData, TSessionId> : ICollection<ITunnelFilter<TData, TSessionId>>
     {
-        void AddAfter(ITunnelFilter<TSource, TConnector> filter, ITunnelFilter<TSource, TConnector> newfilter);
-        void AddBefore(ITunnelFilter<TSource, TConnector> filter, ITunnelFilter<TSource, TConnector> newfilter);
-        void AddFirst(ITunnelFilter<TSource, TConnector> filter);
-        void AddLast(ITunnelFilter<TSource, TConnector> filter);
+        void AddAfter(ITunnelFilter<TData, TSessionId> filter, ITunnelFilter<TData, TSessionId> newfilter);
+        void AddBefore(ITunnelFilter<TData, TSessionId> filter, ITunnelFilter<TData, TSessionId> newfilter);
+        void AddFirst(ITunnelFilter<TData, TSessionId> filter);
+        void AddLast(ITunnelFilter<TData, TSessionId> filter);
         void RemoveFirst();
         void RemoveLast();
     }

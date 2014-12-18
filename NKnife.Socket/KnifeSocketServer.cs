@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Threading.Tasks;
 using Common.Logging;
-using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.Protocol.Generic;
-using NKnife.Tunnel;
+using NKnife.Tunnel.Events;
 using SocketKnife.Common;
-using SocketKnife.Events;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
-    public class KnifeSocketServer : TunnelBase, IKnifeSocketServer
+    public class KnifeSocketServer : IDisposable, IKnifeSocketServer
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -29,13 +24,31 @@ namespace SocketKnife
         private Socket _MainListenSocket;
         private SocketAsyncEventArgsPool _SocketAsynPool;
         protected KnifeSocketSessionMap SessionMap = DI.Get<KnifeSocketSessionMap>();
-        protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
+        private KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
 
+        private IPAddress _IpAddress;
+        private int _Port;
         #endregion
 
-        #region ISocketServerKnife 接口实现
+        #region IKnifeSocketServer接口
+        public KnifeSocketConfig Config
+        {
+            get { return _Config; }
+            set { _Config = (KnifeSocketServerConfig)value; }
+        }
+        public virtual void Configure(IPAddress ipAddress, int port)
+        {
+            _IpAddress = ipAddress;
+            _Port = port;
+        }
+        #endregion
 
-        public override bool Start()
+        #region IDataConnector接口
+        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
+        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
+        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
+
+        public bool Start()
         {
             try
             {
@@ -50,29 +63,21 @@ namespace SocketKnife
             }
         }
 
-        public override bool ReStart()
-        {
-            if (Stop())
-            {
-                return Start();
-            }
-            return false;
-        }
-
-        public override bool Stop()
+        public bool Stop()
         {
             try
             {
                 _MainAutoReset.Reset();
                 _IsClose = true;
-                foreach (KeyValuePair<EndPoint, KnifeSocketSession> pair in SessionMap)
+
+                foreach (var session in SessionMap.Values())
                 {
-                    Socket client = pair.Value.Connector;
-                    if (client.Connected)
+                    if (null == session.AcceptSocket || !session.AcceptSocket.Connected)
                     {
-                        client.Shutdown(SocketShutdown.Both);
+                        continue;
                     }
-                    client.Close();
+                    session.AcceptSocket.Shutdown(SocketShutdown.Both);
+                    session.AcceptSocket.Close();
                 }
                 SessionMap.Clear();
                 foreach (SocketAsyncEventArgs async in _SocketAsynPool)
@@ -95,17 +100,87 @@ namespace SocketKnife
                 return false;
             }
         }
+        #endregion
 
-        public override void AddFilters(params KnifeSocketFilter[] filters)
+        #region ISessionProvider
+        public void Send(EndPoint id, byte[] data)
         {
-            base.AddFilters(filters);
-            foreach (var filter in filters)
+            if (!SessionMap.ContainsKey(id))
             {
-                var serverFilter = (KnifeSocketServerFilter)filter;
-                serverFilter.Bind(() => SessionMap);
+                _logger.Warn(string.Format("session:{0}不存在",id));
+                return;
+            }
+            var session = SessionMap[id];
+            Socket socket = session.AcceptSocket;
+            if (socket.Connected)
+            {
+                try
+                {
+                    socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
+                    _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
+                }
+                catch (SocketException e)
+                {
+                    _logger.WarnFormat("发送异常.{0},{1}. {2}", id, data.ToHexString(), e.Message);
+                }
             }
         }
 
+        public void SendAll(byte[] data)
+        {
+            if (SessionMap.Count == 0)
+            {
+                _logger.Warn(string.Format("SessionMap为空"));
+                return;
+            }
+            foreach (KnifeSocketSession session in SessionMap.Values())
+            {
+                Socket socket = session.AcceptSocket;
+                if (socket.Connected)
+                {
+                    try
+                    {
+                        socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
+                        _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
+                    }
+                    catch (SocketException e)
+                    {
+                        _logger.WarnFormat("发送异常.{0},{1}. {2}", session.Id, data.ToHexString(), e.Message);
+                    }
+                }
+            }
+        }
+
+        public void KillSession(EndPoint id)
+        {
+            if (SessionMap.ContainsKey(id))
+            {
+                var session = SessionMap[id];
+                if (null == session.AcceptSocket || !session.AcceptSocket.Connected)
+                {
+                    //session连接已经中断了
+                }
+                else
+                {
+                    session.AcceptSocket.Shutdown(SocketShutdown.Both);
+                    session.AcceptSocket.Close();
+                }
+                SessionMap.Remove(id);
+            }
+            var handler = SessionBroken;
+            var replySession = DI.Get<KnifeSocketSession>();
+            replySession.Id = id;
+            if(handler !=null)
+                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(replySession));
+        }
+
+        public bool SessionExist(EndPoint id)
+        {
+            return SessionMap.ContainsKey(id);
+        }
+        #endregion
+
+        #region 初始化
         protected virtual void Initialize()
         {
             if (_IsDisposed)
@@ -145,17 +220,7 @@ namespace SocketKnife
             _logger.InfoFormat("SocketAsyncEventArgs 连接池已创建。大小:{0}", Config.MaxConnectCount);
         }
 
-        protected override void OnBound(params KnifeSocketProtocolHandler[] handlers)
-        {
-            foreach (KnifeSocketProtocolHandler handler in handlers)
-            {
-                var serverHandler = (KnifeSocketServerProtocolHandler) handler;
-                serverHandler.Bind(WirteProtocol);
-                serverHandler.Bind(WirteBase);
-                serverHandler.SessionMap = SessionMap;
-                _logger.InfoFormat("{0}绑定成功。", serverHandler.GetType().Name);
-            }
-        }
+        #endregion
 
         #region 释放( IDisposable )
 
@@ -164,22 +229,15 @@ namespace SocketKnife
         /// </summary>
         private bool _IsDisposed;
 
-        public override KnifeSocketConfig Config
-        {
-            get { return _Config; }
-            set { _Config = (KnifeSocketServerConfig) value; }
-        }
 
-        public override void Dispose()
+
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        protected override void SetFilterChain()
-        {
-            _FilterChain = DI.Get<ITunnelFilterChain<EndPoint, Socket>>("Server");
-        }
+
 
         ~KnifeSocketServer()
         {
@@ -210,8 +268,6 @@ namespace SocketKnife
                 _IsDisposed = true;
             }
         }
-
-        #endregion
 
         #endregion
 
@@ -259,28 +315,31 @@ namespace SocketKnife
                     {
                         WaitHandle.WaitAll(new WaitHandle[] {_MainAutoReset});
                         _MainAutoReset.Set();
-                        if (_BufferContainer.SetBuffer(e))
-                        {
-                            if (!e.AcceptSocket.ReceiveAsync(e))
-                                ProcessReceive(e);
-                        }
+
                         //如果选用长连接服务时，将相应的连接置入一个Map以做处理
                         var iep = e.AcceptSocket.RemoteEndPoint as IPEndPoint;
                         if (iep != null)
                         {
-                            string ip = iep.ToString();
+                            if (_BufferContainer.SetBuffer(e))
+                            {
+                                e.UserToken = iep; //将iep在UserToken中存一份，远端中断连接时，receive异常时，能够从UserToken中恢复iep
+                                if (!e.AcceptSocket.ReceiveAsync(e))
+                                    ProcessReceive(e);
+                            }
+
                             if (!SessionMap.ContainsKey(iep))
                             {
                                 var session = DI.Get<KnifeSocketSession>();
-                                session.Source = iep;
-                                session.Connector = e.AcceptSocket;
+                                session.Id = iep;
+                                session.AcceptSocket = e.AcceptSocket;
                                 SessionMap.Add(iep, session);
-                                _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", ip, SessionMap.Count);
-                                foreach (var filter in _FilterChain)
-                                {
-                                    var serverFilter = (KnifeSocketServerFilter) filter;
-                                    serverFilter.OnClientCome(new SocketSessionEventArgs(session));
-                                }
+
+                                _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", iep, SessionMap.Count);
+
+                                var handler = SessionBuilt;
+                                if(handler !=null)
+                                    handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(session));
+                                
                             }
                         }
                         else
@@ -297,6 +356,7 @@ namespace SocketKnife
                     default:
                     {
                         e.AcceptSocket = null;
+                        e.UserToken = null;
                         _SocketAsynPool.Push(e);
                         _logger.WarnFormat("服务端:未处理状态,{0}", e.SocketError);
                         break;
@@ -336,7 +396,9 @@ namespace SocketKnife
             {
                 RemoveSession(e);
                 e.AcceptSocket = null;
+                e.UserToken = null;
                 _BufferContainer.FreeBuffer(e);
+                
                 _SocketAsynPool.Push(e);
                 if (_SocketAsynPool.Count == 1)
                 {
@@ -348,17 +410,15 @@ namespace SocketKnife
         protected virtual void RemoveSession(SocketAsyncEventArgs e)
         {
             _logger.TraceFormat("当RemoveSession时，Socket状态：{0}", e.SocketError);
-            if (!e.AcceptSocket.Connected)
+            EndPoint iep = null;
+            try
             {
-                return;
+                iep = e.AcceptSocket.RemoteEndPoint;
+                _logger.InfoFormat("Server: >> 客户端:{0}, 连接中断.", iep);
             }
-            EndPoint iep = e.AcceptSocket.RemoteEndPoint;
-            _logger.InfoFormat("Server: >> 客户端:{0}, 连接中断.", iep);
-
-            foreach (var filter in _FilterChain)
+            catch
             {
-                var serverFilter = (KnifeSocketServerFilter)filter;
-                serverFilter.OnClientBroken(new ConnectionBrokenEventArgs(iep, BrokenCause.Passive));
+                iep = (EndPoint) e.UserToken;
             }
 
             if (iep != null)
@@ -378,6 +438,12 @@ namespace SocketKnife
             {
                 _logger.WarnFormat("e.AcceptSocket.RemoteEndPoint不是正确的IPEndPoint：null");
             }
+
+            var session = DI.Get<KnifeSocketSession>();
+            session.Id = iep;
+            var handler = SessionBroken;
+            if(handler !=null)
+                handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(session));
         }
 
         /// <summary>
@@ -389,16 +455,16 @@ namespace SocketKnife
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
 
-            foreach (var filter in _FilterChain)
+            var handler = DataReceived;
+            if (handler != null)
             {
-                var serverFilter = (KnifeSocketServerFilter) filter;
                 EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
-                serverFilter.OnDataFetched(new SocketDataFetchedEventArgs(endPoint, data)); // 触发数据到达事件
-
-                KnifeSocketSession session = SessionMap[endPoint];
-                serverFilter.PrcoessReceiveData(session, ref data); // 调用filter对数据进行处理
-                if (!serverFilter.ContinueNextFilter)
-                    break;
+                if (SessionMap.ContainsKey(endPoint))
+                {
+                    KnifeSocketSession session = SessionMap[endPoint];
+                    session.Data = data;
+                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                }
             }
 
             if (!e.AcceptSocket.ReceiveAsync(e))
@@ -427,29 +493,18 @@ namespace SocketKnife
 
         protected virtual void WirteBase(KnifeSocketSession session, byte[] data)
         {
-            Socket socket = session.Connector;
-            if (socket.Connected)
-            {
-                try
-                {
-                    socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
-                    _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
-                }
-                catch (SocketException e)
-                {
-                    _logger.WarnFormat("发送异常.{0},{1}. {2}", session.Source, data.ToHexString(), e.Message);
-                }
-            }
+
         }
 
-        protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
-        {
-            string replay = _Family.Generate(protocol);
-            byte[] data = _Codec.SocketEncoder.Execute(replay);
-            WirteBase(session, data);
-            _logger.DebugFormat("ServerSend:{0}", replay);
-        }
+//        protected virtual void WirteProtocol(KnifeSocketSession session, StringProtocol protocol)
+//        {
+//            string replay = _Family.Generate(protocol);
+//            byte[] data = _Codec.SocketEncoder.Execute(replay);
+//            WirteBase(session, data);
+//            _logger.DebugFormat("ServerSend:{0}", replay);
+//        }
 
         #endregion
+
     }
 }

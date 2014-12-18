@@ -7,11 +7,11 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketServerFilterChain : ITunnelFilterChain<EndPoint, Socket>
+    public class KnifeSocketServerFilterChain : ITunnelFilterChain<byte[], EndPoint>
     {
-        private readonly LinkedList<KnifeSocketServerFilter> _Filters = new LinkedList<KnifeSocketServerFilter>();
+        private readonly LinkedList<ITunnelFilter<byte[], EndPoint>> _Filters = new LinkedList<ITunnelFilter<byte[], EndPoint>>();
 
-        IEnumerator<ITunnelFilter<EndPoint, Socket>> IEnumerable<ITunnelFilter<EndPoint, Socket>>.GetEnumerator()
+        IEnumerator<ITunnelFilter<byte[], EndPoint>> IEnumerable<ITunnelFilter<byte[], EndPoint>>.GetEnumerator()
         {
             return GetEnumerator();
         }
@@ -21,9 +21,9 @@ namespace SocketKnife.Generic
             return GetEnumerator();
         }
 
-        void ICollection<ITunnelFilter<EndPoint, Socket>>.Add(ITunnelFilter<EndPoint, Socket> item)
+        void ICollection<ITunnelFilter<byte[], EndPoint>>.Add(ITunnelFilter<byte[], EndPoint> item)
         {
-            Add((KnifeSocketServerFilter)item);
+            Add((ITunnelFilter<byte[], EndPoint>)item);
         }
 
         public void Clear()
@@ -31,19 +31,19 @@ namespace SocketKnife.Generic
             _Filters.Clear();
         }
 
-        bool ICollection<ITunnelFilter<EndPoint, Socket>>.Contains(ITunnelFilter<EndPoint, Socket> item)
+        bool ICollection<ITunnelFilter<byte[], EndPoint>>.Contains(ITunnelFilter<byte[], EndPoint> item)
         {
-            return Contains((KnifeSocketServerFilter)item);
+            return Contains((ITunnelFilter<byte[], EndPoint>)item);
         }
 
-        void ICollection<ITunnelFilter<EndPoint, Socket>>.CopyTo(ITunnelFilter<EndPoint, Socket>[] array, int arrayIndex)
+        void ICollection<ITunnelFilter<byte[], EndPoint>>.CopyTo(ITunnelFilter<byte[], EndPoint>[] array, int arrayIndex)
         {
-            CopyTo((KnifeSocketServerFilter[])array, arrayIndex);
+            CopyTo((ITunnelFilter<byte[], EndPoint>[])array, arrayIndex);
         }
 
-        bool ICollection<ITunnelFilter<EndPoint, Socket>>.Remove(ITunnelFilter<EndPoint, Socket> item)
+        bool ICollection<ITunnelFilter<byte[], EndPoint>>.Remove(ITunnelFilter<byte[], EndPoint> item)
         {
-            return Remove((KnifeSocketServerFilter)item);
+            return Remove((ITunnelFilter<byte[], EndPoint>)item);
         }
 
         public int Count
@@ -53,27 +53,27 @@ namespace SocketKnife.Generic
 
         public bool IsReadOnly
         {
-            get { return ((ICollection<KnifeSocketServerFilter>)_Filters).IsReadOnly; }
+            get { return ((ICollection<ITunnelFilter<byte[], EndPoint>>)_Filters).IsReadOnly; }
         }
 
-        void ITunnelFilterChain<EndPoint, Socket>.AddAfter(ITunnelFilter<EndPoint, Socket> filter, ITunnelFilter<EndPoint, Socket> newfilter)
+        void ITunnelFilterChain<byte[], EndPoint>.AddAfter(ITunnelFilter<byte[], EndPoint> filter, ITunnelFilter<byte[], EndPoint> newfilter)
         {
-            AddAfter((KnifeSocketServerFilter)filter, (KnifeSocketServerFilter)newfilter);
+            AddAfter((ITunnelFilter<byte[], EndPoint>)filter, (ITunnelFilter<byte[], EndPoint>)newfilter);
         }
 
-        void ITunnelFilterChain<EndPoint, Socket>.AddBefore(ITunnelFilter<EndPoint, Socket> filter, ITunnelFilter<EndPoint, Socket> newfilter)
+        void ITunnelFilterChain<byte[], EndPoint>.AddBefore(ITunnelFilter<byte[], EndPoint> filter, ITunnelFilter<byte[], EndPoint> newfilter)
         {
-            AddBefore((KnifeSocketServerFilter)filter, (KnifeSocketServerFilter)newfilter);
+            AddBefore((ITunnelFilter<byte[], EndPoint>)filter, (ITunnelFilter<byte[], EndPoint>)newfilter);
         }
 
-        void ITunnelFilterChain<EndPoint, Socket>.AddFirst(ITunnelFilter<EndPoint, Socket> filter)
+        void ITunnelFilterChain<byte[], EndPoint>.AddFirst(ITunnelFilter<byte[], EndPoint> filter)
         {
-            AddFirst((KnifeSocketServerFilter)filter);
+            AddFirst((ITunnelFilter<byte[], EndPoint>)filter);
         }
 
-        void ITunnelFilterChain<EndPoint, Socket>.AddLast(ITunnelFilter<EndPoint, Socket> filter)
+        void ITunnelFilterChain<byte[], EndPoint>.AddLast(ITunnelFilter<byte[], EndPoint> filter)
         {
-            AddLast((KnifeSocketServerFilter)filter);
+            AddLast((ITunnelFilter<byte[], EndPoint>)filter);
         }
 
         public void RemoveFirst()
@@ -86,49 +86,49 @@ namespace SocketKnife.Generic
             _Filters.RemoveLast();
         }
 
-        public IEnumerator<KnifeSocketServerFilter> GetEnumerator()
+        public IEnumerator<ITunnelFilter<byte[], EndPoint>> GetEnumerator()
         {
             return _Filters.GetEnumerator();
         }
 
-        public void Add(KnifeSocketServerFilter item)
+        public void Add(ITunnelFilter<byte[], EndPoint> item)
         {
             _Filters.AddLast(item);
         }
 
-        public bool Contains(KnifeSocketServerFilter item)
+        public bool Contains(ITunnelFilter<byte[], EndPoint> item)
         {
             return _Filters.Contains(item);
         }
 
-        public void CopyTo(KnifeSocketServerFilter[] array, int arrayIndex)
+        public void CopyTo(ITunnelFilter<byte[], EndPoint>[] array, int arrayIndex)
         {
             _Filters.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(KnifeSocketServerFilter item)
+        public bool Remove(ITunnelFilter<byte[], EndPoint> item)
         {
             return _Filters.Remove(item);
         }
 
-        public void AddAfter(KnifeSocketServerFilter filter, KnifeSocketServerFilter newfilter)
+        public void AddAfter(ITunnelFilter<byte[], EndPoint> filter, ITunnelFilter<byte[], EndPoint> newfilter)
         {
-            _Filters.AddAfter(new LinkedListNode<KnifeSocketServerFilter>(filter), new LinkedListNode<KnifeSocketServerFilter>(newfilter));
+            _Filters.AddAfter(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter), new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(newfilter));
         }
 
-        public void AddBefore(KnifeSocketServerFilter filter, KnifeSocketServerFilter newfilter)
+        public void AddBefore(ITunnelFilter<byte[], EndPoint> filter, ITunnelFilter<byte[], EndPoint> newfilter)
         {
-            _Filters.AddBefore(new LinkedListNode<KnifeSocketServerFilter>(filter), new LinkedListNode<KnifeSocketServerFilter>(newfilter));
+            _Filters.AddBefore(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter), new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(newfilter));
         }
 
-        public void AddFirst(KnifeSocketServerFilter filter)
+        public void AddFirst(ITunnelFilter<byte[], EndPoint> filter)
         {
-            _Filters.AddFirst(new LinkedListNode<KnifeSocketServerFilter>(filter));
+            _Filters.AddFirst(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter));
         }
 
-        public void AddLast(KnifeSocketServerFilter filter)
+        public void AddLast(ITunnelFilter<byte[], EndPoint> filter)
         {
-            _Filters.AddLast(new LinkedListNode<KnifeSocketServerFilter>(filter));
+            _Filters.AddLast(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter));
         }
     }
 }

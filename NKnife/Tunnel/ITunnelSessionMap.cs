@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelSessionMap<TSource, TConnector> : IDictionary<TSource, ITunnelSession<TSource, TConnector>>
+    public interface ITunnelSessionMap<TData, TSessionId> : IDictionary<TSessionId, ITunnelSession<TData, TSessionId>>
     {
     }
 }

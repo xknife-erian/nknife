@@ -5,12 +5,13 @@ using System.Text;
 using Common.Logging;
 using NKnife.Interface;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FixedTailDecoder : KnifeSocketDatagramDecoder
+    public class FixedTailDecoder : KnifeStringDatagramDecoder
     {
         private byte[] _Tail = Encoding.Default.GetBytes("\r\n");
 

@@ -8,6 +8,7 @@ using NKnife.Interface;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
+using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 using SocketKnife.Events;
 using SocketKnife.Generic.Filters;
@@ -50,7 +51,7 @@ namespace SocketKnife.Generic
 
         protected Func<StringProtocolFamily> _FamilyGetter;
         protected Func<IList<KnifeSocketProtocolHandler>> _HandlersGetter;
-        protected Func<KnifeSocketCodec> _CodecGetter;
+        protected Func<KnifeStringCodec> _CodecGetter;
 
         /// <summary>
         /// 当执行完当前Filter的工作时，是否继续Filter链的下个节点
@@ -66,7 +67,7 @@ namespace SocketKnife.Generic
 
         public event EventHandler<DataDecodedEventArgs<EndPoint>> DataDecoded;
 
-        public virtual void BindGetter(Func<KnifeSocketCodec> codecFunc, Func<IList<KnifeSocketProtocolHandler>> handlerGetter, Func<StringProtocolFamily> familyGetter)
+        public virtual void BindGetter(Func<KnifeStringCodec> codecFunc, Func<IList<KnifeSocketProtocolHandler>> handlerGetter, Func<StringProtocolFamily> familyGetter)
         {
             _FamilyGetter = familyGetter;
             _HandlersGetter = handlerGetter;

@@ -1,85 +1,81 @@
-﻿using System.Collections.Generic;
-using Ninject;
-using Common.Logging;
-using NKnife.Interface;
+﻿using Common.Logging;
 using NKnife.IoC;
-using NKnife.Tunnel;
 
-namespace SocketKnife.Generic
+namespace NKnife.Tunnel.Generic
 {
-    public class KnifeSocketCodec : ITunnelCodec<string>
+    public class KnifeStringCodec : ITunnelCodec<string>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-        public KnifeSocketCodec()
+        public KnifeStringCodec()
         {
             
         }
 
-        public KnifeSocketCodec(string codecName)
+        public KnifeStringCodec(string codecName)
         {
             CodecName = codecName;
         }
 
         public string CodecName { get; set; }
 
-        private KnifeSocketDatagramDecoder _SocketDecoder;
+        private KnifeStringDatagramDecoder _StringDecoder;
         private bool _HasSetSocketDecoder;
-        public virtual KnifeSocketDatagramDecoder SocketDecoder
+        public virtual KnifeStringDatagramDecoder StringDecoder
         {
             get
             {
                 if (!_HasSetSocketDecoder)
                 {
                     return string.IsNullOrEmpty(CodecName)
-                        ? DI.Get<KnifeSocketDatagramDecoder>()
-                        : DI.Get<KnifeSocketDatagramDecoder>(CodecName);
+                        ? DI.Get<KnifeStringDatagramDecoder>()
+                        : DI.Get<KnifeStringDatagramDecoder>(CodecName);
                 }
-                return _SocketDecoder;
+                return _StringDecoder;
             }
             set
             {
-                _SocketDecoder = value;
+                _StringDecoder = value;
                 _HasSetSocketDecoder = true;
             }
         }
 
-        private KnifeSocketDatagramEncoder _SocketEncoder;
+        private KnifeStringDatagramEncoder _StringEncoder;
         private bool _HasSetSocketEncoder;
 
-        public virtual KnifeSocketDatagramEncoder SocketEncoder
+        public virtual KnifeStringDatagramEncoder StringEncoder
         {
             get
             {
                 if (!_HasSetSocketEncoder)
                 {
-                    return string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeSocketDatagramEncoder>() : DI.Get<KnifeSocketDatagramEncoder>(CodecName);
+                    return string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramEncoder>() : DI.Get<KnifeStringDatagramEncoder>(CodecName);
                 }
-                return _SocketEncoder;
+                return _StringEncoder;
             }
             set
             {
-                _SocketEncoder = value;
+                _StringEncoder = value;
                 _HasSetSocketEncoder = true;
             }
         }
 
         IDatagramDecoder<string> ITunnelCodec<string>.Decoder
         {
-            get { return SocketDecoder; }
+            get { return StringDecoder; }
             set
             {
-                SocketDecoder = (KnifeSocketDatagramDecoder) value;
+                StringDecoder = (KnifeStringDatagramDecoder) value;
                 _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
             }
         }
 
         IDatagramEncoder<string> ITunnelCodec<string>.Encoder
         {
-            get { return SocketEncoder; }
+            get { return StringEncoder; }
             set
             {
-                SocketEncoder = (KnifeSocketDatagramEncoder) value;
+                StringEncoder = (KnifeStringDatagramEncoder) value;
                 _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
             }
         }

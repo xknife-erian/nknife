@@ -9,6 +9,7 @@ using Common.Logging;
 using NKnife.Events;
 using NKnife.Interface;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel;
 using NKnife.Utility;
 using SocketKnife.Common;
 using SocketKnife.Events;
@@ -86,7 +87,7 @@ namespace SocketKnife.Generic.Filters
         {
             int finishedIndex;
             var codec = _CodecGetter.Invoke();
-            string[] datagram = codec.SocketDecoder.Execute(data, out finishedIndex);
+            string[] datagram = codec.StringDecoder.Execute(data, out finishedIndex);
             OnDataDecoded(new SocketDataDecodedEventArgs(endpoint, datagram));
             if (UtilityCollection.IsNullOrEmpty(datagram))
                 return finishedIndex;

@@ -34,7 +34,7 @@ namespace SocketKnife.Generic
             }
         }
 
-        bool IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.TryGetValue(EndPoint key, out ITunnelSession<EndPoint, Socket> value)
+        bool IDictionary<EndPoint, ITunnelSession<byte[], EndPoint>>.TryGetValue(EndPoint key, out ITunnelSession<byte[], EndPoint> value)
         {
             KnifeSocketSession session;
             if (TryGetValue(key, out session))
@@ -46,7 +46,7 @@ namespace SocketKnife.Generic
             return false;
         }
 
-        ITunnelSession<EndPoint, Socket> IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.this[EndPoint key]
+        ITunnelSession<byte[], EndPoint> IDictionary<EndPoint, ITunnelSession<byte[], EndPoint>>.this[EndPoint key]
         {
             get { return this[key]; }
             set { this[key] = (KnifeSocketSession)value; }
@@ -57,9 +57,9 @@ namespace SocketKnife.Generic
             get { return _Map.Keys; }
         }
 
-        ICollection<ITunnelSession<EndPoint, Socket>> IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.Values
+        ICollection<ITunnelSession<byte[], EndPoint>> IDictionary<EndPoint, ITunnelSession<byte[], EndPoint>>.Values
         {
-            get { return (ICollection<ITunnelSession<EndPoint, Socket>>) Values(); }
+            get { return (ICollection<ITunnelSession<byte[], EndPoint>>)Values(); }
         }
 
         public ICollection<KnifeSocketSession> Values()
@@ -67,12 +67,12 @@ namespace SocketKnife.Generic
             return _Map.Values;
         }
 
-        void IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.Add(EndPoint key, ITunnelSession<EndPoint, Socket> value)
+        void IDictionary<EndPoint, ITunnelSession<byte[], EndPoint>>.Add(EndPoint key, ITunnelSession<byte[], EndPoint> value)
         {
             Add(key, (KnifeSocketSession)value);
         }
 
-        void ICollection<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>.Add(KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>> item)
+        void ICollection<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>>.Add(KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>> item)
         {
             Add(item.Key, (KnifeSocketSession)item.Value);
         }
@@ -93,16 +93,16 @@ namespace SocketKnife.Generic
             return Contains(key);
         }
 
-        bool ICollection<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>.Contains(KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>> item)
+        bool ICollection<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>>.Contains(KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>> item)
         {
             return Contains(item.Key);
         }
 
         [Obsolete("不推荐使用。Knife.")]
-        void ICollection<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>.CopyTo(KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>>.CopyTo(KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>[] array, int arrayIndex)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
-            ((IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>) _Map).CopyTo(array, arrayIndex);
+            ((IDictionary<EndPoint, ITunnelSession<byte[], EndPoint>>)_Map).CopyTo(array, arrayIndex);
         }
 
         public int Count
@@ -115,9 +115,9 @@ namespace SocketKnife.Generic
             get { return ((IDictionary<EndPoint, KnifeSocketSession>)_Map).IsReadOnly; }
         }
 
-        IEnumerator<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>> IEnumerable<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>.GetEnumerator()
+        IEnumerator<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>> IEnumerable<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>>.GetEnumerator()
         {
-            return (IEnumerator<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>) GetEnumerator();
+            return (IEnumerator<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>>)GetEnumerator();
         }
 
         public IEnumerator GetEnumerator()
@@ -125,7 +125,7 @@ namespace SocketKnife.Generic
             return _Map.GetEnumerator();
         }
 
-        bool ICollection<KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>>>.Remove(KeyValuePair<EndPoint, ITunnelSession<EndPoint, Socket>> item)
+        bool ICollection<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>>.Remove(KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>> item)
         {
             if (_Map.ContainsKey(item.Key))
             {
@@ -134,7 +134,7 @@ namespace SocketKnife.Generic
             return false;
         }
 
-        bool IDictionary<EndPoint, ITunnelSession<EndPoint, Socket>>.Remove(EndPoint key)
+        bool IDictionary<EndPoint, ITunnelSession<byte[], EndPoint>>.Remove(EndPoint key)
         {
             return Remove(key);
         }

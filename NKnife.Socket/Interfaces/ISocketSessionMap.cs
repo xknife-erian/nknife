@@ -9,7 +9,7 @@ using SocketKnife.Generic;
 
 namespace SocketKnife.Interfaces
 {
-    public interface ISocketSessionMap : ITunnelSessionMap<EndPoint, Socket>
+    public interface ISocketSessionMap : ITunnelSessionMap<byte[], EndPoint>
     {
         event EventHandler<EventArgs<EndPoint>> Removed;
 

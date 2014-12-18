@@ -18,5 +18,5 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("NKnife.UnitTest")]
 
-[assembly: AssemblyVersion("14.4.7.1030")]
-[assembly: AssemblyFileVersionAttribute("14.4.7.1030")]
+[assembly: AssemblyVersion("14.4.8.1215")]
+[assembly: AssemblyFileVersionAttribute("14.4.8.1215")]

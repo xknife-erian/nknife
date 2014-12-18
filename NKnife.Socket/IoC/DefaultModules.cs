@@ -17,8 +17,10 @@ namespace SocketKnife.IoC
             Bind<IKnifeSocketServer>().To<KnifeSocketServer>();
             Bind<IKnifeSocketClient>().To<KnifeSocketClient>();
 
-            Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketServerFilterChain>().Named("Server");
-            Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketClientFilterChain>().Named("Client");
+            Bind<ITunnelFilterChain<byte[], EndPoint>>().To<KnifeSocketServerFilterChain>();
+            //Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketClientFilterChain>().Named("Client");
+
+            Bind<ITunnel<byte[], EndPoint>>().To<KnifeTunnel<byte[], EndPoint>>();
 
             Bind<KnifeSocketConfig>().To<KnifeSocketServerConfig>().Named("Server");
             Bind<KnifeSocketConfig>().To<KnifeSocketClientConfig>().Named("Client");
