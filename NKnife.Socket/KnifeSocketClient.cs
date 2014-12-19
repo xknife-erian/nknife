@@ -54,8 +54,6 @@ namespace SocketKnife
 
         #endregion 成员变量
 
-
-
         #region IKnifeSocketClient接口
 
         public KnifeSocketConfig Config
