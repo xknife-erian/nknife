@@ -32,6 +32,7 @@ namespace SocketKnife
         protected KnifeSocketClientConfig _Config = DI.Get<KnifeSocketClientConfig>();
         protected EndPoint EndPoint;
 
+        private bool _IsConnecting; //true 正在进行连接, false表示连接动作完成
         protected bool IsConnected; //连接状态，true表示已经连接上了
         private bool _ReconnectFlag;
         private bool _NeedReconnected;//是否重连
@@ -48,7 +49,7 @@ namespace SocketKnife
 
         public KnifeSocketClient()
         {
-            
+
         }
 
         #endregion 成员变量
@@ -169,7 +170,7 @@ namespace SocketKnife
 
                 if (_NeedReconnected) //需要重连
                 {
-                    if (!IsConnected) //未连接
+                    if (!IsConnected && !_IsConnecting) //未连接
                     {
                         _logger.Debug("Client发起重连尝试");
                         AsyncConnect(_IpAddress, _Port);
@@ -236,9 +237,10 @@ namespace SocketKnife
         /// </summary>
         private bool _IsDisposed;
 
-        public KnifeSocketClient(bool reconnectFlag)
+        public KnifeSocketClient(bool reconnectFlag, bool isConnecting)
         {
             _ReconnectFlag = reconnectFlag;
+            _IsConnecting = isConnecting;
         }
 
         public void Dispose()
@@ -278,11 +280,13 @@ namespace SocketKnife
                 {
                     BuildSocket();
                 }
+                _IsConnecting = true;
                 if (!AsyncConnectEventArgs.AcceptSocket.ConnectAsync(AsyncConnectEventArgs))
                     ProcessConnect(AsyncConnectEventArgs);
             }
             catch (Exception e)
             {
+                _IsConnecting = false;
                 _logger.Error("客户端异步连接远端时异常.{0}", e);
             }
         }
@@ -399,6 +403,7 @@ namespace SocketKnife
                     break;
                 }
             }
+            _IsConnecting = false;
         }
 
         protected virtual void ProcessReceive(SocketAsyncEventArgs e)
@@ -540,8 +545,6 @@ namespace SocketKnife
                 StartReconnect();
                 _ReconnectResetEvent.Set(); //立刻发起连接
 
-                //_SynConnectWaitEventReset.Reset();
-                //_SynConnectWaitEventReset.WaitOne(_Config.ReconnectInterval * 2); //等待连接事件结束，等重连两次的时间，只有连接成功了， 信号才会被提前释放
             }
             else //已连接
             {
@@ -552,10 +555,6 @@ namespace SocketKnife
                     ProcessSend(AsyncSendEventArgs);
                 }
             }
-//            else //连接失败了
-//            {
-//                _logger.Warn("Clitent发送失败，因为无法连接服务端");
-//            }
         }
 
         private void AddSendQueue(byte[] data)
