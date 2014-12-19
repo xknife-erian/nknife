@@ -172,11 +172,16 @@
     <Compile Include="Tests\ITestCase.cs" />
     <Compile Include="Tests\TestCaseAttribute.cs" />
     <Compile Include="Tests\TestMode.cs" />
+    <Compile Include="Tunnel\Common\Heartbeat.cs" />
+    <Compile Include="Tunnel\Common\KnifeTunnelFilterChain.cs" />
+    <Compile Include="Tunnel\Common\KnifeTunnelSession.cs" />
+    <Compile Include="Tunnel\Filters\LogFilter.cs" />
     <Compile Include="Tunnel\Events\DataDecodedEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />
     <Compile Include="Protocol\IProtocolCommandParser.cs" />
     <Compile Include="Tunnel\Filters\SocketProtocolFilter.cs" />
+    <Compile Include="Tunnel\Filters\HeartbeatFilter.cs" />
     <Compile Include="Tunnel\Generic\KnifeStringCodec.cs" />
     <Compile Include="Tunnel\Generic\KnifeStringDatagramDecoder.cs" />
     <Compile Include="Tunnel\Generic\KnifeStringDatagramEncoder.cs" />

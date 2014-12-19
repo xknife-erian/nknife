@@ -1,6 +1,7 @@
 using System;
 using NKnife.Base;
 using NKnife.Events;
+using NKnife.Tunnel.Common;
 using SocketKnife.Common;
 
 namespace SocketKnife.Interfaces

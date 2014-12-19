@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using NKnife.Tunnel;
+﻿using System.Net;
 
-namespace SocketKnife.Generic
+namespace NKnife.Tunnel.Common
 {
     /// <summary>
-    /// 有EndPoint,有byte[]，可用于socket, http等网络协议
+    /// 有EndPoint,有byte[]，可用于socket, http等网络协议，
+    /// 只要SessionId的类型可以为EndPoint，均可以使用此类作为会话类
     /// </summary>
     public class KnifeTunnelSession : ITunnelSession<byte[], EndPoint>
     {
         public EndPoint Id { get; set; }
         public byte[] Data { get; set; }
 
-        protected bool Equals(KnifeSocketSession other)
+        protected bool Equals(KnifeTunnelSession other)
         {
             return Id == other.Id && Equals(Id, other.Id);
         }
@@ -35,7 +31,7 @@ namespace SocketKnife.Generic
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((KnifeSocketSession)obj);
+            return Equals((KnifeTunnelSession)obj);
         }
     }
 }

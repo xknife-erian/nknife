@@ -1,20 +1,13 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Timers;
 using Common.Logging;
-using NKnife.Interface;
-using NKnife.Tunnel;
-using SocketKnife.Common;
-using SocketKnife.Events;
-using SocketKnife.Interfaces;
+using NKnife.Tunnel.Common;
 
-namespace SocketKnife.Generic.Filters
+namespace NKnife.Tunnel.Filters
 {
     public class HeartbeatFilter : ITunnelFilter<byte[], EndPoint>
     {
@@ -120,7 +113,7 @@ namespace SocketKnife.Generic.Filters
 
         private HeartBeatSession GetHeartBeatSessionFromMap(EndPoint endPoint)
         {
-            HeartBeatSession result = null;
+            HeartBeatSession result;
             _HeartBeartSessionMap.TryGetValue(endPoint, out result);
             return result;
         }
@@ -216,10 +209,12 @@ namespace SocketKnife.Generic.Filters
         {
             if (!_HeartBeartSessionMap.ContainsKey(id))
             {
-                var session = new HeartBeatSession();
-                session.SessionId = id;
+                var session = new HeartBeatSession
+                {
+                    SessionId = id, 
+                    WaitingForReply = !EnableAggressiveMode
+                };
                 //被动模式则WaitingForReply=true,从session建立起，就开始等着收到心跳请求了，主动模式不用
-                session.WaitingForReply = !EnableAggressiveMode; 
 
                 _HeartBeartSessionMap.TryAdd(id, session);
             }
@@ -315,7 +310,7 @@ namespace SocketKnife.Generic.Filters
                 if (ReferenceEquals(null, obj)) return false;
                 if (ReferenceEquals(this, obj)) return true;
                 if (obj.GetType() != this.GetType()) return false;
-                return Equals((KnifeSocketSession)obj);
+                return Equals((HeartBeatSession)obj);
             }
         }
     }

@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Timers;
 using Common.Logging;
 using NKnife.IoC;
-using NKnife.Protocol.Generic;
-using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
-using SocketKnife.Common;
-using SocketKnife.Events;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 

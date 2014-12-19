@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using Common.Logging;
-using NKnife.Tunnel;
 
-namespace SocketKnife.Generic.Filters
+namespace NKnife.Tunnel.Filters
 {
     public class LogFilter : ITunnelFilter<byte[], EndPoint>
     {

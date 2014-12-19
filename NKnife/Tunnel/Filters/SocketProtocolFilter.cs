@@ -24,7 +24,7 @@ namespace NKnife.Tunnel.Filters
 
         public SocketProtocolFilterListener Listener { get; set; }
 
-        public bool ContinueNextFilter { get; private set; }
+        public bool ContinueNextFilter { get { return true; } }
 
 
         public SocketProtocolFilter()
@@ -44,7 +44,7 @@ namespace NKnife.Tunnel.Filters
         {
             var data = session.Data;
             EndPoint endPoint = session.Id;
-            ReceiveQueue receive = null;
+            ReceiveQueue receive;
             if (!_ReceiveQueueMap.TryGetValue(endPoint, out receive))
             {
                 //当第一次有相应的客户端连接时，为该客户端创建相应的处理队列
@@ -108,7 +108,7 @@ namespace NKnife.Tunnel.Filters
                             foreach (var protocol in protocols)
                             {
                                 // 触发数据基础解析后发生的数据到达事件
-                                Listener.HandlerInvoke(endPoint, (StringProtocol) protocol);
+                                Listener.HandlerInvoke(endPoint, protocol);
                             }
                         }
                     }

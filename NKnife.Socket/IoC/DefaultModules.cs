@@ -5,6 +5,7 @@ using Ninject.Modules;
 using Ninject.Planning.Bindings;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
 
@@ -18,7 +19,6 @@ namespace SocketKnife.IoC
             Bind<IKnifeSocketClient>().To<KnifeSocketClient>();
 
             Bind<ITunnelFilterChain<byte[], EndPoint>>().To<KnifeTunnelFilterChain>();
-            //Bind<ITunnelFilterChain<EndPoint, Socket>>().To<KnifeSocketClientFilterChain>().Named("Client");
 
             Bind<ITunnel<byte[], EndPoint>>().To<KnifeTunnel<byte[], EndPoint>>();
 
