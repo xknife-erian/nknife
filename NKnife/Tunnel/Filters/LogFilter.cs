@@ -16,12 +16,12 @@ namespace NKnife.Tunnel.Filters
 
         public void ProcessSessionBroken(EndPoint id)
         {
-            _logger.Debug(string.Format("连接建立，来自{0}", id));
+            _logger.Debug(string.Format("连接断开，来自{0}", id));
         }
 
         public void ProcessSessionBuilt(EndPoint id)
         {
-            _logger.Debug(string.Format("连接断开,来自{0}", id));
+            _logger.Debug(string.Format("连接建立,来自{0}", id));
         }
     }
 }
