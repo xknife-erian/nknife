@@ -11,48 +11,61 @@ using NKnife.Tunnel.Generic;
 
 namespace NKnife.Tunnel.Filters
 {
-    public class SocketProtocolFilter : ProtocolProcessorBase<string>, ITunnelFilter<byte[], EndPoint>
+    public class SocketProtocolFilter : ProtocolProcessorBase<string>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-
-        IFilterListener<byte[], EndPoint> ITunnelFilter<byte[], EndPoint>.Listener
-        {
-            get { return Listener; }
-            set { Listener = (SocketProtocolFilterListener) value; }
-        }
-
-        public SocketProtocolFilterListener Listener { get; set; }
-
-        public bool ContinueNextFilter { get { return true; } }
+//        protected IFilterListener<byte[], EndPoint> ITunnelFilter<byte[], EndPoint>.Listener
+//        {
+//            get { return Listener; }
+//            set { Listener = (SocketProtocolFilterListener) value; }
+//        }
+//
+//        public SocketProtocolFilterListener Listener { get; set; }
 
 
         public SocketProtocolFilter()
         {
             Listener = new SocketProtocolFilterListener();
+            ContinueNextFilter = true;
         }
 
-        public void ProcessSessionBroken(EndPoint id)
+        public override void ProcessSessionBroken(EndPoint id)
         {
+            DataMonitor monitor;
+            if (_DataMonitors.TryGetValue(id, out monitor))
+            {
+                monitor.IsMonitor = false;
+                monitor.ReceiveQueue.AutoResetEvent.Set();
+            }
+
+            _DataMonitors.TryRemove(id, out monitor);
         }
 
-        public void ProcessSessionBuilt(EndPoint id)
+        public override void ProcessSessionBuilt(EndPoint id)
         {
-
+            DataMonitor monitor;
+            if (!_DataMonitors.TryGetValue(id, out monitor))
+            {
+                //当第一次有相应的客户端连接时，为该客户端创建相应的处理队列
+                monitor = new DataMonitor();
+                InitializeDataMonitor(id, monitor);
+            }
         }
-        public void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+        public override void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
         {
             var data = session.Data;
             EndPoint endPoint = session.Id;
-            ReceiveQueue receive;
-            if (!_ReceiveQueueMap.TryGetValue(endPoint, out receive))
+            //ReceiveQueue receive;
+            DataMonitor monitor;
+            if (!_DataMonitors.TryGetValue(endPoint, out monitor))
             {
                 //当第一次有相应的客户端连接时，为该客户端创建相应的处理队列
-                receive = new ReceiveQueue();
-                _ReceiveQueueMap.TryAdd(endPoint, receive);
-                InitializeDataMonitor(new KeyValuePair<EndPoint, ReceiveQueue>(endPoint, receive));
+                monitor = new DataMonitor();
+                InitializeDataMonitor(endPoint,monitor);
             }
-            receive.Enqueue(data);
+
+            monitor.ReceiveQueue.Enqueue(data);
         }
 
 
@@ -61,24 +74,23 @@ namespace NKnife.Tunnel.Filters
         private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors =
     new ConcurrentDictionary<EndPoint, DataMonitor>();
 
-        private readonly ConcurrentDictionary<EndPoint, ReceiveQueue> _ReceiveQueueMap =
-            new ConcurrentDictionary<EndPoint, ReceiveQueue>();
-
         public void AddHandlers(params KnifeProtocolHandlerBase<byte[], EndPoint, string>[] handlers)
         {
-            Listener.AddHandlers(handlers);
+            ((SocketProtocolFilterListener)Listener).AddHandlers(handlers);
         }
 
         public void RemoveHandler(KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
         {
-            Listener.RemoveHandler(handler);
+            ((SocketProtocolFilterListener)Listener).RemoveHandler(handler);
         }
 
-        protected virtual void InitializeDataMonitor(KeyValuePair<EndPoint, ReceiveQueue> pair)
+        protected virtual void InitializeDataMonitor(EndPoint id,DataMonitor dm)
         {
-            var task = new Task(ReceiveQueueMonitor, pair);
-            var dm = new DataMonitor { IsMonitor = true, ReceiveQueue = pair.Value, Task = task };
-            _DataMonitors.TryAdd(pair.Key, dm);
+            var task = new Task(ReceiveQueueMonitor, id);
+            dm.IsMonitor = true;
+            dm.Task = task;
+            dm.ReceiveQueue = new ReceiveQueue();
+            _DataMonitors.TryAdd(id, dm);
             task.Start();
         }
 
@@ -87,41 +99,53 @@ namespace NKnife.Tunnel.Filters
         /// </summary>
         protected virtual void ReceiveQueueMonitor(object obj)
         {
-            var pair = (KeyValuePair<EndPoint, ReceiveQueue>)obj;
-            _logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", pair.Key));
-            ReceiveQueue receiveQueue = pair.Value;
-
-            var unFinished = new byte[] { };
+            var endPoint = (EndPoint)obj;
             DataMonitor dataMonitor;
-            EndPoint endPoint = pair.Key;
-            if (_DataMonitors.TryGetValue(endPoint, out dataMonitor))
-            {
-                while (dataMonitor.IsMonitor)
-                {
-                    if (receiveQueue.Count > 0)
-                    {
-                        byte[] data = receiveQueue.Dequeue();
-                        var protocols = ProcessDataPacket(data, unFinished);
+            _logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", endPoint));
+            var unFinished = new byte[] { };
 
-                        if (protocols != null)
+            try
+            {
+                if (_DataMonitors.TryGetValue(endPoint, out dataMonitor))
+                {
+                    while (dataMonitor.IsMonitor)
+                    {
+
+                        if (dataMonitor.ReceiveQueue.Count > 0)
                         {
-                            foreach (var protocol in protocols)
+                            byte[] data = dataMonitor.ReceiveQueue.Dequeue();
+                            var protocols = ProcessDataPacket(data, unFinished);
+
+                            if (protocols != null)
                             {
-                                // 触发数据基础解析后发生的数据到达事件
-                                Listener.HandlerInvoke(endPoint, protocol);
+                                foreach (var protocol in protocols)
+                                {
+                                    // 触发数据基础解析后发生的数据到达事件
+                                    ((SocketProtocolFilterListener)Listener).HandlerInvoke(endPoint, protocol);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        receiveQueue.AutoResetEvent.WaitOne();
+                        else
+                        {
+                            dataMonitor.ReceiveQueue.AutoResetEvent.WaitOne();
+                        }
+
+
                     }
                 }
+                // 当接收队列停止监听时，移除该客户端数据队列
+           
             }
-            // 当接收队列停止监听时，移除该客户端数据队列
-            bool isRemoved = _DataMonitors.TryRemove(endPoint, out dataMonitor);
-            if (isRemoved)
-                _logger.Trace(string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", endPoint, _DataMonitors.Count));
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("监听循环异常结束：{0}", ex));
+            }
+            finally
+            {
+                bool isRemoved = _DataMonitors.TryRemove(endPoint, out dataMonitor);
+                if (isRemoved)
+                    _logger.Trace(string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", endPoint, _DataMonitors.Count));
+            }
         }
 
 

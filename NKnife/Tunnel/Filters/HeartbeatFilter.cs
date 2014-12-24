@@ -6,23 +6,14 @@ using System.Net;
 using System.Timers;
 using Common.Logging;
 using NKnife.Tunnel.Common;
+using NKnife.Tunnel.Generic;
 
 namespace NKnife.Tunnel.Filters
 {
-    public class HeartbeatFilter : ITunnelFilter<byte[], EndPoint>
+    public class HeartbeatFilter : TunnelFilterBase<byte[], EndPoint>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-        IFilterListener<byte[], EndPoint> ITunnelFilter<byte[], EndPoint>.Listener
-        {
-            get { return Listener; }
-            set { Listener = (HeartBeatListener)value; }
-        }
-
-        public HeartBeatListener Listener { get; set; }
-
-
-        public bool ContinueNextFilter { get; private set; }
 
         public Heartbeat Heartbeat { get; set; }
         public double Interval { get; set; }
@@ -80,7 +71,7 @@ namespace NKnife.Tunnel.Filters
                 {
                     if (EnableAggressiveMode) //主动模式需要发出心跳请求，并进入等待状态
                     {
-                        Listener.ProcessHeartBeatRequestOrReply(session.SessionId, Heartbeat.RequestOfHeartBeat);
+                        ((HeartBeatListener)Listener).ProcessHeartBeatRequestOrReply(session.SessionId, Heartbeat.RequestOfHeartBeat);
                         session.WaitingForReply = true; //在PrcoessReceiveData方法里，当收到回复时会回写为false
 #if DEBUG
                         _logger.Trace(string.Format("Server发出{0}心跳.", session.SessionId));
@@ -93,15 +84,16 @@ namespace NKnife.Tunnel.Filters
                 }
                 else
                 {
-                    _logger.Info(string.Format("心跳检查客户端{0}无响应，从SessionMap中移除之。池中:{1}", endpoint, _HeartBeartSessionMap.Count));
+                    
                     todoList.Add(endpoint);
                 }
             }
 
             foreach (EndPoint endPoint in todoList)
             {
+                _logger.Info(string.Format("心跳检查客户端{0}无响应，从SessionMap中移除之。池中:{1}", endPoint, _HeartBeartSessionMap.Count));
                 RemoveHeartBeatSessionFromMap(endPoint);
-                Listener.ProcessHeartBroke(endPoint); //发出心跳中断消息
+                ((HeartBeatListener)Listener).ProcessHeartBroke(endPoint); //发出心跳中断消息
             }
         }
 
@@ -129,7 +121,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+        public override void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
         {
             var data = session.Data;
             var heartSession = GetHeartBeatSessionFromMap(session.Id);
@@ -161,7 +153,7 @@ namespace NKnife.Tunnel.Filters
                 {
                     heartSession.WaitingForReply = false;
                 }
-                Listener.ProcessHeartBeatRequestOrReply(session.Id, Heartbeat.ReplyOfHeartBeat);
+                ((HeartBeatListener)Listener).ProcessHeartBeatRequestOrReply(session.Id, Heartbeat.ReplyOfHeartBeat);
 #if DEBUG
                 _logger.TraceFormat("Server收到{0}心跳请求.回复完成.", session.Id);
 #endif
@@ -188,7 +180,7 @@ namespace NKnife.Tunnel.Filters
             ContinueNextFilter = true;
         }
 
-        public void ProcessSessionBroken(EndPoint id)
+        public override void ProcessSessionBroken(EndPoint id)
         {
             if (_HeartBeartSessionMap.ContainsKey(id))
             {
@@ -205,7 +197,7 @@ namespace NKnife.Tunnel.Filters
             Listener.OnSessionBroken(id);
         }
 
-        public void ProcessSessionBuilt(EndPoint id)
+        public override void ProcessSessionBuilt(EndPoint id)
         {
             if (!_HeartBeartSessionMap.ContainsKey(id))
             {

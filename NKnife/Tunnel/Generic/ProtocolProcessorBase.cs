@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Web.Configuration;
-using System.Windows.Forms.VisualStyles;
 using Common.Logging;
 using NKnife.Protocol;
-using NKnife.Protocol.Generic;
 using NKnife.Utility;
 
 namespace NKnife.Tunnel.Generic
@@ -17,7 +13,7 @@ namespace NKnife.Tunnel.Generic
     /// 具备数据byte[]到Protocol处理能力的类
     /// 1、能够对byte[]进行拼包操作
     /// </summary>
-    public abstract class ProtocolProcessorBase<T> : IPackageProcessor<T>
+    public abstract class ProtocolProcessorBase<T> : TunnelFilterBase<byte[], EndPoint>,IPackageProcessor<T>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -97,12 +93,12 @@ namespace NKnife.Tunnel.Generic
                     _logger.Error(string.Format("命令字解析异常:{0},Data:{1}", e.Message, dg), e);
                     continue;
                 }
-                _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
+                _logger.Trace(string.Format("开始协议解析::命令字:{0},数据包:{1}", command, dg));
 
                 IProtocol<T> protocol;
                 try
                 {
-                    protocol = (IProtocol<T>)family.Parse(command, dg);
+                    protocol = family.Parse(command, dg);
                 }
                 catch (ArgumentNullException ex)
                 {

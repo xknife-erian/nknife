@@ -16,5 +16,6 @@ namespace NKnife.Tunnel
 
         void ProcessSessionBroken(TSessionId id);
         void ProcessSessionBuilt(TSessionId id);
+        void PrcoessSendData(ITunnelSession<TData, TSessionId> session);
     }
 }

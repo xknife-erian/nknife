@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Threading;
 using Common.Logging;
 using NKnife.IoC;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 using SocketKnife.Common;
 using SocketKnife.Generic;
@@ -48,6 +49,7 @@ namespace SocketKnife
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
+        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataSent;
 
         public bool Start()
         {
@@ -127,40 +129,18 @@ namespace SocketKnife
             Socket socket = session.AcceptSocket;
             if (socket.Connected)
             {
-                try
-                {
-                    socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
-                    _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
-                }
-                catch (SocketException e)
-                {
-                    _logger.WarnFormat("发送异常.{0},{1}. {2}", id, data.ToHexString(), e.Message);
-                }
+                ProcessSendData(id,socket, data);
             }
         }
 
         public void SendAll(byte[] data)
         {
-//            if (SessionMap.Count == 0)
-//            {
-//                _logger.Warn(string.Format("SessionMap为空"));
-//                return;
-//            }
-
             foreach (KnifeSocketSession session in SessionMap.Values())
             {
                 Socket socket = session.AcceptSocket;
                 if (socket.Connected)
                 {
-                    try
-                    {
-                        socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
-                        _logger.InfoFormat("ServerSend:{0}", data.ToHexString());
-                    }
-                    catch (SocketException e)
-                    {
-                        _logger.WarnFormat("发送异常.{0},{1}. {2}", session.Id, data.ToHexString(), e.Message);
-                    }
+                    ProcessSendData(session.Id,socket,data);
                 }
             }
         }
@@ -416,9 +396,11 @@ namespace SocketKnife
                 }
                 else //没收到数据，但连接正常，继续收
                 {
+                    Thread.Sleep(10);
                     if (e.AcceptSocket != null && e.AcceptSocket.Connected)
                     {
-                        if (!e.AcceptSocket.ReceiveAsync(e))
+                        bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(e);
+                        if (!willRaiseEvent)
                             ProcessReceive(e);
                     }
                 }
@@ -503,6 +485,32 @@ namespace SocketKnife
 
             if (!e.AcceptSocket.ReceiveAsync(e))
                 ProcessReceive(e);
+        }
+
+        protected virtual void ProcessSendData(EndPoint id, Socket socket, byte[] data)
+        {
+            try
+            {
+                socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
+                //_logger.InfoFormat("ServerSend:{0}", data.ToHexString());
+
+                var handler = DataSent;
+                if (handler != null)
+                {
+                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                    {
+                        Data = data,
+                        Id = id
+                    }));
+                }
+
+            }
+            catch (SocketException e)
+            {
+                _logger.WarnFormat("发送异常.{0},{1}. {2}", id, data.ToHexString(), e.Message);
+            }
+
+
         }
 
         protected virtual void AsynEndSend(IAsyncResult result)

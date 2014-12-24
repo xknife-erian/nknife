@@ -187,6 +187,7 @@
     <Compile Include="Tunnel\Generic\KnifeStringDatagramEncoder.cs" />
     <Compile Include="Tunnel\Generic\ProtocolProcessorBase.cs" />
     <Compile Include="Tunnel\Generic\TunnelBase.cs" />
+    <Compile Include="Tunnel\Generic\TunnelFilterBase.cs" />
     <Compile Include="Tunnel\IDataConnector.cs" />
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />

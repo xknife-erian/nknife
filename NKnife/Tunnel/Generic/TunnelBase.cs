@@ -57,6 +57,7 @@ namespace NKnife.Tunnel.Generic
             _DataConnector.SessionBuilt += OnSessionBuilt;
             _DataConnector.SessionBroken += OnSessionBroken;
             _DataConnector.DataReceived += OnDataReceived;
+            _DataConnector.DataSent += OnDataSent;
             foreach (var filter in _FilterChain)
             {
                 if (filter.Listener != null)
@@ -74,6 +75,14 @@ namespace NKnife.Tunnel.Generic
 
                 if (!filter.ContinueNextFilter)
                     break;
+            }
+        }
+
+        private void OnDataSent(object sender, SessionEventArgs<TData, TSessionId> e)
+        {
+            foreach (var filter in _FilterChain)
+            {
+                filter.PrcoessSendData(e.Item); // 调用filter对数据进行处理
             }
         }
 

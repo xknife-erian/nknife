@@ -74,6 +74,7 @@ namespace SocketKnife
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
+        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataSent;
 
         public bool Start()
         {
@@ -344,11 +345,13 @@ namespace SocketKnife
                         IsConnected = true;
 
                         var handler = SessionBuilt;
-                        if(handler !=null)
-                            handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                        if (handler != null)
+                        {
+                            handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
                             {
                                 Id = EndPoint,
                             }));
+                        }
 
                         //如果有自动重连，则通知timer停止重连
                         StopReconnect();
@@ -357,7 +360,7 @@ namespace SocketKnife
                         if (_SendQueue.Count > 0) //有数据要发送
                         {
                             byte[] dataToSend;
-                            _SendQueue.TryPeek(out dataToSend); //发送成功后才移除
+                            _SendQueue.TryDequeue(out dataToSend); 
                             _logger.Debug(string.Format("ClientSend: {0}", dataToSend.ToHexString()));
                             AsyncSendEventArgs.SetBuffer(dataToSend, 0, dataToSend.Length);
                             AsyncSendEventArgs.AcceptSocket = AsyncConnectEventArgs.AcceptSocket;
@@ -366,7 +369,6 @@ namespace SocketKnife
                                 ProcessSend(AsyncSendEventArgs);
                             }
                         }
-
 
                         _logger.Debug("client连接成功，开始接收数据");
 
@@ -408,28 +410,33 @@ namespace SocketKnife
         {
             try
             {
-                if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success) //连接正常
+                if (e.SocketError == SocketError.Success) //连接正常
                 {
-                    PrcessReceiveData(e); //处理收到的数据
-                    if (_Config.EnableDisconnectAfterReceive) //接收后主动断开-短连接
+                    if (e.BytesTransferred > 0) //有数据
                     {
-                        _logger.Info(string.Format("Client接收数据完成，主动中断连接。"));
-                        AsyncDisconnect();
-                    }
-                    else //继续接收
-                    {
-                        if (AsyncConnectEventArgs.AcceptSocket != null)
+                        PrcessReceiveData(e); //处理收到的数据
+                        if (_Config.EnableDisconnectAfterReceive) //接收后主动断开-短连接
                         {
-                            var data = new byte[Config.ReceiveBufferSize];
-                            e.SetBuffer(data, 0, data.Length); //设置数据包
-                            if (!AsyncConnectEventArgs.AcceptSocket.ReceiveAsync(e)) //开始读取数据包
-                                ProcessReceive(e);
-                        }
-                        else
-                        {
-                            ProcessConnectionBrokenPassive();
+                            _logger.Info(string.Format("Client接收数据完成，主动中断连接。"));
+                            AsyncDisconnect();
+                            return;
                         }
                     }
+
+                    //如果没有主动断开，则无论是否收到数据都继续接收
+                    Thread.Sleep(10);
+                    if (AsyncConnectEventArgs.AcceptSocket != null)
+                    {
+                        var data = new byte[Config.ReceiveBufferSize];
+                        e.SetBuffer(data, 0, data.Length); //设置数据包
+                        if (!AsyncConnectEventArgs.AcceptSocket.ReceiveAsync(e)) //开始读取数据包
+                            ProcessReceive(e);
+                    }
+                    else
+                    {
+                        ProcessConnectionBrokenPassive();
+                    }
+                   
                 }
                 else //连接异常了
                 {
@@ -478,17 +485,25 @@ namespace SocketKnife
 
         protected virtual void ProcessSend(SocketAsyncEventArgs e)
         {
+            var data = e.Buffer;
             if (e.SocketError == SocketError.Success) //连接正常
             {
                 //发送成功
-                if (_SendQueue.Count > 0)
+                
+                var handler = DataSent;
+                if (handler != null)
                 {
-                    byte[] giveUpData;
-                    _SendQueue.TryDequeue(out giveUpData);
+                    handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                    {
+                        Id = e.RemoteEndPoint,
+                        Data = data
+                    }));
                 }
             }
             else
             {
+                AddSendQueue(data); //发送失败，重新放入发送队列中，等待连接成功后再发
+
                 _logger.Info(string.Format("Client发送时发现连接中断。"));
                 IsConnected = false;
 
