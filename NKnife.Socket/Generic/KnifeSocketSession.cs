@@ -13,14 +13,9 @@ namespace SocketKnife.Generic
     /// <summary>
     /// 除了EndPoint, byte[]之外，多了Socket，只能用于Socket协议
     /// </summary>
-    public class KnifeSocketSession : KnifeTunnelSession
+    public class KnifeSocketSession : KnifeTunnelSession<EndPoint>
     {
         public Socket AcceptSocket { get; set; }
-
-        protected bool Equals(KnifeSocketSession other)
-        {
-            return Id == other.Id && Equals(Id, other.Id);
-        }
 
         public override int GetHashCode()
         {

@@ -56,6 +56,7 @@
     <Compile Include="Common\SendRecvEventArgs.cs" />
     <Compile Include="Common\SerialProDataReceivedEventArgs.cs" />
     <Compile Include="Common\SerialType.cs" />
+    <Compile Include="Interfaces\IKnifeSerialConnector.cs" />
     <Compile Include="Interfaces\ISerialClient.cs" />
     <Compile Include="Interfaces\ISerialClientManager.cs" />
     <Compile Include="Interfaces\ISerialDataPool.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="SerialClient.cs" />
     <Compile Include="SerialClients.cs" />
     <Compile Include="Common\SerialDataPool.cs" />
+    <Compile Include="Tunnel\Filters\SerialLogFilter.cs" />
     <Compile Include="Wrappers\SerialPortWin32.cs" />
     <Compile Include="Wrappers\SerialPortWrapperDotNet.cs" />
     <Compile Include="Wrappers\SerialPortWrapperWinApi.cs" />

@@ -33,9 +33,6 @@ namespace NKnife.Tunnel.Generic
 
         public bool Start()
         {
-            DataConnector.SessionBuilt += OnSessionBuilt;
-            DataConnector.SessionBroken += OnSessionBroken;
-            DataConnector.DataReceived += OnDataReceived;
             DataConnector.Start();
 
             return true;

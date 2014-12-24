@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
+using NKnife.IoC;
 
 namespace NKnife.Kits.SerialKnife
 {
@@ -15,6 +14,10 @@ namespace NKnife.Kits.SerialKnife
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Global.Culture = "zh-CN";
+            DI.Initialize();
+
             Application.Run(new WorkBenchForm());
         }
     }

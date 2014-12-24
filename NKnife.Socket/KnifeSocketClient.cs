@@ -93,7 +93,7 @@ namespace SocketKnife
 
             var handler = SessionBroken;
             if(handler !=null)
-                handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
                 {
                     Id = EndPoint,
                 }));
@@ -347,7 +347,7 @@ namespace SocketKnife
                         var handler = SessionBuilt;
                         if (handler != null)
                         {
-                            handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                            handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
                             {
                                 Id = EndPoint,
                             }));
@@ -459,7 +459,7 @@ namespace SocketKnife
 
             var handler = SessionBroken;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
                 {
                     Id = EndPoint,
                 }));
@@ -493,7 +493,7 @@ namespace SocketKnife
                 var handler = DataSent;
                 if (handler != null)
                 {
-                    handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
                     {
                         Id = e.RemoteEndPoint,
                         Data = data
@@ -509,7 +509,7 @@ namespace SocketKnife
 
                 var handler = SessionBroken;
                 if(handler != null)
-                    handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
                     {
                         Id = EndPoint
                     }));
@@ -530,7 +530,7 @@ namespace SocketKnife
 
                 var handler = SessionBroken;
                 if(handler !=null)
-                    handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
                     {
                         Id = EndPoint
                     }));

@@ -497,7 +497,7 @@ namespace SocketKnife
                 var handler = DataSent;
                 if (handler != null)
                 {
-                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession()
+                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
                     {
                         Data = data,
                         Id = id
