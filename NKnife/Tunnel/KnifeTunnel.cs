@@ -18,7 +18,7 @@ namespace NKnife.Tunnel
 
         protected override void SetFilterChain()
         {
-            _FilterChain = DI.Get<ITunnelFilterChain<TData, TSessionId>>();
+            FilterChain = DI.Get<ITunnelFilterChain<TData, TSessionId>>();
         }
     }
 }

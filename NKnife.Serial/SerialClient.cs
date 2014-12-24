@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading;
 using Common.Logging;
-using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.NSerial.Abstracts;
 using NKnife.NSerial.Common;
 using NKnife.NSerial.Interfaces;
 
-namespace NKnife.NSerial
+namespace SerialKnife
 {
     /// <summary>串口通讯器。每个实例绑定一个端口。
     /// </summary>
