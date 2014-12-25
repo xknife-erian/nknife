@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Common.Logging;
 using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Generic
 {
     public abstract class TunnelBase<TData, TSessionId> : ITunnel<TData, TSessionId>
     {
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private bool _IsDataConnectedBound;
+
         protected IDataConnector<TData, TSessionId> DataConnector;
         protected ITunnelFilterChain<TData, TSessionId> FilterChain;
 
@@ -33,34 +37,42 @@ namespace NKnife.Tunnel.Generic
 
         public bool Start()
         {
-            DataConnector.Start();
-
-            return true;
+            return DataConnector.Start();
         }
 
         public virtual bool ReStart()
         {
-            return true;
+            if (DataConnector.Stop())
+            {
+                return DataConnector.Start();
+            }
+            return false;
         }
 
         public virtual bool Stop()
         {
-            return true;
+            return DataConnector.Stop();
         }
 
         public void BindDataConnector(IDataConnector<TData, TSessionId> dataConnector)
         {
-            DataConnector = dataConnector;
-            DataConnector.SessionBuilt += OnSessionBuilt;
-            DataConnector.SessionBroken += OnSessionBroken;
-            DataConnector.DataReceived += OnDataReceived;
-            DataConnector.DataSent += OnDataSent;
-            foreach (var filter in FilterChain)
+            if (!_IsDataConnectedBound)
             {
-                if (filter.Listener != null)
+                DataConnector = dataConnector;
+                DataConnector.SessionBuilt += OnSessionBuilt;
+                DataConnector.SessionBroken += OnSessionBroken;
+                DataConnector.DataReceived += OnDataReceived;
+                DataConnector.DataSent += OnDataSent;
+                foreach (var filter in FilterChain)
                 {
-                    filter.Listener.BindSessionHandler((ISessionProvider<TData, TSessionId>)dataConnector);
+                    filter.BindSessionHandler(dataConnector);
                 }
+                _logger.Debug(string.Format("DataConnector[{0}]绑定成功",dataConnector.GetType()));
+                _IsDataConnectedBound = true;
+            }
+            else
+            {
+                _logger.Debug(string.Format("DataConnector[{0}]已经绑定，不需重复绑定", dataConnector.GetType()));
             }
         }
 

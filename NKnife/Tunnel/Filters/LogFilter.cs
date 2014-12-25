@@ -14,6 +14,11 @@ namespace NKnife.Tunnel.Filters
             ContinueNextFilter = true;
         }
 
+        public override void BindSessionHandler(ISessionProvider<byte[], EndPoint> sessionProvider)
+        {
+            //什么都不做，也不需要
+        }
+
         public override void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
         {
             _logger.Debug(string.Format("收到数据，来自{0}：{1}",session.Id,Encoding.Default.GetString(session.Data)));

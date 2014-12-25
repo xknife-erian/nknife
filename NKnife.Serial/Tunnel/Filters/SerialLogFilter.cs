@@ -13,6 +13,11 @@ namespace SerialKnife.Tunnel.Filters
             ContinueNextFilter = true;
         }
 
+        public override void BindSessionHandler(ISessionProvider<byte[], int> sessionProvider)
+        {
+            //什么都不做，也不需要
+        }
+
         public override void PrcoessReceiveData(ITunnelSession<byte[], int> session)
         {
             _logger.Debug(string.Format("收到数据，来自{0}：{1}", session.Id, session.Data.ToHexString()));

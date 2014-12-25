@@ -7,9 +7,9 @@ namespace NKnife.Tunnel.Generic
 {
     public abstract class TunnelFilterBase<TData, TSessionId> : ITunnelFilter<TData, TSessionId>
     {
-        public IFilterListener<TData, TSessionId> Listener { get; set; }
-
         public bool ContinueNextFilter { get; protected set; }
+
+        public abstract void BindSessionHandler(ISessionProvider<TData, TSessionId> sessionProvider);
 
         public abstract void PrcoessReceiveData(ITunnelSession<TData, TSessionId> session);
 

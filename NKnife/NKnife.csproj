@@ -193,7 +193,6 @@
     <Compile Include="Tunnel\IDataConnector.cs" />
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />
-    <Compile Include="Tunnel\IFilterListener.cs" />
     <Compile Include="Tunnel\IKnifeClient`.cs" />
     <Compile Include="Tunnel\ISessionProvider.cs" />
     <Compile Include="Tunnel\ITunnel`.cs" />

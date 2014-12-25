@@ -15,9 +15,9 @@ namespace NKnife.Kits.SerialKnife.Kernel
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private readonly ITunnel<byte[], int> _Tunnel = DI.Get<ITunnel<byte[], int>>();
-        private readonly IKnifeSerialConnector _DataConnector = DI.Get<IKnifeSerialConnector>(); 
+        private readonly IKnifeSerialConnector _DataConnector = DI.Get<IKnifeSerialConnector>();
 
-        public bool Start()
+        public Tunnels()
         {
             var logFilter = DI.Get<SerialLogFilter>();
             var queryFilter = DI.Get<QueryBusFilter>();
@@ -28,14 +28,18 @@ namespace NKnife.Kits.SerialKnife.Kernel
             _DataConnector.PortNumber = 1; //串口1
 
             _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力
-            _Tunnel.Start();
+        }
 
+        public bool Start()
+        {
+            _Tunnel.Start();
             _logger.Info("Tunnel服务启动成功");
             return true;
         }
 
         public bool Stop()
         {
+            _Tunnel.Stop();
             _logger.Info("Tunnel服务停止成功");
             return true;
         }

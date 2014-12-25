@@ -15,19 +15,29 @@ namespace NKnife.Tunnel.Filters
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-//        protected IFilterListener<byte[], EndPoint> ITunnelFilter<byte[], EndPoint>.Listener
-//        {
-//            get { return Listener; }
-//            set { Listener = (SocketProtocolFilterListener) value; }
-//        }
-//
-//        public SocketProtocolFilterListener Listener { get; set; }
+        protected List<KnifeProtocolHandlerBase<byte[], EndPoint, string>> Handlers = new List<KnifeProtocolHandlerBase<byte[], EndPoint, string>>();
 
+        public ISessionProvider<byte[], EndPoint> SessionProvider { get; private set; }
 
         public SocketProtocolFilter()
         {
-            Listener = new SocketProtocolFilterListener();
             ContinueNextFilter = true;
+        }
+
+        public override void BindSessionHandler(ISessionProvider<byte[], EndPoint> sessionProvider)
+        {
+            SessionProvider = sessionProvider;
+            if (Handlers.Count == 0)
+            {
+                _logger.Warn("绑定SessionProvider时Handler集合不应为空，在此之前应先执行AddHandler动作.");
+            }
+            else
+            {
+                foreach (var handler in Handlers)
+                {
+                    handler.SessionProvider = sessionProvider;
+                }
+            }
         }
 
         public override void ProcessSessionBroken(EndPoint id)
@@ -69,6 +79,42 @@ namespace NKnife.Tunnel.Filters
         }
 
 
+        /// <summary>
+        ///     // 触发数据基础解析后发生的数据到达事件
+        /// </summary>
+        public virtual void HandlerInvoke(EndPoint endpoint, IProtocol<string> protocol)
+        {
+            if (SessionProvider == null)
+            {
+                _logger.Warn("没有SessionProvider，无法处理协议");
+                return;
+            }
+
+            try
+            {
+                if (Handlers.Count == 0)
+                {
+                    Debug.Fail(string.Format("Handler集合不应为空."));
+                    return;
+                }
+                if (Handlers.Count == 1)
+                {
+                    Handlers[0].Recevied(endpoint, protocol);
+                }
+                else
+                {
+                    foreach (var handler in Handlers)
+                    {
+                        if (handler.Commands.Contains(protocol.Command))
+                            handler.Recevied(endpoint, protocol);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
+            }
+        }
 
         #region 数据处理
         private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors =
@@ -76,12 +122,12 @@ namespace NKnife.Tunnel.Filters
 
         public void AddHandlers(params KnifeProtocolHandlerBase<byte[], EndPoint, string>[] handlers)
         {
-            ((SocketProtocolFilterListener)Listener).AddHandlers(handlers);
+            Handlers.AddRange(handlers);
         }
 
         public void RemoveHandler(KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
         {
-            ((SocketProtocolFilterListener)Listener).RemoveHandler(handler);
+            Handlers.Remove(handler);
         }
 
         protected virtual void InitializeDataMonitor(EndPoint id,DataMonitor dm)
@@ -121,7 +167,7 @@ namespace NKnife.Tunnel.Filters
                                 foreach (var protocol in protocols)
                                 {
                                     // 触发数据基础解析后发生的数据到达事件
-                                    ((SocketProtocolFilterListener)Listener).HandlerInvoke(endPoint, protocol);
+                                    HandlerInvoke(endPoint, protocol);
                                 }
                             }
                         }
@@ -156,88 +202,6 @@ namespace NKnife.Tunnel.Filters
             public bool IsMonitor { get; set; }
             public Task Task { get; set; }
             public ReceiveQueue ReceiveQueue { get; set; }
-        }
-
-        public class SocketProtocolFilterListener : IFilterListener<byte[], EndPoint>
-        {
-            protected List<KnifeProtocolHandlerBase<byte[], EndPoint, string>> Handlers = new List<KnifeProtocolHandlerBase<byte[], EndPoint, string>>();
-
-            public ISessionProvider<byte[], EndPoint> SessionProvider { get; private set; }
-
-            #region IFilterListener接口
-            public void OnSessionBroken(EndPoint id)
-            {
-                
-            }
-
-            public void OnSessionBuilt(EndPoint id)
-            {
-               
-            }
-
-            public void BindSessionHandler(ISessionProvider<byte[], EndPoint> sessionProvider)
-            {
-                SessionProvider = sessionProvider;
-                if (Handlers.Count == 0)
-                {
-                    _logger.Warn("绑定SessionProvider时Handler集合不应为空，在此之前应先执行AddHandler动作.");
-                }
-                else
-                {
-                    foreach (var handler in Handlers)
-                    {
-                        handler.SessionProvider = sessionProvider;
-                    }
-                }
-            }
-            #endregion
-
-            public virtual void AddHandlers(params KnifeProtocolHandlerBase<byte[], EndPoint, string>[] handlers)
-            {
-                Handlers.AddRange(handlers);
-            }
-
-            public virtual void RemoveHandler(KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
-            {
-                Handlers.Remove(handler);
-            }
-
-            /// <summary>
-            ///     // 触发数据基础解析后发生的数据到达事件
-            /// </summary>
-            public virtual void HandlerInvoke(EndPoint endpoint, IProtocol<string> protocol)
-            {
-                if (SessionProvider == null)
-                {
-                    _logger.Warn("没有SessionProvider，无法处理协议");
-                    return;
-                }
-
-                try
-                {
-                    if (Handlers.Count == 0)
-                    {
-                        Debug.Fail(string.Format("Handler集合不应为空."));
-                        return;
-                    }
-                    if (Handlers.Count == 1)
-                    {
-                        Handlers[0].Recevied(endpoint, protocol);
-                    }
-                    else
-                    {
-                        foreach (var handler in Handlers)
-                        {
-                            if (handler.Commands.Contains(protocol.Command))
-                                handler.Recevied(endpoint, protocol);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
-                }
-            }
         }
         #endregion
     }
