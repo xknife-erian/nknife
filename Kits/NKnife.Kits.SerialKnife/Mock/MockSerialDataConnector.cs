@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using Common.Logging;
@@ -26,7 +27,13 @@ namespace NKnife.Kits.SerialKnife.Mock
 
         public void Send(int id, byte[] data)
         {
-            throw new NotImplementedException();
+            var handler = DataSent;
+            if(handler !=null)
+                handler.Invoke(this,new SessionEventArgs<byte[], int>(new KnifeTunnelSession<int>()
+                {
+                    Id = id,
+                    Data = data,
+                }));
         }
 
         public void SendAll(byte[] data)
@@ -73,7 +80,18 @@ namespace NKnife.Kits.SerialKnife.Mock
         }
         #endregion
 
+        #region 模拟方法
+        public void MockReceive(byte[] data)
+        {
+            var handler = DataReceived;
+            if(handler !=null)
+                handler.Invoke(this,new SessionEventArgs<byte[], int>(new KnifeTunnelSession<int>()
+                {
+                    Id = 1,
+                    Data = data,
+                }));
+        }
 
-
+        #endregion
     }
 }

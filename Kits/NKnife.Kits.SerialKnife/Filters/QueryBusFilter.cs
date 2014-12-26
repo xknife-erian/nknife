@@ -4,28 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Common.Logging;
+using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Generic;
 
 namespace NKnife.Kits.SerialKnife.Filters
 {
-    public class QueryBusFilter : TunnelFilterBase<byte[],int>
+    public class QueryBusFilter : KnifeProtocolProcessorBase<byte[]>, ITunnelFilter<byte[], int>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-        private Dictionary<int, QueryThreadWrapper> _QueryThreadMap = new Dictionary<int, QueryThreadWrapper>();
+        private readonly Dictionary<int, QueryThreadWrapper> _QueryThreadMap = new Dictionary<int, QueryThreadWrapper>();
 
         private ISessionProvider<byte[], int> _SessionProvider;
-        public override void BindSessionHandler(ISessionProvider<byte[], int> sessionProvider)
+        public void BindSessionProvider(ISessionProvider<byte[], int> sessionProvider)
         {
             _SessionProvider = sessionProvider;
         }
 
-        public override void PrcoessReceiveData(ITunnelSession<byte[], int> session)
+        public bool ContinueNextFilter { get; private set; }
+
+        public QueryBusFilter()
+        {
+            ContinueNextFilter = true;
+        }
+
+        public void PrcoessReceiveData(ITunnelSession<byte[], int> session)
         {
             
         }
 
-        public override void ProcessSessionBroken(int id)
+        public void PrcoessSendData(ITunnelSession<byte[], int> session)
+        {
+            
+        }
+
+        public void ProcessSessionBroken(int id)
         {
             if (_QueryThreadMap.ContainsKey(id))
             {
@@ -35,7 +48,7 @@ namespace NKnife.Kits.SerialKnife.Filters
             }
         }
 
-        public override void ProcessSessionBuilt(int id)
+        public void ProcessSessionBuilt(int id)
         {
             //连接建立后就开始轮询
             var queryThread = new Thread(QuerySendLoop) { IsBackground = true };
@@ -47,6 +60,8 @@ namespace NKnife.Kits.SerialKnife.Filters
             queryThread.Start(id);
         }
 
+
+
         /// <summary>指令发送的循环线程
         /// </summary>
         private void QuerySendLoop(object state)
@@ -54,8 +69,8 @@ namespace NKnife.Kits.SerialKnife.Filters
             var id = (int) state;
             while (_QueryThreadMap[id].RunFlag)
             {
-                SendProcess();
-                Thread.Sleep(1000);
+                SendProcess(id);
+                Thread.Sleep(500);
             }
         }
 
@@ -64,12 +79,14 @@ namespace NKnife.Kits.SerialKnife.Filters
         /// 有数据包则先按照数据包中的发送准备时长进行延时等候（PreSleepBeforeSendData），
         /// 然以将数据从串口发出，待数据接收超时后，激发数据包发送完成事件
         /// </summary>
-        private void SendProcess()
+        /// <param name="id"></param>
+        private void SendProcess(int id)
         {
             try
             {
-
-
+                //发送巡查
+                SendQuery(id);
+                Thread.Sleep(1000);
             }
             catch (Exception e)
             {
@@ -77,6 +94,15 @@ namespace NKnife.Kits.SerialKnife.Filters
             }
         }
 
+
+        private void SendQuery(int id)
+        {
+            var queryProtocol = Family.Build(new byte[] {0x01}); //命令字
+            queryProtocol.CommandParam = new byte[]{0x03,0x00}; //地址，计数
+            var data = Family.Generate(queryProtocol);
+            var datagram = Codec.Encoder.Execute(data);
+            _SessionProvider.Send(id, datagram);
+        }
 
 
         class QueryThreadWrapper

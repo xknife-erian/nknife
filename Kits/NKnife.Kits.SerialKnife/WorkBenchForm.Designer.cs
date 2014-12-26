@@ -31,10 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkBenchForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.操作面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.日志面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.模拟串口连接器面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,8 +61,19 @@
             this.设置ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.设置ToolStripMenuItem.Text = "设置";
             // 
+            // ExitToolStripMenuItem
+            // 
+            this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ExitToolStripMenuItem.Text = "退出";
+            this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
             // 视图ToolStripMenuItem
             // 
+            this.视图ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.操作面板ToolStripMenuItem,
+            this.日志面板ToolStripMenuItem,
+            this.模拟串口连接器面板ToolStripMenuItem});
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
             this.视图ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.视图ToolStripMenuItem.Text = "视图";
@@ -78,12 +92,26 @@
             this.MainPanel.Size = new System.Drawing.Size(559, 449);
             this.MainPanel.TabIndex = 1;
             // 
-            // ExitToolStripMenuItem
+            // 操作面板ToolStripMenuItem
             // 
-            this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.ExitToolStripMenuItem.Text = "退出";
-            this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            this.操作面板ToolStripMenuItem.Name = "操作面板ToolStripMenuItem";
+            this.操作面板ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.操作面板ToolStripMenuItem.Text = "操作面板";
+            this.操作面板ToolStripMenuItem.Click += new System.EventHandler(this.操作面板ToolStripMenuItem_Click);
+            // 
+            // 日志面板ToolStripMenuItem
+            // 
+            this.日志面板ToolStripMenuItem.Name = "日志面板ToolStripMenuItem";
+            this.日志面板ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.日志面板ToolStripMenuItem.Text = "日志面板";
+            this.日志面板ToolStripMenuItem.Click += new System.EventHandler(this.日志面板ToolStripMenuItem_Click);
+            // 
+            // 模拟串口连接器面板ToolStripMenuItem
+            // 
+            this.模拟串口连接器面板ToolStripMenuItem.Name = "模拟串口连接器面板ToolStripMenuItem";
+            this.模拟串口连接器面板ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.模拟串口连接器面板ToolStripMenuItem.Text = "模拟串口连接器面板";
+            this.模拟串口连接器面板ToolStripMenuItem.Click += new System.EventHandler(this.模拟串口连接器面板ToolStripMenuItem_Click);
             // 
             // WorkBenchForm
             // 
@@ -112,6 +140,9 @@
         private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
         private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 操作面板ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 日志面板ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 模拟串口连接器面板ToolStripMenuItem;
     }
 }
 

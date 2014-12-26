@@ -20,12 +20,12 @@ namespace NKnife.Tunnel.Generic
         public string CodecName { get; set; }
 
         private KnifeStringDatagramDecoder _StringDecoder;
-        private bool _HasSetSocketDecoder;
+        private bool _HasSetDecoder;
         public virtual KnifeStringDatagramDecoder StringDecoder
         {
             get
             {
-                if (!_HasSetSocketDecoder)
+                if (!_HasSetDecoder)
                 {
                     return string.IsNullOrEmpty(CodecName)
                         ? DI.Get<KnifeStringDatagramDecoder>()
@@ -36,18 +36,18 @@ namespace NKnife.Tunnel.Generic
             set
             {
                 _StringDecoder = value;
-                _HasSetSocketDecoder = true;
+                _HasSetDecoder = true;
             }
         }
 
         private KnifeStringDatagramEncoder _StringEncoder;
-        private bool _HasSetSocketEncoder;
+        private bool _HasSetEncoder;
 
         public virtual KnifeStringDatagramEncoder StringEncoder
         {
             get
             {
-                if (!_HasSetSocketEncoder)
+                if (!_HasSetEncoder)
                 {
                     return string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramEncoder>() : DI.Get<KnifeStringDatagramEncoder>(CodecName);
                 }
@@ -56,7 +56,7 @@ namespace NKnife.Tunnel.Generic
             set
             {
                 _StringEncoder = value;
-                _HasSetSocketEncoder = true;
+                _HasSetEncoder = true;
             }
         }
 

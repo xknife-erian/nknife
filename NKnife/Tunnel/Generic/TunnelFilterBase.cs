@@ -9,7 +9,7 @@ namespace NKnife.Tunnel.Generic
     {
         public bool ContinueNextFilter { get; protected set; }
 
-        public abstract void BindSessionHandler(ISessionProvider<TData, TSessionId> sessionProvider);
+        public abstract void BindSessionProvider(ISessionProvider<TData, TSessionId> sessionProvider);
 
         public abstract void PrcoessReceiveData(ITunnelSession<TData, TSessionId> session);
 

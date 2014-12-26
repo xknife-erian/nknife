@@ -5,6 +5,6 @@
     /// </summary>
     public interface IDatagramEncoder<in T>
     {
-        byte[] Execute(T replay);
+        byte[] Execute(T data);
     }
 }

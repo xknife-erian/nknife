@@ -14,7 +14,7 @@ namespace NKnife.Tunnel.Filters
             ContinueNextFilter = true;
         }
 
-        public override void BindSessionHandler(ISessionProvider<byte[], EndPoint> sessionProvider)
+        public override void BindSessionProvider(ISessionProvider<byte[], EndPoint> sessionProvider)
         {
             //什么都不做，也不需要
         }

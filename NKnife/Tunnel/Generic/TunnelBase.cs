@@ -65,7 +65,7 @@ namespace NKnife.Tunnel.Generic
                 DataConnector.DataSent += OnDataSent;
                 foreach (var filter in FilterChain)
                 {
-                    filter.BindSessionHandler(dataConnector);
+                    filter.BindSessionProvider(dataConnector);
                 }
                 _logger.Debug(string.Format("DataConnector[{0}]绑定成功",dataConnector.GetType()));
                 _IsDataConnectedBound = true;

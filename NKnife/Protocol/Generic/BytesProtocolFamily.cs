@@ -1,40 +1,37 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
+using System.Linq;
+using System.Text;
 using Ninject;
 using NKnife.IoC;
 
 namespace NKnife.Protocol.Generic
 {
-    /// <summary>
-    ///     协议族
-    /// </summary>
     [Serializable]
-    public class StringProtocolFamily : IProtocolFamily<string>
+    public class BytesProtocolFamily : IProtocolFamily<byte[]>
     {
-        protected Func<string, StringProtocol> _DefaultProtocolBuilder;
-        protected Dictionary<string, Func<string, StringProtocol>> _ProtocolBuilderMap = new Dictionary<string, Func<string, StringProtocol>>();
-        protected Func<string, StringProtocolPacker> _DefaultProtocolPackerGetter;
-        protected Dictionary<string,Func<string,StringProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<string, Func<string, StringProtocolPacker>>();
-        protected Func<string, StringProtocolUnPacker> _DefaultProtocolUnPackerGetter;
-        protected Dictionary<string,Func<string,StringProtocolUnPacker>> _ProtocolUnPackerGetterMap = new Dictionary<string, Func<string, StringProtocolUnPacker>>();
+        protected Func<byte[], BytesProtocol> _DefaultProtocolBuilder;
+        protected Dictionary<byte[], Func<byte[], BytesProtocol>> _ProtocolBuilderMap = new Dictionary<byte[], Func<byte[], BytesProtocol>>();
+        protected Func<byte[], BytesProtocolPacker> _DefaultProtocolPackerGetter;
+        protected Dictionary<byte[], Func<byte[], BytesProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<byte[], Func<byte[], BytesProtocolPacker>>();
+        protected Func<byte[], BytesProtocolUnPacker> _DefaultProtocolUnPackerGetter;
+        protected Dictionary<byte[], Func<byte[], BytesProtocolUnPacker>> _ProtocolUnPackerGetterMap = new Dictionary<byte[], Func<byte[], BytesProtocolUnPacker>>();
 
-        public StringProtocolFamily()
+        public BytesProtocolFamily()
         {
         }
 
-        public StringProtocolFamily(string name)
+        public BytesProtocolFamily(string name)
         {
             FamilyName = name;
         }
 
         public string FamilyName { get; set; }
 
-        private StringProtocolCommandParser _CommandParser;
+        private BytesProtocolCommandParser _CommandParser;
         private bool _HasSetCommandParser;
-        public StringProtocolCommandParser CommandParser
+        public BytesProtocolCommandParser CommandParser
         {
             get
             {
@@ -43,12 +40,12 @@ namespace NKnife.Protocol.Generic
                     try
                     {
                         return string.IsNullOrEmpty(FamilyName)
-                            ? DI.Get<StringProtocolCommandParser>()
-                            : DI.Get<StringProtocolCommandParser>(FamilyName);
+                            ? DI.Get<BytesProtocolCommandParser>()
+                            : DI.Get<BytesProtocolCommandParser>(FamilyName);
                     }
                     catch (ActivationException ex)
                     {
-                        return DI.Get<StringProtocolCommandParser>();
+                        return DI.Get<BytesProtocolCommandParser>();
                     }
                 }
                 return _CommandParser;
@@ -62,64 +59,65 @@ namespace NKnife.Protocol.Generic
 
 
         #region 隐式实现
-        IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
+        IProtocolCommandParser<byte[]> IProtocolFamily<byte[]>.CommandParser
         {
             get { return CommandParser; }
-            set { CommandParser = (StringProtocolCommandParser) value; }
+            set { CommandParser = (BytesProtocolCommandParser)value; }
         }
 
-        IProtocol<string> IProtocolFamily<string>.Build(string command)
+        IProtocol<byte[]> IProtocolFamily<byte[]>.Build(byte[] command)
         {
             return Build(command);
         }
 
-        IProtocol<string> IProtocolFamily<string>.Parse(string command, string datagram)
+        IProtocol<byte[]> IProtocolFamily<byte[]>.Parse(byte[] command, byte[] datagram)
         {
             return Parse(command, datagram);
         }
 
-        string IProtocolFamily<string>.Generate(IProtocol<string> protocol)
+        byte[] IProtocolFamily<byte[]>.Generate(IProtocol<byte[]> protocol)
         {
-            return Generate((StringProtocol)protocol);
+            return Generate((BytesProtocol)protocol);
         }
 
-        void IProtocolFamily<string>.AddPackerGetter(Func<string, IProtocolPacker<string>> func)
+        void IProtocolFamily<byte[]>.AddPackerGetter(Func<byte[], IProtocolPacker<byte[]>> func)
         {
-            AddPackerGetter((Func<string, StringProtocolPacker>) func);
+            AddPackerGetter((Func<byte[], BytesProtocolPacker>)func);
         }
 
-        void IProtocolFamily<string>.AddPackerGetter(string command, Func<string, IProtocolPacker<string>> func)
+        void IProtocolFamily<byte[]>.AddPackerGetter(byte[] command, Func<byte[], IProtocolPacker<byte[]>> func)
         {
-            AddPackerGetter(command,(Func<string, StringProtocolPacker>) func);
+            AddPackerGetter(command, (Func<byte[], BytesProtocolPacker>)func);
         }
         #endregion
 
-        public StringProtocol Build(string command)
+        public BytesProtocol Build(byte[] command)
         {
             Debug.Assert(!string.IsNullOrEmpty(FamilyName), "未设置协议族名称");
-            if (string.IsNullOrWhiteSpace(command))
+            if (command == null)
+                throw new ArgumentNullException("command", "协议命令字不能为null");
+            if(command.Count() ==0)
                 throw new ArgumentNullException("command", "协议命令字不能为空");
-
-            StringProtocol result;
+            BytesProtocol result;
             if (_ProtocolBuilderMap.ContainsKey(command))
             {
                 result = _ProtocolBuilderMap[command].Invoke(command);
             }
             else 
             {
-                result = _DefaultProtocolBuilder == null ? DI.Get<StringProtocol>() : _DefaultProtocolBuilder.Invoke(command);
+                result = _DefaultProtocolBuilder == null ? DI.Get<BytesProtocol>() : _DefaultProtocolBuilder.Invoke(command);
             }
             result.Family = FamilyName;
             result.Command = command;
             return result;
         }
 
-        public void AddProtocolBuilder(Func<string, StringProtocol> func)
+        public void AddProtocolBuilder(Func<byte[], BytesProtocol> func)
         {
             _DefaultProtocolBuilder = func;
         }
 
-        public void AddProtocolBuilder(string command, Func<string, StringProtocol> func)
+        public void AddProtocolBuilder(byte[] command, Func<byte[], BytesProtocol> func)
         {
             if (_ProtocolBuilderMap.ContainsKey(command))
             {
@@ -137,10 +135,14 @@ namespace NKnife.Protocol.Generic
         /// </summary>
         /// <param name="command"></param>
         /// <param name="datagram">The datas.</param>
-        public StringProtocol Parse(string command, string datagram)
+        public BytesProtocol Parse(byte[] command, byte[] datagram)
         {
             var protocol = Build(command);
-            if (string.IsNullOrWhiteSpace(datagram))
+            if (datagram == null)
+            {
+                Debug.Fail("空数据无法进行协议的解析");
+            }
+            if (datagram.Count() ==0)
             {
                 Debug.Fail("空数据无法进行协议的解析");
             }
@@ -154,7 +156,7 @@ namespace NKnife.Protocol.Generic
                 {
                     if (_DefaultProtocolUnPackerGetter == null)
                     {
-                        DI.Get<StringProtocolUnPacker>().Execute(protocol,datagram,command);
+                        DI.Get<BytesProtocolUnPacker>().Execute(protocol,datagram,command);
                     }
                     else
                     {
@@ -174,7 +176,7 @@ namespace NKnife.Protocol.Generic
         /// </summary>
         /// <param name="protocol"></param>
         /// <returns></returns>
-        public string Generate(StringProtocol protocol)
+        public byte[] Generate(BytesProtocol protocol)
         {
             var command = protocol.Command;
             if(_ProtocolPackerGetterMap.ContainsKey(command))
@@ -182,7 +184,7 @@ namespace NKnife.Protocol.Generic
                 return _ProtocolPackerGetterMap[command].Invoke(command).Combine(protocol);
             }
             return _DefaultProtocolPackerGetter == null ? 
-                DI.Get<StringProtocolPacker>().Combine(protocol) : 
+                DI.Get<BytesProtocolPacker>().Combine(protocol) : 
                 _DefaultProtocolPackerGetter.Invoke(command).Combine(protocol);
         }
 
@@ -192,7 +194,7 @@ namespace NKnife.Protocol.Generic
         /// <param name="protocol"></param>
         /// <param name="param">PackerGetter的参数，默认使用command作为参数</param>
         /// <returns></returns>
-        public string Generate(StringProtocol protocol,string param)
+        public byte[] Generate(BytesProtocol protocol,byte[] param)
         {
             var command = protocol.Command;
             if (_ProtocolPackerGetterMap.ContainsKey(command))
@@ -200,16 +202,16 @@ namespace NKnife.Protocol.Generic
                 return _ProtocolPackerGetterMap[command].Invoke(param).Combine(protocol);
             }
             return _DefaultProtocolPackerGetter == null ?
-                DI.Get<StringProtocolPacker>().Combine(protocol) :
+                DI.Get<BytesProtocolPacker>().Combine(protocol) :
                 _DefaultProtocolPackerGetter.Invoke(param).Combine(protocol);
         }
 
-        public void AddPackerGetter(Func<string, StringProtocolPacker> func)
+        public void AddPackerGetter(Func<byte[], BytesProtocolPacker> func)
         {
             _DefaultProtocolPackerGetter = func;
         }
 
-        public void AddPackerGetter(string command, Func<string, StringProtocolPacker> func)
+        public void AddPackerGetter(byte[] command, Func<byte[], BytesProtocolPacker> func)
         {
             if (_ProtocolPackerGetterMap.ContainsKey(command))
             {
@@ -221,12 +223,12 @@ namespace NKnife.Protocol.Generic
             }
         }
 
-        public void AddUnPackerGetter(Func<string, StringProtocolUnPacker> func)
+        public void AddUnPackerGetter(Func<byte[], BytesProtocolUnPacker> func)
         {
             _DefaultProtocolUnPackerGetter = func;
         }
 
-        public void AddUnPackerGetter(string command, Func<string, StringProtocolUnPacker> func)
+        public void AddUnPackerGetter(byte[] command, Func<byte[], BytesProtocolUnPacker> func)
         {
             if (_ProtocolUnPackerGetterMap.ContainsKey(command))
             {

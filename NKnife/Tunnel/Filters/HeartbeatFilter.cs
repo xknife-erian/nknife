@@ -120,7 +120,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public override void BindSessionHandler(ISessionProvider<byte[], EndPoint> sessionProvider)
+        public override void BindSessionProvider(ISessionProvider<byte[], EndPoint> sessionProvider)
         {
             _SessionProvider = sessionProvider;
         }

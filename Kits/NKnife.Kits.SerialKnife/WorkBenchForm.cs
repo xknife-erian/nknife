@@ -23,6 +23,7 @@ namespace NKnife.Kits.SerialKnife
         private readonly DockPanel _DockPanel = new DockPanel();
         private readonly DockContent _LogView = DI.Get<LogView>();
         private readonly DockContent _ControlPanelView = DI.Get<ControlPanelView>();
+        private readonly DockContent _MockDataConnectorView = DI.Get<MockSerialDataConnectorView>();
 
 
 
@@ -79,6 +80,8 @@ namespace NKnife.Kits.SerialKnife
                 return _ControlPanelView;
             if (xml == typeof(LogView).ToString())
                 return _LogView;
+            if (xml == typeof (MockSerialDataConnectorView).ToString())
+                return _MockDataConnectorView;
             return null;
         }
 
@@ -86,6 +89,8 @@ namespace NKnife.Kits.SerialKnife
         {
             _LogView.HideOnClose = true;
             _LogView.Show(_DockPanel, DockState.DockBottom);
+            _MockDataConnectorView.HideOnClose = true;
+            _MockDataConnectorView.Show(_DockPanel,DockState.DockRight);
             _ControlPanelView.HideOnClose = true;
             _ControlPanelView.Show(_DockPanel, DockState.Document);
 
@@ -97,6 +102,26 @@ namespace NKnife.Kits.SerialKnife
         {
             Close();
         }
+
+        private void 操作面板ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(_ControlPanelView !=null)
+                _ControlPanelView.Show();
+        }
+
+        private void 日志面板ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(_LogView !=null)
+                _LogView.Show();
+        }
+
+        private void 模拟串口连接器面板ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(_MockDataConnectorView !=null)
+                _MockDataConnectorView.Show();
+        }
         #endregion
+
+
     }
 }

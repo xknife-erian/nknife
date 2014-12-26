@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
-using NKnife.Tunnel.Generic;
+using NKnife.Tunnel;
 
-namespace NKnife.Tunnel.Filters
+namespace SocketKnife.Generic.Filters
 {
-    public class SocketProtocolFilter : ProtocolProcessorBase<string>
+    public class SocketKnifeProtocolFilter : KnifeProtocolProcessorBase<string>, ITunnelFilter<byte[], EndPoint>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -19,12 +19,14 @@ namespace NKnife.Tunnel.Filters
 
         public ISessionProvider<byte[], EndPoint> SessionProvider { get; private set; }
 
-        public SocketProtocolFilter()
+        public bool ContinueNextFilter { get; protected set; }
+
+        public SocketKnifeProtocolFilter()
         {
             ContinueNextFilter = true;
         }
 
-        public override void BindSessionHandler(ISessionProvider<byte[], EndPoint> sessionProvider)
+        public void BindSessionProvider(ISessionProvider<byte[], EndPoint> sessionProvider)
         {
             SessionProvider = sessionProvider;
             if (Handlers.Count == 0)
@@ -40,7 +42,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public override void ProcessSessionBroken(EndPoint id)
+        public void ProcessSessionBroken(EndPoint id)
         {
             DataMonitor monitor;
             if (_DataMonitors.TryGetValue(id, out monitor))
@@ -52,7 +54,7 @@ namespace NKnife.Tunnel.Filters
             _DataMonitors.TryRemove(id, out monitor);
         }
 
-        public override void ProcessSessionBuilt(EndPoint id)
+        public void ProcessSessionBuilt(EndPoint id)
         {
             DataMonitor monitor;
             if (!_DataMonitors.TryGetValue(id, out monitor))
@@ -62,7 +64,7 @@ namespace NKnife.Tunnel.Filters
                 InitializeDataMonitor(id, monitor);
             }
         }
-        public override void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+        public void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
         {
             var data = session.Data;
             EndPoint endPoint = session.Id;
@@ -76,6 +78,11 @@ namespace NKnife.Tunnel.Filters
             }
 
             monitor.ReceiveQueue.Enqueue(data);
+        }
+
+        public virtual void PrcoessSendData(ITunnelSession<byte[], EndPoint> session)
+        {
+            //默认啥也不干
         }
 
 

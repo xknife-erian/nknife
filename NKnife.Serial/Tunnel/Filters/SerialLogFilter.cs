@@ -13,7 +13,7 @@ namespace SerialKnife.Tunnel.Filters
             ContinueNextFilter = true;
         }
 
-        public override void BindSessionHandler(ISessionProvider<byte[], int> sessionProvider)
+        public override void BindSessionProvider(ISessionProvider<byte[], int> sessionProvider)
         {
             //什么都不做，也不需要
         }

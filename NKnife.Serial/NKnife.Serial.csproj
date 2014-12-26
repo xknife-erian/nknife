@@ -69,6 +69,11 @@
     <Compile Include="SerialClients.cs" />
     <Compile Include="Common\SerialDataPool.cs" />
     <Compile Include="Tunnel\Filters\SerialLogFilter.cs" />
+    <Compile Include="Tunnel\Tools\FirstByteCommandParser.cs" />
+    <Compile Include="Tunnel\Tools\FixByteHeadTailDatagramDecoder.cs" />
+    <Compile Include="Tunnel\Tools\FixByteHeadTailDatagramEncoder.cs" />
+    <Compile Include="Tunnel\Tools\SimpleBytesProtocolPacker.cs" />
+    <Compile Include="Tunnel\Tools\SimpleBytesProtocolUnPacker.cs" />
     <Compile Include="Wrappers\SerialPortWin32.cs" />
     <Compile Include="Wrappers\SerialPortWrapperDotNet.cs" />
     <Compile Include="Wrappers\SerialPortWrapperWinApi.cs" />
