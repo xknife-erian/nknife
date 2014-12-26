@@ -67,7 +67,7 @@ namespace NKnife.Kits.SerialKnife.Views
             this.MockReceiveContentTextBox.Location = new System.Drawing.Point(3, 17);
             this.MockReceiveContentTextBox.Multiline = true;
             this.MockReceiveContentTextBox.Name = "MockReceiveContentTextBox";
-            this.MockReceiveContentTextBox.Size = new System.Drawing.Size(297, 46);
+            this.MockReceiveContentTextBox.Size = new System.Drawing.Size(297, 121);
             this.MockReceiveContentTextBox.TabIndex = 2;
             // 
             // groupBox2
@@ -76,14 +76,14 @@ namespace NKnife.Kits.SerialKnife.Views
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(0, 237);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(303, 66);
+            this.groupBox2.Size = new System.Drawing.Size(303, 141);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "数据内容";
             // 
             // DoMockReceiveButton
             // 
-            this.DoMockReceiveButton.Location = new System.Drawing.Point(84, 320);
+            this.DoMockReceiveButton.Location = new System.Drawing.Point(84, 390);
             this.DoMockReceiveButton.Name = "DoMockReceiveButton";
             this.DoMockReceiveButton.Size = new System.Drawing.Size(207, 31);
             this.DoMockReceiveButton.TabIndex = 4;
@@ -93,7 +93,7 @@ namespace NKnife.Kits.SerialKnife.Views
             // 
             // DoMockDisconnectButton
             // 
-            this.DoMockDisconnectButton.Location = new System.Drawing.Point(84, 358);
+            this.DoMockDisconnectButton.Location = new System.Drawing.Point(84, 428);
             this.DoMockDisconnectButton.Name = "DoMockDisconnectButton";
             this.DoMockDisconnectButton.Size = new System.Drawing.Size(207, 31);
             this.DoMockDisconnectButton.TabIndex = 5;
@@ -124,7 +124,12 @@ namespace NKnife.Kits.SerialKnife.Views
         private void MockSerialDataConnectorView_Load(object sender, EventArgs e)
         {
             var mockReceiveList = new List<KeyValuePair<string, byte[]>>();
-            mockReceiveList.Add(new KeyValuePair<string, byte[]>("登录",new byte[]{0xA0, 0x07,0x3D,0x03,0x10,0x01,0x00,0x00,0x00,0x58,0xFF}));
+            mockReceiveList.Add(new KeyValuePair<string, byte[]>(
+                "登录",new byte[]{0xA0, 0x07,0x3D,0x03,0x10,0x01,0x00,0x00,0x00,0x58,0xFF}));
+            mockReceiveList.Add(new KeyValuePair<string, byte[]>(
+                "一条登录（前后都有错包）", new byte[] { 0x01,0x05, 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x01, 0x00, 0x00, 0x00, 0x58, 0xFF, 0x55,0x46 }));
+            mockReceiveList.Add(new KeyValuePair<string, byte[]>(
+                "两条登录（内容不同）", new byte[] { 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x01, 0x00, 0x00, 0x00, 0x58, 0xFF, 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xFF }));
             MockReceiveListBox.DataSource = mockReceiveList;
             MockReceiveListBox.DisplayMember = "Key";
         }

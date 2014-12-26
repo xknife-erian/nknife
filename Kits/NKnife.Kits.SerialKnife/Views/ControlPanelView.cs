@@ -25,6 +25,7 @@ namespace NKnife.Kits.SerialKnife.Views
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox ReceivedProtocolListBox;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button ClearReceiveListButton;
         private readonly Tunnels _Tunnels = DI.Get<Tunnels>();
 
         #region 初始化
@@ -44,6 +45,7 @@ namespace NKnife.Kits.SerialKnife.Views
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ReceivedProtocolListBox = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ClearReceiveListButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -138,9 +140,20 @@ namespace NKnife.Kits.SerialKnife.Views
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "协议内容";
             // 
+            // ClearReceiveListButton
+            // 
+            this.ClearReceiveListButton.Location = new System.Drawing.Point(15, 463);
+            this.ClearReceiveListButton.Name = "ClearReceiveListButton";
+            this.ClearReceiveListButton.Size = new System.Drawing.Size(106, 35);
+            this.ClearReceiveListButton.TabIndex = 62;
+            this.ClearReceiveListButton.Text = "清空";
+            this.ClearReceiveListButton.UseVisualStyleBackColor = true;
+            this.ClearReceiveListButton.Click += new System.EventHandler(this.ClearReceiveListButton_Click);
+            // 
             // ControlPanelView
             // 
             this.ClientSize = new System.Drawing.Size(998, 543);
+            this.Controls.Add(this.ClearReceiveListButton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -187,6 +200,11 @@ namespace NKnife.Kits.SerialKnife.Views
             }
             var protocol = (ProtocolWrapper)ReceivedProtocolListBox.SelectedItem;
             BytesProtocolPropertyGrid.SelectedObject = protocol;
+        }
+
+        private void ClearReceiveListButton_Click(object sender, EventArgs e)
+        {
+            ReceivedProtocolListBox.Items.Clear();
         }
 
         /// <summary>
@@ -240,6 +258,8 @@ namespace NKnife.Kits.SerialKnife.Views
                 return string.Format("{0}:Command={1}, Data={2}",DateTime.Now.ToString("HH:mm:ss fff"),_Protocol.Command.ToHexString(),_Protocol.CommandParam.ToHexString());
             }
         }
+
+
 
 
     }
