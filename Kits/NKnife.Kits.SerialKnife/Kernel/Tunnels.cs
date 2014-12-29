@@ -20,7 +20,7 @@ namespace NKnife.Kits.SerialKnife.Kernel
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private const string FAMILY_NAME = "p-an485";
         private readonly ITunnel<byte[], int> _Tunnel = DI.Get<ITunnel<byte[], int>>();
-        private readonly IKnifeSerialConnector _DataConnector = DI.Get<IKnifeSerialConnector>("Mock");
+        private readonly IKnifeSerialConnector _DataConnector;
         public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
 
         public Tunnels()
@@ -39,7 +39,11 @@ namespace NKnife.Kits.SerialKnife.Kernel
             _Tunnel.AddFilters(queryFilter);
             _Tunnel.AddFilters(protocolFilter);
 
-            _DataConnector.PortNumber = 1; //串口1
+            if (Properties.Settings.Default.EnableMock)
+                _DataConnector = DI.Get<IKnifeSerialConnector>("Mock");
+            else
+                _DataConnector = DI.Get<IKnifeSerialConnector>("Serial");
+            _DataConnector.PortNumber = Properties.Settings.Default.PortNumber; //串口1
 
             _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力
         }

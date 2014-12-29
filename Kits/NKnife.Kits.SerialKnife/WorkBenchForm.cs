@@ -103,6 +103,12 @@ namespace NKnife.Kits.SerialKnife
             Close();
         }
 
+        private void 数据连接器设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var setting = new SettingForm();
+            setting.ShowDialog();
+        }
+
         private void 操作面板ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(_ControlPanelView !=null)
@@ -121,6 +127,8 @@ namespace NKnife.Kits.SerialKnife
                 _MockDataConnectorView.Show();
         }
         #endregion
+
+
 
 
     }

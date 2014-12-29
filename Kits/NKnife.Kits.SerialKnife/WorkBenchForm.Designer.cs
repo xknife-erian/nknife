@@ -33,11 +33,13 @@
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainPanel = new System.Windows.Forms.Panel();
             this.操作面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.日志面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.模拟串口连接器面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainPanel = new System.Windows.Forms.Panel();
+            this.数据连接器设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +58,8 @@
             // 设置ToolStripMenuItem
             // 
             this.设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.数据连接器设置ToolStripMenuItem,
+            this.toolStripSeparator1,
             this.ExitToolStripMenuItem});
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
             this.设置ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
@@ -64,7 +68,7 @@
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.ExitToolStripMenuItem.Text = "退出";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -77,20 +81,6 @@
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
             this.视图ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.视图ToolStripMenuItem.Text = "视图";
-            // 
-            // 帮助ToolStripMenuItem
-            // 
-            this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
-            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.帮助ToolStripMenuItem.Text = "帮助";
-            // 
-            // MainPanel
-            // 
-            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(0, 25);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(559, 449);
-            this.MainPanel.TabIndex = 1;
             // 
             // 操作面板ToolStripMenuItem
             // 
@@ -112,6 +102,32 @@
             this.模拟串口连接器面板ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.模拟串口连接器面板ToolStripMenuItem.Text = "模拟串口连接器面板";
             this.模拟串口连接器面板ToolStripMenuItem.Click += new System.EventHandler(this.模拟串口连接器面板ToolStripMenuItem_Click);
+            // 
+            // 帮助ToolStripMenuItem
+            // 
+            this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
+            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.帮助ToolStripMenuItem.Text = "帮助";
+            // 
+            // MainPanel
+            // 
+            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainPanel.Location = new System.Drawing.Point(0, 25);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(559, 449);
+            this.MainPanel.TabIndex = 1;
+            // 
+            // 数据连接器设置ToolStripMenuItem
+            // 
+            this.数据连接器设置ToolStripMenuItem.Name = "数据连接器设置ToolStripMenuItem";
+            this.数据连接器设置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.数据连接器设置ToolStripMenuItem.Text = "数据连接器设置";
+            this.数据连接器设置ToolStripMenuItem.Click += new System.EventHandler(this.数据连接器设置ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
             // 
             // WorkBenchForm
             // 
@@ -143,6 +159,8 @@
         private System.Windows.Forms.ToolStripMenuItem 操作面板ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 日志面板ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 模拟串口连接器面板ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据连接器设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

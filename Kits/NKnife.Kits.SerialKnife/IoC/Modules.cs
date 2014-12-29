@@ -6,6 +6,7 @@ using Ninject.Modules;
 using NKnife.Kits.SerialKnife.Mock;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Common;
+using SerialKnife;
 using SerialKnife.Interfaces;
 
 namespace NKnife.Kits.SerialKnife.IoC
@@ -15,6 +16,7 @@ namespace NKnife.Kits.SerialKnife.IoC
         public override void Load()
         {
             Bind<IKnifeSerialConnector>().To<MockSerialDataConnector>().InSingletonScope().Named("Mock");
+            Bind<IKnifeSerialConnector>().To<SerialPortDataConnector>().Named("Serial");
         }
     }
 }

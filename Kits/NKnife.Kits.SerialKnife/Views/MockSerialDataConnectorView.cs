@@ -132,6 +132,8 @@ namespace NKnife.Kits.SerialKnife.Views
                 "两条登录（内容不同）", new byte[] { 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x01, 0x00, 0x00, 0x00, 0x58, 0xFF, 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xFF }));
             MockReceiveListBox.DataSource = mockReceiveList;
             MockReceiveListBox.DisplayMember = "Key";
+
+            DoMockReceiveButton.Enabled = Properties.Settings.Default.EnableMock;
         }
 
         private void MockReceiveListBox_Click(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using NKnife.IoC;
 using NKnife.Kits.SerialKnife.Kernel;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
+using NKnife.Wrapper;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.SerialKnife.Views
@@ -20,12 +21,14 @@ namespace NKnife.Kits.SerialKnife.Views
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage ManualPackageTabPage;
         private System.Windows.Forms.PropertyGrid BytesProtocolPropertyGrid;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button SendProtocolToRemoteButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox ReceivedProtocolListBox;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button ClearReceiveListButton;
+        private System.Windows.Forms.TabPage Pan485PackageTabPage;
+        private System.Windows.Forms.ListBox Pan485ProtocolListBox;
         private readonly Tunnels _Tunnels = DI.Get<Tunnels>();
 
         #region 初始化
@@ -40,16 +43,19 @@ namespace NKnife.Kits.SerialKnife.Views
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.ManualPackageTabPage = new System.Windows.Forms.TabPage();
             this.BytesProtocolPropertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.button1 = new System.Windows.Forms.Button();
+            this.SendProtocolToRemoteButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ReceivedProtocolListBox = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ClearReceiveListButton = new System.Windows.Forms.Button();
+            this.Pan485PackageTabPage = new System.Windows.Forms.TabPage();
+            this.Pan485ProtocolListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.Pan485PackageTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // _StartTunnelButton
@@ -65,6 +71,7 @@ namespace NKnife.Kits.SerialKnife.Views
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.ManualPackageTabPage);
+            this.tabControl1.Controls.Add(this.Pan485PackageTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 17);
             this.tabControl1.Name = "tabControl1";
@@ -90,14 +97,15 @@ namespace NKnife.Kits.SerialKnife.Views
             this.BytesProtocolPropertyGrid.Size = new System.Drawing.Size(478, 400);
             this.BytesProtocolPropertyGrid.TabIndex = 57;
             // 
-            // button1
+            // SendProtocolToRemoteButton
             // 
-            this.button1.Location = new System.Drawing.Point(144, 463);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(106, 35);
-            this.button1.TabIndex = 58;
-            this.button1.Text = "发送";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SendProtocolToRemoteButton.Location = new System.Drawing.Point(144, 463);
+            this.SendProtocolToRemoteButton.Name = "SendProtocolToRemoteButton";
+            this.SendProtocolToRemoteButton.Size = new System.Drawing.Size(106, 35);
+            this.SendProtocolToRemoteButton.TabIndex = 58;
+            this.SendProtocolToRemoteButton.Text = "发送";
+            this.SendProtocolToRemoteButton.UseVisualStyleBackColor = true;
+            this.SendProtocolToRemoteButton.Click += new System.EventHandler(this.SendProtocolToRemoteButton_Click);
             // 
             // groupBox1
             // 
@@ -150,6 +158,26 @@ namespace NKnife.Kits.SerialKnife.Views
             this.ClearReceiveListButton.UseVisualStyleBackColor = true;
             this.ClearReceiveListButton.Click += new System.EventHandler(this.ClearReceiveListButton_Click);
             // 
+            // Pan485PackageTabPage
+            // 
+            this.Pan485PackageTabPage.Controls.Add(this.Pan485ProtocolListBox);
+            this.Pan485PackageTabPage.Location = new System.Drawing.Point(4, 22);
+            this.Pan485PackageTabPage.Name = "Pan485PackageTabPage";
+            this.Pan485PackageTabPage.Size = new System.Drawing.Size(459, 192);
+            this.Pan485PackageTabPage.TabIndex = 1;
+            this.Pan485PackageTabPage.Text = "Pan485协议族";
+            this.Pan485PackageTabPage.UseVisualStyleBackColor = true;
+            // 
+            // Pan485ProtocolListBox
+            // 
+            this.Pan485ProtocolListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Pan485ProtocolListBox.FormattingEnabled = true;
+            this.Pan485ProtocolListBox.ItemHeight = 12;
+            this.Pan485ProtocolListBox.Location = new System.Drawing.Point(0, 0);
+            this.Pan485ProtocolListBox.Name = "Pan485ProtocolListBox";
+            this.Pan485ProtocolListBox.Size = new System.Drawing.Size(459, 192);
+            this.Pan485ProtocolListBox.TabIndex = 0;
+            // 
             // ControlPanelView
             // 
             this.ClientSize = new System.Drawing.Size(998, 543);
@@ -157,7 +185,7 @@ namespace NKnife.Kits.SerialKnife.Views
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.SendProtocolToRemoteButton);
             this.Controls.Add(this._StartTunnelButton);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "ControlPanelView";
@@ -167,6 +195,7 @@ namespace NKnife.Kits.SerialKnife.Views
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.Pan485PackageTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -174,6 +203,19 @@ namespace NKnife.Kits.SerialKnife.Views
         private void ControlPanelView_Load(object sender, EventArgs e)
         {
             _Tunnels.ProtocolsReceived += _Tunnels_ProtocolsReceived;
+            FillUpPan485ProtocolList();
+        }
+
+
+        private void FillUpPan485ProtocolList()
+        {
+            var family = DI.Get<BytesProtocolFamily>();
+            family.FamilyName = "p-an485";
+            var protocol = family.Build(new byte[] {0x3D}); //登录成功
+            Pan485ProtocolListBox.Items.Add(new ProtocolWrapper(protocol)
+            {
+                Description = "登录成功",
+            });
         }
         #endregion
 
@@ -237,9 +279,11 @@ namespace NKnife.Kits.SerialKnife.Views
             [DisplayName("CommandParam")]
             public byte[] CommandParam { get; set; }
 
+            [DisplayName("描述")]
+            public string Description { get; set; }
+
             private ProtocolWrapper()
             {
-                
             }
 
             public ProtocolWrapper(IProtocol<byte[]> protocol)
@@ -249,16 +293,24 @@ namespace NKnife.Kits.SerialKnife.Views
                 CommandInString = protocol.Command.ToHexString();
                 CommandParamInString = protocol.CommandParam.ToHexString();
                 CommandParam = protocol.CommandParam;
+                Description = string.Empty;
             }
 
 
 
             public override string ToString()
             {
-                return string.Format("{0}:Command={1}, Data={2}",DateTime.Now.ToString("HH:mm:ss fff"),_Protocol.Command.ToHexString(),_Protocol.CommandParam.ToHexString());
+                if(string.IsNullOrEmpty(Description))
+                    return string.Format("{0}:Command={1}, Data={2}",DateTime.Now.ToString("HH:mm:ss fff"),_Protocol.Command.ToHexString(),_Protocol.CommandParam.ToHexString());
+                else
+                    return string.Format("{0}:{1}, Command={2}, Data={3}", DateTime.Now.ToString("HH:mm:ss fff"), Description, _Protocol.Command.ToHexString(), _Protocol.CommandParam.ToHexString());
             }
         }
 
+        private void SendProtocolToRemoteButton_Click(object sender, EventArgs e)
+        {
+
+        }
 
 
 
