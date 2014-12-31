@@ -660,7 +660,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Database\Database.template" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuring\readme.txt" />
