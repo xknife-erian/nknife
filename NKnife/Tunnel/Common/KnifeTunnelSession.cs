@@ -1,20 +1,18 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections;
+using System.Net;
 
 namespace NKnife.Tunnel.Common
 {
     /// <summary>
-    /// 有EndPoint,有byte[]，可用于socket, http等网络协议，
-    /// 只要SessionId的类型可以为EndPoint，均可以使用此类作为会话类
+    /// 数据类型为byte[]，
+    /// 如果SessionId的类型可以为EndPoint，可用于socket, http等网络协议，
+    /// 如果SessionId的类型为int,可用于serialport等串口协议,用int串口号做标记
     /// </summary>
-    public class KnifeTunnelSession : ITunnelSession<byte[], EndPoint>
+    public class KnifeTunnelSession<TSessionId> : ITunnelSession<byte[], TSessionId>
     {
-        public EndPoint Id { get; set; }
+        public TSessionId Id { get; set; }
         public byte[] Data { get; set; }
-
-        protected bool Equals(KnifeTunnelSession other)
-        {
-            return Id == other.Id && Equals(Id, other.Id);
-        }
 
         public override int GetHashCode()
         {
@@ -31,7 +29,7 @@ namespace NKnife.Tunnel.Common
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((KnifeTunnelSession)obj);
+            return Equals(obj);
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Common.Logging;
-using NKnife.Interface;
 using NKnife.NSerial.Abstracts;
 using NKnife.NSerial.Common;
 using NKnife.NSerial.Interfaces;
 
-namespace NKnife.NSerial
+namespace SerialKnife
 {
     /// <summary>串口通讯管理器
     /// </summary>

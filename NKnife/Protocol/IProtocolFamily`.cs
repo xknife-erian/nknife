@@ -19,8 +19,8 @@ namespace NKnife.Protocol
         /// </summary>
         T Generate(IProtocol<T> protocol);
 
-        void AddPackerGetter(Func<string, IProtocolPacker<T>> func);
+        void AddPackerGetter(Func<T, IProtocolPacker<T>> func);
 
-        void AddPackerGetter(string command, Func<string, IProtocolPacker<T>> func);
+        void AddPackerGetter(T command, Func<T, IProtocolPacker<T>> func);
     }
 }

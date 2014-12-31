@@ -383,5 +383,16 @@ namespace System
             }
             return false;
         }
+
+        public static byte[] ToBytes(this string src, params char[] separator)
+        {
+            var strs = src.Split(separator);
+            var result = new byte[strs.Length];
+            for (int i = 0; i < strs.Length; i++)
+            {
+                result[i] = (byte) Convert.ToInt32(strs[i], 16);
+            }
+            return result;
+        }
     }
 }

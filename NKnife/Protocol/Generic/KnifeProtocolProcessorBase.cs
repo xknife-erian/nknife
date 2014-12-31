@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Web.Configuration;
-using System.Windows.Forms.VisualStyles;
 using Common.Logging;
-using NKnife.Protocol;
-using NKnife.Protocol.Generic;
+using NKnife.Tunnel;
 using NKnife.Utility;
 
-namespace NKnife.Tunnel.Generic
+namespace NKnife.Protocol.Generic
 {
 
     /// <summary>
-    /// 具备数据byte[]到Protocol处理能力的类
-    /// 1、能够对byte[]进行拼包操作
+    /// 具备数据T到Protocol处理能力的类
+    /// 1、能够对T进行拼包操作
     /// </summary>
-    public abstract class ProtocolProcessorBase<T> : IPackageProcessor<T>
+    public abstract class KnifeProtocolProcessorBase<T> : IKnifeProtocolProcessor<T>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -39,7 +34,7 @@ namespace NKnife.Tunnel.Generic
         /// <param name="dataPacket">当前新的数据包</param>
         /// <param name="unFinished">未完成处理的数据</param>
         /// <returns>未处理完成,待下个数据包到达时将要继续处理的数据(半包)</returns>
-        protected virtual IEnumerable<IProtocol<T>> ProcessDataPacket(byte[] dataPacket, byte[] unFinished)
+        public virtual IEnumerable<IProtocol<T>> ProcessDataPacket(byte[] dataPacket, byte[] unFinished)
         {
             if (!UtilityCollection.IsNullOrEmpty(unFinished))
             {
@@ -61,7 +56,7 @@ namespace NKnife.Tunnel.Generic
             }
             else
             {
-                protocols = ParseProtocols(Family, datagram);
+                protocols = ParseProtocols(datagram);
             }
             
 
@@ -81,7 +76,7 @@ namespace NKnife.Tunnel.Generic
             return Codec.Decoder.Execute(data, out done);
         }
 
-        protected virtual IEnumerable<IProtocol<T>> ParseProtocols(IProtocolFamily<T> family, T[] datagram)
+        protected virtual IEnumerable<IProtocol<T>> ParseProtocols(T[] datagram)
         {
             var protocols = new List<IProtocol<T>>(datagram.Length);
             foreach (T dg in datagram)
@@ -90,19 +85,19 @@ namespace NKnife.Tunnel.Generic
                 T command;
                 try
                 {
-                    command = family.CommandParser.GetCommand(dg);
+                    command = Family.CommandParser.GetCommand(dg);
                 }
                 catch (Exception e)
                 {
                     _logger.Error(string.Format("命令字解析异常:{0},Data:{1}", e.Message, dg), e);
                     continue;
                 }
-                _logger.Trace(string.Format("Server.OnDataComeIn::命令字:{0},数据包:{1}", command, dg));
+                _logger.Trace(string.Format("开始协议解析::命令字:{0},数据包:{1}", command, dg));
 
                 IProtocol<T> protocol;
                 try
                 {
-                    protocol = (IProtocol<T>)family.Parse(command, dg);
+                    protocol = Family.Parse(command, dg);
                 }
                 catch (ArgumentNullException ex)
                 {
@@ -118,10 +113,5 @@ namespace NKnife.Tunnel.Generic
             }
             return protocols;
         }
-    }
-
-    public interface IPackageProcessor<T>
-    {
-        
     }
 }

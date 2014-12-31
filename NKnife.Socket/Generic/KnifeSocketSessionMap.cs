@@ -107,7 +107,7 @@ namespace SocketKnife.Generic
 
         public int Count
         {
-            get { return _Map.Count; }
+            get { return ((IDictionary<EndPoint, KnifeSocketSession>)_Map).Count; }
         }
 
         public bool IsReadOnly
@@ -122,7 +122,7 @@ namespace SocketKnife.Generic
 
         public IEnumerator GetEnumerator()
         {
-            return _Map.GetEnumerator();
+            return ((IDictionary<EndPoint, KnifeSocketSession>)_Map).GetEnumerator();
         }
 
         bool ICollection<KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>>>.Remove(KeyValuePair<EndPoint, ITunnelSession<byte[], EndPoint>> item)

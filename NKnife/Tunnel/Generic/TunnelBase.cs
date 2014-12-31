@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Common.Logging;
 using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Generic
 {
     public abstract class TunnelBase<TData, TSessionId> : ITunnel<TData, TSessionId>
     {
-        protected IDataConnector<TData, TSessionId> _DataConnector;
-        protected ITunnelFilterChain<TData, TSessionId> _FilterChain;
+        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private bool _IsDataConnectedBound;
+
+        protected IDataConnector<TData, TSessionId> DataConnector;
+        protected ITunnelFilterChain<TData, TSessionId> FilterChain;
 
         public abstract void Dispose();
         protected abstract void SetFilterChain();
@@ -17,58 +21,64 @@ namespace NKnife.Tunnel.Generic
         public ITunnelConfig Config { get; set; }
         public virtual void AddFilters(params ITunnelFilter<TData, TSessionId>[] filters)
         {
-            if (_FilterChain == null)
+            if (FilterChain == null)
                 SetFilterChain();
             foreach (var filter in filters)
             {
-                if (_FilterChain != null)
-                    _FilterChain.AddLast(filter);
+                if (FilterChain != null)
+                    FilterChain.AddLast(filter);
             }
         }
 
         public void RemoveFilter(ITunnelFilter<TData, TSessionId> filter)
         {
-            _FilterChain.Remove(filter);
+            FilterChain.Remove(filter);
         }
 
         public bool Start()
         {
-            _DataConnector.SessionBuilt += OnSessionBuilt;
-            _DataConnector.SessionBroken += OnSessionBroken;
-            _DataConnector.DataReceived += OnDataReceived;
-            _DataConnector.Start();
-
-            return true;
+            return DataConnector.Start();
         }
 
         public virtual bool ReStart()
         {
-            return true;
+            if (DataConnector.Stop())
+            {
+                return DataConnector.Start();
+            }
+            return false;
         }
 
         public virtual bool Stop()
         {
-            return true;
+            return DataConnector.Stop();
         }
 
         public void BindDataConnector(IDataConnector<TData, TSessionId> dataConnector)
         {
-            _DataConnector = dataConnector;
-            _DataConnector.SessionBuilt += OnSessionBuilt;
-            _DataConnector.SessionBroken += OnSessionBroken;
-            _DataConnector.DataReceived += OnDataReceived;
-            foreach (var filter in _FilterChain)
+            if (!_IsDataConnectedBound)
             {
-                if (filter.Listener != null)
+                DataConnector = dataConnector;
+                DataConnector.SessionBuilt += OnSessionBuilt;
+                DataConnector.SessionBroken += OnSessionBroken;
+                DataConnector.DataReceived += OnDataReceived;
+                DataConnector.DataSent += OnDataSent;
+                foreach (var filter in FilterChain)
                 {
-                    filter.Listener.BindSessionHandler((ISessionProvider<TData, TSessionId>)dataConnector);
+                    filter.BindSessionProvider(dataConnector);
                 }
+                _logger.Debug(string.Format("DataConnector[{0}]绑定成功",dataConnector.GetType()));
+                _IsDataConnectedBound = true;
+            }
+            else
+            {
+                _logger.Debug(string.Format("DataConnector[{0}]已经绑定，不需重复绑定", dataConnector.GetType()));
             }
         }
 
         private void OnDataReceived(object sender, SessionEventArgs<TData, TSessionId> e)
         {
-            foreach (var filter in _FilterChain)
+            foreach (var filter in FilterChain)
             {
                 filter.PrcoessReceiveData(e.Item); // 调用filter对数据进行处理
 
@@ -77,9 +87,17 @@ namespace NKnife.Tunnel.Generic
             }
         }
 
+        private void OnDataSent(object sender, SessionEventArgs<TData, TSessionId> e)
+        {
+            foreach (var filter in FilterChain)
+            {
+                filter.PrcoessSendData(e.Item); // 调用filter对数据进行处理
+            }
+        }
+
         private void OnSessionBroken(object sender, SessionEventArgs<TData, TSessionId> e)
         {
-            foreach (var filter in _FilterChain)
+            foreach (var filter in FilterChain)
             {
                 filter.ProcessSessionBroken(e.Item.Id);
             }
@@ -87,7 +105,7 @@ namespace NKnife.Tunnel.Generic
 
         private void OnSessionBuilt(object sender, SessionEventArgs<TData, TSessionId> e)
         {
-            foreach (var filter in _FilterChain)
+            foreach (var filter in FilterChain)
             {
                 filter.ProcessSessionBuilt(e.Item.Id);
             }

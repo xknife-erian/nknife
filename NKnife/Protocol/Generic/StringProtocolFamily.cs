@@ -148,17 +148,17 @@ namespace NKnife.Protocol.Generic
             {
                 if (_ProtocolUnPackerGetterMap.ContainsKey(command))
                 {
-                    _ProtocolUnPackerGetterMap[command].Invoke(command).Execute(protocol,datagram,FamilyName,command);
+                    _ProtocolUnPackerGetterMap[command].Invoke(command).Execute(protocol,datagram,command);
                 }
                 else 
                 {
                     if (_DefaultProtocolUnPackerGetter == null)
                     {
-                        DI.Get<StringProtocolUnPacker>().Execute(protocol,datagram,FamilyName,command);
+                        DI.Get<StringProtocolUnPacker>().Execute(protocol,datagram,command);
                     }
                     else
                     {
-                        _DefaultProtocolUnPackerGetter.Invoke(command).Execute(protocol,datagram,FamilyName,command);
+                        _DefaultProtocolUnPackerGetter.Invoke(command).Execute(protocol,datagram,command);
                     }
                 }
             }

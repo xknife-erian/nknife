@@ -4,9 +4,9 @@ using System.Net;
 
 namespace NKnife.Tunnel.Common
 {
-    public class KnifeTunnelFilterChain : ITunnelFilterChain<byte[], EndPoint>
+    public class KnifeTunnelFilterChain<TSessionId> : ITunnelFilterChain<byte[], TSessionId>
     {
-        private readonly LinkedList<ITunnelFilter<byte[], EndPoint>> _Filters = new LinkedList<ITunnelFilter<byte[], EndPoint>>();
+        private readonly LinkedList<ITunnelFilter<byte[], TSessionId>> _Filters = new LinkedList<ITunnelFilter<byte[], TSessionId>>();
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -25,7 +25,7 @@ namespace NKnife.Tunnel.Common
 
         public bool IsReadOnly
         {
-            get { return ((ICollection<ITunnelFilter<byte[], EndPoint>>)_Filters).IsReadOnly; }
+            get { return ((ICollection<ITunnelFilter<byte[], TSessionId>>)_Filters).IsReadOnly; }
         }
 
         public void RemoveFirst()
@@ -38,49 +38,49 @@ namespace NKnife.Tunnel.Common
             _Filters.RemoveLast();
         }
 
-        public IEnumerator<ITunnelFilter<byte[], EndPoint>> GetEnumerator()
+        public IEnumerator<ITunnelFilter<byte[], TSessionId>> GetEnumerator()
         {
             return _Filters.GetEnumerator();
         }
 
-        public void Add(ITunnelFilter<byte[], EndPoint> item)
+        public void Add(ITunnelFilter<byte[], TSessionId> item)
         {
             _Filters.AddLast(item);
         }
 
-        public bool Contains(ITunnelFilter<byte[], EndPoint> item)
+        public bool Contains(ITunnelFilter<byte[], TSessionId> item)
         {
             return _Filters.Contains(item);
         }
 
-        public void CopyTo(ITunnelFilter<byte[], EndPoint>[] array, int arrayIndex)
+        public void CopyTo(ITunnelFilter<byte[], TSessionId>[] array, int arrayIndex)
         {
             _Filters.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(ITunnelFilter<byte[], EndPoint> item)
+        public bool Remove(ITunnelFilter<byte[], TSessionId> item)
         {
             return _Filters.Remove(item);
         }
 
-        public void AddAfter(ITunnelFilter<byte[], EndPoint> filter, ITunnelFilter<byte[], EndPoint> newfilter)
+        public void AddAfter(ITunnelFilter<byte[], TSessionId> filter, ITunnelFilter<byte[], TSessionId> newfilter)
         {
-            _Filters.AddAfter(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter), new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(newfilter));
+            _Filters.AddAfter(new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(filter), new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(newfilter));
         }
 
-        public void AddBefore(ITunnelFilter<byte[], EndPoint> filter, ITunnelFilter<byte[], EndPoint> newfilter)
+        public void AddBefore(ITunnelFilter<byte[], TSessionId> filter, ITunnelFilter<byte[], TSessionId> newfilter)
         {
-            _Filters.AddBefore(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter), new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(newfilter));
+            _Filters.AddBefore(new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(filter), new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(newfilter));
         }
 
-        public void AddFirst(ITunnelFilter<byte[], EndPoint> filter)
+        public void AddFirst(ITunnelFilter<byte[], TSessionId> filter)
         {
-            _Filters.AddFirst(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter));
+            _Filters.AddFirst(new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(filter));
         }
 
-        public void AddLast(ITunnelFilter<byte[], EndPoint> filter)
+        public void AddLast(ITunnelFilter<byte[], TSessionId> filter)
         {
-            _Filters.AddLast(new LinkedListNode<ITunnelFilter<byte[], EndPoint>>(filter));
+            _Filters.AddLast(new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(filter));
         }
     }
 }
