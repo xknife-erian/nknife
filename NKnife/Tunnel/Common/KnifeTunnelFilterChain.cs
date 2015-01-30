@@ -38,6 +38,16 @@ namespace NKnife.Tunnel.Common
             _Filters.RemoveLast();
         }
 
+        public LinkedListNode<ITunnelFilter<byte[], TSessionId>> Previous(LinkedListNode<ITunnelFilter<byte[], TSessionId>> currentNode)
+        {
+            return currentNode.Previous;
+        }
+
+        public LinkedListNode<ITunnelFilter<byte[], TSessionId>> Next(LinkedListNode<ITunnelFilter<byte[], TSessionId>> currentNode)
+        {
+            return currentNode.Next;
+        }
+
         public IEnumerator<ITunnelFilter<byte[], TSessionId>> GetEnumerator()
         {
             return _Filters.GetEnumerator();
@@ -45,12 +55,17 @@ namespace NKnife.Tunnel.Common
 
         public void Add(ITunnelFilter<byte[], TSessionId> item)
         {
-            _Filters.AddLast(item);
+            _Filters.AddLast(new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(item));
         }
 
         public bool Contains(ITunnelFilter<byte[], TSessionId> item)
         {
             return _Filters.Contains(item);
+        }
+
+        public LinkedListNode<ITunnelFilter<byte[], TSessionId>> Find(ITunnelFilter<byte[], TSessionId> filter)
+        {
+            return _Filters.Find(filter);
         }
 
         public void CopyTo(ITunnelFilter<byte[], TSessionId>[] array, int arrayIndex)
@@ -63,14 +78,14 @@ namespace NKnife.Tunnel.Common
             return _Filters.Remove(item);
         }
 
-        public void AddAfter(ITunnelFilter<byte[], TSessionId> filter, ITunnelFilter<byte[], TSessionId> newfilter)
+        public void AddAfter(LinkedListNode<ITunnelFilter<byte[], TSessionId>> node, ITunnelFilter<byte[], TSessionId> newfilter)
         {
-            _Filters.AddAfter(new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(filter), new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(newfilter));
+            _Filters.AddAfter(node, new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(newfilter));
         }
 
-        public void AddBefore(ITunnelFilter<byte[], TSessionId> filter, ITunnelFilter<byte[], TSessionId> newfilter)
+        public void AddBefore(LinkedListNode<ITunnelFilter<byte[], TSessionId>> node, ITunnelFilter<byte[], TSessionId> newfilter)
         {
-            _Filters.AddBefore(new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(filter), new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(newfilter));
+            _Filters.AddBefore(node, new LinkedListNode<ITunnelFilter<byte[], TSessionId>>(newfilter));
         }
 
         public void AddFirst(ITunnelFilter<byte[], TSessionId> filter)

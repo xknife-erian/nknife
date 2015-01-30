@@ -1,6 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Text;
 using Common.Logging;
+using NKnife.Events;
+using NKnife.Tunnel.Events;
 using NKnife.Tunnel.Generic;
 
 namespace NKnife.Tunnel.Filters
@@ -9,19 +12,10 @@ namespace NKnife.Tunnel.Filters
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
-        public LogFilter()
-        {
-            ContinueNextFilter = true;
-        }
-
-        public override void BindSessionProvider(ISessionProvider<byte[], EndPoint> sessionProvider)
-        {
-            //什么都不做，也不需要
-        }
-
-        public override void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+        public override bool PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
         {
             _logger.Debug(string.Format("收到数据，来自{0}：{1}",session.Id,Encoding.Default.GetString(session.Data)));
+            return true;
         }
 
         public override void ProcessSessionBroken(EndPoint id)
@@ -34,9 +28,18 @@ namespace NKnife.Tunnel.Filters
             _logger.Debug(string.Format("连接建立,来自{0}", id));
         }
 
-        public override void PrcoessSendData(ITunnelSession<byte[], EndPoint> session)
+        public override void ProcessSendToSession(ITunnelSession<byte[], EndPoint> session)
         {
             _logger.Debug(string.Format("发送数据，目标{0}：{1}",session.Id,Encoding.Default.GetString(session.Data)));
         }
+
+        public override void ProcessSendToAll(byte[] data)
+        {
+            _logger.Debug(string.Format("发送数据，目标全体Session：{0}", Encoding.Default.GetString(data)));
+        }
+
+        public override event EventHandler<SessionEventArgs<byte[], EndPoint>> OnSendToSession;
+        public override event EventHandler<EventArgs<byte[]>> OnSendToAll;
+        public override event EventHandler<EventArgs<EndPoint>> OnKillSession;
     }
 }

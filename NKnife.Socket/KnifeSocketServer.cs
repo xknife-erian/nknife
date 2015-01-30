@@ -291,6 +291,9 @@ namespace SocketKnife
                 case SocketAsyncOperation.Receive:
                     ProcessReceive(e);
                     break;
+//                case SocketAsyncOperation.Send:
+//                    ProcessSend(e);
+//                    break;
             }
         }
 
@@ -388,39 +391,43 @@ namespace SocketKnife
                     e.AcceptSocket.Close();
                 return;
             }
-            if (e.SocketError == SocketError.Success) //连接正常
+            if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success) //连接正常
             {
                 if (e.BytesTransferred > 0) //收到数据了
                 {
                     PrcoessReceivedData(e);
                 }
-                else //没收到数据，但连接正常，继续收
+                //处理完成，继续接收
+                //Thread.Sleep(10);
+                if (e.AcceptSocket != null && e.AcceptSocket.Connected)
                 {
-                    Thread.Sleep(10);
-                    if (e.AcceptSocket != null && e.AcceptSocket.Connected)
-                    {
-                        bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(e);
-                        if (!willRaiseEvent)
-                            ProcessReceive(e);
-                    }
+                    bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(e);
+                    if (!willRaiseEvent)
+                        ProcessReceive(e);
                 }
+                
             }
             else //连接不正常
             {
-                RemoveSession(e);
-                try
-                {
-                    e.AcceptSocket.Shutdown(SocketShutdown.Both);
-                }
-                catch (Exception ex)
-                {
-                    
-                }
-                e.AcceptSocket.Close();
-                e.UserToken = null;
-                _BufferContainer.FreeBuffer(e);
-                _SendRecvSocketAsynPool.Push(e);
+                ProcessConnectionBrokenActive(e);
             }
+        }
+
+        protected virtual void ProcessConnectionBrokenActive(SocketAsyncEventArgs e)
+        {
+            RemoveSession(e);
+            try
+            {
+                e.AcceptSocket.Shutdown(SocketShutdown.Both);
+            }
+            catch (Exception ex)
+            {
+                                
+            }
+            e.AcceptSocket.Close();
+            e.UserToken = null;
+            _BufferContainer.FreeBuffer(e);
+            _SendRecvSocketAsynPool.Push(e);
         }
 
         protected virtual void RemoveSession(SocketAsyncEventArgs e)
@@ -482,28 +489,49 @@ namespace SocketKnife
                     handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
                 }
             }
-
-            if (!e.AcceptSocket.ReceiveAsync(e))
-                ProcessReceive(e);
         }
+
+//        protected virtual void ProcessSend(SocketAsyncEventArgs e)
+//        {
+//            var id = e.RemoteEndPoint;
+//            var data = e.Buffer;
+//            if (e.SocketError == SocketError.Success) //连接正常
+//            {
+//                //发送成功
+//                var handler = DataSent;
+//                if (handler != null)
+//                {
+//                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
+//                    {
+//                        Data = data,
+//                        Id = id
+//                    }));
+//                }
+//            }
+//            else
+//            {
+//                _logger.WarnFormat("发送失败.{0},{1}.", id, data.ToHexString());
+//            }
+//        }
 
         protected virtual void ProcessSendData(EndPoint id, Socket socket, byte[] data)
         {
             try
             {
-                socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socket);
-                //_logger.InfoFormat("ServerSend:{0}", data.ToHexString());
-
-                var handler = DataSent;
-                if (handler != null)
+                var socketSession = new KnifeSocketSession
                 {
-                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
-                    {
-                        Data = data,
-                        Id = id
-                    }));
-                }
-
+                    AcceptSocket = socket,
+                    Data = data,
+                    Id = id,
+                };
+                socket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, socketSession);
+//                var e = new SocketAsyncEventArgs{RemoteEndPoint = id};
+//                e.Completed += AsynCompleted;
+//                e.SetBuffer(data, 0, data.Length);
+//
+//                bool isSuceess = socket.SendAsync(e);
+//                if (!isSuceess)
+//                        ProcessSend(e);
             }
             catch (SocketException e)
             {
@@ -517,10 +545,23 @@ namespace SocketKnife
         {
             try
             {
-                var sock = result.AsyncState as Socket;
-                if (sock != null)
+                var session = result.AsyncState as KnifeSocketSession;
+                if (session!=null)
                 {
-                    sock.EndSend(result);
+                    session.AcceptSocket.EndSend(result);
+                    var data = session.Data;
+                    var id = session.Id;
+                    _logger.Debug(string.Format("ServerSend:{0}", data.ToHexString()));
+
+                    var handler = DataSent;
+                    if (handler != null)
+                    {
+                        handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
+                        {
+                            Data = data,
+                            Id = id
+                        }));
+                    }
                 }
             }
             catch (Exception e)

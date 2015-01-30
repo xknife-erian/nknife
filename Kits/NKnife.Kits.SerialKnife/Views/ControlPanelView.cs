@@ -18,6 +18,10 @@ namespace NKnife.Kits.SerialKnife.Views
         private System.Windows.Forms.Button _StartTunnelButton;
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private bool _IsTunnelStarted;
+
+        private readonly Tunnels _Tunnels = DI.Get<Tunnels>();
+
+        #region 初始化
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage ManualPackageTabPage;
         private System.Windows.Forms.PropertyGrid BytesProtocolPropertyGrid;
@@ -29,9 +33,6 @@ namespace NKnife.Kits.SerialKnife.Views
         private System.Windows.Forms.Button ClearReceiveListButton;
         private System.Windows.Forms.TabPage Pan485PackageTabPage;
         private System.Windows.Forms.ListBox Pan485ProtocolListBox;
-        private readonly Tunnels _Tunnels = DI.Get<Tunnels>();
-
-        #region 初始化
         public ControlPanelView()
         {
             InitializeComponent();

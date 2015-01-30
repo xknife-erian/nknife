@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net;
 using System.Windows;
 using Common.Logging;
 using NKnife.Collections;
 using NKnife.Interface;
 using NKnife.Kits.SocketKnife.Common;
+using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Demo
 {
-    public class DemoClientHandler : KnifeSocketClientProtocolHandler
+    public class DemoClientHandler : KnifeProtocolHandlerBase<byte[], EndPoint, string>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -24,12 +26,12 @@ namespace NKnife.Kits.SocketKnife.Demo
             _SocketMessages = socketMessages;
         }
 
-        public override void Received(StringProtocol protocol)
+        public override void Recevied(EndPoint sessionId, IProtocol<string> protocol)
         {
             var msg = new SocketMessage();
             msg.Command = protocol.Command;
             msg.SocketDirection = SocketDirection.Receive;
-            msg.Message = _Family.Generate(protocol);
+            msg.Message = _Family.Generate((StringProtocol) protocol);
             msg.Time = DateTime.Now.ToString("HH:mm:ss.fff");
             _logger.Info("新消息解析完成" + msg.Message);
 
@@ -66,8 +68,8 @@ namespace NKnife.Kits.SocketKnife.Demo
     {
         public MyClass()
         {
-            KnifeSocketClientProtocolHandler handler = new DemoClientHandler(null,null);
-            handler.Write(new StringProtocol());
+            KnifeProtocolHandlerBase<byte[], EndPoint, string> handler = new DemoClientHandler(null, null);
+            handler.WriteToAllSession(new StringProtocol());
         } 
     }
 }

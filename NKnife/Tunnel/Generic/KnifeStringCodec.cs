@@ -3,7 +3,7 @@ using NKnife.IoC;
 
 namespace NKnife.Tunnel.Generic
 {
-    public class KnifeStringCodec : ITunnelCodec<string>
+    public class KnifeStringCodec : ITunnelCodec<string,byte[]>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
@@ -60,7 +60,7 @@ namespace NKnife.Tunnel.Generic
             }
         }
 
-        IDatagramDecoder<string> ITunnelCodec<string>.Decoder
+        IDatagramDecoder<string, byte[]> ITunnelCodec<string, byte[]>.Decoder
         {
             get { return StringDecoder; }
             set
@@ -70,7 +70,7 @@ namespace NKnife.Tunnel.Generic
             }
         }
 
-        IDatagramEncoder<string> ITunnelCodec<string>.Encoder
+        IDatagramEncoder<string, byte[]> ITunnelCodec<string, byte[]>.Encoder
         {
             get { return StringEncoder; }
             set

@@ -2,6 +2,7 @@
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
+using NKnife.Tunnel.Generic;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
 
@@ -17,8 +18,8 @@ namespace NKnife.Kits.SocketKnife.IoC
             Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
             Bind<StringProtocolCommandParser>().To<TextPlainFirstFieldCommandParser>().InSingletonScope();
 
-            Bind<KnifeSocketDatagramDecoder>().To<FixedTailDecoder>();
-            Bind<KnifeSocketDatagramEncoder>().To<FixedTailEncoder>();
+            Bind<KnifeStringDatagramDecoder>().To<FixedTailDecoder>();
+            Bind<KnifeStringDatagramEncoder>().To<FixedTailEncoder>();
 
             Bind<StringProtocol>().To<MyProtocol>().Named("TestCustom");
         }

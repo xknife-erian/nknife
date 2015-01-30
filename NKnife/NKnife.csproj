@@ -182,6 +182,7 @@
     <Compile Include="Tunnel\Common\IntKnifeTunnelSession.cs" />
     <Compile Include="Tunnel\Common\KnifeTunnelFilterChain.cs" />
     <Compile Include="Tunnel\Common\KnifeTunnelSession.cs" />
+    <Compile Include="Tunnel\Common\TunnelSession.cs" />
     <Compile Include="Tunnel\Filters\LogFilter.cs" />
     <Compile Include="Tunnel\Events\DataDecodedEventArgs.cs" />
     <Compile Include="Tunnel\Events\DataFetchedEventArgs.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />
     <Compile Include="Tunnel\IKnifeClient`.cs" />
-    <Compile Include="Tunnel\ISessionProvider.cs" />
     <Compile Include="Tunnel\ITunnel`.cs" />
     <Compile Include="Tunnel\ITunnelConfig.cs" />
     <Compile Include="Tunnel\ITunnelFilterChain`.cs" />

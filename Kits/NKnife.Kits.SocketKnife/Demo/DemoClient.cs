@@ -1,10 +1,16 @@
-﻿using System.Windows.Threading;
+﻿using System.Net;
+using System.Windows.Threading;
 using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo.Protocols;
 using NKnife.Mvvm;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
+using NKnife.Tunnel.Filters;
+using NKnife.Tunnel.Generic;
+using SocketKnife;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
@@ -15,7 +21,8 @@ namespace NKnife.Kits.SocketKnife.Demo
     class DemoClient : NotificationObject
     {
         private bool _IsInitialized = false;
-        private IKnifeSocketClient _Client;
+        private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
+        private IKnifeSocketClient _Client = DI.Get<KnifeSocketClient>();
         private StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
         public StringProtocolFamily GetFamily()
@@ -23,34 +30,38 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Family;
         }
 
-        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting, KnifeSocketClientProtocolHandler handler)
+        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting, KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
         {
             if (_IsInitialized) return;
 
-            var heartbeatServerFilter = DI.Get<HeartbeatClientFilter>();
-            heartbeatServerFilter.Interval = 1000*5;
-            heartbeatServerFilter.Heartbeat = new Heartbeat();
+            var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
+            heartbeatServerFilter.Heartbeat = new Heartbeat("Client","Server");
+            heartbeatServerFilter.Interval = 1000 * 5;
+            heartbeatServerFilter.EnableStrictMode = true; //严格模式
+            heartbeatServerFilter.EnableAggressiveMode = true; //禁用主动模式
 
-            var keepAliveFilter = DI.Get<KeepAliveClientFilter>();
-            var codec = DI.Get<KnifeSocketCodec>();
-            if (codec.SocketDecoder.GetType() != customSetting.Decoder)
-                codec.SocketDecoder = (KnifeSocketDatagramDecoder) DI.Get(customSetting.Decoder);
-            if (codec.SocketEncoder.GetType() != customSetting.Encoder)
-                codec.SocketEncoder = (KnifeSocketDatagramEncoder) DI.Get(customSetting.Encoder);
+            var codec = DI.Get<KnifeStringCodec>();
+            if (codec.StringDecoder.GetType() != customSetting.Decoder)
+                codec.StringDecoder = (KnifeStringDatagramDecoder)DI.Get(customSetting.Decoder);
+            if (codec.StringEncoder.GetType() != customSetting.Encoder)
+                codec.StringEncoder = (KnifeStringDatagramEncoder)DI.Get(customSetting.Encoder);
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
             if (protocolFamily.CommandParser.GetType() != customSetting.CommandParser)
                 protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(customSetting.CommandParser);
 
-            _Client = DI.Get<IKnifeSocketClient>();
-            _Client.Config = config;
-            if (customSetting.NeedHeartBeat)
-                _Client.AddFilters(heartbeatServerFilter);
-            _Client.AddFilters(keepAliveFilter);
-            _Client.Configure(customSetting.IpAddress, customSetting.Port);
-            _Client.Bind(codec, protocolFamily);
-            _Client.AddHandlers(handler);
+            var protocolFilter = DI.Get<SocketKnifeProtocolFilter>();
+            protocolFilter.Bind(codec, protocolFamily);
+            protocolFilter.AddHandlers(handler);
 
+            _Tunnel.AddFilters(DI.Get<LogFilter>());
+            if (customSetting.NeedHeartBeat)
+                _Tunnel.AddFilters(heartbeatServerFilter);
+            _Tunnel.AddFilters(protocolFilter);
+
+            _Client.Config = config;
+            _Client.Configure(customSetting.IpAddress, customSetting.Port);
+            _Tunnel.BindDataConnector(_Client);
             _IsInitialized = true;
         }
 
@@ -76,14 +87,14 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void Start()
         {
-            if (_Client != null)
-                _Client.Start();
+            if (_Tunnel != null)
+                _Tunnel.Start();
         }
 
         public void Stop()
         {
-            if (_Client != null)
-                _Client.Stop();
+            if (_Tunnel != null)
+                _Tunnel.Stop();
         }
 
     }

@@ -4,11 +4,15 @@ namespace NKnife.Tunnel
 {
     public interface ITunnelFilterChain<TData, TSessionId> : ICollection<ITunnelFilter<TData, TSessionId>>
     {
-        void AddAfter(ITunnelFilter<TData, TSessionId> filter, ITunnelFilter<TData, TSessionId> newfilter);
-        void AddBefore(ITunnelFilter<TData, TSessionId> filter, ITunnelFilter<TData, TSessionId> newfilter);
+        LinkedListNode<ITunnelFilter<TData, TSessionId>> Find(ITunnelFilter<TData, TSessionId> filter);
+        void AddAfter(LinkedListNode<ITunnelFilter<TData, TSessionId>> node, ITunnelFilter<TData, TSessionId> newfilter);
+        void AddBefore(LinkedListNode<ITunnelFilter<TData, TSessionId>> node, ITunnelFilter<TData, TSessionId> newfilter);
         void AddFirst(ITunnelFilter<TData, TSessionId> filter);
         void AddLast(ITunnelFilter<TData, TSessionId> filter);
         void RemoveFirst();
         void RemoveLast();
+        LinkedListNode<ITunnelFilter<TData, TSessionId>> Previous(LinkedListNode<ITunnelFilter<TData, TSessionId>> currentNode);
+
+        LinkedListNode<ITunnelFilter<TData, TSessionId>> Next(LinkedListNode<ITunnelFilter<TData, TSessionId>> currentNode);
     }
 }

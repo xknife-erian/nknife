@@ -7,36 +7,30 @@ using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Events;
 
 namespace NKnife.Kits.SerialKnife.Filters
 {
     public class ProtocolHandleFilter : KnifeProtocolProcessorBase<byte[]>, ITunnelFilter<byte[], int>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-        private ISessionProvider<byte[], int> _SessionProvider;
         private readonly byte[] _CurrentReceiveBuffer = new byte[1024];
         private int _CurrentReceiveByteLength = 0;
 
         public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
 
         #region Interface
-        public void BindSessionProvider(ISessionProvider<byte[], int> sessionProvider)
-        {
-            _SessionProvider = sessionProvider;
-        }
-
-        public bool ContinueNextFilter { get; private set; }
-        public void PrcoessReceiveData(ITunnelSession<byte[], int> session)
+        public bool PrcoessReceiveData(ITunnelSession<byte[], int> session)
         {
             var data = session.Data;
             var len = data.Length;
             if (len == 0)
-                return;
+                return false;
             if (_CurrentReceiveByteLength + len > 1024) //缓冲区溢出了，只保留后1024位
             {
                 //暂时不做处理，直接抛弃
                 _logger.Warn("收到的数据超出1024，缓冲区溢出，该条数据抛弃");
-                return;
+                return false;
             }
 
             var tempData = new byte[_CurrentReceiveByteLength + len];
@@ -63,6 +57,7 @@ namespace NKnife.Kits.SerialKnife.Filters
                     handler.Invoke(this, new EventArgs<IEnumerable<IProtocol<byte[]>>>(protocols));
                 }
             }
+            return true;
         }
 
         public void ProcessSessionBroken(int id)
@@ -73,9 +68,19 @@ namespace NKnife.Kits.SerialKnife.Filters
         {
         }
 
-        public void PrcoessSendData(ITunnelSession<byte[], int> session)
+        public void ProcessSendToSession(ITunnelSession<byte[], int> session)
         {
+
         }
+
+        public void ProcessSendToAll(byte[] data)
+        {
+            
+        }
+
+        public event EventHandler<SessionEventArgs<byte[], int>> OnSendToSession;
+        public event EventHandler<EventArgs<byte[]>> OnSendToAll;
+        public event EventHandler<EventArgs<int>> OnKillSession;
 
         #endregion
     }

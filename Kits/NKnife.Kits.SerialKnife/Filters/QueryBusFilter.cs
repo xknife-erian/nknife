@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Common.Logging;
+using NKnife.Events;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
+using NKnife.Tunnel.Events;
 using NKnife.Tunnel.Generic;
 
 namespace NKnife.Kits.SerialKnife.Filters
@@ -15,25 +18,26 @@ namespace NKnife.Kits.SerialKnife.Filters
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private readonly Dictionary<int, QueryThreadWrapper> _QueryThreadMap = new Dictionary<int, QueryThreadWrapper>();
 
-        private ISessionProvider<byte[], int> _SessionProvider;
-        public void BindSessionProvider(ISessionProvider<byte[], int> sessionProvider)
-        {
-            _SessionProvider = sessionProvider;
-        }
-
-        public bool ContinueNextFilter { get; private set; }
+        public event EventHandler<SessionEventArgs<byte[], int>> OnSendToSession;
+        public event EventHandler<EventArgs<byte[]>> OnSendToAll;
+        public event EventHandler<EventArgs<int>> OnKillSession;
 
         public QueryBusFilter()
         {
-            ContinueNextFilter = true;
+
         }
 
-        public void PrcoessReceiveData(ITunnelSession<byte[], int> session)
+        public bool PrcoessReceiveData(ITunnelSession<byte[], int> session)
+        {
+            return true;
+        }
+
+        public void ProcessSendToSession(ITunnelSession<byte[], int> session)
         {
             
         }
 
-        public void PrcoessSendData(ITunnelSession<byte[], int> session)
+        public void ProcessSendToAll(byte[] data)
         {
             
         }
@@ -101,7 +105,14 @@ namespace NKnife.Kits.SerialKnife.Filters
             queryProtocol.CommandParam = new byte[]{0x03,0x00}; //地址，计数
             var data = Family.Generate(queryProtocol);
             var datagram = Codec.Encoder.Execute(data);
-            _SessionProvider.Send(id, datagram);
+
+            var handler = OnSendToSession;
+            if(handler !=null)
+                handler.Invoke(this,new SessionEventArgs<byte[], int>(new IntKnifeTunnelSession
+                {
+                    Id = id,
+                    Data = datagram
+                }));
         }
 
 
