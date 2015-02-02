@@ -35,24 +35,38 @@ namespace NKnife.Protocol.Generic
         /// <param name="protocol"></param>
         public void WriteToSession(TSessionId sessionId, IProtocol<T> protocol)
         {
-            T str = Family.Generate(protocol);
-            TData data = Codec.Encoder.Execute(str);
-            var handler = OnSendToSession;
-            if (handler != null)
-                handler.Invoke(this, new SessionEventArgs<TData, TSessionId>(new TunnelSession<TData, TSessionId>
-                {
-                    Id = sessionId,
-                    Data = data
-                }));
+            try
+            {
+                T str = Family.Generate(protocol);
+                TData data = Codec.Encoder.Execute(str);
+                var handler = OnSendToSession;
+                if (handler != null)
+                    handler.Invoke(this, new SessionEventArgs<TData, TSessionId>(new TunnelSession<TData, TSessionId>
+                    {
+                        Id = sessionId,
+                        Data = data
+                    }));
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("发送protocol异常,{0}", ex));
+            }
         }
 
         public void WriteToAllSession(IProtocol<T> protocol)
         {
-            T str = Family.Generate(protocol);
-            TData data = Codec.Encoder.Execute(str);
-            var handler = OnSendToAll;
-            if (handler != null)
-                handler.Invoke(this,new EventArgs<TData>(data));
+            try
+            {
+                T str = Family.Generate(protocol);
+                TData data = Codec.Encoder.Execute(str);
+                var handler = OnSendToAll;
+                if (handler != null)
+                    handler.Invoke(this, new EventArgs<TData>(data));
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("发送protocol异常,{0}", ex));
+            }
         }
     }
 }
