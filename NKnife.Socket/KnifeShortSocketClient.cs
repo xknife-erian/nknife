@@ -14,6 +14,12 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
+    /// <summary>
+    /// 实现了socket短连接客户端，使用异步事件模型，
+    /// 一次交互依照连接-发送-接收-断开的顺序执行，每一步都是异步
+    /// 没有实现发送指令的缓冲队列，因此每次发送都是等上次发送动作完成（成功或异常）后才能进行
+    /// 可以扩展该类，增加发送指令缓冲队列，或增加通过发送接收方法等
+    /// </summary>
     public class KnifeShortSocketClient : IKnifeSocketClient, IDisposable 
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -14,6 +11,9 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
+    /// <summary>
+    /// 实现了socket长连接客户端，使用异步事件模型，自动重连
+    /// </summary>
     public class KnifeSocketClient : IDisposable, IKnifeSocketClient
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
@@ -151,7 +151,7 @@ namespace SocketKnife
         {
             while (_ReconnectFlag)
             {
-                if (_Config.EnableReconnect && !IsConnected) //重连检查，仅启用了自动重连的时候做
+                if (!IsConnected) //重连检查，仅启用了自动重连的时候做
                 {
                     _NeedReconnected = true;
                 }
@@ -377,9 +377,8 @@ namespace SocketKnife
                         _logger.Warn(string.Format("连接失败:{0}", e.SocketError));
                         IsConnected = false;
 
-                        //如果启用自动重连，则尝试重连
-                        if(_Config.EnableReconnect)
-                            StartReconnect();
+                        //自动重连，则尝试重连
+                        StartReconnect();
                     }
                     catch (Exception ex)
                     {
@@ -400,18 +399,13 @@ namespace SocketKnife
                     if (e.BytesTransferred > 0) //有数据
                     {
                         PrcessReceiveData(e); //处理收到的数据
-                        if (_Config.EnableDisconnectAfterReceive) //接收后主动断开-短连接
-                        {
-                            _logger.Info(string.Format("Client接收数据完成，主动中断连接。"));
-                            ProcessConnectionBrokenActive();
-                        }
-                        else
-                        {
-                            var data = new byte[Config.ReceiveBufferSize];
-                            e.SetBuffer(data, 0, data.Length); //设置数据包
-                            if (!SocketSession.AcceptSocket.ReceiveAsync(e)) //开始接收数据包
-                                    ProcessReceive(e);
-                        }
+
+                        //继续接收
+                        var data = new byte[Config.ReceiveBufferSize];
+                        e.SetBuffer(data, 0, data.Length); //设置数据包
+                        if (!SocketSession.AcceptSocket.ReceiveAsync(e)) //开始接收数据包
+                                ProcessReceive(e);
+                        
                     }
                     else
                     {
@@ -448,8 +442,7 @@ namespace SocketKnife
                 }));
 
             //如果有自动重连，则需要启用自动重连
-            if (_Config.EnableReconnect)
-                StartReconnect();
+            StartReconnect();
         }
 
         protected virtual void ProcessConnectionBrokenActive()
@@ -475,8 +468,7 @@ namespace SocketKnife
                 }));
 
             //如果有自动重连，则需要启用自动重连
-            if (_Config.EnableReconnect)
-                StartReconnect();
+            StartReconnect();
         }
 
         protected virtual void PrcessReceiveData(SocketAsyncEventArgs e)
@@ -521,8 +513,7 @@ namespace SocketKnife
                         Id = EndPoint
                     }));
                 //如果有自动重连，则需要启用自动重连
-                if (_Config.EnableReconnect)
-                    StartReconnect();
+                StartReconnect();
             }
         }
 
@@ -593,8 +584,7 @@ namespace SocketKnife
                         Id = EndPoint
                     }));
                 //如果有自动重连，则需要启用自动重连
-                if (_Config.EnableReconnect)
-                    StartReconnect();
+                StartReconnect();
             }
 
 
