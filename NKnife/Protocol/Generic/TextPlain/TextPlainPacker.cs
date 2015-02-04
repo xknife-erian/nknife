@@ -4,15 +4,15 @@ namespace NKnife.Protocol.Generic.TextPlain
 {
     public class TextPlainPacker : StringProtocolPacker
     {
-        public override string Combine(StringProtocol c)
+        public override string Combine(StringProtocol protocol)
         {
-            var command = string.Format("{0}{2}{1}{2}", c.Command, c.CommandParam, TextPlainProtocolFlags.SplitFlag);
+            var command = string.Format("{0}{2}{1}{2}", protocol.Command, protocol.CommandParam, TextPlainProtocolFlags.SplitFlag);
             var sb = new StringBuilder(command);
-            foreach (var tag in c.Tags)
+            foreach (var tag in protocol.Tags)
             {
                 sb.Append(tag).Append(TextPlainProtocolFlags.SplitFlag);
             }
-            foreach (var info in c.Infomations)
+            foreach (var info in protocol.Infomations)
             {
                 sb.Append(info.Key)
                     .Append(TextPlainProtocolFlags.InfomationSplitFlag)

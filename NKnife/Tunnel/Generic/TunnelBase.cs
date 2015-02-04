@@ -35,25 +35,6 @@ namespace NKnife.Tunnel.Generic
             FilterChain.Remove(filter);
         }
 
-        public bool Start()
-        {
-            return DataConnector.Start();
-        }
-
-        public virtual bool ReStart()
-        {
-            if (DataConnector.Stop())
-            {
-                return DataConnector.Start();
-            }
-            return false;
-        }
-
-        public virtual bool Stop()
-        {
-            return DataConnector.Stop();
-        }
-
         public void BindDataConnector(IDataConnector<TData, TSessionId> dataConnector)
         {
             if (!_IsDataConnectedBound)

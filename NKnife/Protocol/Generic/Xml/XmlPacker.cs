@@ -31,11 +31,11 @@ namespace NKnife.Protocol.Generic.Xml
         #region IProtocolPackage Members
 
         /// <summary>
-        /// Combines the specified content.
+        /// Combines the specified protocol.
         /// </summary>
-        /// <param name="content">The content.</param>
+        /// <param name="protocol">The protocol.</param>
         /// <returns></returns>
-        public override string Combine(StringProtocol content)
+        public override string Combine(StringProtocol protocol)
         {
             using (var stream = new MemoryStream())
             {
@@ -43,9 +43,9 @@ namespace NKnife.Protocol.Generic.Xml
                 {
                     try
                     {
-                        WriteRoot(content, writer);
-                        WriteTags(content, writer);
-                        WriteInformation(content, writer);
+                        WriteRoot(protocol, writer);
+                        WriteTags(protocol, writer);
+                        WriteInformation(protocol, writer);
                     }
                     catch (Exception e)
                     {

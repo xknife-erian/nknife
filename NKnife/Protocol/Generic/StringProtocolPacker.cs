@@ -7,6 +7,6 @@
             return Combine((StringProtocol) content);
         }
 
-        public abstract string Combine(StringProtocol content);
+        public abstract string Combine(StringProtocol protocol);
     }
 }
