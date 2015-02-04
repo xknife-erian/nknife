@@ -87,14 +87,14 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void Start()
         {
-            if (_Tunnel != null)
-                _Tunnel.Start();
+            if (_Client != null)
+                _Client.Start();
         }
 
         public void Stop()
         {
-            if (_Tunnel != null)
-                _Tunnel.Stop();
+            if (_Client != null)
+                _Client.Stop();
         }
 
     }

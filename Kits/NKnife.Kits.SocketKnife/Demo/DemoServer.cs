@@ -104,14 +104,14 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public void StartServer()
         {
-            if (_Tunnel != null)
-                _Tunnel.Start();
+            if (_Server != null)
+                _Server.Start();
         }
 
         public void StopServer()
         {
-            if (_Tunnel != null)
-                _Tunnel.Stop();
+            if (_Server != null)
+                _Server.Stop();
         }
     }
 }
