@@ -402,11 +402,19 @@ namespace SocketKnife
 
         #region 发送消息
 
-        public void AsyncSendData(byte[] data)
+        public void AsyncSendData(byte[] data, int timeout = 5000)
         {
+            int localCount = 0;
+            int timeoutCount = timeout/100;
             while (_OnSending)
             {
                 Thread.Sleep(100);
+                localCount += 1;
+                if (localCount > timeoutCount)
+                {
+                    _logger.Warn(string.Format("AsyncSendData发送超时,timeout={0}",timeout));
+                    return;
+                }
             }
             SwitchOnSending(true);
             _SocketAsyncEventArgs.SetBuffer(data, 0, data.Length);
