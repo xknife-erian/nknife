@@ -40,6 +40,7 @@ namespace SocketKnife
         protected bool _IsConnected; //连接状态，true表示已经连接上了
         private bool _ReconnectFlag;
         private bool _NeedReconnected; //是否重连
+        private Thread _ReconnectedThread;
 
         /// <summary>
         ///     SOCKET对象
@@ -82,7 +83,7 @@ namespace SocketKnife
         {
             Initialize();
             AsyncConnect(_IpAddress, _Port);
-
+            _ReconnectedThread.Start();
             return true;
         }
 
@@ -147,8 +148,7 @@ namespace SocketKnife
             _SocketSession.Id = ipPoint;
 
             _ReconnectFlag = true;
-            var reconnectedThread = new Thread(ReconnectedLoop);
-            reconnectedThread.Start();
+            _ReconnectedThread = new Thread(ReconnectedLoop);
         }
 
         private void ReconnectedLoop()
@@ -166,8 +166,7 @@ namespace SocketKnife
                     {
                         _logger.Debug("Client发起重连尝试");
                         AsyncConnect(_IpAddress, _Port);
-                        //阻塞
-                        _ReconnectResetEvent.Reset();
+                        _ReconnectResetEvent.Reset();//阻塞
                         _ReconnectResetEvent.WaitOne(_Config.ReconnectInterval);
                     }
                     else //已连接，则不需要重连了
@@ -363,29 +362,34 @@ namespace SocketKnife
         {
             try
             {
-                if (e.SocketError == SocketError.Success) //连接正常
+                switch (e.SocketError)
                 {
-                    if (e.BytesTransferred > 0) //有数据
+                    case SocketError.Success: //连接正常
                     {
-                        PrcessReceiveData(e); //处理收到的数据
+                        if (e.BytesTransferred > 0) //有数据
+                        {
+                            PrcessReceiveData(e); //处理收到的数据
 
-                        //继续接收
-                        var data = new byte[Config.ReceiveBufferSize];
-                        e.SetBuffer(data, 0, data.Length); //设置数据包
-                        if (!_SocketSession.AcceptSocket.ReceiveAsync(e)) //开始接收数据包
-                            ProcessReceive(e);
+                            //继续接收
+                            var data = new byte[Config.ReceiveBufferSize];
+                            e.SetBuffer(data, 0, data.Length); //设置数据包
+                            if (!_SocketSession.AcceptSocket.ReceiveAsync(e)) //开始接收数据包
+                                ProcessReceive(e);
+                        }
+                        else
+                        {
+                            var data = new byte[Config.ReceiveBufferSize];
+                            e.SetBuffer(data, 0, data.Length); //设置数据包
+                            if (!_SocketSession.AcceptSocket.ReceiveAsync(e)) //开始接收数据包
+                                ProcessReceive(e);
+                        }
+                        break;
                     }
-                    else
+                    default: //其他未处理的Socket状态
                     {
-                        var data = new byte[Config.ReceiveBufferSize];
-                        e.SetBuffer(data, 0, data.Length); //设置数据包
-                        if (!_SocketSession.AcceptSocket.ReceiveAsync(e)) //开始接收数据包
-                            ProcessReceive(e);
+                        _logger.Info(string.Format("Client接收时发现连接中断。{0}", e.SocketError));
+                        break;
                     }
-                }
-                else //连接异常了
-                {
-                    _logger.Info(string.Format("Client接收时发现连接中断。"));
                 }
             }
             catch (Exception ex) //接收处理异常了
@@ -454,33 +458,38 @@ namespace SocketKnife
 
         protected virtual void ProcessSend(SocketAsyncEventArgs e)
         {
-            if (e.SocketError == SocketError.Success) //连接正常
+            switch (e.SocketError)
             {
-                //发送成功
-                _logger.Debug(string.Format("ClientSend: {0}", e.Buffer.ToHexString()));
-                var dataSentHandler = DataSent;
-                if (dataSentHandler != null)
+                case SocketError.Success: //连接正常
                 {
-                    dataSentHandler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                    //发送成功
+                    _logger.Debug(string.Format("ClientSend: {0}", e.Buffer.ToHexString()));
+                    var dataSentHandler = DataSent;
+                    if (dataSentHandler != null)
                     {
-                        Id = e.RemoteEndPoint,
-                        Data = e.Buffer
-                    }));
+                        dataSentHandler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                        {
+                            Id = e.RemoteEndPoint,
+                            Data = e.Buffer
+                        }));
+                    }
+                    return;
                 }
-            }
-            else
-            {
-                _logger.Info(string.Format("Client发送时发现连接中断。"));
-                _IsConnected = false;
+                default:
+                {
+                    _logger.Info(string.Format("Client发送时发现未处理的Socket状态。{0}", e.SocketError));
+                    _IsConnected = false;
 
-                var handler = SessionBroken;
-                if (handler != null)
-                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                    var handler = SessionBroken;
+                    if (handler != null)
                     {
-                        Id = _EndPoint
-                    }));
-                //如果有自动重连，则需要启用自动重连
-                StartReconnect();
+                        var session = new EndPointKnifeTunnelSession {Id = _EndPoint};
+                        handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                    }
+                    //如果有自动重连，则需要启用自动重连
+                    StartReconnect();
+                    return;
+                }
             }
         }
 
