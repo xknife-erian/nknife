@@ -423,7 +423,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _logger.Debug("Socket客户端Shutdown异常。", e);
+                _logger.Error("Socket客户端Shutdown异常。", e);
             }
             _IsConnected = false;
 
