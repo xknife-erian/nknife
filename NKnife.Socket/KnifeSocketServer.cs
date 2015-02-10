@@ -232,15 +232,11 @@ namespace SocketKnife
         /// </summary>
         private bool _IsDisposed;
 
-
-
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-
 
         ~KnifeSocketServer()
         {
@@ -356,8 +352,6 @@ namespace SocketKnife
                 if (handler != null)
                     handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
 
-                
-
                 SocketAsyncEventArgs receiveSendEventArgs = _SendRecvSocketAsynPool.Pop();
                 receiveSendEventArgs.AcceptSocket = e.AcceptSocket;
 
@@ -365,7 +359,6 @@ namespace SocketKnife
                 _AcceptSocketAsynPool.Push(e);   
 
                 StartReceive(receiveSendEventArgs);
-
             }
             else
             {
@@ -391,7 +384,7 @@ namespace SocketKnife
                     e.AcceptSocket.Close();
                 return;
             }
-            if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success) //连接正常
+            if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success) //TODO:连接正常
             {
                 if (e.BytesTransferred > 0) //收到数据了
                 {
@@ -405,7 +398,6 @@ namespace SocketKnife
                     if (!willRaiseEvent)
                         ProcessReceive(e);
                 }
-                
             }
             else //连接不正常
             {
@@ -478,6 +470,8 @@ namespace SocketKnife
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
 
+            _logger.Fatal("1>>>>>"+data.ToHexString());
+
             var handler = DataReceived;
             if (handler != null)
             {
@@ -487,6 +481,10 @@ namespace SocketKnife
                     KnifeSocketSession session = SessionMap[endPoint];
                     session.Data = data;
                     handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                }
+                else
+                {
+                    _logger.Fatal("2>>>>>" + data.ToHexString());
                 }
             }
         }

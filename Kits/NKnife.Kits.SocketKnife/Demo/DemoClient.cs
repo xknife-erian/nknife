@@ -36,6 +36,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Client","Server");
+            heartbeatServerFilter.Heartbeat.Name = "Client";
             heartbeatServerFilter.Interval = 1000 * 5;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
             heartbeatServerFilter.EnableAggressiveMode = true; //禁用主动模式
@@ -67,20 +68,11 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         private StringProtocolFamily GetProtocolFamily()
         {
-            var register = DI.Get<Register>();
-
             _Family.FamilyName = "socket-kit";
 
             var custom = DI.Get<StringProtocol>("TestCustom");
             custom.Family = _Family.FamilyName;
             custom.Command = "custom";
-
-//            _Family.Add(_Family.Build("call"));
-//            _Family.Add(_Family.Build("recall"));
-//            _Family.Add(_Family.Build("sing"));
-//            _Family.Add(_Family.Build("dance"));
-//            _Family.Add(register);
-//            _Family.Add(custom);
 
             return _Family;
         }

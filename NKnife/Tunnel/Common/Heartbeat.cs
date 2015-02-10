@@ -19,7 +19,7 @@ namespace NKnife.Tunnel.Common
             RequestFromRemote = Encoding.Default.GetBytes(string.Format("[[beat request from {0} to {1}.]]", RemoteHeartDescription,LocalHeartDescription));
             ReplyFromRemote = Encoding.Default.GetBytes(string.Format("[[beat reply from {0} to {1}.]]", RemoteHeartDescription, LocalHeartDescription));
         }
-
+        public string Name { get; set; }
         public string LocalHeartDescription { get; private set; }
         public string RemoteHeartDescription { get; private set; }
 

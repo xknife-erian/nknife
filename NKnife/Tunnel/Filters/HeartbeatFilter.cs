@@ -9,6 +9,7 @@ using NKnife.Events;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 using NKnife.Tunnel.Generic;
+using NKnife.Utility;
 
 namespace NKnife.Tunnel.Filters
 {
@@ -19,8 +20,6 @@ namespace NKnife.Tunnel.Filters
         public override event EventHandler<EventArgs<EndPoint>> OnKillSession;
 
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-
-        //private ISessionProvider<byte[], EndPoint> _SessionProvider;
 
         public Heartbeat Heartbeat { get; set; }
         public double Interval { get; set; }
@@ -89,7 +88,6 @@ namespace NKnife.Tunnel.Filters
                 }
                 else
                 {
-                    
                     todoList.Add(endpoint);
                 }
             }
@@ -154,7 +152,6 @@ namespace NKnife.Tunnel.Filters
 
             if (Compare(ref data, Heartbeat.RequestFromRemote)) //判断是否收到心跳请求
             {
-
                 //被动模式下，收到了心跳请求，则标记WaitingForReply = false
                 //主动模式下，收到心跳请求，则只是回复心跳，是否标记WaitingForReply = false取决于是否严格模式
                 if (!EnableAggressiveMode) //被动模式
@@ -213,15 +210,11 @@ namespace NKnife.Tunnel.Filters
                     WaitingForReply = !EnableAggressiveMode
                 };
                 //被动模式则WaitingForReply=true,从session建立起，就开始等着收到心跳请求了，主动模式不用
-
                 _HeartBeartSessionMap.TryAdd(id, session);
             }
-
             //第一次监听到Session建立时启动
             Start();
         }
-
-
 
         /// <summary>
         /// 心跳中断处理
