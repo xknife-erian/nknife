@@ -294,6 +294,9 @@ namespace SocketKnife
                     case SocketAsyncOperation.Disconnect:
                         ProcessDisconnectAndCloseSocket(e);
                         break;
+                    default:
+                        _logger.Debug(string.Format("未处理的Socket状态：{0}", e.LastOperation));
+                        break;
                 }
             }
         }
@@ -462,7 +465,6 @@ namespace SocketKnife
             {
                 case SocketError.Success: //连接正常
                 {
-                    //发送成功
                     _logger.Debug(string.Format("ClientSend: {0}", e.Buffer.ToHexString()));
                     var dataSentHandler = DataSent;
                     if (dataSentHandler != null)
@@ -558,9 +560,15 @@ namespace SocketKnife
                 var session = result.AsyncState as KnifeSocketSession;
                 if (session != null)
                 {
-                    session.AcceptSocket.EndSend(result);
                     var data = session.Data;
                     var id = session.Id;
+                    var length = session.AcceptSocket.EndSend(result);
+                    if (length != data.Length)
+                    {
+                        _logger.Warn(string.Format("发送数据长度异常:expected:{1},actual:{0}", length, data.Length));
+                        return;
+                    }
+
                     //发送成功
                     _logger.Debug(string.Format("ClientSend: {0}", data.ToHexString()));
                     var dataSentHandler = DataSent;

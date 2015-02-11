@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Net;
+using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
@@ -53,7 +54,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Server","Client");
             heartbeatServerFilter.Heartbeat.Name = "Server";
-            heartbeatServerFilter.Interval = 1000*6;
+            heartbeatServerFilter.Interval = 1000 * 6;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
             heartbeatServerFilter.EnableAggressiveMode = false; //禁用主动模式
 
@@ -91,12 +92,6 @@ namespace NKnife.Kits.SocketKnife.Demo
             var custom = DI.Get<StringProtocol>("TestCustom");
             custom.Family = _Family.FamilyName;
             custom.Command = "custom";
-
-
-            //Func<string, StringProtocolPacker> func = s => DI.Get<StringProtocolPacker>(s);
-
-            //_Family.AddPackerGetter(func);
-            //_Family.AddPackerGetter("call", func);
 
             _Family.Build("command");
            

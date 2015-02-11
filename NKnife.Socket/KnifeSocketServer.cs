@@ -23,9 +23,11 @@ namespace SocketKnife
         private BufferContainer _BufferContainer;
         private bool _IsClose = true;
         private Socket _MainListenSocket;
+
         private SocketAsyncEventArgsPool _AcceptSocketAsynPool;
-        private SocketAsyncEventArgsPool _SendRecvSocketAsynPool;
-        protected KnifeSocketSessionMap SessionMap = new KnifeSocketSessionMap();
+        private SocketAsyncEventArgsPool _SendReceivedSocketAsynPool;
+
+        protected KnifeSocketSessionMap _SessionMap = new KnifeSocketSessionMap();
         private KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
 
         private IPAddress _IpAddress;
@@ -46,6 +48,7 @@ namespace SocketKnife
         #endregion
 
         #region IDataConnector接口
+
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
@@ -73,7 +76,7 @@ namespace SocketKnife
                 _MainAutoReset.Reset();
                 _IsClose = true;
 
-                foreach (var session in SessionMap.Values())
+                foreach (var session in _SessionMap.Values())
                 {
                     if (null == session.AcceptSocket || !session.AcceptSocket.Connected)
                     {
@@ -82,7 +85,7 @@ namespace SocketKnife
                     session.AcceptSocket.Shutdown(SocketShutdown.Both);
                     session.AcceptSocket.Close();
                 }
-                SessionMap.Clear();
+                _SessionMap.Clear();
                 foreach (SocketAsyncEventArgs async in _AcceptSocketAsynPool)
                 {
                     if (null == async.AcceptSocket || !async.AcceptSocket.Connected)
@@ -94,7 +97,7 @@ namespace SocketKnife
                 }
                 _AcceptSocketAsynPool.Clear();
 
-                foreach (SocketAsyncEventArgs async in _SendRecvSocketAsynPool)
+                foreach (SocketAsyncEventArgs async in _SendReceivedSocketAsynPool)
                 {
                     if (null == async.AcceptSocket || !async.AcceptSocket.Connected)
                     {
@@ -103,7 +106,7 @@ namespace SocketKnife
                     async.AcceptSocket.Shutdown(SocketShutdown.Both);
                     async.AcceptSocket.Close();
                 }
-                _SendRecvSocketAsynPool.Clear();
+                _SendReceivedSocketAsynPool.Clear();
 
                 //_MainListenSocket.Close();
                 _logger.Info("SocketServer关闭。");
@@ -120,12 +123,12 @@ namespace SocketKnife
         #region ISessionProvider
         public void Send(EndPoint id, byte[] data)
         {
-            if (!SessionMap.ContainsKey(id))
+            if (!_SessionMap.ContainsKey(id))
             {
                 _logger.Warn(string.Format("session:{0}不存在",id));
                 return;
             }
-            var session = SessionMap[id];
+            var session = _SessionMap[id];
             Socket socket = session.AcceptSocket;
             if (socket.Connected)
             {
@@ -135,7 +138,7 @@ namespace SocketKnife
 
         public void SendAll(byte[] data)
         {
-            foreach (KnifeSocketSession session in SessionMap.Values())
+            foreach (KnifeSocketSession session in _SessionMap.Values())
             {
                 Socket socket = session.AcceptSocket;
                 if (socket.Connected)
@@ -147,9 +150,9 @@ namespace SocketKnife
 
         public void KillSession(EndPoint id)
         {
-            if (SessionMap.ContainsKey(id))
+            if (_SessionMap.ContainsKey(id))
             {
-                var session = SessionMap[id];
+                var session = _SessionMap[id];
                 if (null == session.AcceptSocket || !session.AcceptSocket.Connected)
                 {
                     //session连接已经中断了
@@ -159,18 +162,20 @@ namespace SocketKnife
                     session.AcceptSocket.Shutdown(SocketShutdown.Both);
                     session.AcceptSocket.Close();
                 }
-                SessionMap.Remove(id);
+                _SessionMap.Remove(id);
             }
             var handler = SessionBroken;
             var replySession = DI.Get<KnifeSocketSession>();
             replySession.Id = id;
-            if(handler !=null)
+            if (handler != null)
+            {
                 handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(replySession));
+            }
         }
 
         public bool SessionExist(EndPoint id)
         {
-            return SessionMap.ContainsKey(id);
+            return _SessionMap.ContainsKey(id);
         }
         #endregion
 
@@ -206,13 +211,13 @@ namespace SocketKnife
                 _AcceptSocketAsynPool.Push(socketAsyn);
             }
 
-            _SendRecvSocketAsynPool = new SocketAsyncEventArgsPool(Config.MaxConnectCount);
+            _SendReceivedSocketAsynPool = new SocketAsyncEventArgsPool(Config.MaxConnectCount);
 
             for (int i = 0; i < Config.MaxConnectCount; i++)
             {
                 var socketAsyn = new SocketAsyncEventArgs();
                 socketAsyn.Completed += AsynCompleted;
-                _SendRecvSocketAsynPool.Push(socketAsyn);
+                _SendReceivedSocketAsynPool.Push(socketAsyn);
             }
 
             StartAccept();
@@ -258,9 +263,9 @@ namespace SocketKnife
                             SocketAsyncEventArgs args = _AcceptSocketAsynPool.Pop();
                             _BufferContainer.FreeBuffer(args);
                         }
-                        for (int i = 0; i < _SendRecvSocketAsynPool.Count; i++)
+                        for (int i = 0; i < _SendReceivedSocketAsynPool.Count; i++)
                         {
-                            SocketAsyncEventArgs args = _SendRecvSocketAsynPool.Pop();
+                            SocketAsyncEventArgs args = _SendReceivedSocketAsynPool.Pop();
                             _BufferContainer.FreeBuffer(args);
                         }
                     }
@@ -282,14 +287,20 @@ namespace SocketKnife
             switch (e.LastOperation)
             {
                 case SocketAsyncOperation.Accept:
+                {
                     ProcessAccept(e);
                     break;
+                }
                 case SocketAsyncOperation.Receive:
+                {
                     ProcessReceive(e);
                     break;
-//                case SocketAsyncOperation.Send:
-//                    ProcessSend(e);
-//                    break;
+                }
+                default:
+                {
+                    _logger.Trace(string.Format("未处理的操作状态: {0}", e.LastOperation));
+                    break;
+                }
             }
         }
 
@@ -304,7 +315,9 @@ namespace SocketKnife
             {
                 SocketAsyncEventArgs sockAsyn = _AcceptSocketAsynPool.Pop();
                 if (!_MainListenSocket.AcceptAsync(sockAsyn))
+                {
                     ProcessAccept(sockAsyn);
+                }
             }
             else
             {
@@ -330,29 +343,29 @@ namespace SocketKnife
             WaitHandle.WaitAll(new WaitHandle[] {_MainAutoReset});
             _MainAutoReset.Set();
 
-            
-
             //如果选用长连接服务时，将相应的连接置入一个Map以做处理
-            var iep = e.AcceptSocket.RemoteEndPoint;
-            if (iep != null)
+            var remoteEndPoine = e.AcceptSocket.RemoteEndPoint;
+            if (remoteEndPoine != null)
             {
-                if (SessionMap.ContainsKey(iep))
+                if (_SessionMap.ContainsKey(remoteEndPoine))
                 {
-                    SessionMap.Remove(iep);
+                    _SessionMap.Remove(remoteEndPoine);
                 }
 
                 var session = DI.Get<KnifeSocketSession>();
-                session.Id = iep;
+                session.Id = remoteEndPoine;
                 session.AcceptSocket = e.AcceptSocket;
-                SessionMap.Add(iep, session);
+                _SessionMap.Add(remoteEndPoine, session);
 
-                _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", iep, SessionMap.Count);
+                _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", remoteEndPoine, _SessionMap.Count);
 
                 var handler = SessionBuilt;
                 if (handler != null)
+                {
                     handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                }
 
-                SocketAsyncEventArgs receiveSendEventArgs = _SendRecvSocketAsynPool.Pop();
+                SocketAsyncEventArgs receiveSendEventArgs = _SendReceivedSocketAsynPool.Pop();
                 receiveSendEventArgs.AcceptSocket = e.AcceptSocket;
 
                 e.AcceptSocket = null;
@@ -370,9 +383,20 @@ namespace SocketKnife
         {
             if (_BufferContainer.SetBuffer(receiveSendEventArgs))
             {
-                receiveSendEventArgs.UserToken = receiveSendEventArgs.AcceptSocket.RemoteEndPoint; //将iep在UserToken中存一份，远端中断连接时，receive异常时，能够从UserToken中恢复iep
+                //将iep在UserToken中存一份，远端中断连接时，receive异常时，能够从UserToken中恢复iep
+                receiveSendEventArgs.UserToken = receiveSendEventArgs.AcceptSocket.RemoteEndPoint;
                 if (!receiveSendEventArgs.AcceptSocket.ReceiveAsync(receiveSendEventArgs))
+                {
                     ProcessReceive(receiveSendEventArgs);
+                }
+                else
+                {
+                    _logger.Warn("异步接收时，Handle completion when completion port is not posted.");
+                }
+            }
+            else
+            {
+                _logger.Error("为接收SocketAsyncEventArgs设置缓存失败");
             }
         }
 
@@ -381,10 +405,12 @@ namespace SocketKnife
             if (_IsClose)
             {
                 if (e.AcceptSocket != null)
+                {
+                    _logger.Debug(string.Format("准备关闭AcceptSocket..."));
                     e.AcceptSocket.Close();
+                }
                 return;
             }
-            _logger.Fatal(string.Format(">>>>:{0}, {1}", e.BytesTransferred, e.SocketError));
             if (e.BytesTransferred > 0) //连接正常
             {
                 switch (e.SocketError)
@@ -400,7 +426,9 @@ namespace SocketKnife
                         {
                             bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(e);
                             if (!willRaiseEvent)
+                            {
                                 ProcessReceive(e);
+                            }
                         }
                         break;
                     }
@@ -443,7 +471,7 @@ namespace SocketKnife
             e.AcceptSocket.Close();
             e.UserToken = null;
             _BufferContainer.FreeBuffer(e);
-            _SendRecvSocketAsynPool.Push(e);
+            _SendReceivedSocketAsynPool.Push(e);
         }
 
         protected virtual void RemoveSession(SocketAsyncEventArgs e)
@@ -463,14 +491,14 @@ namespace SocketKnife
             if (iep != null)
             {
                 string ip = iep.ToString();
-                if (SessionMap.ContainsKey(iep))
+                if (_SessionMap.ContainsKey(iep))
                 {
-                    SessionMap.Remove(iep);
-                    _logger.InfoFormat("服务端:IP地址:{0}的连接被移出客户端池。{1}", ip, SessionMap.Count);
+                    _SessionMap.Remove(iep);
+                    _logger.InfoFormat("服务端:IP地址:{0}的连接被移出客户端池。{1}", ip, _SessionMap.Count);
                 }
                 else
                 {
-                    _logger.WarnFormat("服务端:打算清理IP地址{0}时，该地址未在池中。{1}", ip, SessionMap.Count);
+                    _logger.WarnFormat("服务端:打算清理IP地址{0}时，该地址未在池中。{1}", ip, _SessionMap.Count);
                 }
             }
             else
@@ -500,9 +528,9 @@ namespace SocketKnife
             if (handler != null)
             {
                 EndPoint endPoint = e.AcceptSocket.RemoteEndPoint;
-                if (SessionMap.ContainsKey(endPoint))
+                if (_SessionMap.ContainsKey(endPoint))
                 {
-                    KnifeSocketSession session = SessionMap[endPoint];
+                    KnifeSocketSession session = _SessionMap[endPoint];
                     session.Data = data;
                     handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
                 }
@@ -512,29 +540,6 @@ namespace SocketKnife
                 }
             }
         }
-
-//        protected virtual void ProcessSend(SocketAsyncEventArgs e)
-//        {
-//            var id = e.RemoteEndPoint;
-//            var data = e.Buffer;
-//            if (e.SocketError == SocketError.Success) //连接正常
-//            {
-//                //发送成功
-//                var handler = DataSent;
-//                if (handler != null)
-//                {
-//                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
-//                    {
-//                        Data = data,
-//                        Id = id
-//                    }));
-//                }
-//            }
-//            else
-//            {
-//                _logger.WarnFormat("发送失败.{0},{1}.", id, data.ToHexString());
-//            }
-//        }
 
         protected virtual void ProcessSendData(EndPoint id, Socket socket, byte[] data)
         {
@@ -559,8 +564,6 @@ namespace SocketKnife
             {
                 _logger.WarnFormat("发送异常.{0},{1}. {2}", id, data.ToHexString(), e.Message);
             }
-
-
         }
 
         protected virtual void AsynEndSend(IAsyncResult result)

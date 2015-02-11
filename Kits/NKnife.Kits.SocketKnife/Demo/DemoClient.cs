@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text;
 using System.Windows.Threading;
 using NKnife.Collections;
 using NKnife.IoC;
@@ -37,7 +38,8 @@ namespace NKnife.Kits.SocketKnife.Demo
             var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Client","Server");
             heartbeatServerFilter.Heartbeat.Name = "Client";
-            heartbeatServerFilter.Interval = 1000 * 5;
+
+            heartbeatServerFilter.Interval = 1000 * 2;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
             heartbeatServerFilter.EnableAggressiveMode = true; //禁用主动模式
 

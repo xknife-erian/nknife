@@ -36,7 +36,9 @@ namespace SocketKnife.Common
         internal Boolean SetBuffer(SocketAsyncEventArgs args)
         {
             if (_FreeIndexPool.Count > 0)
+            {
                 args.SetBuffer(_Buffer, _FreeIndexPool.Pop(), _BufferSize);
+            }
             else
             {
                 if ((_NumSize - _BufferSize) < _CurrentIndex)
