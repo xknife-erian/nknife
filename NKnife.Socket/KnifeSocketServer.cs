@@ -384,24 +384,48 @@ namespace SocketKnife
                     e.AcceptSocket.Close();
                 return;
             }
-            if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success) //TODO:连接正常
+            _logger.Fatal(string.Format(">>>>:{0}, {1}", e.BytesTransferred, e.SocketError));
+            if (e.BytesTransferred > 0) //连接正常
             {
-                if (e.BytesTransferred > 0) //收到数据了
+                switch (e.SocketError)
                 {
-                    PrcoessReceivedData(e);
-                }
-                //处理完成，继续接收
-                //Thread.Sleep(10);
-                if (e.AcceptSocket != null && e.AcceptSocket.Connected)
-                {
-                    bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(e);
-                    if (!willRaiseEvent)
-                        ProcessReceive(e);
+                    case SocketError.Success:
+                    {
+                        if (e.BytesTransferred > 0) //收到数据了
+                        {
+                            PrcoessReceivedData(e);
+                        }
+                        //处理完成，继续接收
+                        if (e.AcceptSocket != null && e.AcceptSocket.Connected)
+                        {
+                            bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(e);
+                            if (!willRaiseEvent)
+                                ProcessReceive(e);
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        _logger.Debug(string.Format("未处理的Socket状态:{0}", e.SocketError));
+                        break;
+                    }
                 }
             }
-            else //连接不正常
+            else if(e.BytesTransferred == 0) //连接不正常
             {
-                ProcessConnectionBrokenActive(e);
+                switch (e.SocketError)
+                {
+                    case SocketError.Success:
+                    {
+                        ProcessConnectionBrokenActive(e);
+                        break;
+                    }
+                    default:
+                    {
+                        _logger.Debug(string.Format("未处理的Socket状态:{0}", e.SocketError));
+                        break;
+                    }
+                }
             }
         }
 
@@ -414,7 +438,7 @@ namespace SocketKnife
             }
             catch (Exception ex)
             {
-                                
+                _logger.Warn("AcceptSocket.Shutdown异常", ex);                
             }
             e.AcceptSocket.Close();
             e.UserToken = null;
@@ -457,8 +481,10 @@ namespace SocketKnife
             var session = DI.Get<KnifeSocketSession>();
             session.Id = iep;
             var handler = SessionBroken;
-            if(handler !=null)
-                handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(session));
+            if (handler != null)
+            {
+                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+            }
         }
 
         /// <summary>
@@ -469,8 +495,6 @@ namespace SocketKnife
         {
             var data = new byte[e.BytesTransferred];
             Array.Copy(e.Buffer, e.Offset, data, 0, data.Length);
-
-            _logger.Fatal("1>>>>>"+data.ToHexString());
 
             var handler = DataReceived;
             if (handler != null)
@@ -484,7 +508,7 @@ namespace SocketKnife
                 }
                 else
                 {
-                    _logger.Fatal("2>>>>>" + data.ToHexString());
+                    _logger.Warn(string.Format("SessionMap中未包含指定Key的Session:{0}", endPoint));
                 }
             }
         }
