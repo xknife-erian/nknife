@@ -85,6 +85,7 @@
     <Compile Include="Interfaces\ISocketConfig.cs" />
     <Compile Include="Interfaces\IKnifeSocketServer.cs" />
     <Compile Include="IoC\DefaultModules.cs" />
+    <Compile Include="KnifeLongSocketClient.cs" />
     <Compile Include="KnifeLongSocketServer.cs" />
     <Compile Include="KnifeShortSocketClient.cs" />
     <Compile Include="KnifeSocketClient.cs" />

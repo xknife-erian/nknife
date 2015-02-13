@@ -89,11 +89,15 @@ namespace NKnife.Tunnel.Generic
             //取得上一个（靠近dataconnector的）filter
             var currentFilter = sender as ITunnelFilter<TData, TSessionId>;
             if (currentFilter == null)
+            {
                 return;
+            }
 
             var node = FilterChain.Find(currentFilter);
             if (node == null)
+            {
                 return;
+            }
 
             var previous = node.Previous;
             while (previous != null)

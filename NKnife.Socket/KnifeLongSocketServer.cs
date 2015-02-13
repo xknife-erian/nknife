@@ -200,8 +200,8 @@ namespace SocketKnife
                 _ListenSocket.SendTimeout = Config.SendTimeout;
                 _ListenSocket.ReceiveTimeout = Config.ReceiveTimeout;
 
-                _ListenSocket.Listen(Config.MaxConnectCount);
-
+                //_ListenSocket.Listen(Config.MaxConnectCount);
+                _ListenSocket.Listen(16);
                 return true;
             }
             catch (Exception err)
