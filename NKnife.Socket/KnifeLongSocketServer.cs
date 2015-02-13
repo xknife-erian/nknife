@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using Common.Logging;
 using NKnife.IoC;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 using SocketKnife.Generic;
 using SocketKnife.Interfaces;
@@ -338,9 +339,12 @@ namespace SocketKnife
                         }
                     }
 
-                    foreach (var id in sessionIDList)  // 统一清除
+                    lock (SessionMap)
                     {
-                        SessionMap.Remove(id);
+                        foreach (var id in sessionIDList) // 统一清除
+                        {
+                            SessionMap.Remove(id);
+                        }
                     }
 
                     sessionIDList.Clear();
@@ -648,9 +652,11 @@ namespace SocketKnife
             {
                 if (SessionMap.ContainsKey(endPoint))
                 {
-                    KnifeSocketSession session = SessionMap[endPoint];
-                    session.Data = data;
-                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession<EndPoint>
+                    {
+                        Id = endPoint,
+                        Data = data
+                    }));
                 }
                 else
                 {
