@@ -41,7 +41,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             heartbeatServerFilter.Interval = 1000 * 2;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
-            heartbeatServerFilter.EnableAggressiveMode = true; //主动模式
+            heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Active; 
 
             var codec = DI.Get<KnifeStringCodec>();
             if (codec.StringDecoder.GetType() != customSetting.Decoder)

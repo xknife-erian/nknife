@@ -105,10 +105,10 @@ namespace NKnife.GUI.WinForm.WinFormContainer
             _AppProcess = null;
         }
 
-        //public void Start(string appFilename)
+        //public void StartBeatingTimer(string appFilename)
         //{
         //    this.AppFilename = AppFilename;
-        //    Start();
+        //    StartBeatingTimer();
         //}
         /// <summary>
         ///     将属性<code>AppFilename</code>指向的应用程序关闭

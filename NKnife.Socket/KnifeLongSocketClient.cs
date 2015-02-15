@@ -428,9 +428,10 @@ namespace SocketKnife
                     _SocketSession.AcceptSocket.Disconnect(true);
                     _SocketSession.AcceptSocket.Close();
                 }
-                catch (Exception) { }
+                catch (Exception){}
+                _logger.Debug("socket客户端关闭");
             }
-            _logger.Info("socket client closed");
+
         }
         #region 发送消息
 

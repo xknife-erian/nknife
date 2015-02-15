@@ -38,21 +38,23 @@ namespace NKnife.Tunnel.Filters
         public bool EnableStrictMode { get; set; }
 
         /// <summary>
-        /// true 主动模式，false 被动模式
+        /// Active主动模式，
         /// 主动模式：主动定时向远端发出心跳请求，如果发送失败（收到来自DataConnector的SessionBroken消息）
         /// 或者发送后经过指定时间没有收到心跳响应，则发出HeartBroken消息，Listener会发出KillSession消息，
         /// DataConnector会杀死对应的Session后，发出SessionBroken消息
         /// 
-        /// 被动模式：不主动发出心跳请求，但连接建立后，经过指定时间没有收到来自远端的心跳请求，
+        /// Passive被动模式：不主动发出心跳请求，但连接建立后，经过指定时间没有收到来自远端的心跳请求，
         /// 则发出HeartBroken消息，Listener会发出KillSession消息，DataConnector会杀死对应的Session后，
         /// 发出SessionBroken消息
         /// 
         /// 不论是主动模式还是被动模式，如果收到心跳请求，都会做出心跳回复
+        /// 
+        /// Responsive应答模式：不主动发出心跳请求，任何时候接收到心跳请求后，进行心跳应答
         /// </summary>
-        public bool EnableAggressiveMode { get; set; }
+        public HeartBeatMode HeartBeatMode { get; set; }
 
         private bool _IsTimerStarted;
-        private readonly Timer _BeatingTimer;
+        private Timer _BeatingTimer;
 
         private readonly Dictionary<EndPoint, HeartBeatSession> _HeartBeartSessionMap = new Dictionary<EndPoint, HeartBeatSession>();
 
@@ -61,11 +63,7 @@ namespace NKnife.Tunnel.Filters
             Heartbeat = new Heartbeat();
             Interval = 1000 * 15;
             EnableStrictMode = false;
-            EnableAggressiveMode = true;
-
-            //初始化Timer
-            _BeatingTimer = new Timer();
-            _BeatingTimer.Elapsed += BeatingTimerElapsed;
+            HeartBeatMode = HeartBeatMode.Responsive;
         }
 
         protected virtual void BeatingTimerElapsed(object sender, EventArgs e)
@@ -75,7 +73,7 @@ namespace NKnife.Tunnel.Filters
                 //_BeatingTimer.Stop();
                 _ReceiveProcessingResetEvent.Reset();
                 _ReceiveProcessingResetEvent.WaitOne();
-                //_BeatingTimer.Start();
+                //_BeatingTimer.StartBeatingTimer();
             }
 
             var todoList = new List<EndPoint>(0); //待移除
@@ -85,7 +83,7 @@ namespace NKnife.Tunnel.Filters
                 HeartBeatSession session = pair.Value;
                 if (!session.GetWaitForReply())
                 {
-                    if (EnableAggressiveMode) //主动模式需要发出心跳请求，并进入等待状态
+                    if (HeartBeatMode == HeartBeatMode.Active) //主动模式需要发出心跳请求，并进入等待状态
                     {
 #if DEBUG
                         _logger.Trace(string.Format("{0}向{1}发出心跳请求.", Heartbeat.LocalHeartDescription,
@@ -126,14 +124,32 @@ namespace NKnife.Tunnel.Filters
             return result;
         }
 
-        protected internal virtual void Start()
+        private void StartBeatingTimer()
         {
-            if (!_IsTimerStarted) 
+            if (HeartBeatMode != HeartBeatMode.Responsive)
             {
-                _IsTimerStarted = true;
-                _BeatingTimer.Interval = Interval;
-                _BeatingTimer.Start();
-                _logger.Info(string.Format("{0}心跳启动。间隔:{1}",Heartbeat.LocalHeartDescription, Interval));
+                if (_BeatingTimer == null)
+                {
+                    _BeatingTimer = new Timer();
+                    _BeatingTimer.Elapsed += BeatingTimerElapsed;
+                }
+
+                if (!_IsTimerStarted)
+                {
+                    _IsTimerStarted = true;
+                    _BeatingTimer.Interval = Interval;
+                    _BeatingTimer.Start();
+                    _logger.Info(string.Format("{0}心跳启动。间隔:{1}", Heartbeat.LocalHeartDescription, Interval));
+                }
+            }
+        }
+
+        private void StopBeatingTimer()
+        {
+            if (HeartBeatMode != HeartBeatMode.Responsive)
+            {
+                _BeatingTimer.Stop();
+                _IsTimerStarted = false;
             }
         }
 
@@ -172,7 +188,7 @@ namespace NKnife.Tunnel.Filters
             {
                 //被动模式下，收到了心跳请求，则标记WaitingForReply = false
                 //主动模式下，收到心跳请求，则只是回复心跳，是否标记WaitingForReply = false取决于是否严格模式
-                if (!EnableAggressiveMode) //被动模式
+                if (HeartBeatMode == HeartBeatMode.Passive) //被动模式
                 {
                     heartSession.SetWaitForReply(false);
                 }
@@ -189,7 +205,7 @@ namespace NKnife.Tunnel.Filters
             {
                 //主动模式下，收到了心跳应答，则标记WaitingForReply = false
                 //被动模式下，收到了心跳应答（按理不会收到，因为被动模式根本不会发出心跳请求），是否标记WaitingForReply = false取决于是否严格模式
-                if (EnableAggressiveMode) //主动模式
+                if (HeartBeatMode == HeartBeatMode.Active) //主动模式
                 {
                     heartSession.SetWaitForReply(false);
                 }
@@ -218,8 +234,7 @@ namespace NKnife.Tunnel.Filters
             if (_HeartBeartSessionMap.Count == 0)
             {
                 //停止心跳timer
-                _BeatingTimer.Stop();
-                _IsTimerStarted = false;
+                StopBeatingTimer();
             }
         }
 
@@ -231,13 +246,13 @@ namespace NKnife.Tunnel.Filters
                 {
                     SessionId = id, 
                 };
-                session.SetWaitForReply(!EnableAggressiveMode);
+                session.SetWaitForReply(HeartBeatMode == HeartBeatMode.Passive);
 
                 //被动模式则WaitingForReply=true,从session建立起，就开始等着收到心跳请求了，主动模式不用
                 _HeartBeartSessionMap.Add(id, session);
             }
             //第一次监听到Session建立时启动
-            Start();
+                StartBeatingTimer();
         }
 
         /// <summary>
@@ -288,7 +303,7 @@ namespace NKnife.Tunnel.Filters
                 Buffer.BlockCopy(tmpData, index + toCompare.Length, data, index, srcLength - index - toCompare.Length);
             }
             return true;
-        }
+        } 
 
         internal class HeartBeatSession
         {
@@ -339,5 +354,12 @@ namespace NKnife.Tunnel.Filters
                 return Equals((HeartBeatSession)obj);
             }
         }
+    }
+
+    public enum HeartBeatMode
+    {
+        Active, //主动模式：主动发出心跳请求，如果心跳间隔内未收到应答，则判断心跳中断，移除连接
+        Passive, //被动模式：不主动发出心跳请求，接收到心跳请求后，进行心跳应答，如果心跳间隔内未收到请求，则判断心跳中断，移除连接
+        Responsive, //应答模式：不主动发出心跳请求，任何时候接收到心跳请求后，进行心跳应答
     }
 }

@@ -54,9 +54,9 @@ namespace NKnife.Kits.SocketKnife.Demo
             var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Server","Client");
             heartbeatServerFilter.Heartbeat.Name = "Server";
-            heartbeatServerFilter.Interval = 1000 * 6;
+            heartbeatServerFilter.Interval = 1000 * 2;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
-            heartbeatServerFilter.EnableAggressiveMode = false; //禁用主动模式
+            heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Responsive; 
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 
