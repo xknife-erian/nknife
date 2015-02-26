@@ -60,7 +60,6 @@ namespace NKnife.Protocol.Generic
             }
         }
 
-
         #region 隐式实现
         IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
         {
@@ -130,7 +129,6 @@ namespace NKnife.Protocol.Generic
                 _ProtocolBuilderMap.Add(command, func);
             }
         }
- 
 
         /// <summary>
         /// 根据远端得到的数据包解析，将数据填充到本实例中，与Generate方法相对

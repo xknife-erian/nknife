@@ -9,8 +9,6 @@ namespace NKnife.Protocol
 
         IProtocolCommandParser<T> CommandParser { get; set; }
 
-        //void Add(IProtocol<T> protocol);
-
         IProtocol<T> Build(T command);
 
         IProtocol<T> Parse(T command, T datagram);

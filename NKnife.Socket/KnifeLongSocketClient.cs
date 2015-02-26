@@ -74,9 +74,12 @@ namespace SocketKnife
                 try
                 {
                     _SocketSession.State = SessionState.Closed;
-                    _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
-                    _SocketSession.AcceptSocket.Disconnect(true);
-                    _SocketSession.AcceptSocket.Close();
+                    if (_SocketSession.AcceptSocket != null)
+                    {
+                        _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
+                        _SocketSession.AcceptSocket.Disconnect(true);
+                        _SocketSession.AcceptSocket.Close();
+                    }
                 }
                 catch (Exception e)
                 {
@@ -357,7 +360,7 @@ namespace SocketKnife
 
         private void ReceiveDatagram()
         {
-            lock (_lockObj)
+            //lock (_lockObj)
             {
                 try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
                 {
@@ -376,7 +379,7 @@ namespace SocketKnife
 
         private void EndReceiveDatagram(IAsyncResult iar)
         {
-            lock (_lockObj)
+            //lock (_lockObj)
             {
                 if (!_SocketSession.AcceptSocket.Connected)
                 {
