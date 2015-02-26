@@ -20,7 +20,6 @@ namespace NKnife.Kits.SerialKnife.Kernel
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private const string FAMILY_NAME = "p-an485";
         private readonly ITunnel<byte[], int> _Tunnel = DI.Get<ITunnel<byte[], int>>();
-        private readonly IKnifeSerialConnector _DataConnector;
         public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
 
         public Tunnels()
@@ -39,25 +38,22 @@ namespace NKnife.Kits.SerialKnife.Kernel
             _Tunnel.AddFilters(queryFilter);
             _Tunnel.AddFilters(protocolFilter);
 
-            if (Properties.Settings.Default.EnableMock)
-                _DataConnector = DI.Get<IKnifeSerialConnector>("Mock");
-            else
-                _DataConnector = DI.Get<IKnifeSerialConnector>("Serial");
-            _DataConnector.PortNumber = Properties.Settings.Default.PortNumber; //串口1
+            var dataConnector = DI.Get<IKnifeSerialConnector>(Properties.Settings.Default.EnableMock ? "Mock" : "Serial");
+            dataConnector.PortNumber = Properties.Settings.Default.PortNumber; //串口1
 
-            _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力
+            _Tunnel.BindDataConnector(dataConnector); //dataConnector是数据流动的动力
         }
 
         public bool Start()
         {
-            _Tunnel.Start();
+            //_Tunnel.Start();
             _logger.Info("Tunnel服务启动成功");
             return true;
         }
 
         public bool Stop()
         {
-            _Tunnel.Stop();
+            //_Tunnel.Stop();
             _logger.Info("Tunnel服务停止成功");
             return true;
         }
