@@ -23,7 +23,7 @@ namespace NKnife.Kits.SocketKnife.Demo
     {
         private bool _IsInitialized = false;
         private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
-        private IKnifeSocketClient _Client = DI.Get<KnifeSocketClient>();
+        private IKnifeSocketClient _Client = DI.Get<KnifeLongSocketClient>();
         private StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
         public StringProtocolFamily GetFamily()
@@ -41,7 +41,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             heartbeatServerFilter.Interval = 1000 * 2;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
-            heartbeatServerFilter.EnableAggressiveMode = true; //禁用主动模式
+            heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Active; 
 
             var codec = DI.Get<KnifeStringCodec>();
             if (codec.StringDecoder.GetType() != customSetting.Decoder)

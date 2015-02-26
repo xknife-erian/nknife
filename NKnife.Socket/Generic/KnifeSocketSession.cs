@@ -15,7 +15,22 @@ namespace SocketKnife.Generic
     /// </summary>
     public class KnifeSocketSession : KnifeTunnelSession<EndPoint>
     {
+        public int ReceiveBufferSize = 16 * 1024;  // 16 K
         public Socket AcceptSocket { get; set; }
+        public SessionState State { get; set; }
+        public DisconnectType DisconnectType { get; set; }
+        public byte[] ReceiveBuffer { get; set; }
+        public DateTime LastSessionTime { get; set; }
+
+        public KnifeSocketSession()
+        {
+            ResetBuffer();
+        }
+
+        public void ResetBuffer()
+        {
+            ReceiveBuffer = new byte[ReceiveBufferSize];
+        }
 
         public override int GetHashCode()
         {
@@ -34,6 +49,10 @@ namespace SocketKnife.Generic
             if (obj.GetType() != this.GetType()) return false;
             return Equals((KnifeSocketSession) obj);
         }
+
+
+
+
 
     }
 }

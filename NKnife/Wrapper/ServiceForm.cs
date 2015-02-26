@@ -103,7 +103,7 @@ namespace NKnife.Wrapper
         protected override void OnStart(string[] args)
         {
             Thread _TestForm = new Thread(new ThreadStart(StartListen));
-            _TestForm.Start();
+            _TestForm.StartBeatingTimer();
         }
         public void StartListen()
         {

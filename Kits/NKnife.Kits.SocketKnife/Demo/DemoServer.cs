@@ -27,11 +27,11 @@ namespace NKnife.Kits.SocketKnife.Demo
     {
         private bool _IsInitialized;
         private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
-        private KnifeSocketServer _Server = DI.Get<KnifeSocketServer>();
+        private KnifeLongSocketServer _Server = DI.Get<KnifeLongSocketServer>();
         private SocketKnifeProtocolFilter _ProtocolFilter = DI.Get<SocketKnifeProtocolFilter>();
         private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
-        public KnifeSocketServer GetSocketServer()
+        public KnifeLongSocketServer GetSocketServer()
         {
             return _Server;
         }
@@ -54,9 +54,9 @@ namespace NKnife.Kits.SocketKnife.Demo
             var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Server","Client");
             heartbeatServerFilter.Heartbeat.Name = "Server";
-            heartbeatServerFilter.Interval = 1000 * 6;
+            heartbeatServerFilter.Interval = 1000 * 2;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
-            heartbeatServerFilter.EnableAggressiveMode = false; //禁用主动模式
+            heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Responsive; 
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 

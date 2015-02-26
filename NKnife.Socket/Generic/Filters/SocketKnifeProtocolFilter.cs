@@ -36,8 +36,6 @@ namespace SocketKnife.Generic.Filters
                 monitor.IsMonitor = false;
                 monitor.ReceiveQueue.AutoResetEvent.Set();
             }
-
-            _DataMonitors.TryRemove(id, out monitor);
         }
 
         public void ProcessSessionBuilt(EndPoint id)
@@ -179,7 +177,7 @@ namespace SocketKnife.Generic.Filters
             {
                 if (_DataMonitors.TryGetValue(endPoint, out dataMonitor))
                 {
-                    while (dataMonitor.IsMonitor)
+                    while (dataMonitor.IsMonitor || dataMonitor.ReceiveQueue.Count > 0) //重要，dataMonitor.IsMonitor=false但dataMonitor.ReceiveQueue.Count > 0时，也要继续处理完数据再退出while
                     {
 
                         if (dataMonitor.ReceiveQueue.Count > 0)
@@ -200,8 +198,6 @@ namespace SocketKnife.Generic.Filters
                         {
                             dataMonitor.ReceiveQueue.AutoResetEvent.WaitOne();
                         }
-
-
                     }
                 }
                 // 当接收队列停止监听时，移除该客户端数据队列
