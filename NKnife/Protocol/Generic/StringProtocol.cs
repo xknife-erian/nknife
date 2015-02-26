@@ -26,8 +26,6 @@ namespace NKnife.Protocol.Generic
             Command = command;
         }
 
-
-
         #region IProtocol Members
 
         /// <summary>协议族名称
@@ -40,8 +38,6 @@ namespace NKnife.Protocol.Generic
         public string CommandParam { get; set; }
         public Dictionary<string, string> Infomations { get; private set; }
         public List<object> Tags { get; set; }
-
-
 
         public StringProtocol NewInstance()
         {

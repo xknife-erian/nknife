@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NKnife.Tunnel.Filters;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Filters;
 
 namespace NKnife.Socket.UnitTest
 {
@@ -129,16 +131,8 @@ namespace NKnife.Socket.UnitTest
             Assert.AreEqual(0x15, data[3], data.ToHexString());
         }
 
-        private class TestKnifeSocketFilter : KnifeSocketFilter
+        private class TestKnifeSocketFilter : HeartbeatFilter
         {
-            public override bool ContinueNextFilter
-            {
-                get { return true; }
-            }
-
-            public override void PrcoessReceiveData(KnifeSocketSession session, ref byte[] data)
-            {
-            }
 
             public bool TestCompare(ref byte[] data, byte[] toCompare)
             {

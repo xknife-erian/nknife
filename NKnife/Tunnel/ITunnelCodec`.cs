@@ -6,9 +6,9 @@ using NKnife.Protocol;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelCodec<T>
+    public interface ITunnelCodec<T,TData>
     {
-        IDatagramDecoder<T> Decoder { get; set; }
-        IDatagramEncoder<T> Encoder { get; set; }
+        IDatagramDecoder<T, TData> Decoder { get; set; }
+        IDatagramEncoder<T, TData> Encoder { get; set; }
     }
 }

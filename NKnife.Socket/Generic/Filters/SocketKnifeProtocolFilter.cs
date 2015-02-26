@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using Common.Logging;
+using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Events;
 
 namespace SocketKnife.Generic.Filters
 {
@@ -17,29 +19,13 @@ namespace SocketKnife.Generic.Filters
 
         protected List<KnifeProtocolHandlerBase<byte[], EndPoint, string>> Handlers = new List<KnifeProtocolHandlerBase<byte[], EndPoint, string>>();
 
-        public ISessionProvider<byte[], EndPoint> SessionProvider { get; private set; }
-
-        public bool ContinueNextFilter { get; protected set; }
+        public event EventHandler<SessionEventArgs<byte[], EndPoint>> OnSendToSession;
+        public event EventHandler<EventArgs<byte[]>> OnSendToAll;
+        public event EventHandler<EventArgs<EndPoint>> OnKillSession;
 
         public SocketKnifeProtocolFilter()
         {
-            ContinueNextFilter = true;
-        }
 
-        public void BindSessionProvider(ISessionProvider<byte[], EndPoint> sessionProvider)
-        {
-            SessionProvider = sessionProvider;
-            if (Handlers.Count == 0)
-            {
-                _logger.Warn("绑定SessionProvider时Handler集合不应为空，在此之前应先执行AddHandler动作.");
-            }
-            else
-            {
-                foreach (var handler in Handlers)
-                {
-                    handler.SessionProvider = sessionProvider;
-                }
-            }
         }
 
         public void ProcessSessionBroken(EndPoint id)
@@ -50,8 +36,6 @@ namespace SocketKnife.Generic.Filters
                 monitor.IsMonitor = false;
                 monitor.ReceiveQueue.AutoResetEvent.Set();
             }
-
-            _DataMonitors.TryRemove(id, out monitor);
         }
 
         public void ProcessSessionBuilt(EndPoint id)
@@ -64,7 +48,20 @@ namespace SocketKnife.Generic.Filters
                 InitializeDataMonitor(id, monitor);
             }
         }
-        public void PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+
+        public void ProcessSendToSession(ITunnelSession<byte[], EndPoint> session)
+        {
+            //什么也不做
+        }
+
+        public void ProcessSendToAll(byte[] data)
+        {
+            //什么也不做
+        }
+
+
+
+        public bool PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
         {
             var data = session.Data;
             EndPoint endPoint = session.Id;
@@ -78,6 +75,7 @@ namespace SocketKnife.Generic.Filters
             }
 
             monitor.ReceiveQueue.Enqueue(data);
+            return true;
         }
 
         public virtual void PrcoessSendData(ITunnelSession<byte[], EndPoint> session)
@@ -91,12 +89,6 @@ namespace SocketKnife.Generic.Filters
         /// </summary>
         public virtual void HandlerInvoke(EndPoint endpoint, IProtocol<string> protocol)
         {
-            if (SessionProvider == null)
-            {
-                _logger.Warn("没有SessionProvider，无法处理协议");
-                return;
-            }
-
             try
             {
                 if (Handlers.Count == 0)
@@ -129,12 +121,36 @@ namespace SocketKnife.Generic.Filters
 
         public void AddHandlers(params KnifeProtocolHandlerBase<byte[], EndPoint, string>[] handlers)
         {
+            foreach (var handler in handlers)
+            {
+                handler.OnSendToSession += handler_OnSendToSession;
+                handler.OnSendToAll += handler_OnSendToAll;
+                handler.Bind(Codec,Family);
+            }
             Handlers.AddRange(handlers);
         }
 
+
+
         public void RemoveHandler(KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
         {
+            handler.OnSendToSession -= handler_OnSendToSession;
+            handler.OnSendToAll -= handler_OnSendToAll;
             Handlers.Remove(handler);
+        }
+
+        private void handler_OnSendToAll(object sender, EventArgs<byte[]> e)
+        {
+            var handler = OnSendToAll;
+            if(handler !=null)
+                handler.Invoke(this,e);
+        }
+
+        private void handler_OnSendToSession(object sender, SessionEventArgs<byte[], EndPoint> e)
+        {
+            var handler = OnSendToSession;
+            if(handler !=null)
+                handler.Invoke(this,e);
         }
 
         protected virtual void InitializeDataMonitor(EndPoint id,DataMonitor dm)
@@ -161,7 +177,7 @@ namespace SocketKnife.Generic.Filters
             {
                 if (_DataMonitors.TryGetValue(endPoint, out dataMonitor))
                 {
-                    while (dataMonitor.IsMonitor)
+                    while (dataMonitor.IsMonitor || dataMonitor.ReceiveQueue.Count > 0) //重要，dataMonitor.IsMonitor=false但dataMonitor.ReceiveQueue.Count > 0时，也要继续处理完数据再退出while
                     {
 
                         if (dataMonitor.ReceiveQueue.Count > 0)
@@ -182,8 +198,6 @@ namespace SocketKnife.Generic.Filters
                         {
                             dataMonitor.ReceiveQueue.AutoResetEvent.WaitOne();
                         }
-
-
                     }
                 }
                 // 当接收队列停止监听时，移除该客户端数据队列

@@ -13,13 +13,8 @@ namespace NKnife.Kits.SocketKnife.Common
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return string.Empty;
             var protocol = value as StringProtocol;
-            //TODO:Generate不再是protocol的方法了，
-//            if (protocol != null)
-//                return protocol.Generate();
-            return string.Empty;
+            return protocol != null ? String.Format("[{0}]{1}", protocol.Command, protocol.CommandParam) : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

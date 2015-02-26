@@ -30,8 +30,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         private void ProtocolsGrid_OnSelected(object sender, RoutedEventArgs e)
         {
-            if (_ProtocolsGrid.SelectedItem == null)
-                return;
             var protocol = _ProtocolsGrid.SelectedItem as ProtocolViewModel.SimpleProtocol;
             if (protocol != null)
             {

@@ -35,25 +35,6 @@ namespace NKnife.Tunnel.Generic
             FilterChain.Remove(filter);
         }
 
-        public bool Start()
-        {
-            return DataConnector.Start();
-        }
-
-        public virtual bool ReStart()
-        {
-            if (DataConnector.Stop())
-            {
-                return DataConnector.Start();
-            }
-            return false;
-        }
-
-        public virtual bool Stop()
-        {
-            return DataConnector.Stop();
-        }
-
         public void BindDataConnector(IDataConnector<TData, TSessionId> dataConnector)
         {
             if (!_IsDataConnectedBound)
@@ -62,10 +43,11 @@ namespace NKnife.Tunnel.Generic
                 DataConnector.SessionBuilt += OnSessionBuilt;
                 DataConnector.SessionBroken += OnSessionBroken;
                 DataConnector.DataReceived += OnDataReceived;
-                DataConnector.DataSent += OnDataSent;
                 foreach (var filter in FilterChain)
                 {
-                    filter.BindSessionProvider(dataConnector);
+                    filter.OnSendToSession += OnFilterSendToSession;
+                    filter.OnSendToAll += OnFilterSendToAll;
+                    filter.OnKillSession += OnFilterKillSession;
                 }
                 _logger.Debug(string.Format("DataConnector[{0}]绑定成功",dataConnector.GetType()));
                 _IsDataConnectedBound = true;
@@ -76,22 +58,65 @@ namespace NKnife.Tunnel.Generic
             }
         }
 
+        private void OnFilterKillSession(object sender, NKnife.Events.EventArgs<TSessionId> e)
+        {
+            DataConnector.KillSession(e.Item);
+        }
+
+        private void OnFilterSendToAll(object sender, NKnife.Events.EventArgs<TData> e)
+        {
+            //取得上一个（靠近dataconnector的）filter
+            var currentFilter = sender as ITunnelFilter<TData, TSessionId>;
+            if (currentFilter == null)
+                return;
+
+            var node = FilterChain.Find(currentFilter);
+            if (node == null)
+                return;
+
+            var previous = node.Previous;
+            while (previous != null)
+            {
+                previous.Value.ProcessSendToAll(e.Item);
+                previous = previous.Previous;
+            }
+
+            DataConnector.SendAll(e.Item);
+        }
+
+        private void OnFilterSendToSession(object sender, SessionEventArgs<TData, TSessionId> e)
+        {
+            //取得上一个（靠近dataconnector的）filter
+            var currentFilter = sender as ITunnelFilter<TData, TSessionId>;
+            if (currentFilter == null)
+            {
+                return;
+            }
+
+            var node = FilterChain.Find(currentFilter);
+            if (node == null)
+            {
+                return;
+            }
+
+            var previous = node.Previous;
+            while (previous != null)
+            {
+                previous.Value.ProcessSendToSession(e.Item);
+                previous = previous.Previous;
+            }
+
+            DataConnector.Send(e.Item.Id,e.Item.Data);
+        }
+
         private void OnDataReceived(object sender, SessionEventArgs<TData, TSessionId> e)
         {
             foreach (var filter in FilterChain)
             {
-                filter.PrcoessReceiveData(e.Item); // 调用filter对数据进行处理
+                var continueNextFilter = filter.PrcoessReceiveData(e.Item); // 调用filter对数据进行处理
 
-                if (!filter.ContinueNextFilter)
+                if (!continueNextFilter)
                     break;
-            }
-        }
-
-        private void OnDataSent(object sender, SessionEventArgs<TData, TSessionId> e)
-        {
-            foreach (var filter in FilterChain)
-            {
-                filter.PrcoessSendData(e.Item); // 调用filter对数据进行处理
             }
         }
 

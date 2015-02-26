@@ -7,8 +7,10 @@ using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol;
+using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Families;
@@ -40,14 +42,14 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             }
             CustomSetting = new SocketCustomSetting();
 
-            var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IDatagramDecoder<>), true);
+            var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramDecoder<string, byte[]>), false);
             foreach (var decoder in decoders)
             {
                 _DecoderComboBox.Items.Add(decoder);
             }
             _DecoderComboBox.SelectedItem = typeof (FixedTailDecoder);
 
-            var encoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof (IDatagramEncoder<>), true);
+            var encoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramEncoder<string, byte[]>), false);
             foreach (var encoder in encoders)
             {
                 _EncoderComboBox.Items.Add(encoder);
@@ -113,10 +115,15 @@ namespace NKnife.Kits.SocketKnife.Dialogs
                 MessageBox.Show("请输入正确的端口号。");
                 return;
             }
-            if (DI.Get<ServerMap>().ContainsKey(new IPEndPoint(localIpAddress, port)))
+
+            //仅服务端需要判断
+            if (IsServer)
             {
-                MessageBox.Show("已启动相同端口号的服务端，请重新选择。");
-                return;
+                if (DI.Get<ServerMap>().ContainsKey(new IPEndPoint(localIpAddress, port)))
+                {
+                    MessageBox.Show("已启动相同端口号的服务端，请重新选择。");
+                    return;
+                }
             }
 
             Config.ReceiveBufferSize = int.Parse(_ReceiveBufferSizeTextBox.Text);

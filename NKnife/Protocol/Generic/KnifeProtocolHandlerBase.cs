@@ -2,29 +2,71 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Common.Logging;
+using NKnife.Events;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
+using NKnife.Tunnel.Events;
 
 namespace NKnife.Protocol.Generic
 {
     public abstract class KnifeProtocolHandlerBase<TData, TSessionId, T> : IProtocolHandler<TData, TSessionId, T>
     {
-        public ISessionProvider<TData, TSessionId> SessionProvider { get; set; } 
+        private static ILog _logger = LogManager.GetCurrentClassLogger();
+
         public List<T> Commands { get; set; }
-
         public abstract void Recevied(TSessionId sessionId, IProtocol<T> protocol);
-        public virtual void Write(TSessionId sessionId, TData data)
+        public event EventHandler<SessionEventArgs<TData, TSessionId>> OnSendToSession;
+        public event EventHandler<EventArgs<TData>> OnSendToAll;
+
+        protected ITunnelCodec<T, TData> Codec;
+        protected IProtocolFamily<T> Family;
+
+        public virtual void Bind(ITunnelCodec<T,TData> codec, IProtocolFamily<T> protocolFamily)
         {
-            if (SessionProvider != null)
-                SessionProvider.Send(sessionId, data);
+            Codec = codec;
+            Family = protocolFamily;
         }
 
-        public virtual void WriteAll(TData data)
+        /// <summary>
+        /// 发送协议，帮助方法
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <param name="protocol"></param>
+        public void WriteToSession(TSessionId sessionId, IProtocol<T> protocol)
         {
-            if(SessionProvider !=null)
-                SessionProvider.SendAll(data);
+            try
+            {
+                T str = Family.Generate(protocol);
+                TData data = Codec.Encoder.Execute(str);
+                var handler = OnSendToSession;
+                if (handler != null)
+                    handler.Invoke(this, new SessionEventArgs<TData, TSessionId>(new TunnelSession<TData, TSessionId>
+                    {
+                        Id = sessionId,
+                        Data = data
+                    }));
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("发送protocol异常,{0}", ex));
+            }
         }
 
-        public abstract void Write(TSessionId sessionId, IProtocol<T> protocol);
-        public abstract void WriteAll(IProtocol<T> protocol);
+        public void WriteToAllSession(IProtocol<T> protocol)
+        {
+            try
+            {
+                T str = Family.Generate(protocol);
+                TData data = Codec.Encoder.Execute(str);
+                var handler = OnSendToAll;
+                if (handler != null)
+                    handler.Invoke(this, new EventArgs<TData>(data));
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("发送protocol异常,{0}", ex));
+            }
+        }
     }
 }

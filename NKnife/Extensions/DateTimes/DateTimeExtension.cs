@@ -41,7 +41,7 @@ namespace System
         }
 
         /// <summary>
-        /// Returns the Start of the given day (the first millisecond of the given <see cref="DateTime"/>).
+        /// Returns the StartBeatingTimer of the given day (the first millisecond of the given <see cref="DateTime"/>).
         /// </summary>
         public static DateTime BeginningOfDay(this DateTime date)
         {

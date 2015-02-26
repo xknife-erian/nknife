@@ -1,15 +1,17 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net;
 using System.Windows;
 using Common.Logging;
 using NKnife.Kits.SocketKnife.Common;
+using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Demo
 {
-    public class DemoServerHandler : KnifeSocketServerProtocolHandler
+    public class DemoServerHandler : KnifeProtocolHandlerBase<byte[], EndPoint, string>
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private StringProtocolFamily _Family;
@@ -20,13 +22,13 @@ namespace NKnife.Kits.SocketKnife.Demo
             _SocketMessages = socketMessages;
         }
 
-        public override void Recevied(KnifeSocketSession session, StringProtocol protocol)
+        public override void Recevied(EndPoint sessionId, IProtocol<string> protocol)
         {
             var socketMessage = new SocketMessage
             {
                 Command = protocol.Command, 
                 SocketDirection = SocketDirection.Receive,
-                Message = _Family.Generate(protocol), 
+                Message = _Family.Generate((StringProtocol) protocol), 
                 Time = DateTime.Now.ToString("HH:mm:ss.fff")
             };
             _logger.Info("新消息解析完成" + socketMessage.Message);
@@ -58,5 +60,7 @@ namespace NKnife.Kits.SocketKnife.Demo
         }
 
         private delegate void SocketMessageInserter(SocketMessage socketMessage);
+
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace NKnife.Tunnel.Generic
 {
-    public abstract class KnifeStringDatagramDecoder : IDatagramDecoder<string>
+    public abstract class KnifeStringDatagramDecoder : IDatagramDecoder<string,byte[]>
     {
         /// <summary>
         /// 解码。将字节数组解析成字符串。

@@ -134,7 +134,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         protected void AddSession(KnifeSocketSession session)
         {
-            Sessions.Add(new SessionByView {EndPoint = (IPEndPoint) session.Source});
+            Sessions.Add(new SessionByView {EndPoint = (IPEndPoint) session.Id});
         }
 
         protected void RemoveSession(EndPoint endPoint)
@@ -161,19 +161,19 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _ServerMap.Add(_CurrentServerPoint, _Server.GetSocketServer());
             _Server.Initialize(config, customSetting, _Handler);
 
-            var filter = _Server.GetSocketServerFilter();
-            filter.SessionMapGetter.Invoke().Added += (sender, args) =>
+            var dataConnector = _Server.GetDataConnector();
+            dataConnector.SessionBuilt += (sender, args) =>
             {
                 try
                 {
                     if (Application.Current.Dispatcher.CheckAccess())
                     {
-                        AddSession(args.Item);
+                        AddSession((KnifeSocketSession) args.Item);
                     }
                     else
                     {
                         var sessionDelegate = new SessionAdder(AddSession);
-                        Application.Current.Dispatcher.BeginInvoke(sessionDelegate, new object[] { args.Item });
+                        Application.Current.Dispatcher.BeginInvoke(sessionDelegate, new object[] {args.Item});
                     }
                 }
                 catch (Exception e)
@@ -182,18 +182,19 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                     Debug.Fail(error);
                 }
             };
-            filter.SessionMapGetter.Invoke().Removed += (sender, args) =>
+
+            dataConnector.SessionBroken += (sender, args) =>
             {
                 try
                 {
                     if (Application.Current.Dispatcher.CheckAccess())
                     {
-                        RemoveSession(args.Item);
+                        RemoveSession(args.Item.Id);
                     }
                     else
                     {
                         var sessionDelegate = new SessionRemover(RemoveSession);
-                        Application.Current.Dispatcher.BeginInvoke(sessionDelegate, new object[] { args.Item });
+                        Application.Current.Dispatcher.BeginInvoke(sessionDelegate, new object[] { args.Item.Id });
                     }
                 }
                 catch (Exception e)
@@ -202,6 +203,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                     Debug.Fail(error);
                 }
             };
+
             _Server.StartServer();
             //_ProtocolViewModel.AddFamily(_Server.GetFamily());
         }
@@ -258,7 +260,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 foreach (var session in Sessions)
                 {
                     if (session.IsSelected)
-                        _Handler.Write(_Handler.SessionMap[session.EndPoint], CurrentProtocol);
+                        _Handler.WriteToSession(session.EndPoint, CurrentProtocol);
                 }
             }
         }

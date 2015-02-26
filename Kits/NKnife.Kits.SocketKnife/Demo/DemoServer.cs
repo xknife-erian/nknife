@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Net;
+using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
@@ -10,28 +11,34 @@ using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo.Protocols;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
+using NKnife.Tunnel.Filters;
+using NKnife.Tunnel.Generic;
 using SocketKnife;
 using SocketKnife.Common;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
+using SocketKnife.Interfaces;
 
 namespace NKnife.Kits.SocketKnife.Demo
 {
     public class DemoServer
     {
         private bool _IsInitialized;
-        private KnifeSocketServer _Server;
-        private KeepAliveServerFilter _KeepAliveFilter = DI.Get<KeepAliveServerFilter>();
+        private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
+        private KnifeLongSocketServer _Server = DI.Get<KnifeLongSocketServer>();
+        private SocketKnifeProtocolFilter _ProtocolFilter = DI.Get<SocketKnifeProtocolFilter>();
         private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
-        public KnifeSocketServer GetSocketServer()
+        public KnifeLongSocketServer GetSocketServer()
         {
             return _Server;
         }
 
-        public KnifeSocketServerFilter GetSocketServerFilter()
+        public IKnifeSocketServer GetDataConnector()
         {
-            return _KeepAliveFilter;
+            return _Server;
         }
 
         public StringProtocolFamily GetFamily()
@@ -39,35 +46,39 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Family;
         }
 
-        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, KnifeSocketServerProtocolHandler handler)
+        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
         {
             if (_IsInitialized) 
                 return;
 
-            var heartbeatServerFilter = DI.Get<HeartbeatServerFilter>();
-            heartbeatServerFilter.Interval = 1000*5;
-            heartbeatServerFilter.Heartbeat = new Heartbeat();
+            var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
+            heartbeatServerFilter.Heartbeat = new Heartbeat("Server","Client");
+            heartbeatServerFilter.Heartbeat.Name = "Server";
+            heartbeatServerFilter.Interval = 1000 * 2;
+            heartbeatServerFilter.EnableStrictMode = true; //严格模式
+            heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Responsive; 
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 
-            _KeepAliveFilter = DI.Get<KeepAliveServerFilter>();
-            var codec = DI.Get<KnifeSocketCodec>();
-
-            if (codec.SocketDecoder.GetType() != socketTools.Decoder)
-                codec.SocketDecoder = (KnifeSocketDatagramDecoder) DI.Get(socketTools.Decoder);
-            if (codec.SocketEncoder.GetType() != socketTools.Encoder)
-                codec.SocketEncoder = (KnifeSocketDatagramEncoder) DI.Get(socketTools.Encoder);
+            var codec = DI.Get<KnifeStringCodec>();
+            if (codec.StringDecoder.GetType() != socketTools.Decoder)
+                codec.StringDecoder = (KnifeStringDatagramDecoder)DI.Get(socketTools.Decoder);
+            if (codec.StringEncoder.GetType() != socketTools.Encoder)
+                codec.StringEncoder = (KnifeStringDatagramEncoder) DI.Get(socketTools.Encoder);
             if (protocolFamily.CommandParser.GetType() != socketTools.CommandParser)
                 protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(socketTools.CommandParser);
 
-            _Server = DI.Get<KnifeSocketServer>();
-            _Server.Config = config;
+            _ProtocolFilter.Bind(codec, protocolFamily);
+            _ProtocolFilter.AddHandlers(handler);
+
+            _Tunnel.AddFilters(DI.Get<LogFilter>());
             if (socketTools.NeedHeartBeat)
-                _Server.AddFilters(heartbeatServerFilter);
-            _Server.AddFilters(_KeepAliveFilter);
+                _Tunnel.AddFilters(heartbeatServerFilter);
+            _Tunnel.AddFilters(_ProtocolFilter);
+
+            _Server.Config = config;
             _Server.Configure(socketTools.IpAddress, socketTools.Port);
-            _Server.Bind(codec, protocolFamily);
-            _Server.AddHandlers(handler);
+            _Tunnel.BindDataConnector(_Server);
 
             _IsInitialized = true;
         }
@@ -81,12 +92,6 @@ namespace NKnife.Kits.SocketKnife.Demo
             var custom = DI.Get<StringProtocol>("TestCustom");
             custom.Family = _Family.FamilyName;
             custom.Command = "custom";
-
-
-            //Func<string, StringProtocolPacker> func = s => DI.Get<StringProtocolPacker>(s);
-
-            //_Family.AddPackerGetter(func);
-            //_Family.AddPackerGetter("call", func);
 
             _Family.Build("command");
            

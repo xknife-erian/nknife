@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NKnife.Events;
+using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Generic
 {
     public abstract class TunnelFilterBase<TData, TSessionId> : ITunnelFilter<TData, TSessionId>
     {
-        public bool ContinueNextFilter { get; protected set; }
-
-        public abstract void BindSessionProvider(ISessionProvider<TData, TSessionId> sessionProvider);
-
-        public abstract void PrcoessReceiveData(ITunnelSession<TData, TSessionId> session);
+        public abstract bool PrcoessReceiveData(ITunnelSession<TData, TSessionId> session);
 
         public abstract void ProcessSessionBroken(TSessionId id);
 
         public abstract void ProcessSessionBuilt(TSessionId id);
 
-        public virtual void PrcoessSendData(ITunnelSession<TData, TSessionId> session)
+        public virtual void ProcessSendToSession(ITunnelSession<TData, TSessionId> session)
         {
             //默认啥也不干
         }
+
+        public virtual void ProcessSendToAll(TData data)
+        {
+            //默认啥也不干
+        }
+
+        public abstract event EventHandler<SessionEventArgs<TData, TSessionId>> OnSendToSession;
+        public abstract event EventHandler<EventArgs<TData>> OnSendToAll;
+        public abstract event EventHandler<EventArgs<TSessionId>> OnKillSession;
     }
 }

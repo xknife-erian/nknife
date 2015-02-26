@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NKnife.Tunnel.Generic
 {
-    public abstract class KnifeBytesDatagramDecoder : IDatagramDecoder<byte[]>
+    public abstract class KnifeBytesDatagramDecoder : IDatagramDecoder<byte[], byte[]>
     {
         /// <summary>
         /// 解码。将字节数组解析成字符串。

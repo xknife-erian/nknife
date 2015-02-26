@@ -13,6 +13,7 @@ namespace NKnife.Tunnel.Common
     {
         public TSessionId Id { get; set; }
         public byte[] Data { get; set; }
+        public object Tag { get; set; }
 
         public override int GetHashCode()
         {

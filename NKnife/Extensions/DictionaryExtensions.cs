@@ -29,5 +29,23 @@ namespace System.Collections.Generic
         {
             dictionary.Add(pair.Key, pair.Value);
         }
+
+        public static void AddOrUpdate<TK, TV>(this Dictionary<TK, TV> dictionary, KeyValuePair<TK, TV> pair)
+        {
+            if (dictionary.ContainsKey(pair.Key))
+            {
+                dictionary[pair.Key] = pair.Value;
+            }
+            dictionary.Add(pair);
+        }
+
+        public static void AddOrUpdate<TK, TV>(this Dictionary<TK, TV> dictionary, TK key, TV value)
+        {
+            if (dictionary.ContainsKey(key))
+            {
+                dictionary[key] = value;
+            }
+            dictionary.Add(key,value);
+        }
     }
 }

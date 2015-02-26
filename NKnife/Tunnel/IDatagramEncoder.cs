@@ -3,8 +3,8 @@
     /// <summary>
     /// 一个最常用的 字符串 => 字节数组 转换器。
     /// </summary>
-    public interface IDatagramEncoder<in T>
+    public interface IDatagramEncoder<in T,out TData>
     {
-        byte[] Execute(T data);
+        TData Execute(T data);
     }
 }

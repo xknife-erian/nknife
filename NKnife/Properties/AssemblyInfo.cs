@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("xknfie.net")]
 [assembly: AssemblyProduct("NKnife")]
-[assembly: AssemblyCopyright("Copyright © xknfie.net 2014")]
+[assembly: AssemblyCopyright("Copyright © xknfie.net 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -18,5 +18,5 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("NKnife.UnitTest")]
 
-[assembly: AssemblyVersion("14.4.9.1222")]
-[assembly: AssemblyFileVersionAttribute("14.4.9.1222")]
+[assembly: AssemblyVersion("15.4.10.0211")]
+[assembly: AssemblyFileVersionAttribute("15.4.10.0211")]
