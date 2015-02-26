@@ -14,30 +14,27 @@ namespace SocketKnife
 {
     public class KnifeLongSocketServer : IKnifeSocketServer, IDisposable
     {
+        private const int ACCEPT_LISTEN_TIME_INTERVAL = 25; // 侦听论询时间间隔(ms)
+        private const int CHECK_SESSION_TABLE_TIME_INTERVAL = 100; // 清理Timer的时间间隔(ms)
+        private const int MAX_SESSION_TIMEOUT = 60; // 1 minutes，不是心跳间隔，但针对长连接也需要有个时间限制，太长时间无动作也要清除
+
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-        private KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
-        protected KnifeSocketSessionMap SessionMap = new KnifeSocketSessionMap();
-
-        private IPAddress _IpAddress;
-        private int _Port;
-
-        private Socket _ListenSocket;
-        private bool _IsServerClosed = true;
-        private bool _IsServerListenPaused;
-
-        private const int AcceptListenTimeInterval = 25; // 侦听论询时间间隔(ms)
-        private const int CheckSessionTableTimeInterval = 100; // 清理Timer的时间间隔(ms)
-
-        private int _SessionCount;
-
-        private const int MaxSessionTimeout = 60; // 1 minutes，不是心跳间隔，但针对长连接也需要有个时间限制，太长时间无动作也要清除
-
+        
         private readonly ManualResetEvent _CheckAcceptListenResetEvent;
         private readonly ManualResetEvent _CheckSessionTableResetEvent;
-
+        private IPAddress _IpAddress;
         private bool _IsDisposed;
+        private bool _IsServerClosed = true;
+        private bool _IsServerListenPaused;
+        private Socket _ListenSocket;
+        private int _Port;
+        private int _SessionCount;
+
+        protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
+        protected KnifeSocketSessionMap _SessionMap = new KnifeSocketSessionMap();
 
         #region 构造
+
         public KnifeLongSocketServer()
         {
             _CheckAcceptListenResetEvent = new ManualResetEvent(true);
@@ -56,23 +53,23 @@ namespace SocketKnife
                 _IsDisposed = true;
                 Close();
                 Dispose(true);
-                GC.SuppressFinalize(this);  // Finalize 不会第二次执行
+                GC.SuppressFinalize(this); // Finalize 不会第二次执行
             }
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)  // 对象正在被显示释放, 不是执行 Finalize()
+            if (disposing) // 对象正在被显示释放, 不是执行 Finalize()
             {
-                lock (SessionMap)
+                lock (_SessionMap)
                 {
-                    SessionMap.Clear();// 释放托管资源
+                    _SessionMap.Clear(); // 释放托管资源
                 }
             }
 
             if (_CheckAcceptListenResetEvent != null)
             {
-                _CheckAcceptListenResetEvent.Close();  // 释放非托管资源
+                _CheckAcceptListenResetEvent.Close(); // 释放非托管资源
             }
 
             if (_CheckSessionTableResetEvent != null)
@@ -80,9 +77,11 @@ namespace SocketKnife
                 _CheckSessionTableResetEvent.Close();
             }
         }
+
         #endregion
 
         #region IKnifeSocketServer接口
+
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
@@ -90,15 +89,14 @@ namespace SocketKnife
         public KnifeSocketConfig Config
         {
             get { return _Config; }
-            set { _Config = (KnifeSocketServerConfig)value; }
+            set { _Config = (KnifeSocketServerConfig) value; }
         }
+
         public virtual void Configure(IPAddress ipAddress, int port)
         {
             _IpAddress = ipAddress;
             _Port = port;
         }
-
-
 
         public bool Stop()
         {
@@ -106,24 +104,23 @@ namespace SocketKnife
             return true;
         }
 
-
-
         public bool Start()
         {
-            _IsServerClosed = true;  // 在其它方法中要判断该字段
+            _IsServerClosed = true; // 在其它方法中要判断该字段
             _IsServerListenPaused = true;
 
             Close();
 
             try
             {
-                if (!CreateServerSocket()) return false;
+                if (!CreateServerSocket()) 
+                    return false;
                 _IsServerClosed = false;
 
-                Thread checkSessionThread = new Thread(CheckSessionTable) {IsBackground = true};
+                var checkSessionThread = new Thread(CheckSessionTable) {IsBackground = true};
                 checkSessionThread.Start();
 
-                Thread serverListenThread = new Thread(StartServerListen) {IsBackground = true};
+                var serverListenThread = new Thread(StartServerListen) {IsBackground = true};
                 serverListenThread.Start();
                 _IsServerListenPaused = false;
 
@@ -131,23 +128,21 @@ namespace SocketKnife
             }
             catch (Exception err)
             {
-                _logger.Info("socket server启动异常");
+                _logger.Info(string.Format("socket server启动异常"), err);
             }
             return !_IsServerClosed;
         }
 
-
         public void Send(EndPoint id, byte[] data)
         {
             KnifeSocketSession session = null;
-            lock (SessionMap)
+            lock (_SessionMap)
             {
-                if (SessionMap.ContainsKey(id))
+                if (_SessionMap.ContainsKey(id))
                 {
-                    session = SessionMap[id];
+                    session = _SessionMap[id];
                 }
             }
-
             if (session != null)
             {
                 SendDatagram(session, data);
@@ -156,9 +151,9 @@ namespace SocketKnife
 
         public void SendAll(byte[] data)
         {
-            lock (SessionMap)
+            lock (_SessionMap)
             {
-                foreach (var session in SessionMap.Values())
+                foreach (var session in _SessionMap.Values())
                 {
                     SendDatagram(session, data);
                 }
@@ -168,24 +163,25 @@ namespace SocketKnife
         public void KillSession(EndPoint id)
         {
             KnifeSocketSession session = null;
-            lock (SessionMap)
+            lock (_SessionMap)
             {
-                if (SessionMap.ContainsKey(id))
+                if (_SessionMap.ContainsKey(id))
                 {
-                    session = SessionMap[id];
+                    session = _SessionMap[id];
                 }
             }
 
             if (session != null)
             {
                 session.DisconnectType = DisconnectType.Timeout;
-                SetSessionInactive(session);  // 标记为将关闭、准备断开
+                SetSessionInactive(session); // 标记为将关闭、准备断开
             }
-            
         }
+
         #endregion
 
         #region Server端处理
+
         private bool CreateServerSocket()
         {
             try
@@ -198,13 +194,12 @@ namespace SocketKnife
                 _ListenSocket.SendTimeout = Config.SendTimeout;
                 _ListenSocket.ReceiveTimeout = Config.ReceiveTimeout;
 
-                //_ListenSocket.Listen(Config.MaxConnectCount);
                 _ListenSocket.Listen(16);
                 return true;
             }
             catch (Exception err)
             {
-                _logger.Warn("CreateServerSocket异常");
+                _logger.Warn(string.Format("CreateServerSocket异常:{0}", err), err);
                 return false;
             }
         }
@@ -218,9 +213,9 @@ namespace SocketKnife
 
             try
             {
-                lock (SessionMap)
+                lock (_SessionMap)
                 {
-                    if (SessionMap != null && SessionMap.Count > 0)
+                    if (_SessionMap != null && _SessionMap.Count > 0)
                     {
                         // 可能结束服务器端的 AcceptClientConnect 的 Poll
                         //                        _ListenSocket.Shutdown(SocketShutdown.Both);  // 有连接才关
@@ -230,7 +225,7 @@ namespace SocketKnife
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("CloseServerSocket异常:{0}",ex));
+                _logger.Warn(string.Format("CloseServerSocket异常:{0}", ex));
             }
             finally
             {
@@ -239,7 +234,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        /// 侦听客户端连接请求
+        ///     侦听客户端连接请求
         /// </summary>
         private void StartServerListen()
         {
@@ -248,10 +243,10 @@ namespace SocketKnife
 
             while (!_IsServerClosed)
             {
-                if (_IsServerListenPaused)  // pause server
+                if (_IsServerListenPaused) // pause server
                 {
                     CloseServerSocket();
-                    Thread.Sleep(AcceptListenTimeInterval);
+                    Thread.Sleep(ACCEPT_LISTEN_TIME_INTERVAL);
                     continue;
                 }
 
@@ -263,30 +258,30 @@ namespace SocketKnife
 
                 try
                 {
-                    if (_ListenSocket.Poll(AcceptListenTimeInterval, SelectMode.SelectRead))
+                    if (_ListenSocket.Poll(ACCEPT_LISTEN_TIME_INTERVAL, SelectMode.SelectRead))
                     {
                         // 频繁关闭、启动时，这里容易产生错误（提示套接字只能有一个）
                         clientSocket = _ListenSocket.Accept();
 
                         if (clientSocket != null && clientSocket.Connected)
                         {
-                            if (_SessionCount >= Config.MaxConnectCount)  // 连接数超过上限
+                            if (_SessionCount >= Config.MaxConnectCount) // 连接数超过上限
                             {
                                 OnSessionRejected(); // 拒绝登录请求
                                 CloseClientSocket(clientSocket);
                             }
                             else
                             {
-                                AddSession(clientSocket);  // 添加到队列中, 并调用异步接收方法
+                                AddSession(clientSocket); // 添加到队列中, 并调用异步接收方法
                             }
                         }
-                        else  // clientSocket is null or connected == false
+                        else // clientSocket is null or connected == false
                         {
                             CloseClientSocket(clientSocket);
                         }
                     }
                 }
-                catch (Exception)  // 侦听连接的异常频繁, 不捕获异常
+                catch (Exception) // 侦听连接的异常频繁, 不捕获异常
                 {
                     CloseClientSocket(clientSocket);
                 }
@@ -296,7 +291,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        /// 资源清理线程, 分若干步完成
+        ///     资源清理线程, 分若干步完成
         /// </summary>
         private void CheckSessionTable()
         {
@@ -304,26 +299,26 @@ namespace SocketKnife
 
             while (!_IsServerClosed)
             {
-                lock (SessionMap)
+                lock (_SessionMap)
                 {
-                    List<EndPoint> sessionIDList = new List<EndPoint>();
-                    KnifeSocketSession[] dataArray = new KnifeSocketSession[SessionMap.Values().Count];
-                    SessionMap.Values().CopyTo(dataArray, 0);
-                    for (int i = 0; i < dataArray.Length; i++)
+                    var sessionIDList = new List<EndPoint>();
+                    var dataArray = new KnifeSocketSession[_SessionMap.Values().Count];
+                    _SessionMap.Values().CopyTo(dataArray, 0);
+                    for (var i = 0; i < dataArray.Length; i++)
                     {
-                        KnifeSocketSession session = dataArray[i];
+                        var session = dataArray[i];
                         if (_IsServerClosed)
                         {
                             break;
                         }
 
-                        if (session.State == SessionState.Inactive)  // 分三步清除一个 Session
+                        if (session.State == SessionState.Inactive) // 分三步清除一个 Session
                         {
-                            ShutdownSession(session);  // 第一步: shutdown, 结束异步事件
+                            ShutdownSession(session); // 第一步: shutdown, 结束异步事件
                         }
                         else if (session.State == SessionState.Shutdown)
                         {
-                            CloseSession(session);  // 第二步: Close
+                            CloseSession(session); // 第二步: Close
                         }
                         else if (session.State == SessionState.Closed)
                         {
@@ -336,18 +331,18 @@ namespace SocketKnife
                         }
                     }
 
-                    lock (SessionMap)
+                    lock (_SessionMap)
                     {
                         foreach (var id in sessionIDList) // 统一清除
                         {
-                            SessionMap.Remove(id);
+                            _SessionMap.Remove(id);
                         }
                     }
 
                     sessionIDList.Clear();
                 }
 
-                Thread.Sleep(CheckSessionTableTimeInterval);
+                Thread.Sleep(CHECK_SESSION_TABLE_TIME_INTERVAL);
             }
 
             _CheckSessionTableResetEvent.Set();
@@ -363,14 +358,14 @@ namespace SocketKnife
             _IsServerClosed = true;
             _IsServerListenPaused = true;
 
-            _CheckAcceptListenResetEvent.WaitOne();  // 等待3个线程
+            _CheckAcceptListenResetEvent.WaitOne(); // 等待3个线程
             _CheckSessionTableResetEvent.WaitOne();
 
-            if (SessionMap != null)
+            if (_SessionMap != null)
             {
-                lock (SessionMap)
+                lock (_SessionMap)
                 {
-                    foreach (KnifeSocketSession session in SessionMap.Values())
+                    foreach (var session in _SessionMap.Values())
                     {
                         CloseSession(session);
                     }
@@ -379,11 +374,11 @@ namespace SocketKnife
 
             CloseServerSocket();
 
-            if (SessionMap != null)  // 清空会话列表
+            if (_SessionMap != null) // 清空会话列表
             {
-                lock (SessionMap)
+                lock (_SessionMap)
                 {
-                    SessionMap.Clear();
+                    _SessionMap.Clear();
                 }
             }
 
@@ -391,7 +386,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        /// 强制关闭客户端请求时的 Socket
+        ///     强制关闭客户端请求时的 Socket
         /// </summary>
         private void CloseClientSocket(Socket socket)
         {
@@ -402,14 +397,18 @@ namespace SocketKnife
                     socket.Shutdown(SocketShutdown.Both);
                     socket.Close();
                 }
-                catch (Exception) { }  // 强制关闭, 忽略错误
+                catch (Exception)
+                {
+                } // 强制关闭, 忽略错误
             }
         }
+
         #endregion
 
         #region Session操作
+
         /// <summary>
-        /// 增加一个会话对象
+        ///     增加一个会话对象
         /// </summary>
         private void AddSession(Socket clientSocket)
         {
@@ -418,11 +417,11 @@ namespace SocketKnife
             session.Id = remoteEndPoint;
             session.AcceptSocket = clientSocket;
             session.LastSessionTime = DateTime.Now;
-            lock (SessionMap)
+            lock (_SessionMap)
             {
-                SessionMap.Add(remoteEndPoint, session);
+                _SessionMap.Add(remoteEndPoint, session);
             }
-            _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", remoteEndPoint, SessionMap.Count);
+            _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", remoteEndPoint, _SessionMap.Count);
 
             ReceiveDatagram(session);
 
@@ -431,15 +430,15 @@ namespace SocketKnife
 
         public void CheckSessionTimeout(KnifeSocketSession session)
         {
-            TimeSpan ts = DateTime.Now.Subtract(session.LastSessionTime);
-            int elapsedSecond = Math.Abs((int)ts.TotalSeconds);
+            var ts = DateTime.Now.Subtract(session.LastSessionTime);
+            var elapsedSecond = Math.Abs((int) ts.TotalSeconds);
 
-            if (elapsedSecond > MaxSessionTimeout)  // 超时，则准备断开连接
+            if (elapsedSecond > MAX_SESSION_TIMEOUT) // 超时，则准备断开连接
             {
                 session.DisconnectType = DisconnectType.Timeout;
-                SetSessionInactive(session);  // 标记为将关闭、准备断开
+                SetSessionInactive(session); // 标记为将关闭、准备断开
 
-                _logger.Info(string.Format("Session{0}长期没有通讯，状态设置为InActive",session.Id));
+                _logger.Info(string.Format("Session{0}长期没有通讯，状态设置为InActive", session.Id));
             }
         }
 
@@ -447,7 +446,7 @@ namespace SocketKnife
         {
             lock (session)
             {
-                if (session.State != SessionState.Inactive || session.AcceptSocket == null)  // Inactive 状态才能 Shutdown
+                if (session.State != SessionState.Inactive || session.AcceptSocket == null) // Inactive 状态才能 Shutdown
                 {
                     return;
                 }
@@ -455,9 +454,11 @@ namespace SocketKnife
                 session.State = SessionState.Shutdown;
                 try
                 {
-                    session.AcceptSocket.Shutdown(SocketShutdown.Both);  // 目的：结束异步事件
+                    session.AcceptSocket.Shutdown(SocketShutdown.Both); // 目的：结束异步事件
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                }
             }
         }
 
@@ -465,7 +466,7 @@ namespace SocketKnife
         {
             lock (session)
             {
-                if (session.State != SessionState.Shutdown || session.AcceptSocket == null)  // Shutdown 状态才能 Close
+                if (session.State != SessionState.Shutdown || session.AcceptSocket == null) // Shutdown 状态才能 Close
                 {
                     return;
                 }
@@ -477,7 +478,9 @@ namespace SocketKnife
                     session.State = SessionState.Closed;
                     session.AcceptSocket.Close();
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                }
             }
         }
 
@@ -504,9 +507,11 @@ namespace SocketKnife
                 OnSessionTimeout(session);
             }
         }
+
         #endregion
 
         #region 异步发送接收
+
         private void SendDatagram(KnifeSocketSession session, byte[] data)
         {
             lock (this)
@@ -520,7 +525,7 @@ namespace SocketKnife
                 {
                     session.AcceptSocket.BeginSend(data, 0, data.Length, SocketFlags.None, EndSendDatagram, session);
                 }
-                catch (Exception err)  // 写 socket 异常，准备关闭该会话
+                catch (Exception err) // 写 socket 异常，准备关闭该会话
                 {
                     session.DisconnectType = DisconnectType.Exception;
                     session.State = SessionState.Inactive;
@@ -531,7 +536,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        /// 发送数据完成处理函数, iar 为目标客户端 Session
+        ///     发送数据完成处理函数, iar 为目标客户端 Session
         /// </summary>
         private void EndSendDatagram(IAsyncResult iar)
         {
@@ -554,7 +559,7 @@ namespace SocketKnife
                     session.AcceptSocket.EndSend(iar);
                     iar.AsyncWaitHandle.Close();
                 }
-                catch (Exception err)  // 写 socket 异常，准备关闭该会话
+                catch (Exception err) // 写 socket 异常，准备关闭该会话
                 {
                     session.DisconnectType = DisconnectType.Exception;
                     session.State = SessionState.Inactive;
@@ -573,13 +578,12 @@ namespace SocketKnife
                     return;
                 }
 
-                try  // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
+                try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
                 {
                     // 开始接受来自该客户端的数据
                     session.AcceptSocket.BeginReceive(session.ReceiveBuffer, 0, session.ReceiveBufferSize, SocketFlags.None, EndReceiveDatagram, session);
-
                 }
-                catch (Exception err)  // 读 Socket 异常，准备关闭该会话
+                catch (Exception err) // 读 Socket 异常，准备关闭该会话
                 {
                     session.DisconnectType = DisconnectType.Exception;
                     session.State = SessionState.Inactive;
@@ -608,7 +612,7 @@ namespace SocketKnife
                 try
                 {
                     // Shutdown 时将调用 ReceiveData，此时也可能收到 0 长数据包
-                    int readBytesLength = session.AcceptSocket.EndReceive(iar);
+                    var readBytesLength = session.AcceptSocket.EndReceive(iar);
                     iar.AsyncWaitHandle.Close();
 
                     if (readBytesLength == 0)
@@ -616,17 +620,17 @@ namespace SocketKnife
                         session.DisconnectType = DisconnectType.Normal;
                         session.State = SessionState.Inactive;
                     }
-                    else  // 正常数据包
+                    else // 正常数据包
                     {
-                        session.LastSessionTime = DateTime.Now; 
+                        session.LastSessionTime = DateTime.Now;
                         // 合并报文，按报文头、尾字符标志抽取报文，将包交给数据处理器
                         var data = new byte[readBytesLength];
                         Array.Copy(session.ReceiveBuffer, 0, data, 0, readBytesLength);
-                        PrcoessReceivedData(session.Id, data);  
+                        PrcoessReceivedData(session.Id, data);
                         ReceiveDatagram(session);
                     }
                 }
-                catch (Exception err)  // 读 socket 异常，关闭该会话，系统不认为是错误（这种错误可能太多）
+                catch (Exception err) // 读 socket 异常，关闭该会话，系统不认为是错误（这种错误可能太多）
                 {
                     if (session.State == SessionState.Active)
                     {
@@ -640,14 +644,14 @@ namespace SocketKnife
         }
 
         /// <summary>
-        /// 处理接收到的数据，此时e.BytesTransferred > 0
+        ///     处理接收到的数据，此时e.BytesTransferred > 0
         /// </summary>
         protected virtual void PrcoessReceivedData(EndPoint endPoint, byte[] data)
         {
             var handler = DataReceived;
             if (handler != null)
             {
-                if (SessionMap.ContainsKey(endPoint))
+                if (_SessionMap.ContainsKey(endPoint))
                 {
                     handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession<EndPoint>
                     {
@@ -661,9 +665,11 @@ namespace SocketKnife
                 }
             }
         }
+
         #endregion
 
         #region Session事件
+
         protected virtual void OnSessionRejected()
         {
             _logger.Debug("OnSessionRejected");
@@ -683,19 +689,17 @@ namespace SocketKnife
         protected virtual void OnSessionDisconnected(KnifeSocketSession session)
         {
             Interlocked.Decrement(ref _SessionCount);
-            _logger.Debug("OnSessionDisconnected");
 
             var handler = SessionBroken;
             if (handler != null)
             {
-                handler.Invoke(this,new SessionEventArgs<byte[], EndPoint>(session));
+                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
             }
         }
 
         protected virtual void OnSessionTimeout(KnifeSocketSession session)
         {
             Interlocked.Decrement(ref _SessionCount);
-            _logger.Debug("OnSessionTimeout");
 
             var handler = SessionBroken;
             if (handler != null)
@@ -707,7 +711,7 @@ namespace SocketKnife
         protected virtual void OnSessionReceiveException(Exception err)
         {
             Interlocked.Decrement(ref _SessionCount);
-            _logger.Warn(string.Format("OnSessionReceiveException:{0}",err));
+            _logger.Warn(string.Format("OnSessionReceiveException:{0}", err));
         }
 
         protected virtual void OnSessionSendException(Exception err)
@@ -715,21 +719,22 @@ namespace SocketKnife
             Interlocked.Decrement(ref _SessionCount);
             _logger.Warn(string.Format("OnSessionSendException:{0}", err));
         }
+
         #endregion
     }
 
     public enum DisconnectType
     {
-        Normal,     // disconnect normally
-        Timeout,    // disconnect because of timeout
-        Exception   // disconnect because of exception
+        Normal, // disconnect normally
+        Timeout, // disconnect because of timeout
+        Exception // disconnect because of exception
     }
 
     public enum SessionState
     {
-        Active,    // state is active
-        Inactive,  // session is inactive and will be closed
-        Shutdown,  // session is shutdownling
-        Closed     // session is closed
+        Active, // state is active
+        Inactive, // session is inactive and will be closed
+        Shutdown, // session is shutdownling
+        Closed // session is closed
     }
 }

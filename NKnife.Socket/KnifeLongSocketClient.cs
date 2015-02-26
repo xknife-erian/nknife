@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using Common.Logging;
 using NKnife.IoC;
@@ -14,11 +11,83 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
-    public class KnifeLongSocketClient: IKnifeSocketClient, IDisposable 
+    public class KnifeLongSocketClient : IKnifeSocketClient, IDisposable
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
 
+        public KnifeLongSocketClient(bool reconnectFlag, bool isConnecting)
+        {
+            _ReconnectFlag = reconnectFlag;
+            _IsConnecting = isConnecting;
+        }
+
+        /// <summary>
+        ///     处理连接被动中断，从远端发起的中断，本地接收或发送时出现异常货socket已经释放的情况
+        /// </summary>
+        protected virtual void ProcessConnectionBrokenPassive()
+        {
+            _IsConnected = false;
+
+            var handler = SessionBroken;
+            if (handler != null)
+            {
+                var session = new EndPointKnifeTunnelSession {Id = _EndPoint};
+                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+            }
+
+            //如果有自动重连，则需要启用自动重连
+            StartReconnect();
+        }
+
+        protected virtual void ProcessConnectionBrokenActive()
+        {
+            try
+            {
+                _logger.Debug("KnifeSocketClient执行主动断开");
+                _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
+                _SocketSession.AcceptSocket.Disconnect(true);
+                _SocketSession.AcceptSocket.Close();
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Socket客户端Shutdown异常。", e);
+            }
+            _IsConnected = false;
+
+            var handler = SessionBroken;
+            if (handler != null)
+            {
+                var session = new EndPointKnifeTunnelSession {Id = _EndPoint};
+                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+            }
+
+            //如果有自动重连，则需要启用自动重连
+            StartReconnect();
+        }
+
+        private void Close()
+        {
+            lock (_lockObj)
+            {
+                _SocketSession.ResetBuffer();
+
+                try
+                {
+                    _SocketSession.State = SessionState.Closed;
+                    _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
+                    _SocketSession.AcceptSocket.Disconnect(true);
+                    _SocketSession.AcceptSocket.Close();
+                }
+                catch (Exception e)
+                {
+                    _logger.Warn("socket客户端关闭时有异常", e);
+                }
+                _logger.Debug("socket客户端关闭");
+            }
+        }
+
         #region 成员变量
+
         protected IPAddress _IpAddress;
         protected int _Port;
 
@@ -37,7 +106,7 @@ namespace SocketKnife
 
         private bool _IsConnecting; //true 正在进行连接, false表示连接动作完成
         protected bool _IsConnected; //连接状态，true表示已经连接上了
-        private bool _ReconnectFlag;
+        private bool _ReconnectFlag = true;
         private bool _NeedReconnected; //是否重连
         private Thread _ReconnectedThread;
 
@@ -95,10 +164,12 @@ namespace SocketKnife
 
             var handler = SessionBroken;
             if (handler != null)
+            {
                 handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
                 {
                     Id = _EndPoint
                 }));
+            }
 
             try
             {
@@ -140,13 +211,14 @@ namespace SocketKnife
         protected void Initialize()
         {
             if (_IsDisposed)
+            {
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
+            }
 
             var ipPoint = new IPEndPoint(_IpAddress, _Port);
             _SocketSession = DI.Get<KnifeSocketSession>();
             _SocketSession.Id = ipPoint;
 
-            _ReconnectFlag = true;
             _ReconnectedThread = new Thread(ReconnectedLoop);
         }
 
@@ -165,7 +237,7 @@ namespace SocketKnife
                     {
                         _logger.Debug("Client发起重连尝试");
                         AsyncConnect(_IpAddress, _Port);
-                        _ReconnectResetEvent.Reset();//阻塞
+                        _ReconnectResetEvent.Reset(); //阻塞
                         _ReconnectResetEvent.WaitOne(_Config.ReconnectInterval);
                     }
                     else //已连接，则不需要重连了
@@ -202,12 +274,6 @@ namespace SocketKnife
         ///     用来确定是否以释放
         /// </summary>
         private bool _IsDisposed;
-
-        public KnifeLongSocketClient(bool reconnectFlag, bool isConnecting)
-        {
-            _ReconnectFlag = reconnectFlag;
-            _IsConnecting = isConnecting;
-        }
 
         public void Dispose()
         {
@@ -293,13 +359,12 @@ namespace SocketKnife
         {
             lock (_lockObj)
             {
-                try  // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
+                try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
                 {
                     // 开始接受来自该客户端的数据
                     _SocketSession.AcceptSocket.BeginReceive(_SocketSession.ReceiveBuffer, 0, _SocketSession.ReceiveBufferSize, SocketFlags.None, EndReceiveDatagram, this);
-
                 }
-                catch (Exception err)  // 读 Socket 异常，准备关闭该会话
+                catch (Exception err) // 读 Socket 异常，准备关闭该会话
                 {
                     _SocketSession.DisconnectType = DisconnectType.Exception;
                     _SocketSession.State = SessionState.Inactive;
@@ -322,7 +387,7 @@ namespace SocketKnife
                 try
                 {
                     // Shutdown 时将调用 ReceiveData，此时也可能收到 0 长数据包
-                    int readBytesLength = _SocketSession.AcceptSocket.EndReceive(iar);
+                    var readBytesLength = _SocketSession.AcceptSocket.EndReceive(iar);
                     iar.AsyncWaitHandle.Close();
 
                     if (readBytesLength == 0)
@@ -330,7 +395,7 @@ namespace SocketKnife
                         _SocketSession.DisconnectType = DisconnectType.Normal;
                         _SocketSession.State = SessionState.Inactive;
                     }
-                    else  // 正常数据包
+                    else // 正常数据包
                     {
                         _SocketSession.LastSessionTime = DateTime.Now;
                         // 合并报文，按报文头、尾字符标志抽取报文，将包交给数据处理器
@@ -340,7 +405,7 @@ namespace SocketKnife
                         ReceiveDatagram();
                     }
                 }
-                catch (Exception err)  // 读 socket 异常，关闭该会话，系统不认为是错误（这种错误可能太多）
+                catch (Exception err) // 读 socket 异常，关闭该会话，系统不认为是错误（这种错误可能太多）
                 {
                     if (_SocketSession.State == SessionState.Active)
                     {
@@ -371,80 +436,18 @@ namespace SocketKnife
 
         #endregion
 
-        /// <summary>
-        ///     处理连接被动中断，从远端发起的中断，本地接收或发送时出现异常货socket已经释放的情况
-        /// </summary>
-        protected virtual void ProcessConnectionBrokenPassive()
-        {
-            _IsConnected = false;
-
-            var handler = SessionBroken;
-            if (handler != null)
-            {
-                var session = new EndPointKnifeTunnelSession() { Id = _EndPoint };
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
-            }
-
-            //如果有自动重连，则需要启用自动重连
-            StartReconnect();
-        }
-
-        protected virtual void ProcessConnectionBrokenActive()
-        {
-            try
-            {
-                _logger.Debug("KnifeSocketClient执行主动断开");
-                _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
-                _SocketSession.AcceptSocket.Disconnect(true);
-                _SocketSession.AcceptSocket.Close();
-            }
-            catch (Exception e)
-            {
-                _logger.Error("Socket客户端Shutdown异常。", e);
-            }
-            _IsConnected = false;
-
-            var handler = SessionBroken;
-            if (handler != null)
-            {
-                var session = new EndPointKnifeTunnelSession() { Id = _EndPoint };
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
-            }
-
-            //如果有自动重连，则需要启用自动重连
-            StartReconnect();
-        }
-
-        private void Close()
-        {
-            lock (_lockObj)
-            {
-                _SocketSession.ResetBuffer();
-
-                try
-                {
-                    _SocketSession.State = SessionState.Closed;
-                    _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
-                    _SocketSession.AcceptSocket.Disconnect(true);
-                    _SocketSession.AcceptSocket.Close();
-                }
-                catch (Exception){}
-                _logger.Debug("socket客户端关闭");
-            }
-
-        }
         #region 发送消息
 
         protected virtual void ProcessSendData(byte[] data)
         {
             try
             {
-                if(_SocketSession.AcceptSocket !=null && _SocketSession.AcceptSocket.Connected)
+                if (_SocketSession.AcceptSocket != null && _SocketSession.AcceptSocket.Connected)
                     _SocketSession.AcceptSocket.BeginSend(data, 0, data.Length, SocketFlags.None, AsynEndSend, data);
             }
             catch (SocketException e)
             {
-                _logger.Info(string.Format("Client发送时发现连接中断。"));
+                _logger.Info(string.Format("Client发送时发现连接中断。{0}", e.Data), e);
                 _IsConnected = false;
 
                 var handler = SessionBroken;
@@ -484,6 +487,5 @@ namespace SocketKnife
         }
 
         #endregion
-
     }
 }
