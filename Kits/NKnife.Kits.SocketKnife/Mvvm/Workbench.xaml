@@ -52,7 +52,6 @@
 
             <xcad:LayoutRoot>
                 <xcad:LayoutPanel Orientation="Horizontal">
-
                     <xcad:LayoutDocumentPaneGroup>
                         <xcad:LayoutDocumentPane/>
                     </xcad:LayoutDocumentPaneGroup>
