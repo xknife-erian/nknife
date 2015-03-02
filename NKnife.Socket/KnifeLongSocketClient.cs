@@ -45,7 +45,7 @@ namespace SocketKnife
             {
                 _logger.Debug("KnifeSocketClient执行主动断开");
                 _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
-                _SocketSession.AcceptSocket.Disconnect(true);
+                //_SocketSession.AcceptSocket.Disconnect(true);
                 _SocketSession.AcceptSocket.Close();
             }
             catch (Exception e)
@@ -177,7 +177,7 @@ namespace SocketKnife
             try
             {
                 _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
-                _SocketSession.AcceptSocket.Disconnect(true);
+                //_SocketSession.AcceptSocket.Disconnect(true);
                 _SocketSession.AcceptSocket.Close();
                 return true;
             }
@@ -222,6 +222,7 @@ namespace SocketKnife
             _SocketSession = DI.Get<KnifeSocketSession>();
             _SocketSession.Id = ipPoint;
 
+            _ReconnectFlag = true;
             _ReconnectedThread = new Thread(ReconnectedLoop);
         }
 
