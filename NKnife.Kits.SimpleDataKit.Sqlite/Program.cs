@@ -13,15 +13,16 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
 {
     class Program
     {
-        private const string FILE = @"d:\simple-data-books.db";
-        private static readonly string _connectionString = string.Format("Data Source={0};Version=3;", FILE);
+        private const string FILE01 = @"d:\simple-data-books.db";
+        private const string FILE02 = ":memory:";
+        private static readonly string _connectionString = string.Format("Data Source={0};Version=3", FILE01);
 
         private static void Main(string[] args)
         {
             Console.WriteLine("==Simple.Data.Sqlite----------");
-            if (File.Exists(FILE))
+            if (File.Exists(FILE01))
             {
-                File.Delete(FILE);
+                File.Delete(FILE01);
             }
 
             var db = Database.OpenConnection(_connectionString);
@@ -143,6 +144,25 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
                 var bookid = string.Format("A{0}", i.ToString().PadLeft(5, '0'));
                 db.book.Insert(id: bookid, name: string.Format("Steve{0}", i), page: 50);
                 Console.Write('.');
+            }
+            stopwatch.Stop();
+            Console.WriteLine();
+            Console.WriteLine("50 record created! process {0}ms.", stopwatch.ElapsedMilliseconds);
+
+            Console.WriteLine("------------");
+
+            // ++++用ADO.net原生的进行写操作进行效率比较
+            stopwatch.Restart();
+            for (int i = 0; i < 50; i++)
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand())
+                {
+                    cmd.Connection = conn;
+                    var bookid = string.Format("B{0}", i.ToString().PadLeft(5, '0'));
+                    cmd.CommandText = string.Format("INSERT INTO 'book' VALUES ('{0}', 'SQLiteC{1}', {1});", bookid, i);
+                    var j = SqliteHelper.ExecuteNonQuery(cmd);
+                    Console.Write(j);
+                }
             }
             stopwatch.Stop();
             Console.WriteLine();
