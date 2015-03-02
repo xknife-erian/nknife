@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 
-namespace NKnife.Database.Interface
+namespace NKnife.Databases.Interface
 {
     /// <summary>针对数据库的操作帮助类。来自nknife的设计。
     /// </summary>

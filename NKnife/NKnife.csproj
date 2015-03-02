@@ -74,18 +74,18 @@
     <Compile Include="Collections\AsyncObservableCollection`.cs" />
     <Compile Include="Converts\Converting.cs" />
     <Compile Include="Converts\UtilityConvert.cs" />
-    <Compile Include="Database\Common\DatabaseCoderSetting.cs" />
-    <Compile Include="Database\Common\DatabaseHelper.cs" />
-    <Compile Include="Database\Common\DatabaseParms.cs" />
-    <Compile Include="Database\DbHelper\SqlDbHelper.cs" />
-    <Compile Include="Database\Interface\IDbStore`.cs" />
-    <Compile Include="Database\Interface\IDatabaseHelper.cs" />
-    <Compile Include="Database\Interface\IDataBaseParameters.cs" />
-    <Compile Include="Database\Interface\IDataReaderProcess.cs" />
-    <Compile Include="Database\Interface\IDataSetProcess.cs" />
-    <Compile Include="Database\PagerInfo.cs" />
-    <Compile Include="Database\Process\ArrayProcess.cs" />
-    <Compile Include="Database\Process\IntProcess.cs" />
+    <Compile Include="Databases\Common\DatabaseCoderSetting.cs" />
+    <Compile Include="Databases\Common\DatabaseHelper.cs" />
+    <Compile Include="Databases\Common\DatabaseParms.cs" />
+    <Compile Include="Databases\DbHelper\SqlDbHelper.cs" />
+    <Compile Include="Databases\Interface\IDbStore`.cs" />
+    <Compile Include="Databases\Interface\IDatabaseHelper.cs" />
+    <Compile Include="Databases\Interface\IDataBaseParameters.cs" />
+    <Compile Include="Databases\Interface\IDataReaderProcess.cs" />
+    <Compile Include="Databases\Interface\IDataSetProcess.cs" />
+    <Compile Include="Databases\PagerInfo.cs" />
+    <Compile Include="Databases\Process\ArrayProcess.cs" />
+    <Compile Include="Databases\Process\IntProcess.cs" />
     <Compile Include="Domains\AppDomainProxy.cs" />
     <Compile Include="Domains\AppDomainFirster.cs" />
     <Compile Include="Domains\AppDomainDynamicLoader.cs" />
@@ -524,8 +524,8 @@
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
     <Compile Include="Wrapper\ByteClass.cs" />
-    <Compile Include="Database\DbHelper\AccessHelper.cs" />
-    <Compile Include="Database\DbHelper\MsSqlServerHelper.cs" />
+    <Compile Include="Databases\DbHelper\AccessHelper.cs" />
+    <Compile Include="Databases\DbHelper\MsSqlServerHelper.cs" />
     <Compile Include="Utility\UtilityByte.cs" />
     <Compile Include="Utility\UtilityClipboard.cs" />
     <Compile Include="Utility\UtilityCollection.cs" />
@@ -669,7 +669,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Database\Database.template" />
+    <None Include="Databases\Database.template" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -1,4 +1,4 @@
-﻿namespace NKnife.Database
+﻿namespace NKnife.Databases
 {
     /// <summary>分页参数
     /// </summary>

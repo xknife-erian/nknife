@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace NKnife.Database.DbHelper
+namespace NKnife.Databases.DbHelper
 {
     public class MsSqlServerHelper
     {

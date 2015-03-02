@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NKnife.Database.Interface
+namespace NKnife.Databases.Interface
 {
     /// <summary>面向一种类型数据的存储器
     /// </summary>

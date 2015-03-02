@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using NKnife.Utility;
 using Simple.Data;
 
 namespace NKnife.Kits.SimpleDataKit.Sqlite
@@ -19,21 +20,23 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
 
         private static void Main(string[] args)
         {
+            var rand = new UtilityRandom();
+
             Console.WriteLine("==Simple.Data.Sqlite----------");
             if (File.Exists(FILE01))
             {
                 File.Delete(FILE01);
             }
 
-            var db = Database.OpenConnection(_connectionString);
             SQLiteConnection conn = new SQLiteConnection(_connectionString);
             conn.Open();
+
+            var db = Database.OpenConnection(_connectionString);
             db.UseSharedConnection(conn);
 
             using (SQLiteCommand cmd = new SQLiteCommand())
             {
                 cmd.Connection = conn;
-                cmd.CommandText = "";
                 SQLiteHelper helper = new SQLiteHelper(cmd);
 
                 SQLiteTable tb = new SQLiteTable("book");
@@ -44,7 +47,19 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
 
                 helper.CreateTable(tb);
                 Console.WriteLine("Table:books is created!");
+
+                tb = new SQLiteTable("voltage");
+
+                tb.Columns.Add(new SQLiteColumn("id", true));
+                tb.Columns.Add(new SQLiteColumn("value", ColType.Decimal));
+                tb.Columns.Add(new SQLiteColumn("time", ColType.DateTime));
+
+                helper.CreateTable(tb);
+                Console.WriteLine("Table:voltage is created!");
             }
+
+            db.StopUsingSharedConnection();
+            conn.Close();
 
             var stopwatch = new Stopwatch();
 
@@ -103,7 +118,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             stopwatch.Restart();
             var book = db.book.FindById("X00005");
             if (book != null)
-                Write(book);
+                WriteBook(book);
             else
                 Console.WriteLine("Has error! Don't find target record!");
             stopwatch.Stop();
@@ -112,7 +127,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             stopwatch.Restart();
             book = db.book.FindById("X00001");
             if (book != null)
-                Write(book);
+                WriteBook(book);
             else
                 Console.WriteLine("Has error! Don't find target record!");
             stopwatch.Stop();
@@ -121,7 +136,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             stopwatch.Restart();
             book = db.book.FindById("X00009");
             if (book != null)
-                Write(book);
+                WriteBook(book);
             else
                 Console.WriteLine("Has error! Don't find target record!");
             stopwatch.Stop();
@@ -130,7 +145,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             stopwatch.Restart();
             book = db.book.FindById("X00004");
             if (book != null)
-                Write(book);
+                WriteBook(book);
             else
                 Console.WriteLine("Has error! Don't find target record!");
             stopwatch.Stop();
@@ -168,10 +183,49 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             Console.WriteLine();
             Console.WriteLine("50 record created! process {0}ms.", stopwatch.ElapsedMilliseconds);
 
+            // ++++向电压采集值表格填充数据
+
+            Console.WriteLine("------------");
+            const int COUNT = 500;
+            var vs = new List<double>(COUNT);
+            for (int i = 0; i < COUNT; i++)
+            {
+                var m = rand.Next(100000000, 999999999);
+                double n = ((double)m)/1000000000;
+                vs.Add(n);
+            }
+
+            stopwatch.Restart();
+            for (int i = 0; i < COUNT; i++)
+            {
+                db.voltage.Insert(value: 1 + vs[i], time: DateTime.Now);
+                if (i%20 == 0)
+                    Console.Write('.');
+            }
+            stopwatch.Stop();
+            Console.WriteLine();
+            Console.WriteLine("{1} record created! process {0}ms.", stopwatch.ElapsedMilliseconds, COUNT);
+
+            //下面做一些高级查询试验
+            Console.WriteLine("------------");
+            stopwatch.Restart();
+            var list = db.voltage.All().Select(db.voltage.value).Where(db.voltage.value > 1.5);
+            stopwatch.Stop();
+            foreach (dynamic voltage in list)
+            {
+                WriteVoltage(voltage);
+            }
+            Console.WriteLine("{1} record found! process {0}ms.", stopwatch.ElapsedMilliseconds, list.Size());
+
             Console.ReadKey();
         }
 
-        private static void Write(dynamic book)
+        private static void WriteVoltage(dynamic voltage)
+        {
+            Console.WriteLine("{1}, {0}", voltage.value, voltage.time);
+        }
+
+        private static void WriteBook(dynamic book)
         {
             Console.WriteLine(string.Format("[{0}],{1},{2}", book.id, book.name, book.page));
         }

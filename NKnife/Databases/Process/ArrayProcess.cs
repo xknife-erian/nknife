@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using NKnife.Database.Interface;
+using NKnife.Databases.Interface;
 
-namespace NKnife.Database.Process
+namespace NKnife.Databases.Process
 {
     public class ArrayProcess : IDataReaderProcess<object[]>
     {

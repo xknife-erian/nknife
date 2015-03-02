@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SimpleDataKit.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SimpleDataKit.Sqlite", "NKnife.Kits.SimpleDataKit.Sqlite\NKnife.Kits.SimpleDataKit.Sqlite.csproj", "{79DE8F75-06A6-44F7-A988-D0BB0CA61FFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csproj", "{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{79DE8F75-06A6-44F7-A988-D0BB0CA61FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79DE8F75-06A6-44F7-A988-D0BB0CA61FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79DE8F75-06A6-44F7-A988-D0BB0CA61FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266FCF12-D8F4-402C-BD7E-FC1DF5F6A0BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.OleDb;
 
-namespace NKnife.Database.DbHelper
+namespace NKnife.Databases.DbHelper
 {
     public class AccessHelper
     {

@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace NKnife.Database.DbHelper
+namespace NKnife.Databases.DbHelper
 {
     /// <summary>SqlHelper是一个微软完全开放源码的数据库操作类, 用于简化你重复的去写那些数据库连接（DbConnection）,DbCommand,DbDataReader等等。
     /// SqlHelper 封装过后通常是只需要给方法传入一些参数如数据库连接字符串，SQL参数等，就可以访问数据库了，很方便。
