@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cute.Demo", "Cute.Demo\Cute.Demo.csproj", "{2244C3D2-34C4-48EE-AE11-D70A574B9901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.API.Controllers", "NKnife.App.Cute.API.Controllers\NKnife.App.Cute.API.Controllers.csproj", "{1FDB8205-EDF3-4938-869B-79725F149040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Base", "NKnife.App.Cute.Base\NKnife.App.Cute.Base.csproj", "{09BCD5DB-3235-4DE3-B2BE-BACFF73A34F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Datas", "NKnife.App.Cute.Datas\NKnife.App.Cute.Datas.csproj", "{39CDB60A-F188-400B-ADAA-2EF6B967B5A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Implement", "NKnife.App.Cute.Implement\NKnife.App.Cute.Implement.csproj", "{BB62A3B6-6A6C-44EE-8854-4A9DA0E40A69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Implement.Industry", "NKnife.App.Cute.Implement.Industry\NKnife.App.Cute.Implement.Industry.csproj", "{2D2A0705-CD25-44E6-98CD-8EC028735D1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Kernel", "NKnife.App.Cute.Kernel\NKnife.App.Cute.Kernel.csproj", "{88B0A550-1693-4E22-8E50-53491496B183}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Site", "NKnife.App.Cute.Site\NKnife.App.Cute.Site.csproj", "{AD8EE5A2-7D99-4B34-978B-FA0ECBC3C442}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Cute.Site.Manager", "NKnife.App.Cute.Site.Manager\NKnife.App.Cute.Site.Manager.csproj", "{300086F3-B458-472A-99E6-208C14324216}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ABEED8A8-C627-4312-8234-9ED4147C370D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2244C3D2-34C4-48EE-AE11-D70A574B9901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2244C3D2-34C4-48EE-AE11-D70A574B9901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2244C3D2-34C4-48EE-AE11-D70A574B9901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2244C3D2-34C4-48EE-AE11-D70A574B9901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDB8205-EDF3-4938-869B-79725F149040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FDB8205-EDF3-4938-869B-79725F149040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FDB8205-EDF3-4938-869B-79725F149040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FDB8205-EDF3-4938-869B-79725F149040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09BCD5DB-3235-4DE3-B2BE-BACFF73A34F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09BCD5DB-3235-4DE3-B2BE-BACFF73A34F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09BCD5DB-3235-4DE3-B2BE-BACFF73A34F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09BCD5DB-3235-4DE3-B2BE-BACFF73A34F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39CDB60A-F188-400B-ADAA-2EF6B967B5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39CDB60A-F188-400B-ADAA-2EF6B967B5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39CDB60A-F188-400B-ADAA-2EF6B967B5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39CDB60A-F188-400B-ADAA-2EF6B967B5A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB62A3B6-6A6C-44EE-8854-4A9DA0E40A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB62A3B6-6A6C-44EE-8854-4A9DA0E40A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB62A3B6-6A6C-44EE-8854-4A9DA0E40A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB62A3B6-6A6C-44EE-8854-4A9DA0E40A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D2A0705-CD25-44E6-98CD-8EC028735D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D2A0705-CD25-44E6-98CD-8EC028735D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D2A0705-CD25-44E6-98CD-8EC028735D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D2A0705-CD25-44E6-98CD-8EC028735D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88B0A550-1693-4E22-8E50-53491496B183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B0A550-1693-4E22-8E50-53491496B183}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B0A550-1693-4E22-8E50-53491496B183}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B0A550-1693-4E22-8E50-53491496B183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD8EE5A2-7D99-4B34-978B-FA0ECBC3C442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD8EE5A2-7D99-4B34-978B-FA0ECBC3C442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD8EE5A2-7D99-4B34-978B-FA0ECBC3C442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD8EE5A2-7D99-4B34-978B-FA0ECBC3C442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{300086F3-B458-472A-99E6-208C14324216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{300086F3-B458-472A-99E6-208C14324216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{300086F3-B458-472A-99E6-208C14324216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{300086F3-B458-472A-99E6-208C14324216}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
