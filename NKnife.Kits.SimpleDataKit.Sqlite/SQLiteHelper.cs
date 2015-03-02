@@ -1,14 +1,18 @@
-ï»¿using System;
+using System;
 using System.Data;
 using System.Data.SQLite;
 
 namespace NKnife.Kits.SimpleDataKit.Sqlite
 {
-    public class SqLiteHelper
+    public class SqliteHelper
     {
-        #region é™æ€ç§æœ‰æ–¹æ³•  
+        #region ¾²Ì¬Ë½ÓĞ·½·¨  
 
-        /// é™„åŠ å‚æ•°
+        /// <summary>
+        ///     ¸½¼Ó²ÎÊı
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="commandParameters"></param>
         private static void AttachParameters(SQLiteCommand command, SQLiteParameter[] commandParameters)
         {
             command.Parameters.Clear();
@@ -20,7 +24,11 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             }
         }
 
-        /// åˆ†é…å‚æ•°å€¼
+        /// <summary>
+        ///     ·ÖÅä²ÎÊıÖµ
+        /// </summary>
+        /// <param name="commandParameters"></param>
+        /// <param name="parameterValues"></param>
         private static void AssignParameterValues(SQLiteParameter[] commandParameters, object[] parameterValues)
         {
             if (commandParameters == null || parameterValues == null)
@@ -33,7 +41,15 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             }
         }
 
-        /// é¢„å¤‡æ‰§è¡Œcommandå‘½ä»¤
+        /// <summary>
+        ///     Ô¤±¸Ö´ĞĞcommandÃüÁî
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <param name="commandType"></param>
+        /// <param name="commandText"></param>
+        /// <param name="commandParameters"></param>
         private static void PrepareCommand(SQLiteCommand command,
             SQLiteConnection connection, SQLiteTransaction transaction,
             CommandType commandType, string commandText, SQLiteParameter[] commandParameters
@@ -41,30 +57,34 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
         {
             if (commandType == CommandType.StoredProcedure)
             {
-                throw new ArgumentException("SQLite æš‚æ—¶ä¸æ”¯æŒå­˜å‚¨è¿‡ç¨‹");
+                throw new ArgumentException("SQLite ÔİÊ±²»Ö§³Ö´æ´¢¹ı³Ì");
             }
             if (connection.State != ConnectionState.Open)
+            {
                 connection.Open();
+            }
             command.Connection = connection;
             command.CommandText = commandText;
             if (transaction != null)
+            {
                 command.Transaction = transaction;
+            }
             command.CommandType = commandType;
             if (commandParameters != null)
+            {
                 AttachParameters(command, commandParameters);
+            }
         }
 
         #endregion
 
-        #region ExecuteNonQuery æ‰§è¡ŒSQLå‘½ä»¤ï¼Œè¿”å›å½±å“è¡Œæ•°  
+        #region ExecuteNonQuery Ö´ĞĞSQLÃüÁî£¬·µ»ØÓ°ÏìĞĞÊı  
 
-        /// æ‰§è¡ŒSQLå‘½å
         public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText)
         {
             return ExecuteNonQuery(connectionString, commandType, commandText, null);
         }
 
-        /// ä¸æ”¯æŒå­˜å‚¨è¿‡ç¨‹ï¼Œä½†å¯ä»¥å‚æ•°åŒ–æŸ¥è¯¢
         public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, params SQLiteParameter[] commandParameters)
         {
             using (var conn = new SQLiteConnection(connectionString))
@@ -90,7 +110,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
 
         #endregion
 
-        #region ExecuteDataSet æ‰§è¡ŒSQLæŸ¥è¯¢ï¼Œå¹¶å°†è¿”å›æ•°æ®å¡«å……åˆ°DataSet  
+        #region ExecuteDataSet Ö´ĞĞSQL²éÑ¯£¬²¢½«·µ»ØÊı¾İÌî³äµ½DataSet  
 
         public static DataSet ExecuteDataset(SQLiteConnection connection, CommandType commandType, string commandText, params SQLiteParameter[] commandParameters)
         {
@@ -125,7 +145,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
 
         #endregion
 
-        #region ExecuteReader æ‰§è¡ŒSQLæŸ¥è¯¢,è¿”å›DbDataReader  
+        #region ExecuteReader Ö´ĞĞSQL²éÑ¯,·µ»ØDbDataReader  
 
         public static SQLiteDataReader ExecuteReader(SQLiteConnection connection, SQLiteTransaction transaction, CommandType commandType, string commandText, SQLiteParameter[] commandParameters, DbConnectionOwnership connectionOwnership)
         {
@@ -140,7 +160,14 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             return dr;
         }
 
-        /// è¯»å–æ•°æ®åå°†è‡ªåŠ¨å…³é—­è¿æ¥
+        /// <summary>
+        ///     ¶ÁÈ¡Êı¾İºó½«×Ô¶¯¹Ø±ÕÁ¬½Ó
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="commandType"></param>
+        /// <param name="commandText"></param>
+        /// <param name="commandParameters"></param>
+        /// <returns></returns>
         public static SQLiteDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, params SQLiteParameter[] commandParameters)
         {
             var cn = new SQLiteConnection(connectionString);
@@ -156,19 +183,38 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             }
         }
 
-        /// è¯»å–æ•°æ®åå°†è‡ªåŠ¨å…³é—­è¿æ¥
+        /// <summary>
+        ///     ¶ÁÈ¡Êı¾İºó½«×Ô¶¯¹Ø±ÕÁ¬½Ó
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="commandType"></param>
+        /// <param name="commandText"></param>
+        /// <returns></returns>
         public static SQLiteDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText)
         {
             return ExecuteReader(connectionString, commandType, commandText, null);
         }
 
-        /// è¯»å–æ•°æ®ä»¥åéœ€è¦è‡ªè¡Œå…³é—­è¿æ¥
+        /// <summary>
+        ///     ¶ÁÈ¡Êı¾İÒÔºóĞèÒª×ÔĞĞ¹Ø±ÕÁ¬½Ó
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="commandType"></param>
+        /// <param name="commandText"></param>
+        /// <returns></returns>
         public static SQLiteDataReader ExecuteReader(SQLiteConnection connection, CommandType commandType, string commandText)
         {
             return ExecuteReader(connection, commandType, commandText, null);
         }
 
-        /// è¯»å–æ•°æ®ä»¥åéœ€è¦è‡ªè¡Œå…³é—­è¿æ¥
+        /// <summary>
+        ///     ¶ÁÈ¡Êı¾İÒÔºóĞèÒª×ÔĞĞ¹Ø±ÕÁ¬½Ó
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="commandType"></param>
+        /// <param name="commandText"></param>
+        /// <param name="commandParameters"></param>
+        /// <returns></returns>
         public static SQLiteDataReader ExecuteReader(SQLiteConnection connection, CommandType commandType, string commandText, params SQLiteParameter[] commandParameters)
         {
             return ExecuteReader(connection, null, commandType, commandText, commandParameters, DbConnectionOwnership.External);
@@ -208,19 +254,5 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
         }
 
         #endregion
-    }
-
-
-    /// <SUMMARY></SUMMARY>
-    /// DbConnectionOwnership DataReaderä»¥åæ˜¯å¦è‡ªåŠ¨å…³é—­è¿æ¥
-    public enum DbConnectionOwnership
-    {
-        /// <SUMMARY></SUMMARY>
-        /// è‡ªåŠ¨å…³é—­
-        Internal,
-
-        /// <SUMMARY></SUMMARY>
-        /// æ‰‹åŠ¨å…³é—­
-        External
     }
 }
