@@ -56,6 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="System.Data.SQLite\SQLiteColumn.cs" />
+    <Compile Include="System.Data.SQLite\SQLiteColumnList.cs" />
+    <Compile Include="System.Data.SQLite\SQLiteHelper.cs" />
+    <Compile Include="System.Data.SQLite\SQLiteTable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
