@@ -28,18 +28,18 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
                 File.Delete(FILE01);
             }
 
-            SQLiteConnection conn = new SQLiteConnection(_connectionString);
+            var conn = new SQLiteConnection(_connectionString);
             conn.Open();
 
             var db = Database.OpenConnection(_connectionString);
             db.UseSharedConnection(conn);
 
-            using (SQLiteCommand cmd = new SQLiteCommand())
+            using (var cmd = new SQLiteCommand())
             {
                 cmd.Connection = conn;
-                SQLiteHelper helper = new SQLiteHelper(cmd);
+                var helper = new SQLiteHelper(cmd);
 
-                SQLiteTable tb = new SQLiteTable("book");
+                var tb = new SQLiteTable("book");
 
                 tb.Columns.Add(new SQLiteColumn("id"));
                 tb.Columns.Add(new SQLiteColumn("name"));
@@ -170,7 +170,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             stopwatch.Restart();
             for (int i = 0; i < 50; i++)
             {
-                using (SQLiteCommand cmd = new SQLiteCommand())
+                using (var cmd = new SQLiteCommand())
                 {
                     cmd.Connection = conn;
                     var bookid = string.Format("B{0}", i.ToString().PadLeft(5, '0'));
@@ -184,7 +184,6 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             Console.WriteLine("50 record created! process {0}ms.", stopwatch.ElapsedMilliseconds);
 
             // ++++向电压采集值表格填充数据
-
             Console.WriteLine("------------");
             const int COUNT = 500;
             var vs = new List<double>(COUNT);
@@ -209,13 +208,28 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             //下面做一些高级查询试验
             Console.WriteLine("------------");
             stopwatch.Restart();
-            var list = db.voltage.All().Select(db.voltage.value).Where(db.voltage.value > 1.5);
+            var list = db.voltage.All().Select(db.voltage.value, db.voltage.time).Where(db.voltage.value > 1.7).OrderBy(db.voltage.value);
             stopwatch.Stop();
+            int size = 0;
             foreach (dynamic voltage in list)
             {
                 WriteVoltage(voltage);
+                size++;
             }
-            Console.WriteLine("{1} record found! process {0}ms.", stopwatch.ElapsedMilliseconds, list.Size());
+            Console.WriteLine("{1} record found! process {0}ms.", stopwatch.ElapsedMilliseconds, size);
+
+            Console.WriteLine("------------");
+            stopwatch.Restart();
+            list = db.voltage.All().Select(db.voltage.value, db.voltage.time)
+                .Where(db.voltage.value > 1.2 && db.voltage.value < 1.3).OrderByDescending(db.voltage.value);
+            stopwatch.Stop();
+            size = 0;
+            foreach (dynamic voltage in list)
+            {
+                WriteVoltage(voltage);
+                size++;
+            }
+            Console.WriteLine("{1} record found! process {0}ms.", stopwatch.ElapsedMilliseconds, size);
 
             Console.ReadKey();
         }
