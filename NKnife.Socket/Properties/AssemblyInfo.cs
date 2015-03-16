@@ -20,5 +20,5 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("NKnife.Socket.UnitTest")]
 
-[assembly: AssemblyVersion("14.4.9.1222")]
-[assembly: AssemblyFileVersion("14.4.9.1222")]
+[assembly: AssemblyVersion("15.1.0.0316")]
+[assembly: AssemblyFileVersion("15.1.0.0316")]
