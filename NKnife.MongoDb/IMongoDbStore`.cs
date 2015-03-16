@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Driver;
-using NKnife.Database;
-using NKnife.Database.Interface;
+using NKnife.Databases;
+using NKnife.Databases.Interface;
 
 namespace NKnife.MongoDb
 {

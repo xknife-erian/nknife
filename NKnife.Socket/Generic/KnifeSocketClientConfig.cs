@@ -19,7 +19,6 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["ReconnectInterval"] = value;
-                RaisePropertyChanged(() => ReconnectInterval);
             }
         }
     }

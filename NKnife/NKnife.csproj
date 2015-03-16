@@ -147,7 +147,6 @@
     <Compile Include="Maths\Combinations.cs" />
     <Compile Include="Maths\Permutations.cs" />
     <Compile Include="Maths\UtilityMath.cs" />
-    <Compile Include="Mvvm\DelegateCommand`.cs" />
     <Compile Include="Entities\AssemblyWrapper.cs" />
     <Compile Include="Protocol\Generic\BytesProtocol.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolCommandParser.cs" />
@@ -495,8 +494,6 @@
     <Compile Include="Interface\IXml.cs" />
     <Compile Include="Interface\IParse.cs" />
     <Compile Include="Interface\ITree.cs" />
-    <Compile Include="Mvvm\NotificationObject.cs" />
-    <Compile Include="Mvvm\PropertyInfoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShareResources\ArgumentValidationString.Designer.cs">
       <AutoGen>True</AutoGen>

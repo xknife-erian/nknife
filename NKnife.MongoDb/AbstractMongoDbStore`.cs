@@ -5,7 +5,7 @@ using Common.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
-using NKnife.Database;
+using NKnife.Databases;
 
 namespace NKnife.MongoDb
 {

@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NKnife.Mvvm;
 using NKnife.Tunnel;
 
 namespace SocketKnife.Generic
 {
-    public abstract class KnifeSocketConfig : NotificationObject, ITunnelConfig
+    public abstract class KnifeSocketConfig : ITunnelConfig
     {
         protected KnifeSocketConfig()
         {
@@ -34,7 +33,6 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["ReceiveBufferSize"] = value;
-                RaisePropertyChanged(() => ReceiveBufferSize);
             }
         }
 
@@ -44,7 +42,6 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["SendBufferSize"] = value;
-                RaisePropertyChanged(() => SendBufferSize);
             }
         }
 
@@ -54,7 +51,6 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["MaxBufferSize"] = value;
-                RaisePropertyChanged(() => MaxBufferSize);
             }
         }
 
@@ -64,7 +60,6 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["MaxConnectCount"] = value;
-                RaisePropertyChanged(() => MaxConnectCount);
             }
         }
 
@@ -74,7 +69,6 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["ReceiveTimeout"] = value;
-                RaisePropertyChanged(() => ReceiveTimeout);
             }
         }
 
@@ -84,7 +78,6 @@ namespace SocketKnife.Generic
             set
             {
                 _Map["SendTimeout"] = value;
-                RaisePropertyChanged(() => SendTimeout);
             }
         }
 
