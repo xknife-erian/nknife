@@ -3,11 +3,11 @@ using System.Text;
 
 namespace System.Data.SQLite
 {
-    public class SqliteHelper
+    public class SqliteHelpers
     {
         readonly SQLiteCommand _Command = null;
 
-        public SqliteHelper(SQLiteCommand command)
+        public SqliteHelpers(SQLiteCommand command)
         {
             _Command = command;
         }
@@ -346,7 +346,7 @@ namespace System.Data.SQLite
 
             bool firstRecord = true;
 
-            foreach (SqliteColumn col in table.Columns)
+            foreach (SqliteColumns col in table.Columns)
             {
                 if (col.ColumnName.Trim().Length == 0)
                 {
