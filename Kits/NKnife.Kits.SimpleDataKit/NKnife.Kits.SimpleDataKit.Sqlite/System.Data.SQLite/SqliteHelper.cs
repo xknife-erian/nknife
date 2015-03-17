@@ -3,11 +3,11 @@ using System.Text;
 
 namespace System.Data.SQLite
 {
-    public class SqliteHelpers
+    public class SqliteHelper
     {
         readonly SQLiteCommand _Command = null;
 
-        public SqliteHelpers(SQLiteCommand command)
+        public SqliteHelper(SQLiteCommand command)
         {
             _Command = command;
         }
@@ -337,7 +337,7 @@ namespace System.Data.SQLite
 
         #region Utilities
 
-        public void CreateTable(SqliteTables table)
+        public void CreateTable(SqliteTable table)
         {
             StringBuilder sb = new Text.StringBuilder();
             sb.Append("create table if not exists `");
@@ -477,7 +477,7 @@ namespace System.Data.SQLite
             _Command.ExecuteNonQuery();
         }
 
-        public void UpdateTableStructure(string targetTable, SqliteTables newStructure)
+        public void UpdateTableStructure(string targetTable, SqliteTable newStructure)
         {
             newStructure.TableName = targetTable + "_temp";
 

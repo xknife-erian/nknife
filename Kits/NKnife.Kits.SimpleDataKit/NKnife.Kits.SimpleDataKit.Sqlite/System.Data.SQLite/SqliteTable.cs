@@ -4,7 +4,7 @@ using System.Text;
 
 namespace System.Data.SQLite
 {
-    public class SqliteTables
+    public class SqliteTable
     {
         public string TableName = "";
         private SqliteColumnCollection _Columns = new SqliteColumnCollection();
@@ -15,10 +15,10 @@ namespace System.Data.SQLite
             set { _Columns = value; }
         }
 
-        public SqliteTables()
+        public SqliteTable()
         { }
 
-        public SqliteTables(string name)
+        public SqliteTable(string name)
         {
             TableName = name;
         }

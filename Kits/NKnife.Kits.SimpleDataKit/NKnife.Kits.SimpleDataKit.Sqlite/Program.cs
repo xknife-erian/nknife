@@ -39,7 +39,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
                 cmd.Connection = conn;
                 var helper = new SqliteHelpers(cmd);
 
-                var tb = new SqliteTables("book");
+                var tb = new SqliteTable("book");
 
                 tb.Columns.Add(new SqliteColumnssss("id"));
                 tb.Columns.Add(new SqliteColumnssss("name"));
@@ -48,7 +48,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
                 helper.CreateTable(tb);
                 Console.WriteLine("Table:books is created!");
 
-                tb = new SqliteTables("voltage");
+                tb = new SqliteTable("voltage");
 
                 tb.Columns.Add(new SqliteColumnssss("id", true));
                 tb.Columns.Add(new SqliteColumnssss("value", SqliteColumnType.Decimal));
