@@ -5,18 +5,18 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace NKnife.Kits.SimpleDataKit.Sqlite
+namespace System.Data.SQLite
 {
     /// <summary>
     ///     SQLiteHelper is a utility class similar to "SQLHelper" in MS
     ///     Data Access Application Block and follows similar pattern.
     /// </summary>
-    public class SqliteHelper
+    public class SqliteUtil
     {
         /// <summary>
-        ///     Creates a new <see cref="SqliteHelper" /> instance. The ctor is marked private since all members are static.
+        ///     Creates a new <see cref="SqliteUtil" /> instance. The ctor is marked private since all members are static.
         /// </summary>
-        private SqliteHelper()
+        private SqliteUtil()
         {
         }
 

@@ -37,7 +37,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             using (var cmd = new SQLiteCommand())
             {
                 cmd.Connection = conn;
-                var helper = new SqLiteHelper(cmd);
+                var helper = new SqliteHelper(cmd);
 
                 var tb = new SqliteTables("book");
 
@@ -175,7 +175,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
                     cmd.Connection = conn;
                     var bookid = string.Format("B{0}", i.ToString().PadLeft(5, '0'));
                     cmd.CommandText = string.Format("INSERT INTO 'book' VALUES ('{0}', 'SQLiteC{1}', {1});", bookid, i);
-                    var j = SqliteHelper.ExecuteNonQuery(cmd);
+                    var j = SqliteUtil.ExecuteNonQuery(cmd);
                     Console.Write(j);
                 }
             }
