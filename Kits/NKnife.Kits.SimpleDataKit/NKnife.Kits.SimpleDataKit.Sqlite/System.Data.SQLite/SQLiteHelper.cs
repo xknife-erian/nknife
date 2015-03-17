@@ -1,30 +1,13 @@
-﻿// Version 1.2
-// Date: 2014-03-27
-// http://sh.codeplex.com
-// Dedicated to Public Domain
-
-using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Data;
-using System.Globalization;
 
 namespace System.Data.SQLite
 {
-    public enum ColType
-    {
-        Text,
-        DateTime,
-        Integer,
-        Decimal,
-        BLOB
-    }
-
-    public class SQLiteHelper
+    public class SqliteHelper
     {
         readonly SQLiteCommand _Command = null;
 
-        public SQLiteHelper(SQLiteCommand command)
+        public SqliteHelper(SQLiteCommand command)
         {
             _Command = command;
         }
@@ -354,7 +337,7 @@ namespace System.Data.SQLite
 
         #region Utilities
 
-        public void CreateTable(SQLiteTable table)
+        public void CreateTable(SqliteTables table)
         {
             StringBuilder sb = new Text.StringBuilder();
             sb.Append("create table if not exists `");
@@ -363,7 +346,7 @@ namespace System.Data.SQLite
 
             bool firstRecord = true;
 
-            foreach (SQLiteColumn col in table.Columns)
+            foreach (SqliteColumn col in table.Columns)
             {
                 if (col.ColumnName.Trim().Length == 0)
                 {
@@ -387,15 +370,15 @@ namespace System.Data.SQLite
 
                 switch (col.ColDataType)
                 {
-                    case ColType.Text:
+                    case SqliteColumnType.Text:
                         sb.Append("text"); break;
-                    case ColType.Integer:
+                    case SqliteColumnType.Integer:
                         sb.Append("integer"); break;
-                    case ColType.Decimal:
+                    case SqliteColumnType.Decimal:
                         sb.Append("decimal"); break;
-                    case ColType.DateTime:
+                    case SqliteColumnType.DateTime:
                         sb.Append("datetime"); break;
-                    case ColType.BLOB:
+                    case SqliteColumnType.BLOB:
                         sb.Append("blob"); break;
                 }
 
@@ -407,7 +390,7 @@ namespace System.Data.SQLite
                 {
                     sb.Append(" default ");
 
-                    if (col.DefaultValue.Contains(" ") || col.ColDataType == ColType.Text || col.ColDataType == ColType.DateTime)
+                    if (col.DefaultValue.Contains(" ") || col.ColDataType == SqliteColumnType.Text || col.ColDataType == SqliteColumnType.DateTime)
                     {
                         sb.Append("'");
                         sb.Append(col.DefaultValue);
@@ -494,7 +477,7 @@ namespace System.Data.SQLite
             _Command.ExecuteNonQuery();
         }
 
-        public void UpdateTableStructure(string targetTable, SQLiteTable newStructure)
+        public void UpdateTableStructure(string targetTable, SqliteTables newStructure)
         {
             newStructure.TableName = targetTable + "_temp";
 
