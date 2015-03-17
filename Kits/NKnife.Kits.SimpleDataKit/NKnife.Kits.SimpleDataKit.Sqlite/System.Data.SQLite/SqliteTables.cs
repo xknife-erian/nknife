@@ -7,9 +7,9 @@ namespace System.Data.SQLite
     public class SqliteTables
     {
         public string TableName = "";
-        private SqLiteColumnCollection _Columns = new SqLiteColumnCollection();
+        private SqliteColumnCollection _Columns = new SqliteColumnCollection();
 
-        public SqLiteColumnCollection Columns
+        public SqliteColumnCollection Columns
         {
             get { return _Columns; }
             set { _Columns = value; }

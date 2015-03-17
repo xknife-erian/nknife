@@ -6,7 +6,7 @@ using System.Text;
 namespace System.Data.SQLite
 {
 
-    public class SqLiteColumnCollection : IList<SqliteColumn>
+    public class SqliteColumnCollection : IList<SqliteColumn>
     {
         readonly List<SqliteColumn> _List = new List<SqliteColumn>();
 
