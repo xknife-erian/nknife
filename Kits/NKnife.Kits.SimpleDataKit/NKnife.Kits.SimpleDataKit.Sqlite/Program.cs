@@ -37,22 +37,22 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
             using (var cmd = new SQLiteCommand())
             {
                 cmd.Connection = conn;
-                var helper = new SqliteHelpers(cmd);
+                var helper = new SqliteHelper(cmd);
 
                 var tb = new SqliteTable("book");
 
-                tb.Columns.Add(new SqliteColumnssss("id"));
-                tb.Columns.Add(new SqliteColumnssss("name"));
-                tb.Columns.Add(new SqliteColumnssss("page", SqliteColumnType.Integer));
+                tb.Columns.Add(new SqliteColumn("id"));
+                tb.Columns.Add(new SqliteColumn("name"));
+                tb.Columns.Add(new SqliteColumn("page", SqliteColumnType.Integer));
 
                 helper.CreateTable(tb);
                 Console.WriteLine("Table:books is created!");
 
                 tb = new SqliteTable("voltage");
 
-                tb.Columns.Add(new SqliteColumnssss("id", true));
-                tb.Columns.Add(new SqliteColumnssss("value", SqliteColumnType.Decimal));
-                tb.Columns.Add(new SqliteColumnssss("time", SqliteColumnType.DateTime));
+                tb.Columns.Add(new SqliteColumn("id", true));
+                tb.Columns.Add(new SqliteColumn("value", SqliteColumnType.Decimal));
+                tb.Columns.Add(new SqliteColumn("time", SqliteColumnType.DateTime));
 
                 helper.CreateTable(tb);
                 Console.WriteLine("Table:voltage is created!");

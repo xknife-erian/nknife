@@ -6,9 +6,9 @@ using System.Text;
 namespace System.Data.SQLite
 {
 
-    public class SqliteColumnCollection : IList<SqliteColumnssss>
+    public class SqliteColumnCollection : IList<SqliteColumn>
     {
-        readonly List<SqliteColumnssss> _List = new ListSqliteColumnsssns>();
+        readonly List<SqliteColumn> _List = new List<SqliteColumn>();
 
         private void CheckColumnName(string colName)
         {
@@ -18,12 +18,12 @@ namespace System.Data.SQLite
             }
         }
 
-        public int IndexOf(SqliteColumnssss item)
+        public int IndexOf(SqliteColumn item)
         {
             return _List.IndexOf(item);
         }
 
-        public void Insert(int index, SqliteColumnssss item)
+        public void Insert(int index, SqliteColumn item)
         {
             CheckColumnName(item.ColumnName);
 
@@ -35,7 +35,7 @@ namespace System.Data.SQLite
             _List.RemoveAt(index);
         }
 
-        public SqliteColumnssss this[int index]
+        public SqliteColumn this[int index]
         {
             get
             {
@@ -52,7 +52,7 @@ namespace System.Data.SQLite
             }
         }
 
-        public void Add(SqliteColumnssss item)
+        public void Add(SqliteColumn item)
         {
             CheckColumnName(item.ColumnName);
 
@@ -64,12 +64,12 @@ namespace System.Data.SQLite
             _List.Clear();
         }
 
-        public bool Contains(SqliteColumnssss item)
+        public bool Contains(SqliteColumn item)
         {
             return _List.Contains(item);
         }
 
-        public void CopyTo(SqliteColumnssss[] array, int arrayIndex)
+        public void CopyTo(SqliteColumn[] array, int arrayIndex)
         {
             _List.CopyTo(array, arrayIndex);
         }
@@ -84,12 +84,12 @@ namespace System.Data.SQLite
             get { return false; }
         }
 
-        public bool Remove(SqliteColumnssss item)
+        public bool Remove(SqliteColumn item)
         {
             return _List.Remove(item);
         }
 
-        public IEnumerator<SqliteColumnssss> GetEnumerator()
+        public IEnumerator<SqliteColumn> GetEnumerator()
         {
             return _List.GetEnumerator();
         }

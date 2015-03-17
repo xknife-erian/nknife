@@ -346,7 +346,7 @@ namespace System.Data.SQLite
 
             bool firstRecord = true;
 
-            foreach (SqliteColumns col in table.Columns)
+            foreach (SqliteColumn col in table.Columns)
             {
                 if (col.ColumnName.Trim().Length == 0)
                 {
