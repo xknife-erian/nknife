@@ -4,7 +4,7 @@ using System.Text;
 
 namespace System.Data.SQLite
 {
-    public class SqliteColumn
+    public class SqliteColumnsss
     {
         public string ColumnName = "";
         public bool PrimaryKey = false;
@@ -13,10 +13,10 @@ namespace System.Data.SQLite
         public bool NotNull = false;
         public string DefaultValue = "";
 
-        public SqliteColumn()
+        public SqliteColumnsss()
         { }
 
-        public SqliteColumn(string colName)
+        public SqliteColumnsss(string colName)
         {
             ColumnName = colName;
             PrimaryKey = false;
@@ -24,7 +24,7 @@ namespace System.Data.SQLite
             AutoIncrement = false;
         }
 
-        public SqliteColumn(string colName, SqliteColumnType colDataType)
+        public SqliteColumnsss(string colName, SqliteColumnType colDataType)
         {
             ColumnName = colName;
             PrimaryKey = false;
@@ -32,7 +32,7 @@ namespace System.Data.SQLite
             AutoIncrement = false;
         }
 
-        public SqliteColumn(string colName, bool autoIncrement)
+        public SqliteColumnsss(string colName, bool autoIncrement)
         {
             ColumnName = colName;
 
@@ -50,7 +50,7 @@ namespace System.Data.SQLite
             }
         }
 
-        public SqliteColumn(string colName, SqliteColumnType colDataType, bool primaryKey, bool autoIncrement, bool notNull, string defaultValue)
+        public SqliteColumnsss(string colName, SqliteColumnType colDataType, bool primaryKey, bool autoIncrement, bool notNull, string defaultValue)
         {
             ColumnName = colName;
 

@@ -61,7 +61,7 @@
     <Compile Include="System.Data.SQLite\SqliteColumn.cs" />
     <Compile Include="System.Data.SQLite\SqLiteColumnCollection.cs" />
     <Compile Include="System.Data.SQLite\SqliteColumnType.cs" />
-    <Compile Include="System.Data.SQLite\SQLiteHelper.cs" />
+    <Compile Include="System.Data.SQLite\SqliteHelpers.cs" />
     <Compile Include="System.Data.SQLite\SqliteTables.cs" />
     <Compile Include="System.Data.SQLite\SqliteUtil.cs" />
   </ItemGroup>
