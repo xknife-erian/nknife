@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using System.Text;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight;
 using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo.Protocols;
-using NKnife.Mvvm;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Common;
@@ -19,7 +19,7 @@ using SocketKnife.Interfaces;
 
 namespace NKnife.Kits.SocketKnife.Demo
 {
-    class DemoClient : NotificationObject
+    class DemoClient : ViewModelBase
     {
         private bool _IsInitialized = false;
         private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();

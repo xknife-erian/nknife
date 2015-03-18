@@ -11,8 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight;
 using NKnife.IoC;
-using NKnife.Mvvm;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
@@ -141,7 +141,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             throw new NotImplementedException();
         }
 
-        public class DialogViewModel : NotificationObject
+        public class DialogViewModel : ObservableObject
         {
             public DialogViewModel()
             {
@@ -151,7 +151,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             public ObservableCollection<string> Values { get; set; }
             public ObservableCollection<ProtocolPairData> PairDatas { get; set; }
 
-            public class ProtocolPairData : NotificationObject
+            public class ProtocolPairData : ObservableObject
             {
                 private string _Key;
                 private string _Value;

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using NKnife.Mvvm;
+using GalaSoft.MvvmLight;
 using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
-    public class ProtocolViewModel : NotificationObject
+    public class ProtocolViewModel : ViewModelBase
     {
         private StringProtocol _SelectedProtocol;
 
@@ -30,7 +30,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             }
         }
 
-        public class SimpleProtocol : NotificationObject
+        public class SimpleProtocol : ObservableObject
         {
             private string _Command;
             private string _CommandParam;

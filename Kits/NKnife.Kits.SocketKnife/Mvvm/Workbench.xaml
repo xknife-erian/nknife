@@ -56,7 +56,7 @@
                         <xcad:LayoutDocumentPane/>
                     </xcad:LayoutDocumentPaneGroup>
 
-                    <xcad:LayoutAnchorablePaneGroup x:Name="_RightPaneGroup" DockWidth="260" DockHeight="*">
+                    <xcad:LayoutAnchorablePaneGroup x:Name="_RightPaneGroup" DockWidth="320" DockHeight="*">
                         <xcad:LayoutAnchorablePane x:Name="_RightPane">
                         </xcad:LayoutAnchorablePane>
                     </xcad:LayoutAnchorablePaneGroup>

@@ -1,9 +1,9 @@
 ﻿using System.Windows.Input;
-using NKnife.Mvvm;
+using GalaSoft.MvvmLight;
 
 namespace NKnife.Kits.SocketKnife.Mvvm
 {
-    public class WorkbenchViewModel : NotificationObject
+    public class WorkbenchViewModel : ViewModelBase
     {
         #region 菜单命令
         

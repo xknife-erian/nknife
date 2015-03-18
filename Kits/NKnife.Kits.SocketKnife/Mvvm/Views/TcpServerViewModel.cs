@@ -5,10 +5,10 @@ using System.Net;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo;
-using NKnife.Mvvm;
 using NKnife.Protocol.Generic;
 using NKnife.Utility;
 using SocketKnife.Generic;
@@ -17,7 +17,7 @@ using Timer = System.Timers.Timer;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
-    public class TcpServerViewModel : NotificationObject
+    public class TcpServerViewModel : ViewModelBase
     {
         private StringProtocol _Protocol;
         private bool _IsOnlyOnce = true;
@@ -267,7 +267,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         #region ÄÚ²¿Àà
 
-        public class SessionByView : NotificationObject
+        public class SessionByView : ObservableObject
         {
             private bool _EnableAutoReplay;
             private IPEndPoint _EndPoint;

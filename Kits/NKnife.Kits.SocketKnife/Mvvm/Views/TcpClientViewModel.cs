@@ -5,18 +5,18 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight;
 using NKnife.Collections;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo;
-using NKnife.Mvvm;
 using NKnife.Protocol.Generic;
 using SocketKnife;
 using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
-    public class TcpClientViewModel : NotificationObject
+    public class TcpClientViewModel : ViewModelBase
     {
         private readonly DemoClient _Client = new DemoClient();
         private StringProtocol _Protocol;
