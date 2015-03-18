@@ -18,10 +18,10 @@ namespace SerialKnife.Tunnel.Tools
                 len += content.CommandParam.Length;
             }
             var result = new byte[len];
-            Array.Copy(content.Command,0,result,0,content.Command.Length);
+            Array.Copy(content.Command, 0, result, 0, content.Command.Length);
             if (content.CommandParam != null)
             {
-                Array.Copy(content.CommandParam, 0, result, content.Command.Length,content.CommandParam.Length);
+                Array.Copy(content.CommandParam, 0, result, content.Command.Length, content.CommandParam.Length);
             }
             return result;
         }

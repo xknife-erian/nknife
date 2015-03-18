@@ -15,7 +15,7 @@ namespace SerialKnife.Tunnel.Tools
             if (data.Length == 0)
                 return;
             protocol.CommandParam = new byte[data.Length];
-            Array.Copy(data,protocol.CommandParam,data.Length);
+            Array.Copy(data, protocol.CommandParam, data.Length);
         }
     }
 }

@@ -22,7 +22,6 @@ namespace NKnife.Protocol.Generic
         }
 
 
-
         #region IProtocol Members
 
         /// <summary>协议族名称
@@ -33,10 +32,10 @@ namespace NKnife.Protocol.Generic
         public byte[] Command { get; set; }
 
         public byte[] CommandParam { get; set; }
+
         public Dictionary<string, byte[]> Infomations { get; private set; }
+
         public List<object> Tags { get; set; }
-
-
 
         public BytesProtocol NewInstance()
         {
@@ -67,7 +66,6 @@ namespace NKnife.Protocol.Generic
                    Equals(Tags, other.Tags) &&
                    Equals(Infomations, other.Infomations);
         }
-
         public override int GetHashCode()
         {
             unchecked
@@ -77,6 +75,7 @@ namespace NKnife.Protocol.Generic
                 return hashCode;
             }
         }
+
         #endregion
     }
 }
