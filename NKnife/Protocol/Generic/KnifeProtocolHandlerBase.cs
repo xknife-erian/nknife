@@ -12,9 +12,8 @@ namespace NKnife.Protocol.Generic
 {
     public abstract class KnifeProtocolHandlerBase<TData, TSessionId, T> : IProtocolHandler<TData, TSessionId, T>
     {
-        private static ILog _logger = LogManager.GetCurrentClassLogger();
-
-        public List<T> Commands { get; set; }
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolHandlerBase<TData, TSessionId, T>>();
+        public abstract List<T> Commands { get; set; }
         public abstract void Recevied(TSessionId sessionId, IProtocol<T> protocol);
         public event EventHandler<SessionEventArgs<TData, TSessionId>> OnSendToSession;
         public event EventHandler<EventArgs<TData>> OnSendToAll;
@@ -33,7 +32,7 @@ namespace NKnife.Protocol.Generic
         /// </summary>
         /// <param name="sessionId"></param>
         /// <param name="protocol"></param>
-        public void WriteToSession(TSessionId sessionId, IProtocol<T> protocol)
+        public virtual void WriteToSession(TSessionId sessionId, IProtocol<T> protocol)
         {
             try
             {
@@ -41,11 +40,13 @@ namespace NKnife.Protocol.Generic
                 TData data = Codec.Encoder.Execute(str);
                 var handler = OnSendToSession;
                 if (handler != null)
+                {
                     handler.Invoke(this, new SessionEventArgs<TData, TSessionId>(new TunnelSession<TData, TSessionId>
                     {
                         Id = sessionId,
                         Data = data
                     }));
+                }
             }
             catch (Exception ex)
             {
@@ -53,7 +54,7 @@ namespace NKnife.Protocol.Generic
             }
         }
 
-        public void WriteToAllSession(IProtocol<T> protocol)
+        public virtual void WriteToAllSession(IProtocol<T> protocol)
         {
             try
             {
@@ -61,7 +62,9 @@ namespace NKnife.Protocol.Generic
                 TData data = Codec.Encoder.Execute(str);
                 var handler = OnSendToAll;
                 if (handler != null)
+                {
                     handler.Invoke(this, new EventArgs<TData>(data));
+                }
             }
             catch (Exception ex)
             {

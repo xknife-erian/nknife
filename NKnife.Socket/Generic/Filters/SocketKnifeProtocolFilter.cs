@@ -15,20 +15,17 @@ namespace SocketKnife.Generic.Filters
 {
     public class SocketKnifeProtocolFilter : KnifeProtocolProcessorBase<string>, ITunnelFilter<byte[], EndPoint>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<SocketKnifeProtocolFilter>();
 
         protected List<KnifeProtocolHandlerBase<byte[], EndPoint, string>> Handlers = new List<KnifeProtocolHandlerBase<byte[], EndPoint, string>>();
 
+        #region interface
+        
         public event EventHandler<SessionEventArgs<byte[], EndPoint>> OnSendToSession;
         public event EventHandler<EventArgs<byte[]>> OnSendToAll;
         public event EventHandler<EventArgs<EndPoint>> OnKillSession;
 
-        public SocketKnifeProtocolFilter()
-        {
-
-        }
-
-        public void ProcessSessionBroken(EndPoint id)
+        public virtual void ProcessSessionBroken(EndPoint id)
         {
             DataMonitor monitor;
             if (_DataMonitors.TryGetValue(id, out monitor))
@@ -38,7 +35,7 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public void ProcessSessionBuilt(EndPoint id)
+        public virtual void ProcessSessionBuilt(EndPoint id)
         {
             DataMonitor monitor;
             if (!_DataMonitors.TryGetValue(id, out monitor))
@@ -49,19 +46,17 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public void ProcessSendToSession(ITunnelSession<byte[], EndPoint> session)
+        public virtual void ProcessSendToSession(ITunnelSession<byte[], EndPoint> session)
         {
             //什么也不做
         }
 
-        public void ProcessSendToAll(byte[] data)
+        public virtual void ProcessSendToAll(byte[] data)
         {
             //什么也不做
         }
 
-
-
-        public bool PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+        public virtual bool PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
         {
             var data = session.Data;
             EndPoint endPoint = session.Id;
@@ -71,97 +66,14 @@ namespace SocketKnife.Generic.Filters
             {
                 //当第一次有相应的客户端连接时，为该客户端创建相应的处理队列
                 monitor = new DataMonitor();
-                InitializeDataMonitor(endPoint,monitor);
+                InitializeDataMonitor(endPoint, monitor);
             }
 
             monitor.ReceiveQueue.Enqueue(data);
             return true;
         }
 
-        public virtual void PrcoessSendData(ITunnelSession<byte[], EndPoint> session)
-        {
-            //默认啥也不干
-        }
-
-
-        /// <summary>
-        ///     // 触发数据基础解析后发生的数据到达事件
-        /// </summary>
-        public virtual void HandlerInvoke(EndPoint endpoint, IProtocol<string> protocol)
-        {
-            try
-            {
-                if (Handlers.Count == 0)
-                {
-                    Debug.Fail(string.Format("Handler集合不应为空."));
-                    return;
-                }
-                if (Handlers.Count == 1)
-                {
-                    Handlers[0].Recevied(endpoint, protocol);
-                }
-                else
-                {
-                    foreach (var handler in Handlers)
-                    {
-                        if (handler.Commands.Contains(protocol.Command))
-                            handler.Recevied(endpoint, protocol);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
-            }
-        }
-
-        #region 数据处理
-        private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors =
-    new ConcurrentDictionary<EndPoint, DataMonitor>();
-
-        public void AddHandlers(params KnifeProtocolHandlerBase<byte[], EndPoint, string>[] handlers)
-        {
-            foreach (var handler in handlers)
-            {
-                handler.OnSendToSession += handler_OnSendToSession;
-                handler.OnSendToAll += handler_OnSendToAll;
-                handler.Bind(Codec,Family);
-            }
-            Handlers.AddRange(handlers);
-        }
-
-
-
-        public void RemoveHandler(KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
-        {
-            handler.OnSendToSession -= handler_OnSendToSession;
-            handler.OnSendToAll -= handler_OnSendToAll;
-            Handlers.Remove(handler);
-        }
-
-        private void handler_OnSendToAll(object sender, EventArgs<byte[]> e)
-        {
-            var handler = OnSendToAll;
-            if(handler !=null)
-                handler.Invoke(this,e);
-        }
-
-        private void handler_OnSendToSession(object sender, SessionEventArgs<byte[], EndPoint> e)
-        {
-            var handler = OnSendToSession;
-            if(handler !=null)
-                handler.Invoke(this,e);
-        }
-
-        protected virtual void InitializeDataMonitor(EndPoint id,DataMonitor dm)
-        {
-            var task = new Task(ReceiveQueueMonitor, id);
-            dm.IsMonitor = true;
-            dm.Task = task;
-            dm.ReceiveQueue = new ReceiveQueue();
-            _DataMonitors.TryAdd(id, dm);
-            task.Start();
-        }
+        #endregion
 
         /// <summary>
         ///     核心方法:监听 ReceiveQueue 队列
@@ -189,7 +101,7 @@ namespace SocketKnife.Generic.Filters
                             {
                                 foreach (var protocol in protocols)
                                 {
-                                    // 触发数据基础解析后发生的数据到达事件
+                                    // 触发数据基础解析后发生的数据到达事件, 即触发handle
                                     HandlerInvoke(endPoint, protocol);
                                 }
                             }
@@ -201,7 +113,7 @@ namespace SocketKnife.Generic.Filters
                     }
                 }
                 // 当接收队列停止监听时，移除该客户端数据队列
-           
+
             }
             catch (Exception ex)
             {
@@ -215,8 +127,38 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-
-
+        /// <summary>
+        ///     // 触发数据基础解析后发生的数据到达事件
+        /// </summary>
+        protected virtual void HandlerInvoke(EndPoint endpoint, IProtocol<string> protocol)
+        {
+            try
+            {
+                if (Handlers.Count == 0)
+                {
+                    Debug.Fail(string.Format("Handler集合不应为空."));
+                    return;
+                }
+                if (Handlers.Count == 1)
+                {
+                    Handlers[0].Recevied(endpoint, protocol);
+                }
+                else
+                {
+                    foreach (var handler in Handlers)
+                    {
+                        if (handler.Commands.Contains(protocol.Command))
+                        {
+                            handler.Recevied(endpoint, protocol);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
+            }
+        }
 
         protected class DataMonitor
         {
@@ -224,6 +166,53 @@ namespace SocketKnife.Generic.Filters
             public Task Task { get; set; }
             public ReceiveQueue ReceiveQueue { get; set; }
         }
+
+        #region 数据处理
+
+        private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors = new ConcurrentDictionary<EndPoint, DataMonitor>();
+
+        public virtual void AddHandlers(params KnifeProtocolHandlerBase<byte[], EndPoint, string>[] handlers)
+        {
+            foreach (var handler in handlers)
+            {
+                handler.OnSendToSession += Handler_OnSendToSession;
+                handler.OnSendToAll += Handler_OnSendToAll;
+                handler.Bind(Codec, Family);
+            }
+            Handlers.AddRange(handlers);
+        }
+
+        public virtual void RemoveHandler(KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
+        {
+            handler.OnSendToSession -= Handler_OnSendToSession;
+            handler.OnSendToAll -= Handler_OnSendToAll;
+            Handlers.Remove(handler);
+        }
+
+        protected void Handler_OnSendToAll(object sender, EventArgs<byte[]> e)
+        {
+            var handler = OnSendToAll;
+            if (handler != null)
+                handler.Invoke(this, e);
+        }
+
+        protected void Handler_OnSendToSession(object sender, SessionEventArgs<byte[], EndPoint> e)
+        {
+            var handler = OnSendToSession;
+            if (handler != null)
+                handler.Invoke(this, e);
+        }
+
+        protected virtual void InitializeDataMonitor(EndPoint id, DataMonitor dm)
+        {
+            var task = new Task(ReceiveQueueMonitor, id);
+            dm.IsMonitor = true;
+            dm.Task = task;
+            dm.ReceiveQueue = new ReceiveQueue();
+            _DataMonitors.TryAdd(id, dm);
+            task.Start();
+        }
+
         #endregion
     }
 }

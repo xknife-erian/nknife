@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
@@ -25,6 +26,8 @@ namespace NKnife.Kits.SocketKnife.Demo
             _Family = family;
             _SocketMessages = socketMessages;
         }
+
+        public override List<string> Commands { get; set; }
 
         public override void Recevied(EndPoint sessionId, IProtocol<string> protocol)
         {

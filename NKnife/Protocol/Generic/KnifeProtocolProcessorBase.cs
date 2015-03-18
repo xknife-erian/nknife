@@ -14,12 +14,12 @@ namespace NKnife.Protocol.Generic
     /// </summary>
     public abstract class KnifeProtocolProcessorBase<T> : IKnifeProtocolProcessor<T>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolProcessorBase<T>>();
 
         protected ITunnelCodec<T, byte[]> Codec;
         protected IProtocolFamily<T> Family;
 
-        public virtual void Bind(ITunnelCodec<T,byte[]> codec, IProtocolFamily<T> protocolFamily)
+        public virtual void Bind(ITunnelCodec<T, byte[]> codec, IProtocolFamily<T> protocolFamily)
         {
             Codec = codec;
             _logger.Info(string.Format("绑定Codec成功。{0},{1}", Codec.Decoder.GetType().Name, Codec.Encoder.GetType().Name));
