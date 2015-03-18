@@ -1,7 +1,6 @@
-﻿using NKnife.NSerial.Abstracts;
-using NKnife.NSerial.Common;
+﻿using SerialKnife.Abstracts;
 
-namespace NKnife.NSerial.Interfaces
+namespace SerialKnife.Interfaces
 {
     /// <summary>向串口即将发送的指令包的集合
     /// </summary>

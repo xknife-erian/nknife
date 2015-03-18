@@ -1,11 +1,11 @@
 ﻿using Ninject.Modules;
-using NKnife.NSerial.Common;
-using NKnife.NSerial.Interfaces;
-using NKnife.NSerial.Wrappers;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Generic;
+using SerialKnife.Common;
+using SerialKnife.Interfaces;
 using SerialKnife.Tunnel.Tools;
+using SerialKnife.Wrappers;
 
 namespace SerialKnife.IoC
 {

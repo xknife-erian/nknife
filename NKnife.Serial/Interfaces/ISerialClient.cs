@@ -1,4 +1,4 @@
-﻿namespace NKnife.NSerial.Interfaces
+﻿namespace SerialKnife.Interfaces
 {
     /// <summary>描述一个串口操作的接口
     /// </summary>

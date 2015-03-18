@@ -1,7 +1,7 @@
-using NKnife.NSerial.Abstracts;
-using NKnife.NSerial.Common;
+using SerialKnife.Abstracts;
+using SerialKnife.Common;
 
-namespace NKnife.NSerial.Interfaces
+namespace SerialKnife.Interfaces
 {
     /// <summary>串口通讯管理器
     /// </summary>

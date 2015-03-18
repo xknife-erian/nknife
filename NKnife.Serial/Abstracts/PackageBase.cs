@@ -1,9 +1,8 @@
 ﻿using System;
 using Common.Logging;
-using NKnife.Interface;
-using NKnife.NSerial.Common;
+using SerialKnife.Common;
 
-namespace NKnife.NSerial.Abstracts
+namespace SerialKnife.Abstracts
 {
     /// <summary>数据包的基类，包含指令及信息与事件的封装
     /// </summary>

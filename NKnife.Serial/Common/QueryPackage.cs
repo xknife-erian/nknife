@@ -1,6 +1,6 @@
-﻿using NKnife.NSerial.Abstracts;
+﻿using SerialKnife.Abstracts;
 
-namespace NKnife.NSerial.Common
+namespace SerialKnife.Common
 {
     /// <summary>轮询数据包
     /// </summary>

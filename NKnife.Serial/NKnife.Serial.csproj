@@ -44,9 +44,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -57,7 +54,7 @@
     <Compile Include="Common\PackageSentEventArgs.cs" />
     <Compile Include="Common\SendInterval.cs" />
     <Compile Include="Common\SendRecvEventArgs.cs" />
-    <Compile Include="Common\SerialProDataReceivedEventArgs.cs" />
+    <Compile Include="Common\SerialDataReceivedEventArgs.cs" />
     <Compile Include="Common\SerialType.cs" />
     <Compile Include="Interfaces\IKnifeSerialConnector.cs" />
     <Compile Include="Interfaces\ISerialClient.cs" />

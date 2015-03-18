@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Common.Logging;
-using NKnife.Interface;
-using NKnife.NSerial.Abstracts;
-using NKnife.NSerial.Interfaces;
+using SerialKnife.Abstracts;
+using SerialKnife.Interfaces;
 
-namespace NKnife.NSerial.Common
+namespace SerialKnife.Common
 {
     /// <summary>向串口即将发送的指令包的集合
     /// TODO:这里分成三类包，双向包，单向包，巡查包，三类包的优先级不同，其实三类包没有必要，下一步引入包优先级的概念

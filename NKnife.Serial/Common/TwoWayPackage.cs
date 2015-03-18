@@ -1,7 +1,7 @@
 ﻿using System;
-using NKnife.NSerial.Abstracts;
+using SerialKnife.Abstracts;
 
-namespace NKnife.NSerial.Common
+namespace SerialKnife.Common
 {
     /// <summary>发送接收信息包（双向）
     /// </summary>

@@ -3,10 +3,9 @@ using System.IO;
 using System.IO.Ports;
 using System.Threading;
 using Common.Logging;
-using NKnife.Interface;
-using NKnife.NSerial.Interfaces;
+using SerialKnife.Interfaces;
 
-namespace NKnife.NSerial.Wrappers
+namespace SerialKnife.Wrappers
 {
     /// <summary>
     ///     通过.net实现的串口操作类

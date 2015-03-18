@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.NSerial.Common
+namespace SerialKnife.Common
 {
     /// <summary>串口接收到的数据
     /// </summary>

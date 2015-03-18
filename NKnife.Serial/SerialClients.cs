@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Common.Logging;
-using NKnife.NSerial.Abstracts;
-using NKnife.NSerial.Common;
-using NKnife.NSerial.Interfaces;
+using SerialKnife.Abstracts;
+using SerialKnife.Common;
+using SerialKnife.Interfaces;
 
 namespace SerialKnife
 {

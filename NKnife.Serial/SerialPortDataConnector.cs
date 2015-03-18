@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NKnife.IoC;
-using NKnife.NSerial.Common;
-using NKnife.NSerial.Interfaces;
-using NKnife.NSerial.Wrappers;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
+using SerialKnife.Common;
 using SerialKnife.Interfaces;
 
 namespace SerialKnife
