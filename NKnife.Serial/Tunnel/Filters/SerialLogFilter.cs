@@ -7,9 +7,9 @@ using NKnife.Tunnel.Generic;
 
 namespace SerialKnife.Tunnel.Filters
 {
-    public class SerialLogFilter:TunnelFilterBase<byte[],int>
+    public class SerialLogFilter : TunnelFilterBase<byte[], int>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<SerialLogFilter>();
 
         public override bool PrcoessReceiveData(ITunnelSession<byte[], int> session)
         {

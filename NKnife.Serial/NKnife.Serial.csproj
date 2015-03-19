@@ -70,6 +70,7 @@
     <Compile Include="Common\SerialDataPool.cs" />
     <Compile Include="SerialPortDataConnector.cs" />
     <Compile Include="Tunnel\Filters\SerialLogFilter.cs" />
+    <Compile Include="Tunnel\Filters\SerialKnifeProtocolFilter.cs" />
     <Compile Include="Tunnel\Tools\FirstByteCommandParser.cs" />
     <Compile Include="Tunnel\Tools\FixByteHeadTailDatagramDecoder.cs" />
     <Compile Include="Tunnel\Tools\FixByteHeadTailDatagramEncoder.cs" />
