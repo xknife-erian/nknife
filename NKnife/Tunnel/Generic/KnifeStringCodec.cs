@@ -3,13 +3,16 @@ using NKnife.IoC;
 
 namespace NKnife.Tunnel.Generic
 {
-    public class KnifeStringCodec : ITunnelCodec<string,byte[]>
+    public class KnifeStringCodec : ITunnelCodec<string, byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeStringCodec>();
+        private bool _HasSetDecoder;
+        private bool _HasSetEncoder;
+        private KnifeStringDatagramDecoder _StringDecoder;
+        private KnifeStringDatagramEncoder _StringEncoder;
 
         public KnifeStringCodec()
         {
-            
         }
 
         public KnifeStringCodec(string codecName)
@@ -19,17 +22,13 @@ namespace NKnife.Tunnel.Generic
 
         public string CodecName { get; set; }
 
-        private KnifeStringDatagramDecoder _StringDecoder;
-        private bool _HasSetDecoder;
         public virtual KnifeStringDatagramDecoder StringDecoder
         {
             get
             {
                 if (!_HasSetDecoder)
                 {
-                    return string.IsNullOrEmpty(CodecName)
-                        ? DI.Get<KnifeStringDatagramDecoder>()
-                        : DI.Get<KnifeStringDatagramDecoder>(CodecName);
+                    return string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramDecoder>() : DI.Get<KnifeStringDatagramDecoder>(CodecName);
                 }
                 return _StringDecoder;
             }
@@ -39,9 +38,6 @@ namespace NKnife.Tunnel.Generic
                 _HasSetDecoder = true;
             }
         }
-
-        private KnifeStringDatagramEncoder _StringEncoder;
-        private bool _HasSetEncoder;
 
         public virtual KnifeStringDatagramEncoder StringEncoder
         {

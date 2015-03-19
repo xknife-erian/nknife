@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace NKnife.Collections
 {
-    /// <summary>一个同步安全的队列类型，内部实现一个AutoResetEvent，可通过该AutoResetEvent处理本队列的监听。
+    /// <summary>一个同步安全的队列类型，内部包含一个AutoResetEvent，可通过该AutoResetEvent处理本队列的监听。
     /// </summary>
     public class SyncQueue<T> : ICollection
     {
@@ -112,7 +112,10 @@ namespace NKnife.Collections
         /// </returns>
         public IEnumerator GetEnumerator()
         {
-            return _Q.GetEnumerator();
+            lock (_Lock)
+            {
+                return _Q.GetEnumerator();
+            }
         }
 
         #endregion
@@ -134,7 +137,7 @@ namespace NKnife.Collections
         ///   <paramref name="array"/> 是多维的。- 或 -源 <see cref="T:System.Collections.ICollection"/> 中的元素数目大于从 <paramref name="index"/> 到目标 <paramref name="array"/> 末尾之间的可用空间。</exception>
         ///   
         /// <exception cref="T:System.ArgumentException">源 <see cref="T:System.Collections.ICollection"/> 的类型无法自动转换为目标 <paramref name="array"/> 的类型。</exception>
-        public void CopyTo(Array array, int index)
+        void ICollection.CopyTo(Array array, int index)
         {
             if (!(array is T[]))
                 throw new ArgumentException("传入数据不是指定的类型，应传入T[]。");

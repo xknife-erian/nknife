@@ -46,7 +46,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Family;
         }
 
-        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
+        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, KnifeProtocolHandlerBase<EndPoint, string> handler)
         {
             if (_IsInitialized) 
                 return;

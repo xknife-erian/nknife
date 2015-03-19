@@ -12,15 +12,16 @@ using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Demo
 {
-    public class DemoServerHandler : KnifeProtocolHandlerBase<byte[], EndPoint, string>
+    public class DemoServerHandler : KnifeProtocolHandlerBase<EndPoint, string>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<DemoServerHandler>();
         private StringProtocolFamily _Family;
         private readonly ObservableCollection<SocketMessage> _SocketMessages;
 
-        public DemoServerHandler(StringProtocolFamily family,ObservableCollection<SocketMessage> socketMessages)
+        public DemoServerHandler(StringProtocolFamily family, ObservableCollection<SocketMessage> socketMessages)
         {
             _SocketMessages = socketMessages;
+            _Family = family;
         }
 
         public override List<string> Commands { get; set; }

@@ -1,8 +1,10 @@
 ﻿namespace NKnife.Tunnel
 {
-    /// <summary>一个将接收到的消息字节数组转换成字符串的工具接口
+    /// <summary>一个解码器工具接口
     /// </summary>
-    public interface IDatagramDecoder<out T,in TData>
+    /// <typeparam name="TOriginal">内容在编程过程所使用的数据形式</typeparam>
+    /// <typeparam name="TData">内容在传输过程所使用的数据形式</typeparam>
+    public interface IDatagramDecoder<out TOriginal, in TData>
     {
         /// <summary>
         /// 解码。将字节数组解析成指定的泛型结果。
@@ -10,6 +12,6 @@
         /// <param name="data">需解码的字节数组.</param>
         /// <param name="finishedIndex">已完成解码的数组的长度.</param>
         /// <returns>结果数组</returns>
-        T[] Execute(TData data, out int finishedIndex);
+        TOriginal[] Execute(TData data, out int finishedIndex);
     }
 }

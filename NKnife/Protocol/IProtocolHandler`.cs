@@ -7,11 +7,13 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Protocol
 {
-    public interface IProtocolHandler<TData, TSessionId, T>
+    public interface IProtocolHandler<TData, TSessionId>
     {
-        List<T> Commands { get; set; }
-        void Recevied(TSessionId session, IProtocol<T> protocol);
+        List<TData> Commands { get; set; }
+        void Recevied(TSessionId session, IProtocol<TData> protocol);
+
         event EventHandler<SessionEventArgs<TData, TSessionId>> OnSendToSession;
+
         event EventHandler<EventArgs<TData>> OnSendToAll;
     }
 }

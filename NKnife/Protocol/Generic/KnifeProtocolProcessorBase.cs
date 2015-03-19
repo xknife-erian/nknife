@@ -12,14 +12,14 @@ namespace NKnife.Protocol.Generic
     /// 具备数据T到Protocol处理能力的类
     /// 1、能够对T进行拼包操作
     /// </summary>
-    public abstract class KnifeProtocolProcessorBase<T> : IKnifeProtocolProcessor<T>
+    public abstract class KnifeProtocolProcessorBase<TOriginal> : IProtocolProcessor<TOriginal>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolProcessorBase<T>>();
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolProcessorBase<TOriginal>>();
 
-        protected ITunnelCodec<T, byte[]> Codec;
-        protected IProtocolFamily<T> Family;
+        protected ITunnelCodec<TOriginal, byte[]> Codec;
+        protected IProtocolFamily<TOriginal> Family;
 
-        public virtual void Bind(ITunnelCodec<T, byte[]> codec, IProtocolFamily<T> protocolFamily)
+        public virtual void Bind(ITunnelCodec<TOriginal, byte[]> codec, IProtocolFamily<TOriginal> protocolFamily)
         {
             Codec = codec;
             _logger.Info(string.Format("绑定Codec成功。{0},{1}", Codec.Decoder.GetType().Name, Codec.Encoder.GetType().Name));
@@ -34,7 +34,7 @@ namespace NKnife.Protocol.Generic
         /// <param name="dataPacket">当前新的数据包</param>
         /// <param name="unFinished">未完成处理的数据</param>
         /// <returns>未处理完成,待下个数据包到达时将要继续处理的数据(半包)</returns>
-        public virtual IEnumerable<IProtocol<T>> ProcessDataPacket(byte[] dataPacket, byte[] unFinished)
+        public virtual IEnumerable<IProtocol<TOriginal>> ProcessDataPacket(byte[] dataPacket, byte[] unFinished)
         {
             if (!UtilityCollection.IsNullOrEmpty(unFinished))
             {
@@ -46,9 +46,9 @@ namespace NKnife.Protocol.Generic
             }
 
             int done;
-            T[] datagram = DecodeData(dataPacket,out done);
+            TOriginal[] datagram = DecodeData(dataPacket,out done);
 
-            IEnumerable<IProtocol<T>> protocols = null;
+            IEnumerable<IProtocol<TOriginal>> protocols = null;
 
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
@@ -71,18 +71,18 @@ namespace NKnife.Protocol.Generic
             return protocols;
         }
 
-        protected virtual T[] DecodeData(byte[] data, out int done)
+        protected virtual TOriginal[] DecodeData(byte[] data, out int done)
         {
             return Codec.Decoder.Execute(data, out done);
         }
 
-        protected virtual IEnumerable<IProtocol<T>> ParseProtocols(T[] datagram)
+        protected virtual IEnumerable<IProtocol<TOriginal>> ParseProtocols(TOriginal[] datagram)
         {
-            var protocols = new List<IProtocol<T>>(datagram.Length);
-            foreach (T dg in datagram)
+            var protocols = new List<IProtocol<TOriginal>>(datagram.Length);
+            foreach (TOriginal dg in datagram)
             {
                 //if (string.IsNullOrWhiteSpace(dg)) continue;
-                T command;
+                TOriginal command;
                 try
                 {
                     command = Family.CommandParser.GetCommand(dg);
@@ -94,7 +94,7 @@ namespace NKnife.Protocol.Generic
                 }
                 _logger.Trace(string.Format("开始协议解析::命令字:{0},数据包:{1}", command, dg));
 
-                IProtocol<T> protocol;
+                IProtocol<TOriginal> protocol;
                 try
                 {
                     protocol = Family.Parse(command, dg);

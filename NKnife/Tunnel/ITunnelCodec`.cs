@@ -6,9 +6,14 @@ using NKnife.Protocol;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelCodec<T,TData>
+    /// <summary>
+    /// 协议的编解码器
+    /// </summary>
+    /// <typeparam name="TOriginal">内容在编程过程所使用的数据形式</typeparam>
+    /// <typeparam name="TData">内容在传输过程所使用的数据形式</typeparam>
+    public interface ITunnelCodec<TOriginal, TData>
     {
-        IDatagramDecoder<T, TData> Decoder { get; set; }
-        IDatagramEncoder<T, TData> Encoder { get; set; }
+        IDatagramDecoder<TOriginal, TData> Decoder { get; set; }
+        IDatagramEncoder<TOriginal, TData> Encoder { get; set; }
     }
 }

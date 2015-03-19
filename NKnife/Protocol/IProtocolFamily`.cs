@@ -3,22 +3,28 @@ using System.Collections.Generic;
 
 namespace NKnife.Protocol
 {
-    public interface IProtocolFamily<T>
+    /// <summary>
+    /// 一个描述协议的集合，协议族
+    /// </summary>
+    /// <typeparam name="TOriginal">内容在编程过程所使用的数据形式</typeparam>
+    public interface IProtocolFamily<TOriginal>
     {
         string FamilyName { get; set; }
 
-        IProtocolCommandParser<T> CommandParser { get; set; }
+        IProtocolCommandParser<TOriginal> CommandParser { get; set; }
 
-        IProtocol<T> Build(T command);
+        IProtocol<TOriginal> Build(TOriginal command);
 
-        IProtocol<T> Parse(T command, T datagram);
-
-        /// <summary>根据当前实例生成协议的原生字符串表达
+        /// <summary>根据远端得到的数据包解析，将数据填充到本实例中，与Generate方法相对
         /// </summary>
-        T Generate(IProtocol<T> protocol);
+        IProtocol<TOriginal> Parse(TOriginal command, TOriginal datagram);
 
-        void AddPackerGetter(Func<T, IProtocolPacker<T>> func);
+        /// <summary>根据当前协议实例生成为在传输过程所使用的数据形式
+        /// </summary>
+        TOriginal Generate(IProtocol<TOriginal> protocol);
 
-        void AddPackerGetter(T command, Func<T, IProtocolPacker<T>> func);
+        void AddPackerGetter(Func<TOriginal, IProtocolPacker<TOriginal>> func);
+
+        void AddPackerGetter(TOriginal command, Func<TOriginal, IProtocolPacker<TOriginal>> func);
     }
 }

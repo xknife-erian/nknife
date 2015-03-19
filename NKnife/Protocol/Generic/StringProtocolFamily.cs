@@ -17,9 +17,9 @@ namespace NKnife.Protocol.Generic
         protected Func<string, StringProtocol> _DefaultProtocolBuilder;
         protected Dictionary<string, Func<string, StringProtocol>> _ProtocolBuilderMap = new Dictionary<string, Func<string, StringProtocol>>();
         protected Func<string, StringProtocolPacker> _DefaultProtocolPackerGetter;
-        protected Dictionary<string,Func<string,StringProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<string, Func<string, StringProtocolPacker>>();
+        protected Dictionary<string, Func<string, StringProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<string, Func<string, StringProtocolPacker>>();
         protected Func<string, StringProtocolUnPacker> _DefaultProtocolUnPackerGetter;
-        protected Dictionary<string,Func<string,StringProtocolUnPacker>> _ProtocolUnPackerGetterMap = new Dictionary<string, Func<string, StringProtocolUnPacker>>();
+        protected Dictionary<string, Func<string, StringProtocolUnPacker>> _ProtocolUnPackerGetterMap = new Dictionary<string, Func<string, StringProtocolUnPacker>>();
 
         public StringProtocolFamily()
         {
@@ -34,6 +34,7 @@ namespace NKnife.Protocol.Generic
 
         private StringProtocolCommandParser _CommandParser;
         private bool _HasSetCommandParser;
+
         public StringProtocolCommandParser CommandParser
         {
             get
@@ -61,6 +62,7 @@ namespace NKnife.Protocol.Generic
         }
 
         #region 隐式实现
+
         IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
         {
             get { return CommandParser; }
@@ -79,7 +81,7 @@ namespace NKnife.Protocol.Generic
 
         string IProtocolFamily<string>.Generate(IProtocol<string> protocol)
         {
-            return Generate((StringProtocol)protocol);
+            return Generate((StringProtocol) protocol);
         }
 
         void IProtocolFamily<string>.AddPackerGetter(Func<string, IProtocolPacker<string>> func)
@@ -89,8 +91,9 @@ namespace NKnife.Protocol.Generic
 
         void IProtocolFamily<string>.AddPackerGetter(string command, Func<string, IProtocolPacker<string>> func)
         {
-            AddPackerGetter(command,(Func<string, StringProtocolPacker>) func);
+            AddPackerGetter(command, (Func<string, StringProtocolPacker>) func);
         }
+
         #endregion
 
         public StringProtocol Build(string command)
@@ -104,7 +107,7 @@ namespace NKnife.Protocol.Generic
             {
                 result = _ProtocolBuilderMap[command].Invoke(command);
             }
-            else 
+            else
             {
                 result = _DefaultProtocolBuilder == null ? DI.Get<StringProtocol>() : _DefaultProtocolBuilder.Invoke(command);
             }
@@ -146,17 +149,17 @@ namespace NKnife.Protocol.Generic
             {
                 if (_ProtocolUnPackerGetterMap.ContainsKey(command))
                 {
-                    _ProtocolUnPackerGetterMap[command].Invoke(command).Execute(protocol,datagram,command);
+                    _ProtocolUnPackerGetterMap[command].Invoke(command).Execute(protocol, datagram, command);
                 }
-                else 
+                else
                 {
                     if (_DefaultProtocolUnPackerGetter == null)
                     {
-                        DI.Get<StringProtocolUnPacker>().Execute(protocol,datagram,command);
+                        DI.Get<StringProtocolUnPacker>().Execute(protocol, datagram, command);
                     }
                     else
                     {
-                        _DefaultProtocolUnPackerGetter.Invoke(command).Execute(protocol,datagram,command);
+                        _DefaultProtocolUnPackerGetter.Invoke(command).Execute(protocol, datagram, command);
                     }
                 }
             }
@@ -175,13 +178,13 @@ namespace NKnife.Protocol.Generic
         public string Generate(StringProtocol protocol)
         {
             var command = protocol.Command;
-            if(_ProtocolPackerGetterMap.ContainsKey(command))
+            if (_ProtocolPackerGetterMap.ContainsKey(command))
             {
                 return _ProtocolPackerGetterMap[command].Invoke(command).Combine(protocol);
             }
-            return _DefaultProtocolPackerGetter == null ? 
-                DI.Get<StringProtocolPacker>().Combine(protocol) : 
-                _DefaultProtocolPackerGetter.Invoke(command).Combine(protocol);
+            return _DefaultProtocolPackerGetter == null
+                ? DI.Get<StringProtocolPacker>().Combine(protocol)
+                : _DefaultProtocolPackerGetter.Invoke(command).Combine(protocol);
         }
 
         /// <summary>
@@ -190,16 +193,16 @@ namespace NKnife.Protocol.Generic
         /// <param name="protocol"></param>
         /// <param name="param">PackerGetter的参数，默认使用command作为参数</param>
         /// <returns></returns>
-        public string Generate(StringProtocol protocol,string param)
+        public string Generate(StringProtocol protocol, string param)
         {
             var command = protocol.Command;
             if (_ProtocolPackerGetterMap.ContainsKey(command))
             {
                 return _ProtocolPackerGetterMap[command].Invoke(param).Combine(protocol);
             }
-            return _DefaultProtocolPackerGetter == null ?
-                DI.Get<StringProtocolPacker>().Combine(protocol) :
-                _DefaultProtocolPackerGetter.Invoke(param).Combine(protocol);
+            return _DefaultProtocolPackerGetter == null
+                ? DI.Get<StringProtocolPacker>().Combine(protocol)
+                : _DefaultProtocolPackerGetter.Invoke(param).Combine(protocol);
         }
 
         public void AddPackerGetter(Func<string, StringProtocolPacker> func)
@@ -215,7 +218,7 @@ namespace NKnife.Protocol.Generic
             }
             else
             {
-                _ProtocolPackerGetterMap.Add(command,func);   
+                _ProtocolPackerGetterMap.Add(command, func);
             }
         }
 

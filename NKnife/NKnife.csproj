@@ -191,7 +191,8 @@
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />
     <Compile Include="Protocol\IProtocolCommandParser.cs" />
     <Compile Include="Tunnel\Filters\HeartbeatFilter.cs" />
-    <Compile Include="Protocol\IKnifeProtocolProcessor.cs" />
+    <Compile Include="Protocol\IProtocolProcessor`.cs" />
+    <Compile Include="Tunnel\Filters\ProtocolFilter.cs" />
     <Compile Include="Tunnel\Generic\KnifeBytesCodec.cs" />
     <Compile Include="Tunnel\Generic\KnifeBytesDatagramDecoder.cs" />
     <Compile Include="Tunnel\Generic\KnifeBytesDatagramEecoder.cs" />

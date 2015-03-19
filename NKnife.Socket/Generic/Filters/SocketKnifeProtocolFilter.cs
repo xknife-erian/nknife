@@ -171,7 +171,7 @@ namespace SocketKnife.Generic.Filters
 
         private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors = new ConcurrentDictionary<EndPoint, DataMonitor>();
 
-        public virtual void AddHandlers(params KnifeProtocolHandlerBase<byte[], EndPoint, string>[] handlers)
+        public virtual void AddHandlers(params KnifeProtocolHandlerBase<EndPoint, string>[] handlers)
         {
             foreach (var handler in handlers)
             {
@@ -182,7 +182,7 @@ namespace SocketKnife.Generic.Filters
             Handlers.AddRange(handlers);
         }
 
-        public virtual void RemoveHandler(KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
+        public virtual void RemoveHandler(KnifeProtocolHandlerBase<EndPoint, string> handler)
         {
             handler.OnSendToSession -= Handler_OnSendToSession;
             handler.OnSendToAll -= Handler_OnSendToAll;

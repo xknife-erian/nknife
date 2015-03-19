@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Common.Logging;
 using NKnife.Events;
 using NKnife.Tunnel;
@@ -10,38 +8,38 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Protocol.Generic
 {
-    public abstract class KnifeProtocolHandlerBase<TData, TSessionId, T> : IProtocolHandler<TData, TSessionId, T>
+    public abstract class KnifeProtocolHandlerBase<TSessionId, TOriginal> : IProtocolHandler<byte[], TSessionId, TOriginal>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolHandlerBase<TData, TSessionId, T>>();
-        public abstract List<T> Commands { get; set; }
-        public abstract void Recevied(TSessionId sessionId, IProtocol<T> protocol);
-        public event EventHandler<SessionEventArgs<TData, TSessionId>> OnSendToSession;
-        public event EventHandler<EventArgs<TData>> OnSendToAll;
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolHandlerBase<TSessionId, TOriginal>>();
 
-        protected ITunnelCodec<T, TData> Codec;
-        protected IProtocolFamily<T> Family;
+        protected ITunnelCodec<byte[], TOriginal> _Codec;
+        protected IProtocolFamily<TOriginal> _Family;
+        public abstract List<TOriginal> Commands { get; set; }
+        public abstract void Recevied(TSessionId sessionId, IProtocol<TOriginal> protocol);
+        public event EventHandler<SessionEventArgs<byte[], TSessionId>> OnSendToSession;
+        public event EventHandler<EventArgs<byte[]>> OnSendToAll;
 
-        public virtual void Bind(ITunnelCodec<T,TData> codec, IProtocolFamily<T> protocolFamily)
+        public virtual void Bind(ITunnelCodec<byte[], TOriginal> codec, IProtocolFamily<TOriginal> protocolFamily)
         {
-            Codec = codec;
-            Family = protocolFamily;
+            _Codec = codec;
+            _Family = protocolFamily;
         }
 
         /// <summary>
-        /// 发送协议，帮助方法
+        ///     发送协议，帮助方法
         /// </summary>
         /// <param name="sessionId"></param>
         /// <param name="protocol"></param>
-        public virtual void WriteToSession(TSessionId sessionId, IProtocol<T> protocol)
+        public virtual void WriteToSession(TSessionId sessionId, IProtocol<TOriginal> protocol)
         {
             try
             {
-                T str = Family.Generate(protocol);
-                TData data = Codec.Encoder.Execute(str);
+                var original = _Family.Generate(protocol);
+                var data = _Codec.Encoder.Execute(original);
                 var handler = OnSendToSession;
                 if (handler != null)
                 {
-                    handler.Invoke(this, new SessionEventArgs<TData, TSessionId>(new TunnelSession<TData, TSessionId>
+                    handler.Invoke(this, new SessionEventArgs<byte[], TSessionId>(new TunnelSession<byte[], TSessionId>
                     {
                         Id = sessionId,
                         Data = data
@@ -54,16 +52,16 @@ namespace NKnife.Protocol.Generic
             }
         }
 
-        public virtual void WriteToAllSession(IProtocol<T> protocol)
+        public virtual void WriteToAllSession(IProtocol<TOriginal> protocol)
         {
             try
             {
-                T str = Family.Generate(protocol);
-                TData data = Codec.Encoder.Execute(str);
+                var str = _Family.Generate(protocol);
+                var data = _Codec.Encoder.Execute(str);
                 var handler = OnSendToAll;
                 if (handler != null)
                 {
-                    handler.Invoke(this, new EventArgs<TData>(data));
+                    handler.Invoke(this, new EventArgs<byte[]>(data));
                 }
             }
             catch (Exception ex)

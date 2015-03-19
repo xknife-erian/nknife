@@ -7,22 +7,21 @@ using Common.Logging;
 using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
-using NKnife.Tunnel;
 using NKnife.Tunnel.Events;
 
-namespace SerialKnife.Tunnel.Filters
+namespace NKnife.Tunnel.Filters
 {
-    public class SerialKnifeProtocolFilter : KnifeProtocolProcessorBase<byte[]>, ITunnelProtocolFilter<byte[], int>
+    public class ProtocolFilter<TOriginal, TSessionId> : KnifeProtocolProcessorBase<TOriginal>, ITunnelProtocolFilter<byte[], TSessionId>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<SerialKnifeProtocolFilter>();
-        protected List<KnifeProtocolHandlerBase<byte[], int, byte[]>> Handlers = new List<KnifeProtocolHandlerBase<byte[], int, byte[]>>();
+        private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<TOriginal, TSessionId>>();
+        protected List<KnifeProtocolHandlerBase<TOriginal, TSessionId, byte[]>> Handlers = new List<KnifeProtocolHandlerBase<TOriginal, TSessionId, byte[]>>();
 
         /// <summary>
         ///     核心方法:监听 ReceiveQueue 队列
         /// </summary>
         protected virtual void ReceiveQueueMonitor(object obj)
         {
-            var id = (int) obj;
+            var id = (TSessionId)obj;
             DataMonitor dataMonitor;
             _logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", id));
             var unFinished = new byte[] {};
@@ -72,7 +71,7 @@ namespace SerialKnife.Tunnel.Filters
         /// <summary>
         ///     触发数据基础解析后发生的数据到达事件
         /// </summary>
-        protected virtual void HandlerInvoke(int id, IProtocol<byte[]> protocol)
+        protected virtual void HandlerInvoke(TSessionId id, IProtocol<TOriginal> protocol)
         {
             try
             {
@@ -104,11 +103,11 @@ namespace SerialKnife.Tunnel.Filters
 
         #region interface
 
-        public event EventHandler<SessionEventArgs<byte[], int>> OnSendToSession;
+        public event EventHandler<SessionEventArgs<byte[], TSessionId>> OnSendToSession;
         public event EventHandler<EventArgs<byte[]>> OnSendToAll;
-        public event EventHandler<EventArgs<int>> OnKillSession;
+        public event EventHandler<EventArgs<TSessionId>> OnKillSession;
 
-        public virtual void ProcessSessionBroken(int id)
+        public virtual void ProcessSessionBroken(TSessionId id)
         {
             DataMonitor monitor;
             if (_DataMonitors.TryGetValue(id, out monitor))
@@ -118,7 +117,7 @@ namespace SerialKnife.Tunnel.Filters
             }
         }
 
-        public virtual void ProcessSessionBuilt(int id)
+        public virtual void ProcessSessionBuilt(TSessionId id)
         {
             DataMonitor monitor;
             if (!_DataMonitors.TryGetValue(id, out monitor))
@@ -139,7 +138,7 @@ namespace SerialKnife.Tunnel.Filters
             //什么也不做
         }
 
-        public virtual bool PrcoessReceiveData(ITunnelSession<byte[], int> session)
+        public virtual bool PrcoessReceiveData(ITunnelSession<byte[], TSessionId> session)
         {
             var data = session.Data;
             var id = session.Id;
@@ -159,9 +158,9 @@ namespace SerialKnife.Tunnel.Filters
 
         #region 数据处理
 
-        private readonly ConcurrentDictionary<int, DataMonitor> _DataMonitors = new ConcurrentDictionary<int, DataMonitor>();
+        private readonly ConcurrentDictionary<TSessionId, DataMonitor> _DataMonitors = new ConcurrentDictionary<TSessionId, DataMonitor>();
 
-        public virtual void AddHandlers(params KnifeProtocolHandlerBase<byte[], int, byte[]>[] handlers)
+        public virtual void AddHandlers(params KnifeProtocolHandlerBase<byte[], TSessionId, byte[]>[] handlers)
         {
             foreach (var handler in handlers)
             {
@@ -172,7 +171,7 @@ namespace SerialKnife.Tunnel.Filters
             Handlers.AddRange(handlers);
         }
 
-        public virtual void RemoveHandler(KnifeProtocolHandlerBase<byte[], int, byte[]> handler)
+        public virtual void RemoveHandler(KnifeProtocolHandlerBase<byte[], TSessionId, byte[]> handler)
         {
             handler.OnSendToSession -= Handler_OnSendToSession;
             handler.OnSendToAll -= Handler_OnSendToAll;
@@ -188,7 +187,7 @@ namespace SerialKnife.Tunnel.Filters
             }
         }
 
-        protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs<byte[], int> e)
+        protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs<byte[], TSessionId> e)
         {
             var handler = OnSendToSession;
             if (handler != null)
@@ -197,7 +196,7 @@ namespace SerialKnife.Tunnel.Filters
             }
         }
 
-        protected virtual void InitializeDataMonitor(int id, DataMonitor dm)
+        protected virtual void InitializeDataMonitor(TSessionId id, DataMonitor dm)
         {
             var task = new Task(ReceiveQueueMonitor, id);
             dm.IsMonitor = true;
