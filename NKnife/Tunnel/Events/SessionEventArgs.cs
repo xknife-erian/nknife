@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.TextFormatting;
 using NKnife.Events;
+using NKnife.Tunnel.Common;
 
 namespace NKnife.Tunnel.Events
 {
-    public class SessionEventArgs<TSessionId, TData> : EventArgs<ITunnelSession<TSessionId, TData>>
+    public class SessionEventArgs<TSessionId> : EventArgs<TunnelSession<TSessionId>>
     {
-        public SessionEventArgs(ITunnelSession<TSessionId, TData> item)
+        public SessionEventArgs(TunnelSession<TSessionId> item)
             : base(item)
         {
         }

@@ -5,7 +5,7 @@
     /// </summary>
     /// <typeparam name="TData">内容在传输过程所使用的数据形式</typeparam>
     /// <typeparam name="TSource">内容在原始状态时所使用的数据形式</typeparam>
-    public interface IDatagramEncoder<out TSource, in TData>
+    public interface IDatagramEncoder<in TData, out TSource>
     {
         /// <summary>
         /// 执行编码
