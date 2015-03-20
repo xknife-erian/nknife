@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NKnife.Tunnel.Common;
 
 namespace NKnife.Tunnel.Generic
 {
-    public abstract class KnifeBytesDatagramEncoder : IDatagramEncoder<byte[], byte[]>
+    public abstract class KnifeBytesDatagramEncoder : BaseDatagramEncoder<byte[]>
     {
-        public abstract byte[] Execute(byte[] data);
+        public abstract override byte[] Execute(byte[] data);
     }
 }

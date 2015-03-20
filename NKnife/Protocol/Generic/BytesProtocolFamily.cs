@@ -9,7 +9,7 @@ using NKnife.IoC;
 namespace NKnife.Protocol.Generic
 {
     [Serializable]
-    public class BytesProtocolFamily : IProtocolFamily<byte[]>
+    public class BytesProtocolFamily<TData> : IProtocolFamily<TData, byte[]>
     {
         protected Func<byte[], BytesProtocol> _DefaultProtocolBuilder;
         protected Dictionary<byte[], Func<byte[], BytesProtocol>> _ProtocolBuilderMap = new Dictionary<byte[], Func<byte[], BytesProtocol>>();

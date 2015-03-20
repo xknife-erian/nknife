@@ -1,6 +1,4 @@
-﻿using NKnife.Protocol.Generic;
-
-namespace NKnife.Protocol
+﻿namespace NKnife.Protocol
 {
     public static class ProtocolExtension
     {
@@ -9,7 +7,7 @@ namespace NKnife.Protocol
         /// </summary>
         /// <param name="content"></param>
         /// <param name="value">The value.</param>
-        public static void AddTag(this StringProtocol content, object value)
+        public static void AddTag<T>(this IProtocol<T> content, object value)
         {
             content.Tags.Add(value);
         }
@@ -17,7 +15,7 @@ namespace NKnife.Protocol
         /// <summary>
         ///     清除所有做为协议数据的对象。
         /// </summary>
-        public static void ClearTag(this StringProtocol content)
+        public static void ClearTag<T>(this IProtocol<T> content)
         {
             content.Tags.Clear();
         }
@@ -27,7 +25,7 @@ namespace NKnife.Protocol
         /// </summary>
         /// <param name="content"></param>
         /// <param name="index">The index.</param>
-        public static void RemoveTag(this StringProtocol content, int index)
+        public static void RemoveTag<T>(this IProtocol<T> content, int index)
         {
             content.Tags.RemoveAt(index);
         }
@@ -37,7 +35,7 @@ namespace NKnife.Protocol
         /// </summary>
         /// <param name="content"></param>
         /// <param name="obj">The obj.</param>
-        public static void SetCommandParam(this StringProtocol content, string obj)
+        public static void SetCommandParam<T>(this IProtocol<T> content, T obj)
         {
             content.CommandParam = obj;
         }
@@ -45,9 +43,9 @@ namespace NKnife.Protocol
         /// <summary>
         ///     清除命令字参数
         /// </summary>
-        public static void ClearCommandParam(this StringProtocol content)
+        public static void ClearCommandParam<T>(this IProtocol<T> content)
         {
-            content.CommandParam = null;
+            content.CommandParam = default(T);
         }
 
         /// <summary>
@@ -56,18 +54,18 @@ namespace NKnife.Protocol
         /// <param name="content"></param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        public static void AddInfo(this StringProtocol content, string key, string value)
+        public static void AddInfo<T>(this IProtocol<T> content, string key, T value)
         {
             content.Infomations.Add(key, value);
         }
 
         /// <summary>
-        /// 获取指定的信息，不做异常处理，如果key不存在则会抛出异常
+        ///     获取指定的信息，不做异常处理，如果key不存在则会抛出异常
         /// </summary>
         /// <param name="content"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string GetInfo(this StringProtocol content, string key)
+        public static T GetInfo<T>(this IProtocol<T> content, string key)
         {
             return content.Infomations[key];
         }
@@ -77,7 +75,7 @@ namespace NKnife.Protocol
         /// </summary>
         /// <param name="content"></param>
         /// <param name="key">The key.</param>
-        public static void RemoveInfo(this StringProtocol content, string key)
+        public static void RemoveInfo<T>(this IProtocol<T> content, string key)
         {
             content.Infomations.Remove(key);
         }
@@ -85,7 +83,7 @@ namespace NKnife.Protocol
         /// <summary>
         ///     清除所有信息。Info:协议制定时确认必须携带的数据,如:时间,交易ID等
         /// </summary>
-        public static void ClearInfo(this StringProtocol content)
+        public static void ClearInfo<T>(this IProtocol<T> content)
         {
             content.Infomations.Clear();
         }

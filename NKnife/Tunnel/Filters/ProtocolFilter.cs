@@ -7,11 +7,12 @@ using Common.Logging;
 using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Filters
 {
-    public class ProtocolFilter<TOriginal, TSessionId> : KnifeProtocolProcessorBase<TOriginal>, ITunnelProtocolFilter<byte[], TSessionId>
+    public class ProtocolFilter<TOriginal, TSessionId> : ITunnelProtocolFilter<byte[], TSessionId>
     {
         private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<TOriginal, TSessionId>>();
         protected List<KnifeProtocolHandlerBase<TOriginal, TSessionId, byte[]>> Handlers = new List<KnifeProtocolHandlerBase<TOriginal, TSessionId, byte[]>>();
@@ -166,7 +167,7 @@ namespace NKnife.Tunnel.Filters
             {
                 handler.OnSendToSession += Handler_OnSendToSession;
                 handler.OnSendToAll += Handler_OnSendToAll;
-                handler.Bind(Codec, Family);
+                handler.Bind(_Codec, _Family);
             }
             Handlers.AddRange(handlers);
         }

@@ -7,9 +7,9 @@ using NKnife.Events;
 
 namespace NKnife.Tunnel.Events
 {
-    public class SessionEventArgs<TData, TSessionId> : EventArgs<ITunnelSession<TData, TSessionId>>
+    public class SessionEventArgs<TSessionId, TData> : EventArgs<ITunnelSession<TSessionId, TData>>
     {
-        public SessionEventArgs(ITunnelSession<TData, TSessionId> item)
+        public SessionEventArgs(ITunnelSession<TSessionId, TData> item)
             : base(item)
         {
         }

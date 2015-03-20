@@ -4,7 +4,7 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelFilter<TData, TSessionId>
+    public interface ITunnelFilter<TSessionId, TData>
     {
 
         #region 针对DataConnector的事件处理

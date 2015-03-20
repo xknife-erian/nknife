@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NKnife.Tunnel.Common
 {
-    public class TunnelSession<TData, TSessionId> : ITunnelSession<TData, TSessionId>
+    public class TunnelSession<TSessionId, TData> : ITunnelSession<TSessionId, TData>
     {
         public TSessionId Id { get; set; }
         public TData Data { get; set; }

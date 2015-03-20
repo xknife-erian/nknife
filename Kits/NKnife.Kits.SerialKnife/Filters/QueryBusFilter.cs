@@ -15,7 +15,7 @@ namespace NKnife.Kits.SerialKnife.Filters
 {
     public class QueryBusFilter : KnifeProtocolProcessorBase<byte[]>, ITunnelFilter<byte[], int>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<QueryBusFilter>();
         private readonly Dictionary<int, QueryThreadWrapper> _QueryThreadMap = new Dictionary<int, QueryThreadWrapper>();
 
         public event EventHandler<SessionEventArgs<byte[], int>> OnSendToSession;
@@ -101,10 +101,10 @@ namespace NKnife.Kits.SerialKnife.Filters
 
         private void SendQuery(int id)
         {
-            var queryProtocol = Family.Build(new byte[] {0x01}); //命令字
+            var queryProtocol = _Family.Build(new byte[] {0x01}); //命令字
             queryProtocol.CommandParam = new byte[]{0x03,0x00}; //地址，计数
-            var data = Family.Generate(queryProtocol);
-            var datagram = Codec.Encoder.Execute(data);
+            var data = _Family.Generate(queryProtocol);
+            var datagram = _Codec.Encoder.Execute(data);
 
             var handler = OnSendToSession;
             if(handler !=null)

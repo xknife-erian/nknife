@@ -3,7 +3,7 @@ using NKnife.IoC;
 
 namespace NKnife.Tunnel.Generic
 {
-    public class KnifeStringCodec : ITunnelCodec<string, byte[]>
+    public class KnifeStringCodec : ITunnelCodecBase<string>
     {
         private static readonly ILog _logger = LogManager.GetLogger<KnifeStringCodec>();
         private bool _HasSetDecoder;
@@ -28,7 +28,9 @@ namespace NKnife.Tunnel.Generic
             {
                 if (!_HasSetDecoder)
                 {
-                    return string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramDecoder>() : DI.Get<KnifeStringDatagramDecoder>(CodecName);
+                    var d = string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramDecoder>() : DI.Get<KnifeStringDatagramDecoder>(CodecName);
+                    _HasSetDecoder = true;
+                    return d;
                 }
                 return _StringDecoder;
             }
@@ -45,7 +47,9 @@ namespace NKnife.Tunnel.Generic
             {
                 if (!_HasSetEncoder)
                 {
-                    return string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramEncoder>() : DI.Get<KnifeStringDatagramEncoder>(CodecName);
+                    var e = string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramEncoder>() : DI.Get<KnifeStringDatagramEncoder>(CodecName);
+                    _HasSetEncoder = true;
+                    return e;
                 }
                 return _StringEncoder;
             }

@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Logging;
-using NKnife.Tunnel;
+using NKnife.Protocol;
 using NKnife.Utility;
 
-namespace NKnife.Protocol.Generic
+namespace NKnife.Tunnel.Common
 {
 
     /// <summary>
     /// 具备数据T到Protocol处理能力的类
     /// 1、能够对T进行拼包操作
     /// </summary>
-    public abstract class KnifeProtocolProcessorBase<TOriginal> : IProtocolProcessor<TOriginal>
+    public abstract class KnifeProtocolProcessorBase<TOriginal>// : IProtocolProcessor<TOriginal>
     {
         private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolProcessorBase<TOriginal>>();
 
-        protected ITunnelCodec<TOriginal, byte[]> Codec;
-        protected IProtocolFamily<TOriginal> Family;
+        protected ITunnelCodec<TOriginal, byte[]> _Codec;
+        protected IProtocolFamily<TOriginal> _Family;
 
         public virtual void Bind(ITunnelCodec<TOriginal, byte[]> codec, IProtocolFamily<TOriginal> protocolFamily)
         {
-            Codec = codec;
-            _logger.Info(string.Format("绑定Codec成功。{0},{1}", Codec.Decoder.GetType().Name, Codec.Encoder.GetType().Name));
+            _Codec = codec;
+            _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.Decoder.GetType().Name, _Codec.Encoder.GetType().Name));
 
-            Family = protocolFamily;
-            _logger.Info(string.Format("协议族[{0}]绑定成功。", Family.FamilyName));
+            _Family = protocolFamily;
+            _logger.Info(string.Format("协议族[{0}]绑定成功。", _Family.FamilyName));
         }
 
         /// <summary>
@@ -42,11 +42,10 @@ namespace NKnife.Protocol.Generic
                 int srcLen = dataPacket.Length;
                 dataPacket = unFinished.Concat(dataPacket).ToArray();
                 _logger.Trace(string.Format("接包操作:半包:{0},原始包:{1},接包后:{2}", unFinished.Length, srcLen, dataPacket.Length));
-                unFinished = new byte[] { };
             }
 
             int done;
-            TOriginal[] datagram = DecodeData(dataPacket,out done);
+            TOriginal[] datagram = _Codec.Decoder.Execute(dataPacket, out done);
 
             IEnumerable<IProtocol<TOriginal>> protocols = null;
 
@@ -58,7 +57,6 @@ namespace NKnife.Protocol.Generic
             {
                 protocols = ParseProtocols(datagram);
             }
-            
 
             if (dataPacket.Length > done)
             {
@@ -70,22 +68,17 @@ namespace NKnife.Protocol.Generic
 
             return protocols;
         }
-
-        protected virtual TOriginal[] DecodeData(byte[] data, out int done)
-        {
-            return Codec.Decoder.Execute(data, out done);
-        }
-
         protected virtual IEnumerable<IProtocol<TOriginal>> ParseProtocols(TOriginal[] datagram)
         {
             var protocols = new List<IProtocol<TOriginal>>(datagram.Length);
             foreach (TOriginal dg in datagram)
             {
-                //if (string.IsNullOrWhiteSpace(dg)) continue;
+                //if (string.IsNullOrWhiteSpace(dg)) 
+                //    continue;
                 TOriginal command;
                 try
                 {
-                    command = Family.CommandParser.GetCommand(dg);
+                    command = _Family.CommandParser.GetCommand(dg);
                 }
                 catch (Exception e)
                 {
@@ -97,7 +90,7 @@ namespace NKnife.Protocol.Generic
                 IProtocol<TOriginal> protocol;
                 try
                 {
-                    protocol = Family.Parse(command, dg);
+                    protocol = _Family.Parse(command, dg);
                 }
                 catch (ArgumentNullException ex)
                 {
@@ -106,7 +99,7 @@ namespace NKnife.Protocol.Generic
                 }
                 catch (Exception ex)
                 {
-                    _logger.Warn(string.Format("协议分装异常。内容:{0};命令字:{1}。{2}", dg, command, ex.Message), ex);
+                    _logger.Warn(string.Format("协议分装异常。{0}", ex.Message), ex);
                     continue;
                 }
                 protocols.Add(protocol);

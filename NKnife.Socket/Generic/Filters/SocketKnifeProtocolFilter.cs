@@ -9,6 +9,7 @@ using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 
 namespace SocketKnife.Generic.Filters
@@ -177,7 +178,7 @@ namespace SocketKnife.Generic.Filters
             {
                 handler.OnSendToSession += Handler_OnSendToSession;
                 handler.OnSendToAll += Handler_OnSendToAll;
-                handler.Bind(Codec, Family);
+                handler.Bind(_Codec, _Family);
             }
             Handlers.AddRange(handlers);
         }

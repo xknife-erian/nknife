@@ -13,8 +13,7 @@ namespace SocketKnife
 {
     public class KnifeLongSocketClient : IKnifeSocketClient, IDisposable
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeLongSocketClient>();
         public KnifeLongSocketClient(bool reconnectFlag, bool isConnecting)
         {
             _ReconnectFlag = reconnectFlag;

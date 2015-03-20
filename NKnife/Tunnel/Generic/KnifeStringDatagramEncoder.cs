@@ -1,7 +1,9 @@
-﻿namespace NKnife.Tunnel.Generic
+﻿using NKnife.Tunnel.Common;
+
+namespace NKnife.Tunnel.Generic
 {
-    public abstract class KnifeStringDatagramEncoder : IDatagramEncoder<string,byte[]>
+    public abstract class KnifeStringDatagramEncoder : BaseDatagramEncoder<string>
     {
-        public abstract byte[] Execute(string replay);
+        public abstract override byte[] Execute(string replay);
     }
 }

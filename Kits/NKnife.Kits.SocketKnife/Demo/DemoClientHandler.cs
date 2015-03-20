@@ -10,6 +10,7 @@ using NKnife.Interface;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel.Common;
 using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Demo

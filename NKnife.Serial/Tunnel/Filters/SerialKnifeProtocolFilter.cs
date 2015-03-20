@@ -8,11 +8,12 @@ using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 
 namespace SerialKnife.Tunnel.Filters
 {
-    public class SerialKnifeProtocolFilter : KnifeProtocolProcessorBase<byte[]>, ITunnelProtocolFilter<byte[], int>
+    public class SerialKnifeProtocolFilter : ITunnelProtocolFilter<byte[], int>
     {
         private static readonly ILog _logger = LogManager.GetLogger<SerialKnifeProtocolFilter>();
         protected List<KnifeProtocolHandlerBase<byte[], int, byte[]>> Handlers = new List<KnifeProtocolHandlerBase<byte[], int, byte[]>>();

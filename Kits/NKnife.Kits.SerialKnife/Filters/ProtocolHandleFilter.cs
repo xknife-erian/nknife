@@ -7,6 +7,7 @@ using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 
 namespace NKnife.Kits.SerialKnife.Filters

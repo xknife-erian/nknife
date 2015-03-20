@@ -156,7 +156,7 @@
     <Compile Include="Protocol\Generic\BytesProtocolFamily.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolPacker.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolUnPacker.cs" />
-    <Compile Include="Protocol\Generic\KnifeProtocolHandlerBase.cs" />
+    <Compile Include="Tunnel\Common\KnifeProtocolHandlerBase.cs" />
     <Compile Include="Protocol\Generic\StringProtocol.cs" />
     <Compile Include="Protocol\Generic\StringProtocolFamily.cs" />
     <Compile Include="Protocol\Generic\StringProtocolPacker.cs" />
@@ -171,7 +171,8 @@
     <Compile Include="Protocol\Generic\Xml\XmlUnPacker.cs" />
     <Compile Include="Protocol\IProtocol`.cs" />
     <Compile Include="Protocol\IProtocolFamily`.cs" />
-    <Compile Include="Protocol\IProtocolHandler`.cs" />
+    <Compile Include="Tunnel\ITunnelCodecBase.cs" />
+    <Compile Include="Tunnel\ITunnelProtocolHandler.cs" />
     <Compile Include="Protocol\IProtocolPacker`.cs" />
     <Compile Include="Protocol\IProtocolUnPacker`.cs" />
     <Compile Include="Protocol\ProtocolExtension.cs" />
@@ -179,6 +180,8 @@
     <Compile Include="Tests\ITestCase.cs" />
     <Compile Include="Tests\TestCaseAttribute.cs" />
     <Compile Include="Tests\TestMode.cs" />
+    <Compile Include="Tunnel\Common\BaseDatagramDecoder.cs" />
+    <Compile Include="Tunnel\Common\BaseDatagramEncoder.cs" />
     <Compile Include="Tunnel\Common\EndPointKnifeTunnelSession.cs" />
     <Compile Include="Tunnel\Common\Heartbeat.cs" />
     <Compile Include="Tunnel\Common\IntKnifeTunnelSession.cs" />
@@ -199,13 +202,12 @@
     <Compile Include="Tunnel\Generic\KnifeStringCodec.cs" />
     <Compile Include="Tunnel\Generic\KnifeStringDatagramDecoder.cs" />
     <Compile Include="Tunnel\Generic\KnifeStringDatagramEncoder.cs" />
-    <Compile Include="Protocol\Generic\KnifeProtocolProcessorBase.cs" />
+    <Compile Include="Tunnel\Common\KnifeProtocolProcessorBase.cs" />
     <Compile Include="Tunnel\Generic\TunnelBase.cs" />
     <Compile Include="Tunnel\Generic\TunnelFilterBase.cs" />
     <Compile Include="Tunnel\IDataConnector.cs" />
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />
-    <Compile Include="Tunnel\IKnifeClient`.cs" />
     <Compile Include="Tunnel\ITunnelProtocolFilter`.cs" />
     <Compile Include="Tunnel\ITunnel`.cs" />
     <Compile Include="Tunnel\ITunnelConfig.cs" />
