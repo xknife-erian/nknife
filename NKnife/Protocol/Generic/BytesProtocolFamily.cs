@@ -9,7 +9,7 @@ using NKnife.IoC;
 namespace NKnife.Protocol.Generic
 {
     [Serializable]
-    public class BytesProtocolFamily<TData> : IProtocolFamily<TData, byte[]>
+    public class BytesProtocolFamily : IProtocolFamily<byte[]>
     {
         protected Func<byte[], BytesProtocol> _DefaultProtocolBuilder;
         protected Dictionary<byte[], Func<byte[], BytesProtocol>> _ProtocolBuilderMap = new Dictionary<byte[], Func<byte[], BytesProtocol>>();
@@ -89,8 +89,8 @@ namespace NKnife.Protocol.Generic
         {
             AddPackerGetter(command, (Func<byte[], BytesProtocolPacker>)func);
         }
+       
         #endregion
-
         public BytesProtocol Build(byte[] command)
         {
             Debug.Assert(!string.IsNullOrEmpty(FamilyName), "未设置协议族名称");

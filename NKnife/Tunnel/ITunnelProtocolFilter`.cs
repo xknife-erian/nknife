@@ -9,8 +9,8 @@ namespace NKnife.Tunnel
 {
     public interface ITunnelProtocolFilter<TSessionId, TData> : ITunnelFilter<TSessionId, TData>
     {
-        void AddHandlers(params KnifeProtocolHandlerBase<TData, TSessionId, TData>[] handlers);
+        void AddHandlers(params KnifeProtocolHandlerBase<TSessionId, TData>[] handlers);
 
-        void RemoveHandler(KnifeProtocolHandlerBase<TData, TSessionId, TData> handler);
+        void RemoveHandler(KnifeProtocolHandlerBase<TSessionId, TData> handler);
     }
 }

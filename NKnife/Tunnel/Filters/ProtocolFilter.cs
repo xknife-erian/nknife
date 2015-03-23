@@ -12,10 +12,10 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Filters
 {
-    public class ProtocolFilter<TOriginal, TSessionId> : ITunnelProtocolFilter<byte[], TSessionId>
+    public class ProtocolFilter<TSessionId> : ITunnelProtocolFilter<TSessionId, byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<TOriginal, TSessionId>>();
-        protected List<KnifeProtocolHandlerBase<TOriginal, TSessionId, byte[]>> Handlers = new List<KnifeProtocolHandlerBase<TOriginal, TSessionId, byte[]>>();
+        private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<TSessionId>>();
+        protected List<KnifeProtocolHandlerBase<TSessionId, byte[]>> _Handlers = new List<KnifeProtocolHandlerBase<TSessionId, byte[]>>();
 
         /// <summary>
         ///     核心方法:监听 ReceiveQueue 队列
@@ -72,22 +72,22 @@ namespace NKnife.Tunnel.Filters
         /// <summary>
         ///     触发数据基础解析后发生的数据到达事件
         /// </summary>
-        protected virtual void HandlerInvoke(TSessionId id, IProtocol<TOriginal> protocol)
+        protected virtual void HandlerInvoke(TSessionId id, IProtocol<byte[]> protocol)
         {
             try
             {
-                if (Handlers.Count == 0)
+                if (_Handlers.Count == 0)
                 {
                     Debug.Fail(string.Format("Handler集合不应为空."));
                     return;
                 }
-                if (Handlers.Count == 1)
+                if (_Handlers.Count == 1)
                 {
-                    Handlers[0].Recevied(id, protocol);
+                    _Handlers[0].Recevied(id, protocol);
                 }
                 else
                 {
-                    foreach (var handler in Handlers)
+                    foreach (var handler in _Handlers)
                     {
                         if (handler.Commands.Contains(protocol.Command))
                         {
@@ -161,7 +161,7 @@ namespace NKnife.Tunnel.Filters
 
         private readonly ConcurrentDictionary<TSessionId, DataMonitor> _DataMonitors = new ConcurrentDictionary<TSessionId, DataMonitor>();
 
-        public virtual void AddHandlers(params KnifeProtocolHandlerBase<byte[], TSessionId, byte[]>[] handlers)
+        public virtual void AddHandlers(params KnifeProtocolHandlerBase<TSessionId, byte[]>[] handlers)
         {
             foreach (var handler in handlers)
             {
@@ -169,14 +169,14 @@ namespace NKnife.Tunnel.Filters
                 handler.OnSendToAll += Handler_OnSendToAll;
                 handler.Bind(_Codec, _Family);
             }
-            Handlers.AddRange(handlers);
+            _Handlers.AddRange(handlers);
         }
 
-        public virtual void RemoveHandler(KnifeProtocolHandlerBase<byte[], TSessionId, byte[]> handler)
+        public virtual void RemoveHandler(KnifeProtocolHandlerBase<TSessionId, byte[]> handler)
         {
             handler.OnSendToSession -= Handler_OnSendToSession;
             handler.OnSendToAll -= Handler_OnSendToAll;
-            Handlers.Remove(handler);
+            _Handlers.Remove(handler);
         }
 
         protected virtual void Handler_OnSendToAll(object sender, EventArgs<byte[]> e)
@@ -188,7 +188,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs<byte[], TSessionId> e)
+        protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs<TSessionId> e)
         {
             var handler = OnSendToSession;
             if (handler != null)
@@ -210,7 +210,6 @@ namespace NKnife.Tunnel.Filters
         }
 
         #endregion
-
         protected class DataMonitor
         {
             public bool IsMonitor { get; set; }

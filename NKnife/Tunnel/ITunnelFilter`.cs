@@ -58,7 +58,7 @@ namespace NKnife.Tunnel
         /// 找到当前filter前一个filter继续执行ProcessSendToSession方法，如果当前filter已经是链表中的第一个filter，
         /// 则tunnel会调用dataconnctor的数据发送方法，
         /// </summary>
-        event EventHandler<SessionEventArgs<TData, TSessionId>> OnSendToSession;
+        event EventHandler<SessionEventArgs<TSessionId>> OnSendToSession;
         /// <summary>
         /// filter通过该消息，通知tunnel，有数据想通过dataconnctor发送给所有会话，tunnel会从filter链表中
         /// 找到当前filter前一个filter继续执行ProcessSendToAll方法，如果当前filter已经是链表中的第一个filter，

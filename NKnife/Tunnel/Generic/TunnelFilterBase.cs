@@ -7,7 +7,7 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Generic
 {
-    public abstract class TunnelFilterBase<TData, TSessionId> : ITunnelFilter<TData, TSessionId>
+    public abstract class TunnelFilterBase<TSessionId, TData> : ITunnelFilter<TSessionId, TData>
     {
         public abstract bool PrcoessReceiveData(ITunnelSession<TData, TSessionId> session);
 
@@ -25,7 +25,7 @@ namespace NKnife.Tunnel.Generic
             //默认啥也不干
         }
 
-        public abstract event EventHandler<SessionEventArgs<TData, TSessionId>> OnSendToSession;
+        public abstract event EventHandler<SessionEventArgs<TSessionId>> OnSendToSession;
         public abstract event EventHandler<EventArgs<TData>> OnSendToAll;
         public abstract event EventHandler<EventArgs<TSessionId>> OnKillSession;
     }

@@ -6,17 +6,17 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel
 {
-    public interface IDataConnector<TData, TSessionId>
+    public interface IDataConnector<TSessionId, in TDataIn>
     {
         bool Stop();
         bool Start();
 
-        event EventHandler<SessionEventArgs<TData, TSessionId>> SessionBuilt;
-        event EventHandler<SessionEventArgs<TData, TSessionId>> SessionBroken;
-        event EventHandler<SessionEventArgs<TData, TSessionId>> DataReceived;
+        event EventHandler<SessionEventArgs<TSessionId>> SessionBuilt;
+        event EventHandler<SessionEventArgs<TSessionId>> SessionBroken;
+        event EventHandler<SessionEventArgs<TSessionId>> DataReceived;
 
-        void Send(TSessionId id, TData data);
-        void SendAll(TData data);
+        void Send(TSessionId id, TDataIn data);
+        void SendAll(TDataIn data);
         void KillSession(TSessionId id);
     }
 }

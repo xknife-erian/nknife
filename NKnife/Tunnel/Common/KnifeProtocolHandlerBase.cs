@@ -27,7 +27,6 @@ namespace NKnife.Tunnel.Common
 
         #endregion
 
-
         protected IProtocolFamily<TData> _Family;
         public abstract List<TData> Commands { get; set; }
         public abstract void Recevied(TSessionId sessionId, IProtocol<TData> protocol);
