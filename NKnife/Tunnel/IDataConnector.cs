@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel
 {
-    public interface IDataConnector<TSessionId, in TDataIn>
+    public interface IDataConnector<in TData>
     {
         bool Stop();
         bool Start();
 
-        event EventHandler<SessionEventArgs<TSessionId>> SessionBuilt;
-        event EventHandler<SessionEventArgs<TSessionId>> SessionBroken;
-        event EventHandler<SessionEventArgs<TSessionId>> DataReceived;
-
-        void Send(TSessionId id, TDataIn data);
-        void SendAll(TDataIn data);
-        void KillSession(TSessionId id);
+        event EventHandler<SessionEventArgs> SessionBuilt;
+        event EventHandler<SessionEventArgs> SessionBroken;
+        event EventHandler<SessionEventArgs> DataReceived;
+        void Send(long id, TData data);
+        void SendAll(TData data);
+        void KillSession(long id);
     }
 }

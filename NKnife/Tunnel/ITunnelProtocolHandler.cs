@@ -6,14 +6,14 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelProtocolHandler<TSessionId, TData, TSource>
+    public interface ITunnelProtocolHandler<TData>
     {
         List<TData> Commands { get; set; }
-        ITunnelCodec<TData, TSource> Codec { get; set; }
-        void Recevied(TSessionId session, IProtocol<TData> protocol);
+        ITunnelCodec<TData> Codec { get; set; }
+        void Recevied(long session, IProtocol<TData> protocol);
 
-        event EventHandler<SessionEventArgs<TSessionId>> OnSendToSession;
+        event EventHandler<SessionEventArgs> OnSendToSession;
 
-        event EventHandler<EventArgs<TSource>> OnSendToAll;
+        event EventHandler<EventArgs> OnSendToAll;
     }
 }

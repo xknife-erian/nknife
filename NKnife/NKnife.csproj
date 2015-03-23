@@ -171,7 +171,6 @@
     <Compile Include="Protocol\Generic\Xml\XmlUnPacker.cs" />
     <Compile Include="Protocol\IProtocol`.cs" />
     <Compile Include="Protocol\IProtocolFamily`.cs" />
-    <Compile Include="Tunnel\ITunnelCodecBase.cs" />
     <Compile Include="Tunnel\ITunnelProtocolHandler.cs" />
     <Compile Include="Protocol\IProtocolPacker`.cs" />
     <Compile Include="Protocol\IProtocolUnPacker`.cs" />

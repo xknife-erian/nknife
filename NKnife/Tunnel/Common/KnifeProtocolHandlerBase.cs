@@ -7,33 +7,33 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Common
 {
-    public abstract class KnifeProtocolHandlerBase<TSessionId, TData> : ITunnelProtocolHandler<TSessionId, TData, byte[]>
+    public abstract class KnifeProtocolHandlerBase<TData> : ITunnelProtocolHandler<TData>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolHandlerBase<TSessionId, TData>>();
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolHandlerBase<TData>>();
 
         #region Codec
 
-        private ITunnelCodecBase<TData> _CodecBase;
-        public ITunnelCodecBase<TData> Codec
+        private ITunnelCodec<TData> _CodecBase;
+        public ITunnelCodec<TData> Codec
         {
             get { return _CodecBase; }
             set { _CodecBase = value; }
         }
-        ITunnelCodec<TData, byte[]> ITunnelProtocolHandler<TSessionId, TData, byte[]>.Codec
+        ITunnelCodec<TData> ITunnelProtocolHandler<TData>.Codec
         {
             get { return _CodecBase; }
-            set { _CodecBase = (ITunnelCodecBase<TData>) value; }
+            set { _CodecBase = value; }
         }
 
         #endregion
 
         protected IProtocolFamily<TData> _Family;
         public abstract List<TData> Commands { get; set; }
-        public abstract void Recevied(TSessionId sessionId, IProtocol<TData> protocol);
-        public event EventHandler<SessionEventArgs<TSessionId>> OnSendToSession;
-        public event EventHandler<EventArgs<byte[]>> OnSendToAll;
+        public abstract void Recevied(long sessionId, IProtocol<TData> protocol);
+        public event EventHandler<SessionEventArgs> OnSendToSession;
+        public event EventHandler<EventArgs> OnSendToAll;
 
-        public virtual void Bind(ITunnelCodecBase<TData> codec, IProtocolFamily<TData> protocolFamily)
+        public virtual void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> protocolFamily)
         {
             _CodecBase = codec;
             _Family = protocolFamily;
@@ -44,7 +44,7 @@ namespace NKnife.Tunnel.Common
         /// </summary>
         /// <param name="sessionId"></param>
         /// <param name="protocol"></param>
-        public virtual void WriteToSession(TSessionId sessionId, IProtocol<TData> protocol)
+        public virtual void WriteToSession(long sessionId, IProtocol<TData> protocol)
         {
             try
             {
@@ -53,8 +53,8 @@ namespace NKnife.Tunnel.Common
                 var handler = OnSendToSession;
                 if (handler != null)
                 {
-                    var session = new TunnelSession<TSessionId> {Id = sessionId, Data = data};
-                    var e = new SessionEventArgs<TSessionId>(session);
+                    var session = new TunnelSession {Id = sessionId, Data = data};
+                    var e = new SessionEventArgs(session);
                     handler.Invoke(this, e);
                 }
             }

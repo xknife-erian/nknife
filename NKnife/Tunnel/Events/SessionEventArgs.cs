@@ -8,10 +8,10 @@ using NKnife.Tunnel.Common;
 
 namespace NKnife.Tunnel.Events
 {
-    public class SessionEventArgs<TSessionId> : EventArgs<TunnelSession<TSessionId>>
+    public class SessionEventArgs : EventArgs<TunnelSession>
     {
-        public SessionEventArgs(TunnelSession<TSessionId> item)
-            : base(item)
+        public SessionEventArgs(TunnelSession session)
+            : base(session)
         {
         }
     }

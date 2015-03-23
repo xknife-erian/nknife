@@ -2,17 +2,16 @@
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelFilterChain<TData, TSessionId> : ICollection<ITunnelFilter<TData, TSessionId>>
+    public interface ITunnelFilterChain : ICollection<ITunnelFilter>
     {
-        LinkedListNode<ITunnelFilter<TData, TSessionId>> Find(ITunnelFilter<TData, TSessionId> filter);
-        void AddAfter(LinkedListNode<ITunnelFilter<TData, TSessionId>> node, ITunnelFilter<TData, TSessionId> newfilter);
-        void AddBefore(LinkedListNode<ITunnelFilter<TData, TSessionId>> node, ITunnelFilter<TData, TSessionId> newfilter);
-        void AddFirst(ITunnelFilter<TData, TSessionId> filter);
-        void AddLast(ITunnelFilter<TData, TSessionId> filter);
+        LinkedListNode<ITunnelFilter> Find(ITunnelFilter filter);
+        void AddAfter(LinkedListNode<ITunnelFilter> node, ITunnelFilter newfilter);
+        void AddBefore(LinkedListNode<ITunnelFilter> node, ITunnelFilter newfilter);
+        void AddFirst(ITunnelFilter filter);
+        void AddLast(ITunnelFilter filter);
         void RemoveFirst();
         void RemoveLast();
-        LinkedListNode<ITunnelFilter<TData, TSessionId>> Previous(LinkedListNode<ITunnelFilter<TData, TSessionId>> currentNode);
-
-        LinkedListNode<ITunnelFilter<TData, TSessionId>> Next(LinkedListNode<ITunnelFilter<TData, TSessionId>> currentNode);
+        LinkedListNode<ITunnelFilter> Previous(LinkedListNode<ITunnelFilter> currentNode);
+        LinkedListNode<ITunnelFilter> Next(LinkedListNode<ITunnelFilter> currentNode);
     }
 }

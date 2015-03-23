@@ -5,9 +5,9 @@ using System.Text;
 
 namespace NKnife.Tunnel.Common
 {
-    public class TunnelSession<TSessionId> : ITunnelSession<TSessionId, byte[]>
+    public class TunnelSession : ITunnelSession
     {
-        public TSessionId Id { get; set; }
+        public long Id { get; set; }
         public byte[] Data { get; set; }
         public object Tag { get; set; }
     }

@@ -7,10 +7,10 @@ using NKnife.Tunnel.Common;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnelProtocolFilter<TSessionId, TData> : ITunnelFilter<TSessionId, TData>
+    public interface ITunnelProtocolFilter<TData> : ITunnelFilter
     {
-        void AddHandlers(params KnifeProtocolHandlerBase<TSessionId, TData>[] handlers);
+        void AddHandlers(params ITunnelProtocolHandler<TData>[] handlers);
 
-        void RemoveHandler(KnifeProtocolHandlerBase<TSessionId, TData> handler);
+        void RemoveHandler(ITunnelProtocolHandler<TData> handler);
     }
 }
