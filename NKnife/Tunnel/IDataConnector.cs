@@ -3,7 +3,7 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel
 {
-    public interface IDataConnector<in TData>
+    public interface IDataConnector
     {
         bool Stop();
         bool Start();
@@ -11,8 +11,8 @@ namespace NKnife.Tunnel
         event EventHandler<SessionEventArgs> SessionBuilt;
         event EventHandler<SessionEventArgs> SessionBroken;
         event EventHandler<SessionEventArgs> DataReceived;
-        void Send(long id, TData data);
-        void SendAll(TData data);
+        void Send(long id, byte[] data);
+        void SendAll(byte[] data);
         void KillSession(long id);
     }
 }

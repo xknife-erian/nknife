@@ -9,6 +9,7 @@ using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 

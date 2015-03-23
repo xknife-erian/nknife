@@ -196,7 +196,6 @@
     <Compile Include="Tunnel\Generic\KnifeStringCodec.cs" />
     <Compile Include="Tunnel\Generic\KnifeStringDatagramDecoder.cs" />
     <Compile Include="Tunnel\Generic\KnifeStringDatagramEncoder.cs" />
-    <Compile Include="Tunnel\Base\KnifeProtocolProcessorBase.cs" />
     <Compile Include="Tunnel\Base\BaseTunnel.cs" />
     <Compile Include="Tunnel\Base\BaseTunnelFilter.cs" />
     <Compile Include="Tunnel\IDataConnector.cs" />

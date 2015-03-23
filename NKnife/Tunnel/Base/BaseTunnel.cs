@@ -3,10 +3,10 @@ using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Base
 {
-    public abstract class BaseTunnel<TData> : ITunnel<TData>
+    public abstract class BaseTunnel : ITunnel
     {
-        private static readonly ILog _logger = LogManager.GetLogger<BaseTunnel<TData>>();
-        protected IDataConnector<TData> _DataConnector;
+        private static readonly ILog _logger = LogManager.GetLogger<BaseTunnel>();
+        protected IDataConnector _DataConnector;
         protected ITunnelFilterChain _FilterChain;
         private bool _IsDataConnectedBound;
         public abstract void Dispose();
@@ -30,7 +30,7 @@ namespace NKnife.Tunnel.Base
             _FilterChain.Remove(filter);
         }
 
-        public void BindDataConnector(IDataConnector<TData> dataConnector)
+        public void BindDataConnector(IDataConnector dataConnector)
         {
             if (!_IsDataConnectedBound)
             {

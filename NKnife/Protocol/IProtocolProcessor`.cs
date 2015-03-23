@@ -5,7 +5,7 @@ namespace NKnife.Protocol
 {
     public interface IProtocolProcessor<TData, TSource>
     {
-        void Bind(ITunnelCodec<TData, TSource> codec, IProtocolFamily<TData> protocolFamily);
+        void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> protocolFamily);
 
         /// <summary>
         /// 数据包处理。包含处理较异常的情况下的，半包的接包，粘包等现象。

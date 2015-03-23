@@ -4,11 +4,11 @@ using NKnife.Protocol;
 
 namespace NKnife.Tunnel
 {
-    public interface ITunnel<TData> : IDisposable
+    public interface ITunnel : IDisposable
     {
         ITunnelConfig Config { get; set; }
         void AddFilters(params ITunnelFilter[] filter);
         void RemoveFilter(ITunnelFilter filter);
-        void BindDataConnector(IDataConnector<TData> dataConnector);
+        void BindDataConnector(IDataConnector dataConnector);
     }
 }

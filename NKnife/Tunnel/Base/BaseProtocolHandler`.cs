@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Logging;
-using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
@@ -15,11 +14,13 @@ namespace NKnife.Tunnel.Base
         #region Codec
 
         private ITunnelCodec<TData> _CodecBase;
+
         public ITunnelCodec<TData> Codec
         {
             get { return _CodecBase; }
             set { _CodecBase = value; }
         }
+
         ITunnelCodec<TData> ITunnelProtocolHandler<TData>.Codec
         {
             get { return _CodecBase; }
@@ -49,9 +50,9 @@ namespace NKnife.Tunnel.Base
         {
             try
             {
-                var original = _Family.Generate(protocol);
-                var data = _CodecBase.Encoder.Execute(original);
-                var handler = OnSendToSession;
+                TData original = _Family.Generate(protocol);
+                byte[] data = _CodecBase.Encoder.Execute(original);
+                EventHandler<SessionEventArgs> handler = OnSendToSession;
                 if (handler != null)
                 {
                     var session = new TunnelSession {Id = sessionId, Data = data};
@@ -69,12 +70,13 @@ namespace NKnife.Tunnel.Base
         {
             try
             {
-                var str = _Family.Generate(protocol);
-                var data = _CodecBase.Encoder.Execute(str);
-                var handler = OnSendToAll;
+                TData str = _Family.Generate(protocol);
+                byte[] data = _CodecBase.Encoder.Execute(str);
+                EventHandler<SessionEventArgs> handler = OnSendToAll;
                 if (handler != null)
                 {
-                    handler.Invoke(this, new SessionEventArgs());// new EventArgs<byte[]>(data));
+                    var session = new TunnelSession { Data = data };
+                    handler.Invoke(this, new SessionEventArgs(session)); // new EventArgs<byte[]>(data));
                 }
             }
             catch (Exception ex)
