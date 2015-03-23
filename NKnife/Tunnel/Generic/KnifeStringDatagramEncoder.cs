@@ -1,4 +1,5 @@
-﻿using NKnife.Tunnel.Common;
+﻿using NKnife.Tunnel.Base;
+using NKnife.Tunnel.Common;
 
 namespace NKnife.Tunnel.Generic
 {

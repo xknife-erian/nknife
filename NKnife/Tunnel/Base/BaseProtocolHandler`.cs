@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Common.Logging;
 using NKnife.Events;
 using NKnife.Protocol;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 
-namespace NKnife.Tunnel.Common
+namespace NKnife.Tunnel.Base
 {
-    public abstract class KnifeProtocolHandlerBase<TData> : ITunnelProtocolHandler<TData>
+    public abstract class BaseProtocolHandler<TData> : ITunnelProtocolHandler<TData>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeProtocolHandlerBase<TData>>();
+        private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolHandler<TData>>();
 
         #region Codec
 

@@ -1,12 +1,11 @@
-﻿using System;
-using Common.Logging;
+﻿using Common.Logging;
 using NKnife.Tunnel.Events;
 
-namespace NKnife.Tunnel.Generic
+namespace NKnife.Tunnel.Base
 {
-    public abstract class TunnelBase<TData> : ITunnel<TData>
+    public abstract class BaseTunnel<TData> : ITunnel<TData>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<TunnelBase<TData>>();
+        private static readonly ILog _logger = LogManager.GetLogger<BaseTunnel<TData>>();
         protected IDataConnector<TData> _DataConnector;
         protected ITunnelFilterChain _FilterChain;
         private bool _IsDataConnectedBound;
@@ -16,7 +15,9 @@ namespace NKnife.Tunnel.Generic
         public virtual void AddFilters(params ITunnelFilter[] filters)
         {
             if (_FilterChain == null)
+            {
                 SetFilterChain();
+            }
             foreach (var filter in filters)
             {
                 if (_FilterChain != null)

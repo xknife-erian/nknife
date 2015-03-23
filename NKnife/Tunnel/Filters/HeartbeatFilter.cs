@@ -1,21 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using Common.Logging;
-using NKnife.Events;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
-using NKnife.Tunnel.Generic;
 using Timer = System.Timers.Timer;
 
 namespace NKnife.Tunnel.Filters
 {
-    public class HeartbeatFilter : TunnelFilterBase<byte[], EndPoint>
+    public class HeartbeatFilter : BaseTunnelFilter
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-        private readonly Dictionary<EndPoint, HeartBeatSession> _HeartBeartSessionMap = new Dictionary<EndPoint, HeartBeatSession>();
+        private static readonly ILog _logger = LogManager.GetLogger<HeartbeatFilter>();
+        private readonly Dictionary<long, HeartBeatSession> _HeartBeartSessionMap = new Dictionary<long, HeartBeatSession>();
         private readonly ManualResetEvent _ReceiveProcessingResetEvent = new ManualResetEvent(false);
         private Timer _BeatingTimer;
         private bool _IsTimerStarted;
@@ -54,9 +52,9 @@ namespace NKnife.Tunnel.Filters
         /// </summary>
         public HeartBeatMode HeartBeatMode { get; set; }
 
-        public override event EventHandler<SessionEventArgs<byte[], EndPoint>> OnSendToSession;
-        public override event EventHandler<EventArgs<byte[]>> OnSendToAll;
-        public override event EventHandler<EventArgs<EndPoint>> OnKillSession;
+        public override event EventHandler<SessionEventArgs> OnSendToSession;
+        public override event EventHandler<SessionEventArgs> OnSendToAll;
+        public override event EventHandler<SessionEventArgs> OnKillSession;
 
         protected virtual void BeatingTimerElapsed(object sender, EventArgs e)
         {
@@ -66,7 +64,7 @@ namespace NKnife.Tunnel.Filters
                 _ReceiveProcessingResetEvent.WaitOne();
             }
 
-            var todoList = new List<EndPoint>(0); //待移除
+            var todoList = new List<long>(0); //待移除
             foreach (var pair in _HeartBeartSessionMap)
             {
                 var endpoint = pair.Key;
@@ -76,10 +74,10 @@ namespace NKnife.Tunnel.Filters
                     if (HeartBeatMode == HeartBeatMode.Active) //主动模式需要发出心跳请求，并进入等待状态
                     {
 #if DEBUG
-                        _logger.Trace(string.Format("{0}向{1}发出心跳请求.", Heartbeat.LocalHeartDescription, session.SessionId));
+                        _logger.Trace(string.Format("{0}向{1}发出心跳请求.", Heartbeat.LocalHeartDescription, session.Id));
 #endif
                         session.SetWaitForReply(true); //在PrcoessReceiveData方法里，当收到回复时会回写为false
-                        ProcessHeartBeatRequestOrReply(session.SessionId, Heartbeat.RequestToRemote);
+                        ProcessHeartBeatRequestOrReply(session.Id, Heartbeat.RequestToRemote);
                     }
                     else //被动模式说明当前周期内收到了心跳请求，进入等待状态，再等一个周期
                     {
@@ -100,12 +98,12 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        private void RemoveHeartBeatSessionFromMap(EndPoint endPoint)
+        private void RemoveHeartBeatSessionFromMap(long endPoint)
         {
             _HeartBeartSessionMap.Remove(endPoint);
         }
 
-        private HeartBeatSession GetHeartBeatSessionFromMap(EndPoint endPoint)
+        private HeartBeatSession GetHeartBeatSessionFromMap(long endPoint)
         {
             HeartBeatSession result;
             _HeartBeartSessionMap.TryGetValue(endPoint, out result);
@@ -141,7 +139,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public override bool PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+        public override bool PrcoessReceiveData(ITunnelSession session)
         {
             _OnReceiveProcessing = true;
 
@@ -205,7 +203,7 @@ namespace NKnife.Tunnel.Filters
             return true;
         }
 
-        public override void ProcessSessionBroken(EndPoint id)
+        public override void ProcessSessionBroken(long id)
         {
             if (_HeartBeartSessionMap.ContainsKey(id))
             {
@@ -219,13 +217,13 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public override void ProcessSessionBuilt(EndPoint id)
+        public override void ProcessSessionBuilt(long id)
         {
             if (!_HeartBeartSessionMap.ContainsKey(id))
             {
                 var session = new HeartBeatSession
                 {
-                    SessionId = id
+                    Id = id
                 };
                 session.SetWaitForReply(HeartBeatMode == HeartBeatMode.Passive);
 
@@ -240,23 +238,23 @@ namespace NKnife.Tunnel.Filters
         ///     心跳中断处理
         /// </summary>
         /// <returns></returns>
-        public void ProcessHeartBroke(EndPoint id)
+        public void ProcessHeartBroke(long id)
         {
             //发出杀死Session的指令，session杀死后，
             //filter会收到SessionBroken消息，收到消息后将对应的session移出map
             var handler = OnKillSession;
             if (handler != null)
             {
-                handler.Invoke(this, new EventArgs<EndPoint>(id));
+                handler.Invoke(this, new SessionEventArgs(_HeartBeartSessionMap[id]));
             }
         }
 
-        public void ProcessHeartBeatRequestOrReply(EndPoint sessionId, byte[] requestOrReply)
+        public void ProcessHeartBeatRequestOrReply(long sessionId, byte[] requestOrReply)
         {
             var handler = OnSendToSession;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
                 {
                     Id = sessionId,
                     Data = requestOrReply
@@ -286,14 +284,12 @@ namespace NKnife.Tunnel.Filters
             return true;
         }
 
-        internal class HeartBeatSession
+        internal class HeartBeatSession : TunnelSession
         {
             /// <summary>
             ///     心跳时等待回复
             /// </summary>
             private bool _WaitingForReply;
-
-            public EndPoint SessionId { get; set; }
 
             public bool GetWaitForReply()
             {
@@ -314,14 +310,14 @@ namespace NKnife.Tunnel.Filters
 
             protected bool Equals(HeartBeatSession other)
             {
-                return SessionId == other.SessionId && _WaitingForReply.Equals(other._WaitingForReply);
+                return Id == other.Id && _WaitingForReply.Equals(other._WaitingForReply);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    var hashCode = SessionId.GetHashCode();
+                    var hashCode = Id.GetHashCode();
                     hashCode = (hashCode*397);
                     return hashCode;
                 }
