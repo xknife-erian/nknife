@@ -9,7 +9,7 @@ namespace NKnife.Electronics
     {
         /// <summary>电阻的阻值，单位欧姆(Ω)。
         /// </summary>
-        public float Value { get; set; }
+        public double Value { get; set; }
 
         /// <summary>电阻值的允许偏差
         /// </summary>
@@ -21,7 +21,7 @@ namespace NKnife.Electronics
 
         /// <summary>电阻的最大工作电压
         /// </summary>
-        public int MaximalVoltage { get; set; }
+        public float MaximalVoltage { get; set; }
 
         /// <summary>当前实例电阻可分解为的电阻的组合
         /// </summary>
@@ -34,12 +34,14 @@ namespace NKnife.Electronics
         /// </returns>
         public object Clone()
         {
-            var newObj = new Resistance();
-            newObj.Value = Value;
-            newObj.Tolerance = Tolerance;
-            newObj.RatedPower = RatedPower;
-            newObj.MaximalVoltage = MaximalVoltage;
-            newObj.Group = Group;
+            var newObj = new Resistance
+            {
+                Value = Value,
+                Tolerance = Tolerance, 
+                RatedPower = RatedPower,
+                MaximalVoltage = MaximalVoltage,
+                Group = Group
+            };
             return newObj;
         }
 

@@ -29,7 +29,7 @@ namespace NKnife.Electronics.Collections
 
         /// <summary>当前集合中的电阻的等效电阻值
         /// </summary>
-        public float EquivalentValue
+        public double EquivalentValue
         {
             get
             {
@@ -47,10 +47,10 @@ namespace NKnife.Electronics.Collections
 
         /// <summary>并联的等效值
         /// </summary>
-        private float ParallelingEquivalentValue()
+        private double ParallelingEquivalentValue()
         {
             //总电阻的倒数等于各分电阻的倒数之和
-            float sum = 0;
+            double sum;
             if (_Resistances.Count > 0)
                 sum = _Resistances.Sum(res => 1/res.Value);
             else
@@ -60,12 +60,12 @@ namespace NKnife.Electronics.Collections
 
         /// <summary>串联的等效值
         /// </summary>
-        private float SeriesEquivalentValue()
+        private double SeriesEquivalentValue()
         {
-            float v = 0;
+            double sum = 0;
             if (_Resistances.Count > 0)
-                v += _Resistances.Sum(res => res.Value);
-            return v;
+                sum += _Resistances.Sum(res => res.Value);
+            return sum;
         }
 
         public IEnumerator<Resistance> GetEnumerator()

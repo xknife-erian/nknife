@@ -7,15 +7,16 @@ using Common.Logging;
 using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 
 namespace NKnife.Tunnel.Filters
 {
-    public class ProtocolFilter<TSessionId> : ITunnelProtocolFilter<TSessionId, byte[]>
+    public class ProtocolFilter<T> : ITunnelProtocolFilter<T>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<TSessionId>>();
-        protected List<KnifeProtocolHandlerBase<TSessionId, byte[]>> _Handlers = new List<KnifeProtocolHandlerBase<TSessionId, byte[]>>();
+        private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<T>>();
+        protected List<ITunnelProtocolHandler<T>> _Handlers = new List<ITunnelProtocolHandler<T>>();
 
         /// <summary>
         ///     核心方法:监听 ReceiveQueue 队列
@@ -72,7 +73,7 @@ namespace NKnife.Tunnel.Filters
         /// <summary>
         ///     触发数据基础解析后发生的数据到达事件
         /// </summary>
-        protected virtual void HandlerInvoke(TSessionId id, IProtocol<byte[]> protocol)
+        protected virtual void HandlerInvoke(long id, IProtocol<T> protocol)
         {
             try
             {
@@ -104,11 +105,11 @@ namespace NKnife.Tunnel.Filters
 
         #region interface
 
-        public event EventHandler<SessionEventArgs<byte[], TSessionId>> OnSendToSession;
-        public event EventHandler<EventArgs<byte[]>> OnSendToAll;
-        public event EventHandler<EventArgs<TSessionId>> OnKillSession;
+        public event EventHandler<SessionEventArgs> OnSendToSession;
+        public event EventHandler<SessionEventArgs> OnSendToAll;
+        public event EventHandler<SessionEventArgs> OnKillSession;
 
-        public virtual void ProcessSessionBroken(TSessionId id)
+        public virtual void ProcessSessionBroken(long id)
         {
             DataMonitor monitor;
             if (_DataMonitors.TryGetValue(id, out monitor))
@@ -118,7 +119,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public virtual void ProcessSessionBuilt(TSessionId id)
+        public virtual void ProcessSessionBuilt(long id)
         {
             DataMonitor monitor;
             if (!_DataMonitors.TryGetValue(id, out monitor))
@@ -129,7 +130,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public virtual void ProcessSendToSession(ITunnelSession<byte[], int> session)
+        public virtual void ProcessSendToSession(ITunnelSession session)
         {
             //什么也不做
         }
@@ -139,7 +140,7 @@ namespace NKnife.Tunnel.Filters
             //什么也不做
         }
 
-        public virtual bool PrcoessReceiveData(ITunnelSession<byte[], TSessionId> session)
+        public virtual bool PrcoessReceiveData(ITunnelSession session)
         {
             var data = session.Data;
             var id = session.Id;
@@ -159,27 +160,27 @@ namespace NKnife.Tunnel.Filters
 
         #region 数据处理
 
-        private readonly ConcurrentDictionary<TSessionId, DataMonitor> _DataMonitors = new ConcurrentDictionary<TSessionId, DataMonitor>();
+        private readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
 
-        public virtual void AddHandlers(params KnifeProtocolHandlerBase<TSessionId, byte[]>[] handlers)
+        public virtual void AddHandlers(params ITunnelProtocolHandler<T>[] handlers)
         {
             foreach (var handler in handlers)
             {
                 handler.OnSendToSession += Handler_OnSendToSession;
                 handler.OnSendToAll += Handler_OnSendToAll;
                 handler.Bind(_Codec, _Family);
+                _Handlers.Add(handler);
             }
-            _Handlers.AddRange(handlers);
         }
 
-        public virtual void RemoveHandler(KnifeProtocolHandlerBase<TSessionId, byte[]> handler)
+        public virtual void RemoveHandler(ITunnelProtocolHandler<T> handler)
         {
             handler.OnSendToSession -= Handler_OnSendToSession;
             handler.OnSendToAll -= Handler_OnSendToAll;
             _Handlers.Remove(handler);
         }
 
-        protected virtual void Handler_OnSendToAll(object sender, EventArgs<byte[]> e)
+        protected virtual void Handler_OnSendToAll(object sender, SessionEventArgs e)
         {
             var handler = OnSendToAll;
             if (handler != null)
@@ -188,7 +189,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs<TSessionId> e)
+        protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs e)
         {
             var handler = OnSendToSession;
             if (handler != null)
@@ -197,7 +198,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        protected virtual void InitializeDataMonitor(TSessionId id, DataMonitor dm)
+        protected virtual void InitializeDataMonitor(long id, DataMonitor dm)
         {
             var task = new Task(ReceiveQueueMonitor, id);
             dm.IsMonitor = true;

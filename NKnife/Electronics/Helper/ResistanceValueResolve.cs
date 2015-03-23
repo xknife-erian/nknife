@@ -20,7 +20,7 @@ namespace NKnife.Electronics.Helper
         /// <param name="target">指定的需分解的电阻值,单位欧姆(Ω)</param>
         /// <param name="begin">已存在的集合的起始位置，默认从0的位置开始搜索</param>
         /// <returns>分解剩余的阻值余数</returns>
-        public float TryGetResolveResult(out Resistances[] results, ResistanceValueResolveModel model, float target, int begin = 0)
+        public double TryGetResolveResult(out Resistances[] results, ResistanceValueResolveModel model, double target, int begin = 0)
         {
             if (Existing == null || Existing.Count <= 0)
                 throw ResistanceCollectionException.ForNull();
@@ -30,7 +30,7 @@ namespace NKnife.Electronics.Helper
             var resultlist = new List<Resistances>();
 
             //分解剩余的阻值余数
-            float remainder = target;
+            double remainder = target;
 
             if ((model & ResistanceValueResolveModel.All) == ResistanceValueResolveModel.SeriesBigValuePriority)
             {
@@ -64,7 +64,7 @@ namespace NKnife.Electronics.Helper
         /// <param name="target">指定的需分解的电阻值,单位欧姆(Ω)</param>
         /// <param name="begin">已存在的集合的起始位置，默认从0的位置开始搜索</param>
         /// <returns>分解剩余的阻值余数</returns>
-        protected float TryGetSeriesBigValuePriorityResult(ref Resistances result, float target, int begin)
+        protected double TryGetSeriesBigValuePriorityResult(ref Resistances result, double target, int begin)
         {
             //下面代码中我们称已存在的电阻的集合为“数列”，并假定该数列已按大到小进行过排序
             for (int i = begin; i < Existing.Count; i++)
@@ -84,7 +84,7 @@ namespace NKnife.Electronics.Helper
                     }
                 }
                 //余数进行下一步的递归分解
-                float modular = target%res.Value;
+                double modular = target%res.Value;
                 if (modular > 0)
                 {
                     //递归分解
@@ -107,7 +107,7 @@ namespace NKnife.Electronics.Helper
         /// <param name="target">指定的需分解的电阻值,单位欧姆(Ω)</param>
         /// <param name="end">本函数将从集合尾部进行搜索组合</param>
         /// <returns>分解剩余的阻值余数</returns>
-        protected float TryGetSeriesSmallValuePriorityResult(ref Resistances result, float target, int end)
+        protected double TryGetSeriesSmallValuePriorityResult(ref Resistances result, double target, int end)
         {
             if (end < 0 || end >= Existing.Count)
                 end = Existing.Count - 1;
