@@ -7,7 +7,7 @@ using SocketKnife.Generic;
 
 namespace SocketKnife.Interfaces
 {
-    public interface IKnifeSocketServer : IDataConnector<byte[], EndPoint>
+    public interface IKnifeSocketServer : IDataConnector
     {
         KnifeSocketConfig Config { get; set; }
         void Configure(IPAddress ipAddress, int port);

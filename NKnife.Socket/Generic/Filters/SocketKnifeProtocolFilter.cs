@@ -15,18 +15,14 @@ using NKnife.Tunnel.Events;
 
 namespace SocketKnife.Generic.Filters
 {
-    public class SocketKnifeProtocolFilter : KnifeProtocolProcessorBase<string>, ITunnelFilter<byte[], EndPoint>
+    public class SocketKnifeProtocolFilter : BaseTunnelFilter
     {
         private static readonly ILog _logger = LogManager.GetLogger<SocketKnifeProtocolFilter>();
 
-        protected List<KnifeProtocolHandlerBase<byte[], EndPoint, string>> Handlers = new List<KnifeProtocolHandlerBase<byte[], EndPoint, string>>();
+        protected List<BaseProtocolHandler<string>> Handlers = new List<BaseProtocolHandler<string>>();
 
         #region interface
         
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> OnSendToSession;
-        public event EventHandler<EventArgs<byte[]>> OnSendToAll;
-        public event EventHandler<EventArgs<EndPoint>> OnKillSession;
-
         public virtual void ProcessSessionBroken(EndPoint id)
         {
             DataMonitor monitor;
@@ -48,20 +44,10 @@ namespace SocketKnife.Generic.Filters
             }
         }
 
-        public virtual void ProcessSendToSession(ITunnelSession<byte[], EndPoint> session)
-        {
-            //什么也不做
-        }
-
-        public virtual void ProcessSendToAll(byte[] data)
-        {
-            //什么也不做
-        }
-
-        public virtual bool PrcoessReceiveData(ITunnelSession<byte[], EndPoint> session)
+        public override bool PrcoessReceiveData(ITunnelSession session)
         {
             var data = session.Data;
-            EndPoint endPoint = session.Id;
+            long endPoint = session.Id;
             //ReceiveQueue receive;
             DataMonitor monitor;
             if (!_DataMonitors.TryGetValue(endPoint, out monitor))
@@ -173,7 +159,7 @@ namespace SocketKnife.Generic.Filters
 
         private readonly ConcurrentDictionary<EndPoint, DataMonitor> _DataMonitors = new ConcurrentDictionary<EndPoint, DataMonitor>();
 
-        public virtual void AddHandlers(params KnifeProtocolHandlerBase<EndPoint, string>[] handlers)
+        public virtual void AddHandlers(params BaseProtocolHandler<string>[] handlers)
         {
             foreach (var handler in handlers)
             {
@@ -184,7 +170,7 @@ namespace SocketKnife.Generic.Filters
             Handlers.AddRange(handlers);
         }
 
-        public virtual void RemoveHandler(KnifeProtocolHandlerBase<EndPoint, string> handler)
+        public virtual void RemoveHandler(BaseProtocolHandler<string> handler)
         {
             handler.OnSendToSession -= Handler_OnSendToSession;
             handler.OnSendToAll -= Handler_OnSendToAll;
@@ -198,7 +184,7 @@ namespace SocketKnife.Generic.Filters
                 handler.Invoke(this, e);
         }
 
-        protected void Handler_OnSendToSession(object sender, SessionEventArgs<byte[], EndPoint> e)
+        protected void Handler_OnSendToSession(object sender, SessionEventArgs e)
         {
             var handler = OnSendToSession;
             if (handler != null)
