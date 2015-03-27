@@ -27,11 +27,11 @@ namespace NKnife.Kits.SocketKnife.Demo
     {
         private bool _IsInitialized;
         private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
-        private KnifeLongSocketServer _Server = DI.Get<KnifeLongSocketServer>();
+        private KnifeSocketServer _Server = DI.Get<KnifeSocketServer>();
         private SocketKnifeProtocolFilter _ProtocolFilter = DI.Get<SocketKnifeProtocolFilter>();
         private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
-        public KnifeLongSocketServer GetSocketServer()
+        public KnifeSocketServer GetSocketServer()
         {
             return _Server;
         }

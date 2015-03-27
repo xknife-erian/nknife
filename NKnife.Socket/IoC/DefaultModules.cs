@@ -15,7 +15,7 @@ namespace SocketKnife.IoC
     {
         public override void Load()
         {
-            Bind<IKnifeSocketServer>().To<KnifeLongSocketServer>();
+            Bind<IKnifeSocketServer>().To<KnifeSocketServer>();
             Bind<IKnifeSocketClient>().To<KnifeLongSocketClient>();
 
             Bind<KnifeSocketConfig>().To<KnifeSocketServerConfig>().Named("Server");

@@ -30,7 +30,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                var session = new EndPointKnifeTunnelSession {Id = _EndPoint};
+                var session = new TunnelSession {Id = _EndPoint};
                 handler.Invoke(this, new SessionEventArgs(session));
             }
 
@@ -44,7 +44,6 @@ namespace SocketKnife
             {
                 _logger.Debug("KnifeSocketClient执行主动断开");
                 _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
-                //_SocketSession.AcceptSocket.Disconnect(true);
                 _SocketSession.AcceptSocket.Close();
             }
             catch (Exception e)
@@ -56,7 +55,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                var session = new EndPointKnifeTunnelSession {Id = _EndPoint};
+                var session = new TunnelSession {Id = _EndPoint};
                 handler.Invoke(this, new SessionEventArgs(session));
             }
 
@@ -167,7 +166,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
                 {
                     Id = _EndPoint
                 }));
@@ -349,7 +348,7 @@ namespace SocketKnife
             var handler = SessionBuilt;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
                 {
                     Id = _EndPoint
                 }));
@@ -365,7 +364,7 @@ namespace SocketKnife
                 try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
                 {
                     // 开始接受来自该客户端的数据
-                    _SocketSession.AcceptSocket.BeginReceive(_SocketSession.ReceiveBuffer, 0, _SocketSession.RECEIVE_BUFFER_SIZE, SocketFlags.None, EndReceiveDatagram, this);
+                    _SocketSession.AcceptSocket.BeginReceive(_SocketSession.ReceiveBuffer, 0, _SocketSession.ReceiveBufferSize, SocketFlags.None, EndReceiveDatagram, this);
                 }
                 catch (Exception err) // 读 Socket 异常，准备关闭该会话
                 {
@@ -456,7 +455,7 @@ namespace SocketKnife
                 var handler = SessionBroken;
                 if (handler != null)
                 {
-                    handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
+                    handler.Invoke(this, new SessionEventArgs(new TunnelSession
                     {
                         Id = _EndPoint
                     }));
@@ -476,7 +475,7 @@ namespace SocketKnife
                 var dataSentHandler = DataSent;
                 if (dataSentHandler != null)
                 {
-                    dataSentHandler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
+                    dataSentHandler.Invoke(this, new SessionEventArgs(new TunnelSession
                     {
                         Id = _SocketSession.AcceptSocket.RemoteEndPoint,
                         Data = data

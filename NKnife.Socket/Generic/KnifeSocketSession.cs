@@ -9,13 +9,13 @@ namespace SocketKnife.Generic
     /// </summary>
     public class KnifeSocketSession : TunnelSession
     {
-        public const int RECEIVE_BUFFER_SIZE = 16*1024; // 16 K
-
         public KnifeSocketSession()
         {
+            ReceiveBufferSize = 16 * 1024;
             ResetBuffer();
         }
 
+        public int ReceiveBufferSize { get; set; }
         public Socket AcceptSocket { get; set; }
         public SessionState State { get; set; }
         public DisconnectType DisconnectType { get; set; }
@@ -24,7 +24,7 @@ namespace SocketKnife.Generic
 
         public void ResetBuffer()
         {
-            ReceiveBuffer = new byte[RECEIVE_BUFFER_SIZE];
+            ReceiveBuffer = new byte[ReceiveBufferSize];
         }
 
         public override int GetHashCode()

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Common.Logging;
-using NKnife.Interface;
 
 namespace SocketKnife
 {
@@ -14,8 +12,7 @@ namespace SocketKnife
     /// </summary>
     public class AsynListener : IDisposable
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly ILog _logger = LogManager.GetLogger<AsynListener>();
         private readonly ManualResetEvent _AllDone = new ManualResetEvent(false);
         private readonly ManualResetEvent _SendDone = new ManualResetEvent(false);
         private int _BufferSize = 128;
@@ -61,7 +58,7 @@ namespace SocketKnife
         }
 
         /// <summary>
-        /// 结束符
+        ///     结束符
         /// </summary>
         public char Tail { get; set; }
 
@@ -91,7 +88,7 @@ namespace SocketKnife
             {
                 _Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                IPAddress ipAddress = _TcpIpServerIp.Trim() == "" ? IPAddress.Any : IPAddress.Parse(_TcpIpServerIp);
+                var ipAddress = _TcpIpServerIp.Trim() == "" ? IPAddress.Any : IPAddress.Parse(_TcpIpServerIp);
                 var localEndPoint = new IPEndPoint(ipAddress, _TcpIpServerPort);
 
                 _Listener.Bind(localEndPoint);
@@ -109,6 +106,7 @@ namespace SocketKnife
                 OnHasListenerException(new ListenerExceptionEventArgs(e, _Listener));
             }
         }
+
         public void EndListening()
         {
             try
@@ -140,7 +138,7 @@ namespace SocketKnife
             {
                 var listener = (Socket) ar.AsyncState;
                 client = listener.EndAccept(ar);
-                _logger.Trace(string.Format("监听到客户端连接：{0}", client.RemoteEndPoint.ToString()));
+                _logger.Trace(string.Format("监听到客户端连接：{0}", client.RemoteEndPoint));
                 var state = new StateObject(_BufferSize, client) {Client = client};
                 client.BeginReceive(state.Buffer, 0, _BufferSize, 0, ReadCallback, state);
             }
@@ -170,12 +168,12 @@ namespace SocketKnife
                     var state = (StateObject) ar.AsyncState;
                     client = state.Client;
 
-                    int bytesRead = client.EndReceive(ar);
+                    var bytesRead = client.EndReceive(ar);
 
                     if (bytesRead > 0)
                     {
                         string content;
-                        bool isComplate = ReceivedChecker(state, bytesRead, out content);
+                        var isComplate = ReceivedChecker(state, bytesRead, out content);
                         if (isComplate)
                         {
                             OnReceivedData(new ReceivedDataEventArgs(content, client));
@@ -225,7 +223,7 @@ namespace SocketKnife
         public virtual void Send(Socket client, string data)
         {
             _logger.Trace(string.Format("Send:{0}", data));
-            byte[] byteData = Encoding.Default.GetBytes(data);
+            var byteData = Encoding.Default.GetBytes(data);
             client.BeginSend(byteData, 0, byteData.Length, 0, SendCallback, client);
         }
 
@@ -244,7 +242,7 @@ namespace SocketKnife
             var client = (Socket) ar.AsyncState;
             try
             {
-                int bytesSent = client.EndSend(ar);
+                var bytesSent = client.EndSend(ar);
                 _logger.Debug(string.Format("Sent {0} bytes to client.", bytesSent));
             }
             catch (Exception e)
@@ -362,9 +360,7 @@ namespace SocketKnife
             }
 
             public byte[] Buffer { get; private set; }
-
             public Socket Client { get; set; }
-
             public StringBuilder StringBuilder { get; private set; }
 
             public void Reset()
@@ -375,6 +371,5 @@ namespace SocketKnife
         }
 
         #endregion
-
     }
 }
