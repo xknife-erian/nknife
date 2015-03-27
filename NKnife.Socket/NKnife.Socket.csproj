@@ -59,9 +59,6 @@
     <Compile Include="Events\ConnectionBrokenEventArgs.cs" />
     <Compile Include="Events\ConnectedEventArgs.cs" />
     <Compile Include="Events\ConnectingEventArgs.cs" />
-    <Compile Include="Events\SocketDataDecodedEventArgs.cs" />
-    <Compile Include="Events\SocketDataFetchedEventArgs.cs" />
-    <Compile Include="Events\SocketSessionEventArgs.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Generic\Families\FixedTailEncoder.cs" />
     <Compile Include="Generic\Families\LengthHeadDecoder.cs" />

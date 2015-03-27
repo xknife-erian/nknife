@@ -11,7 +11,7 @@ namespace SocketKnife.Interfaces
 {
     public interface ISocketSessionMap : ITunnelSessionMap
     {
-        event EventHandler<EventArgs<EndPoint>> Removed;
+        event EventHandler<EventArgs<long>> Removed;
 
         event EventHandler<EventArgs<KnifeSocketSession>> Added;
     }

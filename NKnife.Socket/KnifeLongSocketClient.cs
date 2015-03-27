@@ -31,7 +31,7 @@ namespace SocketKnife
             if (handler != null)
             {
                 var session = new EndPointKnifeTunnelSession {Id = _EndPoint};
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                handler.Invoke(this, new SessionEventArgs(session));
             }
 
             //如果有自动重连，则需要启用自动重连
@@ -57,7 +57,7 @@ namespace SocketKnife
             if (handler != null)
             {
                 var session = new EndPointKnifeTunnelSession {Id = _EndPoint};
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                handler.Invoke(this, new SessionEventArgs(session));
             }
 
             //如果有自动重连，则需要启用自动重连
@@ -144,10 +144,10 @@ namespace SocketKnife
 
         #region IDataConnector接口
 
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataSent;
+        public event EventHandler<SessionEventArgs> SessionBuilt;
+        public event EventHandler<SessionEventArgs> SessionBroken;
+        public event EventHandler<SessionEventArgs> DataReceived;
+        public event EventHandler<SessionEventArgs> DataSent;
 
         public bool Start()
         {
@@ -167,7 +167,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
                 {
                     Id = _EndPoint
                 }));
@@ -349,7 +349,7 @@ namespace SocketKnife
             var handler = SessionBuilt;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
                 {
                     Id = _EndPoint
                 }));
@@ -365,7 +365,7 @@ namespace SocketKnife
                 try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
                 {
                     // 开始接受来自该客户端的数据
-                    _SocketSession.AcceptSocket.BeginReceive(_SocketSession.ReceiveBuffer, 0, _SocketSession.ReceiveBufferSize, SocketFlags.None, EndReceiveDatagram, this);
+                    _SocketSession.AcceptSocket.BeginReceive(_SocketSession.ReceiveBuffer, 0, _SocketSession.RECEIVE_BUFFER_SIZE, SocketFlags.None, EndReceiveDatagram, this);
                 }
                 catch (Exception err) // 读 Socket 异常，准备关闭该会话
                 {
@@ -433,7 +433,7 @@ namespace SocketKnife
             {
                 _SocketSession.Id = _EndPoint;
                 _SocketSession.Data = data;
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(_SocketSession));
+                handler.Invoke(this, new SessionEventArgs(_SocketSession));
             }
         }
 
@@ -456,7 +456,7 @@ namespace SocketKnife
                 var handler = SessionBroken;
                 if (handler != null)
                 {
-                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                    handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
                     {
                         Id = _EndPoint
                     }));
@@ -476,7 +476,7 @@ namespace SocketKnife
                 var dataSentHandler = DataSent;
                 if (dataSentHandler != null)
                 {
-                    dataSentHandler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                    dataSentHandler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
                     {
                         Id = _SocketSession.AcceptSocket.RemoteEndPoint,
                         Data = data

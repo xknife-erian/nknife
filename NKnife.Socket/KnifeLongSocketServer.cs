@@ -82,9 +82,9 @@ namespace SocketKnife
 
         #region IKnifeSocketServer接口
 
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
+        public event EventHandler<SessionEventArgs> SessionBuilt;
+        public event EventHandler<SessionEventArgs> SessionBroken;
+        public event EventHandler<SessionEventArgs> DataReceived;
 
         public KnifeSocketConfig Config
         {
@@ -558,7 +558,7 @@ namespace SocketKnife
             try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
             {
                 // 开始接受来自该客户端的数据
-                session.AcceptSocket.BeginReceive(session.ReceiveBuffer, 0, session.ReceiveBufferSize, SocketFlags.None, EndReceiveDatagram, session);
+                session.AcceptSocket.BeginReceive(session.ReceiveBuffer, 0, session.RECEIVE_BUFFER_SIZE, SocketFlags.None, EndReceiveDatagram, session);
             }
             catch (Exception err) // 读 Socket 异常，准备关闭该会话
             {
@@ -630,7 +630,7 @@ namespace SocketKnife
             {
                 if (_SessionMap.ContainsKey(endPoint))
                 {
-                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new KnifeTunnelSession<EndPoint>
+                    handler.Invoke(this, new SessionEventArgs(new KnifeTunnelSession<EndPoint>
                     {
                         Id = endPoint,
                         Data = data
@@ -659,7 +659,7 @@ namespace SocketKnife
             var handler = SessionBuilt;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                handler.Invoke(this, new SessionEventArgs(session));
             }
         }
 
@@ -670,7 +670,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                handler.Invoke(this, new SessionEventArgs(session));
             }
         }
 
@@ -681,7 +681,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(session));
+                handler.Invoke(this, new SessionEventArgs(session));
             }
         }
 

@@ -22,7 +22,7 @@ namespace SocketKnife
     /// </summary>
     public class KnifeShortSocketClient : IKnifeSocketClient, IDisposable 
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeShortSocketClient>();
 
         #region 成员变量
         protected IPAddress _IpAddress;
@@ -60,10 +60,10 @@ namespace SocketKnife
         #endregion
 
         #region IDataConnector接口
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBuilt;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> SessionBroken;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataReceived;
-        public event EventHandler<SessionEventArgs<byte[], EndPoint>> DataSent;
+        public event EventHandler<SessionEventArgs> SessionBuilt;
+        public event EventHandler<SessionEventArgs> SessionBroken;
+        public event EventHandler<SessionEventArgs> DataReceived;
+        public event EventHandler<SessionEventArgs> DataSent;
 
         public bool Start()
         {
@@ -75,7 +75,7 @@ namespace SocketKnife
         {
             var handler = SessionBroken;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
                 {
                     Id = EndPoint,
                 }));
@@ -223,7 +223,7 @@ namespace SocketKnife
                             var handler = SessionBuilt;
                             if (handler != null)
                             {
-                                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
+                                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession()
                                 {
                                     Id = EndPoint,
                                 }));
@@ -292,7 +292,7 @@ namespace SocketKnife
         {
             var handler = SessionBroken;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
+                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession()
                 {
                     Id = EndPoint,
                 }));
@@ -314,7 +314,7 @@ namespace SocketKnife
 
             var handler = SessionBroken;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession
+                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
                 {
                     Id = EndPoint,
                 }));
@@ -330,7 +330,7 @@ namespace SocketKnife
             {
                 SocketSession.Id = EndPoint;
                 SocketSession.Data = data;
-                handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(SocketSession));
+                handler.Invoke(this, new SessionEventArgs(SocketSession));
             }
         }
 
@@ -346,7 +346,7 @@ namespace SocketKnife
                     if (dataSentHandler != null)
                     {
                         dataSentHandler.Invoke(this,
-                            new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
+                            new SessionEventArgs(new EndPointKnifeTunnelSession()
                             {
                                 Id = e.RemoteEndPoint,
                                 Data = e.Buffer
@@ -382,7 +382,7 @@ namespace SocketKnife
 
                 var handler = SessionBroken;
                 if (handler != null)
-                    handler.Invoke(this, new SessionEventArgs<byte[], EndPoint>(new EndPointKnifeTunnelSession()
+                    handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession()
                     {
                         Id = EndPoint
                     }));

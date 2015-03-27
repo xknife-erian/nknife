@@ -18,8 +18,6 @@ namespace SocketKnife.IoC
             Bind<IKnifeSocketServer>().To<KnifeLongSocketServer>();
             Bind<IKnifeSocketClient>().To<KnifeLongSocketClient>();
 
-            Bind<ITunnel<byte[], EndPoint>>().To<KnifeTunnel<EndPoint>>();
-
             Bind<KnifeSocketConfig>().To<KnifeSocketServerConfig>().Named("Server");
             Bind<KnifeSocketConfig>().To<KnifeSocketClientConfig>().Named("Client");
 
