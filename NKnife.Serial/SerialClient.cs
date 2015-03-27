@@ -12,7 +12,7 @@ namespace SerialKnife
     /// </summary>
     internal class SerialClient : ISerialClient
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<SerialClient>();
 
         private readonly bool _EnableDetialLogger;
         private readonly ManualResetEventSlim _QSendWaitEvent = new ManualResetEventSlim(false);

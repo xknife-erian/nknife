@@ -9,7 +9,6 @@ namespace NKnife.Tunnel.Base
         protected IDataConnector _DataConnector;
         protected ITunnelFilterChain _FilterChain;
         private bool _IsDataConnectedBound;
-        public abstract void Dispose();
         public ITunnelConfig Config { get; set; }
 
         public virtual void AddFilters(params ITunnelFilter[] filters)
@@ -54,6 +53,7 @@ namespace NKnife.Tunnel.Base
         }
 
         protected abstract void SetFilterChain();
+        public abstract void Dispose();
 
         private void OnFilterKillSession(object sender, SessionEventArgs e)
         {

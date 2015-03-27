@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using Common.Logging;
 
-namespace SocketKnife
+namespace SocketKnife.Common
 {
     /// <summary>
     ///     一个应用在较简单场景且压力较小情况下的SocketServer。

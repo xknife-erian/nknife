@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsynListener.cs" />
+    <Compile Include="Common\AsynListener.cs" />
     <Compile Include="Common\BufferContainer.cs" />
     <Compile Include="Common\BrokenCause.cs" />
     <Compile Include="Events\ConnectionBrokenEventArgs.cs" />
@@ -89,6 +89,7 @@
     <Compile Include="KnifeSocketServer.cs" />
     <Compile Include="KnifeShortSocketClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SocketTunnel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife\NKnife.csproj">
