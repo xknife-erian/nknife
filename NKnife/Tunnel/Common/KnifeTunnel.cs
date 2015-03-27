@@ -1,11 +1,11 @@
 ﻿using Common.Logging;
 using NKnife.Tunnel.Events;
 
-namespace NKnife.Tunnel.Base
+namespace NKnife.Tunnel.Common
 {
-    public abstract class BaseTunnel : ITunnel
+    public class KnifeTunnel : ITunnel
     {
-        private static readonly ILog _logger = LogManager.GetLogger<BaseTunnel>();
+        private static readonly ILog _logger = LogManager.GetLogger<KnifeTunnel>();
         protected IDataConnector _DataConnector;
         protected ITunnelFilterChain _FilterChain;
         private bool _IsDataConnectedBound;
@@ -52,8 +52,15 @@ namespace NKnife.Tunnel.Base
             }
         }
 
-        protected abstract void SetFilterChain();
-        public abstract void Dispose();
+        protected virtual void SetFilterChain()
+        {
+            _FilterChain = new TunnelFilterChain();
+        }
+
+        public virtual void Dispose()
+        {
+            _DataConnector.Stop();
+        }
 
         private void OnFilterKillSession(object sender, SessionEventArgs e)
         {
