@@ -52,9 +52,9 @@ namespace NKnife.Tunnel.Filters
         /// </summary>
         public HeartBeatMode HeartBeatMode { get; set; }
 
-        public override event EventHandler<SessionEventArgs> OnSendToSession;
-        public override event EventHandler<SessionEventArgs> OnSendToAll;
-        public override event EventHandler<SessionEventArgs> OnKillSession;
+        public override event EventHandler<SessionEventArgs> SendToSession;
+        public override event EventHandler<SessionEventArgs> SendToAll;
+        public override event EventHandler<SessionEventArgs> KillSession;
 
         protected virtual void BeatingTimerElapsed(object sender, EventArgs e)
         {
@@ -242,7 +242,7 @@ namespace NKnife.Tunnel.Filters
         {
             //发出杀死Session的指令，session杀死后，
             //filter会收到SessionBroken消息，收到消息后将对应的session移出map
-            var handler = OnKillSession;
+            var handler = KillSession;
             if (handler != null)
             {
                 handler.Invoke(this, new SessionEventArgs(_HeartBeartSessionMap[id]));
@@ -251,7 +251,7 @@ namespace NKnife.Tunnel.Filters
 
         public void ProcessHeartBeatRequestOrReply(long sessionId, byte[] requestOrReply)
         {
-            var handler = OnSendToSession;
+            var handler = SendToSession;
             if (handler != null)
             {
                 handler.Invoke(this, new SessionEventArgs(new TunnelSession

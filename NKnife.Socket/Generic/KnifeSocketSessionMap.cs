@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NKnife.Events;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
@@ -153,6 +154,15 @@ namespace SocketKnife.Generic
         {
             _Map.TryAdd(key, value);
             OnAdded(new EventArgs<KnifeSocketSession>(value));
+        }
+
+        protected static long _Count = 1;
+        public long Add(KnifeSocketSession session)
+        {
+            session.Id = _Count;
+            Add(_Count, session);
+            _Count++;
+            return session.Id;
         }
 
         public bool Contains(long key)

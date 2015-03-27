@@ -28,7 +28,7 @@ namespace NKnife.Kits.SocketKnife.Demo
         private bool _IsInitialized;
         private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
         private KnifeSocketServer _Server = DI.Get<KnifeSocketServer>();
-        private SocketKnifeProtocolFilter _ProtocolFilter = DI.Get<SocketKnifeProtocolFilter>();
+        private SocketProtocolFilter _ProtocolFilter = DI.Get<SocketProtocolFilter>();
         private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
         public KnifeSocketServer GetSocketServer()

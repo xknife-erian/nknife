@@ -75,10 +75,7 @@ namespace SocketKnife
         {
             var handler = SessionBroken;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                {
-                    Id = EndPoint,
-                }));
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
 
             try
             {
@@ -94,7 +91,7 @@ namespace SocketKnife
             }
         }
 
-        public void Send(EndPoint id, byte[] data)
+        public void Send(long id, byte[] data)
         {
             AsyncSendData(data);
         }
@@ -104,7 +101,7 @@ namespace SocketKnife
             AsyncSendData(data);
         }
 
-        public void KillSession(EndPoint id)
+        public void KillSession(long id)
         {
             ProcessConnectionBrokenActive();
         }
@@ -118,7 +115,7 @@ namespace SocketKnife
 
             var ipPoint = new IPEndPoint(_IpAddress, _Port);
             SocketSession = DI.Get<KnifeSocketSession>();
-            SocketSession.Id = ipPoint;
+//            SocketSession.Id = ipPoint;
             _SocketAsyncEventArgs = new SocketAsyncEventArgs{RemoteEndPoint = ipPoint};
             _SocketAsyncEventArgs.Completed += AsynCompleted;
         }
@@ -223,10 +220,7 @@ namespace SocketKnife
                             var handler = SessionBuilt;
                             if (handler != null)
                             {
-                                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession()
-                                {
-                                    Id = EndPoint,
-                                }));
+                                handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
                             }
 
                             _logger.Debug("client连接成功，开始发送数据");
@@ -292,10 +286,7 @@ namespace SocketKnife
         {
             var handler = SessionBroken;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession()
-                {
-                    Id = EndPoint,
-                }));
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
         }
 
         protected virtual void ProcessConnectionBrokenActive()
@@ -314,10 +305,7 @@ namespace SocketKnife
 
             var handler = SessionBroken;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession
-                {
-                    Id = EndPoint,
-                }));
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
         }
 
         protected virtual void PrcessReceiveData(SocketAsyncEventArgs e)
@@ -328,7 +316,7 @@ namespace SocketKnife
             var handler = DataReceived;
             if (handler != null)
             {
-                SocketSession.Id = EndPoint;
+//                SocketSession.Id = EndPoint;
                 SocketSession.Data = data;
                 handler.Invoke(this, new SessionEventArgs(SocketSession));
             }
@@ -346,9 +334,9 @@ namespace SocketKnife
                     if (dataSentHandler != null)
                     {
                         dataSentHandler.Invoke(this,
-                            new SessionEventArgs(new EndPointKnifeTunnelSession()
+                            new SessionEventArgs(new TunnelSession()
                             {
-                                Id = e.RemoteEndPoint,
+//                                Id = e.RemoteEndPoint,
                                 Data = e.Buffer
                             }));
                     }
@@ -382,10 +370,7 @@ namespace SocketKnife
 
                 var handler = SessionBroken;
                 if (handler != null)
-                    handler.Invoke(this, new SessionEventArgs(new EndPointKnifeTunnelSession()
-                    {
-                        Id = EndPoint
-                    }));
+                    handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
             }
             catch (Exception e)
             {

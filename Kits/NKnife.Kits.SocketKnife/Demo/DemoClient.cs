@@ -53,7 +53,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             if (protocolFamily.CommandParser.GetType() != customSetting.CommandParser)
                 protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(customSetting.CommandParser);
 
-            var protocolFilter = DI.Get<SocketKnifeProtocolFilter>();
+            var protocolFilter = DI.Get<SocketProtocolFilter>();
             protocolFilter.Bind(codec, protocolFamily);
             protocolFilter.AddHandlers(handler);
 

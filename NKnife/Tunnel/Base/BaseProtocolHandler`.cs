@@ -32,8 +32,8 @@ namespace NKnife.Tunnel.Base
         protected IProtocolFamily<TData> _Family;
         public abstract List<TData> Commands { get; set; }
         public abstract void Recevied(long sessionId, IProtocol<TData> protocol);
-        public event EventHandler<SessionEventArgs> OnSendToSession;
-        public event EventHandler<SessionEventArgs> OnSendToAll;
+        public event EventHandler<SessionEventArgs> SendToSession;
+        public event EventHandler<SessionEventArgs> SendToAll;
 
         public virtual void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> protocolFamily)
         {
@@ -52,7 +52,7 @@ namespace NKnife.Tunnel.Base
             {
                 TData original = _Family.Generate(protocol);
                 byte[] data = _CodecBase.Encoder.Execute(original);
-                EventHandler<SessionEventArgs> handler = OnSendToSession;
+                EventHandler<SessionEventArgs> handler = SendToSession;
                 if (handler != null)
                 {
                     var session = new TunnelSession {Id = sessionId, Data = data};
@@ -72,7 +72,7 @@ namespace NKnife.Tunnel.Base
             {
                 TData str = _Family.Generate(protocol);
                 byte[] data = _CodecBase.Encoder.Execute(str);
-                EventHandler<SessionEventArgs> handler = OnSendToAll;
+                EventHandler<SessionEventArgs> handler = SendToAll;
                 if (handler != null)
                 {
                     var session = new TunnelSession { Data = data };

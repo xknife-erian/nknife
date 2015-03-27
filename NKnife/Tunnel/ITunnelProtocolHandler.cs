@@ -17,8 +17,8 @@ namespace NKnife.Tunnel
         ITunnelCodec<TData> Codec { get; set; }
         void Recevied(long session, IProtocol<TData> protocol);
 
-        event EventHandler<SessionEventArgs> OnSendToSession;
+        event EventHandler<SessionEventArgs> SendToSession;
 
-        event EventHandler<SessionEventArgs> OnSendToAll;
+        event EventHandler<SessionEventArgs> SendToAll;
     }
 }

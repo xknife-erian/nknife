@@ -30,7 +30,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                var session = new TunnelSession {Id = _EndPoint};
+                var session = new TunnelSession();
                 handler.Invoke(this, new SessionEventArgs(session));
             }
 
@@ -55,7 +55,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                var session = new TunnelSession {Id = _EndPoint};
+                var session = new TunnelSession();
                 handler.Invoke(this, new SessionEventArgs(session));
             }
 
@@ -166,10 +166,7 @@ namespace SocketKnife
             var handler = SessionBroken;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                {
-                    Id = _EndPoint
-                }));
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
             }
 
             try
@@ -190,7 +187,7 @@ namespace SocketKnife
 
         #region ISessionProvider
 
-        public void Send(EndPoint id, byte[] data)
+        public void Send(long id, byte[] data)
         {
             ProcessSendData(data);
         }
@@ -200,7 +197,7 @@ namespace SocketKnife
             ProcessSendData(data);
         }
 
-        public void KillSession(EndPoint id)
+        public void KillSession(long id)
         {
             ProcessConnectionBrokenActive();
         }
@@ -218,7 +215,6 @@ namespace SocketKnife
 
             var ipPoint = new IPEndPoint(_IpAddress, _Port);
             _SocketSession = DI.Get<KnifeSocketSession>();
-            _SocketSession.Id = ipPoint;
 
             _ReconnectFlag = true;
             _ReconnectedThread = new Thread(ReconnectedLoop);
@@ -348,10 +344,7 @@ namespace SocketKnife
             var handler = SessionBuilt;
             if (handler != null)
             {
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                {
-                    Id = _EndPoint
-                }));
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
             }
 
             ReceiveDatagram();
@@ -430,7 +423,7 @@ namespace SocketKnife
             var handler = DataReceived;
             if (handler != null)
             {
-                _SocketSession.Id = _EndPoint;
+//                _SocketSession.Id = _EndPoint;
                 _SocketSession.Data = data;
                 handler.Invoke(this, new SessionEventArgs(_SocketSession));
             }
@@ -455,10 +448,7 @@ namespace SocketKnife
                 var handler = SessionBroken;
                 if (handler != null)
                 {
-                    handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                    {
-                        Id = _EndPoint
-                    }));
+                    handler.Invoke(this, new SessionEventArgs(new TunnelSession()));
                 }
                 //如果有自动重连，则需要启用自动重连
                 StartReconnect();
@@ -477,7 +467,7 @@ namespace SocketKnife
                 {
                     dataSentHandler.Invoke(this, new SessionEventArgs(new TunnelSession
                     {
-                        Id = _SocketSession.AcceptSocket.RemoteEndPoint,
+//                        Id = _SocketSession.AcceptSocket.RemoteEndPoint,
                         Data = data
                     }));
                 }

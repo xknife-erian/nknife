@@ -21,8 +21,8 @@ namespace NKnife.Tunnel.Base
             //默认啥也不干
         }
 
-        public abstract event EventHandler<SessionEventArgs> OnSendToSession;
-        public abstract event EventHandler<SessionEventArgs> OnSendToAll;
-        public abstract event EventHandler<SessionEventArgs> OnKillSession;
+        public abstract event EventHandler<SessionEventArgs> SendToSession;
+        public abstract event EventHandler<SessionEventArgs> SendToAll;
+        public abstract event EventHandler<SessionEventArgs> KillSession;
     }
 }

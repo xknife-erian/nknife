@@ -109,9 +109,9 @@ namespace NKnife.Tunnel.Filters
 
         #region interface
 
-        public event EventHandler<SessionEventArgs> OnSendToSession;
-        public event EventHandler<SessionEventArgs> OnSendToAll;
-        public event EventHandler<SessionEventArgs> OnKillSession;
+        public event EventHandler<SessionEventArgs> SendToSession;
+        public event EventHandler<SessionEventArgs> SendToAll;
+        public event EventHandler<SessionEventArgs> KillSession;
 
         public virtual void ProcessSessionBroken(long id)
         {
@@ -173,8 +173,8 @@ namespace NKnife.Tunnel.Filters
                 var phandler = handler as BaseProtocolHandler<TData>;
                 if (phandler != null)
                 {
-                    phandler.OnSendToSession += Handler_OnSendToSession;
-                    phandler.OnSendToAll += Handler_OnSendToAll;
+                    phandler.SendToSession += Handler_OnSendToSession;
+                    phandler.SendToAll += Handler_OnSendToAll;
                     phandler.Bind(_Codec, _Family);
                     _Handlers.Add(handler);
                 }
@@ -183,14 +183,14 @@ namespace NKnife.Tunnel.Filters
 
         public virtual void RemoveHandler(ITunnelProtocolHandler<TData> handler)
         {
-            handler.OnSendToSession -= Handler_OnSendToSession;
-            handler.OnSendToAll -= Handler_OnSendToAll;
+            handler.SendToSession -= Handler_OnSendToSession;
+            handler.SendToAll -= Handler_OnSendToAll;
             _Handlers.Remove(handler);
         }
 
         protected virtual void Handler_OnSendToAll(object sender, SessionEventArgs e)
         {
-            var handler = OnSendToAll;
+            var handler = SendToAll;
             if (handler != null)
             {
                 handler.Invoke(this, e);
@@ -199,7 +199,7 @@ namespace NKnife.Tunnel.Filters
 
         protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs e)
         {
-            var handler = OnSendToSession;
+            var handler = SendToSession;
             if (handler != null)
             {
                 handler.Invoke(this, e);

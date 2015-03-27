@@ -40,9 +40,9 @@ namespace NKnife.Tunnel.Base
                 _DataConnector.DataReceived += OnDataReceived;
                 foreach (var filter in _FilterChain)
                 {
-                    filter.OnSendToSession += OnFilterSendToSession;
-                    filter.OnSendToAll += OnFilterSendToAll;
-                    filter.OnKillSession += OnFilterKillSession;
+                    filter.SendToSession += OnFilterSendToSession;
+                    filter.SendToAll += OnFilterSendToAll;
+                    filter.KillSession += OnFilterKillSession;
                 }
                 _logger.Debug(string.Format("DataConnector[{0}]绑定成功", dataConnector.GetType()));
                 _IsDataConnectedBound = true;

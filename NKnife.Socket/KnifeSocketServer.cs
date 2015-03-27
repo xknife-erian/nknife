@@ -397,13 +397,9 @@ namespace SocketKnife
         {
             var remoteEndPoint = clientSocket.RemoteEndPoint;
             var session = DI.Get<KnifeSocketSession>();
-            session.Id = remoteEndPoint;
             session.AcceptSocket = clientSocket;
             session.LastSessionTime = DateTime.Now;
-            //lock (_SessionMap)
-            {
-                _SessionMap.Add(remoteEndPoint, session);
-            }
+            _SessionMap.Add(session);
             _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", remoteEndPoint, _SessionMap.Count);
 
             ReceiveDatagram(session);
