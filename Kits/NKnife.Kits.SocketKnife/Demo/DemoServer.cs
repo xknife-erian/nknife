@@ -12,6 +12,7 @@ using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo.Protocols;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Filters;
 using NKnife.Tunnel.Generic;
@@ -26,7 +27,7 @@ namespace NKnife.Kits.SocketKnife.Demo
     public class DemoServer
     {
         private bool _IsInitialized;
-        private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
+        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
         private KnifeSocketServer _Server = DI.Get<KnifeSocketServer>();
         private SocketProtocolFilter _ProtocolFilter = DI.Get<SocketProtocolFilter>();
         private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
@@ -46,7 +47,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Family;
         }
 
-        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, KnifeProtocolHandlerBase<EndPoint, string> handler)
+        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, BaseProtocolHandler<string> handler)
         {
             if (_IsInitialized) 
                 return;

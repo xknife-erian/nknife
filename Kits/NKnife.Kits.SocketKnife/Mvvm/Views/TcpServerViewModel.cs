@@ -134,10 +134,10 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         protected void AddSession(KnifeSocketSession session)
         {
-            Sessions.Add(new SessionByView {EndPoint = (IPEndPoint) session.Id});
+            Sessions.Add(new SessionByView { EndPoint = (IPEndPoint)session.AcceptSocket.LocalEndPoint });
         }
 
-        protected void RemoveSession(EndPoint endPoint)
+        protected void RemoveSession(long endPoint)
         {
             for (int i = 0; i < Sessions.Count; i++)
             {
@@ -259,8 +259,8 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             {
                 foreach (var session in Sessions)
                 {
-                    if (session.IsSelected)
-                        _Handler.WriteToSession(session.EndPoint, CurrentProtocol);
+                    //if (session.IsSelected)
+                        //_Handler.WriteToSession(session.Id, CurrentProtocol);
                 }
             }
         }
@@ -318,7 +318,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         #region ½çÃæÎ¯ÍÐ
 
-        private delegate void SessionRemover(EndPoint endPoint);
+        private delegate void SessionRemover(long endPoint);
 
         private delegate void SessionAdder(KnifeSocketSession session);
 

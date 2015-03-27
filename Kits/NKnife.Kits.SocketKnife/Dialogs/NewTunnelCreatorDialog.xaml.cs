@@ -42,14 +42,14 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             }
             CustomSetting = new SocketCustomSetting();
 
-            var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramDecoder<string, byte[]>), false);
+            var decoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramDecoder<string>), false);
             foreach (var decoder in decoders)
             {
                 _DecoderComboBox.Items.Add(decoder);
             }
             _DecoderComboBox.SelectedItem = typeof (FixedTailDecoder);
 
-            var encoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramEncoder<string, byte[]>), false);
+            var encoders = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IDatagramEncoder<string>), false);
             foreach (var encoder in encoders)
             {
                 _EncoderComboBox.Items.Add(encoder);

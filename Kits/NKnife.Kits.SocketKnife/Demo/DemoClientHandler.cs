@@ -10,14 +10,15 @@ using NKnife.Interface;
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Demo
 {
-    public class DemoClientHandler : KnifeProtocolHandlerBase<byte[], EndPoint, string>
+    public class DemoClientHandler : BaseProtocolHandler<string>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<DemoClientHandler>();
 
         private StringProtocolFamily _Family;
         private readonly ObservableCollection<SocketMessage> _SocketMessages;
@@ -30,7 +31,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         public override List<string> Commands { get; set; }
 
-        public override void Recevied(EndPoint sessionId, IProtocol<string> protocol)
+        public override void Recevied(long sessionId, IProtocol<string> protocol)
         {
             var msg = new SocketMessage();
             msg.Command = protocol.Command;
@@ -72,7 +73,7 @@ namespace NKnife.Kits.SocketKnife.Demo
     {
         public MyClass()
         {
-            KnifeProtocolHandlerBase<byte[], EndPoint, string> handler = new DemoClientHandler(null, null);
+            BaseProtocolHandler<string> handler = new DemoClientHandler(null, null);
             handler.WriteToAllSession(new StringProtocol());
         } 
     }

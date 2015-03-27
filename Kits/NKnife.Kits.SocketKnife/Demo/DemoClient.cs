@@ -8,6 +8,7 @@ using NKnife.Kits.SocketKnife.Common;
 using NKnife.Kits.SocketKnife.Demo.Protocols;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Filters;
 using NKnife.Tunnel.Generic;
@@ -22,16 +23,16 @@ namespace NKnife.Kits.SocketKnife.Demo
     class DemoClient : ViewModelBase
     {
         private bool _IsInitialized = false;
-        private readonly ITunnel<byte[], EndPoint> _Tunnel = DI.Get<ITunnel<byte[], EndPoint>>();
-        private IKnifeSocketClient _Client = DI.Get<KnifeLongSocketClient>();
-        private StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
+        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
+        private readonly IKnifeSocketClient _Client = DI.Get<KnifeLongSocketClient>();
+        private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
         public StringProtocolFamily GetFamily()
         {
             return _Family;
         }
 
-        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting, KnifeProtocolHandlerBase<byte[], EndPoint, string> handler)
+        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting, BaseProtocolHandler<string> handler)
         {
             if (_IsInitialized) return;
 
