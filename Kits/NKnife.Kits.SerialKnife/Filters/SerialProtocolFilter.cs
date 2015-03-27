@@ -1,122 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using Common.Logging;
 using NKnife.Events;
 using NKnife.Protocol;
-using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
-using NKnife.Tunnel.Base;
-using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
-using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 
 namespace NKnife.Kits.SerialKnife.Filters
 {
-    public class QueryBusFilter : ITunnelFilter
+    public class SerialProtocolFilter : ITunnelProtocolFilter<byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<QueryBusFilter>();
-        private readonly Dictionary<long, QueryThreadWrapper> _QueryThreadMap = new Dictionary<long, QueryThreadWrapper>();
+        private static readonly ILog _logger = LogManager.GetLogger<SerialProtocolFilter>();
+        private readonly byte[] _CurrentReceiveBuffer = new byte[1024];
+        private int _CurrentReceiveByteLength;
 
-        public event EventHandler<SessionEventArgs> SendToSession;
-        public event EventHandler<SessionEventArgs> SendToAll;
-        public event EventHandler<SessionEventArgs> KillSession;
+        public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
 
-        public QueryBusFilter()
-        {
-
-        }
+        #region Interface
 
         public bool PrcoessReceiveData(ITunnelSession session)
         {
+            byte[] data = session.Data;
+            int len = data.Length;
+            if (len == 0)
+                return false;
+            if (_CurrentReceiveByteLength + len > 1024) //缓冲区溢出了，只保留后1024位
+            {
+                //暂时不做处理，直接抛弃
+                _logger.Warn("收到的数据超出1024，缓冲区溢出，该条数据抛弃");
+                return false;
+            }
+
+            var tempData = new byte[_CurrentReceiveByteLength + len];
+            Array.Copy(_CurrentReceiveBuffer, 0, tempData, 0, _CurrentReceiveByteLength);
+            Array.Copy(data, 0, tempData, _CurrentReceiveByteLength, data.Length);
+            var unfinished = new byte[] {};
+            var protocols = ProcessDataPacket(tempData, unfinished);
+
+            if (unfinished.Length > 0)
+            {
+                Array.Copy(unfinished, 0, _CurrentReceiveBuffer, 0, unfinished.Length);
+                _CurrentReceiveByteLength = unfinished.Length;
+            }
+            else
+            {
+                _CurrentReceiveByteLength = 0;
+            }
+
+            if (protocols != null)
+            {
+                EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> handler = ProtocolsReceived;
+                if (handler != null)
+                {
+                    handler.Invoke(this, new EventArgs<IEnumerable<IProtocol<byte[]>>>(protocols));
+                }
+            }
             return true;
         }
 
         public void ProcessSendToSession(ITunnelSession session)
         {
-            
         }
 
         public void ProcessSendToAll(byte[] data)
         {
-            
         }
+
+        public event EventHandler<SessionEventArgs> SendToSession;
+        public event EventHandler<SessionEventArgs> SendToAll;
+        public event EventHandler<SessionEventArgs> KillSession;
 
         public void ProcessSessionBroken(long id)
         {
-            if (_QueryThreadMap.ContainsKey(id))
-            {
-                _QueryThreadMap[id].RunFlag = false;
-                _QueryThreadMap[id].QueryThread.Abort();
-                _QueryThreadMap.Remove(id);
-            }
         }
 
         public void ProcessSessionBuilt(long id)
         {
-            //连接建立后就开始轮询
-            var queryThread = new Thread(QuerySendLoop) { IsBackground = true };
-            _QueryThreadMap.Add(id,new QueryThreadWrapper
-            {
-                QueryThread = queryThread,
-                RunFlag = true
-            });
-            queryThread.Start(id);
         }
 
-
-
-        /// <summary>指令发送的循环线程
-        /// </summary>
-        private void QuerySendLoop(object state)
-        {
-            var id = (int) state;
-            while (_QueryThreadMap[id].RunFlag)
-            {
-                SendProcess(id);
-                Thread.Sleep(500);
-            }
-        }
-
-        /// <summary>串口数据发送函数
-        /// 从数据池中检索数据，没有数据包则直接返回，
-        /// 有数据包则先按照数据包中的发送准备时长进行延时等候（PreSleepBeforeSendData），
-        /// 然以将数据从串口发出，待数据接收超时后，激发数据包发送完成事件
-        /// </summary>
-        /// <param name="id"></param>
-        private void SendProcess(int id)
-        {
-            try
-            {
-                //发送巡查
-                SendQuery(id);
-                Thread.Sleep(1000);
-            }
-            catch (Exception e)
-            {
-                _logger.Warn("SendProcess异常", e);
-            }
-        }
-
-
-        private void SendQuery(int id)
-        {
-            var queryProtocol = _Family.Build(new byte[] {0x01}); //命令字
-            queryProtocol.CommandParam = new byte[]{0x03,0x00}; //地址，计数
-            var data = _Family.Generate(queryProtocol);
-            var datagram = _Codec.Encoder.Execute(data);
-
-            var handler = SendToSession;
-            if(handler !=null)
-                handler.Invoke(this,new SessionEventArgs(new TunnelSession
-                {
-                    Id = id,
-                    Data = datagram
-                }));
-        }
+        #endregion
 
         #region KnifeProtocolProcessorBase
 
@@ -215,10 +179,14 @@ namespace NKnife.Kits.SerialKnife.Filters
         #endregion
 
 
-        class QueryThreadWrapper
+        public void AddHandlers(params ITunnelProtocolHandler<byte[]>[] handlers)
         {
-            public Thread QueryThread { get; set; }
-            public bool RunFlag { get; set; }
+            throw new NotImplementedException();
+        }
+
+        public void RemoveHandler(ITunnelProtocolHandler<byte[]> handler)
+        {
+            throw new NotImplementedException();
         }
     }
 }

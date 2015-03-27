@@ -20,10 +20,10 @@ namespace NKnife.Kits.SerialKnife.Mock
         #endregion
 
         #region IDataConnector
-        public event EventHandler<SessionEventArgs<byte[], int>> SessionBuilt;
-        public event EventHandler<SessionEventArgs<byte[], int>> SessionBroken;
-        public event EventHandler<SessionEventArgs<byte[], int>> DataReceived;
-        public event EventHandler<SessionEventArgs<byte[], int>> DataSent;
+        public event EventHandler<SessionEventArgs> SessionBuilt;
+        public event EventHandler<SessionEventArgs> SessionBroken;
+        public event EventHandler<SessionEventArgs> DataReceived;
+        public event EventHandler<SessionEventArgs> DataSent;
 
         public void Send(int id, byte[] data)
         {

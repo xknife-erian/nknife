@@ -62,8 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filters\ProtocolHandleFilter.cs" />
     <Compile Include="Filters\QueryBusFilter.cs" />
+    <Compile Include="Filters\SerialProtocolFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="Kernel\Tunnels.cs" />
     <Compile Include="Mock\MockSerialDataConnector.cs" />

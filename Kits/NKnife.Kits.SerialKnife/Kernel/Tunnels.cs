@@ -19,7 +19,7 @@ namespace NKnife.Kits.SerialKnife.Kernel
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private const string FAMILY_NAME = "p-an485";
-        private readonly ITunnel<byte[], int> _Tunnel = DI.Get<ITunnel<byte[], int>>();
+        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
         public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
         private readonly IKnifeSerialConnector _DataConnector;
 
@@ -27,7 +27,7 @@ namespace NKnife.Kits.SerialKnife.Kernel
         {
             var logFilter = DI.Get<SerialLogFilter>();
             var queryFilter = DI.Get<QueryBusFilter>();
-            var protocolFilter = DI.Get<ProtocolHandleFilter>();
+            var protocolFilter = DI.Get<SerialProtocolFilter>();
             var codec = DI.Get<KnifeBytesCodec>();
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;

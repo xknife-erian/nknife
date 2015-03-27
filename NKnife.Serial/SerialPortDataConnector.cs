@@ -22,13 +22,14 @@ namespace SerialKnife
         }
 
         #region IKnifeSerialConnector
-        public event EventHandler<SessionEventArgs<byte[], int>> SessionBuilt;
-        public event EventHandler<SessionEventArgs<byte[], int>> SessionBroken;
-        public event EventHandler<SessionEventArgs<byte[], int>> DataReceived;
-        public event EventHandler<SessionEventArgs<byte[], int>> DataSent;
+
+        public event EventHandler<SessionEventArgs> SessionBuilt;
+        public event EventHandler<SessionEventArgs> SessionBroken;
+        public event EventHandler<SessionEventArgs> DataReceived;
+        public event EventHandler<SessionEventArgs> DataSent;
         public int PortNumber { get; set; }
 
-        public void Send(int id, byte[] data)
+        public void Send(long id, byte[] data)
         {
             byte[] received;
             _SerialComm.SendData(data, out received);
@@ -50,13 +51,13 @@ namespace SerialKnife
             }
         }
 
-        public void KillSession(int id)
+        public void KillSession(long id)
         {
             if (_SerialComm.IsOpen)
                 _SerialComm.Close();
         }
 
-        public bool SessionExist(int id)
+        public bool SessionExist(long id)
         {
             CheckAndInitiate();
             return _SerialComm.IsOpen;
@@ -82,7 +83,7 @@ namespace SerialKnife
             {
                 return true;
             }
-            var result= _SerialComm.InitPort(string.Format("COM{0}", PortNumber));
+            var result = _SerialComm.InitPort(string.Format("COM{0}", PortNumber));
             if (result)
                 InvokeSessionBuilt();
             return result;
@@ -101,8 +102,8 @@ namespace SerialKnife
         private void InvokeDataSent(byte[] data)
         {
             var handler = DataSent;
-            if(handler !=null)
-                handler.Invoke(this,new SessionEventArgs<byte[], int>(new KnifeTunnelSession<int>()
+            if (handler != null)
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
                 {
                     Id = PortNumber,
                     Data = data,
@@ -112,21 +113,19 @@ namespace SerialKnife
         private void InvokeDataReceived(byte[] data)
         {
             var handler = DataReceived;
-            if(handler !=null)
-                handler.Invoke(this,new SessionEventArgs<byte[], int>(new KnifeTunnelSession<int>()
+            if (handler != null)
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
                 {
                     Id = PortNumber,
                     Data = data,
-
                 }));
-
         }
 
         private void InvokeSessionBroken()
         {
             var handler = SessionBroken;
-            if(handler !=null)
-                handler.Invoke(this,new SessionEventArgs<byte[], int>(new KnifeTunnelSession<int>()
+            if (handler != null)
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
                 {
                     Id = PortNumber,
                 }));
@@ -136,7 +135,7 @@ namespace SerialKnife
         {
             var handler = SessionBuilt;
             if (handler != null)
-                handler.Invoke(this, new SessionEventArgs<byte[], int>(new KnifeTunnelSession<int>()
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
                 {
                     Id = PortNumber,
                 }));
