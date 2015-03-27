@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NKnife.Tunnel.Base;
+using NKnife.Tunnel.Common;
 
 namespace SocketKnife
 {
@@ -15,7 +16,7 @@ namespace SocketKnife
 
         protected override void SetFilterChain()
         {
-            throw new NotImplementedException();
+            _FilterChain = new TunnelFilterChain();
         }
     }
 }

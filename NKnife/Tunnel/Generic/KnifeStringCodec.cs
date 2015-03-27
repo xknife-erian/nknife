@@ -28,9 +28,9 @@ namespace NKnife.Tunnel.Generic
             {
                 if (!_HasSetDecoder)
                 {
-                    var d = string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramDecoder>() : DI.Get<KnifeStringDatagramDecoder>(CodecName);
+                    _StringDecoder = string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramDecoder>() : DI.Get<KnifeStringDatagramDecoder>(CodecName);
                     _HasSetDecoder = true;
-                    return d;
+                    return _StringDecoder;
                 }
                 return _StringDecoder;
             }
@@ -47,9 +47,9 @@ namespace NKnife.Tunnel.Generic
             {
                 if (!_HasSetEncoder)
                 {
-                    var e = string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramEncoder>() : DI.Get<KnifeStringDatagramEncoder>(CodecName);
+                    _StringEncoder = string.IsNullOrEmpty(CodecName) ? DI.Get<KnifeStringDatagramEncoder>() : DI.Get<KnifeStringDatagramEncoder>(CodecName);
                     _HasSetEncoder = true;
-                    return e;
+                    return _StringEncoder;
                 }
                 return _StringEncoder;
             }

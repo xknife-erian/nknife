@@ -19,6 +19,7 @@ using NKnife.Tunnel.Generic;
 using SocketKnife;
 using SocketKnife.Common;
 using SocketKnife.Generic;
+using SocketKnife.Generic.Families;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
@@ -49,24 +50,30 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, BaseProtocolHandler<string> handler)
         {
-            if (_IsInitialized) 
+            if (_IsInitialized)
                 return;
 
             var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
-            heartbeatServerFilter.Heartbeat = new Heartbeat("Server","Client");
+            heartbeatServerFilter.Heartbeat = new Heartbeat("Server", "Client");
             heartbeatServerFilter.Heartbeat.Name = "Server";
-            heartbeatServerFilter.Interval = 1000 * 2;
+            heartbeatServerFilter.Interval = 1000*2;
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
-            heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Responsive; 
+            heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Responsive;
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 
             var codec = DI.Get<KnifeStringCodec>();
-            if (codec.StringDecoder.GetType() != socketTools.Decoder)
-                codec.StringDecoder = (KnifeStringDatagramDecoder)DI.Get(socketTools.Decoder);
-            if (codec.StringEncoder.GetType() != socketTools.Encoder)
-                codec.StringEncoder = (KnifeStringDatagramEncoder) DI.Get(socketTools.Encoder);
-            if (protocolFamily.CommandParser.GetType() != socketTools.CommandParser)
+            if (codec.StringDecoder.GetType()!=socketTools.Decoder)
+            {
+                var decoder = DI.Get(socketTools.Decoder) as FixedTailDecoder;
+                codec.StringDecoder = decoder;
+            }
+            if (codec.StringEncoder.GetType()!=socketTools.Encoder)
+            {
+                var encoder = (FixedTailEncoder)DI.Get(socketTools.Encoder);
+                codec.StringEncoder = encoder;
+            }
+            if (protocolFamily.CommandParser == null || protocolFamily.CommandParser.GetType() != socketTools.CommandParser)
                 protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(socketTools.CommandParser);
 
             _ProtocolFilter.Bind(codec, protocolFamily);
