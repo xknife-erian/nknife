@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Common.Logging;
 using NKnife.Events;
 using NKnife.IoC;
 using NKnife.Kits.SerialKnife.Filters;
+using NKnife.Kits.SerialKnife.Properties;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
@@ -17,11 +16,10 @@ namespace NKnife.Kits.SerialKnife.Kernel
 {
     public class Tunnels
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private const string FAMILY_NAME = "p-an485";
-        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
-        public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
+        private static readonly ILog _logger = LogManager.GetLogger<Tunnels>();
         private readonly IKnifeSerialConnector _DataConnector;
+        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
 
         public Tunnels()
         {
@@ -31,19 +29,21 @@ namespace NKnife.Kits.SerialKnife.Kernel
             var codec = DI.Get<KnifeBytesCodec>();
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;
-            queryFilter.Bind(codec,family);
-            protocolFilter.Bind(codec,family);
+            queryFilter.Bind(codec, family);
+            protocolFilter.Bind(codec, family);
             protocolFilter.ProtocolsReceived += protocolFilter_ProtocolsReceived;
 
             _Tunnel.AddFilters(logFilter);
             _Tunnel.AddFilters(queryFilter);
             _Tunnel.AddFilters(protocolFilter);
 
-            _DataConnector = DI.Get<IKnifeSerialConnector>(Properties.Settings.Default.EnableMock ? "Mock" : "Serial");
-            _DataConnector.PortNumber = Properties.Settings.Default.PortNumber; //串口1
+            _DataConnector = DI.Get<IKnifeSerialConnector>(Settings.Default.EnableMock ? "Mock" : "Serial");
+            _DataConnector.PortNumber = Settings.Default.PortNumber; //串口1
 
             _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力
         }
+
+        public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
 
         public bool Start()
         {
@@ -60,15 +60,15 @@ namespace NKnife.Kits.SerialKnife.Kernel
         }
 
         /// <summary>
-        /// 协议接收处理
+        ///     协议接收处理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void protocolFilter_ProtocolsReceived(object sender, Events.EventArgs<IEnumerable<Protocol.IProtocol<byte[]>>> e)
+        private void protocolFilter_ProtocolsReceived(object sender, EventArgs<IEnumerable<IProtocol<byte[]>>> e)
         {
-            var handler = ProtocolsReceived;
-            if(handler !=null)
-                handler.Invoke(sender,e);
+            EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> handler = ProtocolsReceived;
+            if (handler != null)
+                handler.Invoke(sender, e);
         }
     }
 }
