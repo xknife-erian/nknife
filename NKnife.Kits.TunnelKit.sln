@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog3", "NKnife.NLog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Serial", "NKnife.Serial\NKnife.Serial.csproj", "{3B1BA8E0-29DD-4CFC-8593-889B9D547AB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SerialKnife", "Kits\NKnife.Kits.SerialKnife\NKnife.Kits.SerialKnife.csproj", "{0EDF4FBE-D774-4AE0-8EBC-891A4513AB69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SerialKnife", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SerialKnife\NKnife.Kits.SerialKnife.csproj", "{0EDF4FBE-D774-4AE0-8EBC-891A4513AB69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Socket", "NKnife.Socket\NKnife.Socket.csproj", "{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife", "Kits\NKnife.Kits.SocketKnife\NKnife.Kits.SocketKnife.csproj", "{63081AEA-1345-4F5C-84DA-E44B2E8E290C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SocketKnife\NKnife.Kits.SocketKnife.csproj", "{63081AEA-1345-4F5C-84DA-E44B2E8E290C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

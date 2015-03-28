@@ -1,0 +1,22 @@
+﻿<xcad:LayoutAnchorable x:Class="NKnife.Kits.SocketKnife.Mvvm.Views.ProtocolsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+             mc:Ignorable="d" AutoHideMinWidth="320"
+             Title="协议管理器" IconSource="/Attachments/protocols-view-icon.png">
+    <Grid Name="_MainGrid">
+        <DataGrid Name="_ProtocolsGrid" AutoGenerateColumns="False"
+                          CanUserAddRows="False" CanUserDeleteRows="True"
+                          HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+                          VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                          SelectionChanged="ProtocolsGrid_OnSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="16" />
+                <DataGridTextColumn Header="命令字" Binding="{Binding Path=Command, Mode=OneWay}" Width="*" />
+                <DataGridTextColumn Header="参数" Binding="{Binding Path=CommandParam, Mode=OneWay}" Width="70" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</xcad:LayoutAnchorable>
