@@ -67,8 +67,6 @@ namespace NKnife.Kits.SerialKnife.Filters
             queryThread.Start(id);
         }
 
-
-
         /// <summary>指令发送的循环线程
         /// </summary>
         private void QuerySendLoop(object state)
