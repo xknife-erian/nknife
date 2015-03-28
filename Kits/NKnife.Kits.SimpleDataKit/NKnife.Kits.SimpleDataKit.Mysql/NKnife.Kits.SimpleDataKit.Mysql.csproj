@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">
-      <HintPath>..\..\..\packages\MySql.Data.6.9.5\lib\net40\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\packages\MySql.Data.6.9.6\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Simple.Data">
       <HintPath>..\..\..\packages\Simple.Data.Core.0.19.0.0\lib\net40\Simple.Data.dll</HintPath>

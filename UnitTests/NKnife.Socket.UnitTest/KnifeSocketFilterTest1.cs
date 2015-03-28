@@ -129,7 +129,7 @@ namespace NKnife.Socket.UnitTest
             return data.Length - 1;
         }
 
-        private class TestKnifeSocketFilter : SocketKnifeProtocolFilter
+        private class TestKnifeSocketFilter : SocketProtocolFilter
         {
             public List<IProtocol<string>> ProcessDataPacketMethod(byte[] dataPacket, byte[] unFinished, Func<EndPoint, byte[], int> dataDecoder, EndPoint endPoint)
             {

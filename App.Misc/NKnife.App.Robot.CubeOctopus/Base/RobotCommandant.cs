@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text;
-using NKnife.NSerial;
-using NKnife.NSerial.Interfaces;
-using NKnife.NSerial.Wrappers;
+using SerialKnife.Interfaces;
+using SerialKnife.Wrappers;
 
 namespace NKnife.Tools.Robot.CubeOctopus.Base
 {
