@@ -73,7 +73,7 @@ namespace NKnife.Kits.SerialKnife.Filters
         /// </summary>
         private void QuerySendLoop(object state)
         {
-            var id = (int) state;
+            var id = (long) state;
             while (_QueryThreadMap[id].RunFlag)
             {
                 SendProcess(id);
@@ -87,7 +87,7 @@ namespace NKnife.Kits.SerialKnife.Filters
         /// 然以将数据从串口发出，待数据接收超时后，激发数据包发送完成事件
         /// </summary>
         /// <param name="id"></param>
-        private void SendProcess(int id)
+        private void SendProcess(long id)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace NKnife.Kits.SerialKnife.Filters
         }
 
 
-        private void SendQuery(int id)
+        private void SendQuery(long id)
         {
             var queryProtocol = _Family.Build(new byte[] {0x01}); //命令字
             queryProtocol.CommandParam = new byte[]{0x03,0x00}; //地址，计数

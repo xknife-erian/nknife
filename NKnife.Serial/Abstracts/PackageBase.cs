@@ -8,7 +8,7 @@ namespace SerialKnife.Abstracts
     /// </summary>
     public abstract class PackageBase
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<PackageBase>();
 
         protected PackageBase(ushort port, byte[] dataToSend, SendInterval sendInterval)
         {

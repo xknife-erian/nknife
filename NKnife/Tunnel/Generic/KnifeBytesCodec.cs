@@ -28,11 +28,11 @@ namespace NKnife.Tunnel.Generic
             {
                 if (!_HasSetDecoder)
                 {
-                    var d = string.IsNullOrEmpty(CodecName)
+                    _BytesDecoder = string.IsNullOrEmpty(CodecName)
                         ? DI.Get<KnifeBytesDatagramDecoder>()
                         : DI.Get<KnifeBytesDatagramDecoder>(CodecName);
                     _HasSetDecoder = true;
-                    return d;
+                    return _BytesDecoder;
                 }
                 return _BytesDecoder;
             }
@@ -49,11 +49,11 @@ namespace NKnife.Tunnel.Generic
             {
                 if (!_HasSetEncoder)
                 {
-                    var e = string.IsNullOrEmpty(CodecName)
+                    _BytesEncoder = string.IsNullOrEmpty(CodecName)
                         ? DI.Get<KnifeBytesDatagramEncoder>()
                         : DI.Get<KnifeBytesDatagramEncoder>(CodecName);
                     _HasSetEncoder = true;
-                    return e;
+                    return _BytesEncoder;
                 }
                 return _BytesEncoder;
             }
