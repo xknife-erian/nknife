@@ -15,7 +15,7 @@ namespace SocketKnife.Generic.Protocol.Xmls
     /// </summary>
     public class XmlProtocolDeserializeUnPacker : XmlProtocolUnPacker
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<XmlProtocolDeserializeUnPacker>();
 
         protected override void ParseTags(StringProtocol content, XmlElement tagsElement)
         {

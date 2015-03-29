@@ -461,13 +461,10 @@ namespace SocketKnife
 
         private void SetSessionInactive(KnifeSocketSession session)
         {
-            //lock (session)
+            if (session.State == SessionState.Active)
             {
-                if (session.State == SessionState.Active)
-                {
-                    session.State = SessionState.Inactive;
-                    session.DisconnectType = DisconnectType.Normal;
-                }
+                session.State = SessionState.Inactive;
+                session.DisconnectType = DisconnectType.Normal;
             }
         }
 
@@ -489,24 +486,21 @@ namespace SocketKnife
 
         private void SendDatagram(KnifeSocketSession session, byte[] data)
         {
-            //lock (this)
+            if (session.State != SessionState.Active)
             {
-                if (session.State != SessionState.Active)
-                {
-                    return;
-                }
+                return;
+            }
 
-                try
-                {
-                    session.AcceptSocket.BeginSend(data, 0, data.Length, SocketFlags.None, EndSendDatagram, session);
-                }
-                catch (Exception err) // 写 socket 异常，准备关闭该会话
-                {
-                    session.DisconnectType = DisconnectType.Exception;
-                    session.State = SessionState.Inactive;
+            try
+            {
+                session.AcceptSocket.BeginSend(data, 0, data.Length, SocketFlags.None, EndSendDatagram, session);
+            }
+            catch (Exception err) // 写 socket 异常，准备关闭该会话
+            {
+                session.DisconnectType = DisconnectType.Exception;
+                session.State = SessionState.Inactive;
 
-                    OnSessionSendException(err);
-                }
+                OnSessionSendException(err);
             }
         }
 

@@ -21,7 +21,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
     /// </summary>
     public partial class Workbench : Window
     {
-        private readonly ILog _Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILog _Logger = LogManager.GetLogger<Workbench>();
 
         public Workbench()
         {

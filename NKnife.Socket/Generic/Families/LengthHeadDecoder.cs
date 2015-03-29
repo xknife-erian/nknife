@@ -13,7 +13,7 @@ namespace SocketKnife.Generic.Families
     /// </summary>
     public class LengthHeadDecoder : KnifeStringDatagramDecoder
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<LengthHeadDecoder>();
 
         public LengthHeadDecoder()
         {

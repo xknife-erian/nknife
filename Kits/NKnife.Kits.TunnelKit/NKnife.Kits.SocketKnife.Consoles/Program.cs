@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Common.Logging;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Consoles.My;
@@ -15,6 +16,7 @@ namespace NKnife.Kits.SocketKnife.Consoles
 
         static void Main(string[] args)
         {
+            Console.ResetColor();
             Console.WriteLine("**** START ****************************");
 
             DI.Initialize();
@@ -25,10 +27,14 @@ namespace NKnife.Kits.SocketKnife.Consoles
 
             var server = new DemoServer();
             server.Initialize(serverConfig, new DemoServerHandler());
+            var socket = server.GetSocket();
+            socket.DataReceived += (s, e) => _logger.Info(e.Item.Data);
+            socket.SessionBuilt += (s, e) => _logger.Info(e.Item.Data);
+            socket.SessionBroken += (s, e) => _logger.Info(e.Item.Data);
             server.StartServer();
 
-            Console.WriteLine("**** END ****************************");
-            Console.ReadKey();
+            Thread.Sleep(200);
+            Console.ReadLine();
         }
     }
 }

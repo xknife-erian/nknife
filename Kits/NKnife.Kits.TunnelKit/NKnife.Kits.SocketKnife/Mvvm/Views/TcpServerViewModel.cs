@@ -161,7 +161,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _ServerMap.Add(_CurrentServerPoint, _Server.GetSocketServer());
             _Server.Initialize(config, customSetting, _Handler);
 
-            var dataConnector = _Server.GetDataConnector();
+            var dataConnector = _Server.GetSocket();
             dataConnector.SessionBuilt += (sender, args) =>
             {
                 try

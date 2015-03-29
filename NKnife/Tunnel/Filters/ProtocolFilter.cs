@@ -22,6 +22,20 @@ namespace NKnife.Tunnel.Filters
         protected ITunnelCodec<TData> _Codec;
         protected IProtocolFamily<TData> _Family;
 
+        protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
+
+        protected virtual void InitializeDataMonitor(long id, DataMonitor dm)
+        {
+            var task = new Task(ReceiveQueueMonitor, id);
+            dm.IsMonitor = true;
+            dm.Task = task;
+            dm.ReceiveQueue = new ReceiveQueue();
+            if (_DataMonitors.TryAdd(id, dm))
+            {
+                dm.Task.Start();
+            }
+        }
+
         /// <summary>
         ///     核心方法:监听 ReceiveQueue 队列
         /// </summary>
@@ -113,6 +127,34 @@ namespace NKnife.Tunnel.Filters
         public event EventHandler<SessionEventArgs> SendToAll;
         public event EventHandler<SessionEventArgs> KillSession;
 
+        protected virtual void OnSendToSession(object sender, SessionEventArgs e)
+        {
+            var handler = SendToSession;
+            if (handler != null)
+                handler(this, e);
+        }
+        protected virtual void OnSendToAll(object sender, SessionEventArgs e)
+        {
+            var handler = SendToAll;
+            if (handler != null)
+                handler(this, e);
+        }
+        protected virtual void OnKillSession(object sender, SessionEventArgs e)
+        {
+            var handler = KillSession;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        public virtual void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> protocolFamily)
+        {
+            _Codec = codec;
+            _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.Decoder.GetType().Name, _Codec.Encoder.GetType().Name));
+
+            _Family = protocolFamily;
+            _logger.Info(string.Format("协议族[{0}]绑定成功。", _Family.FamilyName));
+        }
+
         public virtual void ProcessSessionBroken(long id)
         {
             DataMonitor monitor;
@@ -164,8 +206,6 @@ namespace NKnife.Tunnel.Filters
 
         #region 数据处理
 
-        private readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
-
         public virtual void AddHandlers(params ITunnelProtocolHandler<TData>[] handlers)
         {
             foreach (var handler in handlers)
@@ -173,8 +213,8 @@ namespace NKnife.Tunnel.Filters
                 var phandler = handler as BaseProtocolHandler<TData>;
                 if (phandler != null)
                 {
-                    phandler.SendToSession += Handler_OnSendToSession;
-                    phandler.SendToAll += Handler_OnSendToAll;
+                    phandler.SendToSession += OnSendToSession;
+                    phandler.SendToAll += OnSendToAll;
                     phandler.Bind(_Codec, _Family);
                     _Handlers.Add(handler);
                 }
@@ -183,39 +223,9 @@ namespace NKnife.Tunnel.Filters
 
         public virtual void RemoveHandler(ITunnelProtocolHandler<TData> handler)
         {
-            handler.SendToSession -= Handler_OnSendToSession;
-            handler.SendToAll -= Handler_OnSendToAll;
+            handler.SendToSession -= OnSendToSession;
+            handler.SendToAll -= OnSendToAll;
             _Handlers.Remove(handler);
-        }
-
-        protected virtual void Handler_OnSendToAll(object sender, SessionEventArgs e)
-        {
-            var handler = SendToAll;
-            if (handler != null)
-            {
-                handler.Invoke(this, e);
-            }
-        }
-
-        protected virtual void Handler_OnSendToSession(object sender, SessionEventArgs e)
-        {
-            var handler = SendToSession;
-            if (handler != null)
-            {
-                handler.Invoke(this, e);
-            }
-        }
-
-        protected virtual void InitializeDataMonitor(long id, DataMonitor dm)
-        {
-            var task = new Task(ReceiveQueueMonitor, id);
-            dm.IsMonitor = true;
-            dm.Task = task;
-            dm.ReceiveQueue = new ReceiveQueue();
-            if (_DataMonitors.TryAdd(id, dm))
-            {
-                dm.Task.Start();
-            }
         }
 
         /// <summary>

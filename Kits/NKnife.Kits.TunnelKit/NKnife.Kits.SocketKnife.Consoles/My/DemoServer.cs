@@ -8,9 +8,11 @@ using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Filters;
 using NKnife.Tunnel.Generic;
+using NKnife.Utility;
 using SocketKnife;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
+using SocketKnife.Interfaces;
 
 namespace NKnife.Kits.SocketKnife.Consoles.My
 {
@@ -24,8 +26,12 @@ namespace NKnife.Kits.SocketKnife.Consoles.My
         private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
         private bool _IsInitialized;
 
+        private IPAddress[] _IpAddresses;
+
         internal void Initialize(KnifeSocketConfig config, BaseProtocolHandler<string> handler)
         {
+            _IpAddresses = UtilityNet.GetLocalIpv4();
+
             if (_IsInitialized)
                 return;
 
@@ -48,12 +54,17 @@ namespace NKnife.Kits.SocketKnife.Consoles.My
             _Tunnel.AddFilters(_ProtocolFilter);
 
             _Server.Config = config;
-            _Server.Configure(IPAddress.Parse("127.0.0.1"), 22011);
-            _logger.Info(string.Format("Server: {0}:{1}", "127.0.0.1", 22011));
+            _Server.Configure(_IpAddresses[0], 22011);
+            _logger.Info(string.Format("Server: {0}:{1}", _IpAddresses[0], 22011));
 
             _Tunnel.BindDataConnector(_Server);
 
             _IsInitialized = true;
+        }
+
+        public IKnifeSocketServer GetSocket()
+        {
+            return _Server;
         }
 
         private StringProtocolFamily GetProtocolFamily()

@@ -23,7 +23,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
     /// </summary>
     public partial class NewTunnelCreatorDialog : Window
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<NewTunnelCreatorDialog>();
         private bool _IsServer;
 
         public NewTunnelCreatorDialog()

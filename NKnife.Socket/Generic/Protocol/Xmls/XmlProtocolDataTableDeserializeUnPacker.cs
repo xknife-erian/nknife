@@ -13,7 +13,7 @@ namespace SocketKnife.Generic.Protocol.Xmls
     /// </summary>
     public class XmlProtocolDataTableDeserializeUnPacker : XmlProtocolUnPacker
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<XmlProtocolDataTableDeserializeUnPacker>();
 
         protected override void ParseTags(StringProtocol content, XmlElement tagsElement)
         {

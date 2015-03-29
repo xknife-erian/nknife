@@ -12,7 +12,7 @@ namespace SocketKnife.Generic.Families
     /// </summary>
     public class LengthHeadEncoder : KnifeStringDatagramEncoder
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<LengthHeadEncoder>();
 
         public LengthHeadEncoder()
         {

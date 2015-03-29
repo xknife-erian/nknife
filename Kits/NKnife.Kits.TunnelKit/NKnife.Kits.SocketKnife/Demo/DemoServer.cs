@@ -38,7 +38,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Server;
         }
 
-        public IKnifeSocketServer GetDataConnector()
+        public IKnifeSocketServer GetSocket()
         {
             return _Server;
         }
