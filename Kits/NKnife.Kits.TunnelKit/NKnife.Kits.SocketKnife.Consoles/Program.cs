@@ -34,6 +34,8 @@ namespace NKnife.Kits.SocketKnife.Consoles
             server.StartServer();
 
             Thread.Sleep(200);
+
+            Console.WriteLine("--------------------");
             Console.ReadLine();
         }
     }

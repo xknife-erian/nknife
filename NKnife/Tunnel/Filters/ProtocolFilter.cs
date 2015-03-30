@@ -15,7 +15,7 @@ using NKnife.Utility;
 
 namespace NKnife.Tunnel.Filters
 {
-    public class ProtocolFilter<TData> : ITunnelProtocolFilter<TData>
+    public class ProtocolFilter<TData> : BaseTunnelFilter, ITunnelProtocolFilter<TData>
     {
         private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<TData>>();
         protected List<ITunnelProtocolHandler<TData>> _Handlers = new List<ITunnelProtocolHandler<TData>>();
@@ -123,9 +123,9 @@ namespace NKnife.Tunnel.Filters
 
         #region interface
 
-        public event EventHandler<SessionEventArgs> SendToSession;
-        public event EventHandler<SessionEventArgs> SendToAll;
-        public event EventHandler<SessionEventArgs> KillSession;
+        public override event EventHandler<SessionEventArgs> SendToSession;
+        public override event EventHandler<SessionEventArgs> SendToAll;
+        public override event EventHandler<SessionEventArgs> KillSession;
 
         protected virtual void OnSendToSession(object sender, SessionEventArgs e)
         {
@@ -155,7 +155,7 @@ namespace NKnife.Tunnel.Filters
             _logger.Info(string.Format("协议族[{0}]绑定成功。", _Family.FamilyName));
         }
 
-        public virtual void ProcessSessionBroken(long id)
+        public override void ProcessSessionBroken(long id)
         {
             DataMonitor monitor;
             if (_DataMonitors.TryGetValue(id, out monitor))
@@ -165,7 +165,7 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public virtual void ProcessSessionBuilt(long id)
+        public override void ProcessSessionBuilt(long id)
         {
             DataMonitor monitor;
             if (!_DataMonitors.TryGetValue(id, out monitor))
@@ -176,17 +176,17 @@ namespace NKnife.Tunnel.Filters
             }
         }
 
-        public virtual void ProcessSendToSession(ITunnelSession session)
+        public override void ProcessSendToSession(ITunnelSession session)
         {
             //什么也不做
         }
 
-        public virtual void ProcessSendToAll(byte[] data)
+        public override void ProcessSendToAll(byte[] data)
         {
             //什么也不做
         }
 
-        public virtual bool PrcoessReceiveData(ITunnelSession session)
+        public override bool PrcoessReceiveData(ITunnelSession session)
         {
             var data = session.Data;
             var id = session.Id;

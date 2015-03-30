@@ -113,12 +113,6 @@ namespace NKnife.Kits.SocketKnife.Mvvm
                 case ThemeStyle.Aero:
                     theme = new AeroTheme();
                     break;
-                case ThemeStyle.ExpressionDark:
-                    theme = new ExpressionDarkTheme();
-                    break;
-                case ThemeStyle.ExpressionLight:
-                    theme = new ExpressionLightTheme();
-                    break;
                 case ThemeStyle.Metro:
                     theme = new MetroTheme();
                     break;
