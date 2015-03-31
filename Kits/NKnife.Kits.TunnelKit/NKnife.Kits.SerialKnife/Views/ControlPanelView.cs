@@ -16,7 +16,7 @@ namespace NKnife.Kits.SerialKnife.Views
     public class ControlPanelView : DockContent
     {
         private System.Windows.Forms.Button _StartTunnelButton;
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<ControlPanelView>();
         private bool _IsTunnelStarted;
 
         private readonly Tunnels _Tunnels = DI.Get<Tunnels>();

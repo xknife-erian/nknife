@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.Consoles", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SocketKnife.Consoles\NKnife.Kits.SocketKnife.Consoles.csproj", "{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SerialKnife.Consoles", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SerialKnife.Consoles\NKnife.Kits.SerialKnife.Consoles.csproj", "{79829579-679B-4408-B6E8-3D7B9EFE7F84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79829579-679B-4408-B6E8-3D7B9EFE7F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79829579-679B-4408-B6E8-3D7B9EFE7F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79829579-679B-4408-B6E8-3D7B9EFE7F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79829579-679B-4408-B6E8-3D7B9EFE7F84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Common.Logging;
 using NKnife.IoC;
-using NKnife.Kits.SerialKnife.Kernel;
 using NKnife.Kits.SerialKnife.Views;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -17,17 +10,15 @@ namespace NKnife.Kits.SerialKnife
 {
     public partial class WorkBenchForm : Form
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-
-        private readonly string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
-        private readonly DockPanel _DockPanel = new DockPanel();
-        private readonly DockContent _LogView = DI.Get<LogView>();
+        private static readonly ILog _logger = LogManager.GetLogger<WorkBenchForm>();
         private readonly DockContent _ControlPanelView = DI.Get<ControlPanelView>();
+        private readonly DockPanel _DockPanel = new DockPanel();
+        private readonly string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
+        private readonly DockContent _LogView = DI.Get<LogView>();
         private readonly DockContent _MockDataConnectorView = DI.Get<MockSerialDataConnectorView>();
 
-
-
         #region 初始化
+
         public WorkBenchForm()
         {
             InitializeComponent();
@@ -78,7 +69,7 @@ namespace NKnife.Kits.SerialKnife
         {
             if (xml == typeof (ControlPanelView).ToString())
                 return _ControlPanelView;
-            if (xml == typeof(LogView).ToString())
+            if (xml == typeof (LogView).ToString())
                 return _LogView;
             if (xml == typeof (MockSerialDataConnectorView).ToString())
                 return _MockDataConnectorView;
@@ -90,14 +81,15 @@ namespace NKnife.Kits.SerialKnife
             _LogView.HideOnClose = true;
             _LogView.Show(_DockPanel, DockState.DockBottom);
             _MockDataConnectorView.HideOnClose = true;
-            _MockDataConnectorView.Show(_DockPanel,DockState.DockRight);
+            _MockDataConnectorView.Show(_DockPanel, DockState.DockRight);
             _ControlPanelView.HideOnClose = true;
             _ControlPanelView.Show(_DockPanel, DockState.Document);
-
         }
+
         #endregion
 
         #region 菜单工具栏
+
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -111,25 +103,22 @@ namespace NKnife.Kits.SerialKnife
 
         private void 操作面板ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(_ControlPanelView !=null)
+            if (_ControlPanelView != null)
                 _ControlPanelView.Show();
         }
 
         private void 日志面板ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(_LogView !=null)
+            if (_LogView != null)
                 _LogView.Show();
         }
 
         private void 模拟串口连接器面板ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(_MockDataConnectorView !=null)
+            if (_MockDataConnectorView != null)
                 _MockDataConnectorView.Show();
         }
+
         #endregion
-
-
-
-
     }
 }

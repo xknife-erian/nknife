@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Common.Logging;
 using NKnife.IoC;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
@@ -12,13 +10,72 @@ namespace SerialKnife
 {
     public class SerialPortDataConnector : IKnifeSerialConnector
     {
-        private ISerialPortWrapper _SerialComm = null;
-
-        public SerialType SerialType { get; set; }
+        private static readonly ILog _logger = LogManager.GetLogger<SerialPortDataConnector>();
+        private ISerialPortWrapper _SerialComm;
 
         public SerialPortDataConnector()
         {
-            SerialType = SerialType.WinApi; //默认使用winapi实现
+            SerialType = SerialType.DotNet; //默认使用winapi实现
+        }
+
+        public SerialType SerialType { get; set; }
+
+        private void CheckAndInitiate()
+        {
+            if (_SerialComm == null)
+            {
+                _SerialComm = DI.Get<ISerialPortWrapper>(SerialType.ToString());
+            }
+        }
+
+        private void InvokeDataSent(byte[] data)
+        {
+            var handler = DataSent;
+            if (handler != null)
+            {
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
+                {
+                    Id = PortNumber,
+                    Data = data
+                }));
+            }
+        }
+
+        private void InvokeDataReceived(byte[] data)
+        {
+            var handler = DataReceived;
+            if (handler != null)
+            {
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
+                {
+                    Id = PortNumber,
+                    Data = data
+                }));
+            }
+        }
+
+        private void InvokeSessionBroken()
+        {
+            var handler = SessionBroken;
+            if (handler != null)
+            {
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
+                {
+                    Id = PortNumber
+                }));
+            }
+        }
+
+        private void InvokeSessionBuilt()
+        {
+            var handler = SessionBuilt;
+            if (handler != null)
+            {
+                handler.Invoke(this, new SessionEventArgs(new TunnelSession
+                {
+                    Id = PortNumber
+                }));
+            }
         }
 
         #region IKnifeSerialConnector
@@ -54,7 +111,9 @@ namespace SerialKnife
         public void KillSession(long id)
         {
             if (_SerialComm.IsOpen)
+            {
                 _SerialComm.Close();
+            }
         }
 
         public bool SessionExist(long id)
@@ -72,7 +131,9 @@ namespace SerialKnife
             }
             var result = _SerialComm.Close();
             if (result)
+            {
                 InvokeSessionBroken();
+            }
             return result;
         }
 
@@ -83,62 +144,20 @@ namespace SerialKnife
             {
                 return true;
             }
-            var result = _SerialComm.InitPort(string.Format("COM{0}", PortNumber));
+            var port = string.Format("COM{0}", PortNumber);
+            var result = _SerialComm.InitPort(port);
             if (result)
+            {
+                _logger.Info(string.Format("串口{0}初始化完成：{1}", port, true));
                 InvokeSessionBuilt();
+            }
+            else
+            {
+                _logger.Warn(string.Format("串口{0}初始化完成：{1}", port, false));
+            }
             return result;
         }
 
         #endregion
-
-        private void CheckAndInitiate()
-        {
-            if (_SerialComm == null)
-            {
-                _SerialComm = DI.Get<ISerialPortWrapper>(SerialType.ToString());
-            }
-        }
-
-        private void InvokeDataSent(byte[] data)
-        {
-            var handler = DataSent;
-            if (handler != null)
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
-                {
-                    Id = PortNumber,
-                    Data = data,
-                }));
-        }
-
-        private void InvokeDataReceived(byte[] data)
-        {
-            var handler = DataReceived;
-            if (handler != null)
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
-                {
-                    Id = PortNumber,
-                    Data = data,
-                }));
-        }
-
-        private void InvokeSessionBroken()
-        {
-            var handler = SessionBroken;
-            if (handler != null)
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
-                {
-                    Id = PortNumber,
-                }));
-        }
-
-        private void InvokeSessionBuilt()
-        {
-            var handler = SessionBuilt;
-            if (handler != null)
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession()
-                {
-                    Id = PortNumber,
-                }));
-        }
     }
 }

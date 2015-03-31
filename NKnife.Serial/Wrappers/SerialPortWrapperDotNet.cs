@@ -12,20 +12,21 @@ namespace SerialKnife.Wrappers
     /// </summary>
     public class SerialPortWrapperDotNet : ISerialPortWrapper
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<SerialPortWrapperDotNet>();
 
-        protected readonly ManualResetEventSlim Reset = new ManualResetEventSlim(false);
+        protected readonly ManualResetEventSlim _Reset = new ManualResetEventSlim(false);
 
-        protected byte[] Buffer = new byte[64];
-        protected int CurrReadLength;
-        protected bool OnReceive;
+        protected byte[] _Buffer = new byte[64];
+        protected int _CurrReadLength;
+        protected bool _OnReceive;
+        protected byte _Tail = 0xFF;
 
         /// <summary>
         ///     串口操作类（通过.net 类库）
         /// </summary>
-        protected SerialPort SerialPort;
+        protected SerialPort _SerialPort;
 
-        protected int TimeOut = 150;
+        protected int _TimeOut = 150;
 
         #region ISerialPortWrapper Members
 
@@ -34,6 +35,12 @@ namespace SerialKnife.Wrappers
         /// </summary>
         public bool IsOpen { get; set; }
 
+        public byte Tail
+        {
+            get { return _Tail;}
+            set { _Tail = value; }
+        }
+
         /// <summary>
         ///     初始化操作器通讯串口
         /// </summary>
@@ -41,7 +48,7 @@ namespace SerialKnife.Wrappers
         /// <returns></returns>
         public bool InitPort(string portName)
         {
-            SerialPort = new SerialPort
+            _SerialPort = new SerialPort
                               {
                                   PortName = portName,
                                   BaudRate = 9600,
@@ -50,24 +57,24 @@ namespace SerialKnife.Wrappers
                                   ReceivedBytesThreshold = 1,
                                   ReadBufferSize = 32,
                               };
-            SerialPort.DataReceived += SerialPortDataReceived;
-            SerialPort.ErrorReceived += SerialPortErrorReceived;
+            _SerialPort.DataReceived += SerialPortDataReceived;
+            _SerialPort.ErrorReceived += SerialPortErrorReceived;
             try
             {
-                if (SerialPort.IsOpen)
+                if (_SerialPort.IsOpen)
                 {
-                    SerialPort.Close();
-                    SerialPort.Open();
+                    _SerialPort.Close();
+                    _SerialPort.Open();
                 }
                 else
                 {
-                    SerialPort.Open();
+                    _SerialPort.Open();
                 }
-                IsOpen = SerialPort.IsOpen;
+                IsOpen = _SerialPort.IsOpen;
                 if (IsOpen)
-                    _logger.Info(string.Format("通讯:成功打开串口:{0}。{1},{2},{3}", portName, SerialPort.BaudRate,
-                                               SerialPort.ReceivedBytesThreshold, SerialPort.ReadTimeout));
-                return SerialPort.IsOpen;
+                    _logger.Info(string.Format("通讯:成功打开串口:{0}。{1},{2},{3}", portName, _SerialPort.BaudRate,
+                                               _SerialPort.ReceivedBytesThreshold, _SerialPort.ReadTimeout));
+                return _SerialPort.IsOpen;
             }
             catch (Exception e)
             {
@@ -85,17 +92,17 @@ namespace SerialKnife.Wrappers
         {
             try
             {
-                if (SerialPort.IsOpen)
+                if (_SerialPort.IsOpen)
                 {
-                    SerialPort.Close();
-                    _logger.Info(string.Format("通讯:成功关闭串口:{0}。", SerialPort.PortName));
+                    _SerialPort.Close();
+                    _logger.Info(string.Format("通讯:成功关闭串口:{0}。", _SerialPort.PortName));
                 }
                 IsOpen = false;
                 return true;
             }
             catch (Exception e)
             {
-                _logger.Warn("关闭串口异常:" + SerialPort.PortName, e);
+                _logger.Warn("关闭串口异常:" + _SerialPort.PortName, e);
                 return false;
             }
         }
@@ -108,8 +115,8 @@ namespace SerialKnife.Wrappers
         {
             if (!IsOpen)
                 return;
-            SerialPort.ReadTimeout = timeout;
-            TimeOut = timeout;
+            _SerialPort.ReadTimeout = timeout;
+            _TimeOut = timeout;
         }
 
         /// <summary>
@@ -122,20 +129,20 @@ namespace SerialKnife.Wrappers
         {
             try
             {
-                CurrReadLength = 0;
-                SerialPort.Write(cmd, 0, cmd.Length);
-                OnReceive = true;
-                Reset.Reset();
-                Reset.Wait(TimeOut); //收到返回
-                OnReceive = false;
+                _CurrReadLength = 0;
+                _SerialPort.Write(cmd, 0, cmd.Length);
+                _OnReceive = true;
+                _Reset.Reset();
+                _Reset.Wait(_TimeOut); //收到返回
+                _OnReceive = false;
 
-                int currReadLength = CurrReadLength;
+                int currReadLength = _CurrReadLength;
                 if (currReadLength > 0)
                 {
                     recv = new byte[currReadLength];
-                    Array.Copy(Buffer, recv, currReadLength);
-                    Buffer = new byte[64];
-                    CurrReadLength = 0;
+                    Array.Copy(_Buffer, recv, currReadLength);
+                    _Buffer = new byte[64];
+                    _CurrReadLength = 0;
                 }
                 else
                 {
@@ -159,16 +166,16 @@ namespace SerialKnife.Wrappers
         /// <param name="e"></param>
         protected virtual void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            if (!OnReceive)
+            if (!_OnReceive)
             {
-                SerialPort.DiscardInBuffer();
+                _SerialPort.DiscardInBuffer();
                 return;
             }
             var readedBuffer = new byte[64];
             int recvCount = 0;
             try
             {
-                recvCount = SerialPort.Read(readedBuffer, 0, readedBuffer.Length);
+                recvCount = _SerialPort.Read(readedBuffer, 0, readedBuffer.Length);
             }
             catch (TimeoutException ex)
             {
@@ -178,27 +185,26 @@ namespace SerialKnife.Wrappers
             {
                 
             }
-            if (recvCount > 0 && CurrReadLength + recvCount <= Buffer.Length)
+            if (recvCount > 0 && _CurrReadLength + recvCount <= _Buffer.Length)
             {
-                System.Buffer.BlockCopy(readedBuffer, 0, Buffer, CurrReadLength, recvCount);
-                CurrReadLength += recvCount;
-                //TODO 结束符要做成活的，不能使用固定的0xFF
-                if (readedBuffer[recvCount - 1] == 0xFF) //校验指令结束符FF
+                Buffer.BlockCopy(readedBuffer, 0, _Buffer, _CurrReadLength, recvCount);
+                _CurrReadLength += recvCount;
+                if (readedBuffer[recvCount - 1] == _Tail) //校验指令结束符
                 {
-                    Reset.Set();
-                    OnReceive = false;
+                    _Reset.Set();
+                    _OnReceive = false;
                 }
             }
             else
             {
-                Buffer = new byte[64];
-                CurrReadLength = 0;
+                _Buffer = new byte[64];
+                _CurrReadLength = 0;
             }
         }
 
         protected virtual void SerialPortErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
-            SerialPort.DiscardInBuffer();
+            _SerialPort.DiscardInBuffer();
         }
     }
 }
