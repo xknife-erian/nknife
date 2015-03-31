@@ -11,7 +11,7 @@ namespace SerialKnife
     public class SerialPortDataConnector : IKnifeSerialConnector
     {
         private static readonly ILog _logger = LogManager.GetLogger<SerialPortDataConnector>();
-        private ISerialPortWrapper _SerialComm;
+        private ISerialPortWrapper _Serial;
 
         public SerialPortDataConnector()
         {
@@ -22,9 +22,9 @@ namespace SerialKnife
 
         private void CheckAndInitiate()
         {
-            if (_SerialComm == null)
+            if (_Serial == null)
             {
-                _SerialComm = DI.Get<ISerialPortWrapper>(SerialType.ToString());
+                _Serial = DI.Get<ISerialPortWrapper>(SerialType.ToString());
             }
         }
 
@@ -89,7 +89,7 @@ namespace SerialKnife
         public void Send(long id, byte[] data)
         {
             byte[] received;
-            _SerialComm.SendData(data, out received);
+            _Serial.SendData(data, out received);
             InvokeDataSent(data);
             if (received != null)
             {
@@ -100,7 +100,7 @@ namespace SerialKnife
         public void SendAll(byte[] data)
         {
             byte[] received;
-            _SerialComm.SendData(data, out received);
+            _Serial.SendData(data, out received);
             InvokeDataSent(data);
             if (received != null)
             {
@@ -110,26 +110,26 @@ namespace SerialKnife
 
         public void KillSession(long id)
         {
-            if (_SerialComm.IsOpen)
+            if (_Serial.IsOpen)
             {
-                _SerialComm.Close();
+                _Serial.Close();
             }
         }
 
         public bool SessionExist(long id)
         {
             CheckAndInitiate();
-            return _SerialComm.IsOpen;
+            return _Serial.IsOpen;
         }
 
         public bool Stop()
         {
             CheckAndInitiate();
-            if (!_SerialComm.IsOpen)
+            if (!_Serial.IsOpen)
             {
                 return true;
             }
-            var result = _SerialComm.Close();
+            var result = _Serial.Close();
             if (result)
             {
                 InvokeSessionBroken();
@@ -140,12 +140,12 @@ namespace SerialKnife
         public bool Start()
         {
             CheckAndInitiate();
-            if (_SerialComm.IsOpen)
+            if (_Serial.IsOpen)
             {
                 return true;
             }
             var port = string.Format("COM{0}", PortNumber);
-            var result = _SerialComm.InitPort(port);
+            var result = _Serial.InitPort(port);
             if (result)
             {
                 _logger.Info(string.Format("串口{0}初始化完成：{1}", port, true));

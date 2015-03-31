@@ -2,7 +2,7 @@
 using System.Threading;
 using Common.Logging;
 using NKnife.IoC;
-using SerialKnife.Abstracts;
+using SerialKnife.Base;
 using SerialKnife.Common;
 using SerialKnife.Interfaces;
 

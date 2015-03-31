@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Common.Logging;
-using SerialKnife.Abstracts;
+using SerialKnife.Base;
 using SerialKnife.Common;
 using SerialKnife.Interfaces;
 

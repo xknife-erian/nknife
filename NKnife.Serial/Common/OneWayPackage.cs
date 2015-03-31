@@ -1,5 +1,5 @@
 ﻿using System;
-using SerialKnife.Abstracts;
+using SerialKnife.Base;
 
 namespace SerialKnife.Common
 {

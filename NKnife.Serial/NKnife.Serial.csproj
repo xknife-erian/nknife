@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="Common\DataRecvEventArgs.cs" />
     <Compile Include="Common\NoResponseEventArgs.cs" />
-    <Compile Include="Abstracts\PackageBase.cs" />
+    <Compile Include="Base\PackageBase.cs" />
     <Compile Include="Common\PackageSentEventArgs.cs" />
     <Compile Include="Common\SendInterval.cs" />
     <Compile Include="Common\SendRecvEventArgs.cs" />

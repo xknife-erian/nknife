@@ -1,4 +1,4 @@
-﻿using SerialKnife.Abstracts;
+﻿using SerialKnife.Base;
 
 namespace SerialKnife.Interfaces
 {
