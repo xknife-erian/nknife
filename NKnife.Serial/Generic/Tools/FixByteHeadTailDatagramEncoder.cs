@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NKnife.Tunnel.Generic;
 
-namespace SerialKnife.Tunnel.Tools
+namespace SerialKnife.Generic.Tools
 {
     public class FixByteHeadTailDatagramEncoder : KnifeBytesDatagramEncoder
     {

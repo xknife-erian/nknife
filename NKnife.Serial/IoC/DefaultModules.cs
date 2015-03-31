@@ -5,8 +5,8 @@ using NKnife.Tunnel;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Generic;
 using SerialKnife.Common;
+using SerialKnife.Generic.Tools;
 using SerialKnife.Interfaces;
-using SerialKnife.Tunnel.Tools;
 using SerialKnife.Wrappers;
 
 namespace SerialKnife.IoC

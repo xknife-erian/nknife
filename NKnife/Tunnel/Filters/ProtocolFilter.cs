@@ -258,7 +258,7 @@ namespace NKnife.Tunnel.Filters
                 protocols = ParseProtocols(datagram);
             }
 
-            if (dataPacket.Length > done)
+            if (done!= 0 && dataPacket.Length > done)
             {
                 // 暂存半包数据，留待下条队列数据接包使用
                 unFinished = new byte[dataPacket.Length - done];
@@ -268,13 +268,12 @@ namespace NKnife.Tunnel.Filters
 
             return protocols;
         }
+
         protected virtual IEnumerable<IProtocol<TData>> ParseProtocols(TData[] datagram)
         {
             var protocols = new List<IProtocol<TData>>(datagram.Length);
             foreach (TData dg in datagram)
             {
-                //if (string.IsNullOrWhiteSpace(dg)) 
-                //    continue;
                 TData command;
                 try
                 {
@@ -308,6 +307,7 @@ namespace NKnife.Tunnel.Filters
         }
 
         #endregion
+
         protected class DataMonitor
         {
             public bool IsMonitor { get; set; }

@@ -9,8 +9,8 @@ using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Generic;
+using SerialKnife.Generic.Filters;
 using SerialKnife.Interfaces;
-using SerialKnife.Tunnel.Filters;
 
 namespace NKnife.Kits.SerialKnife.Kernel
 {

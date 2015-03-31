@@ -6,7 +6,7 @@ using NKnife.Protocol;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Filters;
 
-namespace SerialKnife.Tunnel.Filters
+namespace SerialKnife.Generic.Filters
 {
     public class SerialProtocolFilter : ProtocolFilter<byte[]>
     {
