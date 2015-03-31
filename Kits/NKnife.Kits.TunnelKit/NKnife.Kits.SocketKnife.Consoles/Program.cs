@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using Common.Logging;
 using NKnife.IoC;
-using NKnife.Kits.SocketKnife.Consoles.My;
+using NKnife.Kits.SocketKnife.Consoles.Demos;
 using SocketKnife.Generic;
 
 namespace NKnife.Kits.SocketKnife.Consoles

@@ -11,7 +11,7 @@ using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
-namespace NKnife.Kits.SocketKnife.Consoles.My
+namespace NKnife.Kits.SocketKnife.Consoles.Demos
 {
     class DemoClient
     {

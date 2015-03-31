@@ -56,13 +56,13 @@
   <ItemGroup>
     <Compile Include="Common\SocketCustomSetting.cs" />
     <Compile Include="IoC\SocketModule.cs" />
-    <Compile Include="My\DemoClient.cs" />
-    <Compile Include="My\DemoClientHandler.cs" />
-    <Compile Include="My\DemoServer.cs" />
-    <Compile Include="My\DemoServerHandler.cs" />
+    <Compile Include="Demos\DemoClient.cs" />
+    <Compile Include="Demos\DemoClientHandler.cs" />
+    <Compile Include="Demos\DemoServer.cs" />
+    <Compile Include="Demos\DemoServerHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="My\Protocols\Register.cs" />
+    <Compile Include="Demos\Protocols\Register.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\NKnife.NLog3\NKnife.NLog3.csproj">

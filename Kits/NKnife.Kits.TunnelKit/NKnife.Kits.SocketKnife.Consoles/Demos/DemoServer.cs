@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using Common.Logging;
 using NKnife.IoC;
-using NKnife.Kits.SocketKnife.Consoles.My.Protocols;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Base;
@@ -14,7 +13,7 @@ using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
 using SocketKnife.Interfaces;
 
-namespace NKnife.Kits.SocketKnife.Consoles.My
+namespace NKnife.Kits.SocketKnife.Consoles.Demos
 {
     public class DemoServer
     {

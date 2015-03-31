@@ -1,6 +1,6 @@
 ﻿using NKnife.Protocol.Generic;
 
-namespace NKnife.Kits.SocketKnife.Consoles.My.Protocols
+namespace NKnife.Kits.SocketKnife.Consoles.Demos.Protocols
 {
     class Register : StringProtocol
     {

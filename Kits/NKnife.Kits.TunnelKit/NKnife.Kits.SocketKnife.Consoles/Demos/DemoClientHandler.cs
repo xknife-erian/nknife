@@ -4,7 +4,7 @@ using Common.Logging;
 using NKnife.Protocol;
 using NKnife.Tunnel.Base;
 
-namespace NKnife.Kits.SocketKnife.Consoles.My
+namespace NKnife.Kits.SocketKnife.Consoles.Demos
 {
     public class Demo1ClientHandler : BaseProtocolHandler<string>
     {
