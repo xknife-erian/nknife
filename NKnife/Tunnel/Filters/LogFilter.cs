@@ -35,9 +35,5 @@ namespace NKnife.Tunnel.Filters
         {
             _logger.Debug(string.Format("发送数据，目标全体Session：{0}", Encoding.Default.GetString(data)));
         }
-
-        public override event EventHandler<SessionEventArgs> SendToSession;
-        public override event EventHandler<SessionEventArgs> SendToAll;
-        public override event EventHandler<SessionEventArgs> KillSession;
     }
 }

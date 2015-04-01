@@ -30,9 +30,5 @@ namespace SerialKnife.Generic.Filters
         {
             _logger.Debug(string.Format("发送数据，目标{0}：{1}", session.Id, session.Data.ToHexString()));
         }
-
-        public override event EventHandler<SessionEventArgs> SendToSession;
-        public override event EventHandler<SessionEventArgs> SendToAll;
-        public override event EventHandler<SessionEventArgs> KillSession;
     }
 }

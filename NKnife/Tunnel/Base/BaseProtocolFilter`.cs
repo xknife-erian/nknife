@@ -125,29 +125,6 @@ namespace NKnife.Tunnel.Base
 
         #region interface
 
-        public override event EventHandler<SessionEventArgs> SendToSession;
-        public override event EventHandler<SessionEventArgs> SendToAll;
-        public override event EventHandler<SessionEventArgs> KillSession;
-
-        protected virtual void OnSendToSession(object sender, SessionEventArgs e)
-        {
-            var handler = SendToSession;
-            if (handler != null)
-                handler(this, e);
-        }
-        protected virtual void OnSendToAll(object sender, SessionEventArgs e)
-        {
-            var handler = SendToAll;
-            if (handler != null)
-                handler(this, e);
-        }
-        protected virtual void OnKillSession(object sender, SessionEventArgs e)
-        {
-            var handler = KillSession;
-            if (handler != null)
-                handler(this, e);
-        }
-
         public virtual void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> protocolFamily)
         {
             _Codec = codec;
