@@ -5,19 +5,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Logging;
-using NKnife.Events;
 using NKnife.Protocol;
-using NKnife.Protocol.Generic;
-using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 using NKnife.Utility;
 
-namespace NKnife.Tunnel.Filters
+namespace NKnife.Tunnel.Base
 {
-    public class ProtocolFilter<TData> : BaseTunnelFilter, ITunnelProtocolFilter<TData>
+    public class BaseProtocolFilter<TData> : BaseTunnelFilter, ITunnelProtocolFilter<TData>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<ProtocolFilter<TData>>();
+        private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolFilter<TData>>();
         protected List<ITunnelProtocolHandler<TData>> _Handlers = new List<ITunnelProtocolHandler<TData>>();
         protected ITunnelCodec<TData> _Codec;
         protected IProtocolFamily<TData> _Family;

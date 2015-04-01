@@ -18,7 +18,7 @@ using NKnife.Utility;
 
 namespace SocketKnife.Generic.Filters
 {
-    public class SocketProtocolFilter : ProtocolFilter<string>
+    public class SocketProtocolFilter : BaseProtocolFilter<string>
     {
     }
 }

@@ -4,11 +4,12 @@ using Common.Logging;
 using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Tunnel;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Filters;
 
 namespace SerialKnife.Generic.Filters
 {
-    public class SerialProtocolFilter : ProtocolFilter<byte[]>
+    public class SerialProtocolFilter : BaseProtocolFilter<byte[]>
     {
         private static readonly ILog _logger = LogManager.GetLogger<SerialProtocolFilter>();
         private readonly byte[] _CurrentReceiveBuffer = new byte[1024];

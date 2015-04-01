@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Threading;
 using Common.Logging;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 using NKnife.Tunnel.Filters;
 
 namespace NKnife.Kits.SerialKnife.Consoles.Common
 {
-    public class QueryBusFilter : ProtocolFilter<byte[]>
+    public class QueryBusFilter : BaseProtocolFilter<byte[]>
     {
         private static readonly ILog _logger = LogManager.GetLogger<QueryBusFilter>();
         private readonly Dictionary<long, QueryThreadWrapper> _QueryThreadMap = new Dictionary<long, QueryThreadWrapper>();
