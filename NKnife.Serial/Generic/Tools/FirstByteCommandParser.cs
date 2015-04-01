@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using NKnife.Protocol.Generic;
 
-namespace SerialKnife.Generic.Tools.Pan
+namespace SerialKnife.Generic.Tools
 {
-    public class PanFirstByteCommandParser : BytesProtocolCommandParser
+    public class FirstByteCommandParser : BytesProtocolCommandParser
     {
         public override byte[] GetCommand(byte[] datagram)
         {

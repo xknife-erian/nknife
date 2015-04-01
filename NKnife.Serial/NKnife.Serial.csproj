@@ -75,7 +75,7 @@
     <Compile Include="SerialPortDataConnector.cs" />
     <Compile Include="Generic\Filters\SerialLogFilter.cs" />
     <Compile Include="Generic\Filters\SerialProtocolFilter.cs" />
-    <Compile Include="Generic\Tools\Pan\PanFirstByteCommandParser.cs" />
+    <Compile Include="Generic\Tools\FirstByteCommandParser.cs" />
     <Compile Include="Generic\Tools\Pan\PanFixByteHeadTailDatagramDecoder.cs" />
     <Compile Include="Generic\Tools\Pan\PanFixByteHeadTailDatagramEncoder.cs" />
     <Compile Include="Generic\Tools\Pan\PanBytesProtocolSimplePacker.cs" />
@@ -95,6 +95,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

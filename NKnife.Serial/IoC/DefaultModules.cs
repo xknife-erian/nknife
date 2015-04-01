@@ -24,7 +24,7 @@ namespace SerialKnife.IoC
             Bind<KnifeBytesDatagramEncoder>().To<PanFixByteHeadTailDatagramEncoder>().InSingletonScope();
 
             //tunnel protocol相关
-            Bind<BytesProtocolCommandParser>().To<PanFirstByteCommandParser>().InSingletonScope();
+            Bind<BytesProtocolCommandParser>().To<FirstByteCommandParser>().InSingletonScope();
             Bind<BytesProtocolPacker>().To<PanBytesProtocolSimplePacker>().InSingletonScope();
             Bind<BytesProtocolUnPacker>().To<PanBytesProtocolSimpleUnPacker>().InSingletonScope();
         }
