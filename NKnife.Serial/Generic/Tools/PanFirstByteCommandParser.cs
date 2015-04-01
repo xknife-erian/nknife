@@ -3,7 +3,7 @@ using NKnife.Protocol.Generic;
 
 namespace SerialKnife.Generic.Tools
 {
-    public class FirstByteCommandParser : BytesProtocolCommandParser
+    public class PanFirstByteCommandParser : BytesProtocolCommandParser
     {
         public override byte[] GetCommand(byte[] datagram)
         {

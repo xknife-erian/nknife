@@ -12,7 +12,7 @@ using NKnife.Utility;
 
 namespace NKnife.Tunnel.Base
 {
-    public class BaseProtocolFilter<TData> : BaseTunnelFilter, ITunnelProtocolFilter<TData>
+    public abstract class BaseProtocolFilter<TData> : BaseTunnelFilter, ITunnelProtocolFilter<TData>
     {
         private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolFilter<TData>>();
         protected List<ITunnelProtocolHandler<TData>> _Handlers = new List<ITunnelProtocolHandler<TData>>();
@@ -20,6 +20,10 @@ namespace NKnife.Tunnel.Base
         protected IProtocolFamily<TData> _Family;
 
         protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
+
+        protected BaseProtocolFilter()
+        {
+        }
 
         protected virtual void InitializeDataMonitor(long id, DataMonitor dm)
         {
@@ -84,6 +88,7 @@ namespace NKnife.Tunnel.Base
                 }
             }
         }
+
 
         /// <summary>
         ///     触发数据基础解析后发生的数据到达事件

@@ -19,11 +19,11 @@ namespace SerialKnife.IoC
             Bind<ISerialPortWrapper>().To<SerialPortWrapperDotNet>().Named(SerialType.DotNet.ToString());
             Bind<ISerialPortWrapper>().To<SerialPortWrapperWinApi>().Named(SerialType.WinApi.ToString());
 
-            Bind<KnifeBytesDatagramDecoder>().To<FixByteHeadTailDatagramDecoder>().InSingletonScope();
-            Bind<KnifeBytesDatagramEncoder>().To<FixByteHeadTailDatagramEncoder>().InSingletonScope();
+            Bind<KnifeBytesDatagramDecoder>().To<PanFixByteHeadTailDatagramDecoder>().InSingletonScope();
+            Bind<KnifeBytesDatagramEncoder>().To<PanFixByteHeadTailDatagramEncoder>().InSingletonScope();
 
             //tunnel protocol相关
-            Bind<BytesProtocolCommandParser>().To<FirstByteCommandParser>().InSingletonScope();
+            Bind<BytesProtocolCommandParser>().To<PanFirstByteCommandParser>().InSingletonScope();
             Bind<BytesProtocolPacker>().To<SimpleBytesProtocolPacker>().InSingletonScope();
             Bind<BytesProtocolUnPacker>().To<SimpleBytesProtocolUnPacker>().InSingletonScope();
         }

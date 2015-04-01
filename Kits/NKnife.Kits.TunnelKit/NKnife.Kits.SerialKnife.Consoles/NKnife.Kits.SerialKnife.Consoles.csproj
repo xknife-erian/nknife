@@ -52,11 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Demos\SerialProtocolHandler.cs" />
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\QueryBusFilter.cs" />
-    <Compile Include="My\SerialClient.cs" />
+    <Compile Include="Demos\SerialClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

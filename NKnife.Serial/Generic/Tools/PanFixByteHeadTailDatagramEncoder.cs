@@ -5,13 +5,13 @@ using NKnife.Tunnel.Generic;
 
 namespace SerialKnife.Generic.Tools
 {
-    public class FixByteHeadTailDatagramEncoder : KnifeBytesDatagramEncoder
+    public class PanFixByteHeadTailDatagramEncoder : KnifeBytesDatagramEncoder
     {
 
         public byte Head { get; set; }
         public byte Tail { get; set; }
 
-        public FixByteHeadTailDatagramEncoder()
+        public PanFixByteHeadTailDatagramEncoder()
         {
             Head = 0xA0;
             Tail = 0xFF;

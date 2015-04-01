@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Common.Logging;
+using NKnife.Protocol;
 using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
@@ -70,7 +71,11 @@ namespace NKnife.Kits.SerialKnife.Consoles.Common
                 Data = datagram
             }));
         }
-        
+
+        protected override void HandlerInvoke(long id, IProtocol<byte[]> protocol)
+        {
+        }
+
         class QueryThreadWrapper
         {
             public Thread QueryThread { get; set; }

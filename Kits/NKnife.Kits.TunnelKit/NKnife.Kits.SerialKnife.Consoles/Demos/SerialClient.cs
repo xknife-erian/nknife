@@ -11,7 +11,7 @@ using NKnife.Tunnel.Generic;
 using SerialKnife.Generic.Filters;
 using SerialKnife.Interfaces;
 
-namespace NKnife.Kits.SerialKnife.Consoles.My
+namespace NKnife.Kits.SerialKnife.Consoles.Demos
 {
     public class SerialClient
     {
@@ -20,29 +20,28 @@ namespace NKnife.Kits.SerialKnife.Consoles.My
         private readonly IKnifeSerialConnector _DataConnector;
         private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
 
-        public SerialClient()
+        public SerialClient(int port)
         {
-            var logFilter = DI.Get<SerialLogFilter>();
-            var queryFilter = DI.Get<QueryBusFilter>();
-            var protocolFilter = DI.Get<SerialProtocolFilter>();
             var codec = DI.Get<KnifeBytesCodec>();
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;
-            queryFilter.Bind(codec, family);
-            protocolFilter.Bind(codec, family);
-            protocolFilter.ProtocolsReceived += protocolFilter_ProtocolsReceived;
 
-            _Tunnel.AddFilters(logFilter);
-            _Tunnel.AddFilters(queryFilter);
+            var queryFilter = DI.Get<QueryBusFilter>();
+            queryFilter.Bind(codec, family);
+
+            var handler = new SerialProtocolHandler();
+            var protocolFilter = new SerialProtocolFilter();
+            protocolFilter.Bind(codec, family);
+            protocolFilter.AddHandlers(handler);
+
+            //_Tunnel.AddFilters(queryFilter);
             _Tunnel.AddFilters(protocolFilter);
 
             _DataConnector = DI.Get<IKnifeSerialConnector>();
-            _DataConnector.PortNumber = 7; //串口1
+            _DataConnector.PortNumber = port; //串口
 
             _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力
         }
-
-        public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
 
         public bool Start()
         {
@@ -58,16 +57,10 @@ namespace NKnife.Kits.SerialKnife.Consoles.My
             return true;
         }
 
-        /// <summary>
-        ///     协议接收处理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void protocolFilter_ProtocolsReceived(object sender, EventArgs<IEnumerable<IProtocol<byte[]>>> e)
+        public void Send(byte[] data)
         {
-            EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> handler = ProtocolsReceived;
-            if (handler != null)
-                handler.Invoke(sender, e);
+            _DataConnector.SendAll(data);
         }
+
     }
 }

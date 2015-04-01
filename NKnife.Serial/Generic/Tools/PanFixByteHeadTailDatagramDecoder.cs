@@ -4,12 +4,12 @@ using NKnife.Tunnel.Generic;
 
 namespace SerialKnife.Generic.Tools
 {
-    public class FixByteHeadTailDatagramDecoder : KnifeBytesDatagramDecoder
+    public class PanFixByteHeadTailDatagramDecoder : KnifeBytesDatagramDecoder
     {
         public byte Head { get; set; }
         public byte Tail { get; set; }
 
-        public FixByteHeadTailDatagramDecoder()
+        public PanFixByteHeadTailDatagramDecoder()
         {
             Head = 0xA0;
             Tail = 0xFF;
