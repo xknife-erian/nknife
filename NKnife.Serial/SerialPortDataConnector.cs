@@ -145,7 +145,7 @@ namespace SerialKnife
                 return true;
             }
             var port = string.Format("COM{0}", PortNumber);
-            var result = _Serial.InitPort(port);
+            var result = _Serial.InitPort(port, new SerialConfig());
             if (result)
             {
                 _logger.Info(string.Format("串口{0}初始化完成：{1}", port, true));

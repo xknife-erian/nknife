@@ -1,3 +1,5 @@
+using SerialKnife.Common;
+
 namespace SerialKnife.Interfaces
 {
     /// <summary>串口操作类接口
@@ -12,7 +14,7 @@ namespace SerialKnife.Interfaces
         /// </summary>
         /// <param name="portName"></param>
         /// <returns></returns>
-        bool InitPort(string portName);
+        bool InitPort(string portName, SerialConfig config);
 
         /// <summary> 关闭串口
         /// </summary>

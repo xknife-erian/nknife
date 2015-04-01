@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using SerialKnife.Common;
 using SerialKnife.Interfaces;
 
 namespace SerialKnife.Wrappers
@@ -19,10 +20,16 @@ namespace SerialKnife.Wrappers
         /// <summary>初始化操作器通讯串口
         /// </summary>
         /// <param name="portName"></param>
+        /// <param name="config"></param>
         /// <returns></returns>
-        public bool InitPort(string portName)
+        public bool InitPort(string portName, SerialConfig config)
         {
-            _SerialPort = new SerialPortWin32 {Port = portName, BaudRate = 9600, ByteSize = 8, ReadTimeout = 150};
+            _SerialPort = new SerialPortWin32 {
+                Port = portName,
+                BaudRate = config.BaudRate,
+                ByteSize = (byte) config.DataBits,
+                ReadTimeout = config.ReadTimeout
+            };
 
             try
             {

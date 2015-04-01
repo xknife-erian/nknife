@@ -3,7 +3,9 @@ using System.IO;
 using System.IO.Ports;
 using System.Threading;
 using Common.Logging;
+using SerialKnife.Common;
 using SerialKnife.Interfaces;
+using SerialDataReceivedEventArgs = System.IO.Ports.SerialDataReceivedEventArgs;
 
 namespace SerialKnife.Wrappers
 {
@@ -45,18 +47,24 @@ namespace SerialKnife.Wrappers
         ///     初始化操作器通讯串口
         /// </summary>
         /// <param name="portName"></param>
+        /// <param name="config"></param>
         /// <returns></returns>
-        public bool InitPort(string portName)
+        public bool InitPort(string portName, SerialConfig config)
         {
             _SerialPort = new SerialPort
                               {
                                   PortName = portName,
-                                  BaudRate = 9600,
-                                  DataBits = 8,
-                                  ReadTimeout = 150,
-                                  ReceivedBytesThreshold = 1,
-                                  ReadBufferSize = 32,
+
+                                  BaudRate = config.BaudRate,//9600,
+                                  DataBits = config.DataBits,//8,
+                                  ReadTimeout = config.ReadTimeout,//150,
+                                  ReceivedBytesThreshold = config.ReceivedBytesThreshold,//1,
+                                  ReadBufferSize = config.ReadBufferSize,//32,
+                                  DtrEnable = config.DtrEnable,
+                                  Parity = config.Parity,
+                                  RtsEnable = config.RtsEnable
                               };
+
             _SerialPort.DataReceived += SerialPortDataReceived;
             _SerialPort.ErrorReceived += SerialPortErrorReceived;
             try
@@ -72,8 +80,10 @@ namespace SerialKnife.Wrappers
                 }
                 IsOpen = _SerialPort.IsOpen;
                 if (IsOpen)
+                {
                     _logger.Info(string.Format("通讯:成功打开串口:{0}。{1},{2},{3}", portName, _SerialPort.BaudRate,
                                                _SerialPort.ReceivedBytesThreshold, _SerialPort.ReadTimeout));
+                }
                 return _SerialPort.IsOpen;
             }
             catch (Exception e)

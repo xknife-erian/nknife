@@ -160,7 +160,7 @@ namespace SerialKnife
         public bool OpenPort(ushort port)
         {
             _PortName = string.Format("COM{0}", port);
-            if (_SerialComm.InitPort(_PortName))
+            if (_SerialComm.InitPort(_PortName, new SerialConfig()))
             {
                 Active = true;
                 _DataPool = new SerialDataPool();

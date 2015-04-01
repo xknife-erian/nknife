@@ -58,12 +58,14 @@
     <Compile Include="Common\SendRecvEventArgs.cs" />
     <Compile Include="Common\SerialDataReceivedEventArgs.cs" />
     <Compile Include="Common\SerialType.cs" />
+    <Compile Include="Generic\Filters\SerialProtocolSimpleFilter.cs" />
     <Compile Include="Interfaces\IKnifeSerialConnector.cs" />
     <Compile Include="Interfaces\ISerialClient.cs" />
     <Compile Include="Interfaces\ISerialClientManager.cs" />
     <Compile Include="Interfaces\ISerialDataPool.cs" />
     <Compile Include="Interfaces\ISerialPortWrapper.cs" />
     <Compile Include="Common\OneWayPackage.cs" />
+    <Compile Include="Common\SerialConfig.cs" />
     <Compile Include="IoC\DefaultModules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\QueryPackage.cs" />
