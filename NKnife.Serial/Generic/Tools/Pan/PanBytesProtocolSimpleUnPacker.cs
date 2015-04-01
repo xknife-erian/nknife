@@ -1,9 +1,9 @@
 ﻿using System;
 using NKnife.Protocol.Generic;
 
-namespace SerialKnife.Generic.Tools
+namespace SerialKnife.Generic.Tools.Pan
 {
-    public class SimpleBytesProtocolUnPacker : BytesProtocolUnPacker
+    public class PanBytesProtocolSimpleUnPacker : BytesProtocolUnPacker
     {
         public override void Execute(BytesProtocol protocol, byte[] data, byte[] command)
         {

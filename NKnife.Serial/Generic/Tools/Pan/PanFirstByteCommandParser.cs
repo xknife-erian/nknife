@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using NKnife.Protocol.Generic;
 
-namespace SerialKnife.Generic.Tools
+namespace SerialKnife.Generic.Tools.Pan
 {
     public class PanFirstByteCommandParser : BytesProtocolCommandParser
     {

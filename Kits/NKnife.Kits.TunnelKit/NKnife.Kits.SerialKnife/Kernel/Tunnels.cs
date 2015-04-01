@@ -25,7 +25,7 @@ namespace NKnife.Kits.SerialKnife.Kernel
         {
             var logFilter = DI.Get<SerialLogFilter>();
             var queryFilter = DI.Get<QueryBusFilter>();
-            var protocolFilter = DI.Get<SerialProtocolFilter>();
+            var protocolFilter = DI.Get<SerialProtocolSimpleFilter>();
             var codec = DI.Get<KnifeBytesCodec>();
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;

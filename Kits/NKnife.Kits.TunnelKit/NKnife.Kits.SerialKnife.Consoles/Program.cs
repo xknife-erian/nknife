@@ -26,7 +26,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
 //            server2.Start();
 
             Thread.Sleep(2000);
-            server1.Send(new byte[] { 0xA0, 0x01, 0x02, 0x03, 0xFF });
+            server1.Send(new byte[] { 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x01, 0x00, 0x00, 0x00, 0x58, 0xFF });
 
             //var timer1 = new Timer(Timer1Call, server1, 1000, 300);
             //var timer2 = new Timer(Timer2Call, server2, 1000, 260);

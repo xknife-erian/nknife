@@ -75,11 +75,11 @@
     <Compile Include="SerialPortDataConnector.cs" />
     <Compile Include="Generic\Filters\SerialLogFilter.cs" />
     <Compile Include="Generic\Filters\SerialProtocolFilter.cs" />
-    <Compile Include="Generic\Tools\PanFirstByteCommandParser.cs" />
-    <Compile Include="Generic\Tools\PanFixByteHeadTailDatagramDecoder.cs" />
-    <Compile Include="Generic\Tools\PanFixByteHeadTailDatagramEncoder.cs" />
-    <Compile Include="Generic\Tools\SimpleBytesProtocolPacker.cs" />
-    <Compile Include="Generic\Tools\SimpleBytesProtocolUnPacker.cs" />
+    <Compile Include="Generic\Tools\Pan\PanFirstByteCommandParser.cs" />
+    <Compile Include="Generic\Tools\Pan\PanFixByteHeadTailDatagramDecoder.cs" />
+    <Compile Include="Generic\Tools\Pan\PanFixByteHeadTailDatagramEncoder.cs" />
+    <Compile Include="Generic\Tools\Pan\PanBytesProtocolSimplePacker.cs" />
+    <Compile Include="Generic\Tools\Pan\PanBytesProtocolSimpleUnPacker.cs" />
     <Compile Include="Wrappers\SerialPortWin32.cs" />
     <Compile Include="Wrappers\SerialPortWrapperDotNet.cs" />
     <Compile Include="Wrappers\SerialPortWrapperWinApi.cs" />

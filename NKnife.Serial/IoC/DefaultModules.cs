@@ -6,6 +6,7 @@ using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Generic;
 using SerialKnife.Common;
 using SerialKnife.Generic.Tools;
+using SerialKnife.Generic.Tools.Pan;
 using SerialKnife.Interfaces;
 using SerialKnife.Wrappers;
 
@@ -24,8 +25,8 @@ namespace SerialKnife.IoC
 
             //tunnel protocol相关
             Bind<BytesProtocolCommandParser>().To<PanFirstByteCommandParser>().InSingletonScope();
-            Bind<BytesProtocolPacker>().To<SimpleBytesProtocolPacker>().InSingletonScope();
-            Bind<BytesProtocolUnPacker>().To<SimpleBytesProtocolUnPacker>().InSingletonScope();
+            Bind<BytesProtocolPacker>().To<PanBytesProtocolSimplePacker>().InSingletonScope();
+            Bind<BytesProtocolUnPacker>().To<PanBytesProtocolSimpleUnPacker>().InSingletonScope();
         }
         private bool Request(IRequest request)
         {
