@@ -19,7 +19,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             _logger.Info("DI初始化结束....");
 
-            var server1 = new SerialClient(7);
+            var server1 = new SerialClient(6);
             server1.Start();
 
 //            var server2 = new SerialClient(1);
