@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Common.Logging;
-using NKnife.Interface;
-using NKnife.Tunnel;
-using NKnife.Tunnel.Generic;
-using NKnife.Utility;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Families
+namespace NKnife.Tunnel.Generic
 {
+    /// <summary>
+    /// 以固定结尾符为规则的解码器
+    /// </summary>
     public class FixedTailDecoder : StringDatagramDecoder
     {
-        private byte[] _Tail = Encoding.Default.GetBytes("\r\n");
+        protected byte[] _Tail = Encoding.Default.GetBytes("\r\n");
 
         public virtual byte[] Tail
         {

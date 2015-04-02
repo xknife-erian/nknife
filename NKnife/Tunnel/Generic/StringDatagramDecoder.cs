@@ -3,6 +3,9 @@ using NKnife.Tunnel.Common;
 
 namespace NKnife.Tunnel.Generic
 {
+    /// <summary>
+    /// 解码器
+    /// </summary>
     public abstract class StringDatagramDecoder : BaseDatagramDecoder<string>
     {
         /// <summary>

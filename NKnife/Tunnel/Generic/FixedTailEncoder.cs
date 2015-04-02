@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
-using NKnife.Tunnel;
-using NKnife.Tunnel.Generic;
-using SocketKnife.Interfaces;
 
-namespace SocketKnife.Generic.Families
+namespace NKnife.Tunnel.Generic
 {
     public class FixedTailEncoder : StringDatagramEncoder
     {

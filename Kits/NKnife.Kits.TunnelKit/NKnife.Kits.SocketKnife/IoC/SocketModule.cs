@@ -4,7 +4,6 @@ using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
 using NKnife.Tunnel.Generic;
 using SocketKnife.Generic;
-using SocketKnife.Generic.Families;
 
 namespace NKnife.Kits.SocketKnife.IoC
 {

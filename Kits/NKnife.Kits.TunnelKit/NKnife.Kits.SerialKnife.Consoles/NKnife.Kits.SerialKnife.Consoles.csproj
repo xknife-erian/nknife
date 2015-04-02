@@ -52,6 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CareOne\CareOneDatagramDecoder.cs" />
+    <Compile Include="CareOne\CareOneDatagramEncoder.cs" />
+    <Compile Include="CareOne\CareOneProtocolPacker.cs" />
+    <Compile Include="CareOne\CareOneProtocolCommandParser.cs" />
+    <Compile Include="CareOne\CareOneProtocolUnPacker.cs" />
     <Compile Include="Demos\SerialProtocolHandler.cs" />
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="Program.cs" />

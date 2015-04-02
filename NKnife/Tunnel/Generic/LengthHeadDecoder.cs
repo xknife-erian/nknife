@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Common.Logging;
-using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 using NKnife.Zip;
 
-namespace SocketKnife.Generic.Families
+namespace NKnife.Tunnel.Generic
 {
     /// <summary>
     ///     一个最常用的 字符数组 => 字符串 转换器。

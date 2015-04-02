@@ -173,6 +173,10 @@
     <Compile Include="Protocol\Generic\Xml\XmlUnPacker.cs" />
     <Compile Include="Protocol\IProtocol`.cs" />
     <Compile Include="Protocol\IProtocolFamily`.cs" />
+    <Compile Include="Tunnel\Generic\FixedTailDecoder.cs" />
+    <Compile Include="Tunnel\Generic\FixedTailEncoder.cs" />
+    <Compile Include="Tunnel\Generic\LengthHeadDecoder.cs" />
+    <Compile Include="Tunnel\Generic\LengthHeadEncoder.cs" />
     <Compile Include="Tunnel\ITunnelProtocolHandler.cs" />
     <Compile Include="Protocol\IProtocolPacker`.cs" />
     <Compile Include="Protocol\IProtocolUnPacker`.cs" />

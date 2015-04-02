@@ -13,7 +13,6 @@ using NKnife.Tunnel;
 using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 using SocketKnife.Generic;
-using SocketKnife.Generic.Families;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace NKnife.Kits.SocketKnife.Dialogs
