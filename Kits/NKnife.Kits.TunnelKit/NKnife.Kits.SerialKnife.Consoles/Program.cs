@@ -25,8 +25,12 @@ namespace NKnife.Kits.SerialKnife.Consoles
 //            var server2 = new SerialClient(1);
 //            server2.Start();
 
-            Thread.Sleep(2000);
-            server1.Send(new byte[] { 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x01, 0x00, 0x00, 0x00, 0x58, 0xFF });
+            Thread.Sleep(200);
+            for (int i = 0; i < 5; i++)
+            {
+                server1.Send(new byte[] { 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x01, 0x00, 0x00, 0x00, 0x58, 0xFF });
+                Thread.Sleep(600);
+            }
 
             //var timer1 = new Timer(Timer1Call, server1, 1000, 300);
             //var timer2 = new Timer(Timer2Call, server2, 1000, 260);

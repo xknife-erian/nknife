@@ -38,7 +38,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Server;
         }
 
-        public IKnifeSocketServer GetSocket()
+        public ISocketServer GetSocket()
         {
             return _Server;
         }
@@ -48,7 +48,7 @@ namespace NKnife.Kits.SocketKnife.Demo
             return _Family;
         }
 
-        internal void Initialize(KnifeSocketConfig config, SocketCustomSetting socketTools, BaseProtocolHandler<string> handler)
+        internal void Initialize(SocketConfig config, SocketCustomSetting socketTools, BaseProtocolHandler<string> handler)
         {
             if (_IsInitialized)
                 return;
@@ -62,7 +62,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 
-            var codec = DI.Get<KnifeStringCodec>();
+            var codec = DI.Get<StringCodec>();
             if (codec.StringDecoder.GetType()!=socketTools.Decoder)
             {
                 var decoder = DI.Get(socketTools.Decoder) as FixedTailDecoder;

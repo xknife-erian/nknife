@@ -6,7 +6,7 @@ using SerialKnife.Interfaces;
 
 namespace NKnife.Kits.SerialKnife.Mock
 {
-    public class MockSerialDataConnector : IKnifeSerialConnector
+    public class MockSerialDataConnector : ISerialConnector
     {
         private static readonly ILog _logger = LogManager.GetLogger<MockSerialDataConnector>();
 

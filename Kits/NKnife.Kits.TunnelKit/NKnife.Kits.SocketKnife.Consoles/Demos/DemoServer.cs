@@ -27,7 +27,7 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
 
         private IPAddress[] _IpAddresses;
 
-        internal void Initialize(KnifeSocketConfig config, BaseProtocolHandler<string> handler)
+        internal void Initialize(SocketConfig config, BaseProtocolHandler<string> handler)
         {
             _IpAddresses = UtilityNet.GetLocalIpv4();
 
@@ -43,7 +43,7 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 
-            var codec = DI.Get<KnifeStringCodec>();
+            var codec = DI.Get<StringCodec>();
 
             _ProtocolFilter.Bind(codec, protocolFamily);
             _ProtocolFilter.AddHandlers(handler);
@@ -61,7 +61,7 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
             _IsInitialized = true;
         }
 
-        public IKnifeSocketServer GetSocket()
+        public ISocketServer GetSocket()
         {
             return _Server;
         }

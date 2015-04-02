@@ -6,7 +6,7 @@ using NKnife.Tunnel;
 
 namespace SerialKnife.Interfaces
 {
-    public interface IKnifeSerialConnector : IDataConnector
+    public interface ISerialConnector : IDataConnector
     {
         int PortNumber { get; set; }
     }

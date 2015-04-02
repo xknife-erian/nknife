@@ -8,7 +8,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FixedTailEncoder : KnifeStringDatagramEncoder
+    public class FixedTailEncoder : StringDatagramEncoder
     {
         private byte[] _Tail = Encoding.Default.GetBytes("\r\n");
 

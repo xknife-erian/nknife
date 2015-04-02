@@ -2,7 +2,7 @@
 
 namespace SocketKnife.Generic.Protocol.Jsons
 {
-    public class JsonEncoder : KnifeStringDatagramEncoder
+    public class JsonEncoder : StringDatagramEncoder
     {
         public override byte[] Execute(string replay)
         {

@@ -10,11 +10,11 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketSessionMap : ISocketSessionMap
+    public class SocketSessionMap : ISocketSessionMap
     {
-        private readonly ConcurrentDictionary<long, KnifeSocketSession> _Map = new ConcurrentDictionary<long, KnifeSocketSession>();
+        private readonly ConcurrentDictionary<long, SocketSession> _Map = new ConcurrentDictionary<long, SocketSession>();
 
-        public KnifeSocketSession this[long key]
+        public SocketSession this[long key]
         {
             get { return _Map.ContainsKey(key) ? _Map[key] : null; }
             set
@@ -24,14 +24,14 @@ namespace SocketKnife.Generic
                 if (!old.Equals(value))
                 {
                     OnRemoved(new EventArgs<long>(key));
-                    OnAdded(new EventArgs<KnifeSocketSession>(value));
+                    OnAdded(new EventArgs<SocketSession>(value));
                 }
             }
         }
 
         bool IDictionary<long, ITunnelSession>.TryGetValue(long key, out ITunnelSession value)
         {
-            KnifeSocketSession session;
+            SocketSession session;
             if (TryGetValue(key, out session))
             {
                 value = session;
@@ -44,7 +44,7 @@ namespace SocketKnife.Generic
         ITunnelSession IDictionary<long, ITunnelSession>.this[long key]
         {
             get { return this[key]; }
-            set { this[key] = (KnifeSocketSession) value; }
+            set { this[key] = (SocketSession) value; }
         }
 
         public ICollection<long> Keys
@@ -59,12 +59,12 @@ namespace SocketKnife.Generic
 
         void IDictionary<long, ITunnelSession>.Add(long key, ITunnelSession value)
         {
-            Add(key, (KnifeSocketSession) value);
+            Add(key, (SocketSession) value);
         }
 
         void ICollection<KeyValuePair<long, ITunnelSession>>.Add(KeyValuePair<long, ITunnelSession> item)
         {
-            Add(item.Key, (KnifeSocketSession) item.Value);
+            Add(item.Key, (SocketSession) item.Value);
         }
 
         public void Clear()
@@ -88,7 +88,7 @@ namespace SocketKnife.Generic
             return Contains(item.Key);
         }
 
-        public ICollection<KnifeSocketSession> Values()
+        public ICollection<SocketSession> Values()
         {
             return _Map.Values;
         }
@@ -102,12 +102,12 @@ namespace SocketKnife.Generic
 
         public int Count
         {
-            get { return ((IDictionary<long, KnifeSocketSession>) _Map).Count; }
+            get { return ((IDictionary<long, SocketSession>) _Map).Count; }
         }
 
         public bool IsReadOnly
         {
-            get { return ((IDictionary<long, KnifeSocketSession>) _Map).IsReadOnly; }
+            get { return ((IDictionary<long, SocketSession>) _Map).IsReadOnly; }
         }
 
         IEnumerator<KeyValuePair<long, ITunnelSession>> IEnumerable<KeyValuePair<long, ITunnelSession>>.GetEnumerator()
@@ -117,7 +117,7 @@ namespace SocketKnife.Generic
 
         public IEnumerator GetEnumerator()
         {
-            return ((IDictionary<long, KnifeSocketSession>) _Map).GetEnumerator();
+            return ((IDictionary<long, SocketSession>) _Map).GetEnumerator();
         }
 
         bool ICollection<KeyValuePair<long, ITunnelSession>>.Remove(KeyValuePair<long, ITunnelSession> item)
@@ -136,11 +136,11 @@ namespace SocketKnife.Generic
 
         public event EventHandler<EventArgs<long>> Removed;
 
-        public event EventHandler<EventArgs<KnifeSocketSession>> Added;
+        public event EventHandler<EventArgs<SocketSession>> Added;
 
-        public bool TryGetValue(long key, out KnifeSocketSession value)
+        public bool TryGetValue(long key, out SocketSession value)
         {
-            KnifeSocketSession session;
+            SocketSession session;
             if (_Map.TryGetValue(key, out session))
             {
                 value = session;
@@ -150,14 +150,14 @@ namespace SocketKnife.Generic
             return false;
         }
 
-        public void Add(long key, KnifeSocketSession value)
+        public void Add(long key, SocketSession value)
         {
             _Map.TryAdd(key, value);
-            OnAdded(new EventArgs<KnifeSocketSession>(value));
+            OnAdded(new EventArgs<SocketSession>(value));
         }
 
         protected static long _Count = 1;
-        public long Add(KnifeSocketSession session)
+        public long Add(SocketSession session)
         {
             session.Id = _Count;
             Add(_Count, session);
@@ -172,14 +172,14 @@ namespace SocketKnife.Generic
 
         public virtual bool Remove(long key)
         {
-            KnifeSocketSession session;
+            SocketSession session;
             var isRemoved = _Map.TryRemove(key, out session);
             if (isRemoved)
                 OnRemoved(new EventArgs<long>(key));
             return isRemoved;
         }
 
-        protected virtual void OnAdded(EventArgs<KnifeSocketSession> e)
+        protected virtual void OnAdded(EventArgs<SocketSession> e)
         {
             var handler = Added;
             if (handler != null) handler(this, e);

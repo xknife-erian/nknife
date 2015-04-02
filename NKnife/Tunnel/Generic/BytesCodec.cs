@@ -3,34 +3,34 @@ using NKnife.IoC;
 
 namespace NKnife.Tunnel.Generic
 {
-    public class KnifeBytesCodec : ITunnelCodec<byte[]>
+    public class BytesCodec : ITunnelCodec<byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeBytesCodec>();
-        private KnifeBytesDatagramDecoder _BytesDecoder;
-        private KnifeBytesDatagramEncoder _BytesEncoder;
+        private static readonly ILog _logger = LogManager.GetLogger<BytesCodec>();
+        private BytesDatagramDecoder _BytesDecoder;
+        private BytesDatagramEncoder _BytesEncoder;
         private bool _HasSetDecoder;
         private bool _HasSetEncoder;
 
-        public KnifeBytesCodec()
+        public BytesCodec()
         {
         }
 
-        public KnifeBytesCodec(string codecName)
+        public BytesCodec(string codecName)
         {
             CodecName = codecName;
         }
 
         public string CodecName { get; set; }
 
-        public virtual KnifeBytesDatagramDecoder BytesDecoder
+        public virtual BytesDatagramDecoder BytesDecoder
         {
             get
             {
                 if (!_HasSetDecoder)
                 {
                     _BytesDecoder = string.IsNullOrEmpty(CodecName)
-                        ? DI.Get<KnifeBytesDatagramDecoder>()
-                        : DI.Get<KnifeBytesDatagramDecoder>(CodecName);
+                        ? DI.Get<BytesDatagramDecoder>()
+                        : DI.Get<BytesDatagramDecoder>(CodecName);
                     _HasSetDecoder = true;
                     return _BytesDecoder;
                 }
@@ -43,15 +43,15 @@ namespace NKnife.Tunnel.Generic
             }
         }
 
-        public virtual KnifeBytesDatagramEncoder BytesEncoder
+        public virtual BytesDatagramEncoder BytesEncoder
         {
             get
             {
                 if (!_HasSetEncoder)
                 {
                     _BytesEncoder = string.IsNullOrEmpty(CodecName)
-                        ? DI.Get<KnifeBytesDatagramEncoder>()
-                        : DI.Get<KnifeBytesDatagramEncoder>(CodecName);
+                        ? DI.Get<BytesDatagramEncoder>()
+                        : DI.Get<BytesDatagramEncoder>(CodecName);
                     _HasSetEncoder = true;
                     return _BytesEncoder;
                 }
@@ -69,7 +69,7 @@ namespace NKnife.Tunnel.Generic
             get { return BytesDecoder; }
             set
             {
-                BytesDecoder = (KnifeBytesDatagramDecoder) value;
+                BytesDecoder = (BytesDatagramDecoder) value;
                 _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
             }
         }
@@ -79,7 +79,7 @@ namespace NKnife.Tunnel.Generic
             get { return BytesEncoder; }
             set
             {
-                BytesEncoder = (KnifeBytesDatagramEncoder) value;
+                BytesEncoder = (BytesDatagramEncoder) value;
                 _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
             }
         }

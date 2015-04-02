@@ -78,7 +78,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             _CommandParserComboBox.SelectedItem = typeof (TextPlainFirstFieldCommandParser);
         }
 
-        public KnifeSocketConfig Config { get; set; }
+        public SocketConfig Config { get; set; }
         internal SocketCustomSetting CustomSetting { get; set; }
 
         public bool IsServer

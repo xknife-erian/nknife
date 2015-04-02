@@ -17,7 +17,7 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
     {
         private bool _IsInitialized = false;
         private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
-        private readonly IKnifeSocketClient _Client = DI.Get<KnifeLongSocketClient>();
+        private readonly ISocketClient _Client = DI.Get<KnifeLongSocketClient>();
         private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
 
         public StringProtocolFamily GetFamily()
@@ -25,7 +25,7 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
             return _Family;
         }
 
-        public void Initialize(KnifeSocketConfig config, SocketCustomSetting customSetting, BaseProtocolHandler<string> handler)
+        public void Initialize(SocketConfig config, SocketCustomSetting customSetting, BaseProtocolHandler<string> handler)
         {
             if (_IsInitialized) return;
 
@@ -37,11 +37,11 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
             heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Active; 
 
-            var codec = DI.Get<KnifeStringCodec>();
+            var codec = DI.Get<StringCodec>();
             if (codec.StringDecoder.GetType() != customSetting.Decoder)
-                codec.StringDecoder = (KnifeStringDatagramDecoder)DI.Get(customSetting.Decoder);
+                codec.StringDecoder = (StringDatagramDecoder)DI.Get(customSetting.Decoder);
             if (codec.StringEncoder.GetType() != customSetting.Encoder)
-                codec.StringEncoder = (KnifeStringDatagramEncoder)DI.Get(customSetting.Encoder);
+                codec.StringEncoder = (StringDatagramEncoder)DI.Get(customSetting.Encoder);
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
             if (protocolFamily.CommandParser.GetType() != customSetting.CommandParser)

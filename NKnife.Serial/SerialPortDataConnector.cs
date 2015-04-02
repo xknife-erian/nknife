@@ -8,7 +8,7 @@ using SerialKnife.Interfaces;
 
 namespace SerialKnife
 {
-    public class SerialPortDataConnector : IKnifeSerialConnector
+    public class SerialPortDataConnector : ISerialConnector
     {
         private static readonly ILog _logger = LogManager.GetLogger<SerialPortDataConnector>();
         private ISerialPortWrapper _Serial;

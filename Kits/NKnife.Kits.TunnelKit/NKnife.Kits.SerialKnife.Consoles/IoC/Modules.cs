@@ -4,11 +4,11 @@ using SerialKnife.Interfaces;
 
 namespace NKnife.Kits.SerialKnife.Consoles.IoC
 {
-    public class Modules:NinjectModule
+    public class Modules : NinjectModule
     {
         public override void Load()
         {
-            Bind<IKnifeSerialConnector>().To<SerialPortDataConnector>();
+            Bind<ISerialConnector>().To<SerialPortDataConnector>();
         }
     }
 }

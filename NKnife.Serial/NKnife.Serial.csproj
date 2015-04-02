@@ -59,7 +59,7 @@
     <Compile Include="Common\SerialDataReceivedEventArgs.cs" />
     <Compile Include="Common\SerialType.cs" />
     <Compile Include="Generic\Filters\SerialProtocolSimpleFilter.cs" />
-    <Compile Include="Interfaces\IKnifeSerialConnector.cs" />
+    <Compile Include="Interfaces\ISerialConnector.cs" />
     <Compile Include="Interfaces\ISerialClient.cs" />
     <Compile Include="Interfaces\ISerialClientManager.cs" />
     <Compile Include="Interfaces\ISerialDataPool.cs" />

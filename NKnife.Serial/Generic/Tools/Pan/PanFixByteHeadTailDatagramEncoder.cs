@@ -5,7 +5,7 @@ using NKnife.Tunnel.Generic;
 
 namespace SerialKnife.Generic.Tools.Pan
 {
-    public class PanFixByteHeadTailDatagramEncoder : KnifeBytesDatagramEncoder
+    public class PanFixByteHeadTailDatagramEncoder : BytesDatagramEncoder
     {
 
         public byte Head { get; set; }

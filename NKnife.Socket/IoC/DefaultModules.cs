@@ -14,14 +14,14 @@ namespace SocketKnife.IoC
         {
             Bind<ITunnel>().To<KnifeTunnel>().When(Request);
 
-            Bind<IKnifeSocketServer>().To<KnifeSocketServer>();
-            Bind<IKnifeSocketClient>().To<KnifeLongSocketClient>();
+            Bind<ISocketServer>().To<KnifeSocketServer>();
+            Bind<ISocketClient>().To<KnifeLongSocketClient>();
 
-            Bind<KnifeSocketConfig>().To<KnifeSocketServerConfig>().Named("Server");
-            Bind<KnifeSocketConfig>().To<KnifeSocketClientConfig>().Named("Client");
+            Bind<SocketConfig>().To<SocketServerConfig>().Named("Server");
+            Bind<SocketConfig>().To<SocketClientConfig>().Named("Client");
 
-            Bind<KnifeSocketSessionMap>().To<KnifeSocketSessionMap>().When(Request);
-            Bind<KnifeSocketSession>().To<KnifeSocketSession>().When(Request);
+            Bind<SocketSessionMap>().To<SocketSessionMap>().When(Request);
+            Bind<SocketSession>().To<SocketSession>().When(Request);
 
             Bind<StringProtocol>().To<StringProtocol>().When(Request);
             Bind<StringProtocolFamily>().To<StringProtocolFamily>().When(Request);

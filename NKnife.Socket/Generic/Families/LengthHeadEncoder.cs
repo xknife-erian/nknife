@@ -10,7 +10,7 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     ///     一个最常用的回复消息的字节数组生成器
     /// </summary>
-    public class LengthHeadEncoder : KnifeStringDatagramEncoder
+    public class LengthHeadEncoder : StringDatagramEncoder
     {
         private static readonly ILog _logger = LogManager.GetLogger<LengthHeadEncoder>();
 

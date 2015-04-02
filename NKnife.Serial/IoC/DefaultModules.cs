@@ -16,12 +16,13 @@ namespace SerialKnife.IoC
     {
         public override void Load()
         {
-            Bind<ITunnel>().To<KnifeTunnel>().When(Request); ; //数据类型byte[], key类型int,表示串口号
+            Bind<ITunnel>().To<KnifeTunnel>().When(Request);
+
             Bind<ISerialPortWrapper>().To<SerialPortWrapperDotNet>().Named(SerialType.DotNet.ToString());
             Bind<ISerialPortWrapper>().To<SerialPortWrapperWinApi>().Named(SerialType.WinApi.ToString());
 
-            Bind<KnifeBytesDatagramDecoder>().To<PanFixByteHeadTailDatagramDecoder>().InSingletonScope();
-            Bind<KnifeBytesDatagramEncoder>().To<PanFixByteHeadTailDatagramEncoder>().InSingletonScope();
+            Bind<BytesDatagramDecoder>().To<PanFixByteHeadTailDatagramDecoder>().InSingletonScope();
+            Bind<BytesDatagramEncoder>().To<PanFixByteHeadTailDatagramEncoder>().InSingletonScope();
 
             //tunnel protocol相关
             Bind<BytesProtocolCommandParser>().To<FirstByteCommandParser>().InSingletonScope();

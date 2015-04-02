@@ -132,7 +132,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             };
         }
 
-        protected void AddSession(KnifeSocketSession session)
+        protected void AddSession(SocketSession session)
         {
             Sessions.Add(new SessionByView { EndPoint = (IPEndPoint)session.AcceptSocket.LocalEndPoint });
         }
@@ -149,7 +149,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             }
         }
 
-        internal void StartServer(KnifeSocketConfig config, SocketCustomSetting customSetting)
+        internal void StartServer(SocketConfig config, SocketCustomSetting customSetting)
         {
             _Handler = new DemoServerHandler(_Server.GetFamily(),SocketMessages);
             _CurrentServerPoint = new IPEndPoint(customSetting.IpAddress, customSetting.Port);
@@ -168,7 +168,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 {
                     if (Application.Current.Dispatcher.CheckAccess())
                     {
-                        AddSession((KnifeSocketSession) args.Item);
+                        AddSession((SocketSession) args.Item);
                     }
                     else
                     {
@@ -320,7 +320,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         private delegate void SessionRemover(long endPoint);
 
-        private delegate void SessionAdder(KnifeSocketSession session);
+        private delegate void SessionAdder(SocketSession session);
 
         #endregion
     }

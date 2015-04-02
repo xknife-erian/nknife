@@ -4,9 +4,9 @@ using NKnife.Tunnel;
 
 namespace SocketKnife.Generic
 {
-    public abstract class KnifeSocketConfig : ITunnelConfig
+    public abstract class SocketConfig : ITunnelConfig
     {
-        protected KnifeSocketConfig()
+        protected SocketConfig()
         {
             //默认值
             _Map.Add("ReceiveBufferSize", 10240);

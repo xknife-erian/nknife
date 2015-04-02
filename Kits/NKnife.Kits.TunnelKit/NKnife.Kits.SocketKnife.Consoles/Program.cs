@@ -23,7 +23,7 @@ namespace NKnife.Kits.SocketKnife.Consoles
 
             _logger.Info("DI初始化结束....");
 
-            var serverConfig = DI.Get<KnifeSocketConfig>("Server");
+            var serverConfig = DI.Get<SocketConfig>("Server");
 
             var server = new DemoServer();
             server.Initialize(serverConfig, new DemoServerHandler());

@@ -15,8 +15,8 @@ namespace NKnife.Kits.SerialKnife.IoC
     {
         public override void Load()
         {
-            Bind<IKnifeSerialConnector>().To<MockSerialDataConnector>().InSingletonScope().Named("Mock");
-            Bind<IKnifeSerialConnector>().To<SerialPortDataConnector>().Named("Serial");
+            Bind<ISerialConnector>().To<MockSerialDataConnector>().InSingletonScope().Named("Mock");
+            Bind<ISerialConnector>().To<SerialPortDataConnector>().Named("Serial");
         }
     }
 }

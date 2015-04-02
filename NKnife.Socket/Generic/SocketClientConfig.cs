@@ -6,9 +6,9 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic
 {
-    public class KnifeSocketClientConfig : KnifeSocketConfig, ISocketClientConfig
+    public class SocketClientConfig : SocketConfig, ISocketClientConfig
     {
-        public KnifeSocketClientConfig()
+        public SocketClientConfig()
         {
             _Map.Add("ReconnectInterval", 1000 * 6); //默认自动重连间隔6秒
         }

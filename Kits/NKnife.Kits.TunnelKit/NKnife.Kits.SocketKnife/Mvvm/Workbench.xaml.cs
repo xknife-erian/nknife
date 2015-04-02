@@ -57,7 +57,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var win = new NewTunnelCreatorDialog();
-            win.Config = DI.Get<KnifeSocketConfig>("Server");
+            win.Config = DI.Get<SocketConfig>("Server");
             win.Title = "新建Socket服务器";
             win.IpAddressLabel = "本地IpAddress:";
             win.IsServer = true;
@@ -76,7 +76,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var win = new NewTunnelCreatorDialog();
-            win.Config = DI.Get<KnifeSocketConfig>("Client");
+            win.Config = DI.Get<SocketConfig>("Client");
             win.Title = "新建Socket客户端";
             win.IpAddressLabel = "远程IpAddress:";
             win.IsServer = false;

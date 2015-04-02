@@ -12,7 +12,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
-    public class KnifeSocketServer : IKnifeSocketServer, IDisposable
+    public class KnifeSocketServer : ISocketServer, IDisposable
     {
         private const int ACCEPT_LISTEN_TIME_INTERVAL = 25; // 侦听论询时间间隔(ms)
         private const int CHECK_SESSION_TABLE_TIME_INTERVAL = 100; // 清理Timer的时间间隔(ms)
@@ -30,8 +30,8 @@ namespace SocketKnife
         private int _Port;
         private int _SessionCount;
 
-        protected KnifeSocketSessionMap _SessionMap = new KnifeSocketSessionMap();
-        protected KnifeSocketServerConfig _Config = DI.Get<KnifeSocketServerConfig>();
+        protected SocketSessionMap _SessionMap = new SocketSessionMap();
+        protected SocketServerConfig _Config = DI.Get<SocketServerConfig>();
 
         #region 构造
 
@@ -86,10 +86,10 @@ namespace SocketKnife
         public event EventHandler<SessionEventArgs> SessionBroken;
         public event EventHandler<SessionEventArgs> DataReceived;
 
-        public KnifeSocketConfig Config
+        public SocketConfig Config
         {
             get { return _Config; }
-            set { _Config = (KnifeSocketServerConfig) value; }
+            set { _Config = (SocketServerConfig) value; }
         }
 
         public virtual void Configure(IPAddress ipAddress, int port)
@@ -135,7 +135,7 @@ namespace SocketKnife
 
         public void Send(long id, byte[] data)
         {
-            KnifeSocketSession session = null;
+            SocketSession session = null;
             if (_SessionMap.ContainsKey(id))
             {
                 session = _SessionMap[id];
@@ -156,7 +156,7 @@ namespace SocketKnife
 
         public void KillSession(long id)
         {
-            KnifeSocketSession session = null;
+            SocketSession session = null;
             if (_SessionMap.ContainsKey(id))
             {
                 session = _SessionMap[id];
@@ -290,7 +290,7 @@ namespace SocketKnife
             while (!_IsServerClosed)
             {
                 var sessionIdList = new List<long>();
-                var dataArray = new KnifeSocketSession[_SessionMap.Values().Count];
+                var dataArray = new SocketSession[_SessionMap.Values().Count];
                 _SessionMap.Values().CopyTo(dataArray, 0);
                 foreach (var session in dataArray)
                 {
@@ -396,7 +396,7 @@ namespace SocketKnife
         private void AddSession(Socket clientSocket)
         {
             var remoteEndPoint = clientSocket.RemoteEndPoint;
-            var session = DI.Get<KnifeSocketSession>();
+            var session = DI.Get<SocketSession>();
             session.AcceptSocket = clientSocket;
             session.LastSessionTime = DateTime.Now;
             _SessionMap.Add(session);
@@ -407,7 +407,7 @@ namespace SocketKnife
             OnSessionConnected(session);
         }
 
-        public void CheckSessionTimeout(KnifeSocketSession session)
+        public void CheckSessionTimeout(SocketSession session)
         {
             var ts = DateTime.Now.Subtract(session.LastSessionTime);
             var elapsedSecond = Math.Abs((int) ts.TotalSeconds);
@@ -421,7 +421,7 @@ namespace SocketKnife
             }
         }
 
-        private void ShutdownSession(KnifeSocketSession session)
+        private void ShutdownSession(SocketSession session)
         {
             if (session.State != SessionState.Inactive || session.AcceptSocket == null) // Inactive 状态才能 Shutdown
             {
@@ -439,7 +439,7 @@ namespace SocketKnife
             }
         }
 
-        private void CloseSession(KnifeSocketSession session)
+        private void CloseSession(SocketSession session)
         {
             if (session.State != SessionState.Shutdown || session.AcceptSocket == null) // Shutdown 状态才能 Close
             {
@@ -459,7 +459,7 @@ namespace SocketKnife
             }
         }
 
-        private void SetSessionInactive(KnifeSocketSession session)
+        private void SetSessionInactive(SocketSession session)
         {
             if (session.State == SessionState.Active)
             {
@@ -468,7 +468,7 @@ namespace SocketKnife
             }
         }
 
-        private void DisconnectSession(KnifeSocketSession session)
+        private void DisconnectSession(SocketSession session)
         {
             if (session.DisconnectType == DisconnectType.Normal)
             {
@@ -484,7 +484,7 @@ namespace SocketKnife
 
         #region 异步发送接收
 
-        private void SendDatagram(KnifeSocketSession session, byte[] data)
+        private void SendDatagram(SocketSession session, byte[] data)
         {
             if (session.State != SessionState.Active)
             {
@@ -509,7 +509,7 @@ namespace SocketKnife
         /// </summary>
         private void EndSendDatagram(IAsyncResult iar)
         {
-            var session = iar.AsyncState as KnifeSocketSession;
+            var session = iar.AsyncState as SocketSession;
             if (session != null && session.State != SessionState.Active)
             {
                 return;
@@ -538,7 +538,7 @@ namespace SocketKnife
             }
         }
 
-        private void ReceiveDatagram(KnifeSocketSession session)
+        private void ReceiveDatagram(SocketSession session)
         {
             if (session.State != SessionState.Active)
             {
@@ -561,7 +561,7 @@ namespace SocketKnife
 
         private void EndReceiveDatagram(IAsyncResult iar)
         {
-            var session = iar.AsyncState as KnifeSocketSession;
+            var session = iar.AsyncState as SocketSession;
             if (session == null)
             {
                 return;
@@ -642,7 +642,7 @@ namespace SocketKnife
             _logger.Debug("OnSessionRejected");
         }
 
-        protected virtual void OnSessionConnected(KnifeSocketSession session)
+        protected virtual void OnSessionConnected(SocketSession session)
         {
             Interlocked.Increment(ref _SessionCount);
 
@@ -653,7 +653,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void OnSessionDisconnected(KnifeSocketSession session)
+        protected virtual void OnSessionDisconnected(SocketSession session)
         {
             Interlocked.Decrement(ref _SessionCount);
 
@@ -664,7 +664,7 @@ namespace SocketKnife
             }
         }
 
-        protected virtual void OnSessionTimeout(KnifeSocketSession session)
+        protected virtual void OnSessionTimeout(SocketSession session)
         {
             Interlocked.Decrement(ref _SessionCount);
 

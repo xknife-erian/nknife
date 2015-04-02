@@ -13,6 +13,6 @@ namespace SocketKnife.Interfaces
     {
         event EventHandler<EventArgs<long>> Removed;
 
-        event EventHandler<EventArgs<KnifeSocketSession>> Added;
+        event EventHandler<EventArgs<SocketSession>> Added;
     }
 }

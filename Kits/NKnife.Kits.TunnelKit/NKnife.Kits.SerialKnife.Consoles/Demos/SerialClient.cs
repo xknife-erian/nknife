@@ -15,14 +15,14 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
 {
     public class SerialClient
     {
-        private const string FAMILY_NAME = "p-an485";
+        private const string FAMILY_NAME = "care-usb";
         private static readonly ILog _logger = LogManager.GetLogger<SerialClient>();
-        private readonly IKnifeSerialConnector _DataConnector;
+        private readonly ISerialConnector _DataConnector;
         private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
 
         public SerialClient(int port)
         {
-            var codec = DI.Get<KnifeBytesCodec>();
+            var codec = DI.Get<BytesCodec>();
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;
 
@@ -34,10 +34,9 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
             protocolFilter.Bind(codec, family);
             protocolFilter.AddHandlers(handler);
 
-            //_Tunnel.AddFilters(queryFilter);
             _Tunnel.AddFilters(protocolFilter);
 
-            _DataConnector = DI.Get<IKnifeSerialConnector>();
+            _DataConnector = DI.Get<ISerialConnector>();
             _DataConnector.PortNumber = port; //串口
 
             _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力

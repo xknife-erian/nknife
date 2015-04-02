@@ -40,7 +40,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         public AsyncObservableCollection<SocketMessage> SocketMessages { get; set; }
 
-        internal void StartClient(KnifeSocketConfig config, SocketCustomSetting customSetting)
+        internal void StartClient(SocketConfig config, SocketCustomSetting customSetting)
         {
             _Handler = new DemoClientHandler(_Client.GetFamily(),SocketMessages);
             _Client.Initialize(config, customSetting, _Handler);

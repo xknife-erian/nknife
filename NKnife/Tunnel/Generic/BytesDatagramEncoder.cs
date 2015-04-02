@@ -7,7 +7,7 @@ using NKnife.Tunnel.Common;
 
 namespace NKnife.Tunnel.Generic
 {
-    public abstract class KnifeBytesDatagramEncoder : BaseDatagramEncoder<byte[]>
+    public abstract class BytesDatagramEncoder : BaseDatagramEncoder<byte[]>
     {
         public abstract override byte[] Execute(byte[] data);
     }

@@ -7,9 +7,9 @@ namespace SocketKnife.Generic
     /// <summary>
     ///     仅用于Socket协议
     /// </summary>
-    public class KnifeSocketSession : TunnelSession
+    public class SocketSession : TunnelSession
     {
-        public KnifeSocketSession()
+        public SocketSession()
         {
             ReceiveBufferSize = 16 * 1024;
             ResetBuffer();
@@ -42,7 +42,7 @@ namespace SocketKnife.Generic
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((KnifeSocketSession) obj);
+            return Equals((SocketSession) obj);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SocketKnife
     /// 没有实现发送指令的缓冲队列，因此每次发送都是等上次发送动作完成（成功或异常）后才能进行
     /// 可以扩展该类，增加发送指令缓冲队列，或增加通过发送接收方法等
     /// </summary>
-    public class KnifeShortSocketClient : IKnifeSocketClient, IDisposable 
+    public class KnifeShortSocketClient : ISocketClient, IDisposable 
     {
         private static readonly ILog _logger = LogManager.GetLogger<KnifeShortSocketClient>();
 
@@ -28,7 +28,7 @@ namespace SocketKnife
         protected IPAddress _IpAddress;
         protected int _Port;
 
-        protected KnifeSocketClientConfig _Config = DI.Get<KnifeSocketClientConfig>();
+        protected SocketClientConfig _Config = DI.Get<SocketClientConfig>();
         protected EndPoint EndPoint;
 
         private bool _OnSending; //true 正在进行发送操作, false表示发送动作完成
@@ -37,7 +37,7 @@ namespace SocketKnife
         ///     SOCKET对象
         /// </summary>
         //protected Socket _Socket;
-        protected KnifeSocketSession SocketSession;
+        protected SocketSession SocketSession;
 
         private SocketAsyncEventArgs _SocketAsyncEventArgs;
 
@@ -45,10 +45,10 @@ namespace SocketKnife
 
         #region IKnifeSocketClient接口
 
-        public KnifeSocketConfig Config
+        public SocketConfig Config
         {
             get { return _Config; }
-            set { _Config = (KnifeSocketClientConfig)value; }
+            set { _Config = (SocketClientConfig)value; }
         }
 
         public void Configure(IPAddress ipAddress, int port)
@@ -114,7 +114,7 @@ namespace SocketKnife
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
 
             var ipPoint = new IPEndPoint(_IpAddress, _Port);
-            SocketSession = DI.Get<KnifeSocketSession>();
+            SocketSession = DI.Get<SocketSession>();
 //            SocketSession.Id = ipPoint;
             _SocketAsyncEventArgs = new SocketAsyncEventArgs{RemoteEndPoint = ipPoint};
             _SocketAsyncEventArgs.Completed += AsynCompleted;

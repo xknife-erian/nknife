@@ -12,7 +12,7 @@ namespace NKnife.Kits.SerialKnife.Views
 {
     public class MockSerialDataConnectorView:DockContent
     {
-        private MockSerialDataConnector _DataConnector = (MockSerialDataConnector) DI.Get<IKnifeSerialConnector>("Mock");
+        private MockSerialDataConnector _DataConnector = (MockSerialDataConnector) DI.Get<ISerialConnector>("Mock");
 
         #region 初始化
         private System.Windows.Forms.ListBox MockReceiveListBox;

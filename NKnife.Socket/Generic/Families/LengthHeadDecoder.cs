@@ -11,7 +11,7 @@ namespace SocketKnife.Generic.Families
     /// <summary>
     ///     一个最常用的 字符数组 => 字符串 转换器。
     /// </summary>
-    public class LengthHeadDecoder : KnifeStringDatagramDecoder
+    public class LengthHeadDecoder : StringDatagramDecoder
     {
         private static readonly ILog _logger = LogManager.GetLogger<LengthHeadDecoder>();
 

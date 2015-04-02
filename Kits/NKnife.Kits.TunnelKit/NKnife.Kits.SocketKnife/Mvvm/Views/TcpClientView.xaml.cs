@@ -14,7 +14,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     {
         private readonly TcpClientViewModel _ViewModel;
 
-        public KnifeSocketConfig Config { get; set; }
+        public SocketConfig Config { get; set; }
         internal SocketCustomSetting CustomSetting { get; set; }
 
         public TcpClientView()

@@ -18,8 +18,8 @@ namespace NKnife.Kits.SocketKnife.IoC
             Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
             Bind<StringProtocolCommandParser>().To<TextPlainFirstFieldCommandParser>().InSingletonScope();
 
-            Bind<KnifeStringDatagramDecoder>().To<FixedTailDecoder>();
-            Bind<KnifeStringDatagramEncoder>().To<FixedTailEncoder>();
+            Bind<StringDatagramDecoder>().To<FixedTailDecoder>();
+            Bind<StringDatagramEncoder>().To<FixedTailEncoder>();
 
             Bind<StringProtocol>().To<MyProtocol>().Named("TestCustom");
         }

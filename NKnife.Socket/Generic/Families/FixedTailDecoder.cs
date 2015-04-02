@@ -11,7 +11,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife.Generic.Families
 {
-    public class FixedTailDecoder : KnifeStringDatagramDecoder
+    public class FixedTailDecoder : StringDatagramDecoder
     {
         private byte[] _Tail = Encoding.Default.GetBytes("\r\n");
 

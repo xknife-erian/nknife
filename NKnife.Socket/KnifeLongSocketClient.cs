@@ -11,7 +11,7 @@ using SocketKnife.Interfaces;
 
 namespace SocketKnife
 {
-    public class KnifeLongSocketClient : IKnifeSocketClient, IDisposable
+    public class KnifeLongSocketClient : ISocketClient, IDisposable
     {
         private static readonly ILog _logger = LogManager.GetLogger<KnifeLongSocketClient>();
         public KnifeLongSocketClient(bool reconnectFlag, bool isConnecting)
@@ -102,7 +102,7 @@ namespace SocketKnife
         /// </summary>
         private readonly ManualResetEvent _ReconnectResetEvent = new ManualResetEvent(false);
 
-        protected KnifeSocketClientConfig _Config = DI.Get<KnifeSocketClientConfig>();
+        protected SocketClientConfig _Config = DI.Get<SocketClientConfig>();
         protected EndPoint _EndPoint;
 
         private bool _IsConnecting; //true 正在进行连接, false表示连接动作完成
@@ -114,7 +114,7 @@ namespace SocketKnife
         /// <summary>
         ///     SOCKET对象
         /// </summary>
-        protected KnifeSocketSession _SocketSession;
+        protected SocketSession _SocketSession;
 
         private static readonly object _lockObj = new object();
 
@@ -126,10 +126,10 @@ namespace SocketKnife
 
         #region IKnifeSocketClient接口
 
-        public KnifeSocketConfig Config
+        public SocketConfig Config
         {
             get { return _Config; }
-            set { _Config = (KnifeSocketClientConfig) value; }
+            set { _Config = (SocketClientConfig) value; }
         }
 
         public void Configure(IPAddress ipAddress, int port)
@@ -214,7 +214,7 @@ namespace SocketKnife
             }
 
             var ipPoint = new IPEndPoint(_IpAddress, _Port);
-            _SocketSession = DI.Get<KnifeSocketSession>();
+            _SocketSession = DI.Get<SocketSession>();
 
             _ReconnectFlag = true;
             _ReconnectedThread = new Thread(ReconnectedLoop);

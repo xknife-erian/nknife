@@ -14,8 +14,8 @@ namespace NKnife.Kits.SocketKnife.Consoles.IoC
             Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
             Bind<StringProtocolCommandParser>().To<TextPlainFirstFieldCommandParser>().InSingletonScope();
 
-            Bind<KnifeStringDatagramDecoder>().To<FixedTailDecoder>();
-            Bind<KnifeStringDatagramEncoder>().To<FixedTailEncoder>();
+            Bind<StringDatagramDecoder>().To<FixedTailDecoder>();
+            Bind<StringDatagramEncoder>().To<FixedTailEncoder>();
         }
     }
 }
