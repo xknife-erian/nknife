@@ -59,6 +59,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CareOne\CareOneDatagramDecoderTests.cs" />
     <Compile Include="FixedTailDecoderTest3.cs" />
     <Compile Include="FixedTailDecoderTest2.cs" />
     <Compile Include="KnifeSocketFilterTest1.cs" />
@@ -70,6 +71,10 @@
     <Compile Include="LengthHeadEncoderTest1.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SerialKnife.Consoles\NKnife.Kits.SerialKnife.Consoles.csproj">
+      <Project>{79829579-679B-4408-B6E8-3D7B9EFE7F84}</Project>
+      <Name>NKnife.Kits.SerialKnife.Consoles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
       <Project>{3d1d08d2-46b0-4c33-a214-a5a76a998102}</Project>
       <Name>NKnife.NLog3</Name>

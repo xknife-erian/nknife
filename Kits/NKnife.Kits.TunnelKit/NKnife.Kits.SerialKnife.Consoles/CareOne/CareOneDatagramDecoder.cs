@@ -3,7 +3,7 @@ using System.Text;
 using NKnife.Converts;
 using NKnife.Tunnel.Generic;
 
-namespace NKnife.Kits.SerialKnife.Consoles.CareOne
+namespace MonitorKnife.Tunnels.Common
 {
     public class CareOneDatagramDecoder : StringDatagramDecoder
     {
