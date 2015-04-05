@@ -32,7 +32,7 @@ namespace NKnife.Tunnel.Generic
         {
             var start = 0;
             var end = data.Find(_Tail);
-            if (end < 0)
+            if (end < 0)//空数据内容
             {
                 finishedIndex = 0;
                 return new string[0];
@@ -42,12 +42,16 @@ namespace NKnife.Tunnel.Generic
             {
                 int location = start;
                 if (start != 0)
+                {
                     location = start + _Tail.Length;
+                }
                 string src = GetString(data, location, end - location);
                 result.Add(src);
                 start = end;
                 if (end + _Tail.Length <= data.Length)
+                {
                     end = data.Find(_Tail, end + _Tail.Length);
+                }
             }
             finishedIndex = start + _Tail.Length;
             return result.ToArray();

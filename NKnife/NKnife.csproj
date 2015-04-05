@@ -319,7 +319,7 @@
     <Compile Include="Events\EventArgs`.cs" />
     <Compile Include="Exceptions\NKnifeException.cs" />
     <Compile Include="Exceptions\TypeConvertingException.cs" />
-    <Compile Include="Extensions\ArrayExtension.cs" />
+    <Compile Include="Extensions\RandomExtension.cs" />
     <Compile Include="Extensions\ArraySegmentExtension.cs" />
     <Compile Include="Extensions\BytesExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />

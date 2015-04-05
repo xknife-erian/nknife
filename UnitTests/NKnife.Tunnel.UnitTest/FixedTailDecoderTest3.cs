@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SocketKnife.Generic.Families;
+using NKnife.Tunnel.Generic;
 
 namespace NKnife.Socket.UnitTest
 {

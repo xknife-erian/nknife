@@ -292,6 +292,7 @@ namespace NKnife.Converts
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns></returns>
+        // ReSharper disable once InconsistentNaming
         public static object NullToDBNull(object obj)
         {
             object value = DBNull.Value;
@@ -477,7 +478,7 @@ namespace NKnife.Converts
         /// 将字节数组转化为16进制字符串
         /// </summary>
         /// <param name="arrByte"></param>
-        /// <param name="reverse">是否需要把得到的字节数组反转，因为Windows操作系统中整形的高低位是反转转之后保存的。</param>
+        /// <param name="reverse">是否需要把得到的字节数组反转，因为Windows操作系统中整形的高低位是反转转置之后保存的。</param>
         /// <returns></returns>
         public static string BytesToHex(byte[] arrByte, bool reverse)
         {

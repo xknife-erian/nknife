@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NKnife.Tunnel.Generic;
 using NKnife.Zip;
-using SocketKnife.Generic.Families;
 
 namespace NKnife.Socket.UnitTest
 {
