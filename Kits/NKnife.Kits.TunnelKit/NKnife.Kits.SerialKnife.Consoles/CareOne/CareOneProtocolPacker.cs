@@ -1,7 +1,7 @@
 ﻿using System;
 using NKnife.Protocol.Generic;
 
-namespace NKnife.Kits.SerialKnife.Consoles.CareOne
+namespace MonitorKnife.Tunnels.Common
 {
     public class CareOneProtocolPacker : StringProtocolPacker
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NKnife.Protocol.Generic;
 
-namespace NKnife.Kits.SerialKnife.Consoles.CareOne
+namespace MonitorKnife.Tunnels.Common
 {
     public class CareOneProtocolUnPacker : StringProtocolUnPacker
     {

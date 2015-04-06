@@ -57,6 +57,7 @@
     <Compile Include="CareOne\CareOneProtocolPacker.cs" />
     <Compile Include="CareOne\CareOneProtocolCommandParser.cs" />
     <Compile Include="CareOne\CareOneProtocolUnPacker.cs" />
+    <Compile Include="CareOne\CareSaying.cs" />
     <Compile Include="Demos\SerialProtocolHandler.cs" />
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="Program.cs" />

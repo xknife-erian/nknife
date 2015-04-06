@@ -44,8 +44,9 @@ namespace MonitorKnife.Tunnels.Common
             var address = UtilityConvert.ConvertTo<int>(data[index + 1]);
             length = UtilityConvert.ConvertTo<int>(data[index + 2]);
             string command = UtilityConvert.BytesToHex(new[] {data[index + 3]}, false);
-            string content = Encoding.ASCII.GetString(data, index + 4, length);
+            string content = Encoding.ASCII.GetString(data, index + 3 + 2, length - 2);
             sb.Append(command).Append('`').Append(address).Append('`').Append(content);
+            length = 3 + length;
             return true;
         }
     }

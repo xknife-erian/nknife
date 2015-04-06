@@ -1,13 +1,14 @@
 ﻿using System;
 using NKnife.Protocol.Generic;
 
-namespace NKnife.Kits.SerialKnife.Consoles.CareOne
+namespace MonitorKnife.Tunnels.Common
 {
     public class CareOneProtocolCommandParser : StringProtocolCommandParser
     {
         public override string GetCommand(string datagram)
         {
-            throw new NotImplementedException();
+            var ds = datagram.Split(new[] {'`'});
+            return ds[0];
         }
     }
 }
