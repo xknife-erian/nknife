@@ -22,11 +22,10 @@ namespace MonitorKnife.Tunnels.Common
         public virtual byte[] Combine(CareSaying content)
         {
             var p = Encoding.ASCII.GetBytes(content.Content);
-            var commandLength = (content.MainCommand == 0xA0 || content.MainCommand == 0xB0) ? 2 : 1;
-            var bs = new byte[3 + commandLength + p.Length];
+            var bs = new byte[5 + p.Length];
             bs[0] = 0x80;
             bs[1] = UtilityConvert.ConvertTo<byte>(content.GpibAddress);
-            bs[2] = UtilityConvert.ConvertTo<byte>(commandLength + p.Length);
+            bs[2] = UtilityConvert.ConvertTo<byte>(2 + p.Length);
             Buffer.BlockCopy(p, 0, bs, 3, p.Length);
             return bs;
         }

@@ -18,7 +18,10 @@ namespace NKnife.Socket.UnitTest.CareOne
             var ps = decoder.Execute(data, out index);
             Assert.AreEqual(index, data.Length);
             Assert.AreEqual(1, ps.Length);
-            Assert.AreEqual("a0`0`care", ps[0]);
+            for (int i = 0; i < data.Length; i++)
+            {
+                Assert.AreEqual(data[i], ps[0][i]);
+            }
         }
 
         [TestMethod()]
@@ -38,7 +41,10 @@ namespace NKnife.Socket.UnitTest.CareOne
             Assert.AreEqual(COUNT, ps.Length);
             for (int i = 0; i < COUNT; i++)
             {
-                Assert.AreEqual("a0`0`care", ps[i]);
+                for (int j = 0; j < d.Length; j++)
+                {
+                    Assert.AreEqual(d[j], ps[i][j],string.Format("i={0},j={1};d[i]={2},ps[i][j]={3}",i,j,d[i],ps[i][j]));
+                }
             }
         }
     }
