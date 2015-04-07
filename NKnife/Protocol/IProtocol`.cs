@@ -7,7 +7,7 @@ namespace NKnife.Protocol
     /// 描述一个通讯会话中一次交易的内容的封装。
     /// </summary>
     /// <typeparam name="TData">内容在编程过程所使用的数据形式,可视化的读取形式</typeparam>
-    public interface IProtocol<TData>// : IEquatable<T>
+    public interface IProtocol<TData> //: IEquatable<TData>
     {
         /// <summary>本协议的命令字.
         /// </summary>

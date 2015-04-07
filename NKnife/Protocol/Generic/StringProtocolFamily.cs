@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
 using Ninject;
 using NKnife.IoC;
 
@@ -14,11 +12,13 @@ namespace NKnife.Protocol.Generic
     [Serializable]
     public class StringProtocolFamily : IProtocolFamily<string>
     {
+        private StringProtocolCommandParser _CommandParser;
         protected Func<string, StringProtocol> _DefaultProtocolBuilder;
-        protected Dictionary<string, Func<string, StringProtocol>> _ProtocolBuilderMap = new Dictionary<string, Func<string, StringProtocol>>();
         protected Func<string, StringProtocolPacker> _DefaultProtocolPackerGetter;
-        protected Dictionary<string, Func<string, StringProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<string, Func<string, StringProtocolPacker>>();
         protected Func<string, StringProtocolUnPacker> _DefaultProtocolUnPackerGetter;
+        private bool _HasSetCommandParser;
+        protected Dictionary<string, Func<string, StringProtocol>> _ProtocolBuilderMap = new Dictionary<string, Func<string, StringProtocol>>();
+        protected Dictionary<string, Func<string, StringProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<string, Func<string, StringProtocolPacker>>();
         protected Dictionary<string, Func<string, StringProtocolUnPacker>> _ProtocolUnPackerGetterMap = new Dictionary<string, Func<string, StringProtocolUnPacker>>();
 
         public StringProtocolFamily()
@@ -29,11 +29,6 @@ namespace NKnife.Protocol.Generic
         {
             FamilyName = name;
         }
-
-        public string FamilyName { get; set; }
-
-        private StringProtocolCommandParser _CommandParser;
-        private bool _HasSetCommandParser;
 
         public StringProtocolCommandParser CommandParser
         {
@@ -61,40 +56,7 @@ namespace NKnife.Protocol.Generic
             }
         }
 
-        #region 隐式实现
-
-        IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
-        {
-            get { return CommandParser; }
-            set { CommandParser = (StringProtocolCommandParser) value; }
-        }
-
-        IProtocol<string> IProtocolFamily<string>.Build(string command)
-        {
-            return Build(command);
-        }
-
-        IProtocol<string> IProtocolFamily<string>.Parse(string command, string datagram)
-        {
-            return Parse(command, datagram);
-        }
-
-        string IProtocolFamily<string>.Generate(IProtocol<string> protocol)
-        {
-            return Generate((StringProtocol) protocol);
-        }
-
-        void IProtocolFamily<string>.AddPackerGetter(Func<string, IProtocolPacker<string>> func)
-        {
-            AddPackerGetter((Func<string, StringProtocolPacker>) func);
-        }
-
-        void IProtocolFamily<string>.AddPackerGetter(string command, Func<string, IProtocolPacker<string>> func)
-        {
-            AddPackerGetter(command, (Func<string, StringProtocolPacker>) func);
-        }
-
-        #endregion
+        public string FamilyName { get; set; }
 
         public StringProtocol Build(string command)
         {
@@ -134,7 +96,7 @@ namespace NKnife.Protocol.Generic
         }
 
         /// <summary>
-        /// 根据远端得到的数据包解析，将数据填充到本实例中，与Generate方法相对
+        ///     根据远端得到的数据包解析，将数据填充到本实例中，与Generate方法相对
         /// </summary>
         /// <param name="command"></param>
         /// <param name="datagram">The datas.</param>
@@ -171,7 +133,7 @@ namespace NKnife.Protocol.Generic
         }
 
         /// <summary>
-        /// 将protocol实例转换成字符串，与Parse方法相对
+        ///     将protocol实例转换成字符串，与Parse方法相对
         /// </summary>
         /// <param name="protocol"></param>
         /// <returns></returns>
@@ -188,7 +150,7 @@ namespace NKnife.Protocol.Generic
         }
 
         /// <summary>
-        /// 将protocol实例转换成字符串，与Parse方法相对
+        ///     将protocol实例转换成字符串，与Parse方法相对
         /// </summary>
         /// <param name="protocol"></param>
         /// <param name="param">PackerGetter的参数，默认使用command作为参数</param>
@@ -238,5 +200,40 @@ namespace NKnife.Protocol.Generic
                 _ProtocolUnPackerGetterMap.Add(command, func);
             }
         }
+
+        #region 隐式实现
+
+        IProtocolCommandParser<string> IProtocolFamily<string>.CommandParser
+        {
+            get { return CommandParser; }
+            set { CommandParser = (StringProtocolCommandParser) value; }
+        }
+
+        IProtocol<string> IProtocolFamily<string>.Build(string command)
+        {
+            return Build(command);
+        }
+
+        IProtocol<string> IProtocolFamily<string>.Parse(string command, string datagram)
+        {
+            return Parse(command, datagram);
+        }
+
+        string IProtocolFamily<string>.Generate(IProtocol<string> protocol)
+        {
+            return Generate((StringProtocol) protocol);
+        }
+
+        void IProtocolFamily<string>.AddPackerGetter(Func<string, IProtocolPacker<string>> func)
+        {
+            AddPackerGetter((Func<string, StringProtocolPacker>) func);
+        }
+
+        void IProtocolFamily<string>.AddPackerGetter(string command, Func<string, IProtocolPacker<string>> func)
+        {
+            AddPackerGetter(command, (Func<string, StringProtocolPacker>) func);
+        }
+
+        #endregion
     }
 }

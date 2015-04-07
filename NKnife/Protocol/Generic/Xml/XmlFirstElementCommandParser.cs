@@ -11,7 +11,7 @@ namespace NKnife.Protocol.Generic.Xml
     /// </summary>
     public class XmlFirstElementCommandParser : StringProtocolCommandParser
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<XmlFirstElementCommandParser>();
         
         public override string GetCommand(string protocol)
         {

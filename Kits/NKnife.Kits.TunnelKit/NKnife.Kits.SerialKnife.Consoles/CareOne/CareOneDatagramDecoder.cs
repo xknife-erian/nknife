@@ -1,51 +1,51 @@
 using System.Collections.Generic;
 using System.Text;
 using NKnife.Converts;
+using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Generic;
 
 namespace MonitorKnife.Tunnels.Common
 {
-    public class CareOneDatagramDecoder : StringDatagramDecoder
+    public class CareOneDatagramDecoder : BaseDatagramDecoder<CareSaying>
     {
-        public const byte Lead = 0x09;
+        public const byte LEAD = 0x09;
 
-        public override string[] Execute(byte[] data, out int finishedIndex)
+        public override CareSaying[] Execute(byte[] data, out int finishedIndex)
         {
             finishedIndex = 0;
-            var ps = new List<string>();
+            var css = new List<CareSaying>();
             bool hasData = true;
             while (hasData)
             {
-                if (data[finishedIndex] == Lead)
+                if (data[finishedIndex] == LEAD)
                 {
                     int length;
-                    StringBuilder sb;
-                    bool parseSuccess = ParseSingle(data, finishedIndex, out length, out sb);
+                    CareSaying cs;
+                    bool parseSuccess = ParseSingle(data, finishedIndex, out length, out cs);
                     if (!parseSuccess)
                     {
                         hasData = false;
                         continue;
                     }
-                    ps.Add(sb.ToString());
+                    css.Add(cs);
                     finishedIndex = finishedIndex + length;
                 }
                 if (finishedIndex >= data.Length)
                     hasData = false;
             }
-            return ps.ToArray();
+            return css.ToArray();
         }
 
-        protected virtual bool ParseSingle(byte[] data, int index, out int length, out StringBuilder sb)
+        protected virtual bool ParseSingle(byte[] data, int index, out int length, out CareSaying cs)
         {
-            sb = new StringBuilder();
+            cs = new CareSaying();
             length = 0;
             if (data[index] != 0x09)
                 return false;
-            var address = UtilityConvert.ConvertTo<int>(data[index + 1]);
-            length = UtilityConvert.ConvertTo<int>(data[index + 2]);
-            string command = UtilityConvert.BytesToHex(new[] {data[index + 3]}, false);
-            string content = Encoding.ASCII.GetString(data, index + 3 + 2, length - 2);
-            sb.Append(command).Append('`').Append(address).Append('`').Append(content);
+            cs.GpibAddress = data[index + 1];
+            cs.Command = data[index + 3];
+            cs.Length = UtilityConvert.ConvertTo<short>(data[index + 2]);
+            cs.Content = Encoding.ASCII.GetString(data, index + 3 + 2, length - 2);
             length = 3 + length;
             return true;
         }

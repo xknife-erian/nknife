@@ -194,7 +194,6 @@
     <Compile Include="Tunnel\Events\SessionEventArgs.cs" />
     <Compile Include="Protocol\IProtocolCommandParser.cs" />
     <Compile Include="Tunnel\Filters\HeartbeatFilter.cs" />
-    <Compile Include="Protocol\IProtocolProcessor`.cs" />
     <Compile Include="Tunnel\Base\BaseProtocolFilter`.cs" />
     <Compile Include="Tunnel\Generic\BytesCodec.cs" />
     <Compile Include="Tunnel\Generic\BytesDatagramDecoder.cs" />

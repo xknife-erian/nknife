@@ -21,10 +21,6 @@ namespace NKnife.Tunnel.Base
 
         protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
 
-        protected BaseProtocolFilter()
-        {
-        }
-
         protected virtual void InitializeDataMonitor(long id, DataMonitor dm)
         {
             var task = new Task(ReceiveQueueMonitor, id);
@@ -125,12 +121,12 @@ namespace NKnife.Tunnel.Base
 
         #region interface
 
-        public virtual void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> protocolFamily)
+        public virtual void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> family)
         {
             _Codec = codec;
             _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.Decoder.GetType().Name, _Codec.Encoder.GetType().Name));
 
-            _Family = protocolFamily;
+            _Family = family;
             _logger.Info(string.Format("协议族[{0}]绑定成功。", _Family.FamilyName));
         }
 
