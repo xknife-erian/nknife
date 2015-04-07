@@ -128,7 +128,7 @@ namespace NKnife.Protocol.Generic
                 _ProtocolBuilderMap.Add(command, func);
             }
         }
- 
+
 
         /// <summary>
         /// 根据远端得到的数据包解析，将数据填充到本实例中，与Generate方法相对
@@ -142,7 +142,7 @@ namespace NKnife.Protocol.Generic
             {
                 Debug.Fail("空数据无法进行协议的解析");
             }
-            if (datagram.Count() ==0)
+            if (datagram.Count() == 0)
             {
                 Debug.Fail("空数据无法进行协议的解析");
             }
@@ -150,17 +150,17 @@ namespace NKnife.Protocol.Generic
             {
                 if (_ProtocolUnPackerGetterMap.ContainsKey(command))
                 {
-                    _ProtocolUnPackerGetterMap[command].Invoke(command).Execute(protocol,datagram,command);
+                    _ProtocolUnPackerGetterMap[command].Invoke(command).Execute(protocol, datagram, command);
                 }
-                else 
+                else
                 {
                     if (_DefaultProtocolUnPackerGetter == null)
                     {
-                        DI.Get<BytesProtocolUnPacker>().Execute(protocol,datagram,command);
+                        DI.Get<BytesProtocolUnPacker>().Execute(protocol, datagram, command);
                     }
                     else
                     {
-                        _DefaultProtocolUnPackerGetter.Invoke(command).Execute(protocol,datagram,command);
+                        _DefaultProtocolUnPackerGetter.Invoke(command).Execute(protocol, datagram, command);
                     }
                 }
             }

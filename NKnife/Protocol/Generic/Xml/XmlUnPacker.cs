@@ -11,7 +11,7 @@ namespace NKnife.Protocol.Generic.Xml
 {
     public class XmlProtocolUnPacker : StringProtocolUnPacker
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<XmlProtocolUnPacker>();
 
         #region IProtocolParser Members
 

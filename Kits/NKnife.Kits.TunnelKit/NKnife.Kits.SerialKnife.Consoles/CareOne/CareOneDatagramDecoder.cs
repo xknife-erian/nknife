@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using NKnife.Converts;
@@ -6,21 +7,21 @@ using NKnife.Tunnel.Generic;
 
 namespace MonitorKnife.Tunnels.Common
 {
-    public class CareOneDatagramDecoder : BaseDatagramDecoder<CareSaying>
+    public class CareOneDatagramDecoder : BytesDatagramDecoder
     {
         public const byte LEAD = 0x09;
 
-        public override CareSaying[] Execute(byte[] data, out int finishedIndex)
+        public override byte[][] Execute(byte[] data, out int finishedIndex)
         {
             finishedIndex = 0;
-            var css = new List<CareSaying>();
+            var css = new List<byte[]>();
             bool hasData = true;
             while (hasData)
             {
                 if (data[finishedIndex] == LEAD)
                 {
                     int length;
-                    CareSaying cs;
+                    byte[] cs;
                     bool parseSuccess = ParseSingle(data, finishedIndex, out length, out cs);
                     if (!parseSuccess)
                     {
@@ -36,17 +37,20 @@ namespace MonitorKnife.Tunnels.Common
             return css.ToArray();
         }
 
-        protected virtual bool ParseSingle(byte[] data, int index, out int length, out CareSaying cs)
+        /// <summary>
+        /// 单条数据的提取
+        /// </summary>
+        /// <param name="data">整体数据流</param>
+        /// <param name="index">开始提取的位置</param>
+        /// <param name="length">提取完成的位置</param>
+        /// <param name="cs">提取出的内容</param>
+        /// <returns>是否提取成功</returns>
+        protected virtual bool ParseSingle(byte[] data, int index, out int length, out byte[] cs)
         {
-            cs = new CareSaying();
-            length = 0;
-            if (data[index] != 0x09)
-                return false;
-            cs.GpibAddress = data[index + 1];
-            cs.Command = data[index + 3];
-            cs.Length = UtilityConvert.ConvertTo<short>(data[index + 2]);
-            cs.Content = Encoding.ASCII.GetString(data, index + 3 + 2, length - 2);
-            length = 3 + length;
+            var sl = UtilityConvert.ConvertTo<short>(data[index + 2]);
+            length = 3 + sl;
+            cs = new byte[length];
+            Buffer.BlockCopy(data, index, cs, 0, length);
             return true;
         }
     }

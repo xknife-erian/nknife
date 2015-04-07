@@ -1,14 +1,14 @@
-﻿using System;
-using NKnife.Protocol.Generic;
+﻿using NKnife.Protocol.Generic;
 
 namespace MonitorKnife.Tunnels.Common
 {
-    public class CareOneProtocolCommandParser : StringProtocolCommandParser
+    public class CareOneProtocolCommandParser : BytesProtocolCommandParser
     {
-        public override string GetCommand(string datagram)
+        public override byte[] GetCommand(byte[] datagram)
         {
-            var ds = datagram.Split(new[] {'`'});
-            return ds[0];
+            if (datagram[3] == 0xA0)
+                return new[] {datagram[3], datagram[4]};
+            return new[] {datagram[3]};
         }
     }
 }
