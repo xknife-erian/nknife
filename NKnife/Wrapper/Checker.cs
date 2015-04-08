@@ -17,16 +17,15 @@ namespace NKnife.Wrapper
             if (data == null) return true;
                 
             //如果为""
-            if (data.GetType() == typeof(String))
+            if (data is string)
             {
                 if (string.IsNullOrEmpty(data.ToString().Trim()))
                     return true;
-                else
-                    return false;
+                return false;
             }
 
             //如果为DBNull
-            if (data.GetType() == typeof(DBNull))
+            if (data is DBNull)
                 return true;
 
             //不为空
@@ -109,7 +108,7 @@ namespace NKnife.Wrapper
         /// <param name="messageName">Parameter value</param>
         public static void CheckForInvalidNullNameReference(string name, string messageName)
         {
-            if ((null == name) || (name.Length == 0))
+            if (string.IsNullOrEmpty(name))
             {
                 string message = string.Format(ArgumentValidationString.ExceptionInvalidNullNameArgument, messageName);
                 throw new InvalidOperationException(message);
@@ -165,7 +164,7 @@ namespace NKnife.Wrapper
         {
             CheckForNullReference(variable, "variable");
             CheckForNullReference(type, "type");
-            if (!type.IsAssignableFrom(variable.GetType()))
+            if (!type.IsInstanceOfType(variable))
             {
                 string message = string.Format(ArgumentValidationString.ExceptionExpectedType, type.FullName);
                 throw new ArgumentException(message);
@@ -205,23 +204,10 @@ namespace NKnife.Wrapper
             if (!Enum.IsDefined(enumType, variable))
             {
                 string message = string.Format(ArgumentValidationString.ExceptionEnumerationNotDefined,
-                    variable.ToString(), enumType.FullName, variableName);
+                    variable, enumType.FullName, variableName);
                 throw new ArgumentException(message);
             }
         }
 
-
-        ///// <summary>
-        ///// 判断某值是否在枚举内（位枚举）
-        ///// </summary>
-        ///// <param name="checkingValue">被检测的枚举值</param>
-        ///// <param name="expectedValue">期望的枚举值</param>
-        ///// <returns></returns>
-        //public static bool Exists<E>(E checkingValue, E expectedValue) where E : Enum
-        //{
-        //    int intCheckingValue = Convert.ToInt32(checkingValue);
-        //    int intExpectedValue = Convert.ToInt32(expectedValue);
-        //    return (intCheckingValue & intExpectedValue) == intExpectedValue;
-        //}
     }
 }
