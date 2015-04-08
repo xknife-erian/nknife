@@ -21,13 +21,13 @@ namespace SerialKnife.IoC
             Bind<ISerialPortWrapper>().To<SerialPortWrapperDotNet>().Named(SerialType.DotNet.ToString());
             Bind<ISerialPortWrapper>().To<SerialPortWrapperWinApi>().Named(SerialType.WinApi.ToString());
 
-            Bind<BytesProtocolCommandParser>().To<FirstByteCommandParser>().InSingletonScope();
+            Bind<BytesProtocolCommandParser>().To<FirstByteCommandParser>().When(Request).InSingletonScope();
 
-            Bind<BytesDatagramDecoder>().To<PanFixByteHeadTailDatagramDecoder>().InSingletonScope();
-            Bind<BytesDatagramEncoder>().To<PanFixByteHeadTailDatagramEncoder>().InSingletonScope();
+            Bind<BytesDatagramDecoder>().To<PanFixByteHeadTailDatagramDecoder>().When(Request).InSingletonScope();
+            Bind<BytesDatagramEncoder>().To<PanFixByteHeadTailDatagramEncoder>().When(Request).InSingletonScope();
 
-            Bind<BytesProtocolPacker>().To<PanBytesProtocolSimplePacker>().InSingletonScope();
-            Bind<BytesProtocolUnPacker>().To<PanBytesProtocolSimpleUnPacker>().InSingletonScope();
+            Bind<BytesProtocolPacker>().To<PanBytesProtocolSimplePacker>().When(Request).InSingletonScope();
+            Bind<BytesProtocolUnPacker>().To<PanBytesProtocolSimpleUnPacker>().When(Request).InSingletonScope();
         }
         private bool Request(IRequest request)
         {

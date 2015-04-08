@@ -19,7 +19,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             _logger.Info("DI初始化结束....");
 
-            var server1 = new SerialClient(6);
+            var server1 = new SerialClient(7);
             server1.Start();
 
 //            var server2 = new SerialClient(1);
@@ -28,7 +28,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
             Thread.Sleep(200);
             for (int i = 0; i < 5; i++)
             {
-                server1.Send(new byte[] { 0xA0, 0x07, 0x3D, 0x03, 0x10, 0x01, 0x00, 0x00, 0x00, 0x58, 0xFF });
+                server1.Send(new byte[] { 0x08, 0x00, 0x05, 0xAA, 0x01, 0x31, 0x32, 0x33 });
                 Thread.Sleep(600);
             }
 
