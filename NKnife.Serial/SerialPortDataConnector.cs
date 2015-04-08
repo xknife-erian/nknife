@@ -86,6 +86,8 @@ namespace SerialKnife
         public event EventHandler<SessionEventArgs> DataSent;
         public int PortNumber { get; set; }
 
+        public SerialConfig SerialConfig { get; set; }
+
         public void Send(long id, byte[] data)
         {
             byte[] received;
@@ -145,7 +147,9 @@ namespace SerialKnife
                 return true;
             }
             var port = string.Format("COM{0}", PortNumber);
-            var result = _Serial.InitPort(port, new SerialConfig());
+            if (SerialConfig == null)
+                SerialConfig = new SerialConfig();
+            var result = _Serial.InitPort(port, SerialConfig);
             if (result)
             {
                 _logger.Info(string.Format("串口{0}初始化完成：{1}", port, true));

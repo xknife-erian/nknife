@@ -28,7 +28,13 @@ namespace SerialKnife.Wrappers
                 Port = portName,
                 BaudRate = config.BaudRate,
                 ByteSize = (byte) config.DataBits,
-                ReadTimeout = config.ReadTimeout
+                ReadTimeout = config.ReadTimeout,
+//                DataBits = config.DataBits,//8,
+//                ReceivedBytesThreshold = config.ReceivedBytesThreshold,//1,
+//                ReadBufferSize = config.ReadBufferSize,//32,
+//                DtrEnable = config.DtrEnable,
+//                Parity = config.Parity,
+//                RtsEnable = config.RtsEnable
             };
 
             try

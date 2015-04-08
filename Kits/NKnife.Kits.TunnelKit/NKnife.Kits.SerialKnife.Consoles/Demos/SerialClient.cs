@@ -8,6 +8,7 @@ using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Generic;
+using SerialKnife.Common;
 using SerialKnife.Generic.Filters;
 using SerialKnife.Interfaces;
 
@@ -38,6 +39,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
             _Tunnel.AddFilters(protocolFilter);
 
             _DataConnector = DI.Get<ISerialConnector>();
+            _DataConnector.SerialConfig = new SerialConfig() {BaudRate = 115200};
             _DataConnector.PortNumber = port; //串口
 
             _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力

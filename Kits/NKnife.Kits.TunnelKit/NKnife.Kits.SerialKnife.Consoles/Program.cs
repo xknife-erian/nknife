@@ -22,11 +22,14 @@ namespace NKnife.Kits.SerialKnife.Consoles
             var server1 = new SerialClient(7);
             server1.Start();
 
-            Thread.Sleep(200);
-            for (int i = 0; i < 5; i++)
+            Thread.Sleep(100);
+            for (int i = 0; i < 100; i++)
             {
-                server1.Send(new byte[] { 0x09, 0x00, 0x05, 0xAA, 0x01, 0x31, 0x32, 0x33 });
-                Thread.Sleep(600);
+                if (i%2 == 0)
+                    server1.Send(new byte[] {0x09, 0x00, 0x05, 0xAA, 0x01, 0x31, 0x32, 0x33});
+                else
+                    server1.Send(new byte[] {0x09, 0x00, 0x05, 0xAA, 0x01, 0x41, 0x42, 0x43, 0x09, 0x00, 0x05, 0xAA, 0x01, 0x51, 0x52, 0x53});
+                Thread.Sleep(10);
             }
 
             Thread.Sleep(200);

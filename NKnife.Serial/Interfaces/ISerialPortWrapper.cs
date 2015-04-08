@@ -13,6 +13,7 @@ namespace SerialKnife.Interfaces
         /// <summary>初始化操作器通讯串口
         /// </summary>
         /// <param name="portName"></param>
+        /// <param name="config"></param>
         /// <returns></returns>
         bool InitPort(string portName, SerialConfig config);
 
