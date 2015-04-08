@@ -25,21 +25,23 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             Thread.Sleep(100);
 
-            var count = 3;
-            Console.WriteLine("----------------");
+            const int COUNT = 9;
+            Console.WriteLine("--{0}--------------", COUNT);
             var sw = new Stopwatch();
             sw.Start();
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < COUNT; i++)
             {
-                //09 17 09 AA 00 52 45 41 44 3F 0D 0A
-                server1.Send(new byte[] {0x08, 0x17, 0x09, 0xAA, 0x00, 0x52, 0x45, 0x41, 0x44, 0x3F, 0x0D, 0x0A});
-                Console.Write("<<< ");
-                Thread.Sleep(50);
+                server1.Send(GetA0D1());
             }
             sw.Stop();
             Console.WriteLine();
-            Console.WriteLine("--{0}--{1}-----", sw.ElapsedMilliseconds, sw.ElapsedMilliseconds/count);
+            Console.WriteLine("--{0}--{1}-----", sw.ElapsedMilliseconds, sw.ElapsedMilliseconds/COUNT);
             Console.ReadLine();
+        }
+
+        private static byte[] GetA0D1()
+        {
+            return new byte[] {0x08, 0x00, 0x02, 0xA0, 0xD1};
         }
     }
 }
