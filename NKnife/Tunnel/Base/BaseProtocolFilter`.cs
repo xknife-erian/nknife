@@ -124,10 +124,10 @@ namespace NKnife.Tunnel.Base
         public virtual void Bind(ITunnelCodec<T> codec, IProtocolFamily<T> family)
         {
             _Codec = codec;
-            _logger.Info(string.Format("绑定Codec成功。{0},{1}", _Codec.Decoder.GetType().Name, _Codec.Encoder.GetType().Name));
+            _logger.Info(string.Format("{2}绑定Codec成功。{0},{1}", _Codec.Decoder.GetType().Name, _Codec.Encoder.GetType().Name, GetType().Name));
 
             _Family = family;
-            _logger.Info(string.Format("协议族[{0}]绑定成功。", _Family.FamilyName));
+            _logger.Info(string.Format("{1}绑定协议族[{0}]成功。", _Family.FamilyName, GetType().Name));
         }
 
         public override void ProcessSessionBroken(long id)
@@ -192,6 +192,7 @@ namespace NKnife.Tunnel.Base
                     phandler.SendToAll += OnSendToAll;
                     phandler.Bind(_Codec, _Family);
                     _Handlers.Add(handler);
+                    _logger.Info(string.Format("{0}增加{1}成功.", GetType().Name, handler.GetType().Name));
                 }
             }
         }
@@ -259,7 +260,7 @@ namespace NKnife.Tunnel.Base
                     _logger.Error(string.Format("命令字解析异常:{0},Data:{1}", e.Message, dg), e);
                     continue;
                 }
-                _logger.Trace(string.Format("开始协议解析::命令字:{0},数据包:{1}", command, dg));
+                _logger.Trace(string.Format("开始协议解析:命令字:{0},数据包:{1}", command, dg));
 
                 IProtocol<T> protocol;
                 try

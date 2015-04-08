@@ -22,36 +22,16 @@ namespace NKnife.Kits.SerialKnife.Consoles
             var server1 = new SerialClient(7);
             server1.Start();
 
-//            var server2 = new SerialClient(1);
-//            server2.Start();
-
             Thread.Sleep(200);
             for (int i = 0; i < 5; i++)
             {
-                server1.Send(new byte[] { 0x08, 0x00, 0x05, 0xAA, 0x01, 0x31, 0x32, 0x33 });
+                server1.Send(new byte[] { 0x09, 0x00, 0x05, 0xAA, 0x01, 0x31, 0x32, 0x33 });
                 Thread.Sleep(600);
             }
-
-            //var timer1 = new Timer(Timer1Call, server1, 1000, 300);
-            //var timer2 = new Timer(Timer2Call, server2, 1000, 260);
 
             Thread.Sleep(200);
 
             Console.ReadLine();
-        }
-
-        private static void Timer2Call(object state)
-        {
-            _logger.Info("2--->");
-            var server = (SerialClient) state;
-            server.Send(new byte[] {0xA0, 0x01, 0x02, 0x03, 0xFF});
-        }
-
-        private static void Timer1Call(object state)
-        {
-            _logger.Info("1--->");
-            var server = (SerialClient) state;
-            server.Send(new byte[] { 0xA0, 0xA1, 0xA2, 0xA3, 0xFF });
         }
     }
 }

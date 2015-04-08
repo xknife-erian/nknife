@@ -3,12 +3,13 @@ using System.Diagnostics;
 using System.Text;
 using NKnife.Converts;
 using NKnife.Protocol;
+using NKnife.Protocol.Generic;
 
 namespace MonitorKnife.Tunnels.Common
 {
-    public class CareOneProtocolPacker : IProtocolPacker<byte[]>
+    public class CareOneProtocolPacker : BytesProtocolPacker
     {
-        byte[] IProtocolPacker<byte[]>.Combine(IProtocol<byte[]> content)
+        public override byte[] Combine(BytesProtocol content)
         {
             var careSaying = content as CareSaying;
             if (careSaying == null)
@@ -19,7 +20,7 @@ namespace MonitorKnife.Tunnels.Common
             return Combine(careSaying);
         }
 
-        public virtual byte[] Combine(CareSaying content)
+        protected virtual byte[] Combine(CareSaying content)
         {
             var p = Encoding.ASCII.GetBytes(content.Content);
             var bs = new byte[5 + p.Length];

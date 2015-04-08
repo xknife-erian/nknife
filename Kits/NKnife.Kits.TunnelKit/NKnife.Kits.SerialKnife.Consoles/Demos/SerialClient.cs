@@ -23,6 +23,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         public SerialClient(int port)
         {
             var codec = DI.Get<BytesCodec>();
+            codec.CodecName = "careone";
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;
 

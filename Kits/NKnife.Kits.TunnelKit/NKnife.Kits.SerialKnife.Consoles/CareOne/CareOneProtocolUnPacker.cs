@@ -7,9 +7,9 @@ using NKnife.Protocol.Generic;
 
 namespace MonitorKnife.Tunnels.Common
 {
-    public class CareOneProtocolUnPacker : IProtocolUnPacker<byte[]>
+    public class CareOneProtocolUnPacker : BytesProtocolUnPacker
     {
-        void IProtocolUnPacker<byte[]>.Execute(IProtocol<byte[]> protocol, byte[] data, byte[] command)
+        public override void Execute(BytesProtocol protocol, byte[] data, byte[] command)
         {
             var careSaying = protocol as CareSaying;
             if (careSaying == null)
@@ -18,11 +18,12 @@ namespace MonitorKnife.Tunnels.Common
             }
             Execute(careSaying, data, command);
         }
-        public virtual void Execute(CareSaying careSaying, byte[] data, byte[] command)
+
+        protected virtual void Execute(CareSaying careSaying, byte[] data, byte[] command)
         {
             ((IProtocol<byte[]>) careSaying).Command = command;
             careSaying.GpibAddress = UtilityConvert.ConvertTo<short>(data[1]);
-            careSaying.Content = Encoding.ASCII.GetString(data);
+            careSaying.Content = Encoding.ASCII.GetString(data, 5, data.Length - 5);
         }
 
     }
