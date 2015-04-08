@@ -28,8 +28,8 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;
 
-            var queryFilter = DI.Get<QueryBusFilter>();
-            queryFilter.Bind(codec, family);
+//            var queryFilter = DI.Get<QueryBusFilter>();
+//            queryFilter.Bind(codec, family);
 
             var handler = new SerialProtocolHandler();
             var protocolFilter = new SerialProtocolFilter();
