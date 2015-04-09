@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NKnife.Tunnel.Generic;
 
-namespace SerialKnife.Generic.Tools.Pan
+namespace SerialKnife.Pan.ProtocolTools
 {
     public class PanFixByteHeadTailDatagramDecoder : BytesDatagramDecoder
     {

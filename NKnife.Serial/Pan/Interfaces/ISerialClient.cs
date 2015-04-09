@@ -1,4 +1,6 @@
-﻿namespace SerialKnife.Interfaces
+﻿using SerialKnife.Interfaces;
+
+namespace SerialKnife.Pan.Interfaces
 {
     /// <summary>描述一个串口操作的接口
     /// </summary>

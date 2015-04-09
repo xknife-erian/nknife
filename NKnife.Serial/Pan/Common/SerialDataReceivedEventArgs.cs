@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     public class SerialDataReceivedEventArgs : EventArgs
     {

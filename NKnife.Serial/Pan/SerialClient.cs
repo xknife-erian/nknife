@@ -2,11 +2,12 @@
 using System.Threading;
 using Common.Logging;
 using NKnife.IoC;
-using SerialKnife.Base;
 using SerialKnife.Common;
 using SerialKnife.Interfaces;
+using SerialKnife.Pan.Common;
+using SerialKnife.Pan.Interfaces;
 
-namespace SerialKnife
+namespace SerialKnife.Pan
 {
     /// <summary>
     ///     串口通讯器。每个实例绑定一个端口。
@@ -61,7 +62,7 @@ namespace SerialKnife
                     : package.SendInterval.ReadTimeoutInterval);
 
                 byte[] received;
-                var recvCount = _SerialComm.SendData(package.DataToSend, out received);
+                var recvCount = _SerialComm.SendReceived(package.DataToSend, out received);
 
                 SendLogger(package);
 
@@ -160,7 +161,7 @@ namespace SerialKnife
         public bool OpenPort(ushort port)
         {
             _PortName = string.Format("COM{0}", port);
-            if (_SerialComm.InitPort(_PortName, new SerialConfig()))
+            if (_SerialComm.Initialize(_PortName, new SerialConfig()))
             {
                 Active = true;
                 _DataPool = new SerialDataPool();

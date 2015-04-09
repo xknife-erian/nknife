@@ -28,9 +28,6 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
             var family = DI.Get<BytesProtocolFamily>();
             family.FamilyName = FAMILY_NAME;
 
-//            var queryFilter = DI.Get<QueryBusFilter>();
-//            queryFilter.Bind(codec, family);
-
             var handler = new SerialProtocolHandler();
             var protocolFilter = new SerialProtocolFilter();
             protocolFilter.Bind(codec, family);
@@ -39,7 +36,12 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
             _Tunnel.AddFilters(protocolFilter);
 
             _DataConnector = DI.Get<ISerialConnector>();
-            _DataConnector.SerialConfig = new SerialConfig() {BaudRate = 115200};
+            _DataConnector.SerialConfig = new SerialConfig()
+            {
+                BaudRate = 115200,
+                ReadBufferSize = 258,
+                ReadTimeout = 100
+            };
             _DataConnector.PortNumber = port; //串口
 
             _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力

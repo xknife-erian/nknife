@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     /// <summary> 数据包发送完成事件参数
     /// </summary>

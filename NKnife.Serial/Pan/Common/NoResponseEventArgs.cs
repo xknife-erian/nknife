@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     /// <summary>上位机向下位机发送的双向数据，没有收到回复
     /// </summary>

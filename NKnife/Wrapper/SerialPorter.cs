@@ -2,13 +2,12 @@
 using System.IO.Ports;
 using System.Text;
 using Common.Logging;
-using NKnife.Interface;
 
 namespace NKnife.Wrapper
 {
     public class SerialPorter
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<SerialPorter>();
         private readonly SerialPort _SerialPort = new SerialPort();
 
         public bool IsOpen
@@ -16,9 +15,9 @@ namespace NKnife.Wrapper
             get { return (_SerialPort != null && _SerialPort.IsOpen); }
         }
 
-        public bool Initialize()
+        public bool Initialize(ushort port)
         {
-            _SerialPort.PortName = "COM4";
+            _SerialPort.PortName = string.Format("COM{0}", port);
             _SerialPort.BaudRate = 9600;
             _SerialPort.DataBits = 8;
             _SerialPort.ReadTimeout = 1000;
@@ -59,7 +58,8 @@ namespace NKnife.Wrapper
             }
         }
 
-        /// <summary>发送十六进制ACSII码
+        /// <summary>
+        ///     发送十六进制ACSII码
         /// </summary>
         /// <param name="hexSrc">(源数据)字符串的Hex表示</param>
         public int WriteToSerial(string hexSrc)
@@ -67,7 +67,8 @@ namespace NKnife.Wrapper
             return WriteToSerial(HexConvertToByte(hexSrc));
         }
 
-        /// <summary>发送十六进制ACSII码的字节表示方式
+        /// <summary>
+        ///     发送十六进制ACSII码的字节表示方式
         /// </summary>
         /// <param name="byteArraySrc">(源数据)字符串的Hex表示</param>
         public int WriteToSerial(byte[] byteArraySrc)
@@ -79,12 +80,13 @@ namespace NKnife.Wrapper
             }
             catch (Exception e)
             {
-                _logger.Warn(string.Format("打印时向串口写数据异常。{0}", Encoding.Default.GetString(byteArraySrc)), e);
+                _logger.Warn(string.Format("向串口写数据异常。{0}", Encoding.Default.GetString(byteArraySrc)), e);
                 return 1;
             }
         }
 
-        /// <summary>从串口读取数据到指定的字节数组中
+        /// <summary>
+        ///     从串口读取数据到指定的字节数组中
         /// </summary>
         /// <param name="outcmd">指定的字节数组引用</param>
         /// <returns>为>=0时表示读取成功，且有数据，数据字节数被返回；为小于0时表示读取失败，或无数据</returns>
@@ -92,7 +94,7 @@ namespace NKnife.Wrapper
         {
             try
             {
-                int result = _SerialPort.Read(outcmd, 0, outcmd.Length);
+                var result = _SerialPort.Read(outcmd, 0, outcmd.Length);
                 return result;
             }
             catch (Exception e)
@@ -102,28 +104,30 @@ namespace NKnife.Wrapper
             }
         }
 
-        /// <summary>将字符串的Hex表示转换成字节数组
+        /// <summary>
+        ///     将字符串的Hex表示转换成字节数组
         /// </summary>
         /// <param name="hexSrc">(源数据)字符串的Hex表示</param>
         /// <returns></returns>
         public static byte[] HexConvertToByte(string hexSrc)
         {
-            string hex = hexSrc.Replace(" ", "");
+            var hex = hexSrc.Replace(" ", "");
             var byteArray = new byte[hex.Length/2];
             for (int i = 0, j = 0; i < hex.Length; i = i + 2, j++)
                 byteArray[j] = Convert.ToByte(hex.Substring(i, 2), 16);
             return byteArray;
         }
 
-        /// <summary>将字符串转换成Hex的字符串表示
+        /// <summary>
+        ///     将字符串转换成Hex的字符串表示
         /// </summary>
         /// <param name="sourceStr">(源数据)字符串</param>
         /// <returns></returns>
         public static string StringConvertToHex(string sourceStr)
         {
-            byte[] b = Encoding.Default.GetBytes(sourceStr.ToCharArray());
+            var b = Encoding.Default.GetBytes(sourceStr.ToCharArray());
             var sb = new StringBuilder();
-            foreach (byte cb in b)
+            foreach (var cb in b)
             {
                 sb.Append(Convert.ToString(cb, 16)).Append(" ");
             }

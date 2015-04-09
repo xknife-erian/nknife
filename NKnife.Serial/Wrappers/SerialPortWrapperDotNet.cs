@@ -18,7 +18,7 @@ namespace SerialKnife.Wrappers
 
         protected readonly ManualResetEventSlim _Reset = new ManualResetEventSlim(false);
 
-        protected byte[] _Buffer = new byte[64];
+        protected byte[] _SyncBuffer = new byte[512];//当同步读取时的Buffer
         protected int _CurrReadLength;
         protected bool _OnReceive;
         protected byte _Tail = 0xFF;
@@ -27,6 +27,10 @@ namespace SerialKnife.Wrappers
         ///     串口操作类（通过.net 类库）
         /// </summary>
         protected SerialPort _SerialPort;
+
+        protected SerialConfig _SerialConfig;
+
+        protected string _PortName;
 
         protected int _TimeOut = 150;
 
@@ -49,8 +53,10 @@ namespace SerialKnife.Wrappers
         /// <param name="portName"></param>
         /// <param name="config"></param>
         /// <returns></returns>
-        public bool InitPort(string portName, SerialConfig config)
+        public bool Initialize(string portName, SerialConfig config)
         {
+            _PortName = portName;
+            _SerialConfig = config;
             _SerialPort = new SerialPort
                               {
                                   PortName = portName,
@@ -67,6 +73,7 @@ namespace SerialKnife.Wrappers
 
             _SerialPort.DataReceived += SerialPortDataReceived;
             _SerialPort.ErrorReceived += SerialPortErrorReceived;
+
             try
             {
                 if (_SerialPort.IsOpen)
@@ -135,7 +142,7 @@ namespace SerialKnife.Wrappers
         /// <param name="cmd">待发送的数据</param>
         /// <param name="recv">回复的数据</param>
         /// <returns>回复的数据的长度</returns>
-        public virtual int SendData(byte[] cmd, out byte[] recv)
+        public virtual int SendReceived(byte[] cmd, out byte[] recv)
         {
             try
             {
@@ -144,21 +151,10 @@ namespace SerialKnife.Wrappers
                 _OnReceive = true;
                 _Reset.Reset();
                 _Reset.Wait(_TimeOut); //收到返回
-                _OnReceive = false;
 
-                int currReadLength = _CurrReadLength;
-                if (currReadLength > 0)
-                {
-                    recv = new byte[currReadLength];
-                    Array.Copy(_Buffer, recv, currReadLength);
-                    _Buffer = new byte[64];
-                    _CurrReadLength = 0;
-                }
-                else
-                {
-                    recv = null;
-                }
-                return currReadLength;
+                recv = new byte[_SyncBuffer.Length];
+                Array.Copy(_SyncBuffer, recv, _SyncBuffer.Length);
+                return _SyncBuffer.Length;
             }
             catch
             {
@@ -178,37 +174,26 @@ namespace SerialKnife.Wrappers
         {
             if (!_OnReceive)
             {
+                //当未在需要读取状态时，丢弃收到的数据
                 _SerialPort.DiscardInBuffer();
                 return;
             }
-            var readedBuffer = new byte[64];
-            int recvCount = 0;
+            var readedBuffer = new byte[_SerialConfig.ReadBufferSize];
             try
             {
-                recvCount = _SerialPort.Read(readedBuffer, 0, readedBuffer.Length);
+                var recvCount = _SerialPort.Read(readedBuffer, 0, readedBuffer.Length);
+                _SyncBuffer = new byte[recvCount];
+                Buffer.BlockCopy(readedBuffer, 0, _SyncBuffer, 0, recvCount);
+                _OnReceive = false;
+                _Reset.Set();
             }
             catch (TimeoutException ex)
             {
-                
+                Console.WriteLine("读取到时,非异常。{0}", ex.Message);
             }
             catch (IOException ex)
             {
-                
-            }
-            if (recvCount > 0 && _CurrReadLength + recvCount <= _Buffer.Length)
-            {
-                Buffer.BlockCopy(readedBuffer, 0, _Buffer, _CurrReadLength, recvCount);
-                _CurrReadLength += recvCount;
-                if (readedBuffer[recvCount - 1] == _Tail) //校验指令结束符
-                {
-                    _Reset.Set();
-                    _OnReceive = false;
-                }
-            }
-            else
-            {
-                _Buffer = new byte[64];
-                _CurrReadLength = 0;
+                _logger.Warn(string.Format("串口读取异常：{0}", ex.Message), ex);
             }
         }
 

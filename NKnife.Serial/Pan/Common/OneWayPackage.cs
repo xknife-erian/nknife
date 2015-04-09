@@ -1,7 +1,7 @@
 ﻿using System;
-using SerialKnife.Base;
+using SerialKnife.Common;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     /// <summary>只发送不接收信息包（单向）
     /// </summary>

@@ -22,7 +22,7 @@ namespace SerialKnife.Wrappers
         /// <param name="portName"></param>
         /// <param name="config"></param>
         /// <returns></returns>
-        public bool InitPort(string portName, SerialConfig config)
+        public bool Initialize(string portName, SerialConfig config)
         {
             _SerialPort = new SerialPortWin32 {
                 Port = portName,
@@ -100,7 +100,7 @@ namespace SerialKnife.Wrappers
         /// <returns>
         /// 回复的数据的长度
         /// </returns>
-        public int SendData(byte[] cmd, out byte[] recv)
+        public int SendReceived(byte[] cmd, out byte[] recv)
         {
             try
             {

@@ -1,7 +1,7 @@
 ﻿using System;
 using NKnife.Protocol.Generic;
 
-namespace SerialKnife.Generic.Tools.Pan
+namespace SerialKnife.Pan.ProtocolTools
 {
     public class PanBytesProtocolSimpleUnPacker : BytesProtocolUnPacker
     {

@@ -15,7 +15,7 @@ namespace SerialKnife.Interfaces
         /// <param name="portName"></param>
         /// <param name="config"></param>
         /// <returns></returns>
-        bool InitPort(string portName, SerialConfig config);
+        bool Initialize(string portName, SerialConfig config);
 
         /// <summary> 关闭串口
         /// </summary>
@@ -27,11 +27,11 @@ namespace SerialKnife.Interfaces
         /// <param name="timeout"></param>
         void SetTimeOut(int timeout);
 
-        /// <summary>发送数据
+        /// <summary>发送数据即刻读取回复数据
         /// </summary>
         /// <param name="cmd">待发送的数据</param>
         /// <param name="recv">回复的数据</param>
         /// <returns>回复的数据的长度</returns>
-        int SendData(byte[] cmd, out byte[] recv);
+        int SendReceived(byte[] cmd, out byte[] recv);
     }
 }

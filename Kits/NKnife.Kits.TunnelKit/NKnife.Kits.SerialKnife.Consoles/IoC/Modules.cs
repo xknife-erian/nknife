@@ -5,7 +5,6 @@ using NKnife.Kits.SerialKnife.Consoles.CareOne;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Generic;
 using SerialKnife;
-using SerialKnife.Generic.Tools.Pan;
 using SerialKnife.Interfaces;
 
 namespace NKnife.Kits.SerialKnife.Consoles.IoC

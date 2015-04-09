@@ -1,7 +1,7 @@
-using SerialKnife.Base;
 using SerialKnife.Common;
+using SerialKnife.Pan.Common;
 
-namespace SerialKnife.Interfaces
+namespace SerialKnife.Pan.Interfaces
 {
     /// <summary>串口通讯管理器
     /// </summary>

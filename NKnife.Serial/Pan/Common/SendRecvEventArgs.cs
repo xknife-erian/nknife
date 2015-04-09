@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     /// <summary>双向数据包发送后，收到回复的事件参数
     /// </summary>

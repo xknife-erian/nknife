@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     /// <summary>串口接收到的数据
     /// </summary>

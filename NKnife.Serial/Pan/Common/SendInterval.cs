@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     /// <summary>发送的间隔
     /// 串口通讯通过发送间隔来控制数据收发时序，

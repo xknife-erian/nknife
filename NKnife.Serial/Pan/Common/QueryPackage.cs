@@ -1,6 +1,6 @@
-﻿using SerialKnife.Base;
+﻿using SerialKnife.Common;
 
-namespace SerialKnife.Common
+namespace SerialKnife.Pan.Common
 {
     /// <summary>轮询数据包
     /// </summary>

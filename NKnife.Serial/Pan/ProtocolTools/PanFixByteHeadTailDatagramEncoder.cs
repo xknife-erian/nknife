@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NKnife.Tunnel.Generic;
 
-namespace SerialKnife.Generic.Tools.Pan
+namespace SerialKnife.Pan.ProtocolTools
 {
     public class PanFixByteHeadTailDatagramEncoder : BytesDatagramEncoder
     {

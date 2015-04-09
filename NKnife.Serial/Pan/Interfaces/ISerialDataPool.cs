@@ -1,6 +1,6 @@
-﻿using SerialKnife.Base;
+﻿using SerialKnife.Pan.Common;
 
-namespace SerialKnife.Interfaces
+namespace SerialKnife.Pan.Interfaces
 {
     /// <summary>向串口即将发送的指令包的集合
     /// </summary>

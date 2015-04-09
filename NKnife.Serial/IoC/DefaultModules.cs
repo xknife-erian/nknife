@@ -6,7 +6,6 @@ using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Generic;
 using SerialKnife.Common;
 using SerialKnife.Generic.Tools;
-using SerialKnife.Generic.Tools.Pan;
 using SerialKnife.Interfaces;
 using SerialKnife.Wrappers;
 

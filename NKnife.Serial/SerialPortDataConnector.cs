@@ -20,70 +20,81 @@ namespace SerialKnife
 
         public SerialType SerialType { get; set; }
 
-        private void CheckAndInitiate()
-        {
-            if (_Serial == null)
-            {
-                _Serial = DI.Get<ISerialPortWrapper>(SerialType.ToString());
-            }
-        }
-
-        private void InvokeDataSent(byte[] data)
-        {
-            var handler = DataSent;
-            if (handler != null)
-            {
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                {
-                    Id = PortNumber,
-                    Data = data
-                }));
-            }
-        }
-
-        private void InvokeDataReceived(byte[] data)
-        {
-            var handler = DataReceived;
-            if (handler != null)
-            {
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                {
-                    Id = PortNumber,
-                    Data = data
-                }));
-            }
-        }
-
-        private void InvokeSessionBroken()
-        {
-            var handler = SessionBroken;
-            if (handler != null)
-            {
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                {
-                    Id = PortNumber
-                }));
-            }
-        }
-
-        private void InvokeSessionBuilt()
-        {
-            var handler = SessionBuilt;
-            if (handler != null)
-            {
-                handler.Invoke(this, new SessionEventArgs(new TunnelSession
-                {
-                    Id = PortNumber
-                }));
-            }
-        }
-
         #region IKnifeSerialConnector
+
+        #region event
 
         public event EventHandler<SessionEventArgs> SessionBuilt;
         public event EventHandler<SessionEventArgs> SessionBroken;
         public event EventHandler<SessionEventArgs> DataReceived;
         public event EventHandler<SessionEventArgs> DataSent;
+
+        protected virtual void OnSessionBuilt(SessionEventArgs e)
+        {
+            var handler = SessionBuilt;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        protected virtual void OnSessionBuilt()
+        {
+            OnSessionBuilt(new SessionEventArgs(new TunnelSession
+            {
+                Id = PortNumber
+            }));
+        }
+
+        protected virtual void OnSessionBroken(SessionEventArgs e)
+        {
+            var handler = SessionBroken;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        protected virtual void OnSessionBroken()
+        {
+            OnSessionBroken(new SessionEventArgs(new TunnelSession
+            {
+                Id = PortNumber
+            }));
+        }
+
+        protected virtual void OnDataReceived(SessionEventArgs e)
+        {
+            var handler = DataReceived;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        protected virtual void OnDataReceived(byte[] data)
+        {
+            var e = new SessionEventArgs(new TunnelSession
+            {
+                Id = PortNumber,
+                Data = data
+            });
+            OnDataReceived(e);
+        }
+
+        protected virtual void OnDataSent(SessionEventArgs e)
+        {
+            var handler = DataSent;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        protected virtual void OnDataSent(byte[] data)
+        {
+            var e = new SessionEventArgs(new TunnelSession
+            {
+                Id = PortNumber,
+                Data = data
+            });
+            OnDataSent(e);
+        }
+
+        #endregion
+
         public int PortNumber { get; set; }
 
         public SerialConfig SerialConfig { get; set; }
@@ -91,22 +102,22 @@ namespace SerialKnife
         public void Send(long id, byte[] data)
         {
             byte[] received;
-            _Serial.SendData(data, out received);
-            InvokeDataSent(data);
+            _Serial.SendReceived(data, out received);
+            OnDataSent(data);
             if (received != null)
             {
-                InvokeDataReceived(received);
+                OnDataReceived(received);
             }
         }
 
         public void SendAll(byte[] data)
         {
             byte[] received;
-            _Serial.SendData(data, out received);
-            InvokeDataSent(data);
+            _Serial.SendReceived(data, out received);
+            OnDataSent(data);
             if (received != null)
             {
-                InvokeDataReceived(received);
+                OnDataReceived(received);
             }
         }
 
@@ -134,7 +145,7 @@ namespace SerialKnife
             var result = _Serial.Close();
             if (result)
             {
-                InvokeSessionBroken();
+                OnSessionBroken();
             }
             return result;
         }
@@ -149,17 +160,25 @@ namespace SerialKnife
             var port = string.Format("COM{0}", PortNumber);
             if (SerialConfig == null)
                 SerialConfig = new SerialConfig();
-            var result = _Serial.InitPort(port, SerialConfig);
+            var result = _Serial.Initialize(port, SerialConfig);
             if (result)
             {
                 _logger.Info(string.Format("串口{0}初始化完成：{1}", port, true));
-                InvokeSessionBuilt();
+                OnSessionBuilt();
             }
             else
             {
                 _logger.Warn(string.Format("串口{0}初始化完成：{1}", port, false));
             }
             return result;
+        }
+
+        protected virtual void CheckAndInitiate()
+        {
+            if (_Serial == null)
+            {
+                _Serial = DI.Get<ISerialPortWrapper>(SerialType.ToString());
+            }
         }
 
         #endregion

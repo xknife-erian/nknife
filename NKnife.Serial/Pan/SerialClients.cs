@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Common.Logging;
-using SerialKnife.Base;
 using SerialKnife.Common;
-using SerialKnife.Interfaces;
+using SerialKnife.Pan.Common;
+using SerialKnife.Pan.Interfaces;
 
-namespace SerialKnife
+namespace SerialKnife.Pan
 {
     /// <summary>
     ///     串口通讯管理器
