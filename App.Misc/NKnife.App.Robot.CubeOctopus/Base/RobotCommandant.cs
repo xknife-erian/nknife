@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using SerialKnife.Common;
 using SerialKnife.Interfaces;
 using SerialKnife.Wrappers;
 
@@ -13,7 +14,7 @@ namespace NKnife.Tools.Robot.CubeOctopus.Base
         public void Initialize(ushort port, uint timeout = 600)
         {
             _Serial = new SerialPortWrapperDotNet();
-            _Serial.InitPort("COM" + port);
+            _Serial.Initialize("COM" + port, new SerialConfig());
             _Serial.SetTimeOut((int) timeout);
         }
 
@@ -31,7 +32,7 @@ namespace NKnife.Tools.Robot.CubeOctopus.Base
         public void SendCommand(Command cmd)
         {
             var bytesCmd = EncodeCommand(cmd.ToString());
-            _Serial.SendData(bytesCmd, out _Replay);
+            _Serial.SendReceived(bytesCmd, out _Replay);
         }
 
         protected static byte[] EncodeCommand(string cmd)
