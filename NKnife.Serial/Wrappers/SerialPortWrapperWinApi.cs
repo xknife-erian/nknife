@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Pansoft.SerialManager;
 using SerialKnife.Common;
 using SerialKnife.Interfaces;
 
@@ -10,7 +9,7 @@ namespace SerialKnife.Wrappers
     {
         /// <summary>通过windows api实现的串口操作类
         /// </summary>
-        private SerialPortPro _SerialPort;
+        private SerialPortWin32 _SerialPort;
 
         private string _PortName;
         private SerialConfig _SerialConfig;
@@ -30,7 +29,7 @@ namespace SerialKnife.Wrappers
         {
             _PortName = portName;
             _SerialConfig = config;
-            _SerialPort = new SerialPortPro
+            _SerialPort = new SerialPortWin32
             {
                 Port = portName,
                 BaudRate = config.BaudRate,
@@ -46,7 +45,7 @@ namespace SerialKnife.Wrappers
 
             try
             {
-                if (_SerialPort._Opened)
+                if (_SerialPort.Opened)
                 {
                     _SerialPort.Close();
                     _SerialPort.Open();
@@ -76,7 +75,7 @@ namespace SerialKnife.Wrappers
         {
             try
             {
-                if (_SerialPort._Opened)
+                if (_SerialPort.Opened)
                 {
                     _SerialPort.Close();
                 }

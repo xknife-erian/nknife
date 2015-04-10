@@ -2,6 +2,7 @@
 using Common.Logging;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
+using SerialKnife.Common;
 using SerialKnife.Interfaces;
 
 namespace NKnife.Kits.SerialKnife.Mock
@@ -13,6 +14,10 @@ namespace NKnife.Kits.SerialKnife.Mock
         #region IKnifeSerialConnector
 
         public int PortNumber { get; set; }
+
+        public SerialType SerialType { get; set; }
+
+        public SerialConfig SerialConfig { get; set; }
 
         #endregion
 
