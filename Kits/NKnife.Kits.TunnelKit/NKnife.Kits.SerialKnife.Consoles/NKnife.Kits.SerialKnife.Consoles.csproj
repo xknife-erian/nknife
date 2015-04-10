@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CareOne\CareOneCodec.cs" />
     <Compile Include="CareOne\CareOneDatagramDecoder.cs" />
     <Compile Include="CareOne\CareOneDatagramEncoder.cs" />
     <Compile Include="CareOne\CareOneProtocolPacker.cs" />

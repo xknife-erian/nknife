@@ -81,7 +81,6 @@
     <Compile Include="Pan\ProtocolTools\PanFixByteHeadTailDatagramEncoder.cs" />
     <Compile Include="Pan\ProtocolTools\PanBytesProtocolSimplePacker.cs" />
     <Compile Include="Pan\ProtocolTools\PanBytesProtocolSimpleUnPacker.cs" />
-    <Compile Include="Wrappers\SerialPortPro.cs" />
     <Compile Include="Wrappers\SerialPortWin32.cs" />
     <Compile Include="Wrappers\SerialPortWrapperDotNet.cs" />
     <Compile Include="Wrappers\SerialPortWrapperWinApi.cs" />
