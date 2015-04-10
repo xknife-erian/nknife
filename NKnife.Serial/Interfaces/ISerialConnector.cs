@@ -11,6 +11,7 @@ namespace SerialKnife.Interfaces
     {
         int PortNumber { get; set; }
 
+        SerialType SerialType { get; set; }
         SerialConfig SerialConfig
         {
             get;

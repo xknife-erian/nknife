@@ -17,6 +17,17 @@ namespace NKnife.Kits.SerialKnife.Consoles
             Console.ResetColor();
             Console.WriteLine("**** START ****************************");
 
+//            Serial serial = new Serial();
+//            serial.PortNum = "COM1";
+//            serial.Open();
+//            serial.Write(new byte[]{0x31,0x32});
+//            var a = serial.Read(2);
+//
+//            Console.WriteLine(a.ToHexString());
+//
+//            Console.ReadLine();
+
+
             DI.Initialize();
 
             _logger.Info("DI初始化结束....");

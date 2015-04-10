@@ -36,6 +36,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
             _Tunnel.AddFilters(protocolFilter);
 
             _DataConnector = DI.Get<ISerialConnector>();
+            _DataConnector.SerialType = SerialType.WinApi;
             _DataConnector.SerialConfig = new SerialConfig()
             {
                 BaudRate = 115200,

@@ -2,19 +2,19 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace SerialKnife.Wrappers
+namespace Pansoft.SerialManager
 {
     ///<summary>串口类操作类，通过windows api实现
     ///</summary>
-    public class SerialPortWin32
+    public class SerialPortPro
     {
         ///<summary>奇偶校验0-4=no,odd,even,mark,space 
         ///</summary>
-        public const byte Parity = 0; //0-4=no,odd,even,mark,space 
+        public const byte PARITY = 0; //0-4=no,odd,even,mark,space 
 
         ///<summary>停止位
         ///</summary>
-        public const byte StopBits = 0; //0,1,2 = 1, 1.5, 2 
+        public const byte STOP_BITS = 0; //0,1,2 = 1, 1.5, 2 
 
         ///<summary>COM口句柄
         ///</summary>
@@ -22,9 +22,9 @@ namespace SerialKnife.Wrappers
 
         ///<summary>串口是否已经打开
         ///</summary>
-        public bool Opened;
+        public bool _Opened;
 
-        public SerialPortWin32()
+        public SerialPortPro()
         {
             BaudRate = 9600;
             ByteSize = 8;
@@ -101,12 +101,12 @@ namespace SerialKnife.Wrappers
             dcb.BaudRate = BaudRate;
             dcb.flags = 0;
             dcb.ByteSize = ByteSize;
-            dcb.StopBits = StopBits;
-            dcb.Parity = Parity;
+            dcb.StopBits = STOP_BITS;
+            dcb.Parity = PARITY;
 
             //------------------------------
             SetDcbFlag(0, 1, dcb); //二进制方式 
-            SetDcbFlag(1, (Parity == 0) ? 0 : 1, dcb);
+            SetDcbFlag(1, (PARITY == 0) ? 0 : 1, dcb);
             SetDcbFlag(2, 0, dcb); //不用CTS检测发送流控制
             SetDcbFlag(3, 0, dcb); //不用DSR检测发送流控制
             SetDcbFlag(4, 0, dcb); //禁止DTR流量控制
@@ -132,7 +132,7 @@ namespace SerialKnife.Wrappers
             {
                 return -2;
             }
-            Opened = true;
+            _Opened = true;
             return 0;
         }
 
@@ -227,13 +227,14 @@ namespace SerialKnife.Wrappers
                 WriteFile(_HComm, writeBytes, intSize, ref bytesWritten, ref ovlCommPort);
                 //if (!bWriteStat)
                 //{
-                //    if (GetLastError() == ERROR_IO_PENDING)
-                //    {
-                //        WaitForSingleObject((IntPtr)ovlCommPort.hEvent, 100);
-                //        return BytesWritten;
-                //    }
-                //    return 0;
-                //}
+//                var error = GetLastError();
+//                    if (GetLastError() == ERROR_IO_PENDING)
+//                    {
+//                        WaitForSingleObject((IntPtr)ovlCommPort.hEvent, 100);
+//                        return 0;
+//                    }
+//                    return 0;
+               // }
                 return bytesWritten;
             }
             return -1;
@@ -264,7 +265,7 @@ namespace SerialKnife.Wrappers
 
         #region "API相关定义"
 
-        private const string DLLPATH = "kernel32.dll";
+        private const string DLLPATH = "kernel32";
 
         ///<summary>
         /// WINAPI常量,写标志
