@@ -15,7 +15,7 @@ namespace SerialKnife
 
         public SerialPortDataConnector()
         {
-            SerialType = SerialType.WinApi; //默认使用winapi实现
+            SerialType = SerialType.DotNet; //默认使用winapi实现
         }
 
         public SerialType SerialType { get; set; }
