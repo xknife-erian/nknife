@@ -538,10 +538,15 @@ namespace SerialKnife.Wrappers
         [StructLayout(LayoutKind.Sequential)]
         private struct OVERLAPPED
         {
+            //[FieldOffset(0)]
             public readonly int Internal;
+            //[FieldOffset(1)]
             public readonly int InternalHigh;
+            //[FieldOffset(2)]
             public readonly int Offset;
+            //[FieldOffset(3)]
             public readonly int OffsetHigh;
+            //[FieldOffset(4)]
             public readonly IntPtr hEvent;
         }
 

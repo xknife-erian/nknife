@@ -11,7 +11,7 @@ namespace NKnife.Wrapper
     /// </summary>
     public class ServiceForm
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<ServiceForm>();
 
         /// <summary>
         ///     开启窗体 使用后用 System.Windows.Forms.Application.Run(_Form);来启动窗体

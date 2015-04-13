@@ -25,7 +25,7 @@ namespace MonitorKnife.Tunnels.Common
             bool hasData = true;//是否有数据未解析完成
             while (hasData)
             {
-                if (data[finishedIndex] == LEAD)
+                if (data.Length > finishedIndex && data[finishedIndex] == LEAD)
                 {
                     int length;
                     byte[] cs;

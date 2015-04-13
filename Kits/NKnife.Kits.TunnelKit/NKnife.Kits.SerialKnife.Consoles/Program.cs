@@ -21,12 +21,12 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             _logger.Info("DI初始化结束....");
 
-            var server1 = new SerialClient(7);
+            var server1 = new SerialClient(4);
             server1.Start();
 
             Thread.Sleep(100);
 
-            const int COUNT = 100;
+            const int COUNT = 5000;
             Console.WriteLine("--{0}--------------", COUNT);
             var sw = new Stopwatch();
             sw.Start();
@@ -39,7 +39,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
                 }
             }
             sw.Stop();
-            for (int i = 0; i < 4000; i++)
+            for (int i = 0; i < 500; i++)
             {
                 Thread.Sleep(1);
             }
