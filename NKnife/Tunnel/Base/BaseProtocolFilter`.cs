@@ -85,7 +85,6 @@ namespace NKnife.Tunnel.Base
             }
         }
 
-
         /// <summary>
         ///     触发数据基础解析后发生的数据到达事件
         /// </summary>
@@ -106,7 +105,7 @@ namespace NKnife.Tunnel.Base
                 {
                     foreach (var handler in _Handlers)
                     {
-                        if (handler.Commands.Contains(protocol.Command))
+                        if (handler.Commands.Count == 0 || handler.Commands.Contains(protocol.Command))
                         {
                             handler.Recevied(id, protocol);
                         }
@@ -260,7 +259,6 @@ namespace NKnife.Tunnel.Base
                     _logger.Error(string.Format("命令字解析异常:{0},Data:{1}", e.Message, dg), e);
                     continue;
                 }
-                //_logger.Trace(string.Format("开始协议解析:命令字:{0},数据包:{1}", command, dg));
 
                 IProtocol<T> protocol;
                 try
