@@ -207,6 +207,7 @@
     <Compile Include="Tunnel\IDatagramDecoder.cs" />
     <Compile Include="Tunnel\IDatagramEncoder.cs" />
     <Compile Include="Tunnel\ITunnelProtocolFilter`.cs" />
+    <Compile Include="Tunnel\ITunnelService.cs" />
     <Compile Include="Tunnel\ITunnel`.cs" />
     <Compile Include="Tunnel\ITunnelConfig.cs" />
     <Compile Include="Tunnel\ITunnelFilterChain`.cs" />

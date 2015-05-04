@@ -13,7 +13,7 @@ namespace NKnife.Wrapper
         /// 获取当前计算机的串口列表
         /// </summary>
         /// <returns>以大写字符串表示串口列表</returns>
-        public static StringCollection GetComList()
+        public static StringCollection GetSerialList()
         {
             var list = new StringCollection();
             RegistryKey keyCom = Registry.LocalMachine.OpenSubKey(@"Hardware\DeviceMap\SerialComm");
