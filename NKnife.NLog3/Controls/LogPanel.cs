@@ -102,7 +102,7 @@ namespace NKnife.NLog3.Controls
                 if (_LogView.Columns[0].Width != 0)
                     _LogView.Columns[0].Width = 80;
                 if (_LogView.Columns[2].Width != 0)
-                    _LogView.Columns[2].Width = 130;
+                    _LogView.Columns[2].Width = 200;
                 _LogView.Columns[1].Width = Width - _LogView.Columns[0].Width - _LogView.Columns[2].Width - 22;
             }
         }

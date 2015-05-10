@@ -42,7 +42,7 @@ namespace NKnife.NLog3.Controls
 
             var loggerNameHeader = new ColumnHeader();
             loggerNameHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Source_Header");
-            loggerNameHeader.Width = 130;
+            loggerNameHeader.Width = 200;
 
             Columns.AddRange(
                 new[]
@@ -92,10 +92,16 @@ namespace NKnife.NLog3.Controls
                         Items.RemoveAt(i);
                 }
                 string logDatetime = logEvent.TimeStamp.ToString("HH:mm:ss fff");
-                string logLoggerName = logEvent.LoggerName.LastIndexOf('.') > 0
-                    ? logEvent.LoggerName.Substring(logEvent.LoggerName.LastIndexOf('.') + 1)
-                    : logEvent.LoggerName;
                 string logMsg = logEvent.FormattedMessage;
+                string logLoggerName = "";
+                if (logEvent.LoggerName.LastIndexOf('.') > 0)
+                {
+                    logLoggerName = ParseLoggerName(logEvent.LoggerName);
+                }
+                else
+                {
+                    logLoggerName = logEvent.LoggerName;
+                }
                 if (logEvent.HasStackTrace)
                     logMsg += logEvent.StackTrace.ToString();
 
@@ -136,6 +142,27 @@ namespace NKnife.NLog3.Controls
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
+            }
+        }
+
+        public string ParseLoggerName(string nameSource)
+        {
+            try
+            {
+                if (nameSource.Contains("[["))
+                {
+                    var ns = nameSource.Substring(0, nameSource.LastIndexOf("`1"));
+                    var className = ns.Substring(ns.LastIndexOf('.') + 1);
+
+                    var fxIndex = nameSource.LastIndexOf("[[") + 2;
+                    var fx = nameSource.Substring(fxIndex, nameSource.IndexOf(',', fxIndex) - fxIndex);
+                    return string.Format("{0}<{1}>", className, fx.Substring(fx.LastIndexOf('.') + 1));
+                }
+                return nameSource.Substring(nameSource.LastIndexOf('.') + 1);
+            }
+            catch (Exception)
+            {
+                return nameSource;
             }
         }
 
