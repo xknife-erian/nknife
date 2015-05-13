@@ -7,11 +7,18 @@ namespace NKnife.Wrapper
 {
     public class About : IAbout
     {
+        public Assembly TargetAssembly { get; set; }
+
+        public About()
+        {
+            TargetAssembly = Assembly.GetEntryAssembly();
+        }
+
         public string AssemblyTitle
         {
             get
             {
-                object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof (AssemblyTitleAttribute), false);
+                object[] attributes = TargetAssembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
                 if (attributes.Length > 0)
                 {
                     var titleAttribute = (AssemblyTitleAttribute) attributes[0];
@@ -20,20 +27,21 @@ namespace NKnife.Wrapper
                         return titleAttribute.Title;
                     }
                 }
-                return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                TargetAssembly = Assembly.GetExecutingAssembly();
+                return Path.GetFileNameWithoutExtension(TargetAssembly.CodeBase);
             }
         }
 
         public Version AssemblyVersion
         {
-            get { return Assembly.GetEntryAssembly().GetName().Version; }
+            get { return TargetAssembly.GetName().Version; }
         }
 
         public string AssemblyDescription
         {
             get
             {
-                object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                object[] attributes = TargetAssembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -46,7 +54,7 @@ namespace NKnife.Wrapper
         {
             get
             {
-                object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                object[] attributes = TargetAssembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -59,7 +67,7 @@ namespace NKnife.Wrapper
         {
             get
             {
-                object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                object[] attributes = TargetAssembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -72,7 +80,7 @@ namespace NKnife.Wrapper
         {
             get
             {
-                object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                object[] attributes = TargetAssembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
