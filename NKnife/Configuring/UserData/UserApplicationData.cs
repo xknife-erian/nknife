@@ -5,52 +5,33 @@ using System.Reflection;
 using System.Xml;
 using NKnife.Configuring.Interfaces;
 using NKnife.Utility;
-using NKnife.Wrapper.Files;
 
 namespace NKnife.Configuring.UserData
 {
-    /// <summary>这是一个保存用户目录下的选项文件，该文件可以不存在，当使用时发现该文件不存在时，将创建，并创建默认值 
+    /// <summary>
+    ///     这是一个保存用户目录下的选项文件，该文件可以不存在，当使用时发现该文件不存在时，将创建，并创建默认值
     /// </summary>
     public class UserApplicationData : IUserApplicationData
     {
-        private string _FileName;
-        private string _UserApplicationDataPath;
+        protected string _FileName;
+        protected string _UserApplicationDataPath;
 
         protected UserApplicationData()
         {
             Load();
         }
 
-        /// <summary>将本选项文件所对应的XML文件
+        /// <summary>
+        ///     将本选项文件所对应的XML文件
         /// </summary>
         /// <value>The document.</value>
         protected virtual XmlDocument Document { get; private set; }
 
-        /// <summary>获取指定名称的XmlElement，如果不存在，将创建
-        /// </summary>
-        /// <param name="localname">The localname.</param>
-        /// <returns></returns>
-        protected virtual XmlElement GetElement(string localname)
-        {
-            if (Document.DocumentElement != null)
-            {
-                XmlNode node = Document.DocumentElement.SelectSingleNode(localname);
-                if (node == null)
-                {
-                    node = Document.CreateElement(localname);
-                    if (Document.DocumentElement != null)
-                        Document.DocumentElement.AppendChild(node);
-                    Save();
-                }
-                return (XmlElement)node;
-            }
-            return null;
-        }
-
-        /// <summary>本选项面向的持久化文件
+        /// <summary>
+        ///     本选项面向的持久化文件
         /// </summary>
         /// <value>The name of the file.</value>
-        public string FileName
+        public virtual string FileName
         {
             get
             {
@@ -60,7 +41,8 @@ namespace NKnife.Configuring.UserData
             }
         }
 
-        /// <summary>用作当前非漫游用户使用的应用程序特定数据的公共储存库路径。
+        /// <summary>
+        ///     用作当前非漫游用户使用的应用程序特定数据的公共储存库路径。
         /// </summary>
         /// <value>The user application data path.</value>
         public string UserApplicationDataPath
@@ -83,7 +65,33 @@ namespace NKnife.Configuring.UserData
             }
         }
 
-        /// <summary>按指定的名称获取选项值，如果该值无法获取，将保存指定的默认值
+        /// <summary>
+        ///     尝试按指定的名称获取选项值
+        /// </summary>
+        /// <param name="localname">The localname.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public bool TryGetValue(string localname, out object value)
+        {
+            value = null;
+            XmlElement ele = GetElement(localname);
+            if (ele == null) return false;
+            string innerText = ele.InnerText;
+            if (!string.IsNullOrEmpty(innerText))
+            {
+                value = innerText;
+            }
+            else
+            {
+                value = string.Empty;
+                return false;
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        ///     按指定的名称获取选项值，如果该值无法获取，将保存指定的默认值
         /// </summary>
         /// <param name="localname">The localname.</param>
         /// <param name="defalutValue">The defalut value.</param>
@@ -101,7 +109,8 @@ namespace NKnife.Configuring.UserData
             return value;
         }
 
-        /// <summary>按指定的名称设置值
+        /// <summary>
+        ///     按指定的名称设置值
         /// </summary>
         /// <param name="localname">The localname.</param>
         /// <param name="value">The value.</param>
@@ -112,7 +121,8 @@ namespace NKnife.Configuring.UserData
             Save();
         }
 
-        /// <summary>加载选项文件
+        /// <summary>
+        ///     加载选项文件
         /// </summary>
         public void Load()
         {
@@ -127,7 +137,8 @@ namespace NKnife.Configuring.UserData
             }
         }
 
-        /// <summary>持久化选项文件
+        /// <summary>
+        ///     持久化选项文件
         /// </summary>
         public void Save()
         {
@@ -144,6 +155,28 @@ namespace NKnife.Configuring.UserData
             }
             Document.Save(FileName); //在文件属性为普通的情况下保存。（不然有可能会“访问被拒绝”）
             File.SetAttributes(FileName, fileAtts); //恢复文件属性
+        }
+
+        /// <summary>
+        ///     获取指定名称的XmlElement，如果不存在，将创建
+        /// </summary>
+        /// <param name="localname">The localname.</param>
+        /// <returns></returns>
+        protected virtual XmlElement GetElement(string localname)
+        {
+            if (Document.DocumentElement != null)
+            {
+                XmlNode node = Document.DocumentElement.SelectSingleNode(localname);
+                if (node == null)
+                {
+                    node = Document.CreateElement(localname);
+                    if (Document.DocumentElement != null)
+                        Document.DocumentElement.AppendChild(node);
+                    Save();
+                }
+                return (XmlElement) node;
+            }
+            return null;
         }
     }
 }

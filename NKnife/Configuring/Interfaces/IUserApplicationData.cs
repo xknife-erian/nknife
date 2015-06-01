@@ -12,6 +12,13 @@
         /// <value>The user application data path.</value>
         string UserApplicationDataPath { get; }
 
+        /// <summary>尝试按指定的名称获取选项值
+        /// </summary>
+        /// <param name="localname">The localname.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        bool TryGetValue(string localname, out object value);
+
         /// <summary>按指定的名称获取选项值，如果该值无法获取，将保存指定的默认值
         /// </summary>
         /// <param name="localname">The localname.</param>

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.Protocol;
@@ -105,7 +106,7 @@ namespace NKnife.Tunnel.Base
                 {
                     foreach (var handler in _Handlers)
                     {
-                        if (handler.Commands.Count == 0 || handler.Commands.Contains(protocol.Command))
+                        if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
                         {
                             handler.Recevied(id, protocol);
                         }
@@ -117,6 +118,15 @@ namespace NKnife.Tunnel.Base
                 _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
             }
         }
+
+        private bool ContainsCommand(List<T> list, T command)
+        {
+            if (command is string || command is byte || command is int || CommandCompareFunc == null)
+                return list.Contains(command);
+            return CommandCompareFunc.Invoke(list, command);
+        }
+
+        public Func<IEnumerable<T>, T, bool> CommandCompareFunc { get; set; }
 
         #region interface
 

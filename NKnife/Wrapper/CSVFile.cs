@@ -38,17 +38,26 @@ namespace NKnife.Wrapper
                     var row = new StringBuilder();
                     for (int i = 0; i < dataTable.Columns.Count; i++)
                     {
+                        var v = dr[i];
+
                         string tmp;
-                        if (i != dataTable.Columns.Count - 1)
-                        {
-                            tmp = dr[i].ToString().Trim().Replace(",", " ");
-                            row.Append(tmp).Append(",");
-                        }
+
+                        if (v is DateTime)
+                            tmp = ((DateTime) dr[i]).ToString("yyyy-M-d HH:mm:ss.fff");
                         else
-                        {
-                            tmp = dr[i].ToString().Trim().Replace(",", ".");
-                            row.Append(tmp);
-                        }
+                            tmp = dr[i].ToString().Trim().Replace(",", " ");
+                        row.Append(tmp).Append(",");
+
+//                        if (i != dataTable.Columns.Count - 1)
+//                        {
+//                            tmp = dr[i].ToString().Trim().Replace(",", " ");
+//                            row.Append(tmp).Append(",");
+//                        }
+//                        else
+//                        {
+//                            tmp = dr[i].ToString().Trim().Replace(",", ".");
+//                            row.Append(tmp);
+//                        }
                     }
                     sw.WriteLine(row);
                 }

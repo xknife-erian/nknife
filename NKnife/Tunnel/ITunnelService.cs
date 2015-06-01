@@ -8,11 +8,11 @@ namespace NKnife.Tunnel
     public interface ITunnelService<T>
     {
         /// <summary>
-        /// 创建一个指定端口的串口服务
+        /// 绑定一个指定端口的串口服务
         /// </summary>
         /// <param name="port">指定的端口</param>
         /// <param name="handlers">协议处理的handler</param>
-        void Build(int port, params BaseProtocolHandler<T>[] handlers);
+        void Bind(int port, params BaseProtocolHandler<T>[] handlers);
         /// <summary>
         /// 销毁服务
         /// </summary>
