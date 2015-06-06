@@ -150,7 +150,9 @@ namespace SerialKnife.Wrappers
                 _Reset.WaitOne(_TimeOut); //收到返回
 
                 recv = new byte[_SyncBuffer.Length];
-                Buffer.BlockCopy(_SyncBuffer, 0, recv, 0, _SyncBuffer.Length);
+                if (recv.Length > 0)
+                    Buffer.BlockCopy(_SyncBuffer, 0, recv, 0, _SyncBuffer.Length);
+                _SyncBuffer = new byte[0];
                 return recv.Length;
             }
             catch
