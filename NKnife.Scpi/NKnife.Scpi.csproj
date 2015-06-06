@@ -39,7 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScpiCommand.cs" />
+    <Compile Include="ScpiCommandList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScpiParseException.cs" />
+    <Compile Include="ScpiParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife\NKnife.csproj">
