@@ -64,6 +64,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.Consoles", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SocketKnife.Consoles\NKnife.Kits.SocketKnife.Consoles.csproj", "{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Scpi", "NKnife.Scpi\NKnife.Scpi.csproj", "{436E22B8-84A4-49E6-9810-E72FAD37313F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -314,6 +316,16 @@ Global
 		{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0EB7EBB2-642A-4CB7-AA0D-7BFCBC066FC9}.Release|x86.ActiveCfg = Release|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{436E22B8-84A4-49E6-9810-E72FAD37313F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
