@@ -7,20 +7,18 @@ using NKnife.Interface;
 
 namespace ScpiKnife
 {
-    public class ScpiParser : IParser<XmlElement, ScpiCommand>
+    public class ScpiParser : IParser<XmlElement, ScpiCommandList>
     {
-        public ScpiCommand Parse(XmlElement element)
+        public ScpiCommandList Parse(XmlElement element)
         {
             string isScpiStr = element.GetAttribute("format");
             bool isScpi = true;
             bool.TryParse(isScpiStr, out isScpi);
-            XmlNodeList nodes = element.SelectNodes("/MeterParam/command[@isConfig='true']");
+            XmlNodeList nodes = element.SelectNodes("command[@isConfig='true']");
             if (nodes == null)
                 throw new ScpiParseException();
 
-            int count = nodes.Count;
-
-            int index = 0;
+            var cmdlist = new ScpiCommandList();
             var rootCmd = new ScpiCommand(isScpi);
             foreach (XmlElement confEle in nodes)
             {
@@ -59,9 +57,8 @@ namespace ScpiKnife
 
                     #endregion
                 }
-                index++;
             }
-            return rootCmd;
+            return cmdlist;
         }
 
         private static ScpiCommand ParseGpibCommand(bool isScpi, XmlElement element, string rootCmd)
