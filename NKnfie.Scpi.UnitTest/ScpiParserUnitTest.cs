@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ScpiKnife;
 
@@ -49,10 +50,27 @@ namespace NKnfie.Scpi.UnitTest
         #endregion
 
         [TestMethod]
-        public void ParseTestMethod01()
+        public void ParseTestMethod00()//当无意义节点，或者节点中无指令列表时，抛出导常
         {
+            var doc = new XmlDocument();
+            doc.LoadXml("<a><b></b></a>");
             var parser = new ScpiParser();
-            var commandlist = parser.Parse(ScpiXml.GetCommandListElement());
+            try
+            {
+                parser.Parse(doc.DocumentElement);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(typeof(ScpiParseException), e.GetType());
+            }
+        }
+
+        [TestMethod]
+        public void ParseTestMethod01()//正常解析，能够返回列表
+        {
+            var xmlelement = ScpiXml.GetCommandListElement(1);
+            var parser = new ScpiParser();
+            var commandlist = parser.Parse(xmlelement);
             Assert.IsNotNull(commandlist);
         }
     }

@@ -8,11 +8,13 @@ namespace NKnfie.Scpi.UnitTest
 {
     class ScpiXml
     {
-        public static XmlElement GetCommandListElement()
+        public static XmlElement GetCommandListElement(int number)
         {
             var doc = new XmlDocument();
-            doc.LoadXml(Resource.Xml);
-            return doc.DocumentElement;
+            doc.Load(string.Format("Sample{0}.xml", number.ToString().PadLeft(2, '0')));
+            if (doc.DocumentElement != null)
+                return (XmlElement) doc.DocumentElement.SelectSingleNode("Commands");
+            return null;
         }
     }
 }

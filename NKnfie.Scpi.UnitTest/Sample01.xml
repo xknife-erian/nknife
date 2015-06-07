@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<MeterConfig>
+  <Commands isScpi="true" format="scpi">
+    <command content="重置" command="*RST"></command>
+    <command content="测量项目" command="CONF" isConfig="true">
+      <command content="直流电压" command="VOLT:DC">
+        <group content="量程">
+          <command content="直流电压" command="VOLT:DC:RANG">
+            <param content=""></param>
+            <param content="最大值" command="MAX"></param>
+            <param content="最小值" command="MIN"></param>
+          </command>
+        </group>
+      </command>
+      <command content="交流电压" command="VOLT:AC">
+        <group content="量程">
+          <command content="交流电压" command="CURR:AC:RANG">
+            <param content=""></param>
+            <param content="最大值" command="MAX"></param>
+            <param content="最小值" command="MIN"></param>
+          </command>
+        </group>
+      </command>
+    </command>
+    <command content="自动调零" command="ZERO:AUTO" isConfig="true">
+      <param content="启动" command="ON"></param>
+      <param content="停用" command="OFF"></param>
+      <param content="仅一次" command="ONCE"></param>
+    </command>
+  </Commands>
+</MeterConfig>
