@@ -50,7 +50,7 @@ namespace ScpiKnife
                             ScpiCommand gpCmd = ParseGpibCommand(isScpi, gpElement, groupCmd.Command);
                             groupCmd.Next = gpCmd;
                         }
-                        cmd.Tag = groupCmd;
+                        //cmd.Tag = groupCmd;
                     }
 
                     #endregion

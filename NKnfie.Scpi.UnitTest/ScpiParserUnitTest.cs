@@ -66,12 +66,36 @@ namespace NKnfie.Scpi.UnitTest
         }
 
         [TestMethod]
-        public void ParseTestMethod01()//正常解析，能够返回列表
+        public void ParseTestMethod01()//正常解析，能够返回列表,不考虑解析的内容是否正确
         {
             var xmlelement = ScpiXml.GetCommandListElement(1);
             var parser = new ScpiParser();
             var commandlist = parser.Parse(xmlelement);
             Assert.IsNotNull(commandlist);
         }
+
+        [TestMethod]
+        public void ParseTestMethod02() //解析，检验命令的数量
+        {
+            var xmlelement = ScpiXml.GetCommandListElement(1);
+            var parser = new ScpiParser();
+            var commandlist = parser.Parse(xmlelement);
+            Assert.AreEqual(3, commandlist.Count);
+        }
+
+        [TestMethod]
+        public void ParseTestMethod03() //解析，检验命令的数量
+        {
+            var xmlelement = ScpiXml.GetCommandListElement(1);
+            var parser = new ScpiParser();
+            var commandlist = parser.Parse(xmlelement);
+            var command = commandlist.ElementAt(0);
+            Assert.AreEqual("重置", command.Content);
+            Assert.AreEqual("*RST", command.Command);
+            Assert.AreEqual(500, command.Interval);
+            Assert.AreEqual(true, command.IsStandard);
+            Assert.AreEqual(false, command.IsReturn);
+            Assert.AreEqual(null, command.Next);
+        }                
     }
 }
