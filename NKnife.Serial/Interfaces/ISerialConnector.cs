@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NKnife.Tunnel;
+﻿using NKnife.Tunnel;
 using SerialKnife.Common;
 
 namespace SerialKnife.Interfaces
@@ -11,11 +7,10 @@ namespace SerialKnife.Interfaces
     {
         int PortNumber { get; set; }
 
+        bool IsInitialized { get; set; }
+
         SerialType SerialType { get; set; }
-        SerialConfig SerialConfig
-        {
-            get;
-            set;
-        }
+
+        SerialConfig SerialConfig { get; set; }
     }
 }

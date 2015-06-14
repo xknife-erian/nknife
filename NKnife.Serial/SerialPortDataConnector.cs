@@ -15,12 +15,15 @@ namespace SerialKnife
 
         public SerialPortDataConnector()
         {
+            IsInitialized = false;
             SerialType = SerialType.DotNet; //默认使用winapi实现
         }
 
         public SerialType SerialType { get; set; }
 
         #region IKnifeSerialConnector
+
+        public bool IsInitialized { get; set; }
 
         #region event
 
@@ -147,6 +150,7 @@ namespace SerialKnife
             {
                 OnSessionBroken();
             }
+            IsInitialized = false;
             return result;
         }
 
@@ -170,6 +174,7 @@ namespace SerialKnife
             {
                 _logger.Warn(string.Format("串口{0}初始化完成：{1}", port, false));
             }
+            IsInitialized = true;
             return result;
         }
 
@@ -182,5 +187,6 @@ namespace SerialKnife
         }
 
         #endregion
+
     }
 }
