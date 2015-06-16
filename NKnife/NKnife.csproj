@@ -102,7 +102,9 @@
     <Compile Include="Encrypt\TripleDESHelper.cs" />
     <Compile Include="Encrypt\UtilityEncrypt.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
-    <Compile Include="GUI\WinForm\ToolStripDateTimePicker.cs" />
+    <Compile Include="GUI\WinForm\ToolStripDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\WinForm\Grouper\Constants.cs" />
     <Compile Include="GUI\WinForm\Grouper\Grouper.cs">
       <SubType>UserControl</SubType>
@@ -137,7 +139,9 @@
     <Compile Include="GUI\WinForm\TabControlEx\TabControlEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\WinForm\ToolStripCheckBox.cs" />
+    <Compile Include="GUI\WinForm\ToolStripCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\WinForm\VirticalLine.cs">
       <SubType>Component</SubType>
     </Compile>
