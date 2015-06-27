@@ -104,6 +104,8 @@ namespace SerialKnife
 
         public void Send(long id, byte[] data)
         {
+            if (_Serial == null)
+                return;
             byte[] received;
             _Serial.SendReceived(data, out received);
             OnDataSent(data);
@@ -115,6 +117,8 @@ namespace SerialKnife
 
         public void SendAll(byte[] data)
         {
+            if (_Serial == null)
+                return;
             byte[] received;
             _Serial.SendReceived(data, out received);
             OnDataSent(data);
