@@ -15,6 +15,8 @@ namespace NKnife.Kits.SerialKnife.Mock
 
         public int PortNumber { get; set; }
 
+        public bool IsInitialized { get; set; }
+
         public SerialType SerialType { get; set; }
 
         public SerialConfig SerialConfig { get; set; }
