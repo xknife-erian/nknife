@@ -102,6 +102,7 @@
     <Compile Include="Encrypt\TripleDESHelper.cs" />
     <Compile Include="Encrypt\UtilityEncrypt.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="GUI\WinForm\CollapsibleSplitContainer.cs" />
     <Compile Include="GUI\WinForm\ToolStripDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
