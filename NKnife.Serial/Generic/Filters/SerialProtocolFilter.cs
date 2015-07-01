@@ -7,7 +7,7 @@ using NKnife.Utility;
 
 namespace SerialKnife.Generic.Filters
 {
-    public class SerialProtocolFilter : BaseProtocolFilter<byte[]>
+    public class SerialProtocolFilter : BytesProtocolFilter
     {
         public SerialProtocolFilter()
         {
