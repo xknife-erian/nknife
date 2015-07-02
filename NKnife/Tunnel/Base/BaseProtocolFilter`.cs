@@ -236,7 +236,7 @@ namespace NKnife.Tunnel.Base
 
             if (UtilityCollection.IsNullOrEmpty(datagram))
             {
-                _logger.Debug("协议消息无内容。");
+                _logger.Trace(string.Format("{1}处理协议无内容。{0}", dataPacket.Length, GetType().Name));
             }
             else
             {
