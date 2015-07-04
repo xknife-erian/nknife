@@ -147,17 +147,23 @@ namespace SerialKnife.Wrappers
                 _CurrReadLength = 0;
                 _OnReceive = true;
                 _SerialPort.Write(cmd, 0, cmd.Length);
-                _Reset.WaitOne(_TimeOut); //收到返回
-
-                recv = new byte[_SyncBuffer.Length];
-                if (recv.Length > 0)
-                    Buffer.BlockCopy(_SyncBuffer, 0, recv, 0, _SyncBuffer.Length);
-                _SyncBuffer = new byte[0];
-                return recv.Length;
+                if (_Reset.WaitOne(_TimeOut))
+                {
+                    //收到返回
+                    recv = new byte[_SyncBuffer.Length];
+                    if (recv.Length > 0)
+                        Buffer.BlockCopy(_SyncBuffer, 0, recv, 0, _SyncBuffer.Length);
+                    _SyncBuffer = new byte[0];
+                    return recv.Length;
+                }
+                //未收到返回，超时
+                recv = new byte[0];
+                return 0;
             }
-            catch
+            catch (Exception e)
             {
-                recv = null;
+                _logger.Warn(string.Format("串口发送与接收时底层异常:{0}", e));
+                recv = new byte[0];
                 return 0;
             }
         }
@@ -173,8 +179,6 @@ namespace SerialKnife.Wrappers
         {
             if (!_OnReceive)
             {
-                Console.WriteLine("============>>>>>>>>>");
-                //当未在需要读取状态时，丢弃收到的数据
                 _SerialPort.DiscardInBuffer();
                 return;
             }
