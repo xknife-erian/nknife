@@ -29,8 +29,8 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
             else
             {
                 _hex = hex;
-                Console.Write(">");
-                //_logger.Info(string.Format("{0},Recevied:{1}", hex, saying.Content));
+                //Console.Write(">");
+                _logger.Info(string.Format("{0},Recevied:{1}", hex, saying.Content));
             }
         }
     }

@@ -26,7 +26,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             Thread.Sleep(100);
 
-            const int COUNT = 5000;
+            const int COUNT = 5;
             Console.WriteLine("--{0}--------------", COUNT);
             var sw = new Stopwatch();
             sw.Start();
@@ -34,6 +34,8 @@ namespace NKnife.Kits.SerialKnife.Consoles
             {
                 for (int j = 209; j < 221; j++)
                 {
+                    if (j == 216)
+                        continue;
                     var command = GetA0(UtilityConvert.ConvertTo<byte>(j));
                     server1.Send(command);
                 }
