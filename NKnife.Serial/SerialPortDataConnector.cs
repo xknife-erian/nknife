@@ -121,10 +121,10 @@ namespace SerialKnife
                 return;
             byte[] received;
             _Serial.SendReceived(data, out received);
-            OnDataSent(data);
+            OnDataSent(data);//激发发放完成事件
             if (received != null)
             {
-                OnDataReceived(received);
+                OnDataReceived(received);//激发接收到数据的事件
             }
         }
 

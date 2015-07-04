@@ -26,7 +26,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             Thread.Sleep(100);
 
-            const int COUNT = 5;
+            const int COUNT = 50;
             Console.WriteLine("--{0}--------------", COUNT);
             var sw = new Stopwatch();
             sw.Start();

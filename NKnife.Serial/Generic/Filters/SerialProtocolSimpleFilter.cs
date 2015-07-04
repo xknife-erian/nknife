@@ -5,13 +5,14 @@ using NKnife.Events;
 using NKnife.Protocol;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Base;
+using NKnife.Tunnel.Filters;
 
 namespace SerialKnife.Generic.Filters
 {
     /// <summary>
     /// 一个最简单的协议处理Filter,不进入Handler进行协议分发,直接抛出协议收到事件
     /// </summary>
-    public class SerialProtocolSimpleFilter : BaseProtocolFilter<byte[]>
+    public class SerialProtocolSimpleFilter : BytesProtocolFilter
     {
         private static readonly ILog _logger = LogManager.GetLogger<SerialProtocolFilter>();
         private readonly byte[] _CurrentReceiveBuffer = new byte[1024];
