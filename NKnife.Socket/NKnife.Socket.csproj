@@ -62,6 +62,7 @@
     <Compile Include="Events\ConnectedEventArgs.cs" />
     <Compile Include="Events\ConnectingEventArgs.cs" />
     <Compile Include="Common\SocketAsyncEventArgsPool.cs" />
+    <Compile Include="Generic\Filters\SocketBytesProtocolFilter.cs" />
     <Compile Include="Generic\Filters\SocketProtocolFilter.cs" />
     <Compile Include="Generic\Protocol\Jsons\JsonCommandParser.cs" />
     <Compile Include="Generic\Protocol\Jsons\JsonDecoder.cs" />

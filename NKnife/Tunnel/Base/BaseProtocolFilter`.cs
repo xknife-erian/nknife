@@ -3,12 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.Protocol;
 using NKnife.Tunnel.Common;
-using NKnife.Tunnel.Events;
 using NKnife.Utility;
 
 namespace NKnife.Tunnel.Base
@@ -16,116 +14,10 @@ namespace NKnife.Tunnel.Base
     public abstract class BaseProtocolFilter<T> : BaseTunnelFilter, ITunnelProtocolFilter<T>
     {
         private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolFilter<T>>();
-        protected List<ITunnelProtocolHandler<T>> _Handlers = new List<ITunnelProtocolHandler<T>>();
+        protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
         protected ITunnelCodec<T> _Codec;
         protected IProtocolFamily<T> _Family;
-
-        protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
-
-        protected virtual void InitializeDataMonitor(long id, DataMonitor dm)
-        {
-            var task = new Task(ReceiveQueueMonitor, id);
-            dm.IsMonitor = true;
-            dm.Task = task;
-            dm.ReceiveQueue = new ReceiveQueue();
-            if (_DataMonitors.TryAdd(id, dm))
-            {
-                dm.Task.Start();
-            }
-        }
-
-        /// <summary>
-        ///     核心方法:监听 ReceiveQueue 队列
-        /// </summary>
-        protected virtual void ReceiveQueueMonitor(object obj)
-        {
-            var id = (long)obj;
-            DataMonitor dataMonitor;
-            _logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", id));
-            var unFinished = new byte[] {};
-
-            try
-            {
-                if (_DataMonitors.TryGetValue(id, out dataMonitor))
-                {
-                    while (dataMonitor.IsMonitor || dataMonitor.ReceiveQueue.Count > 0) //重要，dataMonitor.IsMonitor=false但dataMonitor.ReceiveQueue.Count > 0时，也要继续处理完数据再退出while
-                    {
-                        if (dataMonitor.ReceiveQueue.Count > 0)
-                        {
-                            var data = dataMonitor.ReceiveQueue.Dequeue();
-                            var protocols = ProcessDataPacket(data, unFinished);
-
-                            if (protocols != null)
-                            {
-                                foreach (var protocol in protocols)
-                                {
-                                    // 触发数据基础解析后发生的数据到达事件, 即触发handle
-                                    HandlerInvoke(id, protocol);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            dataMonitor.ReceiveQueue.AutoResetEvent.WaitOne();
-                        }
-                    }
-                }
-                // 当接收队列停止监听时，移除该客户端数据队列
-            }
-            catch (Exception ex)
-            {
-                _logger.Warn(string.Format("监听循环异常结束：{0}", ex));
-            }
-            finally
-            {
-                var isRemoved = _DataMonitors.TryRemove(id, out dataMonitor);
-                if (isRemoved)
-                {
-                    _logger.Trace(string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", id, _DataMonitors.Count));
-                }
-            }
-        }
-
-        /// <summary>
-        ///     触发数据基础解析后发生的数据到达事件
-        /// </summary>
-        protected virtual void HandlerInvoke(long id, IProtocol<T> protocol)
-        {
-            try
-            {
-                if (_Handlers.Count == 0)
-                {
-                    Debug.Fail(string.Format("Handler集合不应为空."));
-                    return;
-                }
-                if (_Handlers.Count == 1)
-                {
-                    _Handlers[0].Recevied(id, protocol);
-                }
-                else
-                {
-                    foreach (var handler in _Handlers)
-                    {
-                        if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
-                        {
-                            handler.Recevied(id, protocol);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
-            }
-        }
-
-        private bool ContainsCommand(List<T> list, T command)
-        {
-            if (command is string || command is byte || command is int || CommandCompareFunc == null)
-                return list.Contains(command);
-            return CommandCompareFunc.Invoke(list, command);
-        }
-
+        protected List<ITunnelProtocolHandler<T>> _Handlers = new List<ITunnelProtocolHandler<T>>();
         public Func<IEnumerable<T>, T, bool> CommandCompareFunc { get; set; }
 
         #region interface
@@ -172,8 +64,8 @@ namespace NKnife.Tunnel.Base
 
         public override bool PrcoessReceiveData(ITunnelSession session)
         {
-            var data = session.Data;
-            var id = session.Id;
+            byte[] data = session.Data;
+            long id = session.Id;
             DataMonitor monitor;
             if (!_DataMonitors.TryGetValue(id, out monitor))
             {
@@ -214,7 +106,7 @@ namespace NKnife.Tunnel.Base
         }
 
         /// <summary>
-        /// 数据包处理。主要处理较异常的情况下的，半包的接包，粘包等现象
+        ///     数据包处理。主要处理较异常的情况下的，半包的接包，粘包等现象
         /// </summary>
         /// <param name="dataPacket">当前新的数据包</param>
         /// <param name="unFinished">未完成处理的数据</param>
@@ -243,7 +135,7 @@ namespace NKnife.Tunnel.Base
                 protocols = ParseProtocols(datagram);
             }
 
-            if (done!= 0 && dataPacket.Length > done)
+            if (done != 0 && dataPacket.Length > done)
             {
                 // 暂存半包数据，留待下条队列数据接包使用
                 unFinished = new byte[dataPacket.Length - done];
@@ -291,6 +183,110 @@ namespace NKnife.Tunnel.Base
         }
 
         #endregion
+
+        protected virtual void InitializeDataMonitor(long id, DataMonitor dm)
+        {
+            var task = new Task(ReceiveQueueMonitor, id);
+            dm.IsMonitor = true;
+            dm.Task = task;
+            dm.ReceiveQueue = new ReceiveQueue();
+            if (_DataMonitors.TryAdd(id, dm))
+            {
+                dm.Task.Start();
+            }
+        }
+
+        /// <summary>
+        ///     核心方法:监听 ReceiveQueue 队列
+        /// </summary>
+        protected virtual void ReceiveQueueMonitor(object obj)
+        {
+            var id = (long) obj;
+            DataMonitor dataMonitor;
+            _logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", id));
+            var unFinished = new byte[] {};
+
+            try
+            {
+                if (_DataMonitors.TryGetValue(id, out dataMonitor))
+                {
+                    while (dataMonitor.IsMonitor || dataMonitor.ReceiveQueue.Count > 0) //重要，dataMonitor.IsMonitor=false但dataMonitor.ReceiveQueue.Count > 0时，也要继续处理完数据再退出while
+                    {
+                        if (dataMonitor.ReceiveQueue.Count > 0)
+                        {
+                            byte[] data = dataMonitor.ReceiveQueue.Dequeue();
+                            IEnumerable<IProtocol<T>> protocols = ProcessDataPacket(data, unFinished);
+
+                            if (protocols != null)
+                            {
+                                foreach (var protocol in protocols)
+                                {
+                                    // 触发数据基础解析后发生的数据到达事件, 即触发handle
+                                    HandlerInvoke(id, protocol);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            dataMonitor.ReceiveQueue.AutoResetEvent.WaitOne();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("监听循环异常结束：{0}", ex));
+            }
+            finally
+            {
+                // 当接收队列停止监听时，移除该客户端数据队列
+                bool isRemoved = _DataMonitors.TryRemove(id, out dataMonitor);
+                if (isRemoved)
+                {
+                    _logger.Trace(string.Format("监听循环结束，从数据队列池中移除该客户端{0}成功，{1}", id, _DataMonitors.Count));
+                }
+            }
+        }
+
+        /// <summary>
+        ///     触发数据基础解析后发生的数据到达事件
+        /// </summary>
+        protected virtual void HandlerInvoke(long id, IProtocol<T> protocol)
+        {
+            try
+            {
+                if (_Handlers.Count == 0)
+                {
+                    Debug.Fail(string.Format("Handler集合不应为空."));
+                    return;
+                }
+                if (_Handlers.Count == 1)
+                {
+                    _Handlers[0].Recevied(id, protocol);
+                }
+                else
+                {
+                    foreach (var handler in _Handlers)
+                    {
+                        if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
+                        {
+                            handler.Recevied(id, protocol);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
+            }
+        }
+
+        private bool ContainsCommand(List<T> list, T command)
+        {
+            if (command is string || command is byte || command is int || CommandCompareFunc == null)
+                return list.Contains(command);
+            return CommandCompareFunc.Invoke(list, command);
+        }
 
         protected class DataMonitor
         {
