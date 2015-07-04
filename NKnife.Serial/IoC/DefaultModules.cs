@@ -15,8 +15,6 @@ namespace SerialKnife.IoC
     {
         public override void Load()
         {
-            Bind<ITunnel>().To<KnifeTunnel>().When(Request);
-
             Bind<ISerialPortWrapper>().To<SerialPortWrapperDotNet>().Named(SerialType.DotNet.ToString());
             Bind<ISerialPortWrapper>().To<SerialPortWrapperWinApi>().Named(SerialType.WinApi.ToString());
 
