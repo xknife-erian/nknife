@@ -15,8 +15,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private static object _lockObj = new object();
         private int _SessionCount = 0;
+        public int TalkCount { get; set; }
 
         public EventHandler<ServerStateEventArgs> StateChanged;
+
 
         public bool PrcoessReceiveData(ITunnelSession session)
         {
@@ -28,12 +30,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             lock (_lockObj)
             {
                 _SessionCount -= 1;
-                var handler = StateChanged;
-                if(handler !=null)
-                    handler.Invoke(this,new ServerStateEventArgs
-                    {
-                        SessionCount = _SessionCount,
-                    });
+                InvokeServerStateChanged();
             }
         }
 
@@ -42,13 +39,19 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             lock (_lockObj)
             {
                 _SessionCount += 1;
-                var handler = StateChanged;
-                if(handler !=null)
-                    handler.Invoke(this,new ServerStateEventArgs
-                    {
-                        SessionCount = _SessionCount,
-                    });
+                InvokeServerStateChanged();
             }
+        }
+
+        public void InvokeServerStateChanged()
+        {
+            var handler = StateChanged;
+            if (handler != null)
+                handler.Invoke(this, new ServerStateEventArgs
+                {
+                    SessionCount = _SessionCount,
+                    TalkCount = TalkCount,
+                });
         }
 
         public void ProcessSendToSession(ITunnelSession session)

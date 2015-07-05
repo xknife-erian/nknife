@@ -28,9 +28,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private List<KnifeLongSocketClient> _Clients = new List<KnifeLongSocketClient>();
 
         private List<MainTestClientHandler> _ClientHandlers = new List<MainTestClientHandler>();
+
+
+        private MainTestOption _TestOption;
+        private TestServerMonitorFilter _TestMonitorFilter;
         public void Start(MainTestOption testOption, TestServerMonitorFilter testMonitorFilter)
         {
+            _TestOption = testOption;
+            _TestMonitorFilter = testMonitorFilter;
             var serverConfig = DI.Get<SocketConfig>("Server");
+            serverConfig.MaxConnectCount = 1000;
             var clientConfig = DI.Get<SocketConfig>("Client");
             _Server = BuildServer(serverConfig, new MainTestServerHandler(), testMonitorFilter);
 
@@ -41,11 +48,35 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                     var clientHandler = new MainTestClientHandler();
                     var client = BuildClient(clientConfig, clientHandler);
                     _Clients.Add(client);
-                    clientHandler.StartSendingTimer(testOption.SendInterval);
                     _ClientHandlers.Add(clientHandler);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100);
                 }
             });
+        }
+
+        public void AddTalk()
+        {
+            if (_TestMonitorFilter.TalkCount + 1 < _ClientHandlers.Count)
+            {
+                _TestMonitorFilter.TalkCount += 1;
+                var clientHandler = _ClientHandlers[_TestMonitorFilter.TalkCount];
+                clientHandler.StartSendingTimer(_TestOption.SendInterval);
+                
+                _TestMonitorFilter.InvokeServerStateChanged();
+            }
+        }
+
+        public void RemoveTalk()
+        {
+            if (_TestMonitorFilter.TalkCount < _ClientHandlers.Count)
+            {
+                var clientHandler = _ClientHandlers[_TestMonitorFilter.TalkCount];
+                clientHandler.StopSendingTimer();
+                _TestMonitorFilter.TalkCount -= 1;
+
+                _TestMonitorFilter.InvokeServerStateChanged();
+            }
+
         }
 
         public void Stop()

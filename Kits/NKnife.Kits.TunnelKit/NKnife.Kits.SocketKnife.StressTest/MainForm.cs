@@ -33,6 +33,8 @@ namespace NKnife.Kits.SocketKnife.StressTest
                 _Test.Stop();
                 _OnTesting = false;
                 StartTestButton.Text = "开始测试";
+                AddTalkButton.Enabled = false;
+                RemoveTalkButton.Enabled = false;
             }
             else
             {
@@ -44,8 +46,22 @@ namespace NKnife.Kits.SocketKnife.StressTest
                     _Test.Start(testOption, testMonitorFilter);
                     _OnTesting = true;
                     StartTestButton.Text = "停止测试";
+                    AddTalkButton.Enabled = true;
+                    RemoveTalkButton.Enabled = true;
                 }
             }
+        }
+
+        private void AddTalkButtonClick(object sender, EventArgs e)
+        {
+            if (_Test != null)
+                _Test.AddTalk();
+        }
+
+        private void RemoveTalkButtonClick(object sender, EventArgs e)
+        {
+            if(_Test !=null)
+                _Test.RemoveTalk();
         }
 
         private void StateChanged(object sender, ServerStateEventArgs serverStateEventArgs)
@@ -53,6 +69,7 @@ namespace NKnife.Kits.SocketKnife.StressTest
             SessionCountLabel.ThreadSafeInvoke(() =>
             {
                 SessionCountLabel.Text = string.Format("{0}", serverStateEventArgs.SessionCount);
+                TalkCountLabel.Text = string.Format("{0}", serverStateEventArgs.TalkCount);
             });
 
         }
@@ -64,7 +81,7 @@ namespace NKnife.Kits.SocketKnife.StressTest
         private bool VerifyTestOption(MainTestOption testOption)
         {
             int clientCount;
-            if (!ClientCountTextBox.Text.IsInteger(out clientCount, 1, 100))
+            if (!ClientCountTextBox.Text.IsInteger(out clientCount, 1, 1000))
             {
                 return false;
             }
@@ -89,5 +106,7 @@ namespace NKnife.Kits.SocketKnife.StressTest
         {
 
         }
+
+
     }
 }

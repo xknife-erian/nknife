@@ -156,7 +156,7 @@ namespace NKnife.NLog3.Controls
 #endif
 
         [Flags]
-        private enum Level : byte
+        public enum Level : byte
         {
             None = 0,
             Trace = 1,
