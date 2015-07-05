@@ -15,7 +15,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.IoC
     {
         public override void Load()
         {
-            Bind<ITunnel>().To<KnifeTunnel>().InSingletonScope().Named("Server");
+            Bind<ITunnel>().To<KnifeTunnel>().Named("Server");
             Bind<ITunnel>().To<KnifeTunnel>().Named("Client");
             Bind<StringProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
             Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();

@@ -37,13 +37,24 @@ namespace NKnife.Kits.SocketKnife.StressTest
             else
             {
                 var testOption = new MainTestOption();
+                var testMonitorFilter = new TestServerMonitorFilter();
+                testMonitorFilter.StateChanged += StateChanged;
                 if (VerifyTestOption(testOption))
                 {
-                    _Test.Start(testOption);
+                    _Test.Start(testOption, testMonitorFilter);
                     _OnTesting = true;
                     StartTestButton.Text = "停止测试";
                 }
             }
+        }
+
+        private void StateChanged(object sender, ServerStateEventArgs serverStateEventArgs)
+        {
+            SessionCountLabel.ThreadSafeInvoke(() =>
+            {
+                SessionCountLabel.Text = string.Format("{0}", serverStateEventArgs.SessionCount);
+            });
+
         }
 
         /// <summary>

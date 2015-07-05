@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ClientSendIntervalTextBox = new System.Windows.Forms.TextBox();
+            this.ClientCountTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.StartTestButton = new System.Windows.Forms.Button();
             this.LogContainerPanel = new System.Windows.Forms.Panel();
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
@@ -36,22 +44,19 @@
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ClientCountTextBox = new System.Windows.Forms.TextBox();
-            this.ClientSendIntervalTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.SessionCountLabel = new System.Windows.Forms.Label();
             this.MainPanel.SuspendLayout();
-            this.MainMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.MainMenuStrip.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainPanel
             // 
             this.MainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MainPanel.Controls.Add(this.groupBox2);
             this.MainPanel.Controls.Add(this.label5);
             this.MainPanel.Controls.Add(this.label4);
             this.MainPanel.Controls.Add(this.groupBox1);
@@ -65,6 +70,78 @@
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(684, 297);
             this.MainPanel.TabIndex = 4;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(222, 167);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(113, 12);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "（毫秒，不小于50）";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(222, 125);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "（1-100）";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Location = new System.Drawing.Point(11, 9);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(660, 70);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "说明";
+            // 
+            // label3
+            // 
+            this.label3.ForeColor = System.Drawing.Color.Blue;
+            this.label3.Location = new System.Drawing.Point(20, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(542, 31);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "通过SocketKnife建立一个SocketServer，指定数量的SocketClient，连接该Server，每个Client均定时（指定时间间隔）发送测试" +
+    "数据给Server，Server收到后返回";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(33, 167);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "发送间隔：";
+            // 
+            // ClientSendIntervalTextBox
+            // 
+            this.ClientSendIntervalTextBox.Location = new System.Drawing.Point(116, 164);
+            this.ClientSendIntervalTextBox.Name = "ClientSendIntervalTextBox";
+            this.ClientSendIntervalTextBox.Size = new System.Drawing.Size(100, 21);
+            this.ClientSendIntervalTextBox.TabIndex = 3;
+            this.ClientSendIntervalTextBox.Text = "1000";
+            // 
+            // ClientCountTextBox
+            // 
+            this.ClientCountTextBox.Location = new System.Drawing.Point(116, 122);
+            this.ClientCountTextBox.Name = "ClientCountTextBox";
+            this.ClientCountTextBox.Size = new System.Drawing.Size(100, 21);
+            this.ClientCountTextBox.TabIndex = 2;
+            this.ClientCountTextBox.Text = "3";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(33, 125);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Client数量：";
             // 
             // StartTestButton
             // 
@@ -126,77 +203,34 @@
             this.AboutToolStripMenuItem.Text = "关于";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
-            // label1
+            // groupBox2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 125);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Client数量：";
+            this.groupBox2.Controls.Add(this.SessionCountLabel);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Location = new System.Drawing.Point(349, 99);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(322, 169);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Server状态";
             // 
-            // ClientCountTextBox
+            // label6
             // 
-            this.ClientCountTextBox.Location = new System.Drawing.Point(116, 122);
-            this.ClientCountTextBox.Name = "ClientCountTextBox";
-            this.ClientCountTextBox.Size = new System.Drawing.Size(100, 21);
-            this.ClientCountTextBox.TabIndex = 2;
-            this.ClientCountTextBox.Text = "3";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 29);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 12);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Session数量：";
             // 
-            // ClientSendIntervalTextBox
+            // SessionCountLabel
             // 
-            this.ClientSendIntervalTextBox.Location = new System.Drawing.Point(116, 164);
-            this.ClientSendIntervalTextBox.Name = "ClientSendIntervalTextBox";
-            this.ClientSendIntervalTextBox.Size = new System.Drawing.Size(100, 21);
-            this.ClientSendIntervalTextBox.TabIndex = 3;
-            this.ClientSendIntervalTextBox.Text = "1000";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(33, 167);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 12);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "发送间隔：";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(11, 9);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(660, 70);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "说明";
-            // 
-            // label3
-            // 
-            this.label3.ForeColor = System.Drawing.Color.Blue;
-            this.label3.Location = new System.Drawing.Point(20, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(542, 31);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "通过SocketKnife建立一个SocketServer，指定数量的SocketClient，连接该Server，每个Client均定时（指定时间间隔）发送测试" +
-    "数据给Server，Server收到后返回";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(222, 125);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 12);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "（1-100）";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(222, 167);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 12);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "（毫秒，不小于50）";
+            this.SessionCountLabel.BackColor = System.Drawing.Color.White;
+            this.SessionCountLabel.Location = new System.Drawing.Point(107, 26);
+            this.SessionCountLabel.Name = "SessionCountLabel";
+            this.SessionCountLabel.Size = new System.Drawing.Size(100, 18);
+            this.SessionCountLabel.TabIndex = 10;
+            this.SessionCountLabel.Text = "0";
             // 
             // MainForm
             // 
@@ -210,9 +244,11 @@
             this.Text = "SocketKnife压力测试";
             this.MainPanel.ResumeLayout(false);
             this.MainPanel.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,6 +272,9 @@
         private System.Windows.Forms.TextBox ClientSendIntervalTextBox;
         private System.Windows.Forms.TextBox ClientCountTextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label SessionCountLabel;
+        private System.Windows.Forms.Label label6;
     }
 }
 
