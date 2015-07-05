@@ -25,6 +25,26 @@ namespace NKnife.NLog3.Controls
 
         #endregion
 
+        #region 辅助方法
+        /// <summary>
+        /// 初始化LogPanel到指定容器
+        /// </summary>
+        /// <param name="container"></param>
+        public static void AppendLogPanelToContainer(Panel container)
+        {
+            var logPanel = Instance;
+            logPanel.Dock = DockStyle.Fill;
+            logPanel.Font = new Font("Tahoma", 8.25F);
+            logPanel.HeaderStyle = ColumnHeaderStyle.Clickable;
+            logPanel.Location = new Point(0, 0);
+            logPanel.Name = "_LogPanel";
+            logPanel.Size = new Size(673, 227);
+            logPanel.TabIndex = 0;
+            logPanel.ToolStripVisible = true;
+            container.Controls.Add(logPanel);
+        }
+        #endregion
+
         private LogPanel()
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Global.Culture);

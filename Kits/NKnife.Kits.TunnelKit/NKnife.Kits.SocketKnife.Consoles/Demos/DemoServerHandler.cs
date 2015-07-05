@@ -18,6 +18,8 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
             string message = _Family.Generate(protocol);
             string time = DateTime.Now.ToString("HH:mm:ss.fff");
             _logger.Info(string.Format("<== {0},{1},{2}", time, command, message));
+
+            WriteToSession(sessionId,protocol);
         }
     }
 }
