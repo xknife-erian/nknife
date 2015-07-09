@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -16,7 +17,7 @@ namespace SocketKnife
     {
         private const int ACCEPT_LISTEN_TIME_INTERVAL = 25; // 侦听论询时间间隔(ms)
         private const int CHECK_SESSION_TABLE_TIME_INTERVAL = 100; // 清理Timer的时间间隔(ms)
-        private const int MAX_SESSION_TIMEOUT = 60; // 1 minutes，不是心跳间隔，但针对长连接也需要有个时间限制，太长时间无动作也要清除
+        //private const int MAX_SESSION_TIMEOUT = 60; // 1 minutes，不是心跳间隔，但针对长连接也需要有个时间限制，太长时间无动作也要清除，如果为0表示不超时清除
 
         private static readonly ILog _logger = LogManager.GetLogger<KnifeSocketServer>();
 
@@ -290,8 +291,12 @@ namespace SocketKnife
             while (!_IsServerClosed)
             {
                 var sessionIdList = new List<long>();
-                var dataArray = new SocketSession[_SessionMap.Values().Count];
-                _SessionMap.Values().CopyTo(dataArray, 0);
+
+//                var dataArray = new SocketSession[_SessionMap.Values().Count];
+//                _SessionMap.Values().CopyTo(dataArray, 0);
+
+                var dataArray = _SessionMap.Values().ToArray();
+
                 foreach (var session in dataArray)
                 {
                     if (_IsServerClosed)
@@ -409,10 +414,12 @@ namespace SocketKnife
 
         public void CheckSessionTimeout(SocketSession session)
         {
+            if (_Config.MaxSessionTimeout == 0) //该参数为0则不检查
+                return;
             var ts = DateTime.Now.Subtract(session.LastSessionTime);
             var elapsedSecond = Math.Abs((int) ts.TotalSeconds);
 
-            if (elapsedSecond > MAX_SESSION_TIMEOUT) // 超时，则准备断开连接
+            if (elapsedSecond > _Config.MaxSessionTimeout) // 超时，则准备断开连接
             {
                 session.DisconnectType = DisconnectType.Timeout;
                 SetSessionInactive(session); // 标记为将关闭、准备断开

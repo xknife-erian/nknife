@@ -36,8 +36,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         {
             _TestOption = testOption;
             _TestMonitorFilter = testMonitorFilter;
-            var serverConfig = DI.Get<SocketConfig>("Server");
+            var serverConfig = (SocketServerConfig)DI.Get<SocketConfig>("Server");
             serverConfig.MaxConnectCount = 1000;
+            serverConfig.MaxSessionTimeout = 0;
             var clientConfig = DI.Get<SocketConfig>("Client");
             _Server = BuildServer(serverConfig, new MainTestServerHandler(), testMonitorFilter);
 
