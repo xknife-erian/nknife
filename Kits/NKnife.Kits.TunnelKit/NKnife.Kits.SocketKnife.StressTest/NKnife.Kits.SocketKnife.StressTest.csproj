@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Codec\NangleDatagramDecoder.cs" />
+    <Compile Include="Codec\NangleDatagramEncoder.cs" />
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -64,6 +66,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol\NangleProtocolPacker.cs" />
+    <Compile Include="Protocol\NangleProtocolUnPacker.cs" />
     <Compile Include="TestCase\MainTestCase.cs" />
     <Compile Include="TestCase\MainTestClientHandler.cs" />
     <Compile Include="TestCase\MainTestServerHandler.cs" />

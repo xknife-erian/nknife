@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnfie.Scpi.UnitTest", "NKn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.StressTest", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SocketKnife.StressTest\NKnife.Kits.SocketKnife.StressTest.csproj", "{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.StressTest.UnitTest", "UnitTests\NKnife.Kits.SocketKnife.StressTest.UnitTest\NKnife.Kits.SocketKnife.StressTest.UnitTest.csproj", "{E15AA080-A108-4E9C-B899-A8BFFCA73C76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -350,6 +352,16 @@ Global
 		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -374,5 +386,6 @@ Global
 		{1B229168-2C13-46E6-87D1-42DFA82E36EE} = {6CCD23AF-807F-4E8A-9456-1788F2C89E81}
 		{FF564C76-B6CD-49F9-841C-CCD43748CE02} = {6CCD23AF-807F-4E8A-9456-1788F2C89E81}
 		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C} = {65690702-547D-4AD3-AA2E-7BA59AB15095}
+		{E15AA080-A108-4E9C-B899-A8BFFCA73C76} = {6CCD23AF-807F-4E8A-9456-1788F2C89E81}
 	EndGlobalSection
 EndGlobal

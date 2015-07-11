@@ -25,5 +25,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             WriteToSession(sessionId,protocol);
             _logger.Debug(string.Format("server[发出{0}] <== {1},{2},{3}", sessionId, time, command, message));
         }
+
+        
     }
 }

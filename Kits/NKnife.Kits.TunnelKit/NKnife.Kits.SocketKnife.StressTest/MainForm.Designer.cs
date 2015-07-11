@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.ToggleLogButton = new System.Windows.Forms.Button();
             this.RemoveTalkButton = new System.Windows.Forms.Button();
             this.AddTalkButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -45,7 +46,6 @@
             this.ClientCountTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.StartTestButton = new System.Windows.Forms.Button();
-            this.LogContainerPanel = new System.Windows.Forms.Panel();
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +60,7 @@
             // MainPanel
             // 
             this.MainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MainPanel.Controls.Add(this.ToggleLogButton);
             this.MainPanel.Controls.Add(this.RemoveTalkButton);
             this.MainPanel.Controls.Add(this.AddTalkButton);
             this.MainPanel.Controls.Add(this.groupBox2);
@@ -74,15 +75,25 @@
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 25);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(684, 297);
+            this.MainPanel.Size = new System.Drawing.Size(684, 579);
             this.MainPanel.TabIndex = 4;
+            // 
+            // ToggleLogButton
+            // 
+            this.ToggleLogButton.Location = new System.Drawing.Point(176, 229);
+            this.ToggleLogButton.Name = "ToggleLogButton";
+            this.ToggleLogButton.Size = new System.Drawing.Size(111, 39);
+            this.ToggleLogButton.TabIndex = 11;
+            this.ToggleLogButton.Text = "显示日志";
+            this.ToggleLogButton.UseVisualStyleBackColor = true;
+            this.ToggleLogButton.Click += new System.EventHandler(this.ToggleLogButton_Click);
             // 
             // RemoveTalkButton
             // 
             this.RemoveTalkButton.Enabled = false;
-            this.RemoveTalkButton.Location = new System.Drawing.Point(233, 229);
+            this.RemoveTalkButton.Location = new System.Drawing.Point(176, 288);
             this.RemoveTalkButton.Name = "RemoveTalkButton";
-            this.RemoveTalkButton.Size = new System.Drawing.Size(83, 39);
+            this.RemoveTalkButton.Size = new System.Drawing.Size(111, 39);
             this.RemoveTalkButton.TabIndex = 10;
             this.RemoveTalkButton.Text = "减少对讲";
             this.RemoveTalkButton.UseVisualStyleBackColor = true;
@@ -91,9 +102,9 @@
             // AddTalkButton
             // 
             this.AddTalkButton.Enabled = false;
-            this.AddTalkButton.Location = new System.Drawing.Point(133, 229);
+            this.AddTalkButton.Location = new System.Drawing.Point(33, 288);
             this.AddTalkButton.Name = "AddTalkButton";
-            this.AddTalkButton.Size = new System.Drawing.Size(83, 39);
+            this.AddTalkButton.Size = new System.Drawing.Size(111, 39);
             this.AddTalkButton.TabIndex = 9;
             this.AddTalkButton.Text = "增加对讲";
             this.AddTalkButton.UseVisualStyleBackColor = true;
@@ -107,7 +118,7 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(349, 99);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(322, 169);
+            this.groupBox2.Size = new System.Drawing.Size(322, 228);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Server状态";
@@ -224,20 +235,11 @@
             // 
             this.StartTestButton.Location = new System.Drawing.Point(33, 229);
             this.StartTestButton.Name = "StartTestButton";
-            this.StartTestButton.Size = new System.Drawing.Size(83, 39);
+            this.StartTestButton.Size = new System.Drawing.Size(111, 39);
             this.StartTestButton.TabIndex = 0;
             this.StartTestButton.Text = "开始测试";
             this.StartTestButton.UseVisualStyleBackColor = true;
             this.StartTestButton.Click += new System.EventHandler(this.StartTestButtonClick);
-            // 
-            // LogContainerPanel
-            // 
-            this.LogContainerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LogContainerPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.LogContainerPanel.Location = new System.Drawing.Point(0, 322);
-            this.LogContainerPanel.Name = "LogContainerPanel";
-            this.LogContainerPanel.Size = new System.Drawing.Size(684, 282);
-            this.LogContainerPanel.TabIndex = 2;
             // 
             // MainMenuStrip
             // 
@@ -286,7 +288,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 604);
             this.Controls.Add(this.MainPanel);
-            this.Controls.Add(this.LogContainerPanel);
             this.Controls.Add(this.MainMenuStrip);
             this.Name = "MainForm";
             this.Text = "SocketKnife压力测试";
@@ -306,7 +307,6 @@
 
         private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.Button StartTestButton;
-        private System.Windows.Forms.Panel LogContainerPanel;
         private System.Windows.Forms.MenuStrip MainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
@@ -327,6 +327,7 @@
         private System.Windows.Forms.Button AddTalkButton;
         private System.Windows.Forms.Label TalkCountLabel;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button ToggleLogButton;
     }
 }
 
