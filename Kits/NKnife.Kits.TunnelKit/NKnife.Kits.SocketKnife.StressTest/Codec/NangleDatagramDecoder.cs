@@ -11,6 +11,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
         public byte FirstHeadByte { get; set; }
         public byte SecondHeadByte { get; set; }
 
+        private const int LENGTH_BYTE_COUNT = 2;
+        private const int TARGET_BYTE_COUNT = 4;
+        private const int COMMAND_BYTE_COUNT = 2;
+        private const int CHK_BYTE_COUNT = 1;
+
         public NangleDatagramDecoder()
         {
             FirstHeadByte = 0xAA;
@@ -21,7 +26,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
             var results = new List<byte[]>();
             finishedIndex = 0;
             var tempDataGram = new List<byte>();
-            bool enableNewDataGram = false;
             for (int i = 0; i < data.Length; i++)
             {
                 if (data[i] == FirstHeadByte) //头部第一个字节吻合
@@ -31,51 +35,48 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
                         if (data[i + 1] == SecondHeadByte) //头部第二个字节吻合
                         {
                             i++; //第二个字节吻合，则i递加
-                            if (tempDataGram.Count > 0) //已经有数据了
+
+                            //判断从当前的头部起，剩下的数据有没有至少一条完整的数据（长度够）
+                            //i当前应指向头部第二个字节
+                            if (i + LENGTH_BYTE_COUNT + TARGET_BYTE_COUNT + COMMAND_BYTE_COUNT + CHK_BYTE_COUNT <
+                                data.Length)
                             {
-                                byte[] item;
-                                if (VerifyDataGram(tempDataGram, out item))
+                                //剩下的数据，长度足够容纳一条最小的（空数据）datagram
+                                //先取长度
+                                int len = GetLenghFromTwoBytesToInt(new[] {data[i + 1], data[i + 2]});
+                                //根据长度判断，剩下的数据长度能否容纳完整的datagram（根据len计算）
+                                if (i + LENGTH_BYTE_COUNT + len < data.Length)
                                 {
-                                    results.Add(item);
+                                    for (int j = 0; j < LENGTH_BYTE_COUNT + len; j++)
+                                    {
+                                        tempDataGram.Add(data[i+1+j]);
+                                    }
+
+                                    int tempFirstHeadIndex = tempDataGram.IndexOf(FirstHeadByte);
+                                    if (tempFirstHeadIndex > -1)
+                                        //有问题了，不应该出现头字符，如果出现了，说明这条数据本身就不完整了，不需要去校验了，直接抛弃
+                                    {
+                                        i += tempFirstHeadIndex;
+                                        finishedIndex = i;
+                                    }
+                                    else
+                                    {
+                                        byte[] item;
+                                        if (VerifyDataGram(tempDataGram, out item))
+                                        {
+                                            results.Add(item);
+                                        }
+                                        i += tempDataGram.Count;
+
+                                        finishedIndex = i + 1;
+                                    }
                                     tempDataGram.Clear();
                                 }
-                                finishedIndex = i - 1;
-                            }
-                            enableNewDataGram = true;
-
-                        }
-                        else //头部第二个字节不吻合
-                        {
-                            if (enableNewDataGram)
-                            {
-                                tempDataGram.Add(data[i]);
                             }
                         }
                     }
-                    else //不可能有头部第二个字节了
-                    {
-                        //什么也不做，等新数据进来
-                    }
-                }
-                else
-                {
-                    if (enableNewDataGram)
-                    {
-                        tempDataGram.Add(data[i]);
-                    }
                 }
             }
-            if (tempDataGram.Count > 0) //处理最后一条，如果数据验证通过则更新finishedindex
-            {
-                byte[] item;
-                if (VerifyDataGram(tempDataGram, out item))
-                {
-                    results.Add(item);
-                    tempDataGram.Clear();
-                    finishedIndex = data.Length;
-                }
-            }
-
             return results.ToArray();
         }
 

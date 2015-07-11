@@ -10,13 +10,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
 {
     /*
      测试关键说明：
-     5.2    帧长度
-帧长度为目的地址长度+命令字长度+测试数据长度。
-考虑TCP单帧数据长度不超过1024字节，所以协议限定帧最大长度为1024字节。
-帧长度的最大取值为1020（目的地址长度4+命令字长度2+数据最大长度1013+校验和1）。当测试数据为0字节时，帧长度取最小值7。
-
      5.2	帧长度
-帧长度为目的地址长度+命令字长度+测试数据长度。
+帧长度为目的地址长度+命令字长度+测试数据长度+校验和。
 考虑TCP单帧数据长度不超过1024字节，所以协议限定帧最大长度为1024字节。
 帧长度的最大取值为1020（目的地址长度4+命令字长度2+数据最大长度1013+校验和1）。当测试数据为0字节时，帧长度取最小值7。
      5.5	校验和
@@ -31,7 +26,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
     public class NangleDatagramDecoderTest
     {
         [TestMethod]
-        public void ExecuteTestMethod0() //一条完整的测试
+        public void ExecuteTestMethod0() //一条完整的数据
         {
             var decoder = new NangleDatagramDecoder();
             const int COUNT = 1;
@@ -46,6 +41,71 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
             var datagrams = decoder.Execute(src.ToArray(), out index);
             Assert.AreEqual(COUNT, datagrams.Length);
             Assert.AreEqual(src.Count, index);
+            Assert.IsTrue(data.Compare(datagrams[0]));
+        }
+
+        [TestMethod]
+        public void ExecuteTestMethod1() //n条一样的完整的数据（连续）
+        {
+            var decoder = new NangleDatagramDecoder();
+            const int COUNT = 2;
+            var datagram = GetOneCorrectDatagram();
+            var data = new byte[datagram.Count - 3];
+            datagram.CopyTo(2, data, 0, datagram.Count - 3);
+
+            var src = new List<byte>();
+            for (int i = 0; i < COUNT; i++)
+            {
+                src.AddRange(new Byte[] { decoder.FirstHeadByte, decoder.SecondHeadByte });
+                src.AddRange(datagram);
+            }
+            int index;
+            var datagrams = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(COUNT, datagrams.Length);
+            Assert.AreEqual(src.Count, index);
+            for (int i = 0; i < COUNT; i++)
+            {
+                Assert.IsTrue(data.Compare(datagrams[i]));
+            }
+        }
+
+        [TestMethod]
+        public void ExecuteTestMethod2() //一条完整的数据，前面有错误的数据
+        {
+            var decoder = new NangleDatagramDecoder();
+            const int COUNT = 1;
+            var datagram = GetOneCorrectDatagram();
+            var data = new byte[datagram.Count - 3];
+            datagram.CopyTo(2, data, 0, datagram.Count - 3);
+
+            var src = new List<byte>();
+            src.AddRange(GetNoiseBytes());
+            src.AddRange(new Byte[] { decoder.FirstHeadByte, decoder.SecondHeadByte });
+            src.AddRange(datagram);
+            int index;
+            var datagrams = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(COUNT, datagrams.Length);
+            Assert.AreEqual(src.Count, index);
+            Assert.IsTrue(data.Compare(datagrams[0]));
+        }
+
+        [TestMethod]
+        public void ExecuteTestMethod3() //一条完整的数据，后面有错误的数据
+        {
+            var decoder = new NangleDatagramDecoder();
+            const int COUNT = 1;
+            var datagram = GetOneCorrectDatagram();
+            var data = new byte[datagram.Count - 3];
+            datagram.CopyTo(2, data, 0, datagram.Count - 3);
+
+            var src = new List<byte>();
+            src.AddRange(new Byte[] { decoder.FirstHeadByte, decoder.SecondHeadByte });
+            src.AddRange(datagram);
+            src.AddRange(GetNoiseBytes());
+            int index;
+            var datagrams = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(COUNT, datagrams.Length);
+            Assert.AreEqual(src.Count - GetNoiseBytes().Length, index);
             Assert.IsTrue(data.Compare(datagrams[0]));
         }
 
@@ -112,6 +172,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
         protected byte[] GetAnyBytes()
         {
             return Encoding.Default.GetBytes("ABCDEFG");
+        }
+
+        protected byte[] GetNoiseBytes()
+        {
+            return Encoding.Default.GetBytes("noise");
         }
 
         /// <summary>
