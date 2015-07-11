@@ -61,6 +61,10 @@
       <Project>{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}</Project>
       <Name>NKnife.Kits.SocketKnife.StressTest</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NKnife\NKnife.csproj">
+      <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
+      <Name>NKnife</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

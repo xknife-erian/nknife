@@ -30,6 +30,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
                     {
                         if (data[i + 1] == SecondHeadByte) //头部第二个字节吻合
                         {
+                            i++; //第二个字节吻合，则i递加
                             if (tempDataGram.Count > 0) //已经有数据了
                             {
                                 byte[] item;
@@ -64,11 +65,21 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
                     }
                 }
             }
+            if (tempDataGram.Count > 0) //处理最后一条，如果数据验证通过则更新finishedindex
+            {
+                byte[] item;
+                if (VerifyDataGram(tempDataGram, out item))
+                {
+                    results.Add(item);
+                    tempDataGram.Clear();
+                    finishedIndex = data.Length;
+                }
+            }
 
             return results.ToArray();
         }
 
-        private bool VerifyDataGram(List<byte> tempDataGram, out byte[] tempData)
+        public bool VerifyDataGram(List<byte> tempDataGram, out byte[] tempData)
         {
             int len = tempDataGram.Count;
             var source = tempDataGram.ToArray();
@@ -77,29 +88,37 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
                 tempData = new byte[] {};
                 return false;
             }
-            tempData = new byte[len - 2];
-            Array.Copy(source,1,tempData,0,len-2); //去掉第一个字节的长度和最后一个字节的校验和
+            tempData = new byte[len - 3];
+            Array.Copy(source,2,tempData,0,len-3); //去掉头两字节的长度和最后一个字节的校验和
             return true;
         }
 
-        private bool VerifyLenAndChk(byte[] source)
+        public bool VerifyLenAndChk(byte[] source)
         {
             int len = source.Length;
-            if (len < 2)
+            if (len < 9) //至少要包含帧长度2+目的地址长度4+命令字长度2+校验和1
                 return false;
-            byte lenByte = source[0];
+            byte[] lenByte = {source[0],source[1]};
             byte chk = source[len - 1];
 
-            if (lenByte != len - 2) //长度不正确
+
+            if (GetLenghFromTwoBytesToInt(lenByte) != len - 2) //长度不正确
                 return false;
-            int sum = lenByte;
-            for (int i = 0; i < len - 2; i++)
+            int sum = 0;
+            for (int i = 2; i < len-1; i++) //不包含头两位的长度，和最后一位的校验和
             {
-                sum += source[i + 1];
+                sum += source[i];
             }
             if(chk != (sum % 255)) //校验和不正确
                 return false;
             return true;
+        }
+
+        private int GetLenghFromTwoBytesToInt(byte[] bytes)
+        {
+            if (bytes.Length != 2)
+                return 0; //长度不正确，返回0长度
+            return bytes[0]*255 + bytes[1];
         }
     }
 }
