@@ -402,6 +402,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     new byte[] {0x00, 0x00},
                     new byte[]{},
                     new byte[] { 0x00, 0x00, 0x00, 0x00 }));
+            ServerProtocolListBox.Items.Add(
+                new StopExecuteTestCase(new byte[]{0x00,0x00,0x00,0x00}, new byte[]{0x00,0x01}));
+            ServerProtocolListBox.Items.Add(
+               new ReadTestCaseResult(new byte[] { 0x00, 0x00, 0x00, 0x00 }, new byte[] { 0x00, 0x01 }));
+            ServerProtocolListBox.Items.Add(
+              new TestRawData(new byte[] { 0x00, 0x00, 0x00, 0x00 }, 0x01, new byte[] { 0x00, 0x01 }));
 
             _TestMonitorFilter = new TestServerMonitorFilter();
             _TestMonitorFilter.StateChanged += StateChanged;

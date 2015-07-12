@@ -77,6 +77,9 @@
     <Compile Include="Protocol\Generic\NangleProtocolPacker.cs" />
     <Compile Include="Protocol\Generic\NangleProtocolUnPacker.cs" />
     <Compile Include="Protocol\InitializeTest.cs" />
+    <Compile Include="Protocol\ReadTestCaseResult.cs" />
+    <Compile Include="Protocol\StopExecuteTestCase.cs" />
+    <Compile Include="Protocol\TestRawData.cs" />
     <Compile Include="TestCase\MainTestCase.cs" />
     <Compile Include="TestCase\MainTestClientHandler.cs" />
     <Compile Include="TestCase\MainTestServerHandler.cs" />
