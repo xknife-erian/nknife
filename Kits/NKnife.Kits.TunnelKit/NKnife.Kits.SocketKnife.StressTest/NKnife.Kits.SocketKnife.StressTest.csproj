@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Codec\NangleCodecUtility.cs" />
+    <Compile Include="Protocol\NangleCommandParser.cs" />
     <Compile Include="Codec\NangleDatagramDecoder.cs" />
     <Compile Include="Codec\NangleDatagramEncoder.cs" />
     <Compile Include="IoC\Modules.cs" />

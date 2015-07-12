@@ -110,6 +110,27 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
         }
 
         [TestMethod]
+        public void ExecuteTestMethod4() //一条完整的数据，前面后面都有错误的数据
+        {
+            var decoder = new NangleDatagramDecoder();
+            const int COUNT = 1;
+            var datagram = GetOneCorrectDatagram();
+            var data = new byte[datagram.Count - 3];
+            datagram.CopyTo(2, data, 0, datagram.Count - 3);
+
+            var src = new List<byte>();
+            src.AddRange(GetNoiseBytes());
+            src.AddRange(new Byte[] { decoder.FirstHeadByte, decoder.SecondHeadByte });
+            src.AddRange(datagram);
+            src.AddRange(GetNoiseBytes());
+            int index;
+            var datagrams = decoder.Execute(src.ToArray(), out index);
+            Assert.AreEqual(COUNT, datagrams.Length);
+            Assert.AreEqual(src.Count - GetNoiseBytes().Length, index);
+            Assert.IsTrue(data.Compare(datagrams[0]));
+        }
+
+        [TestMethod]
         public void VerifyLenAndChkTestMethod0() //一条长度和校验和正确的数据
         {
             var decoder = new NangleDatagramDecoder();
@@ -140,13 +161,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
             var data = GetAnyBytes();
             var len = 7 + data.Length;
 
-            src.AddRange(GetLengthFromIntToTwoBytes(len)); //长度
+            src.AddRange(NangleCodecUtility.GetLengthFromIntToTwoBytes(len)); //长度
             src.AddRange(GetTargetAddress()); //目标地址
             src.AddRange(GetAnyCommand()); //命令
             src.AddRange(data); //数据
             var tempBytes = new byte[len - 1];
             src.CopyTo(2, tempBytes, 0, len - 1);
-            src.Add(GetOneByteChk(tempBytes));
+            src.Add(NangleCodecUtility.GetOneByteChk(tempBytes));
             return src;
         }
 
@@ -179,25 +200,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
             return Encoding.Default.GetBytes("noise");
         }
 
-        /// <summary>
-        /// 整数长度转换成2字节
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private byte[] GetLengthFromIntToTwoBytes(int length)
-        {
-            return new[]{(byte)((length/255)%255),(byte)(length%255)};
-        }
 
-        /// <summary>
-        /// 计算1字节校验和
-        /// </summary>
-        /// <param name="tempData"></param>
-        /// <returns></returns>
-        private byte GetOneByteChk(byte[] tempData)
-        {
-            var sum = tempData.Aggregate(0, (current, t) => current + t);
-            return (byte)(sum%255);
-        }
     }
 }

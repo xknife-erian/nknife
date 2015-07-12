@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ninject.Modules;
+using NKnife.Kits.SocketKnife.StressTest.Codec;
+using NKnife.Kits.SocketKnife.StressTest.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
 using NKnife.Tunnel;
@@ -17,12 +19,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.IoC
         {
             Bind<ITunnel>().To<KnifeTunnel>().Named("Server");
             Bind<ITunnel>().To<KnifeTunnel>().Named("Client");
-            Bind<StringProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
-            Bind<StringProtocolUnPacker>().To<TextPlainUnPacker>().InSingletonScope();
-            Bind<StringProtocolCommandParser>().To<TextPlainFirstFieldCommandParser>().InSingletonScope();
+            Bind<BytesProtocolPacker>().To<NangleProtocolPacker>().InSingletonScope();
+            Bind<BytesProtocolUnPacker>().To<NangleProtocolUnPacker>().InSingletonScope();
+            Bind<BytesProtocolCommandParser>().To<NangleCommandParser>().InSingletonScope();
 
-            Bind<StringDatagramDecoder>().To<FixedTailDecoder>();
-            Bind<StringDatagramEncoder>().To<FixedTailEncoder>();
+            Bind<BytesDatagramDecoder>().To<NangleDatagramDecoder>();
+            Bind<BytesDatagramEncoder>().To<NangleDatagramEncoder>();
         }
     }
 }
