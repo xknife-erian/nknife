@@ -20,7 +20,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         {
             byte[] command = protocol.Command;
             byte[] message = _Family.Generate(protocol);
-            _logger.Debug(string.Format("client[收到] <== {0},{1}", command.ToHexString(), message.ToHexString()));
+            _logger.Debug(string.Format("client[收到]<==[{0}], {1}", command.ToHexString(), message.ToHexString()));
         }
 
         public void StartSendingTimer(int timerInterval = 1000)
@@ -43,7 +43,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 {
                     WriteToAllSession(protocol);
                     var message = _Family.Generate(protocol);
-                    _logger.Debug(string.Format("client[发出] <== {0},{1}", command, message));
+                    _logger.Debug(string.Format("client[发出]==>[{0}], {1}", command.ToHexString(), message.ToHexString()));
                 }
                 catch (Exception ex)
                 {

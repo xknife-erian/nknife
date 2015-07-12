@@ -43,6 +43,20 @@ namespace NKnife.NLog3.Controls
             logPanel.ToolStripVisible = true;
             container.Controls.Add(logPanel);
         }
+
+        public static void AppendLogPanelToContainer(Form container)
+        {
+            var logPanel = Instance;
+            logPanel.Dock = DockStyle.Fill;
+            logPanel.Font = new Font("Tahoma", 8.25F);
+            logPanel.HeaderStyle = ColumnHeaderStyle.Clickable;
+            logPanel.Location = new Point(0, 0);
+            logPanel.Name = "_LogPanel";
+            logPanel.Size = new Size(673, 227);
+            logPanel.TabIndex = 0;
+            logPanel.ToolStripVisible = true;
+            container.Controls.Add(logPanel);
+        }
         #endregion
 
         private LogPanel()

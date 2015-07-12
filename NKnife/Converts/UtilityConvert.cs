@@ -502,13 +502,13 @@ namespace NKnife.Converts
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static byte[] HexToBytes(string value)
+        public static byte[] HexToBytes(string hexSrc)
         {
-            var len = value.Length/2;
-            var ret = new byte[len];
-            for (var i = 0; i < len; i++)
-                ret[i] = (byte) (Convert.ToInt32(value.Substring(i*2, 2), 16));
-            return ret;
+            var hex = hexSrc.Replace(" ", "");
+            var byteArray = new byte[hex.Length / 2];
+            for (int i = 0, j = 0; i < hex.Length; i = i + 2, j++)
+                byteArray[j] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return byteArray;
         }
 
         #endregion

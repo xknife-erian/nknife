@@ -5,6 +5,9 @@ using System.Text;
 using Ninject.Modules;
 using NKnife.Kits.SocketKnife.StressTest.Codec;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
+using NKnife.Kits.SocketKnife.StressTest.TestCase;
+using NKnife.Kits.SocketKnife.StressTest.View;
 using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
 using NKnife.Tunnel;
@@ -17,6 +20,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.IoC
     {
         public override void Load()
         {
+            //逻辑
+            Bind<MainTestCase>().ToSelf().InSingletonScope();
+
+            //通讯协议相关
             Bind<ITunnel>().To<KnifeTunnel>().Named("Server");
             Bind<ITunnel>().To<KnifeTunnel>().Named("Client");
             Bind<BytesProtocolPacker>().To<NangleProtocolPacker>().InSingletonScope();
@@ -25,6 +32,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.IoC
 
             Bind<BytesDatagramDecoder>().To<NangleDatagramDecoder>();
             Bind<BytesDatagramEncoder>().To<NangleDatagramEncoder>();
+
+            //界面相关
+            Bind<LogView>().ToSelf().InSingletonScope();
+            Bind<ServerView>().ToSelf().InSingletonScope();
+            Bind<MockClientView>().ToSelf().InSingletonScope();
+            Bind<ProtocolView>().ToSelf().InSingletonScope();
+
         }
     }
 }
