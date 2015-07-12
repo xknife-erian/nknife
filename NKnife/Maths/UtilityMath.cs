@@ -117,9 +117,9 @@ namespace NKnife.Maths
                     }
                     else
                     {
-                        int ASCIIValue = numberStr[charIndex] + 1;
-                        var ASCII = (char) ASCIIValue;
-                        resultStr = new string(ASCII, 1) + resultStr;
+                        int asciiValue = numberStr[charIndex] + 1;
+                        var ascii = (char) asciiValue;
+                        resultStr = new string(ascii, 1) + resultStr;
                     }
                 }
                 else
