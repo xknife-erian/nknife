@@ -52,6 +52,7 @@
     <Compile Include="ScpiCommand.cs" />
     <Compile Include="ScpiCommandList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScpiCommandQueue.cs" />
     <Compile Include="ScpiParseException.cs" />
     <Compile Include="ScpiParser.cs" />
   </ItemGroup>

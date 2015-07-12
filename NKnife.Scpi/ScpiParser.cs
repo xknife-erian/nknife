@@ -22,7 +22,7 @@ namespace ScpiKnife
             var rootCmd = new ScpiCommand(isScpi);
             foreach (XmlElement confEle in nodes)
             {
-                rootCmd.Content = confEle.GetAttribute("content");
+                rootCmd.Description = confEle.GetAttribute("content");
                 rootCmd.Command = confEle.GetAttribute("command");
                 if (!confEle.HasChildNodes)
                     continue;
@@ -64,7 +64,7 @@ namespace ScpiKnife
         private static ScpiCommand ParseGpibCommand(bool isScpi, XmlElement element, string rootCmd)
         {
             var cmd = new ScpiCommand(isScpi);
-            cmd.Content = element.GetAttribute("content");
+            cmd.Description = element.GetAttribute("content");
             if (element.LocalName == "command")
                 cmd.Command = string.Format("{0}:{1}", rootCmd, element.GetAttribute("command"));
             else if (element.LocalName == "param")

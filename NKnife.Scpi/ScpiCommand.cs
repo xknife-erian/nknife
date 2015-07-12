@@ -13,13 +13,13 @@
         public ScpiCommand(bool isStandard)
         {
             IsStandard = isStandard;
-            Interval = 500;
+            Interval = 300;
         }
 
         public ScpiCommand Next { get; set; }
 
         public bool IsStandard { get; set; }
-        public string Content { get; set; }
+        public string Description { get; set; }
         public string Command { get; set; }
         public long Interval { get; set; }
 
@@ -27,7 +27,7 @@
 
         public string Build()
         {
-            return Content;
+            return Description;
         }
 
         public override string ToString()
