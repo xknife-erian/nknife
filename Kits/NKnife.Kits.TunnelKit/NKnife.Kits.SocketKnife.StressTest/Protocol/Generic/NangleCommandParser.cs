@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using NKnife.Protocol.Generic;
 
-namespace NKnife.Kits.SocketKnife.StressTest.Protocol
+namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Generic
 {
     /// <summary>
     /// datagram：目的地址（4字节）+命令字（2字节）+数据（不定长）

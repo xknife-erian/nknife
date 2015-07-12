@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace NKnife.Kits.SocketKnife.StressTest.Base
+{
+    public class SessionWrapper
+    {
+        public long Id { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}", Id);
+        }
+    }
+}

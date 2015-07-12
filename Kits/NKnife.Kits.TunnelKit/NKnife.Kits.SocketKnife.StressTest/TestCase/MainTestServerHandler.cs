@@ -18,10 +18,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         {
             byte[] command = protocol.Command;
             byte[] message = _Family.Generate(protocol);
-            _logger.Debug(string.Format("server[收到{0}] <== {1},{2}", sessionId, command.ToHexString(), message.ToHexString()));
+            _logger.Debug(string.Format("server[收到{0}]<==[{1}], {2}", sessionId, command.ToHexString(), message.ToHexString()));
 
             WriteToSession(sessionId,protocol);
-            _logger.Debug(string.Format("server[发出{0}] <== {1},{2}", sessionId, command.ToHexString(), message.ToHexString()));
+            _logger.Debug(string.Format("server[发出{0}]==>[{1}], {2}", sessionId, command.ToHexString(), message.ToHexString()));
         }
 
         

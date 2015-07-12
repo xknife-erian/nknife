@@ -23,36 +23,165 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
     public class MainTestCase
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private int _ServerListenPort = Properties.Settings.Default.ServerPort;
         private readonly BytesProtocolFamily _Family = DI.Get<BytesProtocolFamily>();
         private KnifeSocketServer _Server;
         private List<KnifeLongSocketClient> _Clients = new List<KnifeLongSocketClient>();
-
         private List<MainTestClientHandler> _ClientHandlers = new List<MainTestClientHandler>();
 
 
         private MainTestOption _TestOption;
         private TestServerMonitorFilter _TestMonitorFilter;
-        public void Start(MainTestOption testOption, TestServerMonitorFilter testMonitorFilter)
-        {
-            _TestOption = testOption;
-            _TestMonitorFilter = testMonitorFilter;
-            var serverConfig = (SocketServerConfig)DI.Get<SocketConfig>("Server");
-            serverConfig.MaxConnectCount = 1000;
-            serverConfig.MaxSessionTimeout = 0;
-            var clientConfig = DI.Get<SocketConfig>("Client");
-            _Server = BuildServer(serverConfig, new MainTestServerHandler(), testMonitorFilter);
 
-            Task.Factory.StartNew(() =>
+        public bool BuildServer(TestServerMonitorFilter testMonitorFilter,MainTestServerHandler handler)
+        {
+            try
             {
-                for (int i = 0; i < testOption.ClientCount; i++)
+                var serverConfig = (SocketServerConfig)DI.Get<SocketConfig>("Server");
+                serverConfig.MaxConnectCount = 1000;
+                serverConfig.MaxSessionTimeout = 0;
+                _Server = BuildServer(serverConfig, handler, testMonitorFilter);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveServer()
+        {
+            try
+            {
+                int count = _ClientHandlers.Count;
+                foreach (var handler in _ClientHandlers)
                 {
-                    var clientHandler = new MainTestClientHandler();
-                    var client = BuildClient(clientConfig, clientHandler);
-                    _Clients.Add(client);
-                    _ClientHandlers.Add(clientHandler);
-                    Thread.Sleep(100);
+                    handler.StopSendingTimer();
                 }
-            });
+                foreach (var client in _Clients)
+                {
+                    client.Stop();
+                }
+
+                Task.Factory.StartNew(() =>
+                {
+                    Thread.Sleep(count * 100);
+                    if (_Server != null)
+                        _Server.Stop();
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool StartServer()
+        {
+            try
+            {
+                if (_Server != null)
+                    return _Server.Start();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("StartServer遇到异常：{0}",ex.Message));
+                return false;
+            }
+        }
+
+        public bool StopServer()
+        {
+            try
+            {
+                int count = _ClientHandlers.Count;
+                foreach (var handler in _ClientHandlers)
+                {
+                    handler.StopSendingTimer();
+                }
+                foreach (var client in _Clients)
+                {
+                    client.Stop();
+                }
+
+                Task.Factory.StartNew(() =>
+                {
+                    Thread.Sleep(count * 100);
+                    if (_Server != null)
+                        _Server.Stop();
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("StopServer遇到异常：{0}", ex.Message));
+                return false;
+            }
+        }
+
+        public bool BuildCient(MainTestOption testOption)
+        {
+            try
+            {
+                _TestOption = testOption;
+                var clientConfig = DI.Get<SocketConfig>("Client");
+
+                Task.Factory.StartNew(() =>
+                {
+                    for (int i = 0; i < testOption.ClientCount; i++)
+                    {
+                        var clientHandler = new MainTestClientHandler();
+                        var client = BuildClient(clientConfig, clientHandler);
+                        _Clients.Add(client);
+                        _ClientHandlers.Add(clientHandler);
+                        Thread.Sleep(100);
+                    }
+                });
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveClient()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool StartClientConnection()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool StopClientConnection()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public void AddTalk()
@@ -80,27 +209,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         }
 
-        public void Stop()
-        {
-            int count = _ClientHandlers.Count;
-            foreach (var handler in _ClientHandlers)
-            {
-                handler.StopSendingTimer();
-            }
-            foreach (var client in _Clients)
-            {
-                client.Stop();
-            }
-
-            Task.Factory.StartNew(() =>
-            {
-                Thread.Sleep(count * 100);
-                if(_Server !=null)
-                    _Server.Stop();
-            });
-
-        }
-
         private KnifeSocketServer BuildServer(SocketConfig config, BaseProtocolHandler<byte[]> handler, TestServerMonitorFilter testMonitorFilter)
         {
             var server = DI.Get<KnifeSocketServer>();
@@ -118,11 +226,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
             tunnel.AddFilters(testMonitorFilter);
             server.Config = config;
-            server.Configure(ipAddresses[0], 22011);
+            server.Configure(ipAddresses[0], _ServerListenPort);
             _logger.Info(string.Format("Server: {0}:{1}", ipAddresses[0], 22011));
 
             tunnel.BindDataConnector(server);
-            server.Start();
             return server;
         }
 
@@ -142,7 +249,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             tunnelClient.AddFilters(protocolFilter);
 
             client.Config = config;
-            client.Configure(ipAddresses[0], 22011);
+            client.Configure(ipAddresses[0], _ServerListenPort);
             _logger.Info(string.Format("Client: {0}:{1}", ipAddresses[0], 22011));
 
             tunnelClient.BindDataConnector(client);
@@ -150,7 +257,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             return client;
         }
 
-        private BytesProtocolFamily GetProtocolFamily()
+        public BytesProtocolFamily GetProtocolFamily()
         {
             _Family.FamilyName = "nangle-socket";
             return _Family;
