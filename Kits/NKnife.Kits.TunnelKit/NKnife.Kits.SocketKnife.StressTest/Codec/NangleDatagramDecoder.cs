@@ -80,6 +80,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
             return results.ToArray();
         }
 
+        /// <summary>
+        /// 验证数据的正确性，校验通过后去掉头部2个字节的长度域和尾部1个字节的校验和域
+        /// </summary>
+        /// <param name="tempDataGram"></param>
+        /// <param name="tempData"></param>
+        /// <returns></returns>
         public bool VerifyDataGram(List<byte> tempDataGram, out byte[] tempData)
         {
             int len = tempDataGram.Count;

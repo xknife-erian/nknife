@@ -23,7 +23,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
     public class MainTestCase
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-        private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
+        private readonly BytesProtocolFamily _Family = DI.Get<BytesProtocolFamily>();
         private KnifeSocketServer _Server;
         private List<KnifeLongSocketClient> _Clients = new List<KnifeLongSocketClient>();
 
@@ -101,15 +101,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         }
 
-        private KnifeSocketServer BuildServer(SocketConfig config, BaseProtocolHandler<string> handler, TestServerMonitorFilter testMonitorFilter)
+        private KnifeSocketServer BuildServer(SocketConfig config, BaseProtocolHandler<byte[]> handler, TestServerMonitorFilter testMonitorFilter)
         {
             var server = DI.Get<KnifeSocketServer>();
             var tunnel = DI.Get<ITunnel>("Server");
             var ipAddresses = UtilityNet.GetLocalIpv4();
 
-            StringProtocolFamily protocolFamily = GetProtocolFamily();
-            var protocolFilter = DI.Get<SocketProtocolFilter>();
-            var codec = DI.Get<StringCodec>();
+            BytesProtocolFamily protocolFamily = GetProtocolFamily();
+            var protocolFilter = DI.Get<SocketBytesProtocolFilter>();
+            var codec = DI.Get<BytesCodec>();
 
             protocolFilter.Bind(codec, protocolFamily);
             protocolFilter.AddHandlers(handler);
@@ -126,15 +126,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             return server;
         }
 
-        private KnifeLongSocketClient BuildClient(SocketConfig config, BaseProtocolHandler<string> handler)
+        private KnifeLongSocketClient BuildClient(SocketConfig config, BaseProtocolHandler<byte[]> handler)
         {
             var client = DI.Get<KnifeLongSocketClient>();
             var tunnelClient = DI.Get<ITunnel>("Client");
             var ipAddresses = UtilityNet.GetLocalIpv4();
 
-            StringProtocolFamily protocolFamily = GetProtocolFamily();
-            var protocolFilter = DI.Get<SocketProtocolFilter>();
-            var codec = DI.Get<StringCodec>();
+            BytesProtocolFamily protocolFamily = GetProtocolFamily();
+            var protocolFilter = DI.Get<SocketBytesProtocolFilter>();
+            var codec = DI.Get<BytesCodec>();
 
             protocolFilter.Bind(codec, protocolFamily);
             protocolFilter.AddHandlers(handler);
@@ -150,9 +150,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             return client;
         }
 
-        private StringProtocolFamily GetProtocolFamily()
+        private BytesProtocolFamily GetProtocolFamily()
         {
-            _Family.FamilyName = "socket-test";
+            _Family.FamilyName = "nangle-socket";
             return _Family;
         }
     }

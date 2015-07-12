@@ -9,19 +9,18 @@ using NKnife.Tunnel.Base;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
-    public class MainTestClientHandler : BaseProtocolHandler<string>
+    public class MainTestClientHandler : BaseProtocolHandler<byte[]>
     {
         private static readonly ILog _logger = LogManager.GetLogger<MainTestClientHandler>();
         private bool _OnSending;
         private int _TimerInterval;
-        public override List<string> Commands { get; set; }
+        public override List<byte[]> Commands { get; set; }
 
-        public override void Recevied(long sessionId, IProtocol<string> protocol)
+        public override void Recevied(long sessionId, IProtocol<byte[]> protocol)
         {
-            string command = protocol.Command;
-            string message = _Family.Generate(protocol);
-            string time = DateTime.Now.ToString("HH:mm:ss.fff");
-            _logger.Debug(string.Format("client[收到] <== {0},{1},{2}", time, command, message));
+            byte[] command = protocol.Command;
+            byte[] message = _Family.Generate(protocol);
+            _logger.Debug(string.Format("client[收到] <== {0},{1}", command.ToHexString(), message.ToHexString()));
         }
 
         public void StartSendingTimer(int timerInterval = 1000)
@@ -35,17 +34,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void SendLoop()
         {
-            var command = "test";
+            var command = new byte[]{0x00,0x01};
             var protocol = _Family.Build(command);
+            protocol.CommandParam = new byte[]{0x30,0x31,0x32,0x33};
             while (_OnSending)
             {
                 try
                 {
-                    protocol.CommandParam = DateTime.Now.ToString("HHmmss");
                     WriteToAllSession(protocol);
-                    string message = _Family.Generate(protocol);
-                    string time = DateTime.Now.ToString("HH:mm:ss.fff");
-                    _logger.Debug(string.Format("client[发出] <== {0},{1},{2}", time, command, message));
+                    var message = _Family.Generate(protocol);
+                    _logger.Debug(string.Format("client[发出] <== {0},{1}", command, message));
                 }
                 catch (Exception ex)
                 {
