@@ -8,6 +8,8 @@ using NKnife.Converts;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.StressTest.Base;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
 using NKnife.Kits.SocketKnife.StressTest.TestCase;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Generic;
@@ -243,6 +245,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ServerProtocolReceiveHistoryTextBox.Location = new System.Drawing.Point(3, 17);
             this.ServerProtocolReceiveHistoryTextBox.Multiline = true;
             this.ServerProtocolReceiveHistoryTextBox.Name = "ServerProtocolReceiveHistoryTextBox";
+            this.ServerProtocolReceiveHistoryTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.ServerProtocolReceiveHistoryTextBox.Size = new System.Drawing.Size(761, 90);
             this.ServerProtocolReceiveHistoryTextBox.TabIndex = 0;
             // 
@@ -412,8 +415,19 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             _TestMonitorFilter = new TestServerMonitorFilter();
             _TestMonitorFilter.StateChanged += StateChanged;
             _ProtocolHandler = new MainTestServerHandler();
+            _ProtocolHandler.ProtocolReceived += ProtocolReceived;
             _Kernel.BuildServer(_TestMonitorFilter, _ProtocolHandler);
             base.OnShown(e);
+        }
+
+        private void ProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
+        {
+            ServerProtocolReceiveHistoryTextBox.ThreadSafeInvoke(() =>
+            {
+                ServerProtocolReceiveHistoryTextBox.Text = string.Format("{0} 服务端收到来自[Session {1}]协议[{2}]: \r\n{3}",
+                    DateTime.Now.ToString("HH:mm:ss fff"),nangleProtocolEventArgs.SessionId, NangleProtocolUtility.GetProtocolDescription(nangleProtocolEventArgs.Protocol), ServerProtocolReceiveHistoryTextBox.Text);
+                AppUtility.LimitTextBoxTextLengh(ServerProtocolReceiveHistoryTextBox);
+            });
         }
 
         protected override void OnClosed(EventArgs e)

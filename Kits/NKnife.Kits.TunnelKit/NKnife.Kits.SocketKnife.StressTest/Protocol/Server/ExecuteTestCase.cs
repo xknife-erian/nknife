@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NKnife.Kits.SocketKnife.StressTest.Base;
-using NKnife.Protocol.Generic;
+﻿using NKnife.Kits.SocketKnife.StressTest.Base;
 
-namespace NKnife.Kits.SocketKnife.StressTest.Protocol
+namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
 {
     /// <summary>
     /// 0x00	0x02	用例编号	发送使能	发送目的地址	发送时间间隔（ms）	发送测试数据长度	发送帧数

@@ -8,10 +8,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
 {
     public class ReadTestCaseResultReply:NangleProtocol
     {
-        public ReadTestCaseResultReply(byte[] targetAddress, byte[] testCaseIndex)
-            : base(targetAddress, new byte[] { 0x00, 0x06 })
+        public ReadTestCaseResultReply(byte[] targetAddress, byte[] testCaseIndex,byte[] sendFrameCount,byte[] receiveFrameCount,byte[] receiveFrameLostCount,byte[] receiveFrameErrorCount)
+            : base(targetAddress, new byte[] { 0x00, 0x07 })
         {
             CommandParamList.AddRange(testCaseIndex);
+            CommandParamList.AddRange(sendFrameCount);
+            CommandParamList.AddRange(receiveFrameCount);
+            CommandParamList.AddRange(receiveFrameLostCount);
+            CommandParamList.AddRange(receiveFrameErrorCount);
+
             CommandParam = CommandParamList.ToArray();
         }
 

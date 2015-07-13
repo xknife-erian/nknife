@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.Kits.SocketKnife.StressTest.TestCase
+namespace NKnife.Kits.SocketKnife.StressTest.Base
 {
     public class ServerStateEventArgs : EventArgs
     {

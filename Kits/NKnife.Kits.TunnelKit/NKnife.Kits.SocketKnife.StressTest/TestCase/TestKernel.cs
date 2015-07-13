@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.IoC;
+using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Base;
@@ -148,6 +150,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         #endregion
 
         #region client相关
+        public EventHandler<NangleProtocolEventArgs> MockClientProtocolReceived;
+
+        private void OnMockClientProtocolReceived(object sender, NangleProtocolEventArgs eventArgs)
+        {
+            var handler = MockClientProtocolReceived;
+            if (handler != null)
+            {
+                handler.Invoke(sender, eventArgs);
+            }
+        }
 
         public List<MainTestClientHandler> GetClientHandlers()
         {
@@ -165,6 +177,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                     for (int i = 0; i < testOption.ClientCount; i++)
                     {
                         var clientHandler = new MainTestClientHandler();
+                        clientHandler.ProtocolReceived+= ProtocolReceived;
                         var client = BuildClient(clientConfig, clientHandler);
                         _Clients.Add(client);
                         _ClientHandlers.Add(clientHandler);
@@ -179,6 +192,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             {
                 return false;
             }
+        }
+
+        private void ProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
+        {
+            OnMockClientProtocolReceived(sender, nangleProtocolEventArgs);
         }
 
         public bool RemoveClient()

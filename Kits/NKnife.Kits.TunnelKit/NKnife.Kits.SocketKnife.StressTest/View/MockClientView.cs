@@ -6,7 +6,10 @@ using System.Windows.Forms;
 using Common.Logging;
 using NKnife.Converts;
 using NKnife.IoC;
+using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Protocol;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Client;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
 using NKnife.Kits.SocketKnife.StressTest.TestCase;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Generic;
@@ -28,7 +31,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private System.Windows.Forms.Button SendProtocolButton;
         private System.Windows.Forms.ListBox ClientProtocolListBox;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox MockClientProtocolReceiveHistoryTextBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button2;
@@ -73,7 +76,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel3 = new System.Windows.Forms.Panel();
             this.ClientProtocolListBox = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.MockClientProtocolReceiveHistoryTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -235,7 +238,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.SendProtocolButton.TabIndex = 1;
             this.SendProtocolButton.Text = "发送协议";
             this.SendProtocolButton.UseVisualStyleBackColor = true;
-            this.SendProtocolButton.Click += new System.EventHandler(this.SendProtocolButton_Click);
+            this.SendProtocolButton.Click += new System.EventHandler(this.SendProtocolButtonClick);
             // 
             // label5
             // 
@@ -281,11 +284,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ClientProtocolListBox.Name = "ClientProtocolListBox";
             this.ClientProtocolListBox.Size = new System.Drawing.Size(193, 268);
             this.ClientProtocolListBox.TabIndex = 0;
-            this.ClientProtocolListBox.Click += new System.EventHandler(this.ClientProtocolListBox_Click);
+            this.ClientProtocolListBox.Click += new System.EventHandler(this.ClientProtocolListBoxClick);
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.MockClientProtocolReceiveHistoryTextBox);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 100);
             this.groupBox3.Name = "groupBox3";
@@ -294,14 +297,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "协议接收及提示窗口";
             // 
-            // textBox1
+            // MockClientProtocolReceiveHistoryTextBox
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 17);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(528, 122);
-            this.textBox1.TabIndex = 0;
+            this.MockClientProtocolReceiveHistoryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MockClientProtocolReceiveHistoryTextBox.Location = new System.Drawing.Point(3, 17);
+            this.MockClientProtocolReceiveHistoryTextBox.Multiline = true;
+            this.MockClientProtocolReceiveHistoryTextBox.Name = "MockClientProtocolReceiveHistoryTextBox";
+            this.MockClientProtocolReceiveHistoryTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.MockClientProtocolReceiveHistoryTextBox.Size = new System.Drawing.Size(528, 122);
+            this.MockClientProtocolReceiveHistoryTextBox.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -386,11 +390,24 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         protected override void OnShown(EventArgs e)
         {
             _Kernel.MockClientAmountChanged += MockClientAmountChanged;
+            _Kernel.MockClientProtocolReceived += OnMockClientProtocolReceived;
             ClientProtocolListBox.Items.Add(new InitializeTestReply(new byte[] { 0x00, 0x00, 0x00, 0x00 }, 0x00));
             ClientProtocolListBox.Items.Add(new ExecuteTestCaseReply(new byte[] {0x00, 0x00, 0x00, 0x00}, 0x00));
             ClientProtocolListBox.Items.Add(new StopExecuteTestCaseReply(new byte[] { 0x00, 0x00, 0x00, 0x00 }, 0x00));
+            ClientProtocolListBox.Items.Add(new ReadTestCaseResultReply(
+                new byte[] { 0x00, 0x00, 0x00, 0x00 },
+                new byte[] { 0x00, 0x00 },
+                new byte[] { 0x00, 0x00, 0x00, 0x00 },
+                new byte[] { 0x00, 0x00, 0x00, 0x00 },
+                new byte[] { 0x00, 0x00, 0x00, 0x00 },
+                new byte[] { 0x00, 0x00, 0x00, 0x00 }));
+            ClientProtocolListBox.Items.Add(new TestRawData(new byte[] {0x00, 0x00, 0x00, 0x00}, 0x00,
+                new byte[] {0x00, 0x01}));
             base.OnShown(e);
         }
+
+
+
         #endregion
 
         /// <summary>
@@ -447,7 +464,25 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         }
 
-        private void SendProtocolButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 仿真客户端收到协议
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="nangleProtocolEventArgs"></param>
+        private void OnMockClientProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
+        {
+            MockClientProtocolReceiveHistoryTextBox.ThreadSafeInvoke(() =>
+            {
+                var index = _Kernel.GetClientHandlers().IndexOf(sender as MainTestClientHandler) + 1;
+                MockClientProtocolReceiveHistoryTextBox.Text = string.Format("{0} 仿真客户端[{1}]收到协议[{2}]: \r\n{3}",
+                     DateTime.Now.ToString("HH:mm:ss fff"), index, NangleProtocolUtility.GetProtocolDescription(nangleProtocolEventArgs.Protocol), MockClientProtocolReceiveHistoryTextBox.Text);
+                AppUtility.LimitTextBoxTextLengh(MockClientProtocolReceiveHistoryTextBox);
+            });
+        }
+
+
+
+        private void SendProtocolButtonClick(object sender, EventArgs e)
         {
             if (ConnectedMockClientListBox.SelectedIndex < 0)
             {
@@ -477,7 +512,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         }
 
-        private void ClientProtocolListBox_Click(object sender, EventArgs e)
+        private void ClientProtocolListBoxClick(object sender, EventArgs e)
         {
             if (ClientProtocolListBox.SelectedIndex >= 0)
             {

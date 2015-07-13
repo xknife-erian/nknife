@@ -268,6 +268,7 @@ namespace NKnife.Tunnel.Base
                 {
                     foreach (var handler in _Handlers)
                     {
+                        //handler Commands.Count为0时，接收处理所有的协议，否则，处理Commands指定的协议
                         if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
                         {
                             handler.Recevied(id, protocol);

@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\AppUtility.cs" />
     <Compile Include="Base\NangleProtocol.cs" />
     <Compile Include="Base\SessionWrapper.cs" />
     <Compile Include="Codec\NangleCodecUtility.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Protocol\Client\InitializeTestReply.cs" />
     <Compile Include="Protocol\Client\ReadTestCaseResultReply.cs" />
     <Compile Include="Protocol\Client\StopExecuteTestCaseReply.cs" />
+    <Compile Include="Protocol\Generic\NangleProtocolUtility.cs" />
     <Compile Include="Protocol\Server\ExecuteTestCase.cs" />
     <Compile Include="Protocol\Generic\NangleCommandParser.cs" />
     <Compile Include="Codec\NangleDatagramDecoder.cs" />
@@ -83,12 +85,13 @@
     <Compile Include="Protocol\Server\InitializeTest.cs" />
     <Compile Include="Protocol\Server\ReadTestCaseResult.cs" />
     <Compile Include="Protocol\Server\StopExecuteTestCase.cs" />
-    <Compile Include="Protocol\Server\TestRawData.cs" />
+    <Compile Include="Protocol\TestRawData.cs" />
+    <Compile Include="Base\NangleProtocolEventArgs.cs" />
     <Compile Include="TestCase\TestKernel.cs" />
     <Compile Include="TestCase\MainTestClientHandler.cs" />
     <Compile Include="TestCase\MainTestServerHandler.cs" />
     <Compile Include="TestCase\MainTestOption.cs" />
-    <Compile Include="TestCase\ServerStateEventArgs.cs" />
+    <Compile Include="Base\ServerStateEventArgs.cs" />
     <Compile Include="TestCase\TestServerMonitorFilter.cs" />
     <Compile Include="View\MockClientView.cs">
       <SubType>Form</SubType>
