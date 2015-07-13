@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Logging;
+using Microsoft.VisualBasic.CompilerServices;
 using NKnife.Protocol;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
@@ -66,6 +67,29 @@ namespace NKnife.Tunnel.Base
             }
         }
 
+        /// <summary>
+        /// 发送原始数据，帮助方法
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <param name="data"></param>
+        public virtual void WriteToSession(long sessionId, byte[] data)
+        {
+            try
+            {
+                EventHandler<SessionEventArgs> handler = SendToSession;
+                if (handler != null)
+                {
+                    var session = new TunnelSession { Id = sessionId, Data = data };
+                    var e = new SessionEventArgs(session);
+                    handler.Invoke(this, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("发送data异常,{0}", ex));
+            }
+        }
+
         public virtual void WriteToAllSession(IProtocol<TData> protocol)
         {
             try
@@ -82,6 +106,23 @@ namespace NKnife.Tunnel.Base
             catch (Exception ex)
             {
                 _logger.Warn(string.Format("发送protocol异常,{0}", ex));
+            }
+        }
+
+        public virtual void WriteToAllSession(byte[] data)
+        {
+            try
+            {
+                EventHandler<SessionEventArgs> handler = SendToAll;
+                if (handler != null)
+                {
+                    var session = new TunnelSession { Data = data };
+                    handler.Invoke(this, new SessionEventArgs(session)); // new EventArgs<byte[]>(data));
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(string.Format("发送data异常,{0}", ex));
             }
         }
     }

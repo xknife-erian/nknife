@@ -11,7 +11,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Base
 
         public override string ToString()
         {
-            return string.Format("{0}", Id);
+            return string.Format("Session {0}", Id);
         }
     }
 }

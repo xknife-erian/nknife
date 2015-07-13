@@ -19,8 +19,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
     public class ServerView:DockContent
     {
         private static readonly ILog _logger = LogManager.GetLogger<ServerView>();
-        private MainTestCase _Kernel = DI.Get<MainTestCase>();
-        BytesCodec _Codec = DI.Get<BytesCodec>();
+        private TestKernel _Kernel = DI.Get<TestKernel>();
+        private BytesCodec _Codec = DI.Get<BytesCodec>();
         private MainTestServerHandler _ProtocolHandler;
         private TestServerMonitorFilter _TestMonitorFilter;
         private bool _OnTesting;
@@ -76,27 +76,27 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ServerProtocolReceiveHistoryTextBox = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.DataToSendByServerTextBox = new System.Windows.Forms.TextBox();
-            this.ConnectedClientListBox = new System.Windows.Forms.ListBox();
             this.SendProtocolButton = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.ServerProtocolListBox = new System.Windows.Forms.ListBox();
+            this.ConnectedClientListBox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -150,7 +150,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(129, 94);
+            this.label5.Location = new System.Drawing.Point(136, 163);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(113, 12);
             this.label5.TabIndex = 18;
@@ -159,7 +159,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 94);
+            this.label2.Location = new System.Drawing.Point(15, 163);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 16;
@@ -167,7 +167,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // ClientSendIntervalTextBox
             // 
-            this.ClientSendIntervalTextBox.Location = new System.Drawing.Point(86, 91);
+            this.ClientSendIntervalTextBox.Location = new System.Drawing.Point(93, 160);
             this.ClientSendIntervalTextBox.Name = "ClientSendIntervalTextBox";
             this.ClientSendIntervalTextBox.Size = new System.Drawing.Size(47, 21);
             this.ClientSendIntervalTextBox.TabIndex = 15;
@@ -258,6 +258,20 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "协议发送窗口";
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.DataToSendByServerTextBox);
+            this.panel3.Controls.Add(this.SendProtocolButton);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.ClientSendIntervalTextBox);
+            this.panel3.Controls.Add(this.label5);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(162, 17);
+            this.panel3.Name = "panel3";
+            this.panel3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.panel3.Size = new System.Drawing.Size(602, 392);
+            this.panel3.TabIndex = 22;
+            // 
             // DataToSendByServerTextBox
             // 
             this.DataToSendByServerTextBox.Dock = System.Windows.Forms.DockStyle.Top;
@@ -267,25 +281,24 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.DataToSendByServerTextBox.Size = new System.Drawing.Size(592, 84);
             this.DataToSendByServerTextBox.TabIndex = 20;
             // 
-            // ConnectedClientListBox
-            // 
-            this.ConnectedClientListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ConnectedClientListBox.FormattingEnabled = true;
-            this.ConnectedClientListBox.ItemHeight = 12;
-            this.ConnectedClientListBox.Location = new System.Drawing.Point(3, 17);
-            this.ConnectedClientListBox.Name = "ConnectedClientListBox";
-            this.ConnectedClientListBox.Size = new System.Drawing.Size(207, 502);
-            this.ConnectedClientListBox.TabIndex = 19;
-            // 
             // SendProtocolButton
             // 
-            this.SendProtocolButton.Location = new System.Drawing.Point(17, 118);
+            this.SendProtocolButton.Location = new System.Drawing.Point(13, 109);
             this.SendProtocolButton.Name = "SendProtocolButton";
             this.SendProtocolButton.Size = new System.Drawing.Size(111, 32);
             this.SendProtocolButton.TabIndex = 1;
             this.SendProtocolButton.Text = "发送协议";
             this.SendProtocolButton.UseVisualStyleBackColor = true;
             this.SendProtocolButton.Click += new System.EventHandler(this.SendProtocolButtonClick);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.ServerProtocolListBox);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(3, 17);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(159, 392);
+            this.panel2.TabIndex = 21;
             // 
             // ServerProtocolListBox
             // 
@@ -297,6 +310,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ServerProtocolListBox.Size = new System.Drawing.Size(159, 392);
             this.ServerProtocolListBox.TabIndex = 0;
             this.ServerProtocolListBox.Click += new System.EventHandler(this.ServerProtocolListBoxClick);
+            // 
+            // ConnectedClientListBox
+            // 
+            this.ConnectedClientListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ConnectedClientListBox.FormattingEnabled = true;
+            this.ConnectedClientListBox.ItemHeight = 12;
+            this.ConnectedClientListBox.Location = new System.Drawing.Point(3, 17);
+            this.ConnectedClientListBox.Name = "ConnectedClientListBox";
+            this.ConnectedClientListBox.Size = new System.Drawing.Size(207, 502);
+            this.ConnectedClientListBox.TabIndex = 19;
             // 
             // panel1
             // 
@@ -336,29 +359,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "已连接客户端列表";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.ServerProtocolListBox);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(3, 17);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(159, 392);
-            this.panel2.TabIndex = 21;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.DataToSendByServerTextBox);
-            this.panel3.Controls.Add(this.SendProtocolButton);
-            this.panel3.Controls.Add(this.label2);
-            this.panel3.Controls.Add(this.ClientSendIntervalTextBox);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(162, 17);
-            this.panel3.Name = "panel3";
-            this.panel3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel3.Size = new System.Drawing.Size(602, 392);
-            this.panel3.TabIndex = 22;
-            // 
             // ServerView
             // 
             this.ClientSize = new System.Drawing.Size(984, 632);
@@ -374,15 +374,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }

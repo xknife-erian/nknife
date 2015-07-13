@@ -21,7 +21,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.IoC
         public override void Load()
         {
             //逻辑
-            Bind<MainTestCase>().ToSelf().InSingletonScope();
+            Bind<TestKernel>().ToSelf().InSingletonScope();
 
             //通讯协议相关
             Bind<ITunnel>().To<KnifeTunnel>().Named("Server");

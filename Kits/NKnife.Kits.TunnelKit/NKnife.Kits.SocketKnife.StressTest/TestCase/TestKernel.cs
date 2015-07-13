@@ -20,7 +20,7 @@ using SocketKnife.Interfaces;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
-    public class MainTestCase
+    public class TestKernel
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
         private int _ServerListenPort = Properties.Settings.Default.ServerPort;
@@ -28,11 +28,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private KnifeSocketServer _Server;
         private List<KnifeLongSocketClient> _Clients = new List<KnifeLongSocketClient>();
         private List<MainTestClientHandler> _ClientHandlers = new List<MainTestClientHandler>();
-
+        public EventHandler MockClientAmountChanged;
 
         private MainTestOption _TestOption;
         private TestServerMonitorFilter _TestMonitorFilter;
 
+        #region server相关
         public bool BuildServer(TestServerMonitorFilter testMonitorFilter,MainTestServerHandler handler)
         {
             try
@@ -121,6 +122,37 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             }
         }
 
+        private KnifeSocketServer BuildServer(SocketConfig config, BaseProtocolHandler<byte[]> handler, TestServerMonitorFilter testMonitorFilter)
+        {
+            var server = DI.Get<KnifeSocketServer>();
+            var tunnel = DI.Get<ITunnel>("Server");
+            var ipAddresses = UtilityNet.GetLocalIpv4();
+
+            BytesProtocolFamily protocolFamily = GetProtocolFamily();
+            var protocolFilter = DI.Get<SocketBytesProtocolFilter>();
+            var codec = DI.Get<BytesCodec>();
+
+            protocolFilter.Bind(codec, protocolFamily);
+            protocolFilter.AddHandlers(handler);
+
+            tunnel.AddFilters(protocolFilter);
+
+            tunnel.AddFilters(testMonitorFilter);
+            server.Config = config;
+            server.Configure(ipAddresses[0], _ServerListenPort);
+            _logger.Info(string.Format("Server: {0}:{1}", ipAddresses[0], 22011));
+
+            tunnel.BindDataConnector(server);
+            return server;
+        }
+        #endregion
+
+        #region client相关
+
+        public List<MainTestClientHandler> GetClientHandlers()
+        {
+            return _ClientHandlers;
+        } 
         public bool BuildCient(MainTestOption testOption)
         {
             try
@@ -136,6 +168,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                         var client = BuildClient(clientConfig, clientHandler);
                         _Clients.Add(client);
                         _ClientHandlers.Add(clientHandler);
+                        OnMockClientAmountChanged();
                         Thread.Sleep(100);
                     }
                 });
@@ -209,30 +242,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         }
 
-        private KnifeSocketServer BuildServer(SocketConfig config, BaseProtocolHandler<byte[]> handler, TestServerMonitorFilter testMonitorFilter)
-        {
-            var server = DI.Get<KnifeSocketServer>();
-            var tunnel = DI.Get<ITunnel>("Server");
-            var ipAddresses = UtilityNet.GetLocalIpv4();
-
-            BytesProtocolFamily protocolFamily = GetProtocolFamily();
-            var protocolFilter = DI.Get<SocketBytesProtocolFilter>();
-            var codec = DI.Get<BytesCodec>();
-
-            protocolFilter.Bind(codec, protocolFamily);
-            protocolFilter.AddHandlers(handler);
-
-            tunnel.AddFilters(protocolFilter);
-
-            tunnel.AddFilters(testMonitorFilter);
-            server.Config = config;
-            server.Configure(ipAddresses[0], _ServerListenPort);
-            _logger.Info(string.Format("Server: {0}:{1}", ipAddresses[0], 22011));
-
-            tunnel.BindDataConnector(server);
-            return server;
-        }
-
         private KnifeLongSocketClient BuildClient(SocketConfig config, BaseProtocolHandler<byte[]> handler)
         {
             var client = DI.Get<KnifeLongSocketClient>();
@@ -256,6 +265,18 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             client.Start();
             return client;
         }
+
+        private void OnMockClientAmountChanged()
+        {
+            var handler = MockClientAmountChanged;
+            if(handler !=null)
+                handler.Invoke(this,EventArgs.Empty);
+        }
+        #endregion
+
+
+
+
 
         public BytesProtocolFamily GetProtocolFamily()
         {
