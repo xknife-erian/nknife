@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Ninject.Modules;
 using NKnife.Kits.SocketKnife.StressTest.Codec;
+using NKnife.Kits.SocketKnife.StressTest.Kernel;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
 using NKnife.Kits.SocketKnife.StressTest.TestCase;

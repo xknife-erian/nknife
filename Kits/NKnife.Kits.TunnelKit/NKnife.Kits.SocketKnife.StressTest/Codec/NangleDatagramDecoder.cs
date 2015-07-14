@@ -53,7 +53,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
                                     }
 
                                     int tempFirstHeadIndex = tempDataGram.IndexOf(FirstHeadByte);
-                                    if (tempFirstHeadIndex > -1)
+                                    if (tempFirstHeadIndex > -1 && tempFirstHeadIndex < tempDataGram.Count - 1 && tempDataGram[tempFirstHeadIndex+1] == SecondHeadByte)
                                         //有问题了，不应该出现头字符，如果出现了，说明这条数据本身就不完整了，不需要去校验了，直接抛弃
                                     {
                                         i += tempFirstHeadIndex;

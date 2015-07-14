@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Common.Logging;
 using NKnife.Kits.SocketKnife.StressTest.Base;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Base;
 
-namespace NKnife.Kits.SocketKnife.StressTest.TestCase
+namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 {
-    public class MainTestServerHandler : BaseProtocolHandler<byte[]>
+    public class ServerHandler : BaseProtocolHandler<byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<MainTestServerHandler>();
+        private static readonly ILog _logger = LogManager.GetLogger<ServerHandler>();
 
         public override List<byte[]> Commands { get; set; }
 

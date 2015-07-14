@@ -1,50 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.StressTest.Base;
-using NKnife.Protocol;
+using NKnife.Kits.SocketKnife.StressTest.TestCase;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Base;
-using NKnife.Tunnel.Filters;
 using NKnife.Tunnel.Generic;
 using NKnife.Utility;
 using SerialKnife.Generic.Filters;
 using SocketKnife;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
-using SocketKnife.Interfaces;
 
-namespace NKnife.Kits.SocketKnife.StressTest.TestCase
+namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 {
-    public class TestKernel
+    public class TestKernel : IKernel
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-        private int _ServerListenPort = Properties.Settings.Default.ServerPort;
+        private readonly int _ServerListenPort = Properties.Settings.Default.ServerPort;
         private readonly BytesProtocolFamily _Family = DI.Get<BytesProtocolFamily>();
-        private KnifeSocketServer _Server;
-        private List<KnifeLongSocketClient> _Clients = new List<KnifeLongSocketClient>();
-        private List<MainTestClientHandler> _ClientHandlers = new List<MainTestClientHandler>();
+        public KnifeSocketServer Server { get; private set; }
+        public ServerHandler ProtocolHandler { get; private set; }
+
+        public List<KnifeLongSocketClient> Clients { get; private set; }
+        public List<MockClientHandler> ClientHandlers { get; private set; }
         public EventHandler MockClientAmountChanged;
 
         private MainTestOption _TestOption;
         private TestServerMonitorFilter _TestMonitorFilter;
 
+        public TestKernel()
+        {
+            ProtocolHandler = new ServerHandler();
+            Clients = new List<KnifeLongSocketClient>();
+            ClientHandlers = new List<MockClientHandler>();
+        }
+
         #region server相关
-        public bool BuildServer(TestServerMonitorFilter testMonitorFilter,MainTestServerHandler handler)
+        public bool BuildServer(TestServerMonitorFilter testMonitorFilter)
         {
             try
             {
                 var serverConfig = (SocketServerConfig)DI.Get<SocketConfig>("Server");
                 serverConfig.MaxConnectCount = 1000;
                 serverConfig.MaxSessionTimeout = 0;
-                _Server = BuildServer(serverConfig, handler, testMonitorFilter);
+                Server = BuildServer(serverConfig, testMonitorFilter);
                 return true;
             }
             catch (Exception ex)
@@ -57,12 +61,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         {
             try
             {
-                int count = _ClientHandlers.Count;
-                foreach (var handler in _ClientHandlers)
+                int count = ClientHandlers.Count;
+                foreach (var handler in ClientHandlers)
                 {
                     handler.StopSendingTimer();
                 }
-                foreach (var client in _Clients)
+                foreach (var client in Clients)
                 {
                     client.Stop();
                 }
@@ -70,8 +74,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 Task.Factory.StartNew(() =>
                 {
                     Thread.Sleep(count * 100);
-                    if (_Server != null)
-                        _Server.Stop();
+                    if (Server != null)
+                        Server.Stop();
                 });
                 return true;
             }
@@ -85,8 +89,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         {
             try
             {
-                if (_Server != null)
-                    return _Server.Start();
+                if (Server != null)
+                    return Server.Start();
                 return false;
             }
             catch (Exception ex)
@@ -100,12 +104,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         {
             try
             {
-                int count = _ClientHandlers.Count;
-                foreach (var handler in _ClientHandlers)
+                int count = ClientHandlers.Count;
+                foreach (var handler in ClientHandlers)
                 {
                     handler.StopSendingTimer();
                 }
-                foreach (var client in _Clients)
+                foreach (var client in Clients)
                 {
                     client.Stop();
                 }
@@ -113,8 +117,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 Task.Factory.StartNew(() =>
                 {
                     Thread.Sleep(count * 100);
-                    if (_Server != null)
-                        _Server.Stop();
+                    if (Server != null)
+                        Server.Stop();
                 });
                 return true;
             }
@@ -125,7 +129,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             }
         }
 
-        private KnifeSocketServer BuildServer(SocketConfig config, BaseProtocolHandler<byte[]> handler, TestServerMonitorFilter testMonitorFilter)
+        private KnifeSocketServer BuildServer(SocketConfig config, TestServerMonitorFilter testMonitorFilter)
         {
             var server = DI.Get<KnifeSocketServer>();
             var tunnel = DI.Get<ITunnel>("Server");
@@ -136,7 +140,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             var codec = DI.Get<BytesCodec>();
 
             protocolFilter.Bind(codec, protocolFamily);
-            protocolFilter.AddHandlers(handler);
+            protocolFilter.AddHandlers(ProtocolHandler);
 
             var logFilter = DI.Get<SerialLogFilter>();
             tunnel.AddFilters(logFilter);
@@ -163,24 +167,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 handler.Invoke(sender, eventArgs);
             }
         }
-
-        /// <summary>
-        /// 获得仿真客户端处理器列表
-        /// </summary>
-        /// <returns></returns>
-        public List<MainTestClientHandler> GetClientHandlers()
-        {
-            return _ClientHandlers;
-        }
-
-        /// <summary>
-        /// 获得仿真客户端列表
-        /// </summary>
-        /// <returns></returns>
-        public List<KnifeLongSocketClient> GetClients()
-        {
-            return _Clients;
-        } 
+ 
         public bool BuildCient(MainTestOption testOption)
         {
             try
@@ -192,11 +179,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 {
                     for (int i = 0; i < testOption.ClientCount; i++)
                     {
-                        var clientHandler = new MainTestClientHandler();
+                        var clientHandler = new MockClientHandler();
                         clientHandler.ProtocolReceived+= ProtocolReceived;
                         var client = BuildClient(clientConfig, clientHandler);
-                        _Clients.Add(client);
-                        _ClientHandlers.Add(clientHandler);
+                        Clients.Add(client);
+                        ClientHandlers.Add(clientHandler);
                         OnMockClientAmountChanged();
                         Thread.Sleep(100);
                     }
@@ -253,10 +240,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         public void AddTalk()
         {
-            if (_TestMonitorFilter.TalkCount + 1 < _ClientHandlers.Count)
+            if (_TestMonitorFilter.TalkCount + 1 < ClientHandlers.Count)
             {
                 _TestMonitorFilter.TalkCount += 1;
-                var clientHandler = _ClientHandlers[_TestMonitorFilter.TalkCount];
+                var clientHandler = ClientHandlers[_TestMonitorFilter.TalkCount];
                 clientHandler.StartSendingTimer(50); //发送间隔50毫秒
                 
                 _TestMonitorFilter.InvokeServerStateChanged();
@@ -265,9 +252,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         public void RemoveTalk()
         {
-            if (_TestMonitorFilter.TalkCount < _ClientHandlers.Count)
+            if (_TestMonitorFilter.TalkCount < ClientHandlers.Count)
             {
-                var clientHandler = _ClientHandlers[_TestMonitorFilter.TalkCount];
+                var clientHandler = ClientHandlers[_TestMonitorFilter.TalkCount];
                 clientHandler.StopSendingTimer();
                 _TestMonitorFilter.TalkCount -= 1;
 
@@ -307,10 +294,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 handler.Invoke(this,EventArgs.Empty);
         }
         #endregion
-
-
-
-
 
         public BytesProtocolFamily GetProtocolFamily()
         {

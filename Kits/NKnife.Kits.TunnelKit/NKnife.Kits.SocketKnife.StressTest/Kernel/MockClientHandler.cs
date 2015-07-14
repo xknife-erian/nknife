@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using Common.Logging;
 using NKnife.Kits.SocketKnife.StressTest.Base;
@@ -9,11 +7,11 @@ using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Base;
 
-namespace NKnife.Kits.SocketKnife.StressTest.TestCase
+namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 {
-    public class MainTestClientHandler : BaseProtocolHandler<byte[]>
+    public class MockClientHandler : BaseProtocolHandler<byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<MainTestClientHandler>();
+        private static readonly ILog _logger = LogManager.GetLogger<MockClientHandler>();
         private bool _OnSending;
         private int _TimerInterval;
         public override List<byte[]> Commands { get; set; }

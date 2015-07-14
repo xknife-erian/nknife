@@ -9,6 +9,7 @@ using Common.Logging;
 using NKnife.Converts;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Kernel;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
@@ -25,7 +26,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private static readonly ILog _logger = LogManager.GetLogger<ServerView>();
         private TestKernel _Kernel = DI.Get<TestKernel>();
         private BytesCodec _Codec = DI.Get<BytesCodec>();
-        private MainTestServerHandler _ProtocolHandler;
+
         private TestServerMonitorFilter _TestMonitorFilter;
         private bool _OnTesting;
 
@@ -455,9 +456,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
             _TestMonitorFilter = new TestServerMonitorFilter();
             _TestMonitorFilter.StateChanged += StateChanged;
-            _ProtocolHandler = new MainTestServerHandler();
-            _ProtocolHandler.ProtocolReceived += ProtocolReceived;
-            _Kernel.BuildServer(_TestMonitorFilter, _ProtocolHandler);
+
+            _Kernel.ProtocolHandler.ProtocolReceived += ProtocolReceived;
+            _Kernel.BuildServer(_TestMonitorFilter);
             base.OnShown(e);
         }
 
@@ -553,7 +554,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     byte[] data = UtilityConvert.HexToBytes(DataToSendByServerTextBox.Text);
                     if (InvokeFunctionOneTimeRadioButton.Checked) //只发一次
                     {
-                        _TestMonitorFilter.WriteToSession(sessionId, data);
+                        _Kernel.ProtocolHandler.WriteToSession(sessionId, data);
                     }
                     else
                     {
@@ -573,7 +574,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                         {
                             for (int i = 0; i < count; i++)
                             {
-                                _TestMonitorFilter.WriteToSession(sessionId, data);
+                                _Kernel.ProtocolHandler.WriteToSession(sessionId, data);
                                 Thread.Sleep(interval);
                             }
                         });

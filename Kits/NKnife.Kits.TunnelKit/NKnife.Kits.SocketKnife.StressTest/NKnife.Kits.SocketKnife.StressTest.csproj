@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\AppUtility.cs" />
+    <Compile Include="Base\IKernel.cs" />
+    <Compile Include="Base\ITestCase.cs" />
     <Compile Include="Base\NangleProtocol.cs" />
     <Compile Include="Base\SessionWrapper.cs" />
     <Compile Include="Codec\NangleCodecUtility.cs" />
@@ -87,12 +89,13 @@
     <Compile Include="Protocol\Server\StopExecuteTestCase.cs" />
     <Compile Include="Protocol\TestRawData.cs" />
     <Compile Include="Base\NangleProtocolEventArgs.cs" />
-    <Compile Include="TestCase\TestKernel.cs" />
-    <Compile Include="TestCase\MainTestClientHandler.cs" />
-    <Compile Include="TestCase\MainTestServerHandler.cs" />
-    <Compile Include="TestCase\MainTestOption.cs" />
+    <Compile Include="Kernel\TestKernel.cs" />
+    <Compile Include="Kernel\MockClientHandler.cs" />
+    <Compile Include="Kernel\ServerHandler.cs" />
+    <Compile Include="Kernel\MainTestOption.cs" />
     <Compile Include="Base\ServerStateEventArgs.cs" />
-    <Compile Include="TestCase\TestServerMonitorFilter.cs" />
+    <Compile Include="Kernel\TestServerMonitorFilter.cs" />
+    <Compile Include="TestCase\SingleTalkTestCase.cs" />
     <Compile Include="View\MockClientView.cs">
       <SubType>Form</SubType>
     </Compile>
