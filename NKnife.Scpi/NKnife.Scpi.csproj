@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parser\SscpiParser.cs" />
+    <None Include="Parser\ScpiParser.cs" />
     <Compile Include="Parser\IScpiCommandHandler.cs" />
     <Compile Include="Parser\ScpiCommandCaller.cs" />
     <Compile Include="Parser\ScpiException.cs" />

@@ -90,7 +90,7 @@ namespace NKnfie.Scpi.UnitTest
             var parser = new ScpiParser();
             var commandlist = parser.Parse(xmlelement);
             var command = commandlist.ElementAt(0);
-            Assert.AreEqual("重置", command.Content);
+            Assert.AreEqual("重置", command.Description);
             Assert.AreEqual("*RST", command.Command);
             Assert.AreEqual(500, command.Interval);
             Assert.AreEqual(true, command.IsStandard);

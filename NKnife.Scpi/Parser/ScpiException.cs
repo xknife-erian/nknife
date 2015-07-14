@@ -5,10 +5,6 @@ using System.Text;
 
 namespace ScpiKnife.Parser
 {
-    /**
-     * Base class for SCPI-related exceptions
-     */
-
     public class ScpiException : Exception
     {
 
@@ -18,9 +14,4 @@ namespace ScpiKnife.Parser
         }
 
     }
-
-    /**
-     * An exception that may be raised while parsing a malformed-query, or query
-     * that refers to an undefined command.
-     */
 }

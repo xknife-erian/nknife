@@ -7,10 +7,10 @@ namespace ScpiKnife.Parser
 {
     public class ScpiCommandCaller
     {
-        readonly SscpiParser.IScpiCommandHandler _Handler;
+        readonly IScpiCommandHandler _Handler;
         readonly string[] _Args;
 
-        public ScpiCommandCaller(SscpiParser.IScpiCommandHandler handler, string[] args)
+        public ScpiCommandCaller(IScpiCommandHandler handler, string[] args)
         {
             this._Handler = handler;
             this._Args = args;
@@ -18,7 +18,7 @@ namespace ScpiKnife.Parser
 
         public string Execute()
         {
-            return _Handler.handle(_Args);
+            return _Handler.Handle(_Args);
         }
     }
 }

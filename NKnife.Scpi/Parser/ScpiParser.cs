@@ -72,29 +72,29 @@ namespace ScpiKnife.Parser
  *
  */
 
-    public class SscpiParser
+    public class ScpiParser
     {
 
-        private readonly Dictionary<ScpiPath, IScpiCommandHandler> handlers = new Dictionary<>();
-        private readonly Dictionary<string, string> shortToLongCMD = new Dictionary<>();
-        private readonly Dictionary<string, List<ScpiCommandCaller>> acceptCache = new Dictionary<>();
-        private readonly Dictionary<string, LongAdder> acceptCacheKeyFrequency = new Dictionary<>();
-        private static readonly Pattern tokenPatterns;
-        private static readonly Pattern upperMatch;
-        private static readonly IScpiCommandHandler nullCMDHandler;
+        private readonly Dictionary<ScpiPath, IScpiCommandHandler> _Handlers = new Dictionary<ScpiPath, IScpiCommandHandler>();
+        private readonly Dictionary<string, string> _ShortToLongCmd = new Dictionary<string, string>();
+        private readonly Dictionary<string, List<ScpiCommandCaller>> _AcceptCache = new Dictionary<string, List<ScpiCommandCaller>>();
+        private readonly Dictionary<string, LongAdder> _AcceptCacheKeyFrequency = new Dictionary<string, LongAdder>();
+        private static readonly Pattern _tokenPatterns;
+        private static readonly Pattern _upperMatch;
+        private static readonly IScpiCommandHandler _nullCmdHandler;
         private static int MAX_CACHE_SIZE = 20;
         private static bool CACHE_QUERIES_WITH_ARGUMENTS = false;
 
-        static SscpiParser()
+        static ScpiParser()
         {
-            tokenPatterns = buildLexer();
-            upperMatch = Pattern.compile("[A-Z_*]+");
-            nullCMDHandler = (string[]
+            _tokenPatterns = buildLexer();
+            _upperMatch = Pattern.compile("[A-Z_*]+");
+            _nullCmdHandler = (string[]
             args) ->
             null;
         }
 
-        public SscpiParser()
+        public ScpiParser()
         {
         }
 
@@ -108,18 +108,18 @@ namespace ScpiKnife.Parser
         public void addHandler(string path, IScpiCommandHandler handler)
         {
             ScpiPath scpipath = new ScpiPath(path);
-            Iterator<string> elements = scpipath.Iterator();
+            IEnumerable<string> elements = scpipath.Iterator();
 
-            while (elements.hasNext())
+            while (element.hasNext())
             {
                 string element = getNonQueryPathElement(elements.next());
-                Matcher matcher = upperMatch.matcher(element);
+                Matcher matcher = _upperMatch.matcher(element);
                 if (matcher.find())
                 {
-                    shortToLongCMD.put(matcher.group(), element);
+                    _ShortToLongCmd.put(matcher.group(), element);
                 }
             }
-            handlers.put(scpipath, handler);
+            _Handlers.put(scpipath, handler);
         }
 
         private bool isQuery(string input)
@@ -157,10 +157,10 @@ namespace ScpiKnife.Parser
         public string[] accept(string query)
         {
             List<ScpiCommandCaller> commands;
-            if (MAX_CACHE_SIZE > 0 && acceptCache.containsKey(query))
+            if (MAX_CACHE_SIZE > 0 && _AcceptCache.containsKey(query))
             {
-                commands = acceptCache.get(query);
-                acceptCacheKeyFrequency.computeIfPresent(query, (k, v) ->
+                commands = _AcceptCache.get(query);
+                _AcceptCacheKeyFrequency.computeIfPresent(query, (k, v) ->
                 {
                     v.increment();
                     return v;
@@ -189,24 +189,24 @@ namespace ScpiKnife.Parser
                 {
                     synchronized(this)
                     {
-                        if (acceptCache.size() > MAX_CACHE_SIZE - 1)
+                        if (_AcceptCache.size() > MAX_CACHE_SIZE - 1)
                         {
                             string lowestFreqCmd = null;
                             Integer lowestFrequency = Integer.MAX_VALUE;
-                            for (string key : acceptCacheKeyFrequency.keySet())
+                            for (string key : _AcceptCacheKeyFrequency.keySet())
                             {
-                                Integer count = acceptCacheKeyFrequency.get(key).intValue();
+                                Integer count = _AcceptCacheKeyFrequency.get(key).intValue();
                                 if (count < lowestFrequency)
                                 {
                                     lowestFrequency = count;
                                     lowestFreqCmd = key;
                                 }
                             }
-                            acceptCacheKeyFrequency.remove(lowestFreqCmd);
-                            acceptCache.remove(lowestFreqCmd);
+                            _AcceptCacheKeyFrequency.remove(lowestFreqCmd);
+                            _AcceptCache.remove(lowestFreqCmd);
                         }
-                        acceptCache.put(query, commands);
-                        acceptCacheKeyFrequency.computeIfAbsent(query, k->
+                        _AcceptCache.put(query, commands);
+                        _AcceptCacheKeyFrequency.computeIfAbsent(query, k->
                         {
                             LongAdder longAdder = new LongAdder();
                             longAdder.increment();
@@ -237,7 +237,7 @@ namespace ScpiKnife.Parser
 
         private Dictionary<string, LongAdder> getCacheFrequency()
         {
-            return acceptCacheKeyFrequency;
+            return _AcceptCacheKeyFrequency;
         }
 
         /**
@@ -300,7 +300,7 @@ namespace ScpiKnife.Parser
                         // normalize all commands to long-version
                         bool isQuery = isQuery(token.data);
                         string queryKey = getNonQueryPathElement(token.data);
-                        string longCmd = shortToLongCMD.get(queryKey);
+                        string longCmd = _ShortToLongCmd.get(queryKey);
                         longCmd = (!isQuery) ? longCmd : longCmd + "?";
                         activePath.append((null == longCmd) ? token.data : longCmd);
                         inCommand = true;
@@ -317,7 +317,7 @@ namespace ScpiKnife.Parser
                         break;
                     case SEMICOLON:
                         // try to handle the current path
-                        IScpiCommandHandler activeHandler = handlers.get(activePath);
+                        IScpiCommandHandler activeHandler = _Handlers.get(activePath);
                         if (null != activeHandler)
                         {
                             commands.add(new ScpiCommandCaller(activeHandler,
@@ -325,7 +325,7 @@ namespace ScpiKnife.Parser
                         }
                         else
                         {
-                            commands.add(new ScpiCommandCaller(nullCMDHandler, new string[] {}));
+                            commands.add(new ScpiCommandCaller(_nullCmdHandler, new string[] {}));
                             throw new ScpiMissingHandlerException(activePath.Tostring());
                         }
                         arguments.clear();
@@ -349,7 +349,7 @@ namespace ScpiKnife.Parser
             // see optimization note for "tokenTypes" in SCPITokenType enum
             ScpiTokenType[] tokenTypes = ScpiTokenType.tokenTypes;
 
-            Matcher matcher = tokenPatterns.matcher(input);
+            Matcher matcher = _tokenPatterns.matcher(input);
             ScpiTokenType prevTokenType = ScpiTokenType.WHITESPACE;
             while (matcher.find())
             {
