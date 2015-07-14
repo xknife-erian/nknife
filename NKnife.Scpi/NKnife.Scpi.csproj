@@ -55,6 +55,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Parser\ScpiParser.cs" />
+    <Compile Include="Parser\IScpiCommandHandler.cs" />
+    <Compile Include="Parser\ScpiCommandCaller.cs" />
+    <Compile Include="Parser\ScpiException.cs" />
+    <Compile Include="Parser\ScpiMissingHandlerException.cs" />
+    <Compile Include="Parser\ScpiPath.cs" />
+    <Compile Include="Parser\ScpiToken.cs" />
+    <Compile Include="Parser\ScpiTokenType.cs" />
     <Compile Include="ScpiCommand.cs" />
     <Compile Include="ScpiCommandList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
