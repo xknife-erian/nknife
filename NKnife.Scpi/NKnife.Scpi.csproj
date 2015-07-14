@@ -55,6 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Parser\Class1.cs" />
+    <Compile Include="Parser\ScpiCommandCaller.cs" />
+    <Compile Include="Parser\ScpiPath.cs" />
+    <Compile Include="Parser\ScpiTokenTypeaa.cs" />
     <Compile Include="ScpiCommand.cs" />
     <Compile Include="ScpiCommandList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
