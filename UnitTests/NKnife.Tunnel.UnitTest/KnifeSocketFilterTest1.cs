@@ -133,7 +133,7 @@ namespace NKnife.Socket.UnitTest
         {
             public List<IProtocol<string>> ProcessDataPacketMethod(byte[] dataPacket, byte[] unFinished, Func<EndPoint, byte[], int> dataDecoder, EndPoint endPoint)
             {
-                return ProcessDataPacket(dataPacket, unFinished).ToList();
+                return ProcessDataPacket(dataPacket, ref unFinished).ToList();
             }
         }
     }

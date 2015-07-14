@@ -8,10 +8,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
 {
     public class InitializeTestReply:NangleProtocol
     {
-        public InitializeTestReply(byte[] targetAddress, byte result)
+        public InitializeTestReply(byte[] targetAddress, byte result,byte[] clientAddress)
             : base(targetAddress, new byte[] { 0x00, 0x01 })
         {
             CommandParamList.Add(result);
+            CommandParamList.AddRange(clientAddress);
             CommandParam = CommandParamList.ToArray();
         }
 

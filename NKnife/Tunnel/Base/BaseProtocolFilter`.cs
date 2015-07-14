@@ -111,7 +111,7 @@ namespace NKnife.Tunnel.Base
         /// <param name="dataPacket">当前新的数据包</param>
         /// <param name="unFinished">未完成处理的数据</param>
         /// <returns>未处理完成,待下个数据包到达时将要继续处理的数据(半包)</returns>
-        public virtual IEnumerable<IProtocol<T>> ProcessDataPacket(byte[] dataPacket, byte[] unFinished)
+        public virtual IEnumerable<IProtocol<T>> ProcessDataPacket(byte[] dataPacket, ref byte[] unFinished)
         {
             if (!UtilityCollection.IsNullOrEmpty(unFinished))
             {
@@ -135,13 +135,16 @@ namespace NKnife.Tunnel.Base
                 protocols = ParseProtocols(datagram);
             }
 
-            if (done != 0 && dataPacket.Length > done)
+            if (dataPacket.Length > done)
+            //if (done != 0 && dataPacket.Length > done)
             {
                 // 暂存半包数据，留待下条队列数据接包使用
                 unFinished = new byte[dataPacket.Length - done];
                 Buffer.BlockCopy(dataPacket, done, unFinished, 0, unFinished.Length);
                 _logger.Trace(string.Format("半包数据暂存,数据长度:{0}", unFinished.Length));
             }
+
+
 
             return protocols;
         }
@@ -215,7 +218,7 @@ namespace NKnife.Tunnel.Base
                         if (dataMonitor.ReceiveQueue.Count > 0)
                         {
                             byte[] data = dataMonitor.ReceiveQueue.Dequeue();
-                            IEnumerable<IProtocol<T>> protocols = ProcessDataPacket(data, unFinished);
+                            IEnumerable<IProtocol<T>> protocols = ProcessDataPacket(data, ref unFinished);
 
                             if (protocols != null)
                             {

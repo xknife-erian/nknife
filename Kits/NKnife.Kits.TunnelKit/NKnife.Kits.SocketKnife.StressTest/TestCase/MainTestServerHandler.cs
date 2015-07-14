@@ -32,9 +32,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         }
         public override void Recevied(long sessionId, IProtocol<byte[]> protocol)
         {
-            byte[] command = protocol.Command;
-            byte[] message = _Family.Generate(protocol);
-            _logger.Debug(string.Format("server[收到{0}]<==[{1}], {2}", sessionId, command.ToHexString(), message.ToHexString()));
+            //byte[] command = protocol.Command;
+            //byte[] message = _Family.Generate(protocol);
+            //_logger.Debug(string.Format("server[收到{0}]<==[{1}], {2}", sessionId, command.ToHexString(), message.ToHexString()));
 
             //针对不同的协议有不同的处理逻辑
 

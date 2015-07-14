@@ -15,6 +15,7 @@ using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Filters;
 using NKnife.Tunnel.Generic;
 using NKnife.Utility;
+using SerialKnife.Generic.Filters;
 using SocketKnife;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
@@ -137,12 +138,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             protocolFilter.Bind(codec, protocolFamily);
             protocolFilter.AddHandlers(handler);
 
+            var logFilter = DI.Get<SerialLogFilter>();
+            tunnel.AddFilters(logFilter);
             tunnel.AddFilters(protocolFilter);
 
             tunnel.AddFilters(testMonitorFilter);
             server.Config = config;
             server.Configure(ipAddresses[0], _ServerListenPort);
-            _logger.Info(string.Format("Server: {0}:{1}", ipAddresses[0], 22011));
+            _logger.Info(string.Format("Server: {0}:{1}", ipAddresses[0], _ServerListenPort));
 
             tunnel.BindDataConnector(server);
             return server;
@@ -161,9 +164,22 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             }
         }
 
+        /// <summary>
+        /// 获得仿真客户端处理器列表
+        /// </summary>
+        /// <returns></returns>
         public List<MainTestClientHandler> GetClientHandlers()
         {
             return _ClientHandlers;
+        }
+
+        /// <summary>
+        /// 获得仿真客户端列表
+        /// </summary>
+        /// <returns></returns>
+        public List<KnifeLongSocketClient> GetClients()
+        {
+            return _Clients;
         } 
         public bool BuildCient(MainTestOption testOption)
         {
@@ -241,7 +257,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             {
                 _TestMonitorFilter.TalkCount += 1;
                 var clientHandler = _ClientHandlers[_TestMonitorFilter.TalkCount];
-                clientHandler.StartSendingTimer(_TestOption.SendInterval);
+                clientHandler.StartSendingTimer(50); //发送间隔50毫秒
                 
                 _TestMonitorFilter.InvokeServerStateChanged();
             }

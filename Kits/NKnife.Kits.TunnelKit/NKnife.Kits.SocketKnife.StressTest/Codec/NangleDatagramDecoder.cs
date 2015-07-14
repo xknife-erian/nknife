@@ -116,7 +116,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
             {
                 sum += source[i];
             }
-            if(chk != (sum % 255)) //校验和不正确
+            if(chk != (sum % 256)) //校验和不正确
                 return false;
             return true;
         }
@@ -125,7 +125,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
         {
             if (bytes.Length != 2)
                 return 0; //长度不正确，返回0长度
-            return bytes[0]*255 + bytes[1];
+            return bytes[0]*256 + bytes[1];
         }
     }
 }

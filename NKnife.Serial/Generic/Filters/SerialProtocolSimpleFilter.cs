@@ -49,7 +49,7 @@ namespace SerialKnife.Generic.Filters
 
             //交由父类的处理函数处理
             var unfinished = new byte[] {};
-            IEnumerable<IProtocol<byte[]>> protocols = ProcessDataPacket(tempData, unfinished);
+            IEnumerable<IProtocol<byte[]>> protocols = ProcessDataPacket(tempData, ref unfinished);
 
             //将未完成解析的数据暂存，待下次收到数据后进行处理
             if (unfinished.Length > 0)

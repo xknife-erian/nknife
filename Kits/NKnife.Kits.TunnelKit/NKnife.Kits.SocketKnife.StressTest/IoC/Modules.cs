@@ -12,7 +12,9 @@ using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
 using NKnife.Tunnel;
 using NKnife.Tunnel.Common;
+using NKnife.Tunnel.Filters;
 using NKnife.Tunnel.Generic;
+using SerialKnife.Generic.Filters;
 
 namespace NKnife.Kits.SocketKnife.StressTest.IoC
 {
@@ -32,6 +34,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.IoC
 
             Bind<BytesDatagramDecoder>().To<NangleDatagramDecoder>();
             Bind<BytesDatagramEncoder>().To<NangleDatagramEncoder>();
+            Bind<SerialLogFilter>().To<SerialLogFilter>();
 
             //界面相关
             Bind<LogView>().ToSelf().InSingletonScope();
