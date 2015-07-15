@@ -8,6 +8,17 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Generic
 {
     public class NangleProtocolUtility
     {
+        static NangleProtocolUtility()
+        {
+            EmptyBytes4 = new byte[]{0x00,0x00,0x00,0x00};
+            EmptyBytes2 = new byte[] { 0x00, 0x00 };
+            ServerAddress = new byte[] { 0x00, 0x00, 0x00, 0x00 };
+        }
+
+        public static byte[] EmptyBytes4 { get; private set; }
+        public static byte[] EmptyBytes2 { get; private set; }
+        public static byte[] ServerAddress { get; private set; } //主机地址
+
         public static string GetProtocolDescription(BytesProtocol protocol)
         {
             string result = "";

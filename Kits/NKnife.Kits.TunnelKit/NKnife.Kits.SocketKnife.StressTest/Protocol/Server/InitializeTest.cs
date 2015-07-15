@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NKnife.Kits.SocketKnife.StressTest.Base;
-using NKnife.Protocol.Generic;
 
-namespace NKnife.Kits.SocketKnife.StressTest.Protocol
+namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
 {
     public class InitializeTest : NangleProtocol
     {

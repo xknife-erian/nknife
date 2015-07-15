@@ -64,6 +64,7 @@
     <Compile Include="Base\NangleProtocol.cs" />
     <Compile Include="Base\SessionWrapper.cs" />
     <Compile Include="Codec\NangleCodecUtility.cs" />
+    <Compile Include="Kernel\NangleServerFilter.cs" />
     <Compile Include="Protocol\Client\ExecuteTestCaseReply.cs" />
     <Compile Include="Protocol\Client\InitializeTestReply.cs" />
     <Compile Include="Protocol\Client\ReadTestCaseResultReply.cs" />
@@ -94,7 +95,6 @@
     <Compile Include="Kernel\ServerHandler.cs" />
     <Compile Include="Kernel\MainTestOption.cs" />
     <Compile Include="Base\ServerStateEventArgs.cs" />
-    <Compile Include="Kernel\TestServerMonitorFilter.cs" />
     <Compile Include="TestCase\SingleTalkTestCase.cs" />
     <Compile Include="View\MockClientView.cs">
       <SubType>Form</SubType>
