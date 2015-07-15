@@ -293,7 +293,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.UnitTest
             var data = GetAnyBytes();
             var len = 7 + data.Length;
 
-            src.AddRange(NangleCodecUtility.GetLengthFromIntToTwoBytes(len)); //长度
+            src.AddRange(NangleCodecUtility.ConvertFromIntToTwoBytes(len)); //长度
             src.AddRange(GetTargetAddress()); //目标地址
             src.AddRange(GetAnyCommand()); //命令
             src.AddRange(data); //数据

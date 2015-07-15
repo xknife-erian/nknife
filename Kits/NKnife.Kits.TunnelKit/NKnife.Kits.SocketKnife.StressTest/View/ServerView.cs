@@ -452,14 +452,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             ServerProtocolListBox.Items.Add(new InitializeTest(new byte[] { 0x00, 0x00, 0x00, 0x00 }, new byte[] { 0x00, 0x00, 0x00, 0x00 }));
             ServerProtocolListBox.Items.Add(
                 new ExecuteTestCase(
-                    new byte[] { 0x00, 0x00, 0x00, 0x00 },
-                    new byte[] {0x00, 0x00},
-                    0x01,
-                    new byte[] {0x00, 0x00, 0x00, 0x00},
-                    new byte[] {0x00, 0x00}, 
-                    new byte[] {0x00, 0x00},
-                    new byte[]{},
-                    new byte[] { 0x00, 0x00, 0x00, 0x00 }));
+                    NangleProtocolUtility.EmptyBytes4, //目标地址
+                    NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
+                    (byte) NangleProtocolUtility.SendEnable.Enable, //发送使能
+                    new byte[] {0x00, 0x00, 0x00, 0x00}, //发送目的地址
+                    NangleProtocolUtility.GetSendInterval(100), //发送时间间隔
+                    NangleProtocolUtility.GetTestDataLength(0), //发送测试数据长度
+                    NangleProtocolUtility.GetFrameCount(0))); //发送帧数
             ServerProtocolListBox.Items.Add(
                 new StopExecuteTestCase(new byte[]{0x00,0x00,0x00,0x00}, new byte[]{0x00,0x01}));
             ServerProtocolListBox.Items.Add(
@@ -621,8 +620,20 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private void ExecuteTestCaseButtonClick(object sender, EventArgs e)
         {
             var testcase = new SingleTalkTestCase();
-            var result = testcase.Start(_Kernel);
-            _logger.Info(string.Format("测试案例执行{0}",result?"成功":"失败"));
+            testcase.Finished += Testcase_Finished;
+            testcase.Start(_Kernel);
+            ExecuteTestCaseButton.Enabled = false;
+
+        }
+
+        void Testcase_Finished(object sender, TestCaseResultEventArgs e)
+        {
+            var result = e.Result;
+            _logger.Info(string.Format("测试案例执行{0}", result ? "成功" : "失败"));
+            ExecuteTestCaseButton.ThreadSafeInvoke(()=>
+            {
+                ExecuteTestCaseButton.Enabled = true;
+            });
         }
     }
 }

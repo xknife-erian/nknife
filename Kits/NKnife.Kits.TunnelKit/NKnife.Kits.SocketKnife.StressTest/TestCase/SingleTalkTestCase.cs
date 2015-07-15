@@ -4,10 +4,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Common.Logging;
 using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Codec;
 using NKnife.Kits.SocketKnife.StressTest.Kernel;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Client;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
 
@@ -22,54 +25,135 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private IKernel _Kernel;
         private ServerHandler _SeverHandler;
         private ManualResetEvent _TestStepResetEvent = new ManualResetEvent(false);
-        private int _ReplyWaitTimeout = 1000; //协议发送后，等待回复的超时时间，单位毫秒
+        private int _ReplyWaitTimeout = 10000; //协议发送后，等待回复的超时时间，单位毫秒
         #region ITestCase
-        public bool Start(IKernel kernel)
+        public void Start(IKernel kernel)
         {
-            _logger.Info("启动测试案例：SingleTalkTestCase");
-            _Kernel = kernel;
-            _SeverHandler = kernel.ServerHandler;
-            _SeverHandler.ProtocolReceived += OnProtocolReceived;
-            var sessionList = _Kernel.ServerProtocolFilter.SessionList;
-
-            if (sessionList.Count == 0)
+            Task.Factory.StartNew(() =>
             {
-                _logger.Warn("当前没有任何客户端连接，无法启动案例，本案例至少需要一个客户端连接");
-                ResetTestCase();
-                return false;
-            }
+                _logger.Info("启动测试案例：SingleTalkTestCase");
+                _Kernel = kernel;
+                _SeverHandler = kernel.ServerHandler;
+                _SeverHandler.ProtocolReceived += OnProtocolReceived;
+                var sessionList = _Kernel.ServerProtocolFilter.SessionList;
 
-            var sessionId = sessionList[0].Id;
-            //第一步执行初始化
-            _Kernel.ServerHandler.WriteToSession(sessionId, new InitializeTest(NangleProtocolUtility.EmptyBytes4, NangleProtocolUtility.ServerAddress));
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
-            {
-                _logger.Warn("发送协议InitializeTest后，等待回复超时");
-                ResetTestCase();
-                return false;
-            }
+                if (sessionList.Count == 0)
+                {
+                    _logger.Warn("当前没有任何客户端连接，无法启动案例，本案例至少需要一个客户端连接");
+                    OnTestCaseFinished(false);
+                    return;
+                }
 
-            return true;
+                var sessionId = sessionList[0].Id;
+                //第一步：执行初始化
+                SetOnWaitProtocol(InitializeTestReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionId, new InitializeTest(NangleProtocolUtility.EmptyBytes4, NangleProtocolUtility.ServerAddress));
+                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+                {
+                    _logger.Warn("发送协议InitializeTest后，等待回复超时");
+                    OnTestCaseFinished(false);
+                    return;
+                }
+                //收到了执行初始化的回复
+
+                //第二步：执行测试用例
+                SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionId, new ExecuteTestCase(
+                    NangleProtocolUtility.EmptyBytes4, //目标地址
+                    NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
+                    (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
+                    new byte[] { 0x00, 0x00, 0x00, 0x00 }, //发送目的地址
+                    NangleProtocolUtility.GetSendInterval(100), //发送时间间隔
+                    NangleProtocolUtility.GetTestDataLength(0), //发送测试数据长度
+                    NangleProtocolUtility.GetFrameCount(0) //发送帧数
+                    ));
+                _TestStepResetEvent.Reset();
+                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+                {
+                    _logger.Warn("发送协议ExecuteTestCase后，等待回复超时");
+                    OnTestCaseFinished(false);
+                    return;
+                }
+                //收到了执行测试用例的回复
+                //第三步：记录接下来收到的数据，并持续一段时间
+
+                Thread.Sleep(1000*5); //持续5秒钟时间
+
+                //第四步：调用停止执行测试用例
+
+                SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionId, new StopExecuteTestCase(
+                    NangleProtocolUtility.EmptyBytes4, //目标地址
+                    NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
+                    ));
+                _TestStepResetEvent.Reset();
+                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+                {
+                    _logger.Warn("发送协议StopExecuteTestCase后，等待回复超时");
+                    OnTestCaseFinished(false);
+                    return;
+                }
+                //收到了停止执行测试用例的回复
+
+                //第五步：读取测试用例执行结果
+                SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionId, new ReadTestCaseResult(
+                    NangleProtocolUtility.EmptyBytes4, //目标地址
+                    NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
+                    ));
+                _TestStepResetEvent.Reset();
+                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+                {
+                    _logger.Warn("发送协议ReadTestCaseResult后，等待回复超时");
+                    OnTestCaseFinished(false);
+                    return;
+                }
+                //收到测试用例结果
+
+                //第六步，比对检测到的数据和返回的测试用例结果是否一致，进行分析
+
+                OnTestCaseFinished(true);
+            });
         }
 
 
 
-        public bool Abort()
+
+        public void Abort()
         {
-            return true;
         }
 
-        public event EventHandler Finished;
-        public event EventHandler Aborted;
+        public event EventHandler<TestCaseResultEventArgs> Finished;
+        public event EventHandler<TestCaseResultEventArgs> Aborted;
         #endregion
 
-        private void ResetTestCase()
+        private int _CurrentCommandIntValue;
+        private void SetOnWaitProtocol(int commandIntValue)
+        {
+            _CurrentCommandIntValue = commandIntValue;
+        }
+
+        private void OnTestCaseFinished(bool result,string message="")
         {
             _SeverHandler.ProtocolReceived -= OnProtocolReceived;
+
+            var handler = Finished;
+            if(handler !=null)
+                handler.Invoke(this,new TestCaseResultEventArgs()
+                {
+                    Result = result,
+                    Message = message
+                });
         }
         private void OnProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
         {
-            _TestStepResetEvent.Set();
+            //TODO:验证当前收到的是正在等候的
+            var protocol = nangleProtocolEventArgs.Protocol;
+            var command = protocol.Command;
+            if (NangleCodecUtility.ConvertFromTwoBytesToInt(command) == _CurrentCommandIntValue)
+            {
+                _TestStepResetEvent.Set();
+            }
         }
     }
 }
