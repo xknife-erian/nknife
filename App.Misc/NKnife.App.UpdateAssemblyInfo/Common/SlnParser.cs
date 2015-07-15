@@ -12,10 +12,11 @@ namespace NKnife.App.UpdateAssemblyInfo.Common
     /// </summary>
     public class SlnParser : IParser<FileInfo, string[]>
     {
-        public string[] Parse(FileInfo source)
+        public bool TryParse(FileInfo source, out string[] result)
         {
             var lines = File.ReadAllLines(source.FullName);
-            return (from line in lines let mv = GetMatchValue(line) where string.IsNullOrEmpty(mv) select GetMatchValue(line)).ToArray();
+            result = (from line in lines let mv = GetMatchValue(line) where string.IsNullOrEmpty(mv) select GetMatchValue(line)).ToArray();
+            return true;
         }
 
         /// <summary>
