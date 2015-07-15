@@ -9,7 +9,7 @@ namespace ScpiKnife
 {
     public class ScpiParser : IParser<XmlElement, ScpiCommandList>
     {
-        public ScpiCommandList Parse(XmlElement element)
+        public bool TryParse(XmlElement element, out ScpiCommandList cmdlist)
         {
             string isScpiStr = element.GetAttribute("format");
             bool isScpi = true;
@@ -18,7 +18,7 @@ namespace ScpiKnife
             if (nodes == null)
                 throw new ScpiParseException();
 
-            var cmdlist = new ScpiCommandList();
+            cmdlist = new ScpiCommandList();
             var rootCmd = new ScpiCommand(isScpi);
             foreach (XmlElement confEle in nodes)
             {
@@ -58,7 +58,7 @@ namespace ScpiKnife
                     #endregion
                 }
             }
-            return cmdlist;
+            return true;
         }
 
         private static ScpiCommand ParseGpibCommand(bool isScpi, XmlElement element, string rootCmd)
