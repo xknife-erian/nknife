@@ -642,10 +642,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             ITestCase testcase = null;
             switch (TestCaseListComboBox.SelectedIndex)
             {
-                case -1:
+                case 0:
                     testcase= new SingleTalkTestCase();
                     break;
-                
+                case 1:
+                    testcase = new PointToPointTestCase();
+                    break;
+
             }
 
             if (testcase != null)

@@ -34,7 +34,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        public static int ConvertFromFourBytesToInt(byte[] bytes)
+        public static long ConvertFromFourBytesToInt(byte[] bytes)
         {
             if (bytes.Length == 4)
                 return bytes[0] * 256 * 256 * 256 + bytes[1] * 256 * 256 + bytes[2] * 256 + bytes[3];

@@ -126,10 +126,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private string VerifyTestCaseResult()
         {
-            var monitored = string.Format("实际监控测试结果：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
+            var monitored = string.Format("服务端监控测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
                 _MoniteredResult.TestCaseIndex, _MoniteredResult.FrameSent, _MoniteredResult.FrameReceived,
                 _MoniteredResult.FrameLost, _MoniteredResult.FrameError);
-            var replied = string.Format("读取返回测试结果：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
+            var replied = string.Format("客户端返回测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
                 _RepliedResult.TestCaseIndex, _RepliedResult.FrameSent, _RepliedResult.FrameReceived,
                 _RepliedResult.FrameLost,_RepliedResult.FrameError);
             return string.Format("{0}\r\n{1}", monitored, replied);
@@ -168,11 +168,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             var protocol = nangleProtocolEventArgs.Protocol;
             var command = protocol.Command;
             var commandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(command);
-            if (commandIntValue == _CurrentCommandIntValue)
-            {
-                _TestStepResetEvent.Set();
-            }
-
             if (commandIntValue == ReadTestCaseResultReply.CommandIntValue) //收到读取测试用例结果回复协议
             {
                 OnReadTestCaseResultReply(protocol);
@@ -180,7 +175,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             else if (commandIntValue == TestRawData.CommandIntValue) //收到测试数据帧
             {
                 _MoniteredResult.FrameReceived += 1;
+                _logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
             }
+
+            if (commandIntValue == _CurrentCommandIntValue)
+            {
+                _TestStepResetEvent.Set();
+            }
+
+
         }
 
         /// <summary>

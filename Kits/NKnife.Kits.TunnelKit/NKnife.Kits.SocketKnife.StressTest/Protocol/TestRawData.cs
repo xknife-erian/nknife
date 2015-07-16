@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NKnife.Kits.SocketKnife.StressTest.Base;
 using NKnife.Kits.SocketKnife.StressTest.Codec;
+using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Protocol
 {
@@ -28,6 +29,17 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol
         public override string ToString()
         {
             return "测试数据";
+        }
+
+        public static bool Parse(ref byte[] targetAddress, BytesProtocol protocol)
+        {
+            var commandParam = protocol.CommandParam;
+            if (commandParam.Length < 4)
+                return false;
+            Array.Copy(commandParam,0,targetAddress,0,4);
+
+            return true;
+
         }
     }
 }

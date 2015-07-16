@@ -9,18 +9,18 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         /// <summary>
         /// 发送帧数
         /// </summary>
-        public int FrameSent { get; set; }
+        public long FrameSent { get; set; }
         /// <summary>
         /// 接收帧数
         /// </summary>
-        public int FrameReceived { get; set; }
+        public long FrameReceived { get; set; }
         /// <summary>
         /// 接收丢失帧数
         /// </summary>
-        public int FrameLost { get; set; }
+        public long FrameLost { get; set; }
         /// <summary>
         /// 接收错误帧数
         /// </summary>
-        public int FrameError { get; set; }
+        public long FrameError { get; set; }
     }
 }
