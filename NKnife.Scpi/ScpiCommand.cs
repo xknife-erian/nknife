@@ -1,4 +1,7 @@
-﻿namespace ScpiKnife
+﻿using System.Data;
+using System.Xml;
+
+namespace ScpiKnife
 {
     /// <summary>
     /// 针对SCPI的指令的封装。
@@ -8,6 +11,22 @@
     /// </summary>
     public class ScpiCommand
     {
+        public static ScpiCommand Parse(XmlElement element)
+        {
+            //<scpi duration="200" hex="true">
+            //  <![CDATA[]]>
+            //</scpi>
+            var sc = new ScpiCommand 
+            {
+                Command = element.GetCDataElement().InnerText
+            };
+            int d;
+            if (!int.TryParse(element.GetAttribute("duration"), out d))
+                sc.Interval = 200;
+            sc.Interval = d;
+            return sc;
+        }
+
         public ScpiCommand()
             : this(true)
         {

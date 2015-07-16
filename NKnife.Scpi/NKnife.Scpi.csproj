@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScpiSubject.cs" />
     <None Include="Parser\ScpiParser.cs" />
     <Compile Include="Parser\IScpiCommandHandler.cs" />
     <Compile Include="Parser\ScpiCommandCaller.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="Parser\ScpiToken.cs" />
     <Compile Include="Parser\ScpiTokenType.cs" />
     <Compile Include="ScpiCommand.cs" />
-    <Compile Include="ScpiCommandList.cs" />
+    <Compile Include="ScpiGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScpiCommandQueue.cs" />
     <Compile Include="ScpiParseException.cs" />

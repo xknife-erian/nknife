@@ -7,9 +7,9 @@ using NKnife.Interface;
 
 namespace ScpiKnife
 {
-    public class ScpiParser : IParser<XmlElement, ScpiCommandList>
+    public class ScpiParser : IParser<XmlElement, ScpiGroup>
     {
-        public bool TryParse(XmlElement element, out ScpiCommandList cmdlist)
+        public bool TryParse(XmlElement element, out ScpiGroup cmdlist)
         {
             string isScpiStr = element.GetAttribute("format");
             bool isScpi = true;
@@ -18,7 +18,7 @@ namespace ScpiKnife
             if (nodes == null)
                 throw new ScpiParseException();
 
-            cmdlist = new ScpiCommandList();
+            cmdlist = new ScpiGroup();
             var rootCmd = new ScpiCommand(isScpi);
             foreach (XmlElement confEle in nodes)
             {
