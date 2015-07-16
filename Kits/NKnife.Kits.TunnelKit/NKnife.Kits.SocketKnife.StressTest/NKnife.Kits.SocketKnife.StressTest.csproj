@@ -97,6 +97,7 @@
     <Compile Include="Kernel\MainTestOption.cs" />
     <Compile Include="Base\ServerStateEventArgs.cs" />
     <Compile Include="TestCase\SingleTalkTestCase.cs" />
+    <Compile Include="TestCase\TestCaseResult.cs" />
     <Compile Include="View\MockClientView.cs">
       <SubType>Form</SubType>
     </Compile>

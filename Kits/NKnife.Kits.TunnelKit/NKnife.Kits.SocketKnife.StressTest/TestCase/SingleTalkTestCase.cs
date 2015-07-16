@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -13,6 +14,7 @@ using NKnife.Kits.SocketKnife.StressTest.Protocol;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Client;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
+using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
@@ -26,9 +28,23 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private ServerHandler _SeverHandler;
         private ManualResetEvent _TestStepResetEvent = new ManualResetEvent(false);
         private int _ReplyWaitTimeout = 10000; //协议发送后，等待回复的超时时间，单位毫秒
+
+        private TestCaseResult _MoniteredResult; //真实监控到的结果
+        private TestCaseResult _RepliedResult; //从下位机读取到的结果
+
+        public SingleTalkTestCase()
+        {
+            InitializeReportTable();
+        }
+
+        private void InitializeReportTable()
+        {
+        }
+
         #region ITestCase
         public void Start(IKernel kernel)
         {
+            _MoniteredResult=new TestCaseResult();
             Task.Factory.StartNew(() =>
             {
                 _logger.Info("启动测试案例：SingleTalkTestCase");
@@ -111,12 +127,21 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到测试用例结果
 
                 //第六步，比对检测到的数据和返回的测试用例结果是否一致，进行分析
-
-                OnTestCaseFinished(true);
+                string message = VerifyTestCaseResult();
+                OnTestCaseFinished(true, message);
             });
         }
 
-
+        private string VerifyTestCaseResult()
+        {
+            var monitored = string.Format("实际监控测试结果：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
+                _MoniteredResult.TestCaseIndex, _MoniteredResult.FrameSent, _MoniteredResult.FrameReceived,
+                _MoniteredResult.FrameLost, _MoniteredResult.FrameError);
+            var replied = string.Format("读取返回测试结果：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
+                _RepliedResult.TestCaseIndex, _RepliedResult.FrameSent, _RepliedResult.FrameReceived,
+                _RepliedResult.FrameLost,_RepliedResult.FrameError);
+            return string.Format("{0}\r\n{1}", monitored, replied);
+        }
 
 
         public void Abort()
@@ -142,7 +167,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 handler.Invoke(this,new TestCaseResultEventArgs()
                 {
                     Result = result,
-                    Message = message
+                    Message = message,
                 });
         }
         private void OnProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
@@ -153,6 +178,24 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             if (NangleCodecUtility.ConvertFromTwoBytesToInt(command) == _CurrentCommandIntValue)
             {
                 _TestStepResetEvent.Set();
+            }
+
+            if (_CurrentCommandIntValue == ReadTestCaseResultReply.CommandIntValue) //收到读取测试用例结果回复协议
+            {
+                OnReadTestCaseResultReply(protocol);
+            }
+        }
+
+        /// <summary>
+        /// 收到读取测试用例结果
+        /// </summary>
+        /// <param name="protocol"></param>
+        private void OnReadTestCaseResultReply(BytesProtocol protocol)
+        {
+            _RepliedResult = new TestCaseResult();
+            if (ReadTestCaseResultReply.Parse(ref _RepliedResult, protocol))
+            {
+                _logger.Info("测试用例结果解析成功");
             }
         }
     }

@@ -629,10 +629,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         void Testcase_Finished(object sender, TestCaseResultEventArgs e)
         {
             var result = e.Result;
+            var message = e.Message;
             _logger.Info(string.Format("测试案例执行{0}", result ? "成功" : "失败"));
             ExecuteTestCaseButton.ThreadSafeInvoke(()=>
             {
                 ExecuteTestCaseButton.Enabled = true;
+                MessageBox.Show(this, message, "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
         }
     }
