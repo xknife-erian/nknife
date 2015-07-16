@@ -10,7 +10,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.Base
     public interface IKernel
     {
         KnifeSocketServer Server { get; }
-        ServerHandler ProtocolHandler { get;}
+        NangleServerFilter ServerProtocolFilter { get; }
+        ServerHandler ServerHandler { get;}
 
         List<KnifeLongSocketClient> Clients { get; }
         List<MockClientHandler> ClientHandlers { get; }

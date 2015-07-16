@@ -29,7 +29,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
         /// <returns></returns>
         public override byte[] Execute(byte[] data)
         {
-            var lenBytes = NangleCodecUtility.GetLengthFromIntToTwoBytes(data.Length + CHK_BYTE_COUNT); //当前数据长度要增加上最后一个字节的校验位
+            var lenBytes = NangleCodecUtility.ConvertFromIntToTwoBytes(data.Length + CHK_BYTE_COUNT); //当前数据长度要增加上最后一个字节的校验位
             var chk = NangleCodecUtility.GetOneByteChk(data);
             if (data.Length >= TARGET_BYTE_COUNT + COMMAND_BYTE_COUNT)
             {

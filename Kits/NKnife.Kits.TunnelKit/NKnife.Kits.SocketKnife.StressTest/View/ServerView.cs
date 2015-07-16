@@ -27,7 +27,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private TestKernel _Kernel = DI.Get<TestKernel>();
         private BytesCodec _Codec = DI.Get<BytesCodec>();
 
-        private TestServerMonitorFilter _TestMonitorFilter;
+
         private bool _OnTesting;
 
         #region UI
@@ -59,6 +59,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private Label label3;
         private TextBox InvokeFunctionIntervalTextBox;
         private RadioButton InvokeFunctionSeveralTimeRadioButton;
+        private Button ExecuteTestCaseButton;
+        private ComboBox TestCaseListComboBox;
         private System.Windows.Forms.ListBox ServerProtocolListBox;
     
         public ServerView()
@@ -82,6 +84,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ServerProtocolReceiveHistoryTextBox = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.ExecuteTestCaseButton = new System.Windows.Forms.Button();
+            this.InvokeFunctionCountTextBox = new System.Windows.Forms.TextBox();
+            this.InvokeFunctionOneTimeRadioButton = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.InvokeFunctionIntervalTextBox = new System.Windows.Forms.TextBox();
+            this.InvokeFunctionSeveralTimeRadioButton = new System.Windows.Forms.RadioButton();
             this.DataToSendByServerTextBox = new System.Windows.Forms.TextBox();
             this.SendProtocolButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -90,12 +99,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.InvokeFunctionCountTextBox = new System.Windows.Forms.TextBox();
-            this.InvokeFunctionOneTimeRadioButton = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.InvokeFunctionIntervalTextBox = new System.Windows.Forms.TextBox();
-            this.InvokeFunctionSeveralTimeRadioButton = new System.Windows.Forms.RadioButton();
+            this.TestCaseListComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -246,6 +250,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.TestCaseListComboBox);
+            this.panel3.Controls.Add(this.ExecuteTestCaseButton);
             this.panel3.Controls.Add(this.InvokeFunctionCountTextBox);
             this.panel3.Controls.Add(this.InvokeFunctionOneTimeRadioButton);
             this.panel3.Controls.Add(this.label1);
@@ -260,6 +266,72 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.panel3.Size = new System.Drawing.Size(602, 392);
             this.panel3.TabIndex = 22;
+            // 
+            // ExecuteTestCaseButton
+            // 
+            this.ExecuteTestCaseButton.Location = new System.Drawing.Point(13, 216);
+            this.ExecuteTestCaseButton.Name = "ExecuteTestCaseButton";
+            this.ExecuteTestCaseButton.Size = new System.Drawing.Size(111, 32);
+            this.ExecuteTestCaseButton.TabIndex = 57;
+            this.ExecuteTestCaseButton.Text = "执行测试案例";
+            this.ExecuteTestCaseButton.UseVisualStyleBackColor = true;
+            this.ExecuteTestCaseButton.Click += new System.EventHandler(this.ExecuteTestCaseButtonClick);
+            // 
+            // InvokeFunctionCountTextBox
+            // 
+            this.InvokeFunctionCountTextBox.Location = new System.Drawing.Point(80, 179);
+            this.InvokeFunctionCountTextBox.Name = "InvokeFunctionCountTextBox";
+            this.InvokeFunctionCountTextBox.Size = new System.Drawing.Size(33, 21);
+            this.InvokeFunctionCountTextBox.TabIndex = 55;
+            this.InvokeFunctionCountTextBox.Text = "3";
+            // 
+            // InvokeFunctionOneTimeRadioButton
+            // 
+            this.InvokeFunctionOneTimeRadioButton.AutoSize = true;
+            this.InvokeFunctionOneTimeRadioButton.Checked = true;
+            this.InvokeFunctionOneTimeRadioButton.Location = new System.Drawing.Point(13, 157);
+            this.InvokeFunctionOneTimeRadioButton.Name = "InvokeFunctionOneTimeRadioButton";
+            this.InvokeFunctionOneTimeRadioButton.Size = new System.Drawing.Size(119, 16);
+            this.InvokeFunctionOneTimeRadioButton.TabIndex = 51;
+            this.InvokeFunctionOneTimeRadioButton.TabStop = true;
+            this.InvokeFunctionOneTimeRadioButton.Text = "一次执行（默认）";
+            this.InvokeFunctionOneTimeRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(221, 183);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 12);
+            this.label1.TabIndex = 54;
+            this.label1.Text = "毫秒，不小于50";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(114, 183);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 56;
+            this.label3.Text = "次，间隔";
+            // 
+            // InvokeFunctionIntervalTextBox
+            // 
+            this.InvokeFunctionIntervalTextBox.Location = new System.Drawing.Point(170, 179);
+            this.InvokeFunctionIntervalTextBox.Name = "InvokeFunctionIntervalTextBox";
+            this.InvokeFunctionIntervalTextBox.Size = new System.Drawing.Size(47, 21);
+            this.InvokeFunctionIntervalTextBox.TabIndex = 53;
+            this.InvokeFunctionIntervalTextBox.Text = "1000";
+            // 
+            // InvokeFunctionSeveralTimeRadioButton
+            // 
+            this.InvokeFunctionSeveralTimeRadioButton.AutoSize = true;
+            this.InvokeFunctionSeveralTimeRadioButton.Location = new System.Drawing.Point(13, 180);
+            this.InvokeFunctionSeveralTimeRadioButton.Name = "InvokeFunctionSeveralTimeRadioButton";
+            this.InvokeFunctionSeveralTimeRadioButton.Size = new System.Drawing.Size(71, 16);
+            this.InvokeFunctionSeveralTimeRadioButton.TabIndex = 52;
+            this.InvokeFunctionSeveralTimeRadioButton.Text = "循环执行";
+            this.InvokeFunctionSeveralTimeRadioButton.UseVisualStyleBackColor = true;
             // 
             // DataToSendByServerTextBox
             // 
@@ -348,61 +420,17 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "已连接客户端列表";
             // 
-            // InvokeFunctionCountTextBox
+            // TestCaseListComboBox
             // 
-            this.InvokeFunctionCountTextBox.Location = new System.Drawing.Point(80, 179);
-            this.InvokeFunctionCountTextBox.Name = "InvokeFunctionCountTextBox";
-            this.InvokeFunctionCountTextBox.Size = new System.Drawing.Size(33, 21);
-            this.InvokeFunctionCountTextBox.TabIndex = 55;
-            this.InvokeFunctionCountTextBox.Text = "3";
-            // 
-            // InvokeFunctionOneTimeRadioButton
-            // 
-            this.InvokeFunctionOneTimeRadioButton.AutoSize = true;
-            this.InvokeFunctionOneTimeRadioButton.Checked = true;
-            this.InvokeFunctionOneTimeRadioButton.Location = new System.Drawing.Point(13, 157);
-            this.InvokeFunctionOneTimeRadioButton.Name = "InvokeFunctionOneTimeRadioButton";
-            this.InvokeFunctionOneTimeRadioButton.Size = new System.Drawing.Size(119, 16);
-            this.InvokeFunctionOneTimeRadioButton.TabIndex = 51;
-            this.InvokeFunctionOneTimeRadioButton.TabStop = true;
-            this.InvokeFunctionOneTimeRadioButton.Text = "一次执行（默认）";
-            this.InvokeFunctionOneTimeRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(221, 183);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 12);
-            this.label1.TabIndex = 54;
-            this.label1.Text = "毫秒，不小于50";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(114, 183);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 56;
-            this.label3.Text = "次，间隔";
-            // 
-            // InvokeFunctionIntervalTextBox
-            // 
-            this.InvokeFunctionIntervalTextBox.Location = new System.Drawing.Point(170, 179);
-            this.InvokeFunctionIntervalTextBox.Name = "InvokeFunctionIntervalTextBox";
-            this.InvokeFunctionIntervalTextBox.Size = new System.Drawing.Size(47, 21);
-            this.InvokeFunctionIntervalTextBox.TabIndex = 53;
-            this.InvokeFunctionIntervalTextBox.Text = "1000";
-            // 
-            // InvokeFunctionSeveralTimeRadioButton
-            // 
-            this.InvokeFunctionSeveralTimeRadioButton.AutoSize = true;
-            this.InvokeFunctionSeveralTimeRadioButton.Location = new System.Drawing.Point(13, 180);
-            this.InvokeFunctionSeveralTimeRadioButton.Name = "InvokeFunctionSeveralTimeRadioButton";
-            this.InvokeFunctionSeveralTimeRadioButton.Size = new System.Drawing.Size(71, 16);
-            this.InvokeFunctionSeveralTimeRadioButton.TabIndex = 52;
-            this.InvokeFunctionSeveralTimeRadioButton.Text = "循环执行";
-            this.InvokeFunctionSeveralTimeRadioButton.UseVisualStyleBackColor = true;
+            this.TestCaseListComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TestCaseListComboBox.FormattingEnabled = true;
+            this.TestCaseListComboBox.Items.AddRange(new object[] {
+            "单点测试",
+            "1对1转发测试"});
+            this.TestCaseListComboBox.Location = new System.Drawing.Point(144, 223);
+            this.TestCaseListComboBox.Name = "TestCaseListComboBox";
+            this.TestCaseListComboBox.Size = new System.Drawing.Size(189, 20);
+            this.TestCaseListComboBox.TabIndex = 58;
             // 
             // ServerView
             // 
@@ -439,14 +467,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             ServerProtocolListBox.Items.Add(new InitializeTest(new byte[] { 0x00, 0x00, 0x00, 0x00 }, new byte[] { 0x00, 0x00, 0x00, 0x00 }));
             ServerProtocolListBox.Items.Add(
                 new ExecuteTestCase(
-                    new byte[] { 0x00, 0x00, 0x00, 0x00 },
-                    new byte[] {0x00, 0x00},
-                    0x01,
-                    new byte[] {0x00, 0x00, 0x00, 0x00},
-                    new byte[] {0x00, 0x00}, 
-                    new byte[] {0x00, 0x00},
-                    new byte[]{},
-                    new byte[] { 0x00, 0x00, 0x00, 0x00 }));
+                    NangleProtocolUtility.EmptyBytes4, //目标地址
+                    NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
+                    (byte) NangleProtocolUtility.SendEnable.Enable, //发送使能
+                    new byte[] {0x00, 0x00, 0x00, 0x00}, //发送目的地址
+                    NangleProtocolUtility.GetSendInterval(100), //发送时间间隔
+                    NangleProtocolUtility.GetTestDataLength(0), //发送测试数据长度
+                    NangleProtocolUtility.GetFrameCount(0))); //发送帧数
             ServerProtocolListBox.Items.Add(
                 new StopExecuteTestCase(new byte[]{0x00,0x00,0x00,0x00}, new byte[]{0x00,0x01}));
             ServerProtocolListBox.Items.Add(
@@ -454,11 +481,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             ServerProtocolListBox.Items.Add(
               new TestRawData(new byte[] { 0x00, 0x00, 0x00, 0x00 }, 0x01, new byte[] { 0x00, 0x01 }));
 
-            _TestMonitorFilter = new TestServerMonitorFilter();
-            _TestMonitorFilter.StateChanged += StateChanged;
+            _Kernel.ServerProtocolFilter.StateChanged += StateChanged;
 
-            _Kernel.ProtocolHandler.ProtocolReceived += ProtocolReceived;
-            _Kernel.BuildServer(_TestMonitorFilter);
+            _Kernel.ServerHandler.ProtocolReceived += ProtocolReceived;
+            _Kernel.BuildServer();
             base.OnShown(e);
         }
 
@@ -489,7 +515,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 SessionCountLabel.Text = string.Format("{0}", serverStateEventArgs.SessionCount);
                 TalkCountLabel.Text = string.Format("{0}", serverStateEventArgs.TalkCount);
                 ConnectedClientListBox.Items.Clear();
-                foreach (var l in _TestMonitorFilter.SessionList)
+                foreach (var l in _Kernel.ServerProtocolFilter.SessionList)
                 {
                     ConnectedClientListBox.Items.Add(l);
                 }
@@ -554,7 +580,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     byte[] data = UtilityConvert.HexToBytes(DataToSendByServerTextBox.Text);
                     if (InvokeFunctionOneTimeRadioButton.Checked) //只发一次
                     {
-                        _Kernel.ProtocolHandler.WriteToSession(sessionId, data);
+                        _Kernel.ServerHandler.WriteToSession(sessionId, data);
                     }
                     else
                     {
@@ -574,7 +600,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                         {
                             for (int i = 0; i < count; i++)
                             {
-                                _Kernel.ProtocolHandler.WriteToSession(sessionId, data);
+                                _Kernel.ServerHandler.WriteToSession(sessionId, data);
                                 Thread.Sleep(interval);
                             }
                         });
@@ -599,6 +625,50 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 byte[] data = _Codec.BytesEncoder.Execute(original);
                 DataToSendByServerTextBox.Text = data.ToHexString();
             }
+        }
+
+        /// <summary>
+        /// 执行测试案例
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExecuteTestCaseButtonClick(object sender, EventArgs e)
+        {
+            if (TestCaseListComboBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("请选择要执行的测试案例");
+                return;
+            }
+            ITestCase testcase = null;
+            switch (TestCaseListComboBox.SelectedIndex)
+            {
+                case 0:
+                    testcase= new SingleTalkTestCase();
+                    break;
+                case 1:
+                    testcase = new PointToPointTestCase();
+                    break;
+
+            }
+
+            if (testcase != null)
+            {
+                testcase.Finished += Testcase_Finished;
+                testcase.Start(_Kernel);
+                ExecuteTestCaseButton.Enabled = false;
+            }
+        }
+
+        void Testcase_Finished(object sender, TestCaseResultEventArgs e)
+        {
+            var result = e.Result;
+            var message = e.Message;
+            _logger.Info(string.Format("测试案例执行{0}", result ? "成功" : "失败"));
+            ExecuteTestCaseButton.ThreadSafeInvoke(()=>
+            {
+                ExecuteTestCaseButton.Enabled = true;
+                MessageBox.Show(this, message, "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            });
         }
     }
 }

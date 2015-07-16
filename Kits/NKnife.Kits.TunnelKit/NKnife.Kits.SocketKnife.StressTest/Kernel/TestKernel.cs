@@ -24,31 +24,33 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
         private readonly int _ServerListenPort = Properties.Settings.Default.ServerPort;
         private readonly BytesProtocolFamily _Family = DI.Get<BytesProtocolFamily>();
         public KnifeSocketServer Server { get; private set; }
-        public ServerHandler ProtocolHandler { get; private set; }
+
+        public NangleServerFilter ServerProtocolFilter { get; private set; }
+        public ServerHandler ServerHandler { get; private set; }
 
         public List<KnifeLongSocketClient> Clients { get; private set; }
         public List<MockClientHandler> ClientHandlers { get; private set; }
         public EventHandler MockClientAmountChanged;
 
         private MainTestOption _TestOption;
-        private TestServerMonitorFilter _TestMonitorFilter;
 
         public TestKernel()
         {
-            ProtocolHandler = new ServerHandler();
+            ServerHandler = new ServerHandler();
             Clients = new List<KnifeLongSocketClient>();
             ClientHandlers = new List<MockClientHandler>();
+            ServerProtocolFilter = DI.Get<NangleServerFilter>();
         }
 
         #region server相关
-        public bool BuildServer(TestServerMonitorFilter testMonitorFilter)
+        public bool BuildServer()
         {
             try
             {
                 var serverConfig = (SocketServerConfig)DI.Get<SocketConfig>("Server");
                 serverConfig.MaxConnectCount = 1000;
                 serverConfig.MaxSessionTimeout = 0;
-                Server = BuildServer(serverConfig, testMonitorFilter);
+                Server = BuildServer(serverConfig);
                 return true;
             }
             catch (Exception ex)
@@ -129,24 +131,22 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             }
         }
 
-        private KnifeSocketServer BuildServer(SocketConfig config, TestServerMonitorFilter testMonitorFilter)
+        private KnifeSocketServer BuildServer(SocketConfig config)
         {
             var server = DI.Get<KnifeSocketServer>();
             var tunnel = DI.Get<ITunnel>("Server");
             var ipAddresses = UtilityNet.GetLocalIpv4();
 
             BytesProtocolFamily protocolFamily = GetProtocolFamily();
-            var protocolFilter = DI.Get<SocketBytesProtocolFilter>();
             var codec = DI.Get<BytesCodec>();
 
-            protocolFilter.Bind(codec, protocolFamily);
-            protocolFilter.AddHandlers(ProtocolHandler);
+            ServerProtocolFilter.Bind(codec, protocolFamily);
+            ServerProtocolFilter.AddHandlers(ServerHandler);
 
             var logFilter = DI.Get<SerialLogFilter>();
             tunnel.AddFilters(logFilter);
-            tunnel.AddFilters(protocolFilter);
+            tunnel.AddFilters(ServerProtocolFilter);
 
-            tunnel.AddFilters(testMonitorFilter);
             server.Config = config;
             server.Configure(ipAddresses[0], _ServerListenPort);
             _logger.Info(string.Format("Server: {0}:{1}", ipAddresses[0], _ServerListenPort));
@@ -240,25 +240,25 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 
         public void AddTalk()
         {
-            if (_TestMonitorFilter.TalkCount + 1 < ClientHandlers.Count)
+            if (ServerProtocolFilter.TalkCount + 1 < ClientHandlers.Count)
             {
-                _TestMonitorFilter.TalkCount += 1;
-                var clientHandler = ClientHandlers[_TestMonitorFilter.TalkCount];
+                ServerProtocolFilter.TalkCount += 1;
+                var clientHandler = ClientHandlers[ServerProtocolFilter.TalkCount];
                 clientHandler.StartSendingTimer(50); //发送间隔50毫秒
-                
-                _TestMonitorFilter.InvokeServerStateChanged();
+
+                ServerProtocolFilter.InvokeServerStateChanged();
             }
         }
 
         public void RemoveTalk()
         {
-            if (_TestMonitorFilter.TalkCount < ClientHandlers.Count)
+            if (ServerProtocolFilter.TalkCount < ClientHandlers.Count)
             {
-                var clientHandler = ClientHandlers[_TestMonitorFilter.TalkCount];
+                var clientHandler = ClientHandlers[ServerProtocolFilter.TalkCount];
                 clientHandler.StopSendingTimer();
-                _TestMonitorFilter.TalkCount -= 1;
+                ServerProtocolFilter.TalkCount -= 1;
 
-                _TestMonitorFilter.InvokeServerStateChanged();
+                ServerProtocolFilter.InvokeServerStateChanged();
             }
 
         }

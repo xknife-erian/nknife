@@ -1,4 +1,5 @@
 ﻿using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Codec;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
 {
@@ -8,15 +9,22 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
     /// </summary>
     public class ExecuteTestCase : NangleProtocol
     {
-        public ExecuteTestCase(byte[] targetAddress,byte[] testCaseIndex,byte sendEnable,byte[] destAddress, byte[] sendInterval, byte[] dataLength, byte[] data, byte[] sendFrameCount)
-            : base(targetAddress,new byte[] {0x00,0x02 })
+        /// <summary>
+        /// 命令字
+        /// </summary>
+        public static byte[] CommandBytes = { 0x00, 0x02 };
+        /// <summary>
+        /// 根据2字节的command命令字计算出的整数，用于switch条件判断等流程
+        /// </summary>
+        public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
+        public ExecuteTestCase(byte[] targetAddress,byte[] testCaseIndex,byte sendEnable,byte[] destAddress, byte[] sendInterval, byte[] dataLength, byte[] sendFrameCount)
+            : base(targetAddress, CommandBytes)
         {
             CommandParamList.AddRange(testCaseIndex);
             CommandParamList.Add(sendEnable);
             CommandParamList.AddRange(destAddress);
             CommandParamList.AddRange(sendInterval);
             CommandParamList.AddRange(dataLength);
-            CommandParamList.AddRange(data);
             CommandParamList.AddRange(sendFrameCount);
             CommandParam = CommandParamList.ToArray();
         }

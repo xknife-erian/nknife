@@ -35,7 +35,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.IoC
 
             Bind<BytesDatagramDecoder>().To<NangleDatagramDecoder>();
             Bind<BytesDatagramEncoder>().To<NangleDatagramEncoder>();
-            Bind<SerialLogFilter>().To<SerialLogFilter>();
 
             //界面相关
             Bind<LogView>().ToSelf().InSingletonScope();
