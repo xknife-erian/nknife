@@ -32,15 +32,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private TestCaseResult _MoniteredResult; //真实监控到的结果
         private TestCaseResult _RepliedResult; //从下位机读取到的结果
 
-        public SingleTalkTestCase()
-        {
-            InitializeReportTable();
-        }
-
-        private void InitializeReportTable()
-        {
-        }
-
         #region ITestCase
         public void Start(IKernel kernel)
         {
@@ -83,6 +74,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                     NangleProtocolUtility.GetTestDataLength(0), //发送测试数据长度
                     NangleProtocolUtility.GetFrameCount(0) //发送帧数
                     ));
+                _MoniteredResult.TestCaseIndex = 1;
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
@@ -175,14 +167,19 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             //TODO:验证当前收到的是正在等候的
             var protocol = nangleProtocolEventArgs.Protocol;
             var command = protocol.Command;
-            if (NangleCodecUtility.ConvertFromTwoBytesToInt(command) == _CurrentCommandIntValue)
+            var commandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(command);
+            if (commandIntValue == _CurrentCommandIntValue)
             {
                 _TestStepResetEvent.Set();
             }
 
-            if (_CurrentCommandIntValue == ReadTestCaseResultReply.CommandIntValue) //收到读取测试用例结果回复协议
+            if (commandIntValue == ReadTestCaseResultReply.CommandIntValue) //收到读取测试用例结果回复协议
             {
                 OnReadTestCaseResultReply(protocol);
+            }
+            else if (commandIntValue == TestRawData.CommandIntValue) //收到测试数据帧
+            {
+                _MoniteredResult.FrameReceived += 1;
             }
         }
 

@@ -434,17 +434,17 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         {
             _Kernel.MockClientAmountChanged += MockClientAmountChanged;
             _Kernel.MockClientProtocolReceived += OnMockClientProtocolReceived;
-            ClientProtocolListBox.Items.Add(new InitializeTestReply(new byte[] { 0x00, 0x00, 0x00, 0x00 }, 0x00,new byte[]{ 0x00, 0x00, 0x00, 0x00 }));
-            ClientProtocolListBox.Items.Add(new ExecuteTestCaseReply(new byte[] {0x00, 0x00, 0x00, 0x00}, 0x00));
-            ClientProtocolListBox.Items.Add(new StopExecuteTestCaseReply(new byte[] { 0x00, 0x00, 0x00, 0x00 }, 0x00));
+            ClientProtocolListBox.Items.Add(new InitializeTestReply(NangleProtocolUtility.EmptyBytes4, 0x00, new byte[] { 0x00, 0x00, 0x00, 0x00 }));
+            ClientProtocolListBox.Items.Add(new ExecuteTestCaseReply(NangleProtocolUtility.EmptyBytes4, 0x00));
+            ClientProtocolListBox.Items.Add(new StopExecuteTestCaseReply(NangleProtocolUtility.EmptyBytes4, 0x00));
             ClientProtocolListBox.Items.Add(new ReadTestCaseResultReply(
-                new byte[] { 0x00, 0x00, 0x00, 0x00 },
-                new byte[] { 0x00, 0x00 },
+                NangleProtocolUtility.EmptyBytes4,
+                NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 }));
-            ClientProtocolListBox.Items.Add(new TestRawData(new byte[] {0x00, 0x00, 0x00, 0x00}, 0x00,
+            ClientProtocolListBox.Items.Add(new TestRawData(NangleProtocolUtility.EmptyBytes4, 0x00,
                 new byte[] {0x00, 0x01}));
             base.OnShown(e);
         }

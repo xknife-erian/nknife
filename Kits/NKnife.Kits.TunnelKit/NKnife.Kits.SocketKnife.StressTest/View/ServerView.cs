@@ -60,6 +60,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private TextBox InvokeFunctionIntervalTextBox;
         private RadioButton InvokeFunctionSeveralTimeRadioButton;
         private Button ExecuteTestCaseButton;
+        private ComboBox TestCaseListComboBox;
         private System.Windows.Forms.ListBox ServerProtocolListBox;
     
         public ServerView()
@@ -83,6 +84,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ServerProtocolReceiveHistoryTextBox = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.ExecuteTestCaseButton = new System.Windows.Forms.Button();
             this.InvokeFunctionCountTextBox = new System.Windows.Forms.TextBox();
             this.InvokeFunctionOneTimeRadioButton = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -97,7 +99,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.ExecuteTestCaseButton = new System.Windows.Forms.Button();
+            this.TestCaseListComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -248,6 +250,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.TestCaseListComboBox);
             this.panel3.Controls.Add(this.ExecuteTestCaseButton);
             this.panel3.Controls.Add(this.InvokeFunctionCountTextBox);
             this.panel3.Controls.Add(this.InvokeFunctionOneTimeRadioButton);
@@ -263,6 +266,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.panel3.Size = new System.Drawing.Size(602, 392);
             this.panel3.TabIndex = 22;
+            // 
+            // ExecuteTestCaseButton
+            // 
+            this.ExecuteTestCaseButton.Location = new System.Drawing.Point(13, 216);
+            this.ExecuteTestCaseButton.Name = "ExecuteTestCaseButton";
+            this.ExecuteTestCaseButton.Size = new System.Drawing.Size(111, 32);
+            this.ExecuteTestCaseButton.TabIndex = 57;
+            this.ExecuteTestCaseButton.Text = "执行测试案例";
+            this.ExecuteTestCaseButton.UseVisualStyleBackColor = true;
+            this.ExecuteTestCaseButton.Click += new System.EventHandler(this.ExecuteTestCaseButtonClick);
             // 
             // InvokeFunctionCountTextBox
             // 
@@ -407,15 +420,17 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "已连接客户端列表";
             // 
-            // ExecuteTestCaseButton
+            // TestCaseListComboBox
             // 
-            this.ExecuteTestCaseButton.Location = new System.Drawing.Point(13, 216);
-            this.ExecuteTestCaseButton.Name = "ExecuteTestCaseButton";
-            this.ExecuteTestCaseButton.Size = new System.Drawing.Size(111, 32);
-            this.ExecuteTestCaseButton.TabIndex = 57;
-            this.ExecuteTestCaseButton.Text = "执行测试案例";
-            this.ExecuteTestCaseButton.UseVisualStyleBackColor = true;
-            this.ExecuteTestCaseButton.Click += new System.EventHandler(this.ExecuteTestCaseButtonClick);
+            this.TestCaseListComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TestCaseListComboBox.FormattingEnabled = true;
+            this.TestCaseListComboBox.Items.AddRange(new object[] {
+            "单点测试",
+            "1对1转发测试"});
+            this.TestCaseListComboBox.Location = new System.Drawing.Point(144, 223);
+            this.TestCaseListComboBox.Name = "TestCaseListComboBox";
+            this.TestCaseListComboBox.Size = new System.Drawing.Size(189, 20);
+            this.TestCaseListComboBox.TabIndex = 58;
             // 
             // ServerView
             // 
@@ -619,11 +634,26 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         /// <param name="e"></param>
         private void ExecuteTestCaseButtonClick(object sender, EventArgs e)
         {
-            var testcase = new SingleTalkTestCase();
-            testcase.Finished += Testcase_Finished;
-            testcase.Start(_Kernel);
-            ExecuteTestCaseButton.Enabled = false;
+            if (TestCaseListComboBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("请选择要执行的测试案例");
+                return;
+            }
+            ITestCase testcase = null;
+            switch (TestCaseListComboBox.SelectedIndex)
+            {
+                case -1:
+                    testcase= new SingleTalkTestCase();
+                    break;
+                
+            }
 
+            if (testcase != null)
+            {
+                testcase.Finished += Testcase_Finished;
+                testcase.Start(_Kernel);
+                ExecuteTestCaseButton.Enabled = false;
+            }
         }
 
         void Testcase_Finished(object sender, TestCaseResultEventArgs e)
