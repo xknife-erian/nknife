@@ -84,6 +84,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ServerProtocolReceiveHistoryTextBox = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.TestCaseListComboBox = new System.Windows.Forms.ComboBox();
             this.ExecuteTestCaseButton = new System.Windows.Forms.Button();
             this.InvokeFunctionCountTextBox = new System.Windows.Forms.TextBox();
             this.InvokeFunctionOneTimeRadioButton = new System.Windows.Forms.RadioButton();
@@ -99,7 +100,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.TestCaseListComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -122,14 +122,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(296, 9);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(245, 82);
+            this.groupBox2.Size = new System.Drawing.Size(245, 73);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             // 
             // TalkCountLabel
             // 
             this.TalkCountLabel.BackColor = System.Drawing.Color.White;
-            this.TalkCountLabel.Location = new System.Drawing.Point(107, 45);
+            this.TalkCountLabel.Location = new System.Drawing.Point(107, 41);
             this.TalkCountLabel.Name = "TalkCountLabel";
             this.TalkCountLabel.Size = new System.Drawing.Size(100, 18);
             this.TalkCountLabel.TabIndex = 12;
@@ -138,7 +138,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 48);
+            this.label8.Location = new System.Drawing.Point(18, 44);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(65, 12);
             this.label8.TabIndex = 11;
@@ -147,7 +147,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // SessionCountLabel
             // 
             this.SessionCountLabel.BackColor = System.Drawing.Color.White;
-            this.SessionCountLabel.Location = new System.Drawing.Point(107, 18);
+            this.SessionCountLabel.Location = new System.Drawing.Point(107, 16);
             this.SessionCountLabel.Name = "SessionCountLabel";
             this.SessionCountLabel.Size = new System.Drawing.Size(100, 18);
             this.SessionCountLabel.TabIndex = 10;
@@ -156,7 +156,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 21);
+            this.label6.Location = new System.Drawing.Point(18, 19);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(83, 12);
             this.label6.TabIndex = 9;
@@ -172,7 +172,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(984, 110);
+            this.groupBox1.Size = new System.Drawing.Size(984, 91);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Server状态";
@@ -180,7 +180,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // ServerListenStatusLabel
             // 
             this.ServerListenStatusLabel.AutoSize = true;
-            this.ServerListenStatusLabel.Location = new System.Drawing.Point(37, 27);
+            this.ServerListenStatusLabel.Location = new System.Drawing.Point(37, 23);
             this.ServerListenStatusLabel.Name = "ServerListenStatusLabel";
             this.ServerListenStatusLabel.Size = new System.Drawing.Size(41, 12);
             this.ServerListenStatusLabel.TabIndex = 27;
@@ -189,7 +189,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // ServerListenPortLabel
             // 
             this.ServerListenPortLabel.AutoSize = true;
-            this.ServerListenPortLabel.Location = new System.Drawing.Point(107, 27);
+            this.ServerListenPortLabel.Location = new System.Drawing.Point(107, 23);
             this.ServerListenPortLabel.Name = "ServerListenPortLabel";
             this.ServerListenPortLabel.Size = new System.Drawing.Size(95, 12);
             this.ServerListenPortLabel.TabIndex = 26;
@@ -197,7 +197,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // StopServerListenButton
             // 
-            this.StopServerListenButton.Location = new System.Drawing.Point(167, 50);
+            this.StopServerListenButton.Location = new System.Drawing.Point(167, 42);
             this.StopServerListenButton.Name = "StopServerListenButton";
             this.StopServerListenButton.Size = new System.Drawing.Size(111, 32);
             this.StopServerListenButton.TabIndex = 25;
@@ -207,7 +207,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // StartServerListenButton
             // 
-            this.StartServerListenButton.Location = new System.Drawing.Point(30, 50);
+            this.StartServerListenButton.Location = new System.Drawing.Point(30, 42);
             this.StartServerListenButton.Name = "StartServerListenButton";
             this.StartServerListenButton.Size = new System.Drawing.Size(111, 32);
             this.StartServerListenButton.TabIndex = 24;
@@ -221,7 +221,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(767, 110);
+            this.groupBox3.Size = new System.Drawing.Size(767, 103);
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "协议接收及提示窗口";
@@ -233,7 +233,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ServerProtocolReceiveHistoryTextBox.Multiline = true;
             this.ServerProtocolReceiveHistoryTextBox.Name = "ServerProtocolReceiveHistoryTextBox";
             this.ServerProtocolReceiveHistoryTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ServerProtocolReceiveHistoryTextBox.Size = new System.Drawing.Size(761, 90);
+            this.ServerProtocolReceiveHistoryTextBox.Size = new System.Drawing.Size(761, 83);
             this.ServerProtocolReceiveHistoryTextBox.TabIndex = 0;
             // 
             // groupBox4
@@ -241,9 +241,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox4.Controls.Add(this.panel3);
             this.groupBox4.Controls.Add(this.panel2);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(0, 110);
+            this.groupBox4.Location = new System.Drawing.Point(0, 103);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(767, 412);
+            this.groupBox4.Size = new System.Drawing.Size(767, 438);
             this.groupBox4.TabIndex = 25;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "协议发送窗口";
@@ -264,12 +264,25 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel3.Location = new System.Drawing.Point(162, 17);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel3.Size = new System.Drawing.Size(602, 392);
+            this.panel3.Size = new System.Drawing.Size(602, 418);
             this.panel3.TabIndex = 22;
+            // 
+            // TestCaseListComboBox
+            // 
+            this.TestCaseListComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TestCaseListComboBox.FormattingEnabled = true;
+            this.TestCaseListComboBox.Items.AddRange(new object[] {
+            "单点测试",
+            "1对1转发测试",
+            "1对1对传测试"});
+            this.TestCaseListComboBox.Location = new System.Drawing.Point(144, 171);
+            this.TestCaseListComboBox.Name = "TestCaseListComboBox";
+            this.TestCaseListComboBox.Size = new System.Drawing.Size(189, 20);
+            this.TestCaseListComboBox.TabIndex = 58;
             // 
             // ExecuteTestCaseButton
             // 
-            this.ExecuteTestCaseButton.Location = new System.Drawing.Point(13, 216);
+            this.ExecuteTestCaseButton.Location = new System.Drawing.Point(13, 164);
             this.ExecuteTestCaseButton.Name = "ExecuteTestCaseButton";
             this.ExecuteTestCaseButton.Size = new System.Drawing.Size(111, 32);
             this.ExecuteTestCaseButton.TabIndex = 57;
@@ -279,7 +292,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // InvokeFunctionCountTextBox
             // 
-            this.InvokeFunctionCountTextBox.Location = new System.Drawing.Point(80, 179);
+            this.InvokeFunctionCountTextBox.Location = new System.Drawing.Point(80, 137);
             this.InvokeFunctionCountTextBox.Name = "InvokeFunctionCountTextBox";
             this.InvokeFunctionCountTextBox.Size = new System.Drawing.Size(33, 21);
             this.InvokeFunctionCountTextBox.TabIndex = 55;
@@ -289,7 +302,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             this.InvokeFunctionOneTimeRadioButton.AutoSize = true;
             this.InvokeFunctionOneTimeRadioButton.Checked = true;
-            this.InvokeFunctionOneTimeRadioButton.Location = new System.Drawing.Point(13, 157);
+            this.InvokeFunctionOneTimeRadioButton.Location = new System.Drawing.Point(13, 115);
             this.InvokeFunctionOneTimeRadioButton.Name = "InvokeFunctionOneTimeRadioButton";
             this.InvokeFunctionOneTimeRadioButton.Size = new System.Drawing.Size(119, 16);
             this.InvokeFunctionOneTimeRadioButton.TabIndex = 51;
@@ -300,7 +313,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(221, 183);
+            this.label1.Location = new System.Drawing.Point(221, 141);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 54;
@@ -309,7 +322,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(114, 183);
+            this.label3.Location = new System.Drawing.Point(114, 141);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 56;
@@ -317,7 +330,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // InvokeFunctionIntervalTextBox
             // 
-            this.InvokeFunctionIntervalTextBox.Location = new System.Drawing.Point(170, 179);
+            this.InvokeFunctionIntervalTextBox.Location = new System.Drawing.Point(170, 137);
             this.InvokeFunctionIntervalTextBox.Name = "InvokeFunctionIntervalTextBox";
             this.InvokeFunctionIntervalTextBox.Size = new System.Drawing.Size(47, 21);
             this.InvokeFunctionIntervalTextBox.TabIndex = 53;
@@ -326,7 +339,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // InvokeFunctionSeveralTimeRadioButton
             // 
             this.InvokeFunctionSeveralTimeRadioButton.AutoSize = true;
-            this.InvokeFunctionSeveralTimeRadioButton.Location = new System.Drawing.Point(13, 180);
+            this.InvokeFunctionSeveralTimeRadioButton.Location = new System.Drawing.Point(13, 138);
             this.InvokeFunctionSeveralTimeRadioButton.Name = "InvokeFunctionSeveralTimeRadioButton";
             this.InvokeFunctionSeveralTimeRadioButton.Size = new System.Drawing.Size(71, 16);
             this.InvokeFunctionSeveralTimeRadioButton.TabIndex = 52;
@@ -339,12 +352,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.DataToSendByServerTextBox.Location = new System.Drawing.Point(10, 0);
             this.DataToSendByServerTextBox.Multiline = true;
             this.DataToSendByServerTextBox.Name = "DataToSendByServerTextBox";
-            this.DataToSendByServerTextBox.Size = new System.Drawing.Size(592, 84);
+            this.DataToSendByServerTextBox.Size = new System.Drawing.Size(592, 71);
             this.DataToSendByServerTextBox.TabIndex = 20;
             // 
             // SendProtocolButton
             // 
-            this.SendProtocolButton.Location = new System.Drawing.Point(13, 109);
+            this.SendProtocolButton.Location = new System.Drawing.Point(13, 77);
             this.SendProtocolButton.Name = "SendProtocolButton";
             this.SendProtocolButton.Size = new System.Drawing.Size(111, 32);
             this.SendProtocolButton.TabIndex = 1;
@@ -358,7 +371,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(3, 17);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(159, 392);
+            this.panel2.Size = new System.Drawing.Size(159, 418);
             this.panel2.TabIndex = 21;
             // 
             // ServerProtocolListBox
@@ -368,7 +381,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ServerProtocolListBox.ItemHeight = 12;
             this.ServerProtocolListBox.Location = new System.Drawing.Point(0, 0);
             this.ServerProtocolListBox.Name = "ServerProtocolListBox";
-            this.ServerProtocolListBox.Size = new System.Drawing.Size(159, 392);
+            this.ServerProtocolListBox.Size = new System.Drawing.Size(159, 418);
             this.ServerProtocolListBox.TabIndex = 0;
             this.ServerProtocolListBox.Click += new System.EventHandler(this.ServerProtocolListBoxClick);
             // 
@@ -379,16 +392,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ConnectedClientListBox.ItemHeight = 12;
             this.ConnectedClientListBox.Location = new System.Drawing.Point(3, 17);
             this.ConnectedClientListBox.Name = "ConnectedClientListBox";
-            this.ConnectedClientListBox.Size = new System.Drawing.Size(207, 502);
+            this.ConnectedClientListBox.Size = new System.Drawing.Size(207, 521);
             this.ConnectedClientListBox.TabIndex = 19;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.splitContainer1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 110);
+            this.panel1.Location = new System.Drawing.Point(0, 91);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(984, 522);
+            this.panel1.Size = new System.Drawing.Size(984, 541);
             this.panel1.TabIndex = 24;
             // 
             // splitContainer1
@@ -405,7 +418,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox4);
             this.splitContainer1.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer1.Size = new System.Drawing.Size(984, 522);
+            this.splitContainer1.Size = new System.Drawing.Size(984, 541);
             this.splitContainer1.SplitterDistance = 213;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -415,22 +428,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(213, 522);
+            this.groupBox5.Size = new System.Drawing.Size(213, 541);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "已连接客户端列表";
-            // 
-            // TestCaseListComboBox
-            // 
-            this.TestCaseListComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TestCaseListComboBox.FormattingEnabled = true;
-            this.TestCaseListComboBox.Items.AddRange(new object[] {
-            "单点测试",
-            "1对1转发测试"});
-            this.TestCaseListComboBox.Location = new System.Drawing.Point(144, 223);
-            this.TestCaseListComboBox.Name = "TestCaseListComboBox";
-            this.TestCaseListComboBox.Size = new System.Drawing.Size(189, 20);
-            this.TestCaseListComboBox.TabIndex = 58;
             // 
             // ServerView
             // 
@@ -648,7 +649,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 case 1:
                     testcase = new PointToPointTestCase();
                     break;
-
+                case 2:
+                    testcase = new PointToPointDualTestCase();
+                    break;
+                case 3:
+                    testcase = new SpeechPointToPointTestCase();
+                    break;
             }
 
             if (testcase != null)

@@ -70,9 +70,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
                     new byte[] { 0x00, 0x00, 0x00, 0x00 }, //发送目的地址
-                    NangleProtocolUtility.GetSendInterval(100), //发送时间间隔
-                    NangleProtocolUtility.GetTestDataLength(0), //发送测试数据长度
-                    NangleProtocolUtility.GetFrameCount(0) //发送帧数
+                    NangleProtocolUtility.GetSendInterval(20), //发送时间间隔
+                    NangleProtocolUtility.GetTestDataLength(200), //发送测试数据长度
+                    NangleProtocolUtility.GetFrameCount(10000) //发送帧数
                     ));
                 _MoniteredResult.TestCaseIndex = 1;
                 _TestStepResetEvent.Reset();

@@ -96,8 +96,10 @@
     <Compile Include="Kernel\ServerHandler.cs" />
     <Compile Include="Kernel\MainTestOption.cs" />
     <Compile Include="Base\ServerStateEventArgs.cs" />
+    <Compile Include="TestCase\PointToPointDualTestCase.cs" />
     <Compile Include="TestCase\PointToPointTestCase.cs" />
     <Compile Include="TestCase\SingleTalkTestCase.cs" />
+    <Compile Include="TestCase\SpeechPointToPointTestCase.cs" />
     <Compile Include="TestCase\TestCaseResult.cs" />
     <Compile Include="View\MockClientView.cs">
       <SubType>Form</SubType>
