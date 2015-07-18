@@ -9,6 +9,7 @@ using Common.Logging;
 using NKnife.Converts;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Codec;
 using NKnife.Kits.SocketKnife.StressTest.Kernel;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Client;
@@ -586,6 +587,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 var protocol = ClientProtocolListBox.SelectedItem as BytesProtocol;
                 //_ProtocolHandler.WriteToSession(sessionId, protocol);
 
+                //初始化回复，需要根据session返回对应的地址
+                if(NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) == InitializeConnectionReply.CommandIntValue)
+                {
+                    int addr = ConnectedMockClientListBox.SelectedIndex + 1;
+                    var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(addr);
+                    Array.Copy(addrBytes, 0, protocol.CommandParam, 1, 4);
+                }
+
                 var family = _Kernel.GetProtocolFamily();
                 byte[] original = family.Generate(protocol);
                 byte[] data = _Codec.BytesEncoder.Execute(original);
@@ -600,15 +609,23 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         /// <param name="e"></param>
         private void ConnectedMockClientListBox_Click(object sender, EventArgs e)
         {
-            var index = ConnectedMockClientListBox.SelectedIndex;
-            if (index >-1)
+            if (ClientProtocolListBox.SelectedIndex >= 0)
             {
-                var clients = _Kernel.Clients;
-                if (index < clients.Count)
-                {
-                    var client = clients[index];
-                }
+                var protocol = ClientProtocolListBox.SelectedItem as BytesProtocol;
+                //_ProtocolHandler.WriteToSession(sessionId, protocol);
 
+                //初始化回复，需要根据session返回对应的地址
+                if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) == InitializeConnectionReply.CommandIntValue)
+                {
+                    int addr = ConnectedMockClientListBox.SelectedIndex + 1;
+                    var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(addr);
+                    Array.Copy(addrBytes, 0, protocol.CommandParam, 1, 4);
+
+                    var family = _Kernel.GetProtocolFamily();
+                    byte[] original = family.Generate(protocol);
+                    byte[] data = _Codec.BytesEncoder.Execute(original);
+                    DataToSendByClientTextBox.Text = data.ToHexString();
+                }
             }
         }
     }

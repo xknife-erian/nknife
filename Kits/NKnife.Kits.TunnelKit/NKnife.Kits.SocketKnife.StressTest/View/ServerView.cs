@@ -277,7 +277,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.TestCasePropertyGrid.Name = "TestCasePropertyGrid";
             this.TestCasePropertyGrid.Size = new System.Drawing.Size(339, 180);
             this.TestCasePropertyGrid.TabIndex = 59;
-            this.TestCasePropertyGrid.Click += new System.EventHandler(this.propertyGrid1_Click);
             // 
             // TestCaseListComboBox
             // 
@@ -286,7 +285,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.TestCaseListComboBox.Items.AddRange(new object[] {
             "单点测试",
             "1对1转发测试",
-            "1对1对传测试"});
+            "1对1对传测试",
+            "语音对讲测试"});
             this.TestCaseListComboBox.Location = new System.Drawing.Point(146, 111);
             this.TestCaseListComboBox.Name = "TestCaseListComboBox";
             this.TestCaseListComboBox.Size = new System.Drawing.Size(203, 20);
@@ -671,7 +671,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     testcase = new PointToPointDualTestCase();
                     break;
                 case 3:
-                    testcase = new SpeechPointToPointTestCase();
+                    testcase = new SpeechTalkTestCase();
                     break;
             }
 
@@ -695,11 +695,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             });
         }
 
-        private void propertyGrid1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void TestCaseListComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
             switch (TestCaseListComboBox.SelectedIndex)
@@ -714,6 +709,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     _CurrentTestcaseParam = new ExecuteHardwareTestParam();
                     break;
                 case 3:
+                    _CurrentTestcaseParam = new SpeechTestParam();
                     break;
             }
             TestCasePropertyGrid.SelectedObject = _CurrentTestcaseParam;

@@ -16,7 +16,7 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
-    public class PointToPointDualTestCase : ITestCase
+    public class SpeechTalkTestCase : ITestCase
     {
         private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
         private IKernel _Kernel;
@@ -24,25 +24,22 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private ManualResetEvent _TestStepResetEvent = new ManualResetEvent(false);
         private int _ReplyWaitTimeout = 10000; //协议发送后，等待回复的超时时间，单位毫秒
 
-        private TestCaseResult _MoniteredResult; //真实监控到的结果
-        private TestCaseResult _RepliedResult; //从下位机读取到的结果
-
         private byte[] _CurrentInitializeRepliedSessionAddress = { 0x00, 0x00, 0x00, 0x00 };
         private Dictionary<long, long> _SessionAddressIdMap = new Dictionary<long, long>();
+        private Dictionary<long, long> _SessionAddressFrameCountMap = new Dictionary<long, long>(); 
         #region ITestCase
 
-        public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
+        public void Start(IKernel kernel, object testCaseParam = default(SpeechTestParam))
         {
-            var param = testCaseParam as ExecuteHardwareTestParam;
+            var param = testCaseParam as SpeechTestParam;
             if (param == null)
             {
                 OnTestCaseFinished(false, "测试参数不正确");
                 return;
             }
-            _MoniteredResult = new TestCaseResult();
             Task.Factory.StartNew(() =>
             {
-                _logger.Info("启动测试案例：PointToPointDualTestCase");
+                _logger.Info("启动测试案例：SpeechTalkTestCase");
                 _Kernel = kernel;
                 _SeverHandler = kernel.ServerHandler;
                 _SeverHandler.ProtocolReceived += OnProtocolReceived;
@@ -73,7 +70,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了sessionIdA执行初始化的回复
                 Array.Copy(_CurrentInitializeRepliedSessionAddress, sessionAddressA, 4);
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA), sessionIdA);
-
+                _SessionAddressFrameCountMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA),0);
                 SetOnWaitProtocol(InitializeConnectionReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdB, new InitializeConnection(NangleProtocolUtility.ServerAddress));
                 _TestStepResetEvent.Reset();
@@ -86,112 +83,70 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了sessionIdB执行初始化的回复
                 Array.Copy(_CurrentInitializeRepliedSessionAddress, sessionAddressB, 4);
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB), sessionIdB);
-
-                //第二步：执行测试用例，使A向B发数据
-                //向sessionB发执行测试用例指令，使其发送
-                SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new ExecuteTestCase(
-                    NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
-                    (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
-                    sessionAddressA, //发送目的地址
-                    NangleProtocolUtility.GetSendInterval(param.SendInterval), //发送时间间隔
-                    NangleProtocolUtility.GetTestDataLength(param.TestDataLength), //发送测试数据长度
-                    NangleProtocolUtility.GetFrameCount(param.FrameCount) //发送帧数
-                    ));
-                _MoniteredResult.TestCaseIndex = 1;
+                _SessionAddressFrameCountMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB),0);
+                //第二步：执行设置语音模式，使A和B均进入对讲模式
+                //向sessionB发执行设置语音模式，使其进入对讲模式
+                SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionIdB, new SetSpeechMode(
+                    (byte)NangleProtocolUtility.SpeechMode.Talk,
+                    sessionAddressA));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
-                    _logger.Warn("发送协议ExecuteTestCase后，等待回复超时");
+                    _logger.Warn("发送协议SetSpeechMode后，等待回复超时");
                     OnTestCaseFinished(false);
                     return;
                 }
-                //收到了执行测试用例的回复
+                //收到了设置语音模式的回复
 
-                //向sessionA发执行测试用例指令，使其发送
-                SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdA, new ExecuteTestCase(
-                    NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
-                    (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
-                    sessionAddressB, //发送目的地址
-                    NangleProtocolUtility.GetSendInterval(param.SendInterval), //发送时间间隔
-                    NangleProtocolUtility.GetTestDataLength(param.TestDataLength), //发送测试数据长度
-                    NangleProtocolUtility.GetFrameCount(param.FrameCount) //发送帧数
-                    ));
-                _MoniteredResult.TestCaseIndex = 1;
+                //向sessionA发执行设置语音模式，使其进入对讲模式
+                SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionIdA, new SetSpeechMode(
+                    (byte)NangleProtocolUtility.SpeechMode.Talk,
+                    sessionAddressB));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
-                    _logger.Warn("发送协议ExecuteTestCase后，等待回复超时");
+                    _logger.Warn("发送协议SetSpeechMode后，等待回复超时");
                     OnTestCaseFinished(false);
                     return;
                 }
-                //收到了执行测试用例的回复
+                //收到了设置语音模式的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
+                _logger.Info("开始语音对讲");
+                Thread.Sleep(1000 * param.SpeechDuration); //持续5秒钟时间
 
-                Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
-
-                //第四步：调用停止执行测试用例
-                //停止A
-                SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdA, new StopExecuteTestCase(
-                    NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
-                    ));
+                //第四步：执行设置语音模式，使A和B均进入idle模式
+                //向sessionB发执行设置语音模式，使其进入idle模式
+                SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionIdB, new SetSpeechMode(
+                    (byte)NangleProtocolUtility.SpeechMode.Idle,
+                    sessionAddressA));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
-                    _logger.Warn("发送协议StopExecuteTestCase后，等待回复超时");
+                    _logger.Warn("发送协议SetSpeechMode后，等待回复超时");
                     OnTestCaseFinished(false);
                     return;
                 }
-                //收到了停止执行测试用例的回复
-                //停止B
-                SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new StopExecuteTestCase(
-                    NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
-                    ));
+                //收到了设置语音模式的回复
+
+                //向sessionA发执行设置语音模式，使其进入对讲模式
+                SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionIdA, new SetSpeechMode(
+                    (byte)NangleProtocolUtility.SpeechMode.Idle,
+                    sessionAddressB));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
-                    _logger.Warn("发送协议StopExecuteTestCase后，等待回复超时");
+                    _logger.Warn("发送协议SetSpeechMode后，等待回复超时");
                     OnTestCaseFinished(false);
                     return;
                 }
-                //收到了停止执行测试用例的回复
+                //收到了设置语音模式的回复
 
-                //第五步：读取SessionA测试用例执行结果
-                SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdA, new ReadTestCaseResult(
-                    NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
-                    ));
-                _TestStepResetEvent.Reset();
-                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
-                {
-                    _logger.Warn("发送协议ReadTestCaseResult后，等待回复超时");
-                    OnTestCaseFinished(false);
-                    return;
-                }
-                //收到来自 SessionA的测试用例结果
-                var message = new StringBuilder(VerifyTestCaseResult("服务端监控", _MoniteredResult));
-                message.Append(string.Format("\r\n{0}", VerifyTestCaseResult("发送端返回", _RepliedResult)));
-
-                //读取SessionB测试用例执行结果
-                SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new ReadTestCaseResult(
-                    NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
-                    ));
-                _TestStepResetEvent.Reset();
-                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
-                {
-                    _logger.Warn("发送协议ReadTestCaseResult后，等待回复超时");
-                    OnTestCaseFinished(false);
-                    return;
-                }
-                message.Append(string.Format("\r\n{0}", VerifyTestCaseResult("接收端返回", _RepliedResult)));
-
-
-                //第六步，比对检测到的数据和返回的测试用例结果是否一致，进行分析，发出报告
-                OnTestCaseFinished(true, message.ToString());
+                //第五步：读取SessionA测试用例执行结果，进行分析，发出报告
+                OnTestCaseFinished(true, VerifyTestCaseResult(param));
             });
         }
 
@@ -205,12 +160,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         #endregion
 
-
-        private string VerifyTestCaseResult(string from, TestCaseResult testCaseResult)
+        private string VerifyTestCaseResult(SpeechTestParam param)
         {
-            return string.Format("{0}测试数据：用例编号[{1}]发送帧数[{2}]接收帧数[{3}]接收丢失帧数[{4}]接收错误帧数[{5}]",
-                from, testCaseResult.TestCaseIndex, testCaseResult.FrameSent, testCaseResult.FrameReceived,
-                testCaseResult.FrameLost, testCaseResult.FrameError);
+            var sb = new StringBuilder();
+            foreach (var key in _SessionAddressIdMap.Keys)
+            {
+                var sessionId = _SessionAddressIdMap[key];
+                var count = _SessionAddressFrameCountMap[key];
+                sb.Append(string.Format("收到来自Session{0}的语音数据帧{1}个，", sessionId, count));
+            }
+            return string.Format("服务端{0}，通话时长{1}秒", sb, param.SpeechDuration);
         }
 
         private int _CurrentCommandIntValue;
@@ -242,14 +201,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             {
                 OnInitializeTestReply(protocol);
             }
-            else if (commandIntValue == ReadTestCaseResultReply.CommandIntValue) //收到读取测试用例结果回复协议
+            else if (commandIntValue == SpeechRawData.CommandIntValue) //收到语音数据帧
             {
-                OnReadTestCaseResultReply(protocol);
-            }
-            else if (commandIntValue == TestRawData.CommandIntValue) //收到测试数据帧
-            {
-                OnTestRawData(protocol);
-                _logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
+                OnSpeechRawData(protocol);
+                
             }
 
             if (commandIntValue == _CurrentCommandIntValue)
@@ -260,19 +215,18 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         }
 
-        private void OnTestRawData(BytesProtocol protocol)
+        private void OnSpeechRawData(BytesProtocol protocol)
         {
-            _MoniteredResult.FrameReceived += 1;
-
             var targetAddress = new byte[] { 0x00, 0x00, 0x00, 0x00 };
-            if (TestRawData.Parse(ref targetAddress, protocol))
+            if (SpeechRawData.Parse(ref targetAddress, protocol))
             {
                 var key = NangleCodecUtility.ConvertFromFourBytesToInt(targetAddress);
                 if (_SessionAddressIdMap.ContainsKey(key))
                 {
                     var targetSessionId = _SessionAddressIdMap[key];
                     _Kernel.ServerHandler.WriteToSession(targetSessionId, protocol);
-                    _MoniteredResult.FrameSent += 1;
+                    _SessionAddressFrameCountMap[key] += 1;
+                    _logger.Debug(string.Format("收到语音数据帧第{0}条", _SessionAddressFrameCountMap[key]));
                 }
             }
         }
@@ -284,19 +238,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private void OnInitializeTestReply(BytesProtocol protocol)
         {
             InitializeConnectionReply.Parse(ref _CurrentInitializeRepliedSessionAddress, protocol);
-        }
-
-        /// <summary>
-        /// 收到读取测试用例结果
-        /// </summary>
-        /// <param name="protocol"></param>
-        private void OnReadTestCaseResultReply(BytesProtocol protocol)
-        {
-            _RepliedResult = new TestCaseResult();
-            if (ReadTestCaseResultReply.Parse(ref _RepliedResult, protocol))
-            {
-                _logger.Info("测试用例结果解析成功");
-            }
         }
     }
 }

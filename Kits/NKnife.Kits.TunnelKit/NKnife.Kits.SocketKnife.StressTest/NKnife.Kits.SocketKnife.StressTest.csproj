@@ -103,7 +103,8 @@
     <Compile Include="TestCase\PointToPointTestCase.cs" />
     <Compile Include="TestCase\SingleTalkTestCase.cs" />
     <Compile Include="TestCase\ExecuteHardwareTestParam.cs" />
-    <Compile Include="TestCase\SpeechPointToPointTestCase.cs" />
+    <Compile Include="TestCase\SpeechTalkTestCase.cs" />
+    <Compile Include="TestCase\SpeechTestParam.cs" />
     <Compile Include="TestCase\TestCaseResult.cs" />
     <Compile Include="View\MockClientView.cs">
       <SubType>Form</SubType>
@@ -148,6 +149,7 @@
       <DependentUpon>ServiceSettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
