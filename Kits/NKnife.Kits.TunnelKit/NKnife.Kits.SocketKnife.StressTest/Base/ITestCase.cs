@@ -7,7 +7,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Base
 {
     public interface ITestCase
     {
-        void Start(IKernel kernel);
+        void Start(IKernel kernel, object testCaseParam);
         void Abort();
 
         event EventHandler<TestCaseResultEventArgs> Finished;

@@ -4,7 +4,7 @@ using NKnife.Kits.SocketKnife.StressTest.Codec;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
 {
-    public class InitializeTest : NangleProtocol
+    public class InitializeConnection : NangleProtocol
     {
         /// <summary>
         /// 命令字
@@ -15,7 +15,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
         /// </summary>
         public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
 
-        public InitializeTest(byte[] serverAddress)
+        public InitializeConnection(byte[] serverAddress)
             : base(CommandBytes)
         {
             CommandParamList.AddRange(serverAddress);
@@ -24,7 +24,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
 
         public override string ToString()
         {
-            return "测试系统初始化指令";
+            return "连接初始化指令";
         }
     }
 }

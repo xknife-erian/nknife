@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NKnife.Protocol;
+using NKnife.Protocol.Generic;
+using NKnife.Tunnel.Generic;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
 

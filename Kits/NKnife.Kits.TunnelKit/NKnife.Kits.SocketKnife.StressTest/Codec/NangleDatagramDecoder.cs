@@ -38,7 +38,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
 
                             //判断从当前的头部起，剩下的数据有没有至少一条完整的数据（长度够）
                             //i当前应指向头部第二个字节
-                            if (i + LENGTH_BYTE_COUNT + TARGET_BYTE_COUNT + COMMAND_BYTE_COUNT + CHK_BYTE_COUNT <
+                            if (i + LENGTH_BYTE_COUNT + COMMAND_BYTE_COUNT + CHK_BYTE_COUNT <
                                 data.Length)
                             {
                                 //剩下的数据，长度足够容纳一条最小的（空数据）datagram
@@ -103,7 +103,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
         public bool VerifyLenAndChk(byte[] source)
         {
             int len = source.Length;
-            if (len < 9) //至少要包含帧长度2+目的地址长度4+命令字长度2+校验和1
+            if (len < 5) //至少要包含帧长度2+命令字长度2+校验和1
                 return false;
             byte[] lenByte = {source[0],source[1]};
             byte chk = source[len - 1];

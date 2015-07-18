@@ -236,7 +236,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // InvokeFunctionCountTextBox
             // 
-            this.InvokeFunctionCountTextBox.Location = new System.Drawing.Point(80, 143);
+            this.InvokeFunctionCountTextBox.Location = new System.Drawing.Point(186, 97);
             this.InvokeFunctionCountTextBox.Name = "InvokeFunctionCountTextBox";
             this.InvokeFunctionCountTextBox.Size = new System.Drawing.Size(33, 21);
             this.InvokeFunctionCountTextBox.TabIndex = 49;
@@ -246,7 +246,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             this.InvokeFunctionOneTimeRadioButton.AutoSize = true;
             this.InvokeFunctionOneTimeRadioButton.Checked = true;
-            this.InvokeFunctionOneTimeRadioButton.Location = new System.Drawing.Point(13, 121);
+            this.InvokeFunctionOneTimeRadioButton.Location = new System.Drawing.Point(137, 75);
             this.InvokeFunctionOneTimeRadioButton.Name = "InvokeFunctionOneTimeRadioButton";
             this.InvokeFunctionOneTimeRadioButton.Size = new System.Drawing.Size(119, 16);
             this.InvokeFunctionOneTimeRadioButton.TabIndex = 45;
@@ -257,16 +257,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(221, 147);
+            this.label6.Location = new System.Drawing.Point(327, 101);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 12);
+            this.label6.Size = new System.Drawing.Size(29, 12);
             this.label6.TabIndex = 48;
-            this.label6.Text = "毫秒，不小于50";
+            this.label6.Text = "毫秒";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(114, 147);
+            this.label3.Location = new System.Drawing.Point(220, 101);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 50;
@@ -274,7 +274,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // InvokeFunctionIntervalTextBox
             // 
-            this.InvokeFunctionIntervalTextBox.Location = new System.Drawing.Point(170, 143);
+            this.InvokeFunctionIntervalTextBox.Location = new System.Drawing.Point(276, 97);
             this.InvokeFunctionIntervalTextBox.Name = "InvokeFunctionIntervalTextBox";
             this.InvokeFunctionIntervalTextBox.Size = new System.Drawing.Size(47, 21);
             this.InvokeFunctionIntervalTextBox.TabIndex = 47;
@@ -283,11 +283,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // InvokeFunctionSeveralTimeRadioButton
             // 
             this.InvokeFunctionSeveralTimeRadioButton.AutoSize = true;
-            this.InvokeFunctionSeveralTimeRadioButton.Location = new System.Drawing.Point(13, 144);
+            this.InvokeFunctionSeveralTimeRadioButton.Location = new System.Drawing.Point(137, 98);
             this.InvokeFunctionSeveralTimeRadioButton.Name = "InvokeFunctionSeveralTimeRadioButton";
-            this.InvokeFunctionSeveralTimeRadioButton.Size = new System.Drawing.Size(71, 16);
+            this.InvokeFunctionSeveralTimeRadioButton.Size = new System.Drawing.Size(47, 16);
             this.InvokeFunctionSeveralTimeRadioButton.TabIndex = 46;
-            this.InvokeFunctionSeveralTimeRadioButton.Text = "循环执行";
+            this.InvokeFunctionSeveralTimeRadioButton.Text = "执行";
             this.InvokeFunctionSeveralTimeRadioButton.UseVisualStyleBackColor = true;
             // 
             // DataToSendByClientTextBox
@@ -301,7 +301,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // SendProtocolButton
             // 
-            this.SendProtocolButton.Location = new System.Drawing.Point(13, 80);
+            this.SendProtocolButton.Location = new System.Drawing.Point(13, 78);
             this.SendProtocolButton.Name = "SendProtocolButton";
             this.SendProtocolButton.Size = new System.Drawing.Size(111, 32);
             this.SendProtocolButton.TabIndex = 1;
@@ -434,7 +434,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         {
             _Kernel.MockClientAmountChanged += MockClientAmountChanged;
             _Kernel.MockClientProtocolReceived += OnMockClientProtocolReceived;
-            ClientProtocolListBox.Items.Add(new InitializeTestReply(0x00, new byte[] { 0x00, 0x00, 0x00, 0x01 }));
+            ClientProtocolListBox.Items.Add(new InitializeConnectionReply(0x00, new byte[] { 0x00, 0x00, 0x00, 0x01 }));
             ClientProtocolListBox.Items.Add(new ExecuteTestCaseReply(0x00));
             ClientProtocolListBox.Items.Add(new StopExecuteTestCaseReply(0x00));
             ClientProtocolListBox.Items.Add(new ReadTestCaseResultReply(
@@ -445,6 +445,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 new byte[] { 0x00, 0x00, 0x00, 0x00 }));
             ClientProtocolListBox.Items.Add(new TestRawData(NangleProtocolUtility.EmptyBytes4, 0x00,
                 new byte[] {0x00, 0x01}));
+            ClientProtocolListBox.Items.Add(new SetSpeechModeReply(0x01));
+            ClientProtocolListBox.Items.Add(new SpeechRawData(NangleProtocolUtility.EmptyBytes4, 0x00,
+               new byte[] { 0x00, 0x01 }));
+
             base.OnShown(e);
         }
 

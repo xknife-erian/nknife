@@ -8,17 +8,17 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Protocol
 {
-    public class TestRawData:NangleProtocol
+    public class SpeechRawData : NangleProtocol
     {
         /// <summary>
         /// 命令字
         /// </summary>
-        public static byte[] CommandBytes = { 0x01, 0x06 };
+        public static byte[] CommandBytes = { 0x02, 0x02 };
         /// <summary>
         /// 根据2字节的command命令字计算出的整数，用于switch条件判断等流程
         /// </summary>
-        public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
-        public TestRawData(byte[] targetAddress,byte index, byte[] data)
+        public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes);
+        public SpeechRawData(byte[] targetAddress, byte index, byte[] data)
             : base(CommandBytes)
         {
             CommandParamList.AddRange(targetAddress);
@@ -29,7 +29,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol
 
         public override string ToString()
         {
-            return "测试数据";
+            return "语音数据";
         }
 
         public static bool Parse(ref byte[] targetAddress, BytesProtocol protocol)
@@ -37,7 +37,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol
             var commandParam = protocol.CommandParam;
             if (commandParam.Length < 4)
                 return false;
-            Array.Copy(commandParam,0,targetAddress,0,4);
+            Array.Copy(commandParam, 0, targetAddress, 0, 4);
 
             return true;
 

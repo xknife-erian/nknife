@@ -12,7 +12,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
         /// <summary>
         /// 命令字
         /// </summary>
-        public static byte[] CommandBytes = { 0x00, 0x05 };
+        public static byte[] CommandBytes = { 0x01, 0x03 };
         /// <summary>
         /// 根据2字节的command命令字计算出的整数，用于switch条件判断等流程
         /// </summary>

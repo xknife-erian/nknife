@@ -31,7 +31,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
         {
             var lenBytes = NangleCodecUtility.ConvertFromIntToTwoBytes(data.Length + CHK_BYTE_COUNT); //当前数据长度要增加上最后一个字节的校验位
             var chk = NangleCodecUtility.GetOneByteChk(data);
-            if (data.Length >= TARGET_BYTE_COUNT + COMMAND_BYTE_COUNT)
+            if (data.Length >= COMMAND_BYTE_COUNT)
             {
                 var result = new byte[data.Length + 5];
                 result[0] = FirstHeadByte;
@@ -42,7 +42,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
                 Array.Copy(data, 0, result, 4, data.Length);
                 return result;
             }
-            return new byte[] {FirstHeadByte,SecondHeadByte, 0x00,0x07, 0x00, 0x00,0x00,0x00,0x00,0x00, 0x00};
+            return new byte[] {FirstHeadByte,SecondHeadByte, 0x00,0x03,0x00,0x00, 0x00};
         }
     }
 }

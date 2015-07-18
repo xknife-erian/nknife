@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,37 +25,61 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Generic
         {
             string result = "";
             var command = protocol.Command;
-            if (command.Length == 2 && command[0] == 0x00) //测试相关协议
+            if (command.Length == 2)
             {
-                switch (command[1])
+                if (command[0] == 0x00) //初始化相关协议
                 {
-                    case 0x00: //测试系统初始化指令 InitializeTest
-                        result = "测试系统初始化指令";
-                        break;
-                    case 0x01:
-                        result = "测试系统初始化回复";
-                        break;
-                    case 0x02:
-                        result = "测试用例执行指令";
-                        break;
-                    case 0x03:
-                        result = "测试用例执行回复";
-                        break;
-                    case 0x04:
-                        result = "测试用例停止指令";
-                        break;
-                    case 0x05:
-                        result = "测试用例停止回复";
-                        break;
-                    case 0x06:
-                        result = "测试用例执行结果读取指令";
-                        break;
-                    case 0x07:
-                        result = "测试用例执行结果汇报";
-                        break;
-                    case 0x08:
-                        result = "测试数据";
-                        break;
+                    switch (command[1])
+                    {
+                        case 0x00: //测试系统初始化指令 InitializeConnection
+                            result = "连接初始化指令";
+                            break;
+                        case 0x01:
+                            result = "连接初始化回复";
+                            break;
+                    }
+                }
+                else if (command[0] == 0x01) //测试相关协议
+                {
+                    switch (command[1])
+                    {
+                        case 0x00:
+                            result = "测试用例执行指令";
+                            break;
+                        case 0x01:
+                            result = "测试用例执行回复";
+                            break;
+                        case 0x02:
+                            result = "测试用例停止指令";
+                            break;
+                        case 0x03:
+                            result = "测试用例停止回复";
+                            break;
+                        case 0x04:
+                            result = "测试用例执行结果读取指令";
+                            break;
+                        case 0x05:
+                            result = "测试用例执行结果汇报";
+                            break;
+                        case 0x06:
+                            result = "测试数据";
+                            break;
+                    }
+                }
+                else if (command[0] == 0x02) //语音相关协议
+                {
+                    switch (command[1])
+                    {
+                        case 0x00:
+                            result = "设置语音模式";
+                            break;
+                        case 0x01:
+                            result = "设置语音模式回应";
+                            break;
+                        case 0x02:
+                            result = "语音数据";
+                            break;
+                    }
                 }
             }
             else
@@ -108,6 +133,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Generic
         public static byte[] GetFrameCount(int count)
         {
             return NangleCodecUtility.ConvertFromIntToFourBytes(count);
+        }
+
+        public enum SpeechMode:byte
+        {
+            Idle = 0x00, //IDLE模式，喇叭麦克关闭
+            Talk = 0x01, //对讲模式，喇叭麦克开启
+            Broadcast = 0x02, //播放模式，喇叭开启麦克关闭
+            Collect = 0x03, //采集模式，喇叭关闭麦克打开
         }
     }
 }

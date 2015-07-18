@@ -31,8 +31,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private Dictionary<long, long> _SessionAddressIdMap = new Dictionary<long, long>();
         #region ITestCase
 
-        public void Start(IKernel kernel)
+        public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
         {
+            var param = testCaseParam as ExecuteHardwareTestParam;
+            if (param == null)
+            {
+                OnTestCaseFinished(false, "测试参数不正确");
+                return;
+            }
             _MoniteredResult = new TestCaseResult();
             Task.Factory.StartNew(() =>
             {
@@ -56,8 +62,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 var sessionAddressB = new byte[] { 0x00, 0x00, 0x00, 0x00 };
 
                 //第一步：执行初始化
-                SetOnWaitProtocol(InitializeTestReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdA, new InitializeTest(NangleProtocolUtility.ServerAddress));
+                SetOnWaitProtocol(InitializeConnectionReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionIdA, new InitializeConnection(NangleProtocolUtility.ServerAddress));
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
                     _logger.Warn("向sessionIdA发送协议InitializeTest后，等待回复超时");
@@ -68,8 +74,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 Array.Copy(_CurrentInitializeRepliedSessionAddress, sessionAddressA, 4);
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA), sessionIdA);
 
-                SetOnWaitProtocol(InitializeTestReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new InitializeTest(NangleProtocolUtility.ServerAddress));
+                SetOnWaitProtocol(InitializeConnectionReply.CommandIntValue);
+                _Kernel.ServerHandler.WriteToSession(sessionIdB, new InitializeConnection(NangleProtocolUtility.ServerAddress));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
@@ -88,9 +94,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
                     sessionAddressA, //发送目的地址
-                    NangleProtocolUtility.GetSendInterval(50), //发送时间间隔
-                    NangleProtocolUtility.GetTestDataLength(200), //发送测试数据长度
-                    NangleProtocolUtility.GetFrameCount(10000) //发送帧数
+                    NangleProtocolUtility.GetSendInterval(param.SendInterval), //发送时间间隔
+                    NangleProtocolUtility.GetTestDataLength(param.TestDataLength), //发送测试数据长度
+                    NangleProtocolUtility.GetFrameCount(param.FrameCount) //发送帧数
                     ));
                 _MoniteredResult.TestCaseIndex = 1;
                 _TestStepResetEvent.Reset();
@@ -108,9 +114,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
                     sessionAddressB, //发送目的地址
-                    NangleProtocolUtility.GetSendInterval(50), //发送时间间隔
-                    NangleProtocolUtility.GetTestDataLength(200), //发送测试数据长度
-                    NangleProtocolUtility.GetFrameCount(10000) //发送帧数
+                    NangleProtocolUtility.GetSendInterval(param.SendInterval), //发送时间间隔
+                    NangleProtocolUtility.GetTestDataLength(param.TestDataLength), //发送测试数据长度
+                    NangleProtocolUtility.GetFrameCount(param.FrameCount) //发送帧数
                     ));
                 _MoniteredResult.TestCaseIndex = 1;
                 _TestStepResetEvent.Reset();
@@ -123,7 +129,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了执行测试用例的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
 
-                Thread.Sleep(1000 * 5); //持续5秒钟时间
+                Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
 
                 //第四步：调用停止执行测试用例
                 //停止A
@@ -199,16 +205,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         #endregion
 
-        //        private string VerifyTestCaseResult()
-        //        {
-        //            var monitored = string.Format("服务端监控测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
-        //                _MoniteredResult.TestCaseIndex, _MoniteredResult.FrameSent, _MoniteredResult.FrameReceived,
-        //                _MoniteredResult.FrameLost, _MoniteredResult.FrameError);
-        //            var replied = string.Format("客户端返回测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
-        //                _RepliedResult.TestCaseIndex, _RepliedResult.FrameSent, _RepliedResult.FrameReceived,
-        //                _RepliedResult.FrameLost, _RepliedResult.FrameError);
-        //            return string.Format("{0}\r\n{1}", monitored, replied);
-        //        }
+
         private string VerifyTestCaseResult(string from, TestCaseResult testCaseResult)
         {
             return string.Format("{0}测试数据：用例编号[{1}]发送帧数[{2}]接收帧数[{3}]接收丢失帧数[{4}]接收错误帧数[{5}]",
@@ -241,7 +238,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             var protocol = nangleProtocolEventArgs.Protocol;
             var command = protocol.Command;
             var commandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(command);
-            if (commandIntValue == InitializeTestReply.CommandIntValue) //收到了初始化回复
+            if (commandIntValue == InitializeConnectionReply.CommandIntValue) //收到了初始化回复
             {
                 OnInitializeTestReply(protocol);
             }
@@ -286,7 +283,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         /// <param name="protocol"></param>
         private void OnInitializeTestReply(BytesProtocol protocol)
         {
-            InitializeTestReply.Parse(ref _CurrentInitializeRepliedSessionAddress, protocol);
+            InitializeConnectionReply.Parse(ref _CurrentInitializeRepliedSessionAddress, protocol);
         }
 
         /// <summary>

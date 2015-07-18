@@ -8,7 +8,7 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
 {
-    public class InitializeTestReply:NangleProtocol
+    public class InitializeConnectionReply:NangleProtocol
     {
         /// <summary>
         /// 命令字
@@ -18,7 +18,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
         /// 根据2字节的command命令字计算出的整数，用于switch条件判断等流程
         /// </summary>
         public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
-        public InitializeTestReply(byte result,byte[] clientAddress)
+        public InitializeConnectionReply(byte result,byte[] clientAddress)
             : base(CommandBytes)
         {
             CommandParamList.Add(result);
@@ -28,7 +28,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
 
         public override string ToString()
         {
-            return "测试系统初始化回复";
+            return "连接初始化回复";
         }
 
         public static bool Parse(ref byte[] currentInitializeRepliedSessionAddress, BytesProtocol protocol)
