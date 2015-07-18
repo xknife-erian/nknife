@@ -14,8 +14,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
         /// </summary>
         public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
 
-        public StopExecuteTestCase(byte[] targetAddress, byte[] testCaseIndex)
-            : base(targetAddress, CommandBytes)
+        public StopExecuteTestCase(byte[] testCaseIndex)
+            : base(CommandBytes)
         {
             CommandParamList.AddRange(testCaseIndex);
             CommandParam = CommandParamList.ToArray();

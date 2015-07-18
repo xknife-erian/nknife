@@ -18,8 +18,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
         /// 根据2字节的command命令字计算出的整数，用于switch条件判断等流程
         /// </summary>
         public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
-        public InitializeTestReply(byte[] targetAddress, byte result,byte[] clientAddress)
-            : base(targetAddress, CommandBytes)
+        public InitializeTestReply(byte result,byte[] clientAddress)
+            : base(CommandBytes)
         {
             CommandParamList.Add(result);
             CommandParamList.AddRange(clientAddress);
@@ -35,14 +35,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
         {
             var commandparam = protocol.CommandParam;
             //commandparam组成如下
-            //目标地址 初始化结果	本机地址
-            //4字节    1字节	        4字节
+            //初始化结果	本机地址
+            //1字节	    4字节
 
-            if (commandparam == null || commandparam.Length != 9)
+            if (commandparam == null || commandparam.Length != 5)
             {
                 return false;
             }
-            Array.Copy(commandparam,5,currentInitializeRepliedSessionAddress,0,4);
+            Array.Copy(commandparam,1,currentInitializeRepliedSessionAddress,0,4);
             return true;
         }
     }

@@ -465,10 +465,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         protected override void OnShown(EventArgs e)
         {
             ServerListenPortLabel.Text = string.Format("监听端口：{0}", Properties.Settings.Default.ServerPort);
-            ServerProtocolListBox.Items.Add(new InitializeTest(new byte[] { 0x00, 0x00, 0x00, 0x00 }, new byte[] { 0x00, 0x00, 0x00, 0x00 }));
+            ServerProtocolListBox.Items.Add(new InitializeTest(new byte[] { 0x00, 0x00, 0x00, 0x00 }));
             ServerProtocolListBox.Items.Add(
                 new ExecuteTestCase(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte) NangleProtocolUtility.SendEnable.Enable, //发送使能
                     new byte[] {0x00, 0x00, 0x00, 0x00}, //发送目的地址
@@ -476,9 +475,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     NangleProtocolUtility.GetTestDataLength(0), //发送测试数据长度
                     NangleProtocolUtility.GetFrameCount(0))); //发送帧数
             ServerProtocolListBox.Items.Add(
-                new StopExecuteTestCase(new byte[]{0x00,0x00,0x00,0x00}, new byte[]{0x00,0x01}));
+                new StopExecuteTestCase(new byte[]{0x00,0x01}));
             ServerProtocolListBox.Items.Add(
-               new ReadTestCaseResult(new byte[] { 0x00, 0x00, 0x00, 0x00 }, new byte[] { 0x00, 0x01 }));
+               new ReadTestCaseResult(new byte[] { 0x00, 0x01 }));
             ServerProtocolListBox.Items.Add(
               new TestRawData(new byte[] { 0x00, 0x00, 0x00, 0x00 }, 0x01, new byte[] { 0x00, 0x01 }));
 

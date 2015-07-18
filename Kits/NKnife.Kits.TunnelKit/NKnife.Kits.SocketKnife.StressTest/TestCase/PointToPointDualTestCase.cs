@@ -57,7 +57,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
                 //第一步：执行初始化
                 SetOnWaitProtocol(InitializeTestReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdA, new InitializeTest(NangleProtocolUtility.EmptyBytes4, NangleProtocolUtility.ServerAddress));
+                _Kernel.ServerHandler.WriteToSession(sessionIdA, new InitializeTest(NangleProtocolUtility.ServerAddress));
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
                     _logger.Warn("向sessionIdA发送协议InitializeTest后，等待回复超时");
@@ -69,7 +69,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA), sessionIdA);
 
                 SetOnWaitProtocol(InitializeTestReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new InitializeTest(NangleProtocolUtility.EmptyBytes4, NangleProtocolUtility.ServerAddress));
+                _Kernel.ServerHandler.WriteToSession(sessionIdB, new InitializeTest(NangleProtocolUtility.ServerAddress));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
@@ -85,7 +85,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //向sessionB发执行测试用例指令，使其发送
                 SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdB, new ExecuteTestCase(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
                     sessionAddressA, //发送目的地址
@@ -106,7 +105,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //向sessionA发执行测试用例指令，使其发送
                 SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdA, new ExecuteTestCase(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
                     sessionAddressB, //发送目的地址
@@ -131,7 +129,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //停止A
                 SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdA, new StopExecuteTestCase(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                     ));
                 _TestStepResetEvent.Reset();
@@ -145,7 +142,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //停止B
                 SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdB, new StopExecuteTestCase(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                     ));
                 _TestStepResetEvent.Reset();
@@ -160,7 +156,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //第五步：读取SessionA测试用例执行结果
                 SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdA, new ReadTestCaseResult(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                     ));
                 _TestStepResetEvent.Reset();
@@ -177,7 +172,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //读取SessionB测试用例执行结果
                 SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdB, new ReadTestCaseResult(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                     ));
                 _TestStepResetEvent.Reset();

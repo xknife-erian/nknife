@@ -13,8 +13,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Server
         /// 根据2字节的command命令字计算出的整数，用于switch条件判断等流程
         /// </summary>
         public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
-        public ReadTestCaseResult(byte[] targetAddress, byte[] testCaseIndex)
-            : base(targetAddress, CommandBytes)
+        public ReadTestCaseResult(byte[] testCaseIndex)
+            : base(CommandBytes)
         {
             CommandParamList.AddRange(testCaseIndex);
             CommandParam = CommandParamList.ToArray();

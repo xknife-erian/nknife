@@ -54,7 +54,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 var sessionId = sessionList[0].Id;
                 //第一步：执行初始化
                 SetOnWaitProtocol(InitializeTestReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionId, new InitializeTest(NangleProtocolUtility.EmptyBytes4, NangleProtocolUtility.ServerAddress));
+                _Kernel.ServerHandler.WriteToSession(sessionId, new InitializeTest(NangleProtocolUtility.ServerAddress));
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
                     _logger.Warn("发送协议InitializeTest后，等待回复超时");
@@ -66,7 +66,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //第二步：执行测试用例
                 SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionId, new ExecuteTestCase(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
                     new byte[] { 0x00, 0x00, 0x00, 0x00 }, //发送目的地址
@@ -91,7 +90,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
                 SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionId, new StopExecuteTestCase(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                     ));
                 _TestStepResetEvent.Reset();
@@ -106,7 +104,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //第五步：读取测试用例执行结果
                 SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionId, new ReadTestCaseResult(
-                    NangleProtocolUtility.EmptyBytes4, //目标地址
                     NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                     ));
                 _TestStepResetEvent.Reset();

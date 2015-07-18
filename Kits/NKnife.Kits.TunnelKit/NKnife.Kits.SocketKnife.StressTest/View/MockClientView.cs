@@ -434,11 +434,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         {
             _Kernel.MockClientAmountChanged += MockClientAmountChanged;
             _Kernel.MockClientProtocolReceived += OnMockClientProtocolReceived;
-            ClientProtocolListBox.Items.Add(new InitializeTestReply(NangleProtocolUtility.EmptyBytes4, 0x00, new byte[] { 0x00, 0x00, 0x00, 0x01 }));
-            ClientProtocolListBox.Items.Add(new ExecuteTestCaseReply(NangleProtocolUtility.EmptyBytes4, 0x00));
-            ClientProtocolListBox.Items.Add(new StopExecuteTestCaseReply(NangleProtocolUtility.EmptyBytes4, 0x00));
+            ClientProtocolListBox.Items.Add(new InitializeTestReply(0x00, new byte[] { 0x00, 0x00, 0x00, 0x01 }));
+            ClientProtocolListBox.Items.Add(new ExecuteTestCaseReply(0x00));
+            ClientProtocolListBox.Items.Add(new StopExecuteTestCaseReply(0x00));
             ClientProtocolListBox.Items.Add(new ReadTestCaseResultReply(
-                NangleProtocolUtility.EmptyBytes4,
                 NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },

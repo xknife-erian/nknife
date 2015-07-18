@@ -10,10 +10,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.Base
     public class NangleProtocol : BytesProtocol
     {
         protected List<byte> CommandParamList = new List<byte>();
-        public NangleProtocol(byte[] targetAddress, byte[] command)
+        public NangleProtocol(byte[] command)
             : base("nangle-socket", command)
         {
-            CommandParamList.AddRange(targetAddress);
+
         }
     }
 }
