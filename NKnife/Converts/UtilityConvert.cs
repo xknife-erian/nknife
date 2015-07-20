@@ -500,14 +500,23 @@ namespace NKnife.Converts
         /// <summary>
         ///     将16进制字符串转化为字节数组
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="hexSrc"></param>
         /// <returns></returns>
         public static byte[] HexToBytes(string hexSrc)
         {
             var hex = hexSrc.Replace(" ", "");
             var byteArray = new byte[hex.Length / 2];
             for (int i = 0, j = 0; i < hex.Length; i = i + 2, j++)
-                byteArray[j] = Convert.ToByte(hex.Substring(i, 2), 16);
+            {
+                try
+                {
+                    byteArray[j] = Convert.ToByte(hex.Substring(i, 2), 16);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
             return byteArray;
         }
 
