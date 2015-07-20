@@ -100,6 +100,7 @@
     <Compile Include="Kernel\MainTestOption.cs" />
     <Compile Include="Base\ServerStateEventArgs.cs" />
     <Compile Include="TestCase\PointToPointDualTestCase.cs" />
+    <Compile Include="TestCase\PointToPointGroupTestCase.cs" />
     <Compile Include="TestCase\PointToPointTestCase.cs" />
     <Compile Include="TestCase\SingleTalkTestCase.cs" />
     <Compile Include="TestCase\ExecuteHardwareTestParam.cs" />

@@ -286,7 +286,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             "单点测试",
             "1对1转发测试",
             "1对1对传测试",
-            "语音对讲测试"});
+            "语音对讲测试",
+            "1对1分组对传测试"});
             this.TestCaseListComboBox.Location = new System.Drawing.Point(146, 111);
             this.TestCaseListComboBox.Name = "TestCaseListComboBox";
             this.TestCaseListComboBox.Size = new System.Drawing.Size(203, 20);
@@ -673,6 +674,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 case 3:
                     testcase = new SpeechTalkTestCase();
                     break;
+                case 4:
+                    testcase = new PointToPointGroupTestCase();
+                    break;
             }
 
             if (testcase != null)
@@ -710,6 +714,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     break;
                 case 3:
                     _CurrentTestcaseParam = new SpeechTestParam();
+                    break;
+                case 4:
+                    _CurrentTestcaseParam = new ExecuteHardwareTestParam();
                     break;
             }
             TestCasePropertyGrid.SelectedObject = _CurrentTestcaseParam;
