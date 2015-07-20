@@ -125,6 +125,12 @@
     <Compile Include="View\ServiceSettingForm.Designer.cs">
       <DependentUpon>ServiceSettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\TestCaseResultDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TestCaseResultDialog.Designer.cs">
+      <DependentUpon>TestCaseResultDialog.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\ServiceSettingForm.resx">
       <DependentUpon>ServiceSettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TestCaseResultDialog.resx">
+      <DependentUpon>TestCaseResultDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />

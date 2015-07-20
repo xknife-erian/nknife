@@ -681,13 +681,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
             if (testcase != null)
             {
-                testcase.Finished += Testcase_Finished;
+                testcase.Finished += TestcaseFinished;
                 testcase.Start(_Kernel, _CurrentTestcaseParam);
                 ExecuteTestCaseButton.Enabled = false;
             }
         }
 
-        void Testcase_Finished(object sender, TestCaseResultEventArgs e)
+        void TestcaseFinished(object sender, TestCaseResultEventArgs e)
         {
             var result = e.Result;
             var message = e.Message;
@@ -695,7 +695,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             ExecuteTestCaseButton.ThreadSafeInvoke(()=>
             {
                 ExecuteTestCaseButton.Enabled = true;
-                MessageBox.Show(this, message, "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var dlg = new TestCaseResultDialog(message);
+                dlg.ShowDialog();
+                //MessageBox.Show(this, message, "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
         }
 

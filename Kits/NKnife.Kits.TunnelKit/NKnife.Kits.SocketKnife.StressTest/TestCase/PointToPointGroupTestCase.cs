@@ -21,9 +21,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
         private IKernel _Kernel;
         private ServerHandler _SeverHandler;
-        private ManualResetEvent _TestStepResetEvent = new ManualResetEvent(false);
         private int _ReplyWaitTimeout = 10000; //协议发送后，等待回复的超时时间，单位毫秒
 
+        private Dictionary<long,ManualResetEvent> _SessionIdResetMap = new Dictionary<long, ManualResetEvent>(); 
+        private Dictionary<long,long> _SessionIdWaitCommandMap = new Dictionary<long, long>(); 
         private Dictionary<long, long> _SessionAddressIdMap = new Dictionary<long, long>();
         private Dictionary<long, byte[]> _SessionIdAddressMap = new Dictionary<long, byte[]>();
         private Dictionary<long,TestCaseResult> _SessionIdTestResultMap = new Dictionary<long, TestCaseResult>(); 
@@ -70,8 +71,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 var result = new StringBuilder();
                 for (int i = 0; i < tskList.Count; i++)
                 {
-                    var msg = _TestResultMap.ContainsKey(i) ? _TestResultMap[i] : string.Empty;
-                    result.Append(string.Format("第{0}组执行{1}，结果：{2}\r\n", i, tskList[i].Result, msg));
+                    var msg = _TestResultMap.ContainsKey(i*2) ? _TestResultMap[i*2] : string.Empty;
+                    result.Append(string.Format("第{0}组执行测试：{1}-----------------------\r\n{2}\r\n", i + 1, tskList[i].Result?"成功":"失败", msg));
                 }
                 OnTestCaseFinished(true,result.ToString());
             });
@@ -88,10 +89,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             var sessionAddressA = new byte[] { 0x00, 0x00, 0x00, 0x00 };
             var sessionAddressB = new byte[] { 0x00, 0x00, 0x00, 0x00 };
 
+            _SessionIdResetMap.Add(sessionIdA,new ManualResetEvent(false));
+            _SessionIdResetMap.Add(sessionIdB,new ManualResetEvent(false));
+
             //第一步：执行初始化
-            SetOnWaitProtocol(InitializeConnectionReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdA,InitializeConnectionReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdA, new InitializeConnection(NangleProtocolUtility.ServerAddress));
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            if (!_SessionIdResetMap[sessionIdA].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn(string.Format("向session{0}发送协议InitializeTest后，等待回复超时",sessionIdA));
                 return false;
@@ -107,10 +111,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             _logger.Debug(string.Format("收到客户端初始化回复，地址[{0}]",sessionAddressA.ToHexString()));
             _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA), sessionIdA);
 
-            SetOnWaitProtocol(InitializeConnectionReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdB,InitializeConnectionReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdB, new InitializeConnection(NangleProtocolUtility.ServerAddress));
-            _TestStepResetEvent.Reset();
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            _SessionIdResetMap[sessionIdB].Reset();
+            if (!_SessionIdResetMap[sessionIdB].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn("向sessionIdA发送协议InitializeTest后，等待回复超时");
                 return false;
@@ -127,7 +131,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
             //第二步：执行测试用例，使A向B发数据
             //向sessionB发执行测试用例指令，使其发送
-            SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdB,ExecuteTestCaseReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdB, new ExecuteTestCase(
                 NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                 (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
@@ -136,8 +140,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 NangleProtocolUtility.GetTestDataLength(param.TestDataLength), //发送测试数据长度
                 NangleProtocolUtility.GetFrameCount(param.FrameCount) //发送帧数
                 ));
-            _TestStepResetEvent.Reset();
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            _SessionIdResetMap[sessionIdB].Reset();
+            if (!_SessionIdResetMap[sessionIdB].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn("发送协议ExecuteTestCase后，等待回复超时");
                 return false;
@@ -145,7 +149,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             //收到了执行测试用例的回复
 
             //向sessionA发执行测试用例指令，使其发送
-            SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdA,ExecuteTestCaseReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdA, new ExecuteTestCase(
                 NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                 (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
@@ -154,8 +158,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 NangleProtocolUtility.GetTestDataLength(param.TestDataLength), //发送测试数据长度
                 NangleProtocolUtility.GetFrameCount(param.FrameCount) //发送帧数
                 ));
-            _TestStepResetEvent.Reset();
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            _SessionIdResetMap[sessionIdA].Reset();
+            if (!_SessionIdResetMap[sessionIdA].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn("发送协议ExecuteTestCase后，等待回复超时");
                 return false;
@@ -167,24 +171,24 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
             //第四步：调用停止执行测试用例
             //停止A
-            SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdA,StopExecuteTestCaseReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdA, new StopExecuteTestCase(
                 NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                 ));
-            _TestStepResetEvent.Reset();
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            _SessionIdResetMap[sessionIdA].Reset();
+            if (!_SessionIdResetMap[sessionIdA].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn("发送协议StopExecuteTestCase后，等待回复超时");
                 return false;
             }
             //收到了停止执行测试用例的回复
             //停止B
-            SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdB,StopExecuteTestCaseReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdB, new StopExecuteTestCase(
                 NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                 ));
-            _TestStepResetEvent.Reset();
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            _SessionIdResetMap[sessionIdB].Reset();
+            if (!_SessionIdResetMap[sessionIdB].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn("发送协议StopExecuteTestCase后，等待回复超时");
                 return false;
@@ -192,12 +196,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             //收到了停止执行测试用例的回复
 
             //第五步：读取SessionA测试用例执行结果
-            SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdA,ReadTestCaseResultReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdA, new ReadTestCaseResult(
                 NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                 ));
-            _TestStepResetEvent.Reset();
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            _SessionIdResetMap[sessionIdA].Reset();
+            if (!_SessionIdResetMap[sessionIdA].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn("发送协议ReadTestCaseResult后，等待回复超时");
                 return false;
@@ -212,12 +216,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             message.Append(string.Format("{0}\r\n", VerifyTestCaseResult("发送端返回", _SessionIdTestResultMap[sessionIdA])));
 
             //读取SessionB测试用例执行结果
-            SetOnWaitProtocol(ReadTestCaseResultReply.CommandIntValue);
+            SetOnWaitProtocol(sessionIdB,ReadTestCaseResultReply.CommandIntValue);
             _Kernel.ServerHandler.WriteToSession(sessionIdB, new ReadTestCaseResult(
                 NangleProtocolUtility.GetTestCaseIndex(1) //用例编号);
                 ));
-            _TestStepResetEvent.Reset();
-            if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
+            _SessionIdResetMap[sessionIdB].Reset();
+            if (!_SessionIdResetMap[sessionIdB].WaitOne(_ReplyWaitTimeout))
             {
                 _logger.Warn("发送协议ReadTestCaseResult后，等待回复超时");
                 return false;
@@ -232,6 +236,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
             //第六步，比对检测到的数据和返回的测试用例结果是否一致，进行分析，发出报告
             _TestResultMap.Add(index,message.ToString());
+            _logger.Debug(string.Format("第{0}组增加测试结果：{1}",index / 2 + 1,message));
             return true;
         }
 
@@ -253,10 +258,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 testCaseResult.FrameLost, testCaseResult.FrameError);
         }
 
-        private int _CurrentCommandIntValue;
-        private void SetOnWaitProtocol(int commandIntValue)
+        private void SetOnWaitProtocol(long sessionId, int commandIntValue)
         {
-            _CurrentCommandIntValue = commandIntValue;
+            if (_SessionIdWaitCommandMap.ContainsKey(sessionId))
+            {
+                _SessionIdWaitCommandMap[sessionId] = commandIntValue;
+            }
+            else
+            {
+                _SessionIdWaitCommandMap.Add(sessionId,commandIntValue);
+            }
         }
 
         private void OnTestCaseFinished(bool result, string message = "")
@@ -274,7 +285,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
         {
-            //TODO:验证当前收到的是正在等候的
             var protocol = nangleProtocolEventArgs.Protocol;
             var sessionId = nangleProtocolEventArgs.SessionId;
             var command = protocol.Command;
@@ -292,9 +302,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 OnTestRawData(protocol);
             }
 
-            if (commandIntValue == _CurrentCommandIntValue)
+            if (_SessionIdWaitCommandMap.ContainsKey(sessionId) && _SessionIdResetMap.ContainsKey(sessionId))
             {
-                _TestStepResetEvent.Set();
+                if (commandIntValue == _SessionIdWaitCommandMap[sessionId])
+                {
+                    _SessionIdResetMap[sessionId].Set();
+                }
             }
 
 

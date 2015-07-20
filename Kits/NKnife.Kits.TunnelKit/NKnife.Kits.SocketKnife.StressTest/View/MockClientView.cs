@@ -14,6 +14,7 @@ using NKnife.Kits.SocketKnife.StressTest.Kernel;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Client;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
 using NKnife.Kits.SocketKnife.StressTest.TestCase;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Generic;
@@ -55,6 +56,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private Label label3;
         private TextBox InvokeFunctionIntervalTextBox;
         private RadioButton InvokeFunctionSeveralTimeRadioButton;
+        private CheckBox AutoReplyCheckBox;
         private System.Windows.Forms.SplitContainer ClientViewSplitContainer;
     
         public MockClientView()
@@ -92,6 +94,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.label7 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.AutoReplyCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ClientViewSplitContainer)).BeginInit();
@@ -108,6 +111,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.AutoReplyCheckBox);
             this.panel1.Controls.Add(this.AutoConnectAfterCreationCheckBox);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.ClientCountTextBox);
@@ -146,7 +150,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ClientCountTextBox.Name = "ClientCountTextBox";
             this.ClientCountTextBox.Size = new System.Drawing.Size(100, 21);
             this.ClientCountTextBox.TabIndex = 19;
-            this.ClientCountTextBox.Text = "3";
+            this.ClientCountTextBox.Text = "4";
             // 
             // label1
             // 
@@ -204,7 +208,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.ConnectedMockClientListBox.Name = "ConnectedMockClientListBox";
             this.ConnectedMockClientListBox.Size = new System.Drawing.Size(177, 533);
             this.ConnectedMockClientListBox.TabIndex = 0;
-            this.ConnectedMockClientListBox.Click += new System.EventHandler(this.ConnectedMockClientListBox_Click);
+            this.ConnectedMockClientListBox.Click += new System.EventHandler(this.ConnectedMockClientListBoxClick);
             // 
             // groupBox4
             // 
@@ -404,6 +408,18 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.button1.Text = "连接";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // AutoReplyCheckBox
+            // 
+            this.AutoReplyCheckBox.AutoSize = true;
+            this.AutoReplyCheckBox.Checked = true;
+            this.AutoReplyCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutoReplyCheckBox.Location = new System.Drawing.Point(484, 17);
+            this.AutoReplyCheckBox.Name = "AutoReplyCheckBox";
+            this.AutoReplyCheckBox.Size = new System.Drawing.Size(72, 16);
+            this.AutoReplyCheckBox.TabIndex = 22;
+            this.AutoReplyCheckBox.Text = "自动应答";
+            this.AutoReplyCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MockClientView
             // 
             this.ClientSize = new System.Drawing.Size(715, 585);
@@ -512,13 +528,58 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         {
             MockClientProtocolReceiveHistoryTextBox.ThreadSafeInvoke(() =>
             {
-                var index = _Kernel.ClientHandlers.IndexOf(sender as MockClientHandler) + 1;
+                var handler = sender as MockClientHandler;
+                var index = _Kernel.ClientHandlers.IndexOf(handler) + 1;
+                var protocol = nangleProtocolEventArgs.Protocol;
                 MockClientProtocolReceiveHistoryTextBox.Text = string.Format("{0} 仿真客户端[{1}]收到协议[{2}]: \r\n{3}",
-                     DateTime.Now.ToString("HH:mm:ss fff"), index, NangleProtocolUtility.GetProtocolDescription(nangleProtocolEventArgs.Protocol), MockClientProtocolReceiveHistoryTextBox.Text);
+                     DateTime.Now.ToString("HH:mm:ss fff"), index, NangleProtocolUtility.GetProtocolDescription(protocol), MockClientProtocolReceiveHistoryTextBox.Text);
                 AppUtility.LimitTextBoxTextLengh(MockClientProtocolReceiveHistoryTextBox);
+
+                if (AutoReplyCheckBox.Checked)
+                {
+                    ProcessProtocol(handler, protocol);
+                }
+                
             });
         }
 
+        /// <summary>
+        /// 自动应答处理
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <param name="protocol"></param>
+        private void ProcessProtocol(MockClientHandler handler, BytesProtocol protocol)
+        {
+            int addr = _Kernel.ClientHandlers.IndexOf(handler) + 1;
+            var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(addr);
+            var commandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command);
+            BytesProtocol reply;
+            if (commandIntValue == InitializeConnection.CommandIntValue) //初始化
+            {
+                reply = new InitializeConnectionReply(0x01, addrBytes);
+                handler.WriteToAllSession(reply);
+            }
+            else if (commandIntValue == ExecuteTestCase.CommandIntValue) //执行测试案例
+            {
+                reply = new ExecuteTestCaseReply(0x01);
+                handler.WriteToAllSession(reply);
+            }
+            else if (commandIntValue == StopExecuteTestCase.CommandIntValue) //停止执行测试案例
+            {
+                reply = new StopExecuteTestCaseReply(0x01);
+                handler.WriteToAllSession(reply);
+            }
+            else if (commandIntValue == ReadTestCaseResult.CommandIntValue) //读取测试结果
+            {
+                reply = new ReadTestCaseResultReply(
+                    NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
+                new byte[] { 0x00, 0x00, 0x00, 0x00 },
+                new byte[] { 0x00, 0x00, 0x00, 0x00 },
+                new byte[] { 0x00, 0x00, 0x00, 0x00 },
+                new byte[] { 0x00, 0x00, 0x00, 0x00 });
+                handler.WriteToAllSession(reply);
+            }
+        }
 
 
         private void SendProtocolButtonClick(object sender, EventArgs e)
@@ -607,7 +668,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ConnectedMockClientListBox_Click(object sender, EventArgs e)
+        private void ConnectedMockClientListBoxClick(object sender, EventArgs e)
         {
             if (ClientProtocolListBox.SelectedIndex >= 0)
             {
