@@ -16,7 +16,7 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
-    public class SpeechTalkTestCase : ITestCase
+    public class SpeechEchoTestCase : ITestCase
     {
         private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
         private IKernel _Kernel;
@@ -26,7 +26,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private byte[] _CurrentInitializeRepliedSessionAddress = { 0x00, 0x00, 0x00, 0x00 };
         private Dictionary<long, long> _SessionAddressIdMap = new Dictionary<long, long>();
-        private Dictionary<long, long> _SessionAddressFrameCountMap = new Dictionary<long, long>(); 
+        private Dictionary<long, long> _SessionAddressFrameCountMap = new Dictionary<long, long>();
         #region ITestCase
 
         public void Start(IKernel kernel, object testCaseParam = default(SpeechTestParam))
@@ -39,24 +39,22 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             }
             Task.Factory.StartNew(() =>
             {
-                _logger.Info("启动测试案例：SpeechTalkTestCase");
+                _logger.Info("启动测试案例：SpeechEchoTestCase");
                 _Kernel = kernel;
                 _SeverHandler = kernel.ServerHandler;
                 _SeverHandler.ProtocolReceived += OnProtocolReceived;
                 var sessionList = _Kernel.ServerProtocolFilter.SessionList;
 
-                if (sessionList.Count < 2)
+                if (sessionList.Count < 1)
                 {
-                    _logger.Warn("当前客户端连接数不够，无法启动案例，本案例至少需要两个客户端连接");
+                    _logger.Warn("当前客户端连接数不够，无法启动案例，本案例至少需要1个客户端连接");
                     OnTestCaseFinished(false);
                     return;
                 }
 
                 //取头两个session进行点对点连接测试
                 var sessionIdA = sessionList[0].Id;
-                var sessionIdB = sessionList[1].Id;
                 var sessionAddressA = new byte[] { 0x00, 0x00, 0x00, 0x00 };
-                var sessionAddressB = new byte[] { 0x00, 0x00, 0x00, 0x00 };
 
                 //第一步：执行初始化
                 SetOnWaitProtocol(InitializeConnectionReply.CommandIntValue);
@@ -70,40 +68,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了sessionIdA执行初始化的回复
                 Array.Copy(_CurrentInitializeRepliedSessionAddress, sessionAddressA, 4);
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA), sessionIdA);
-                _SessionAddressFrameCountMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA),0);
-                SetOnWaitProtocol(InitializeConnectionReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new InitializeConnection(NangleProtocolUtility.ServerAddress));
-                _TestStepResetEvent.Reset();
-                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
-                {
-                    _logger.Warn("向sessionIdA发送协议InitializeTest后，等待回复超时");
-                    OnTestCaseFinished(false);
-                    return;
-                }
-                //收到了sessionIdB执行初始化的回复
-                Array.Copy(_CurrentInitializeRepliedSessionAddress, sessionAddressB, 4);
-                _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB), sessionIdB);
-                _SessionAddressFrameCountMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB),0);
-                //第二步：执行设置语音模式，使A和B均进入对讲模式
-                //向sessionB发执行设置语音模式，使其进入对讲模式
-                SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new SetSpeechMode(
-                    (byte)NangleProtocolUtility.SpeechMode.Talk,
-                    sessionAddressA));
-                _TestStepResetEvent.Reset();
-                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
-                {
-                    _logger.Warn("发送协议SetSpeechMode后，等待回复超时");
-                    OnTestCaseFinished(false);
-                    return;
-                }
-                //收到了设置语音模式的回复
-
+                _SessionAddressFrameCountMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressA), 0);
+                
+                //第二步：执行设置语音模式，使A均进入对讲模式
                 //向sessionA发执行设置语音模式，使其进入对讲模式
                 SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdA, new SetSpeechMode(
                     (byte)NangleProtocolUtility.SpeechMode.Talk,
-                    sessionAddressB));
+                    sessionAddressA));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
@@ -113,29 +85,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 }
                 //收到了设置语音模式的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
-                _logger.Info("开始语音对讲");
+                _logger.Info("开始语音Echo");
                 Thread.Sleep(1000 * param.SpeechDuration); //持续5秒钟时间
 
-                //第四步：执行设置语音模式，使A和B均进入idle模式
-                //向sessionB发执行设置语音模式，使其进入idle模式
-                SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
-                _Kernel.ServerHandler.WriteToSession(sessionIdB, new SetSpeechMode(
-                    (byte)NangleProtocolUtility.SpeechMode.Idle,
-                    sessionAddressA));
-                _TestStepResetEvent.Reset();
-                if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
-                {
-                    _logger.Warn("发送协议SetSpeechMode后，等待回复超时");
-                    OnTestCaseFinished(false);
-                    return;
-                }
-                //收到了设置语音模式的回复
+                //第四步：执行设置语音模式，使A进入idle模式
 
                 //向sessionA发执行设置语音模式，使其进入idle模式
                 SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdA, new SetSpeechMode(
                     (byte)NangleProtocolUtility.SpeechMode.Idle,
-                    sessionAddressB));
+                    sessionAddressA));
                 _TestStepResetEvent.Reset();
                 if (!_TestStepResetEvent.WaitOne(_ReplyWaitTimeout))
                 {
@@ -195,6 +154,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         {
             //TODO:验证当前收到的是正在等候的
             var protocol = nangleProtocolEventArgs.Protocol;
+            var sessionId = nangleProtocolEventArgs.SessionId;
             var command = protocol.Command;
             var commandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(command);
             if (commandIntValue == InitializeConnectionReply.CommandIntValue) //收到了初始化回复
@@ -203,8 +163,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             }
             else if (commandIntValue == SpeechRawData.CommandIntValue) //收到语音数据帧
             {
-                OnSpeechRawData(protocol);
-                
+                OnSpeechRawData(sessionId,protocol);
+
             }
 
             if (commandIntValue == _CurrentCommandIntValue)
@@ -215,7 +175,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         }
 
-        private void OnSpeechRawData(BytesProtocol protocol)
+        private void OnSpeechRawData(long sessionId, BytesProtocol protocol)
         {
             var targetAddress = new byte[] { 0x00, 0x00, 0x00, 0x00 };
             if (SpeechRawData.Parse(ref targetAddress, protocol))
@@ -223,8 +183,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 var key = NangleCodecUtility.ConvertFromFourBytesToInt(targetAddress);
                 if (_SessionAddressIdMap.ContainsKey(key))
                 {
-                    var targetSessionId = _SessionAddressIdMap[key];
-                    _Kernel.ServerHandler.WriteToSession(targetSessionId, protocol);
+                    _Kernel.ServerHandler.WriteToSession(sessionId, protocol);
                     _SessionAddressFrameCountMap[key] += 1;
                     _logger.Debug(string.Format("收到语音数据帧第{0}条", _SessionAddressFrameCountMap[key]));
                 }

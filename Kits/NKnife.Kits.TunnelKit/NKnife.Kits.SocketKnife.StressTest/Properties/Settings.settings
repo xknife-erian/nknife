@@ -5,5 +5,8 @@
     <Setting Name="ServerPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">22011</Value>
     </Setting>
+    <Setting Name="EnableDetailLog" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

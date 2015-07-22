@@ -8,6 +8,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Base
     public class SessionWrapper
     {
         public long Id { get; set; }
+        public long Address { get; set; }
 
         public override string ToString()
         {

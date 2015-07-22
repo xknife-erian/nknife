@@ -13,7 +13,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         public SpeechTestParam()
         {
-            SpeechDuration = 5;
+            SpeechDuration = 20;
         }
     }
 }

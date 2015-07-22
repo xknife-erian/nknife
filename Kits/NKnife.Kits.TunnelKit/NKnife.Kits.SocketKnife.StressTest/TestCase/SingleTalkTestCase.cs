@@ -132,12 +132,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private string VerifyTestCaseResult()
         {
-            var monitored = string.Format("服务端监控测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
+            var monitored = string.Format("服务端监控测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]",
                 _MoniteredResult.TestCaseIndex, _MoniteredResult.FrameSent, _MoniteredResult.FrameReceived,
-                _MoniteredResult.FrameLost, _MoniteredResult.FrameError);
-            var replied = string.Format("客户端返回测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]接收错误帧数[{4}]",
+                _MoniteredResult.FrameLost);
+            var replied = string.Format("客户端返回测试数据：用例编号[{0}]发送帧数[{1}]接收帧数[{2}]接收丢失帧数[{3}]",
                 _RepliedResult.TestCaseIndex, _RepliedResult.FrameSent, _RepliedResult.FrameReceived,
-                _RepliedResult.FrameLost,_RepliedResult.FrameError);
+                _RepliedResult.FrameLost);
             return string.Format("{0}\r\n{1}", monitored, replied);
         }
 

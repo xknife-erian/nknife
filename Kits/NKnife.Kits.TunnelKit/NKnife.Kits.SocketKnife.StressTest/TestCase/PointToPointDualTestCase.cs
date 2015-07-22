@@ -29,6 +29,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private byte[] _CurrentInitializeRepliedSessionAddress = { 0x00, 0x00, 0x00, 0x00 };
         private Dictionary<long, long> _SessionAddressIdMap = new Dictionary<long, long>();
+
         #region ITestCase
 
         public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
@@ -208,9 +209,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private string VerifyTestCaseResult(string from, TestCaseResult testCaseResult)
         {
-            return string.Format("{0}测试数据：用例编号[{1}]发送帧数[{2}]接收帧数[{3}]接收丢失帧数[{4}]接收错误帧数[{5}]",
+            return string.Format("{0}测试数据：用例编号[{1}]发送帧数[{2}]接收帧数[{3}]接收丢失帧数[{4}]",
                 from, testCaseResult.TestCaseIndex, testCaseResult.FrameSent, testCaseResult.FrameReceived,
-                testCaseResult.FrameLost, testCaseResult.FrameError);
+                testCaseResult.FrameLost);
         }
 
         private int _CurrentCommandIntValue;

@@ -114,9 +114,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
                     (byte)NangleProtocolUtility.SendEnable.Enable, //发送使能
                     sessionAddressB, //发送目的地址
-                    NangleProtocolUtility.GetSendInterval(50), //发送时间间隔
-                    NangleProtocolUtility.GetTestDataLength(200), //发送测试数据长度
-                    NangleProtocolUtility.GetFrameCount(10000) //发送帧数
+                    NangleProtocolUtility.GetSendInterval(param.SendInterval), //发送时间间隔
+                    NangleProtocolUtility.GetTestDataLength(param.TestDataLength), //发送测试数据长度
+                    NangleProtocolUtility.GetFrameCount(param.FrameCount) //发送帧数
                     ));
                 _MoniteredResult.TestCaseIndex = 1;
                 _TestStepResetEvent.Reset();
@@ -217,9 +217,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 //        }
         private string VerifyTestCaseResult(string from, TestCaseResult testCaseResult)
         {
-            return string.Format("{0}测试数据：用例编号[{1}]发送帧数[{2}]接收帧数[{3}]接收丢失帧数[{4}]接收错误帧数[{5}]",
+            return string.Format("{0}测试数据：用例编号[{1}]发送帧数[{2}]接收帧数[{3}]接收丢失帧数[{4}]",
                 from,testCaseResult.TestCaseIndex, testCaseResult.FrameSent, testCaseResult.FrameReceived,
-                testCaseResult.FrameLost, testCaseResult.FrameError);
+                testCaseResult.FrameLost);
         }
 
         private int _CurrentCommandIntValue;

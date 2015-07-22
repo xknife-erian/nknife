@@ -39,13 +39,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private System.Windows.Forms.TextBox MockClientProtocolReceiveHistoryTextBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button MockClientDisconnectButton;
+        private System.Windows.Forms.Button MockClientConnectButton;
         private System.Windows.Forms.ListBox ConnectedMockClientListBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox ClientCountTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button MockClientRemoveButton;
         private System.Windows.Forms.CheckBox AutoConnectAfterCreationCheckBox;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox DataToSendByClientTextBox;
@@ -67,6 +67,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.AutoReplyCheckBox = new System.Windows.Forms.CheckBox();
             this.AutoConnectAfterCreationCheckBox = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.ClientCountTextBox = new System.Windows.Forms.TextBox();
@@ -90,11 +91,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.MockClientProtocolReceiveHistoryTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.MockClientRemoveButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.AutoReplyCheckBox = new System.Windows.Forms.CheckBox();
+            this.MockClientDisconnectButton = new System.Windows.Forms.Button();
+            this.MockClientConnectButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ClientViewSplitContainer)).BeginInit();
@@ -122,6 +122,18 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(715, 52);
             this.panel1.TabIndex = 0;
+            // 
+            // AutoReplyCheckBox
+            // 
+            this.AutoReplyCheckBox.AutoSize = true;
+            this.AutoReplyCheckBox.Checked = true;
+            this.AutoReplyCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutoReplyCheckBox.Location = new System.Drawing.Point(484, 17);
+            this.AutoReplyCheckBox.Name = "AutoReplyCheckBox";
+            this.AutoReplyCheckBox.Size = new System.Drawing.Size(72, 16);
+            this.AutoReplyCheckBox.TabIndex = 22;
+            this.AutoReplyCheckBox.Text = "自动应答";
+            this.AutoReplyCheckBox.UseVisualStyleBackColor = true;
             // 
             // AutoConnectAfterCreationCheckBox
             // 
@@ -357,10 +369,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button4);
+            this.groupBox1.Controls.Add(this.MockClientRemoveButton);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.MockClientDisconnectButton);
+            this.groupBox1.Controls.Add(this.MockClientConnectButton);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
@@ -369,15 +381,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "仿真Client状态";
             // 
-            // button4
+            // MockClientRemoveButton
             // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(303, 35);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(111, 32);
-            this.button4.TabIndex = 28;
-            this.button4.Text = "删除";
-            this.button4.UseVisualStyleBackColor = true;
+            this.MockClientRemoveButton.Location = new System.Drawing.Point(303, 35);
+            this.MockClientRemoveButton.Name = "MockClientRemoveButton";
+            this.MockClientRemoveButton.Size = new System.Drawing.Size(111, 32);
+            this.MockClientRemoveButton.TabIndex = 28;
+            this.MockClientRemoveButton.Text = "删除";
+            this.MockClientRemoveButton.UseVisualStyleBackColor = true;
+            this.MockClientRemoveButton.Click += new System.EventHandler(this.MockClientRemoveButton_Click);
             // 
             // label7
             // 
@@ -386,39 +398,27 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 27;
-            this.label7.Text = "已断开";
+            this.label7.Text = "已连接";
             // 
-            // button2
+            // MockClientDisconnectButton
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(167, 35);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(111, 32);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "断开";
-            this.button2.UseVisualStyleBackColor = true;
+            this.MockClientDisconnectButton.Location = new System.Drawing.Point(167, 35);
+            this.MockClientDisconnectButton.Name = "MockClientDisconnectButton";
+            this.MockClientDisconnectButton.Size = new System.Drawing.Size(111, 32);
+            this.MockClientDisconnectButton.TabIndex = 25;
+            this.MockClientDisconnectButton.Text = "断开";
+            this.MockClientDisconnectButton.UseVisualStyleBackColor = true;
+            this.MockClientDisconnectButton.Click += new System.EventHandler(this.MockClientDisconnectButton_Click);
             // 
-            // button1
+            // MockClientConnectButton
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(30, 35);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(111, 32);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "连接";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // AutoReplyCheckBox
-            // 
-            this.AutoReplyCheckBox.AutoSize = true;
-            this.AutoReplyCheckBox.Checked = true;
-            this.AutoReplyCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AutoReplyCheckBox.Location = new System.Drawing.Point(484, 17);
-            this.AutoReplyCheckBox.Name = "AutoReplyCheckBox";
-            this.AutoReplyCheckBox.Size = new System.Drawing.Size(72, 16);
-            this.AutoReplyCheckBox.TabIndex = 22;
-            this.AutoReplyCheckBox.Text = "自动应答";
-            this.AutoReplyCheckBox.UseVisualStyleBackColor = true;
+            this.MockClientConnectButton.Location = new System.Drawing.Point(30, 35);
+            this.MockClientConnectButton.Name = "MockClientConnectButton";
+            this.MockClientConnectButton.Size = new System.Drawing.Size(111, 32);
+            this.MockClientConnectButton.TabIndex = 24;
+            this.MockClientConnectButton.Text = "连接";
+            this.MockClientConnectButton.UseVisualStyleBackColor = true;
+            this.MockClientConnectButton.Click += new System.EventHandler(this.MockClientConnectButton_Click);
             // 
             // MockClientView
             // 
@@ -456,7 +456,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             ClientProtocolListBox.Items.Add(new StopExecuteTestCaseReply(0x00));
             ClientProtocolListBox.Items.Add(new ReadTestCaseResultReply(
                 NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
-                new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 }));
@@ -539,9 +538,17 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 {
                     ProcessProtocol(handler, protocol);
                 }
+
+                //临时
+                if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) == TestRawData.CommandIntValue)
+                {
+                    _TempFrameCount += 0;
+                }
                 
             });
         }
+
+        private int _TempFrameCount;
 
         /// <summary>
         /// 自动应答处理
@@ -573,7 +580,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             {
                 reply = new ReadTestCaseResultReply(
                     NangleProtocolUtility.GetTestCaseIndex(1), //用例编号
-                new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 },
                 new byte[] { 0x00, 0x00, 0x00, 0x00 });
@@ -670,6 +676,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         /// <param name="e"></param>
         private void ConnectedMockClientListBoxClick(object sender, EventArgs e)
         {
+            if (ConnectedMockClientListBox.SelectedIndex >= 0)
+            {
+                var clients = _Kernel.Clients;
+                var client = clients[ConnectedMockClientListBox.SelectedIndex];
+            }
+
+
             if (ClientProtocolListBox.SelectedIndex >= 0)
             {
                 var protocol = ClientProtocolListBox.SelectedItem as BytesProtocol;
@@ -689,5 +702,38 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 }
             }
         }
+        private void MockClientConnectButton_Click(object sender, EventArgs e)
+        {
+            var index = ConnectedMockClientListBox.SelectedIndex;
+            if (index >= 0)
+            {
+                _Kernel.StartClientConnection(index);
+            }
+        }
+
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MockClientDisconnectButton_Click(object sender, EventArgs e)
+        {
+            var index = ConnectedMockClientListBox.SelectedIndex;
+            if (index >= 0)
+            {
+                _Kernel.StopClientConnection(index);
+            }
+        }
+
+        private void MockClientRemoveButton_Click(object sender, EventArgs e)
+        {
+            var index = ConnectedMockClientListBox.SelectedIndex;
+            if (index >= 0)
+            {
+                _Kernel.RemoveClient(index);
+            }
+        }
+
+
     }
 }

@@ -9,8 +9,10 @@ using Common.Logging;
 using NKnife.Converts;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Codec;
 using NKnife.Kits.SocketKnife.StressTest.Kernel;
 using NKnife.Kits.SocketKnife.StressTest.Protocol;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Client;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
 using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
 using NKnife.Kits.SocketKnife.StressTest.TestCase;
@@ -33,9 +35,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         #region UI
 
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label TalkCountLabel;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label SessionCountLabel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -63,6 +62,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private Button ExecuteTestCaseButton;
         private ComboBox TestCaseListComboBox;
         private PropertyGrid TestCasePropertyGrid;
+        private CheckBox TempStopReceiveInfoListCheckBox;
         private System.Windows.Forms.ListBox ServerProtocolListBox;
     
         public ServerView()
@@ -72,12 +72,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         private void InitializeComponent()
         {
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.TalkCountLabel = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.SessionCountLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.TempStopReceiveInfoListCheckBox = new System.Windows.Forms.CheckBox();
             this.ServerListenStatusLabel = new System.Windows.Forms.Label();
             this.ServerListenPortLabel = new System.Windows.Forms.Label();
             this.StopServerListenButton = new System.Windows.Forms.Button();
@@ -103,7 +101,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -117,40 +114,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.TalkCountLabel);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.SessionCountLabel);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(296, 9);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(245, 73);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            // 
-            // TalkCountLabel
-            // 
-            this.TalkCountLabel.BackColor = System.Drawing.Color.White;
-            this.TalkCountLabel.Location = new System.Drawing.Point(107, 41);
-            this.TalkCountLabel.Name = "TalkCountLabel";
-            this.TalkCountLabel.Size = new System.Drawing.Size(100, 18);
-            this.TalkCountLabel.TabIndex = 12;
-            this.TalkCountLabel.Text = "0";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 44);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 12);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Talk数量：";
-            // 
             // SessionCountLabel
             // 
             this.SessionCountLabel.BackColor = System.Drawing.Color.White;
-            this.SessionCountLabel.Location = new System.Drawing.Point(107, 16);
+            this.SessionCountLabel.Location = new System.Drawing.Point(387, 23);
             this.SessionCountLabel.Name = "SessionCountLabel";
             this.SessionCountLabel.Size = new System.Drawing.Size(100, 18);
             this.SessionCountLabel.TabIndex = 10;
@@ -159,7 +126,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 19);
+            this.label6.Location = new System.Drawing.Point(298, 26);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(83, 12);
             this.label6.TabIndex = 9;
@@ -167,11 +134,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.TempStopReceiveInfoListCheckBox);
             this.groupBox1.Controls.Add(this.ServerListenStatusLabel);
+            this.groupBox1.Controls.Add(this.SessionCountLabel);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.ServerListenPortLabel);
             this.groupBox1.Controls.Add(this.StopServerListenButton);
             this.groupBox1.Controls.Add(this.StartServerListenButton);
-            this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
@@ -179,6 +148,16 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Server状态";
+            // 
+            // TempStopReceiveInfoListCheckBox
+            // 
+            this.TempStopReceiveInfoListCheckBox.AutoSize = true;
+            this.TempStopReceiveInfoListCheckBox.Location = new System.Drawing.Point(300, 51);
+            this.TempStopReceiveInfoListCheckBox.Name = "TempStopReceiveInfoListCheckBox";
+            this.TempStopReceiveInfoListCheckBox.Size = new System.Drawing.Size(276, 16);
+            this.TempStopReceiveInfoListCheckBox.TabIndex = 28;
+            this.TempStopReceiveInfoListCheckBox.Text = "临时，停止协议接收提示（刷屏时可以先停止）";
+            this.TempStopReceiveInfoListCheckBox.UseVisualStyleBackColor = true;
             // 
             // ServerListenStatusLabel
             // 
@@ -287,7 +266,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             "1对1转发测试",
             "1对1对传测试",
             "语音对讲测试",
-            "1对1分组对传测试"});
+            "1对1分组对传测试",
+            "数据广播测试",
+            "语音广播测试",
+            "语音Echo测试"});
             this.TestCaseListComboBox.Location = new System.Drawing.Point(146, 111);
             this.TestCaseListComboBox.Name = "TestCaseListComboBox";
             this.TestCaseListComboBox.Size = new System.Drawing.Size(203, 20);
@@ -455,8 +437,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "ServerView";
             this.Text = "服务端";
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -511,10 +491,37 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         {
             ServerProtocolReceiveHistoryTextBox.ThreadSafeInvoke(() =>
             {
-                ServerProtocolReceiveHistoryTextBox.Text = string.Format("{0} 服务端收到来自[Session {1}]协议[{2}]: \r\n{3}",
-                    DateTime.Now.ToString("HH:mm:ss fff"),nangleProtocolEventArgs.SessionId, NangleProtocolUtility.GetProtocolDescription(nangleProtocolEventArgs.Protocol), ServerProtocolReceiveHistoryTextBox.Text);
-                AppUtility.LimitTextBoxTextLengh(ServerProtocolReceiveHistoryTextBox);
+                if (!TempStopReceiveInfoListCheckBox.Checked)
+                {
+                    var sessionId = nangleProtocolEventArgs.SessionId;
+                    var protocol = nangleProtocolEventArgs.Protocol;
+                    ServerProtocolReceiveHistoryTextBox.Text = string.Format("{0} 服务端收到来自[Session {1}]协议[{2}]: \r\n{3}",
+                        DateTime.Now.ToString("HH:mm:ss fff"), sessionId,
+                        NangleProtocolUtility.GetProtocolDescription(protocol), ServerProtocolReceiveHistoryTextBox.Text);
+                    AppUtility.LimitTextBoxTextLengh(ServerProtocolReceiveHistoryTextBox);
+                }
+//                if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) ==
+//                    InitializeConnectionReply.CommandIntValue) //初始化回复
+//                {
+//                    var address = new byte[] {0x00, 0x00, 0x00, 0x00};
+//                    if (InitializeConnectionReply.Parse(ref address, protocol))
+//                    {
+//                        UpdateClientAddress(sessionId, address);
+//
+//                    }
+//                }
             });
+        }
+
+        private void UpdateClientAddress(long sessionId, byte[] address)
+        {
+            foreach (var item in ConnectedClientListBox.Items)
+            {
+                if (((SessionWrapper) item).Id == sessionId)
+                {
+                    ((SessionWrapper) item).Address = NangleCodecUtility.ConvertFromFourBytesToInt(address);
+                }
+            }
         }
 
         protected override void OnClosed(EventArgs e)
@@ -532,7 +539,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             SessionCountLabel.ThreadSafeInvoke(() =>
             {
                 SessionCountLabel.Text = string.Format("{0}", serverStateEventArgs.SessionCount);
-                TalkCountLabel.Text = string.Format("{0}", serverStateEventArgs.TalkCount);
                 ConnectedClientListBox.Items.Clear();
                 foreach (var l in _Kernel.ServerProtocolFilter.SessionList)
                 {
@@ -569,6 +575,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 ServerListenStatusLabel.Text = "已停止";
                 StartServerListenButton.Enabled = true;
                 StopServerListenButton.Enabled = false;
+                ConnectedClientListBox.Items.Clear();
             }
         }
 
@@ -677,6 +684,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 case 4:
                     testcase = new PointToPointGroupTestCase();
                     break;
+                case 5:
+                    testcase = new BroadcastTestCase();
+                    break;
+                case 6:
+                    testcase = new SpeechBroadcastTestCase();
+                    break;
+                case 7:
+                    testcase = new SpeechEchoTestCase();
+                    break;
             }
 
             if (testcase != null)
@@ -719,6 +735,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                     break;
                 case 4:
                     _CurrentTestcaseParam = new ExecuteHardwareTestParam();
+                    break;
+                case 5:
+                    _CurrentTestcaseParam = new ExecuteHardwareTestParam();
+                    break;
+                case 6:
+                    _CurrentTestcaseParam = new SpeechTestParam();
+                    break;
+                case 7:
+                    _CurrentTestcaseParam = new SpeechTestParam();
                     break;
             }
             TestCasePropertyGrid.SelectedObject = _CurrentTestcaseParam;

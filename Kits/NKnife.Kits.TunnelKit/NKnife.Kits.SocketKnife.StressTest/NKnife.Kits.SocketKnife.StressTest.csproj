@@ -99,11 +99,14 @@
     <Compile Include="Kernel\ServerHandler.cs" />
     <Compile Include="Kernel\MainTestOption.cs" />
     <Compile Include="Base\ServerStateEventArgs.cs" />
+    <Compile Include="TestCase\BroadcastTestCase.cs" />
     <Compile Include="TestCase\PointToPointDualTestCase.cs" />
     <Compile Include="TestCase\PointToPointGroupTestCase.cs" />
     <Compile Include="TestCase\PointToPointTestCase.cs" />
     <Compile Include="TestCase\SingleTalkTestCase.cs" />
     <Compile Include="TestCase\ExecuteHardwareTestParam.cs" />
+    <Compile Include="TestCase\SpeechBroadcastTestCase.cs" />
+    <Compile Include="TestCase\SpeechEchoTestCase.cs" />
     <Compile Include="TestCase\SpeechTalkTestCase.cs" />
     <Compile Include="TestCase\SpeechTestParam.cs" />
     <Compile Include="TestCase\TestCaseResult.cs" />

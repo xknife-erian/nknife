@@ -50,6 +50,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
                 var serverConfig = (SocketServerConfig)DI.Get<SocketConfig>("Server");
                 serverConfig.MaxConnectCount = 1000;
                 serverConfig.MaxSessionTimeout = 0;
+                serverConfig.SendBufferSize = 4096;
+                serverConfig.ReceiveBufferSize = 4096;
+                serverConfig.MaxBufferSize = 4096;
                 Server = BuildServer(serverConfig);
                 return true;
             }
@@ -64,10 +67,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             try
             {
                 int count = ClientHandlers.Count;
-                foreach (var handler in ClientHandlers)
-                {
-                    handler.StopSendingTimer();
-                }
                 foreach (var client in Clients)
                 {
                     client.Stop();
@@ -107,10 +106,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             try
             {
                 int count = ClientHandlers.Count;
-                foreach (var handler in ClientHandlers)
-                {
-                    handler.StopSendingTimer();
-                }
                 foreach (var client in Clients)
                 {
                     client.Stop();
@@ -144,7 +139,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             ServerProtocolFilter.AddHandlers(ServerHandler);
 
             var logFilter = DI.Get<SerialLogFilter>();
-            tunnel.AddFilters(logFilter);
+            if (Properties.Settings.Default.EnableDetailLog)
+            {
+                tunnel.AddFilters(logFilter);
+            }
             tunnel.AddFilters(ServerProtocolFilter);
 
             server.Config = config;
@@ -202,10 +200,20 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             OnMockClientProtocolReceived(sender, nangleProtocolEventArgs);
         }
 
-        public bool RemoveClient()
+        public bool RemoveClient(int index)
         {
             try
             {
+                var clientHandler = ClientHandlers[index];
+                clientHandler.ProtocolReceived -= ProtocolReceived;
+                ClientHandlers.RemoveAt(index);
+
+                var client = Clients[0];
+                client.Stop();
+                Clients.RemoveAt(index);
+
+                OnMockClientAmountChanged();
+
                 return true;
             }
             catch (Exception ex)
@@ -214,10 +222,12 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             }
         }
 
-        public bool StartClientConnection()
+        public bool StartClientConnection(int index)
         {
             try
             {
+                var client = Clients[0];
+                client.Start();
                 return true;
             }
             catch (Exception ex)
@@ -226,41 +236,18 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             }
         }
 
-        public bool StopClientConnection()
+        public bool StopClientConnection(int index)
         {
             try
             {
+                var client = Clients[0];
+                client.Stop();
                 return true;
             }
             catch (Exception ex)
             {
                 return false;
             }
-        }
-
-        public void AddTalk()
-        {
-            if (ServerProtocolFilter.TalkCount + 1 < ClientHandlers.Count)
-            {
-                ServerProtocolFilter.TalkCount += 1;
-                var clientHandler = ClientHandlers[ServerProtocolFilter.TalkCount];
-                clientHandler.StartSendingTimer(50); //发送间隔50毫秒
-
-                ServerProtocolFilter.InvokeServerStateChanged();
-            }
-        }
-
-        public void RemoveTalk()
-        {
-            if (ServerProtocolFilter.TalkCount < ClientHandlers.Count)
-            {
-                var clientHandler = ClientHandlers[ServerProtocolFilter.TalkCount];
-                clientHandler.StopSendingTimer();
-                ServerProtocolFilter.TalkCount -= 1;
-
-                ServerProtocolFilter.InvokeServerStateChanged();
-            }
-
         }
 
         private KnifeLongSocketClient BuildClient(SocketConfig config, BaseProtocolHandler<byte[]> handler)

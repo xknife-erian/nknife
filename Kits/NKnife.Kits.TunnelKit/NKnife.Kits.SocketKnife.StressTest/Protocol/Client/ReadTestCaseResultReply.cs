@@ -19,14 +19,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
         /// 根据2字节的command命令字计算出的整数，用于switch条件判断等流程
         /// </summary>
         public static int CommandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(CommandBytes); 
-        public ReadTestCaseResultReply(byte[] testCaseIndex,byte[] sendFrameCount,byte[] receiveFrameCount,byte[] receiveFrameLostCount,byte[] receiveFrameErrorCount)
+        public ReadTestCaseResultReply(byte[] testCaseIndex,byte[] sendFrameCount,byte[] receiveFrameCount,byte[] receiveFrameLostCount)
             : base(CommandBytes)
         {
             CommandParamList.AddRange(testCaseIndex);
             CommandParamList.AddRange(sendFrameCount);
             CommandParamList.AddRange(receiveFrameCount);
             CommandParamList.AddRange(receiveFrameLostCount);
-            CommandParamList.AddRange(receiveFrameErrorCount);
 
             CommandParam = CommandParamList.ToArray();
         }
@@ -40,9 +39,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
         {
             var commandparam = protocol.CommandParam;
             //commandparam组成如下
-            //用例编号	发送帧数	接收帧数	接收丢失帧数	接收错误帧数
-            //2字节	    4字节	4字节	4字节	    4字节
-            if (commandparam == null || commandparam.Length != 18)
+            //用例编号	发送帧数	接收帧数	接收丢失帧数
+            //2字节	    4字节	4字节	4字节	   
+            if (commandparam == null || commandparam.Length != 14)
             {
                 return false;
             }
@@ -57,9 +56,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Client
             result.FrameLost =
                 NangleCodecUtility.ConvertFromFourBytesToInt(new[] 
                 { commandparam[10], commandparam[11], commandparam[12], commandparam[13] });
-            result.FrameError =
-                NangleCodecUtility.ConvertFromFourBytesToInt(new[] 
-                { commandparam[14], commandparam[15], commandparam[16], commandparam[17] });
             return true;
         }
     }
