@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Common.Logging;
 using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Codec;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Client;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Base;
@@ -30,7 +32,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
         }
         public override void Recevied(long sessionId, IProtocol<byte[]> protocol)
         {
-            //byte[] command = protocol.Command;
+//            byte[] command = protocol.Command;
+//            _logger.Debug("protocol received");
+//            if (NangleCodecUtility.ConvertFromTwoBytesToInt(command) == StopExecuteTestCaseReply.CommandIntValue)
+//            {
+//                _logger.Debug("stop protocol received");
+//            }
+
+
             //byte[] message = _Family.Generate(protocol);
             //_logger.Debug(string.Format("server[收到{0}]<==[{1}], {2}", sessionId, command.ToHexString(), message.ToHexString()));
 

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Common.Logging;
 using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Generic
@@ -9,9 +10,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.Protocol.Generic
     /// </summary>
     public class NangleCommandParser : BytesProtocolCommandParser
     {
+        private static readonly ILog _logger = LogManager.GetLogger<NangleCommandParser>();
+
         public override byte[] GetCommand(byte[] datagram)
         {
-            if (datagram != null && datagram.Count() >= 2)
+            if (datagram != null && datagram.Length >= 2)
             {
                 return new[] { datagram[0],datagram[1] };
             }

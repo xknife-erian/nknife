@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Common.Logging;
 using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Tunnel;
 using SocketKnife.Generic.Filters;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 {
     public class NangleServerFilter : SocketBytesProtocolFilter
     {
+        private static readonly ILog _logger = LogManager.GetLogger<NangleServerFilter>();
         private static object _lockObj = new object();
         private int _SessionCount = 0;
         public int TalkCount { get; set; }

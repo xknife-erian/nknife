@@ -26,7 +26,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private byte[] _CurrentInitializeRepliedSessionAddress = { 0x00, 0x00, 0x00, 0x00 };
         private Dictionary<long, long> _SessionAddressIdMap = new Dictionary<long, long>();
-        private Dictionary<long, long> _SessionAddressFrameCountMap = new Dictionary<long, long>(); 
+        private Dictionary<long, long> _SessionAddressFrameCountMap = new Dictionary<long, long>();
+        private bool _OnDataTransfer;
+
         #region ITestCase
 
         public void Start(IKernel kernel, object testCaseParam = default(SpeechTestParam))
@@ -84,6 +86,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 Array.Copy(_CurrentInitializeRepliedSessionAddress, sessionAddressB, 4);
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB), sessionIdB);
                 _SessionAddressFrameCountMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB),0);
+                
                 //第二步：执行设置语音模式，使A和B均进入对讲模式
                 //向sessionB发执行设置语音模式，使其进入对讲模式
                 SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
@@ -114,8 +117,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了设置语音模式的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
                 _logger.Info("开始语音对讲");
+                _OnDataTransfer = true;
                 Thread.Sleep(1000 * param.SpeechDuration); //持续5秒钟时间
-
+                _OnDataTransfer = false;
                 //第四步：执行设置语音模式，使A和B均进入idle模式
                 //向sessionB发执行设置语音模式，使其进入idle模式
                 SetOnWaitProtocol(SetSpeechModeReply.CommandIntValue);
@@ -180,6 +184,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnTestCaseFinished(bool result, string message = "")
         {
+            _OnDataTransfer = false;
             _SeverHandler.ProtocolReceived -= OnProtocolReceived;
 
             var handler = Finished;
@@ -217,6 +222,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnSpeechRawData(BytesProtocol protocol)
         {
+            if (!_OnDataTransfer) return;
             var targetAddress = new byte[] { 0x00, 0x00, 0x00, 0x00 };
             if (SpeechRawData.Parse(ref targetAddress, protocol))
             {

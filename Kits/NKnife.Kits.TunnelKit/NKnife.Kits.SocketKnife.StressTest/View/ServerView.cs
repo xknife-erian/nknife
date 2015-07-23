@@ -32,6 +32,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         private bool _OnTesting;
         private object _CurrentTestcaseParam;
+        private int _TestCaseStartTime;
+
+        private bool _TempStopReceiveInfoList = true;
 
         #region UI
 
@@ -152,12 +155,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             // TempStopReceiveInfoListCheckBox
             // 
             this.TempStopReceiveInfoListCheckBox.AutoSize = true;
+            this.TempStopReceiveInfoListCheckBox.Checked = true;
+            this.TempStopReceiveInfoListCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.TempStopReceiveInfoListCheckBox.Location = new System.Drawing.Point(300, 51);
             this.TempStopReceiveInfoListCheckBox.Name = "TempStopReceiveInfoListCheckBox";
-            this.TempStopReceiveInfoListCheckBox.Size = new System.Drawing.Size(276, 16);
+            this.TempStopReceiveInfoListCheckBox.Size = new System.Drawing.Size(264, 16);
             this.TempStopReceiveInfoListCheckBox.TabIndex = 28;
-            this.TempStopReceiveInfoListCheckBox.Text = "临时，停止协议接收提示（刷屏时可以先停止）";
+            this.TempStopReceiveInfoListCheckBox.Text = "临时停止协议接收提示（刷屏时可以先停止）";
             this.TempStopReceiveInfoListCheckBox.UseVisualStyleBackColor = true;
+            this.TempStopReceiveInfoListCheckBox.Click += new System.EventHandler(this.TempStopReceiveInfoListCheckBoxClick);
             // 
             // ServerListenStatusLabel
             // 
@@ -489,28 +495,30 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         private void ProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
         {
-            ServerProtocolReceiveHistoryTextBox.ThreadSafeInvoke(() =>
+            if (!_TempStopReceiveInfoList)
             {
-                if (!TempStopReceiveInfoListCheckBox.Checked)
+                ServerProtocolReceiveHistoryTextBox.ThreadSafeInvoke(() =>
                 {
-                    var sessionId = nangleProtocolEventArgs.SessionId;
-                    var protocol = nangleProtocolEventArgs.Protocol;
-                    ServerProtocolReceiveHistoryTextBox.Text = string.Format("{0} 服务端收到来自[Session {1}]协议[{2}]: \r\n{3}",
-                        DateTime.Now.ToString("HH:mm:ss fff"), sessionId,
-                        NangleProtocolUtility.GetProtocolDescription(protocol), ServerProtocolReceiveHistoryTextBox.Text);
-                    AppUtility.LimitTextBoxTextLengh(ServerProtocolReceiveHistoryTextBox);
+
+                        var sessionId = nangleProtocolEventArgs.SessionId;
+                        var protocol = nangleProtocolEventArgs.Protocol;
+                        ServerProtocolReceiveHistoryTextBox.Text = string.Format("{0} 服务端收到来自[Session {1}]协议[{2}]: \r\n{3}",
+                            DateTime.Now.ToString("HH:mm:ss fff"), sessionId,
+                            NangleProtocolUtility.GetProtocolDescription(protocol), ServerProtocolReceiveHistoryTextBox.Text);
+                        AppUtility.LimitTextBoxTextLengh(ServerProtocolReceiveHistoryTextBox);
+
+    //                if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) ==
+    //                    InitializeConnectionReply.CommandIntValue) //初始化回复
+    //                {
+    //                    var address = new byte[] {0x00, 0x00, 0x00, 0x00};
+    //                    if (InitializeConnectionReply.Parse(ref address, protocol))
+    //                    {
+    //                        UpdateClientAddress(sessionId, address);
+    //
+    //                    }
+    //                }
+                });
                 }
-//                if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) ==
-//                    InitializeConnectionReply.CommandIntValue) //初始化回复
-//                {
-//                    var address = new byte[] {0x00, 0x00, 0x00, 0x00};
-//                    if (InitializeConnectionReply.Parse(ref address, protocol))
-//                    {
-//                        UpdateClientAddress(sessionId, address);
-//
-//                    }
-//                }
-            });
         }
 
         private void UpdateClientAddress(long sessionId, byte[] address)
@@ -698,7 +706,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             if (testcase != null)
             {
                 testcase.Finished += TestcaseFinished;
+
+                _TestCaseStartTime = System.Environment.TickCount;
                 testcase.Start(_Kernel, _CurrentTestcaseParam);
+
                 ExecuteTestCaseButton.Enabled = false;
             }
         }
@@ -707,7 +718,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         {
             var result = e.Result;
             var message = e.Message;
-            _logger.Info(string.Format("测试案例执行{0}", result ? "成功" : "失败"));
+
+            var duration = (System.Environment.TickCount - _TestCaseStartTime) / 1000; //秒
+            _logger.Info(string.Format("测试案例执行约{0}秒，结果{1}",duration, result ? "成功" : "失败"));
             ExecuteTestCaseButton.ThreadSafeInvoke(()=>
             {
                 ExecuteTestCaseButton.Enabled = true;
@@ -749,6 +762,11 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             TestCasePropertyGrid.SelectedObject = _CurrentTestcaseParam;
             TestCasePropertyGrid.Refresh();
 
+        }
+
+        private void TempStopReceiveInfoListCheckBoxClick(object sender, EventArgs e)
+        {
+            _TempStopReceiveInfoList = TempStopReceiveInfoListCheckBox.Checked;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private Dictionary<long,TestCaseResult> _SessionIdTestResultMap = new Dictionary<long, TestCaseResult>(); 
         private Dictionary<int, string> _TestResultMap = new Dictionary<int, string>(); 
         private ExecuteHardwareTestParam param;
-
+        private bool _OnDataTransfer;
         #region ITestCase
 
         public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
@@ -167,8 +167,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             }
             //收到了执行测试用例的回复
             //第三步：记录接下来收到的数据，并持续一段时间
-
+            _OnDataTransfer = true;
             Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
+            _OnDataTransfer = false;
 
             //第四步：调用停止执行测试用例
             //停止A
@@ -273,6 +274,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnTestCaseFinished(bool result, string message = "")
         {
+            _OnDataTransfer = false;
             _SeverHandler.ProtocolReceived -= OnProtocolReceived;
 
             var handler = Finished;
@@ -316,7 +318,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnTestRawData(BytesProtocol protocol)
         {
-
+            if (!_OnDataTransfer) return;
             var targetAddress = new byte[] { 0x00, 0x00, 0x00, 0x00 };
             if (TestRawData.Parse(ref targetAddress, protocol))
             {

@@ -185,7 +185,7 @@ namespace SocketKnife
                 _ListenSocket.SendBufferSize = Config.SendBufferSize;
                 _ListenSocket.SendTimeout = Config.SendTimeout;
                 _ListenSocket.ReceiveTimeout = Config.ReceiveTimeout;
-
+                _ListenSocket.NoDelay = true;
                 _ListenSocket.Listen(16);
                 return true;
             }
@@ -627,6 +627,7 @@ namespace SocketKnife
             {
                 if (_SessionMap.ContainsKey(endPoint))
                 {
+
                     handler.Invoke(this, new SessionEventArgs(new TunnelSession
                     {
                         Id = endPoint,

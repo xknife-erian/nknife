@@ -16,9 +16,12 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
+    /// <summary>
+    /// 1对1对传测试
+    /// </summary>
     public class PointToPointDualTestCase : ITestCase
     {
-        private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
+        private static readonly ILog _logger = LogManager.GetLogger<PointToPointDualTestCase>();
         private IKernel _Kernel;
         private ServerHandler _SeverHandler;
         private ManualResetEvent _TestStepResetEvent = new ManualResetEvent(false);
@@ -30,10 +33,13 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private byte[] _CurrentInitializeRepliedSessionAddress = { 0x00, 0x00, 0x00, 0x00 };
         private Dictionary<long, long> _SessionAddressIdMap = new Dictionary<long, long>();
 
+        private bool _OnDataTransfer;
+        private int _LastTick;
         #region ITestCase
 
         public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
         {
+            _LastTick = Environment.TickCount;
             var param = testCaseParam as ExecuteHardwareTestParam;
             if (param == null)
             {
@@ -89,6 +95,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB), sessionIdB);
 
                 //第二步：执行测试用例，使A向B发数据
+                
                 //向sessionB发执行测试用例指令，使其发送
                 SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdB, new ExecuteTestCase(
@@ -129,8 +136,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 }
                 //收到了执行测试用例的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
-
+                _OnDataTransfer = true;
                 Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
+                _OnDataTransfer = false;
 
                 //第四步：调用停止执行测试用例
                 //停止A
@@ -190,7 +198,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 }
                 message.Append(string.Format("\r\n{0}", VerifyTestCaseResult("接收端返回", _RepliedResult)));
 
-
                 //第六步，比对检测到的数据和返回的测试用例结果是否一致，进行分析，发出报告
                 OnTestCaseFinished(true, message.ToString());
             });
@@ -205,7 +212,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         public event EventHandler<TestCaseResultEventArgs> Aborted;
 
         #endregion
-
 
         private string VerifyTestCaseResult(string from, TestCaseResult testCaseResult)
         {
@@ -222,6 +228,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnTestCaseFinished(bool result, string message = "")
         {
+            _OnDataTransfer = false;
             _SeverHandler.ProtocolReceived -= OnProtocolReceived;
 
             var handler = Finished;
@@ -250,19 +257,18 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             else if (commandIntValue == TestRawData.CommandIntValue) //收到测试数据帧
             {
                 OnTestRawData(protocol);
-                _logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
+                //_logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
             }
 
             if (commandIntValue == _CurrentCommandIntValue)
             {
                 _TestStepResetEvent.Set();
             }
-
-
         }
 
         private void OnTestRawData(BytesProtocol protocol)
         {
+            if (!_OnDataTransfer) return;
             _MoniteredResult.FrameReceived += 1;
 
             var targetAddress = new byte[] { 0x00, 0x00, 0x00, 0x00 };
