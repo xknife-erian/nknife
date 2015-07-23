@@ -22,6 +22,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 
         public EventHandler<NangleProtocolEventArgs> ProtocolReceived;
 
+        public long ClientAddressValue { get; set; }
+
         private bool _OnTask = false;
         public int FrameSent { get; set; }
         public int FrameReceived { get; set; }

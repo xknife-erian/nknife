@@ -36,6 +36,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         private bool _TempStopReceiveInfoList = true;
 
+        public Dictionary<long, long> ClientAddressSessionIdMap = new Dictionary<long, long>(); 
+
         #region UI
 
         private System.Windows.Forms.Label SessionCountLabel;
@@ -495,41 +497,81 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         private void ProtocolReceived(object sender, NangleProtocolEventArgs nangleProtocolEventArgs)
         {
+            var sessionId = nangleProtocolEventArgs.SessionId;
+            var protocol = nangleProtocolEventArgs.Protocol;
+            ProcessProtocol(sessionId,protocol);
             if (!_TempStopReceiveInfoList)
             {
                 ServerProtocolReceiveHistoryTextBox.ThreadSafeInvoke(() =>
                 {
-
-                        var sessionId = nangleProtocolEventArgs.SessionId;
-                        var protocol = nangleProtocolEventArgs.Protocol;
-                        ServerProtocolReceiveHistoryTextBox.Text = string.Format("{0} 服务端收到来自[Session {1}]协议[{2}]: \r\n{3}",
-                            DateTime.Now.ToString("HH:mm:ss fff"), sessionId,
-                            NangleProtocolUtility.GetProtocolDescription(protocol), ServerProtocolReceiveHistoryTextBox.Text);
-                        AppUtility.LimitTextBoxTextLengh(ServerProtocolReceiveHistoryTextBox);
-
-    //                if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) ==
-    //                    InitializeConnectionReply.CommandIntValue) //初始化回复
-    //                {
-    //                    var address = new byte[] {0x00, 0x00, 0x00, 0x00};
-    //                    if (InitializeConnectionReply.Parse(ref address, protocol))
-    //                    {
-    //                        UpdateClientAddress(sessionId, address);
-    //
-    //                    }
-    //                }
+                    ServerProtocolReceiveHistoryTextBox.Text = string.Format("{0} 服务端收到来自[Session {1}]协议[{2}]: \r\n{3}",
+                        DateTime.Now.ToString("HH:mm:ss fff"), sessionId,
+                        NangleProtocolUtility.GetProtocolDescription(protocol), ServerProtocolReceiveHistoryTextBox.Text);
+                    AppUtility.LimitTextBoxTextLengh(ServerProtocolReceiveHistoryTextBox);
                 });
-                }
+            }
         }
 
-        private void UpdateClientAddress(long sessionId, byte[] address)
+        private void ProcessProtocol(long sessionId, BytesProtocol protocol)
         {
-            foreach (var item in ConnectedClientListBox.Items)
+            if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) ==
+                InitializeConnectionReply.CommandIntValue) //收到初始化回复
             {
-                if (((SessionWrapper) item).Id == sessionId)
+                var address = new byte[] {0x00, 0x00, 0x00, 0x00};
+                if (InitializeConnectionReply.Parse(ref address, protocol))
                 {
-                    ((SessionWrapper) item).Address = NangleCodecUtility.ConvertFromFourBytesToInt(address);
+                    var addressValue = NangleCodecUtility.ConvertFromFourBytesToInt(address);
+                    if (ClientAddressSessionIdMap.ContainsKey(addressValue))
+                    {
+                        var lastSessionId = ClientAddressSessionIdMap[addressValue];
+                        if (lastSessionId != sessionId)
+                        {
+                            RemoveSessionFromList(lastSessionId);
+                            ClientAddressSessionIdMap[addressValue] = sessionId;
+                        }
+                    }
+                    else
+                    {
+                        ClientAddressSessionIdMap[addressValue] = sessionId;
+                    }
+                    UpdateSessionList(sessionId, addressValue);
                 }
             }
+        }
+
+        private void RemoveSessionFromList(long lastSessionId)
+        {
+            var sessionList = _Kernel.ServerProtocolFilter.SessionList;
+            var wrapper = sessionList.Find(item => item.Id == lastSessionId);
+            if (wrapper != null)
+            {
+                sessionList.Remove(wrapper);
+                StateChanged(this,new ServerStateEventArgs
+                {
+                    SessionCount = sessionList.Count
+                });
+            }
+
+
+        }
+
+        private void UpdateSessionList(long sessionId, long addressValue)
+        {
+            var sessionList = _Kernel.ServerProtocolFilter.SessionList;
+            var wrapper = sessionList.Find(item => item.Id == sessionId);
+            if (wrapper != null)
+            {
+                if (wrapper.AddressValue != addressValue)
+                {
+                    wrapper.AddressValue = addressValue;
+                    StateChanged(this, new ServerStateEventArgs
+                    {
+                        SessionCount = sessionList.Count
+                    });
+                }
+                
+            }
+
         }
 
         protected override void OnClosed(EventArgs e)

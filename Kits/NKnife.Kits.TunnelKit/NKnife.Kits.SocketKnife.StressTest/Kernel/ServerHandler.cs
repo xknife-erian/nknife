@@ -48,6 +48,5 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             OnProtocolReceived(sessionId,protocol);
         }
 
-        
     }
 }

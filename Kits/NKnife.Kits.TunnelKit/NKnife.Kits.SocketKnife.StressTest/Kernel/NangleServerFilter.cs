@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Common.Logging;
 using NKnife.Kits.SocketKnife.StressTest.Base;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Generic;
+using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
 using NKnife.Tunnel;
 using SocketKnife.Generic.Filters;
 
@@ -14,7 +16,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
         private static readonly ILog _logger = LogManager.GetLogger<NangleServerFilter>();
         private static object _lockObj = new object();
         private int _SessionCount = 0;
-        public int TalkCount { get; set; }
 
         public EventHandler<ServerStateEventArgs> StateChanged;
 
@@ -34,6 +35,17 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
                 AddSession(id);
                 _SessionCount += 1;
                 InvokeServerStateChanged();
+            }
+
+            //检测到连接，则立即发出初始化指令
+            if (_Handlers.Count > 0)
+            {
+                var handler = _Handlers[0] as ServerHandler;
+                if (handler != null)
+                {
+                    handler.WriteToSession(id,new InitializeConnection(NangleProtocolUtility.ServerAddress));
+                }
+
             }
 
         }
@@ -76,7 +88,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
                 handler.Invoke(this, new ServerStateEventArgs
                 {
                     SessionCount = _SessionCount,
-                    TalkCount = TalkCount,
                 });
         }
     }

@@ -21,6 +21,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
     public class TestKernel : IKernel
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static long ClientAddressValue = 0;
+
         private readonly int _ServerListenPort = Properties.Settings.Default.ServerPort;
         private readonly BytesProtocolFamily _Family = DI.Get<BytesProtocolFamily>();
         public KnifeSocketServer Server { get; private set; }
@@ -190,6 +192,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
                     for (int i = 0; i < testOption.ClientCount; i++)
                     {
                         var clientHandler = new MockClientHandler();
+
+                        ClientAddressValue += 1;
+                        clientHandler.ClientAddressValue = ClientAddressValue; //为程序每一个创建的client分配独立的AddressValue
+
                         clientHandler.ProtocolReceived+= ProtocolReceived;
                         var client = BuildClient(clientConfig, clientHandler);
                         Clients.Add(client);

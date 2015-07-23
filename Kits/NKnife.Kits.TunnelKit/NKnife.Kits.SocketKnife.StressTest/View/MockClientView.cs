@@ -572,10 +572,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 ConnectedMockClientListBox.Items.Clear();
                 var clients = _Kernel.ClientHandlers;
                 int i = 0;
-                foreach (var mainTestClientHandler in clients)
+                foreach (var clientHandler in clients)
                 {
                     i += 1;
-                    ConnectedMockClientListBox.Items.Add(string.Format("仿真{0}", i));
+                    ConnectedMockClientListBox.Items.Add(string.Format("仿真{0} [{1}]", i, NangleCodecUtility.ConvertFromIntToFourBytes(clientHandler.ClientAddressValue).ToHexString()));
                 }
             });
 
@@ -619,8 +619,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         /// <param name="protocol"></param>
         private void ProcessProtocol(MockClientHandler handler, BytesProtocol protocol)
         {
-            int addr = _Kernel.ClientHandlers.IndexOf(handler) + 1;
-            var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(addr);
+            var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(handler.ClientAddressValue);
             var commandIntValue = NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command);
             BytesProtocol reply;
             if (commandIntValue == InitializeConnection.CommandIntValue) //初始化
@@ -712,6 +711,15 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
 
         private void ClientProtocolListBoxClick(object sender, EventArgs e)
         {
+            if (ConnectedMockClientListBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("请先选择要发送协议的客户端");
+                return;
+            }
+
+            var clientHandlerss = _Kernel.ClientHandlers;
+            var clientHandler = clientHandlerss[ConnectedMockClientListBox.SelectedIndex];
+
             if (ClientProtocolListBox.SelectedIndex >= 0)
             {
                 var protocol = ClientProtocolListBox.SelectedItem as BytesProtocol;
@@ -720,8 +728,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 //初始化回复，需要根据session返回对应的地址
                 if(NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) == InitializeConnectionReply.CommandIntValue)
                 {
-                    int addr = ConnectedMockClientListBox.SelectedIndex + 1;
-                    var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(addr);
+                    var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(clientHandler.ClientAddressValue);
                     Array.Copy(addrBytes, 0, protocol.CommandParam, 1, 4);
                 }
 
@@ -739,11 +746,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         /// <param name="e"></param>
         private void ConnectedMockClientListBoxClick(object sender, EventArgs e)
         {
-            if (ConnectedMockClientListBox.SelectedIndex >= 0)
+            if (ConnectedMockClientListBox.SelectedIndex < 0)
             {
-                var clients = _Kernel.Clients;
-                var client = clients[ConnectedMockClientListBox.SelectedIndex];
+                MessageBox.Show("请先选择要发送协议的客户端");
+                return;
             }
+
+            var clientHandlerss = _Kernel.ClientHandlers;
+            var clientHandler = clientHandlerss[ConnectedMockClientListBox.SelectedIndex];
 
 
             if (ClientProtocolListBox.SelectedIndex >= 0)
@@ -754,8 +764,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 //初始化回复，需要根据session返回对应的地址
                 if (NangleCodecUtility.ConvertFromTwoBytesToInt(protocol.Command) == InitializeConnectionReply.CommandIntValue)
                 {
-                    int addr = ConnectedMockClientListBox.SelectedIndex + 1;
-                    var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(addr);
+                    var addrBytes = NangleCodecUtility.ConvertFromIntToFourBytes(clientHandler.ClientAddressValue);
                     Array.Copy(addrBytes, 0, protocol.CommandParam, 1, 4);
 
                     var family = _Kernel.GetProtocolFamily();
