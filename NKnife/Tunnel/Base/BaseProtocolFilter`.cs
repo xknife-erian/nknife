@@ -132,7 +132,9 @@ namespace NKnife.Tunnel.Base
             }
             else
             {
+                //_logger.Debug(string.Format("dataMonitor 处理数据 step start"));
                 protocols = ParseProtocols(datagram);
+                //_logger.Debug(string.Format("dataMonitor 处理数据 step stop"));
             }
 
             if (dataPacket.Length > done)
@@ -154,9 +156,11 @@ namespace NKnife.Tunnel.Base
             var protocols = new List<IProtocol<T>>(datagram.Length);
             foreach (T dg in datagram)
             {
+                //_logger.Debug(string.Format("dataMonitor 处理数据 step {0}",1));
                 T command;
                 try
                 {
+                    //_logger.Debug(string.Format("dataMonitor 处理数据 step {0}", 2));
                     command = _Family.CommandParser.GetCommand(dg);
                 }
                 catch (Exception e)
@@ -164,6 +168,8 @@ namespace NKnife.Tunnel.Base
                     _logger.Error(string.Format("命令字解析异常:{0},Data:{1}", e.Message, dg), e);
                     continue;
                 }
+
+                //_logger.Debug(string.Format("dataMonitor 处理数据 step {0}", 3));
 
                 IProtocol<T> protocol;
                 try
@@ -180,6 +186,7 @@ namespace NKnife.Tunnel.Base
                     _logger.Warn(string.Format("协议分装异常。{0}", ex.Message), ex);
                     continue;
                 }
+
                 protocols.Add(protocol);
             }
             return protocols;
@@ -199,6 +206,7 @@ namespace NKnife.Tunnel.Base
             }
         }
 
+        private int _TempCount;
         /// <summary>
         ///     核心方法:监听 ReceiveQueue 队列
         /// </summary>
@@ -217,9 +225,11 @@ namespace NKnife.Tunnel.Base
                     {
                         if (dataMonitor.ReceiveQueue.Count > 0)
                         {
+                            _TempCount += 1;
+                            //_logger.Debug(string.Format("dataMonitor 处理数据{0}",_TempCount));
                             byte[] data = dataMonitor.ReceiveQueue.Dequeue();
                             IEnumerable<IProtocol<T>> protocols = ProcessDataPacket(data, ref unFinished);
-
+                            //_logger.Debug(string.Format("dataMonitor 处理数据{0}完成", _TempCount));
                             if (protocols != null)
                             {
                                 foreach (var protocol in protocols)

@@ -21,6 +21,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
     public class TestKernel : IKernel
     {
         private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static long ClientAddressValue = 0;
+
         private readonly int _ServerListenPort = Properties.Settings.Default.ServerPort;
         private readonly BytesProtocolFamily _Family = DI.Get<BytesProtocolFamily>();
         public KnifeSocketServer Server { get; private set; }
@@ -50,9 +52,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
                 var serverConfig = (SocketServerConfig)DI.Get<SocketConfig>("Server");
                 serverConfig.MaxConnectCount = 1000;
                 serverConfig.MaxSessionTimeout = 0;
-                serverConfig.SendBufferSize = 4096;
-                serverConfig.ReceiveBufferSize = 4096;
-                serverConfig.MaxBufferSize = 4096;
+                serverConfig.SendBufferSize = 1024*8;
+                serverConfig.ReceiveBufferSize = 1024*8;
+                serverConfig.MaxBufferSize = 1024*16;
                 Server = BuildServer(serverConfig);
                 return true;
             }
@@ -67,6 +69,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             try
             {
                 int count = ClientHandlers.Count;
+                foreach (var mockClientHandler in ClientHandlers)
+                {
+                    mockClientHandler.StopTask();
+                }
                 foreach (var client in Clients)
                 {
                     client.Stop();
@@ -106,6 +112,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             try
             {
                 int count = ClientHandlers.Count;
+                foreach (var mockClientHandler in ClientHandlers)
+                {
+                    mockClientHandler.StopTask();
+                }
                 foreach (var client in Clients)
                 {
                     client.Stop();
@@ -113,7 +123,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 
                 Task.Factory.StartNew(() =>
                 {
-                    Thread.Sleep(count * 100);
+                    Thread.Sleep(count * 50);
                     if (Server != null)
                         Server.Stop();
                 });
@@ -172,12 +182,20 @@ namespace NKnife.Kits.SocketKnife.StressTest.Kernel
             {
                 _TestOption = testOption;
                 var clientConfig = DI.Get<SocketConfig>("Client");
+                clientConfig.MaxConnectCount = 1000;
+                clientConfig.SendBufferSize = 1024 * 8;
+                clientConfig.ReceiveBufferSize = 1024 * 8;
+                clientConfig.MaxBufferSize = 1024 * 16;
 
                 Task.Factory.StartNew(() =>
                 {
                     for (int i = 0; i < testOption.ClientCount; i++)
                     {
                         var clientHandler = new MockClientHandler();
+
+                        ClientAddressValue += 1;
+                        clientHandler.ClientAddressValue = ClientAddressValue; //为程序每一个创建的client分配独立的AddressValue
+
                         clientHandler.ProtocolReceived+= ProtocolReceived;
                         var client = BuildClient(clientConfig, clientHandler);
                         Clients.Add(client);

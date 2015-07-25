@@ -38,14 +38,15 @@ namespace NKnife.Protocol.Generic
                 {
                     try
                     {
-                        return string.IsNullOrEmpty(FamilyName)
+                        _CommandParser = string.IsNullOrEmpty(FamilyName)
                             ? DI.Get<StringProtocolCommandParser>()
                             : DI.Get<StringProtocolCommandParser>(FamilyName);
                     }
                     catch (ActivationException ex)
                     {
-                        return DI.Get<StringProtocolCommandParser>();
+                        _CommandParser = DI.Get<StringProtocolCommandParser>();
                     }
+                    _HasSetCommandParser = true;
                 }
                 return _CommandParser;
             }

@@ -181,7 +181,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             else if (commandIntValue == TestRawData.CommandIntValue) //收到测试数据帧
             {
                 _MoniteredResult.FrameReceived += 1;
-                _logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
+                //_logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
             }
 
             if (commandIntValue == _CurrentCommandIntValue)

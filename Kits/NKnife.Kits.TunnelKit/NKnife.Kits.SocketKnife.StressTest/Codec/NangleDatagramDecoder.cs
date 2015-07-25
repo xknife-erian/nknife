@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using Common.Logging;
+using NKnife.Kits.SocketKnife.StressTest.Kernel;
 using NKnife.Tunnel.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Codec
 {
     public class NangleDatagramDecoder : BytesDatagramDecoder
     {
+        private static readonly ILog _logger = LogManager.GetLogger<NangleDatagramDecoder>();
         public byte FirstHeadByte { get; set; }
         public byte SecondHeadByte { get; set; }
 
@@ -77,6 +81,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.Codec
                     }
                 }
             }
+
             return results.ToArray();
         }
 

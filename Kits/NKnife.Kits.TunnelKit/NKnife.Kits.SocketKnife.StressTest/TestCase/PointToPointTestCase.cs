@@ -28,7 +28,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private TestCaseResult _RepliedResult; //从下位机读取到的结果
 
         private byte[] _CurrentInitializeRepliedSessionAddress = {0x00,0x00,0x00,0x00};
-        private Dictionary<long,long> _SessionAddressIdMap = new Dictionary<long, long>(); 
+        private Dictionary<long,long> _SessionAddressIdMap = new Dictionary<long, long>();
+
+        private bool _OnDataTransfer = false;
+
         #region ITestCase
 
         public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
@@ -88,6 +91,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 _SessionAddressIdMap.Add(NangleCodecUtility.ConvertFromFourBytesToInt(sessionAddressB), sessionIdB);
 
                 //第二步：执行测试用例，使A向B发数据
+                _OnDataTransfer = true;
                 //向sessionB发执行测试用例指令，使其只接收，不发送
                 SetOnWaitProtocol(ExecuteTestCaseReply.CommandIntValue);
                 _Kernel.ServerHandler.WriteToSession(sessionIdB, new ExecuteTestCase(
@@ -130,7 +134,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //第三步：记录接下来收到的数据，并持续一段时间
 
                 Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
-
+                _OnDataTransfer = false;
                 //第四步：调用停止执行测试用例
                 //停止A
                 SetOnWaitProtocol(StopExecuteTestCaseReply.CommandIntValue);
@@ -230,6 +234,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnTestCaseFinished(bool result, string message = "")
         {
+            _OnDataTransfer = false;
             _SeverHandler.ProtocolReceived -= OnProtocolReceived;
 
             var handler = Finished;
@@ -258,7 +263,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             else if (commandIntValue == TestRawData.CommandIntValue) //收到测试数据帧
             {
                 OnTestRawData(protocol);
-                _logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
+                //_logger.Debug(string.Format("收到测试数据帧第{0}条", _MoniteredResult.FrameReceived));
             }
 
             if (commandIntValue == _CurrentCommandIntValue)
@@ -271,6 +276,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         private void OnTestRawData(BytesProtocol protocol)
         {
+            if (!_OnDataTransfer) return;
+
             _MoniteredResult.FrameReceived += 1;
 
             var targetAddress = new byte[]{0x00,0x00,0x00,0x00};

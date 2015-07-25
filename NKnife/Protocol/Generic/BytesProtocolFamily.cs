@@ -35,18 +35,19 @@ namespace NKnife.Protocol.Generic
         {
             get
             {
-                if (!_HasSetCommandParser)
+                if (!_HasSetCommandParser) //如果没有设，则从DI取
                 {
                     try
                     {
-                        return string.IsNullOrEmpty(FamilyName)
+                        _CommandParser = string.IsNullOrEmpty(FamilyName)
                             ? DI.Get<BytesProtocolCommandParser>()
                             : DI.Get<BytesProtocolCommandParser>(FamilyName);
                     }
                     catch (ActivationException ex)
                     {
-                        return DI.Get<BytesProtocolCommandParser>();
+                        _CommandParser = DI.Get<BytesProtocolCommandParser>();
                     }
+                    _HasSetCommandParser = true;
                 }
                 return _CommandParser;
             }

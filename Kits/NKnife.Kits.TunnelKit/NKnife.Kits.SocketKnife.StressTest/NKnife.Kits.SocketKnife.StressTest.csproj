@@ -65,6 +65,7 @@
     <Compile Include="Base\SessionWrapper.cs" />
     <Compile Include="Base\TestCaseResultEventArgs.cs" />
     <Compile Include="Codec\NangleCodecUtility.cs" />
+    <Compile Include="Kernel\ExecuteTestCaseParam.cs" />
     <Compile Include="Kernel\NangleServerFilter.cs" />
     <Compile Include="Protocol\Client\ExecuteTestCaseReply.cs" />
     <Compile Include="Protocol\Client\InitializeConnectionReply.cs" />
