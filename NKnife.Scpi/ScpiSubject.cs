@@ -1,10 +1,13 @@
 ﻿namespace ScpiKnife
 {
     /// <summary>
-    /// 描述一项采集工作的指令集合
+    /// 面向一个工作主题的指令集合
     /// </summary>
     public class ScpiSubject
     {
+        /// <summary>
+        /// 工作主题的描述
+        /// </summary>
         public string Description { get; set; }
         /// <summary>
         /// 前导指令集合

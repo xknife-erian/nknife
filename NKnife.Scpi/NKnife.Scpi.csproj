@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ScpiSubject.cs" />
+    <Compile Include="ScpiSubjectCollection.cs" />
     <None Include="Parser\ScpiParser.cs" />
     <Compile Include="Parser\IScpiCommandHandler.cs" />
     <Compile Include="Parser\ScpiCommandCaller.cs" />
