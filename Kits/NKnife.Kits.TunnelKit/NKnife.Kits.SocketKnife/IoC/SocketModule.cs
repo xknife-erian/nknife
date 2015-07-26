@@ -2,6 +2,8 @@
 using NKnife.Kits.SocketKnife.Common;
 using NKnife.Protocol.Generic;
 using NKnife.Protocol.Generic.TextPlain;
+using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Generic;
 using SocketKnife.Generic;
 
@@ -11,6 +13,8 @@ namespace NKnife.Kits.SocketKnife.IoC
     {
         public override void Load()
         {
+            Bind<ITunnel>().To<KnifeTunnel>();
+
             Bind<ServerMap>().ToSelf().InSingletonScope();
 
             Bind<StringProtocolPacker>().To<TextPlainPacker>().InSingletonScope();
