@@ -19,7 +19,7 @@ namespace ScpiKnife
                 throw new ScpiParseException();
 
             cmdlist = new ScpiGroup();
-            var rootCmd = new ScpiCommand(isScpi);
+            var rootCmd = new ScpiCommand();
             foreach (XmlElement confEle in nodes)
             {
                 rootCmd.Description = confEle.GetAttribute("content");
@@ -48,7 +48,7 @@ namespace ScpiKnife
                         foreach (XmlElement gpElement in groupElement.ChildNodes)
                         {
                             ScpiCommand gpCmd = ParseGpibCommand(isScpi, gpElement, groupCmd.Command);
-                            groupCmd.Next = gpCmd;
+                            //groupCmd.Next = gpCmd;
                         }
                         //cmd.Tag = groupCmd;
                     }
@@ -63,7 +63,7 @@ namespace ScpiKnife
 
         private static ScpiCommand ParseGpibCommand(bool isScpi, XmlElement element, string rootCmd)
         {
-            var cmd = new ScpiCommand(isScpi);
+            var cmd = new ScpiCommand();
             cmd.Description = element.GetAttribute("content");
             if (element.LocalName == "command")
                 cmd.Command = string.Format("{0}:{1}", rootCmd, element.GetAttribute("command"));

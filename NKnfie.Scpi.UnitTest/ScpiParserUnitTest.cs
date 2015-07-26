@@ -57,7 +57,7 @@ namespace NKnfie.Scpi.UnitTest
             var parser = new ScpiParser();
             try
             {
-                ScpiCommandList result;
+                ScpiGroup result;
                 parser.TryParse(doc.DocumentElement, out result);
             }
             catch (Exception e)
@@ -71,7 +71,7 @@ namespace NKnfie.Scpi.UnitTest
         {
             var xmlelement = ScpiXml.GetCommandListElement(1);
             var parser = new ScpiParser();
-            ScpiCommandList commandlist;
+            ScpiGroup commandlist;
             parser.TryParse(xmlelement, out commandlist);
             Assert.IsNotNull(commandlist);
         }
@@ -81,7 +81,7 @@ namespace NKnfie.Scpi.UnitTest
         {
             var xmlelement = ScpiXml.GetCommandListElement(1);
             var parser = new ScpiParser();
-            ScpiCommandList commandlist;
+            ScpiGroup commandlist;
             parser.TryParse(xmlelement, out commandlist);
             Assert.AreEqual(3, commandlist.Count);
         }
@@ -91,15 +91,13 @@ namespace NKnfie.Scpi.UnitTest
         {
             var xmlelement = ScpiXml.GetCommandListElement(1);
             var parser = new ScpiParser();
-            ScpiCommandList commandlist;
+            ScpiGroup commandlist;
             parser.TryParse(xmlelement, out commandlist);
             var command = commandlist.ElementAt(0);
             Assert.AreEqual("重置", command.Description);
             Assert.AreEqual("*RST", command.Command);
             Assert.AreEqual(500, command.Interval);
-            Assert.AreEqual(true, command.IsStandard);
             Assert.AreEqual(false, command.IsReturn);
-            Assert.AreEqual(null, command.Next);
         }                
     }
 }
