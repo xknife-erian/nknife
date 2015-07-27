@@ -74,6 +74,12 @@ namespace NKnife.Utility
         /// <returns>合并后的数组(第一个数组+第二个数组，长度为两个数组的长度)</returns>
         public static T[] MergerArray<T>(T[] first, T[] second)
         {
+            if (first == null && second == null)
+                return null;
+            if (first != null && second == null)
+                return first;
+            if (first == null)
+                return second;
             var result = new T[first.Length + second.Length];
             first.CopyTo(result, 0);
             second.CopyTo(result, first.Length);
