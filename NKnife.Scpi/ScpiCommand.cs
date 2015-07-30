@@ -2,6 +2,7 @@
 using System.Data;
 using System.Text;
 using System.Xml;
+using NKnife.Converts;
 
 namespace ScpiKnife
 {
@@ -82,7 +83,8 @@ namespace ScpiKnife
         {
             byte mainCommand = IsReturn ? (byte) 0xAA : (byte) 0xAB;
             const byte SUB_COMMAND = 0x00;
-            var scpiBytes = Encoding.ASCII.GetBytes(Command);
+
+            byte[] scpiBytes = IsHex ? UtilityConvert.HexToBytes(Command) : Encoding.ASCII.GetBytes(Command);
 
             var bs = new byte[] {0x08, (byte) gpibAddress, (byte) (scpiBytes.Length + 2), mainCommand, SUB_COMMAND};
             var result = new byte[bs.Length + scpiBytes.Length];
