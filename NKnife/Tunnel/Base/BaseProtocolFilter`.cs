@@ -14,6 +14,7 @@ namespace NKnife.Tunnel.Base
     public abstract class BaseProtocolFilter<T> : BaseTunnelFilter, ITunnelProtocolFilter<T>
     {
         private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolFilter<T>>();
+        private object _Lock = new object();
         protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
         protected ITunnelCodec<T> _Codec;
         protected IProtocolFamily<T> _Family;
@@ -92,8 +93,11 @@ namespace NKnife.Tunnel.Base
                     phandler.SendToSession += OnSendToSession;
                     phandler.SendToAll += OnSendToAll;
                     phandler.Bind(_Codec, _Family);
-                    _Handlers.Add(handler);
-                    _logger.Info(string.Format("{0}增加{1}成功.", GetType().Name, handler.GetType().Name));
+                    lock (_Lock)
+                    {
+                        _Handlers.Add(handler);
+                        _logger.Info(string.Format("{0}增加{1}成功.", GetType().Name, handler.GetType().Name));
+                    }
                 }
             }
         }
@@ -102,7 +106,11 @@ namespace NKnife.Tunnel.Base
         {
             handler.SendToSession -= OnSendToSession;
             handler.SendToAll -= OnSendToAll;
-            _Handlers.Remove(handler);
+            lock (_Lock)
+            {
+                _Handlers.Remove(handler);
+                _logger.Info(string.Format("{0}移除{1}成功.", GetType().Name, handler.GetType().Name));
+            }
         }
 
         /// <summary>
@@ -138,7 +146,6 @@ namespace NKnife.Tunnel.Base
             }
 
             if (dataPacket.Length > done)
-            //if (done != 0 && dataPacket.Length > done)
             {
                 // 暂存半包数据，留待下条队列数据接包使用
                 unFinished = new byte[dataPacket.Length - done];
@@ -206,7 +213,7 @@ namespace NKnife.Tunnel.Base
             }
         }
 
-        private int _TempCount;
+        //private int _TempCount;
         /// <summary>
         ///     核心方法:监听 ReceiveQueue 队列
         /// </summary>
@@ -225,9 +232,11 @@ namespace NKnife.Tunnel.Base
                     {
                         if (dataMonitor.ReceiveQueue.Count > 0)
                         {
-                            _TempCount += 1;
+                            //_TempCount += 1;
                             //_logger.Debug(string.Format("dataMonitor 处理数据{0}",_TempCount));
                             byte[] data = dataMonitor.ReceiveQueue.Dequeue();
+                            if (UtilityCollection.IsNullOrEmpty(data))
+                                continue;
                             IEnumerable<IProtocol<T>> protocols = ProcessDataPacket(data, ref unFinished);
                             //_logger.Debug(string.Format("dataMonitor 处理数据{0}完成", _TempCount));
                             if (protocols != null)
@@ -268,23 +277,26 @@ namespace NKnife.Tunnel.Base
         {
             try
             {
-                if (_Handlers.Count == 0)
+                lock (_Lock)
                 {
-                    Debug.Fail(string.Format("Handler集合不应为空."));
-                    return;
-                }
-                if (_Handlers.Count == 1)
-                {
-                    _Handlers[0].Recevied(id, protocol);
-                }
-                else
-                {
-                    foreach (var handler in _Handlers)
+                    if (_Handlers.Count == 0)
                     {
-                        //handler Commands.Count为0时，接收处理所有的协议，否则，处理Commands指定的协议
-                        if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
+                        Debug.Fail(string.Format("Handler集合不应为空."));
+                        return;
+                    }
+                    if (_Handlers.Count == 1)
+                    {
+                        _Handlers[0].Recevied(id, protocol);
+                    }
+                    else
+                    {
+                        foreach (var handler in _Handlers)
                         {
-                            handler.Recevied(id, protocol);
+                            //handler Commands.Count为0时，接收处理所有的协议，否则，处理Commands指定的协议
+                            if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
+                            {
+                                handler.Recevied(id, protocol);
+                            }
                         }
                     }
                 }
