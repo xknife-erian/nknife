@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScpiCommandQueue.cs" />
+    <Compile Include="ScpiCommandQueueMap.cs" />
     <Compile Include="ScpiSubject.cs" />
     <Compile Include="ScpiSubjectCollection.cs" />
     <None Include="Parser\ScpiParser.cs" />
@@ -66,7 +68,6 @@
     <Compile Include="ScpiCommand.cs" />
     <Compile Include="ScpiGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScpiCommandQueue.cs" />
     <Compile Include="ScpiParseException.cs" />
     <Compile Include="ScpiParser.cs" />
   </ItemGroup>
