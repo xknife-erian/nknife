@@ -281,7 +281,8 @@ namespace NKnife.Tunnel.Base
                 }
                 else
                 {
-                    foreach (var handler in _Handlers)
+                    var hs = _Handlers.ToArray();//防止正在执行循环过程中移除Handler出现的异常
+                    foreach (var handler in hs)
                     {
                         //handler Commands.Count为0时，接收处理所有的协议，否则，处理Commands指定的协议
                         if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
