@@ -14,7 +14,6 @@ namespace NKnife.Tunnel.Base
     public abstract class BaseProtocolFilter<T> : BaseTunnelFilter, ITunnelProtocolFilter<T>
     {
         private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolFilter<T>>();
-        private object _Lock = new object();
         protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
         protected ITunnelCodec<T> _Codec;
         protected IProtocolFamily<T> _Family;
@@ -93,11 +92,8 @@ namespace NKnife.Tunnel.Base
                     phandler.SendToSession += OnSendToSession;
                     phandler.SendToAll += OnSendToAll;
                     phandler.Bind(_Codec, _Family);
-                    lock (_Lock)
-                    {
-                        _Handlers.Add(handler);
-                        _logger.Info(string.Format("{0}增加{1}成功.", GetType().Name, handler.GetType().Name));
-                    }
+                    _Handlers.Add(handler);
+                    _logger.Info(string.Format("{0}增加{1}成功.", GetType().Name, handler.GetType().Name));
                 }
             }
         }
@@ -106,11 +102,8 @@ namespace NKnife.Tunnel.Base
         {
             handler.SendToSession -= OnSendToSession;
             handler.SendToAll -= OnSendToAll;
-            lock (_Lock)
-            {
-                _Handlers.Remove(handler);
-                _logger.Info(string.Format("{0}移除{1}成功.", GetType().Name, handler.GetType().Name));
-            }
+            _Handlers.Remove(handler);
+            _logger.Info(string.Format("{0}移除{1}成功.", GetType().Name, handler.GetType().Name));
         }
 
         /// <summary>
@@ -277,26 +270,23 @@ namespace NKnife.Tunnel.Base
         {
             try
             {
-                lock (_Lock)
+                if (_Handlers.Count == 0)
                 {
-                    if (_Handlers.Count == 0)
+                    Debug.Fail(string.Format("Handler集合不应为空."));
+                    return;
+                }
+                if (_Handlers.Count == 1)
+                {
+                    _Handlers[0].Recevied(id, protocol);
+                }
+                else
+                {
+                    foreach (var handler in _Handlers)
                     {
-                        Debug.Fail(string.Format("Handler集合不应为空."));
-                        return;
-                    }
-                    if (_Handlers.Count == 1)
-                    {
-                        _Handlers[0].Recevied(id, protocol);
-                    }
-                    else
-                    {
-                        foreach (var handler in _Handlers)
+                        //handler Commands.Count为0时，接收处理所有的协议，否则，处理Commands指定的协议
+                        if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
                         {
-                            //handler Commands.Count为0时，接收处理所有的协议，否则，处理Commands指定的协议
-                            if (handler.Commands.Count == 0 || ContainsCommand(handler.Commands, protocol.Command))
-                            {
-                                handler.Recevied(id, protocol);
-                            }
+                            handler.Recevied(id, protocol);
                         }
                     }
                 }
