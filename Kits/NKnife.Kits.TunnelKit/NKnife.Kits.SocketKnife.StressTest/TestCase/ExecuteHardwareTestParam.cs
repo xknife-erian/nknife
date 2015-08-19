@@ -15,14 +15,14 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         public int TestDataLength { get; set; } //发送测试数据长度
         [DisplayName("发送帧数")]
         public int FrameCount { get; set; }
-        [DisplayName("数据发送持续时长（秒）")]
+        [DisplayName("数据发送持续时长（秒），0表示不计时，只能手动停止")]
         public int SendDuration { get; set; }
         public ExecuteHardwareTestParam()
         {
             SendInterval = 20;
             TestDataLength = 100;
             FrameCount = 10000;
-            SendDuration = 5;
+            SendDuration = 0;
         }
     }
 }
