@@ -25,9 +25,9 @@ namespace ScpiKnife
         /// </summary>
         public ScpiSubjectCollection OwnerCollection { get; set; }
 
-        /// <summary>
-        /// 指令集合所关联的XML节点
-        /// </summary>
-        public XmlElement XmlElement { get; set; }
+        public XmlElement BuildXmlElement(XmlDocument ownDocument)
+        {
+            return null;
+        }
     }
 }
