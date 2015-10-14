@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IScpiFileVersionProcessor.cs" />
     <Compile Include="ScpiCommandGroupCategory.cs" />
     <Compile Include="ScpiCommandQueue.cs" />
     <Compile Include="ScpiCommandQueueMap.cs" />
