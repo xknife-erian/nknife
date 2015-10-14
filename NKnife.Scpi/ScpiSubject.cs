@@ -25,9 +25,10 @@ namespace ScpiKnife
         /// </summary>
         public ScpiSubjectCollection OwnerCollection { get; set; }
 
-        public XmlElement BuildXmlElement(XmlDocument ownDocument)
+        public XmlElement BuildXmlElement(ScpisXmlFile xmlFile)
         {
-            return null;
+            var element = xmlFile.NewElement("subject");
+            return element;
         }
     }
 }

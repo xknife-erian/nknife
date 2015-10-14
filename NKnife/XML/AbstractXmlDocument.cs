@@ -22,30 +22,21 @@ namespace NKnife.XML
         protected AbstractXmlDocument(string filePath)
         {
             FilePath = filePath;
-            InitializeComponent();
+            CheckFile();
         }
 
-        protected virtual void CheckFile()
+        protected void CheckFile()
         {
             if (!File.Exists(FilePath))
             {
-#if DEBUG
-                throw new FileNotFoundException("Xml File isn't Exists!");
-#else
                 //如果文件不存在，建立这个文件
-                this.BaseXmlNode = XmlHelper.CreatNewDoucmnet(this.FilePath, RootNodeLocalName);
-#endif
+                BaseXmlNode = XmlHelper.CreatNewDoucmnet(FilePath, RootNodeLocalName);
             }
             else
             {
                 BaseXmlNode = new XmlDocument();
                 (BaseXmlNode as XmlDocument).Load(FilePath);
             }
-        }
-
-        protected virtual void InitializeComponent()
-        {
-            CheckFile();
         }
 
         #endregion
@@ -84,6 +75,11 @@ namespace NKnife.XML
         #endregion
 
         #region 方法
+
+        public XmlElement NewElement(string localName)
+        {
+            return ((XmlDocument) BaseXmlNode).CreateElement(localName);
+        }
 
         /// <summary>
         /// 保存当前XmlDocument

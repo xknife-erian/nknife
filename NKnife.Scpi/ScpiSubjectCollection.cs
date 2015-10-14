@@ -11,6 +11,10 @@ namespace ScpiKnife
     /// </summary>
     public class ScpiSubjectCollection : List<ScpiSubject>
     {
+        protected ScpisXmlFile _ScpiFile;
+
+        public Version Version { get; set; }
+
         /// <summary>
         ///     指令主题所属的仪器品牌
         /// </summary>
@@ -22,54 +26,48 @@ namespace ScpiKnife
         public string Name { get; set; }
 
         /// <summary>
-        ///     指令集合所在的文件
+        ///     指令集合所在的Xml文件
         /// </summary>
-        public FileInfo File { get; set; }
+        public void BuildScpiFile(string fileFullName)
+        {
+            _ScpiFile = new ScpisXmlFile(fileFullName);
+        }
 
         public bool Save()
         {
-            var xml = new XmlDocument();
-            if (File.Exists)
+            Debug.Assert(_ScpiFile.DocumentElement != null, "xml.DocumentElement != null");
+            foreach (XmlNode childNode in _ScpiFile.DocumentElement.ChildNodes)
             {
-                xml.Load(File.FullName);
-                Debug.Assert(xml.DocumentElement != null, "xml.DocumentElement != null");
-                foreach (XmlNode childNode in xml.DocumentElement.ChildNodes)
-                {
-                    xml.DocumentElement.RemoveChild(childNode);
-                }
+                _ScpiFile.DocumentElement.RemoveChild(childNode);
             }
 
             foreach (var ss in this)
             {
-                Debug.Assert(xml.DocumentElement != null, "xml.DocumentElement != null");
-                xml.DocumentElement.AppendChild(ss.BuildXmlElement(xml));
+                Debug.Assert(_ScpiFile.DocumentElement != null, "xml.DocumentElement != null");
+                _ScpiFile.DocumentElement.AppendChild(ss.BuildXmlElement(_ScpiFile));
             }
-            xml.Save(File.FullName);
+            _ScpiFile.Save();
             return true;
         }
 
-        public bool TryParse(FileInfo fileInfo)
+        public bool TryParse()
         {
-            if (fileInfo == null)
-                throw new ArgumentNullException("fileInfo");
-
-            if (!fileInfo.Exists)
+            if (_ScpiFile == null)
             {
-                return false;
+                throw new FileNotFoundException();
             }
-            var xmldoc = new XmlDocument();
-            xmldoc.Load(fileInfo.FullName);
 
-            var meterinfoElement = xmldoc.SelectSingleNode("//meterinfo") as XmlElement;
+            Version = Version.Parse(_ScpiFile.DocumentElement.GetAttribute("version"));
+
+            var meterinfoElement = _ScpiFile.DocumentElement.SelectSingleNode("//information") as XmlElement;
             if (meterinfoElement == null)
             {
                 return false;
             }
             Brand = meterinfoElement.GetAttribute("brand");
             Name = meterinfoElement.GetAttribute("name");
-            File = fileInfo;
 
-            var node = xmldoc.SelectSingleNode("//scpigroups");
+            var node = _ScpiFile.DocumentElement.SelectSingleNode("//scpigroups");
             var scpigroups = node as XmlElement;
             if (scpigroups == null)
             {
@@ -82,6 +80,7 @@ namespace ScpiKnife
                     continue;
                 var scpiSubject = new ScpiSubject();
                 scpiSubject.OwnerCollection = this;
+                
                 var ele = subjectNode as XmlElement;
                 scpiSubject.Description = ele.GetAttribute("description");
 

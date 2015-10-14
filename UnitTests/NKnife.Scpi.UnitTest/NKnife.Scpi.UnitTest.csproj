@@ -63,8 +63,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScpiParserUnitTest.cs" />
-    <Compile Include="ScpiXml.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NKnife.Scpi\NKnife.Scpi.csproj">
@@ -78,13 +76,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Sample.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sample01.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Scpis\AdvantestR6581.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scpis\Agilent34401A.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Choose>
