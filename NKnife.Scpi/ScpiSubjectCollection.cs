@@ -68,7 +68,7 @@ namespace ScpiKnife
             {
                 var element = _ScpiFile.NewElement("subject");
                 scpiSubject.Build(ref element);
-                _ScpiFile.DocumentElement.AppendChild(element);
+                groups.AppendChild(element);
             }
 
             _ScpiFile.Save();
@@ -81,7 +81,9 @@ namespace ScpiKnife
                 _ScpiFile = scpiFileVersionProcessor.Update(_ScpiFile, true);
 
             //仪器信息部份
-            Version = Version.Parse(_ScpiFile.DocumentElement.GetAttribute("version")); //Scpi文件格式版本
+            Version = new Version("1.0");
+            if (_ScpiFile.DocumentElement.HasAttribute("version"))
+                Version = Version.Parse(_ScpiFile.DocumentElement.GetAttribute("version")); //Scpi文件格式版本
 
             var meterinfoElement = _ScpiFile.DocumentElement.SelectSingleNode("//information") as XmlElement;
             Debug.Assert(meterinfoElement != null, "meterinfoElement != null");
@@ -95,7 +97,12 @@ namespace ScpiKnife
             {
                 return false;
             }
-            AddRange(ScpiSubject.Parse(scpigroups));
+            var array = ScpiSubject.Parse(scpigroups);
+            foreach (var scpiSubject in array)
+            {
+                scpiSubject.OwnerCollection = this;
+                Add(scpiSubject);
+            }
 
             return true;
         }

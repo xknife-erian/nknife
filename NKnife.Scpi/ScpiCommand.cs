@@ -71,6 +71,7 @@ namespace ScpiKnife
         {
             Interval = 200;
             IsHex = false;
+            Selected = true;
         }
 
         /// <summary>

@@ -44,10 +44,10 @@ namespace ScpiKnife
             switch (Category)
             {
                 case ScpiCommandGroupCategory.Collect:
-                    element.SetAttribute("way", "init");
+                    element.SetAttribute("way", "collect");
                     break;
                 case ScpiCommandGroupCategory.Initializtion:
-                    element.SetAttribute("way", "collect");
+                    element.SetAttribute("way", "init");
                     break;
                 case ScpiCommandGroupCategory.None:
                     element.SetAttribute("way", "none");

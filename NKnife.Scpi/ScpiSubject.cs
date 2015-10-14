@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml;
 
 namespace ScpiKnife
@@ -34,6 +35,21 @@ namespace ScpiKnife
 
         public void Build(ref XmlElement element)
         {
+            Debug.Assert(element.OwnerDocument != null, "element.OwnerDocument != null");
+            var document = element.OwnerDocument;
+            if (document == null)
+                return;
+
+            element.RemoveAll();
+            element.SetAttribute("description", Description);
+
+            var groupElement = document.CreateElement("group");
+            Preload.Build(ref groupElement);
+            element.AppendChild(groupElement);
+
+            groupElement = document.CreateElement("group");
+            Collect.Build(ref groupElement);
+            element.AppendChild(groupElement);
         }
 
         public static IEnumerable<ScpiSubject> Parse(XmlElement scpigroups)
