@@ -53,10 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScpiCommandGroupCategory.cs" />
     <Compile Include="ScpiCommandQueue.cs" />
     <Compile Include="ScpiCommandQueueMap.cs" />
     <Compile Include="ScpiSubject.cs" />
     <Compile Include="ScpiSubjectCollection.cs" />
+    <Compile Include="ScpisXmlFile.cs" />
     <None Include="Parser\ScpiParser.cs" />
     <Compile Include="Parser\IScpiCommandHandler.cs" />
     <Compile Include="Parser\ScpiCommandCaller.cs" />
