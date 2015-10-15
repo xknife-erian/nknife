@@ -1,15 +1,16 @@
 ﻿using System;
 
-namespace Performance
+namespace NKnife.App.XPath.Performance
 {
-
     public class Display
     {
-        private static int _Indent = 0;
+        private static int _Indent;
+
+        public static int Indent { set; get; }
 
         public static void Show(string Message)
         {
-            for (int i = 0; i < (_Indent * 4); i++)
+            for (var i = 0; i < (_Indent*4); i++)
             {
                 Console.Write(" ");
             }
@@ -23,20 +24,17 @@ namespace Performance
             {
                 _Indent = 0;
             }
-            int num = _Indent * 4;
+            var num = _Indent*4;
             _Indent += PostIndent;
             if (_Indent < 0)
             {
                 _Indent = 0;
             }
-            for (int i = 0; i < num; i++)
+            for (var i = 0; i < num; i++)
             {
                 Console.Write(" ");
             }
             Console.WriteLine(Message);
         }
-
-        public static int Indent { set; get; }
     }
 }
-

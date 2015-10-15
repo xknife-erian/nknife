@@ -1,33 +1,38 @@
-﻿namespace Gean.Client.XPathTool
-{
-    using System;
-    using System.Collections;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Drawing;
-    using System.Text.RegularExpressions;
-    using System.Windows.Forms;
-    using System.Xml;
-    using System.Xml.XPath;
-    using System.Xml.Xsl;
-    using Performance;
+﻿using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.XPath;
+using System.Xml.Xsl;
+using NKnife.App.XPath.Performance;
 
+namespace NKnife.App.XPath
+{
     public class MainForm : Form
     {
+        private readonly XmlDocument _xmlDoc = new XmlDocument();
+        private readonly string _xmlString = "<?xml version=\"1.0\"?>";
         private Hashtable _attributes = new Hashtable();
+        private ContextMenu _CtxAttrContextMenu;
         private bool _hasDefNS;
         private bool _hasNS;
         private bool _hasSiblings;
         private int _level;
+        private MainMenu _MainMenu;
         private string _nsDefPrefix;
         private XmlNamespaceManager _nsMgr;
         private string _nsPrefix;
         private string _nsValue;
+        private OpenFileDialog _OpenXmlFileDialog;
         private TreeNode _selectedNode;
         private string _strNamespaces;
         private TreeView _treeResult;
-        private XmlDocument _xmlDoc = new XmlDocument();
-        private string _xmlString = "<?xml version=\"1.0\"?>";
+
+        internal string _XmlFileName;
         private string _xPathExp;
         private BooleanOp boolOperation = new BooleanOp();
         private Button btnCSCode;
@@ -40,12 +45,10 @@
         private Button btnShowNamespaces;
         private CheckBox checkBox1;
         private IContainer components;
-        private ContextMenu _CtxAttrContextMenu;
-        private bool isContextNode = false;
-        private bool isVerbose = false;
+        private bool isContextNode;
+        private bool isVerbose;
         private Label label1;
         private Label label2;
-        private MainMenu _MainMenu;
         private MenuItem menuItem1;
         private MenuItem menuItem10;
         private MenuItem menuItem4;
@@ -60,154 +63,161 @@
         private MenuItem mnuOpen;
         private MenuItem mnuShowHelp;
         private MenuItem mnuVerbose;
-        private OpenFileDialog _OpenXmlFileDialog;
         private StatusBar statusBar;
         private TextBox txtQuery;
         private TextBox txtXmlFileName;
 
-        internal string _XmlFileName;
-
         public MainForm()
         {
-            this.InitializeComponent();
-            this._XmlFileName = this.txtXmlFileName.Text;
-            this.mnuVerbose.RadioCheck = true;
-            this.mnuAbbreviate.RadioCheck = true;
-            this.mnuAbbreviate.Checked = true;
+            InitializeComponent();
+            _XmlFileName = txtXmlFileName.Text;
+            mnuVerbose.RadioCheck = true;
+            mnuAbbreviate.RadioCheck = true;
+            mnuAbbreviate.Checked = true;
         }
 
         private void _treeResult_KeyUp(object sender, KeyEventArgs e)
         {
-            if (!this.isContextNode)
+            if (!isContextNode)
             {
-                this.ClickAction();
+                ClickAction();
             }
         }
 
         private void AddAllElementsMenu()
         {
-            this._CtxAttrContextMenu.MenuItems.Add(new MenuItem("-"));
-            MenuItem item = new MenuItem("Select All <" + this.MatchRegex(this._treeResult.SelectedNode.Text) + "> elements");
-            if (this._hasDefNS)
+            _CtxAttrContextMenu.MenuItems.Add(new MenuItem("-"));
+            var item = new MenuItem("Select All <" + MatchRegex(_treeResult.SelectedNode.Text) + "> elements");
+            if (_hasDefNS)
             {
                 item.MenuItems.Add(
                     new MenuItem(".//" +
-                        DisplayForm.GetElementName
-                        (this._nsDefPrefix + ":",
-                        this.MatchRegex(this._treeResult.SelectedNode.Text)),
-                        new EventHandler(this.mnuSelectElements_Click)));
+                                 DisplayForm.GetElementName
+                                     (_nsDefPrefix + ":",
+                                         MatchRegex(_treeResult.SelectedNode.Text)),
+                        mnuSelectElements_Click));
             }
             else
             {
-                item.MenuItems.Add(new MenuItem(".//" + DisplayForm.GetElementName("", this.MatchRegex(this._treeResult.SelectedNode.Text)), new EventHandler(this.mnuSelectElements_Click)));
+                item.MenuItems.Add(
+                    new MenuItem(".//" + DisplayForm.GetElementName("", MatchRegex(_treeResult.SelectedNode.Text)),
+                        mnuSelectElements_Click));
             }
-            this._CtxAttrContextMenu.MenuItems.Add(item);
+            _CtxAttrContextMenu.MenuItems.Add(item);
         }
 
         private void AddAttributesMenu(Menu.MenuItemCollection mnuColl, EventHandler e)
         {
-            IDictionaryEnumerator enumerator = this._attributes.GetEnumerator();
+            var enumerator = _attributes.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                string str = "";
-                MenuItem item = new MenuItem(enumerator.Key.ToString() + str, e);
+                var str = "";
+                var item = new MenuItem(enumerator.Key + str, e);
                 mnuColl.Add(item);
             }
         }
 
         private void btnCSCode_Click(object sender, EventArgs e)
         {
-            string str = this._XmlFileName;
-            string text = this.txtQuery.Text;
-            string str3 = "\r\n";
-            string code = "using System;" + str3 + "using System.Xml;" + str3 + "using System.Xml.XPath;" + str3 + "public static void RunXPath()" + str3 + "{" + str3 + "XmlDocument xmlDoc = new XmlDocument();" + str3 + "xmlDoc.Load(@\"" + str + "\");" + str3 + "";
-            if (this._hasNS)
+            var str = _XmlFileName;
+            var text = txtQuery.Text;
+            var str3 = "\r\n";
+            var code = "using System;" + str3 + "using System.Xml;" + str3 + "using System.Xml.XPath;" + str3 +
+                       "public static void RunXPath()" + str3 + "{" + str3 + "XmlDocument xmlDoc = new XmlDocument();" +
+                       str3 + "xmlDoc.Load(@\"" + str + "\");" + str3 + "";
+            if (_hasNS)
             {
                 code = code + "XmlNamespaceManager nsMgr= new XmlNamespaceManager(xmlDoc.NameTable);" + str3;
-                foreach (string str5 in this._nsMgr)
+                foreach (string str5 in _nsMgr)
                 {
-                    if (this._nsMgr.HasNamespace(str5))
+                    if (_nsMgr.HasNamespace(str5))
                     {
-                        string str6 = this._nsMgr.LookupNamespace(str5);
-                        string str7 = code;
+                        var str6 = _nsMgr.LookupNamespace(str5);
+                        var str7 = code;
                         code = str7 + "nsMgr.AddNamespace(\"" + str5 + "\",\"" + str6 + "\");" + str3 + "";
                     }
                 }
-                string str8 = code;
-                code = str8 + "XmlNodeList nodes = xmlDoc.SelectNodes(\"" + text + "\",nsMgr);" + str3 + "foreach(XmlNode node in nodes)" + str3 + "{" + str3 + "// Do anything with node" + str3 + "Console.WriteLine(node.OuterXml);" + str3 + "}" + str3 + "}";
+                var str8 = code;
+                code = str8 + "XmlNodeList nodes = xmlDoc.SelectNodes(\"" + text + "\",nsMgr);" + str3 +
+                       "foreach(XmlNode node in nodes)" + str3 + "{" + str3 + "// Do anything with node" + str3 +
+                       "Console.WriteLine(node.OuterXml);" + str3 + "}" + str3 + "}";
             }
             else
             {
-                code = "using System;" + str3 + "using System.Xml;" + str3 + "using System.Xml.XPath;" + str3 + "public static void RunXPath()" + str3 + "{" + str3 + "XmlDocument xmlDoc = new XmlDocument();" + str3 + "xmlDoc.Load(@\"" + str + "\");" + str3 + "XmlNodeList nodes = xmlDoc.SelectNodes(\"" + text + "\");" + str3 + "foreach(XmlNode node in nodes)" + str3 + "{" + str3 + "// Do anything with node" + str3 + "Console.WriteLine(node.OuterXml);" + str3 + "}" + str3 + "}";
+                code = "using System;" + str3 + "using System.Xml;" + str3 + "using System.Xml.XPath;" + str3 +
+                       "public static void RunXPath()" + str3 + "{" + str3 + "XmlDocument xmlDoc = new XmlDocument();" +
+                       str3 + "xmlDoc.Load(@\"" + str + "\");" + str3 + "XmlNodeList nodes = xmlDoc.SelectNodes(\"" +
+                       text + "\");" + str3 + "foreach(XmlNode node in nodes)" + str3 + "{" + str3 +
+                       "// Do anything with node" + str3 + "Console.WriteLine(node.OuterXml);" + str3 + "}" + str3 + "}";
             }
             new CodeForm(code).Show(this);
         }
 
         private void btnExecuteQuery_Click(object sender, EventArgs e)
         {
-            this.btnSelXPath.Enabled = false;
-            this._treeResult.BeginUpdate();
-            this._treeResult.Nodes.Clear();
-            XmlNode documentElement = this._xmlDoc.DocumentElement;
-            TreeNode node = new TreeNode(this._xmlString);
-            this._treeResult.Nodes.Add(node);
+            btnSelXPath.Enabled = false;
+            _treeResult.BeginUpdate();
+            _treeResult.Nodes.Clear();
+            XmlNode documentElement = _xmlDoc.DocumentElement;
+            var node = new TreeNode(_xmlString);
+            _treeResult.Nodes.Add(node);
             try
             {
-                PerformanceTimer timer = new PerformanceTimer();
+                var timer = new PerformanceTimer();
                 timer.Start();
                 XmlNodeList list = null;
-                if (this._hasNS)
+                if (_hasNS)
                 {
-                    list = documentElement.SelectNodes(this.txtQuery.Text, this._nsMgr);
+                    list = documentElement.SelectNodes(txtQuery.Text, _nsMgr);
                 }
                 else
                 {
-                    list = documentElement.SelectNodes(this.txtQuery.Text);
+                    list = documentElement.SelectNodes(txtQuery.Text);
                 }
                 timer.Stop();
-                this.statusBar.Text = "XPath Query -- Elapsed time: " + timer.ElapsedTime.ToString() + " ms";
-                for (int i = 0; i < list.Count; i++)
+                statusBar.Text = "XPath Query -- Elapsed time: " + timer.ElapsedTime + " ms";
+                for (var i = 0; i < list.Count; i++)
                 {
-                    this.Xml2Tree(node, list[i]);
+                    Xml2Tree(node, list[i]);
                 }
-                this.isContextNode = true;
+                isContextNode = true;
             }
             catch (XPathException exception)
             {
                 MessageBox.Show("Error in XPath Query:" + exception.Message);
-                this.btnSelXPath.Enabled = true;
-                this.isContextNode = false;
+                btnSelXPath.Enabled = true;
+                isContextNode = false;
                 return;
             }
             catch (XsltException exception2)
             {
                 MessageBox.Show(exception2.Message);
-                this.btnSelXPath.Enabled = true;
-                this.isContextNode = false;
+                btnSelXPath.Enabled = true;
+                isContextNode = false;
                 return;
             }
-            this._treeResult.EndUpdate();
+            _treeResult.EndUpdate();
             node.Expand();
         }
 
         private void btnLoadXmlFile_Click(object sender, EventArgs e)
         {
-            this.OpenFile();
+            OpenFile();
         }
 
         private void btnNotepad_Click(object sender, EventArgs e)
         {
-            this.OpenNotePad(this._XmlFileName);
+            OpenNotePad(_XmlFileName);
         }
 
         private void btnOpenFile_Click(object sender, EventArgs e)
         {
-            this.OpenXmlFile(true);
+            OpenXmlFile(true);
         }
 
         private void btnSelXPath_Click(object sender, EventArgs e)
         {
-            this.txtQuery.Text = this.statusBar.Text;
+            txtQuery.Text = statusBar.Text;
         }
 
         private void btnShowHelp_Click(object sender, EventArgs e)
@@ -218,9 +228,9 @@
         private void btnShowNamespaces_Click(object sender, EventArgs e)
         {
             string str;
-            if (this._strNamespaces != "")
+            if (_strNamespaces != "")
             {
-                str = this._strNamespaces + "\n'def' is the prefix of Default Namespace";
+                str = _strNamespaces + "\n'def' is the prefix of Default Namespace";
             }
             else
             {
@@ -231,57 +241,58 @@
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.checkBox1.Checked)
+            if (checkBox1.Checked)
             {
-                this._treeResult.ExpandAll();
+                _treeResult.ExpandAll();
             }
             else
             {
-                this._treeResult.CollapseAll();
+                _treeResult.CollapseAll();
             }
         }
 
         private void ClickAction()
         {
-            if (!this.isContextNode)
+            if (!isContextNode)
             {
-                TreeNode selectedNode = this._treeResult.SelectedNode;
+                var selectedNode = _treeResult.SelectedNode;
                 if (selectedNode != null)
                 {
-                    this._xPathExp = "";
+                    _xPathExp = "";
                     while (selectedNode.Parent != null)
                     {
                         if (selectedNode.Text.StartsWith("<") && selectedNode.Text.EndsWith(">"))
                         {
-                            this._level = this.GetNodeLevel(selectedNode);
-                            string prefix = "";
-                            string elementName = this.MatchRegex(selectedNode.Text);
-                            if (this._hasDefNS && (elementName.IndexOf(":", 0, elementName.Length) == -1))
+                            _level = GetNodeLevel(selectedNode);
+                            var prefix = "";
+                            var elementName = MatchRegex(selectedNode.Text);
+                            if (_hasDefNS && (elementName.IndexOf(":", 0, elementName.Length) == -1))
                             {
-                                prefix = this._nsDefPrefix + ":";
+                                prefix = _nsDefPrefix + ":";
                             }
-                            if (this._hasSiblings)
+                            if (_hasSiblings)
                             {
-                                this._xPathExp = DisplayForm.GetElementName(prefix, elementName) + "[" + DisplayForm.GetPositionName(this._level) + "]/" + this._xPathExp;
+                                _xPathExp = DisplayForm.GetElementName(prefix, elementName) + "[" +
+                                            DisplayForm.GetPositionName(_level) + "]/" + _xPathExp;
                             }
                             else
                             {
-                                this._xPathExp = DisplayForm.GetElementName(prefix, elementName) + "/" + this._xPathExp;
+                                _xPathExp = DisplayForm.GetElementName(prefix, elementName) + "/" + _xPathExp;
                             }
                         }
                         else
                         {
-                            this._xPathExp = this._xPathExp + DisplayForm.GetTextName();
+                            _xPathExp = _xPathExp + DisplayForm.GetTextName();
                         }
                         selectedNode = selectedNode.Parent;
                     }
-                    this._xPathExp = "/" + this._xPathExp;
-                    if (this._xPathExp.EndsWith("/"))
+                    _xPathExp = "/" + _xPathExp;
+                    if (_xPathExp.EndsWith("/"))
                     {
-                        this._xPathExp = this._xPathExp.Remove(this._xPathExp.Length - 1, 1);
+                        _xPathExp = _xPathExp.Remove(_xPathExp.Length - 1, 1);
                     }
-                    this._attributes = this.GetAttributes(this._treeResult.SelectedNode.Text);
-                    this.txtQuery.Text = this._xPathExp;
+                    _attributes = GetAttributes(_treeResult.SelectedNode.Text);
+                    txtQuery.Text = _xPathExp;
                 }
             }
         }
@@ -290,7 +301,7 @@
         {
             foreach (TreeNode node in tNode.Nodes)
             {
-                this.ColorRecursive(node, c);
+                ColorRecursive(node, c);
             }
         }
 
@@ -299,80 +310,80 @@
             treeNode.BackColor = c;
             foreach (TreeNode node in treeNode.Nodes)
             {
-                this.ColorRecursive(node, c);
+                ColorRecursive(node, c);
             }
         }
 
         private void ctxAttr_Click(object sender, EventArgs e)
         {
-            this._xPathExp = this._xPathExp + "/" + DisplayForm.GetAttrName(((MenuItem)sender).Text);
-            this.txtQuery.Text = this._xPathExp;
+            _xPathExp = _xPathExp + "/" + DisplayForm.GetAttrName(((MenuItem) sender).Text);
+            txtQuery.Text = _xPathExp;
         }
 
         private void ctxAttr_Popup(object sender, EventArgs e)
         {
-            this._CtxAttrContextMenu.MenuItems.Clear();
-            if (!this.isContextNode && (this._treeResult.SelectedNode.Parent != null))
+            _CtxAttrContextMenu.MenuItems.Clear();
+            if (!isContextNode && (_treeResult.SelectedNode.Parent != null))
             {
-                this.AddAttributesMenu(this._CtxAttrContextMenu.MenuItems, new EventHandler(this.ctxAttr_Click));
-                this.AddAllElementsMenu();
-                this.GetNodeLevel(this._treeResult.SelectedNode);
-                if (this._hasSiblings && (this._attributes.Count > 0))
+                AddAttributesMenu(_CtxAttrContextMenu.MenuItems, ctxAttr_Click);
+                AddAllElementsMenu();
+                GetNodeLevel(_treeResult.SelectedNode);
+                if (_hasSiblings && (_attributes.Count > 0))
                 {
-                    MenuItem item = new MenuItem("Select All " + this.MatchRegex(this._treeResult.SelectedNode.Text) + "(s) for");
-                    this.AddAttributesMenu(item.MenuItems, new EventHandler(this.mnuSelectAttributeValue_Click));
-                    this._CtxAttrContextMenu.MenuItems.Add(item);
+                    var item = new MenuItem("Select All " + MatchRegex(_treeResult.SelectedNode.Text) + "(s) for");
+                    AddAttributesMenu(item.MenuItems, mnuSelectAttributeValue_Click);
+                    _CtxAttrContextMenu.MenuItems.Add(item);
                 }
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.components != null))
+            if (disposing && (components != null))
             {
-                this.components.Dispose();
+                components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void FillXmlDocument(XmlDocument _xmlDoc)
         {
-            this._strNamespaces = "";
-            this._hasDefNS = false;
-            this._hasNS = false;
-            this.isContextNode = false;
-            this._treeResult.BeginUpdate();
-            this._treeResult.Nodes.Clear();
+            _strNamespaces = "";
+            _hasDefNS = false;
+            _hasNS = false;
+            isContextNode = false;
+            _treeResult.BeginUpdate();
+            _treeResult.Nodes.Clear();
             XmlNode documentElement = _xmlDoc.DocumentElement;
-            this._nsMgr = new XmlNamespaceManager(_xmlDoc.NameTable);
-            TreeNode node = new TreeNode(this._xmlString);
-            this._treeResult.Nodes.Add(node);
-            this.Xml2Tree(node, documentElement);
-            this._treeResult.EndUpdate();
+            _nsMgr = new XmlNamespaceManager(_xmlDoc.NameTable);
+            var node = new TreeNode(_xmlString);
+            _treeResult.Nodes.Add(node);
+            Xml2Tree(node, documentElement);
+            _treeResult.EndUpdate();
             node.Expand();
         }
 
         private Hashtable GetAttributes(string input)
         {
-            Hashtable hashtable = new Hashtable();
+            var hashtable = new Hashtable();
             if (input.StartsWith("<") && input.EndsWith(">"))
             {
                 hashtable.Clear();
-                RegexOptions none = RegexOptions.None;
-                string str = @"\w:";
-                string str2 = @"\w.\s-:?/=@#";
-                Regex regex = new Regex("([" + str + "]*=\"[" + str2 + "]*\")", none);
+                var none = RegexOptions.None;
+                var str = @"\w:";
+                var str2 = @"\w.\s-:?/=@#";
+                var regex = new Regex("([" + str + "]*=\"[" + str2 + "]*\")", none);
                 if (!regex.IsMatch(input))
                 {
                     return hashtable;
                 }
-                MatchCollection matchs = regex.Matches(input);
-                for (int i = 0; i != matchs.Count; i++)
+                var matchs = regex.Matches(input);
+                for (var i = 0; i != matchs.Count; i++)
                 {
-                    string str4 = matchs[i].Groups[0].Value;
+                    var str4 = matchs[i].Groups[0].Value;
                     if (!str4.StartsWith("xmlns"))
                     {
-                        string[] strArray = str4.Split(new char[] { '=' });
+                        var strArray = str4.Split('=');
                         hashtable.Add(strArray[0], strArray[1]);
                     }
                 }
@@ -391,39 +402,39 @@
 
         private int GetNodeLevel(TreeNode node)
         {
-            int num = 1;
-            int num2 = 1;
-            this._hasSiblings = false;
-            string str = this.MatchRegex(node.Text);
-            TreeNode prevTreeNode = this.GetPrevTreeNode(node);
-            string str2 = "";
+            var num = 1;
+            var num2 = 1;
+            _hasSiblings = false;
+            var str = MatchRegex(node.Text);
+            var prevTreeNode = GetPrevTreeNode(node);
+            var str2 = "";
             while (prevTreeNode != null)
             {
-                str2 = this.MatchRegex(prevTreeNode.Text);
+                str2 = MatchRegex(prevTreeNode.Text);
                 if (str.Equals(str2))
                 {
                     num++;
                 }
-                prevTreeNode = this.GetPrevTreeNode(prevTreeNode);
+                prevTreeNode = GetPrevTreeNode(prevTreeNode);
             }
             if (num > 1)
             {
-                this._hasSiblings = true;
+                _hasSiblings = true;
             }
-            TreeNode nextTreeNode = this.GetNextTreeNode(node);
-            string str3 = "";
+            var nextTreeNode = GetNextTreeNode(node);
+            var str3 = "";
             while (nextTreeNode != null)
             {
-                str3 = this.MatchRegex(nextTreeNode.Text);
+                str3 = MatchRegex(nextTreeNode.Text);
                 if (str.Equals(str3))
                 {
                     num2++;
                 }
-                nextTreeNode = this.GetNextTreeNode(nextTreeNode);
+                nextTreeNode = GetNextTreeNode(nextTreeNode);
             }
             if (num2 > 1)
             {
-                this._hasSiblings = true;
+                _hasSiblings = true;
             }
             return num;
         }
@@ -439,342 +450,349 @@
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtXmlFileName = new System.Windows.Forms.TextBox();
-            this.btnLoadXmlFile = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtQuery = new System.Windows.Forms.TextBox();
-            this.btnExecuteQuery = new System.Windows.Forms.Button();
-            this._treeResult = new System.Windows.Forms.TreeView();
-            this._CtxAttrContextMenu = new System.Windows.Forms.ContextMenu();
-            this._OpenXmlFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.statusBar = new System.Windows.Forms.StatusBar();
-            this.btnSelXPath = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.btnShowNamespaces = new System.Windows.Forms.Button();
-            this.btnShowHelp = new System.Windows.Forms.Button();
-            this.btnCSCode = new System.Windows.Forms.Button();
-            this.btnNotepad = new System.Windows.Forms.Button();
-            this.btnOpenFile = new System.Windows.Forms.Button();
-            this._MainMenu = new System.Windows.Forms.MainMenu(this.components);
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.mnuOpen = new System.Windows.Forms.MenuItem();
-            this.mnuLoad = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
-            this.mnuNotepad = new System.Windows.Forms.MenuItem();
-            this.menuItem6 = new System.Windows.Forms.MenuItem();
-            this.mnuGenCode = new System.Windows.Forms.MenuItem();
-            this.menuItem8 = new System.Windows.Forms.MenuItem();
-            this.mnuExit = new System.Windows.Forms.MenuItem();
-            this.menuItem10 = new System.Windows.Forms.MenuItem();
-            this.mnuVerbose = new System.Windows.Forms.MenuItem();
-            this.mnuAbbreviate = new System.Windows.Forms.MenuItem();
-            this.mnuHelp = new System.Windows.Forms.MenuItem();
-            this.mnuShowHelp = new System.Windows.Forms.MenuItem();
-            this.SuspendLayout();
+            components = new Container();
+            var resources = new ComponentResourceManager(typeof (MainForm));
+            label1 = new Label();
+            txtXmlFileName = new TextBox();
+            btnLoadXmlFile = new Button();
+            label2 = new Label();
+            txtQuery = new TextBox();
+            btnExecuteQuery = new Button();
+            _treeResult = new TreeView();
+            _CtxAttrContextMenu = new ContextMenu();
+            _OpenXmlFileDialog = new OpenFileDialog();
+            statusBar = new StatusBar();
+            btnSelXPath = new Button();
+            checkBox1 = new CheckBox();
+            btnShowNamespaces = new Button();
+            btnShowHelp = new Button();
+            btnCSCode = new Button();
+            btnNotepad = new Button();
+            btnOpenFile = new Button();
+            _MainMenu = new MainMenu(components);
+            menuItem1 = new MenuItem();
+            mnuOpen = new MenuItem();
+            mnuLoad = new MenuItem();
+            menuItem4 = new MenuItem();
+            mnuNotepad = new MenuItem();
+            menuItem6 = new MenuItem();
+            mnuGenCode = new MenuItem();
+            menuItem8 = new MenuItem();
+            mnuExit = new MenuItem();
+            menuItem10 = new MenuItem();
+            mnuVerbose = new MenuItem();
+            mnuAbbreviate = new MenuItem();
+            mnuHelp = new MenuItem();
+            mnuShowHelp = new MenuItem();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Xml File:";
+            label1.AutoSize = true;
+            label1.Location = new Point(5, 11);
+            label1.Name = "label1";
+            label1.Size = new Size(46, 13);
+            label1.TabIndex = 0;
+            label1.Text = "Xml File:";
             // 
             // txtXmlFileName
             // 
-            this.txtXmlFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtXmlFileName.Location = new System.Drawing.Point(57, 8);
-            this.txtXmlFileName.Name = "txtXmlFileName";
-            this.txtXmlFileName.Size = new System.Drawing.Size(514, 21);
-            this.txtXmlFileName.TabIndex = 0;
+            txtXmlFileName.Anchor = (AnchorStyles.Top | AnchorStyles.Left)
+                                    | AnchorStyles.Right;
+            txtXmlFileName.Location = new Point(57, 8);
+            txtXmlFileName.Name = "txtXmlFileName";
+            txtXmlFileName.Size = new Size(514, 21);
+            txtXmlFileName.TabIndex = 0;
             // 
             // btnLoadXmlFile
             // 
-            this.btnLoadXmlFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoadXmlFile.Location = new System.Drawing.Point(587, 8);
-            this.btnLoadXmlFile.Name = "btnLoadXmlFile";
-            this.btnLoadXmlFile.Size = new System.Drawing.Size(72, 23);
-            this.btnLoadXmlFile.TabIndex = 3;
-            this.btnLoadXmlFile.Text = "&Load";
-            this.btnLoadXmlFile.Click += new System.EventHandler(this.btnLoadXmlFile_Click);
+            btnLoadXmlFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLoadXmlFile.Location = new Point(587, 8);
+            btnLoadXmlFile.Name = "btnLoadXmlFile";
+            btnLoadXmlFile.Size = new Size(72, 23);
+            btnLoadXmlFile.TabIndex = 3;
+            btnLoadXmlFile.Text = "&Load";
+            btnLoadXmlFile.Click += btnLoadXmlFile_Click;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Enter XPath Query:";
+            label2.AutoSize = true;
+            label2.Location = new Point(5, 50);
+            label2.Name = "label2";
+            label2.Size = new Size(101, 13);
+            label2.TabIndex = 3;
+            label2.Text = "Enter XPath Query:";
             // 
             // txtQuery
             // 
-            this.txtQuery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtQuery.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtQuery.Location = new System.Drawing.Point(112, 40);
-            this.txtQuery.Name = "txtQuery";
-            this.txtQuery.Size = new System.Drawing.Size(547, 32);
-            this.txtQuery.TabIndex = 1;
+            txtQuery.Anchor = (AnchorStyles.Top | AnchorStyles.Left)
+                              | AnchorStyles.Right;
+            txtQuery.Font = new Font("Consolas", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtQuery.Location = new Point(112, 40);
+            txtQuery.Name = "txtQuery";
+            txtQuery.Size = new Size(547, 32);
+            txtQuery.TabIndex = 1;
             // 
             // btnExecuteQuery
             // 
-            this.btnExecuteQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExecuteQuery.Location = new System.Drawing.Point(667, 40);
-            this.btnExecuteQuery.Name = "btnExecuteQuery";
-            this.btnExecuteQuery.Size = new System.Drawing.Size(80, 32);
-            this.btnExecuteQuery.TabIndex = 2;
-            this.btnExecuteQuery.Text = "&Execute";
-            this.btnExecuteQuery.Click += new System.EventHandler(this.btnExecuteQuery_Click);
+            btnExecuteQuery.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExecuteQuery.Location = new Point(667, 40);
+            btnExecuteQuery.Name = "btnExecuteQuery";
+            btnExecuteQuery.Size = new Size(80, 32);
+            btnExecuteQuery.TabIndex = 2;
+            btnExecuteQuery.Text = "&Execute";
+            btnExecuteQuery.Click += btnExecuteQuery_Click;
             // 
             // _treeResult
             // 
-            this._treeResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this._treeResult.ContextMenu = this._CtxAttrContextMenu;
-            this._treeResult.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this._treeResult.ForeColor = System.Drawing.SystemColors.WindowText;
-            this._treeResult.FullRowSelect = true;
-            this._treeResult.HideSelection = false;
-            this._treeResult.Location = new System.Drawing.Point(8, 87);
-            this._treeResult.Name = "_treeResult";
-            this._treeResult.Size = new System.Drawing.Size(651, 276);
-            this._treeResult.TabIndex = 6;
-            this._treeResult.KeyUp += new System.Windows.Forms.KeyEventHandler(this._treeResult_KeyUp);
-            this._treeResult.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeResult_MouseDown);
+            _treeResult.Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom)
+                                  | AnchorStyles.Left)
+                                 | AnchorStyles.Right;
+            _treeResult.ContextMenu = _CtxAttrContextMenu;
+            _treeResult.Font = new Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            _treeResult.ForeColor = SystemColors.WindowText;
+            _treeResult.FullRowSelect = true;
+            _treeResult.HideSelection = false;
+            _treeResult.Location = new Point(8, 87);
+            _treeResult.Name = "_treeResult";
+            _treeResult.Size = new Size(651, 276);
+            _treeResult.TabIndex = 6;
+            _treeResult.KeyUp += _treeResult_KeyUp;
+            _treeResult.MouseDown += treeResult_MouseDown;
             // 
             // _CtxAttrContextMenu
             // 
-            this._CtxAttrContextMenu.Popup += new System.EventHandler(this.ctxAttr_Popup);
+            _CtxAttrContextMenu.Popup += ctxAttr_Popup;
             // 
             // _OpenXmlFileDialog
             // 
-            this._OpenXmlFileDialog.Filter = "XML files|*.xml|All files|*.*";
-            this._OpenXmlFileDialog.InitialDirectory = "c:\\";
-            this._OpenXmlFileDialog.Title = "Open XML File";
+            _OpenXmlFileDialog.Filter = "XML files|*.xml|All files|*.*";
+            _OpenXmlFileDialog.InitialDirectory = "c:\\";
+            _OpenXmlFileDialog.Title = "Open XML File";
             // 
             // statusBar
             // 
-            this.statusBar.Location = new System.Drawing.Point(0, 404);
-            this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(755, 22);
-            this.statusBar.TabIndex = 8;
-            this.statusBar.Text = "Ready";
+            statusBar.Location = new Point(0, 404);
+            statusBar.Name = "statusBar";
+            statusBar.Size = new Size(755, 22);
+            statusBar.TabIndex = 8;
+            statusBar.Text = "Ready";
             // 
             // btnSelXPath
             // 
-            this.btnSelXPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelXPath.Enabled = false;
-            this.btnSelXPath.Location = new System.Drawing.Point(595, 372);
-            this.btnSelXPath.Name = "btnSelXPath";
-            this.btnSelXPath.Size = new System.Drawing.Size(152, 23);
-            this.btnSelXPath.TabIndex = 7;
-            this.btnSelXPath.Text = "&Use Selected XPath";
-            this.btnSelXPath.Click += new System.EventHandler(this.btnSelXPath_Click);
+            btnSelXPath.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnSelXPath.Enabled = false;
+            btnSelXPath.Location = new Point(595, 372);
+            btnSelXPath.Name = "btnSelXPath";
+            btnSelXPath.Size = new Size(152, 23);
+            btnSelXPath.TabIndex = 7;
+            btnSelXPath.Text = "&Use Selected XPath";
+            btnSelXPath.Click += btnSelXPath_Click;
             // 
             // checkBox1
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBox1.Location = new System.Drawing.Point(38, 372);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(184, 24);
-            this.checkBox1.TabIndex = 8;
-            this.checkBox1.Text = "Expand All/Collapse All";
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            checkBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            checkBox1.Location = new Point(38, 372);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(184, 24);
+            checkBox1.TabIndex = 8;
+            checkBox1.Text = "Expand All/Collapse All";
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // btnShowNamespaces
             // 
-            this.btnShowNamespaces.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowNamespaces.Location = new System.Drawing.Point(435, 372);
-            this.btnShowNamespaces.Name = "btnShowNamespaces";
-            this.btnShowNamespaces.Size = new System.Drawing.Size(152, 23);
-            this.btnShowNamespaces.TabIndex = 6;
-            this.btnShowNamespaces.Text = "&Show Namespaces";
-            this.btnShowNamespaces.Click += new System.EventHandler(this.btnShowNamespaces_Click);
+            btnShowNamespaces.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnShowNamespaces.Location = new Point(435, 372);
+            btnShowNamespaces.Name = "btnShowNamespaces";
+            btnShowNamespaces.Size = new Size(152, 23);
+            btnShowNamespaces.TabIndex = 6;
+            btnShowNamespaces.Text = "&Show Namespaces";
+            btnShowNamespaces.Click += btnShowNamespaces_Click;
             // 
             // btnShowHelp
             // 
-            this.btnShowHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShowHelp.Location = new System.Drawing.Point(8, 372);
-            this.btnShowHelp.Name = "btnShowHelp";
-            this.btnShowHelp.Size = new System.Drawing.Size(24, 23);
-            this.btnShowHelp.TabIndex = 9;
-            this.btnShowHelp.Text = "?";
-            this.btnShowHelp.Click += new System.EventHandler(this.btnShowHelp_Click);
+            btnShowHelp.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnShowHelp.Location = new Point(8, 372);
+            btnShowHelp.Name = "btnShowHelp";
+            btnShowHelp.Size = new Size(24, 23);
+            btnShowHelp.TabIndex = 9;
+            btnShowHelp.Text = "?";
+            btnShowHelp.Click += btnShowHelp_Click;
             // 
             // btnCSCode
             // 
-            this.btnCSCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCSCode.Location = new System.Drawing.Point(667, 340);
-            this.btnCSCode.Name = "btnCSCode";
-            this.btnCSCode.Size = new System.Drawing.Size(80, 23);
-            this.btnCSCode.TabIndex = 10;
-            this.btnCSCode.Text = "&C# Code";
-            this.btnCSCode.Click += new System.EventHandler(this.btnCSCode_Click);
+            btnCSCode.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnCSCode.Location = new Point(667, 340);
+            btnCSCode.Name = "btnCSCode";
+            btnCSCode.Size = new Size(80, 23);
+            btnCSCode.TabIndex = 10;
+            btnCSCode.Text = "&C# Code";
+            btnCSCode.Click += btnCSCode_Click;
             // 
             // btnNotepad
             // 
-            this.btnNotepad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNotepad.Location = new System.Drawing.Point(667, 87);
-            this.btnNotepad.Name = "btnNotepad";
-            this.btnNotepad.Size = new System.Drawing.Size(80, 23);
-            this.btnNotepad.TabIndex = 5;
-            this.btnNotepad.Text = "&Notepad";
-            this.btnNotepad.Click += new System.EventHandler(this.btnNotepad_Click);
+            btnNotepad.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnNotepad.Location = new Point(667, 87);
+            btnNotepad.Name = "btnNotepad";
+            btnNotepad.Size = new Size(80, 23);
+            btnNotepad.TabIndex = 5;
+            btnNotepad.Text = "&Notepad";
+            btnNotepad.Click += btnNotepad_Click;
             // 
             // btnOpenFile
             // 
-            this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenFile.Location = new System.Drawing.Point(667, 8);
-            this.btnOpenFile.Name = "btnOpenFile";
-            this.btnOpenFile.Size = new System.Drawing.Size(80, 23);
-            this.btnOpenFile.TabIndex = 4;
-            this.btnOpenFile.Text = "&Open File...";
-            this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
+            btnOpenFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnOpenFile.Location = new Point(667, 8);
+            btnOpenFile.Name = "btnOpenFile";
+            btnOpenFile.Size = new Size(80, 23);
+            btnOpenFile.TabIndex = 4;
+            btnOpenFile.Text = "&Open File...";
+            btnOpenFile.Click += btnOpenFile_Click;
             // 
             // _MainMenu
             // 
-            this._MainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem1,
-            this.menuItem10,
-            this.mnuHelp});
+            _MainMenu.MenuItems.AddRange(new[]
+            {
+                menuItem1,
+                menuItem10,
+                mnuHelp
+            });
             // 
             // menuItem1
             // 
-            this.menuItem1.Index = 0;
-            this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnuOpen,
-            this.mnuLoad,
-            this.menuItem4,
-            this.mnuNotepad,
-            this.menuItem6,
-            this.mnuGenCode,
-            this.menuItem8,
-            this.mnuExit});
-            this.menuItem1.Text = "&File";
+            menuItem1.Index = 0;
+            menuItem1.MenuItems.AddRange(new[]
+            {
+                mnuOpen,
+                mnuLoad,
+                menuItem4,
+                mnuNotepad,
+                menuItem6,
+                mnuGenCode,
+                menuItem8,
+                mnuExit
+            });
+            menuItem1.Text = "&File";
             // 
             // mnuOpen
             // 
-            this.mnuOpen.Index = 0;
-            this.mnuOpen.Text = "&Open";
-            this.mnuOpen.Click += new System.EventHandler(this.btnOpenFile_Click);
+            mnuOpen.Index = 0;
+            mnuOpen.Text = "&Open";
+            mnuOpen.Click += btnOpenFile_Click;
             // 
             // mnuLoad
             // 
-            this.mnuLoad.Index = 1;
-            this.mnuLoad.Text = "&Load";
-            this.mnuLoad.Click += new System.EventHandler(this.btnLoadXmlFile_Click);
+            mnuLoad.Index = 1;
+            mnuLoad.Text = "&Load";
+            mnuLoad.Click += btnLoadXmlFile_Click;
             // 
             // menuItem4
             // 
-            this.menuItem4.Index = 2;
-            this.menuItem4.Text = "-";
+            menuItem4.Index = 2;
+            menuItem4.Text = "-";
             // 
             // mnuNotepad
             // 
-            this.mnuNotepad.Index = 3;
-            this.mnuNotepad.Text = "&Notepad";
-            this.mnuNotepad.Click += new System.EventHandler(this.btnNotepad_Click);
+            mnuNotepad.Index = 3;
+            mnuNotepad.Text = "&Notepad";
+            mnuNotepad.Click += btnNotepad_Click;
             // 
             // menuItem6
             // 
-            this.menuItem6.Index = 4;
-            this.menuItem6.Text = "-";
+            menuItem6.Index = 4;
+            menuItem6.Text = "-";
             // 
             // mnuGenCode
             // 
-            this.mnuGenCode.Index = 5;
-            this.mnuGenCode.Text = "&Generate Code";
-            this.mnuGenCode.Click += new System.EventHandler(this.btnCSCode_Click);
+            mnuGenCode.Index = 5;
+            mnuGenCode.Text = "&Generate Code";
+            mnuGenCode.Click += btnCSCode_Click;
             // 
             // menuItem8
             // 
-            this.menuItem8.Index = 6;
-            this.menuItem8.Text = "-";
+            menuItem8.Index = 6;
+            menuItem8.Text = "-";
             // 
             // mnuExit
             // 
-            this.mnuExit.Index = 7;
-            this.mnuExit.Text = "E&xit";
-            this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
+            mnuExit.Index = 7;
+            mnuExit.Text = "E&xit";
+            mnuExit.Click += mnuExit_Click;
             // 
             // menuItem10
             // 
-            this.menuItem10.Index = 1;
-            this.menuItem10.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnuVerbose,
-            this.mnuAbbreviate});
-            this.menuItem10.Text = "&Options";
+            menuItem10.Index = 1;
+            menuItem10.MenuItems.AddRange(new[]
+            {
+                mnuVerbose,
+                mnuAbbreviate
+            });
+            menuItem10.Text = "&Options";
             // 
             // mnuVerbose
             // 
-            this.mnuVerbose.Index = 0;
-            this.mnuVerbose.Text = "Verbose";
-            this.mnuVerbose.Click += new System.EventHandler(this.mnuDisplayform_Click);
+            mnuVerbose.Index = 0;
+            mnuVerbose.Text = "Verbose";
+            mnuVerbose.Click += mnuDisplayform_Click;
             // 
             // mnuAbbreviate
             // 
-            this.mnuAbbreviate.Index = 1;
-            this.mnuAbbreviate.Text = "Abbreviate";
-            this.mnuAbbreviate.Click += new System.EventHandler(this.mnuDisplayform_Click);
+            mnuAbbreviate.Index = 1;
+            mnuAbbreviate.Text = "Abbreviate";
+            mnuAbbreviate.Click += mnuDisplayform_Click;
             // 
             // mnuHelp
             // 
-            this.mnuHelp.Index = 2;
-            this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnuShowHelp});
-            this.mnuHelp.Text = "&Help";
+            mnuHelp.Index = 2;
+            mnuHelp.MenuItems.AddRange(new[]
+            {
+                mnuShowHelp
+            });
+            mnuHelp.Text = "&Help";
             // 
             // mnuShowHelp
             // 
-            this.mnuShowHelp.Index = 0;
-            this.mnuShowHelp.Text = "&Show";
-            this.mnuShowHelp.Click += new System.EventHandler(this.btnShowHelp_Click);
+            mnuShowHelp.Index = 0;
+            mnuShowHelp.Text = "&Show";
+            mnuShowHelp.Click += btnShowHelp_Click;
             // 
             // MainForm
             // 
-            this.AcceptButton = this.btnLoadXmlFile;
-            this.AllowDrop = true;
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-            this.ClientSize = new System.Drawing.Size(755, 426);
-            this.Controls.Add(this.btnOpenFile);
-            this.Controls.Add(this.btnNotepad);
-            this.Controls.Add(this.btnCSCode);
-            this.Controls.Add(this.btnShowHelp);
-            this.Controls.Add(this.btnShowNamespaces);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.btnSelXPath);
-            this.Controls.Add(this.statusBar);
-            this.Controls.Add(this._treeResult);
-            this.Controls.Add(this.btnExecuteQuery);
-            this.Controls.Add(this.txtQuery);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnLoadXmlFile);
-            this.Controls.Add(this.txtXmlFileName);
-            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Menu = this._MainMenu;
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Visual XPath";
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AcceptButton = btnLoadXmlFile;
+            AllowDrop = true;
+            AutoScaleBaseSize = new Size(5, 14);
+            ClientSize = new Size(755, 426);
+            Controls.Add(btnOpenFile);
+            Controls.Add(btnNotepad);
+            Controls.Add(btnCSCode);
+            Controls.Add(btnShowHelp);
+            Controls.Add(btnShowNamespaces);
+            Controls.Add(checkBox1);
+            Controls.Add(btnSelXPath);
+            Controls.Add(statusBar);
+            Controls.Add(_treeResult);
+            Controls.Add(btnExecuteQuery);
+            Controls.Add(txtQuery);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(btnLoadXmlFile);
+            Controls.Add(txtXmlFileName);
+            Font = new Font("Tahoma", 8.25F);
+            Icon = ((Icon) (resources.GetObject("$this.Icon")));
+            Menu = _MainMenu;
+            Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Visual XPath";
+            Load += MainForm_Load;
+            DragDrop += MainForm_DragDrop;
+            DragEnter += MainForm_DragEnter;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private bool LoadXmlAndVerify(string strXml)
         {
-            XmlDocument document = new XmlDocument();
+            var document = new XmlDocument();
             try
             {
                 document.LoadXml(strXml);
@@ -789,22 +807,22 @@
 
         private void LoadXmlFile()
         {
-            PerformanceTimer timer = new PerformanceTimer();
+            var timer = new PerformanceTimer();
             timer.Start();
-            this._xmlDoc.Load(this._XmlFileName);
+            _xmlDoc.Load(_XmlFileName);
             timer.Stop();
-            this.statusBar.Text = "Xml Document Load Time: " + timer.ElapsedTime.ToString() + " ms";
-            this.btnExecuteQuery.Enabled = true;
-            this.FillXmlDocument(this._xmlDoc);
+            statusBar.Text = "Xml Document Load Time: " + timer.ElapsedTime + " ms";
+            btnExecuteQuery.Enabled = true;
+            FillXmlDocument(_xmlDoc);
         }
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] data = (string[])(e.Data.GetData(DataFormats.FileDrop));
-                this._XmlFileName = this.txtXmlFileName.Text = data[0];
-                this.LoadXmlFile();
+                var data = (string[]) (e.Data.GetData(DataFormats.FileDrop));
+                _XmlFileName = txtXmlFileName.Text = data[0];
+                LoadXmlFile();
             }
         }
 
@@ -822,27 +840,27 @@
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (!this._XmlFileName.Equals(""))
+            if (!_XmlFileName.Equals(""))
             {
-                this.txtXmlFileName.Text = this._XmlFileName;
-                this.LoadXmlFile();
+                txtXmlFileName.Text = _XmlFileName;
+                LoadXmlFile();
             }
         }
 
         private string MatchRegex(string matchStr)
         {
-            Regex regex = new Regex(@"(<|</)?([\w:]+)(\s|>)?");
-            string input = matchStr;
-            Group group = regex.Match(input).Groups[2];
+            var regex = new Regex(@"(<|</)?([\w:]+)(\s|>)?");
+            var input = matchStr;
+            var group = regex.Match(input).Groups[2];
             return group.Value;
         }
 
         private void mnuDisplayform_Click(object sender, EventArgs e)
         {
-            this.mnuAbbreviate.Checked = !this.mnuAbbreviate.Checked;
-            this.mnuVerbose.Checked = !this.mnuVerbose.Checked;
-            DisplayForm.isVerbose = this.isVerbose = !this.isVerbose;
-            this.ClickAction();
+            mnuAbbreviate.Checked = !mnuAbbreviate.Checked;
+            mnuVerbose.Checked = !mnuVerbose.Checked;
+            DisplayForm.isVerbose = isVerbose = !isVerbose;
+            ClickAction();
         }
 
         private void mnuExit_Click(object sender, EventArgs e)
@@ -852,19 +870,19 @@
 
         private void mnuSelectAttributeValue_Click(object sender, EventArgs e)
         {
-            string text = ((MenuItem)sender).Text;
-            this.txtQuery.Text = DisplayForm.GetAllElementsName(this._xPathExp) + "/@" + text;
+            var text = ((MenuItem) sender).Text;
+            txtQuery.Text = DisplayForm.GetAllElementsName(_xPathExp) + "/@" + text;
         }
 
         private void mnuSelectElements_Click(object sender, EventArgs e)
         {
-            this.txtQuery.Text = ((MenuItem)sender).Text;
+            txtQuery.Text = ((MenuItem) sender).Text;
         }
 
         private void OpenFile()
         {
-            this.btnNotepad.Enabled = !this.txtXmlFileName.Text.StartsWith("http://");
-            this.OpenXmlFile(!this.txtXmlFileName.Text.EndsWith(".xml"));
+            btnNotepad.Enabled = !txtXmlFileName.Text.StartsWith("http://");
+            OpenXmlFile(!txtXmlFileName.Text.EndsWith(".xml"));
         }
 
         private void OpenNotePad(string filename)
@@ -874,20 +892,20 @@
 
         private void OpenXmlFile(bool openDialog)
         {
-            string text = this.txtXmlFileName.Text;
+            var text = txtXmlFileName.Text;
             if (openDialog)
             {
-                this._OpenXmlFileDialog.InitialDirectory = this.txtXmlFileName.Text;
-                if (this._OpenXmlFileDialog.ShowDialog() == DialogResult.OK)
+                _OpenXmlFileDialog.InitialDirectory = txtXmlFileName.Text;
+                if (_OpenXmlFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    this._XmlFileName = this.txtXmlFileName.Text = this._OpenXmlFileDialog.FileName;
+                    _XmlFileName = txtXmlFileName.Text = _OpenXmlFileDialog.FileName;
                     try
                     {
-                        this.LoadXmlFile();
+                        LoadXmlFile();
                     }
                     catch (XmlException exception)
                     {
-                        this._XmlFileName = this.txtXmlFileName.Text = text;
+                        _XmlFileName = txtXmlFileName.Text = text;
                         MessageBox.Show("Error loading Xml File\n" + exception.Message);
                     }
                 }
@@ -896,11 +914,11 @@
 
         private void treeResult_MouseDown(object sender, MouseEventArgs e)
         {
-            this._selectedNode = this._treeResult.GetNodeAt(e.X, e.Y);
-            if ((this._selectedNode != null) && (this._selectedNode.Parent != null))
+            _selectedNode = _treeResult.GetNodeAt(e.X, e.Y);
+            if ((_selectedNode != null) && (_selectedNode.Parent != null))
             {
-                this._treeResult.SelectedNode = this._selectedNode;
-                this.ClickAction();
+                _treeResult.SelectedNode = _selectedNode;
+                ClickAction();
             }
         }
 
@@ -918,49 +936,49 @@
                     tNode.Nodes.Add(node);
                     if (xNode.Attributes.Count > 0)
                     {
-                        for (int i = 0; i < xNode.Attributes.Count; i++)
+                        for (var i = 0; i < xNode.Attributes.Count; i++)
                         {
                             if (xNode.Attributes[i].Name.StartsWith("xmlns"))
                             {
-                                this._hasNS = true;
-                                string[] strArray = xNode.Attributes[i].Name.Split(new char[] { '=' });
+                                _hasNS = true;
+                                var strArray = xNode.Attributes[i].Name.Split('=');
                                 if (!strArray[0].Equals("xmlns"))
                                 {
-                                    string[] strArray2 = strArray[0].Split(new char[] { ':' });
-                                    this._nsPrefix = strArray2[1];
-                                    this._nsValue = xNode.Attributes[i].Value;
+                                    var strArray2 = strArray[0].Split(':');
+                                    _nsPrefix = strArray2[1];
+                                    _nsValue = xNode.Attributes[i].Value;
                                 }
                                 else
                                 {
-                                    this._nsDefPrefix = this._nsPrefix = "def";
-                                    this._hasDefNS = true;
-                                    this._nsValue = xNode.Attributes[i].Value;
+                                    _nsDefPrefix = _nsPrefix = "def";
+                                    _hasDefNS = true;
+                                    _nsValue = xNode.Attributes[i].Value;
                                 }
-                                this._nsMgr.AddNamespace(this._nsPrefix, this._nsValue);
-                                string str2 = this._strNamespaces;
-                                this._strNamespaces = str2 + "Prefix = " + this._nsPrefix + " : Uri = " + this._nsValue + "\n";
+                                _nsMgr.AddNamespace(_nsPrefix, _nsValue);
+                                var str2 = _strNamespaces;
+                                _strNamespaces = str2 + "Prefix = " + _nsPrefix + " : Uri = " + _nsValue + "\n";
                             }
-                            string text = node.Text;
+                            var text = node.Text;
                             node.Text = text + " " + xNode.Attributes[i].Name + "=\"" + xNode.Attributes[i].Value + "\"";
                         }
                     }
                     break;
 
                 case XmlNodeType.Attribute:
-                    {
-                        TreeNode node4 = new TreeNode(xNode.Value);
-                        tNode.Nodes.Add(node4);
-                        return;
-                    }
+                {
+                    var node4 = new TreeNode(xNode.Value);
+                    tNode.Nodes.Add(node4);
+                    return;
+                }
                 case XmlNodeType.Text:
-                    {
-                        TreeNode node3 = new TreeNode(xNode.Value);
-                        node3.ForeColor = Color.Red;
-                        font = new Font("Courier New", 9F);
-                        node3.NodeFont = font;
-                        tNode.Nodes.Add(node3);
-                        return;
-                    }
+                {
+                    var node3 = new TreeNode(xNode.Value);
+                    node3.ForeColor = Color.Red;
+                    font = new Font("Courier New", 9F);
+                    node3.NodeFont = font;
+                    tNode.Nodes.Add(node3);
+                    return;
+                }
                 case XmlNodeType.CDATA:
                 case XmlNodeType.EntityReference:
                 case XmlNodeType.Entity:
@@ -969,7 +987,7 @@
                     return;
 
                 case XmlNodeType.Document:
-                    this.LoadXmlFile();
+                    LoadXmlFile();
                     return;
 
                 default:
@@ -978,14 +996,13 @@
             node.Text = node.Text + ">";
             if (xNode.HasChildNodes)
             {
-                for (int j = 0; j < xNode.ChildNodes.Count; j++)
+                for (var j = 0; j < xNode.ChildNodes.Count; j++)
                 {
-                    this.Xml2Tree(node, xNode.ChildNodes[j]);
+                    Xml2Tree(node, xNode.ChildNodes[j]);
                 }
             }
-            TreeNode node2 = new TreeNode("</" + xNode.Name + ">");
+            var node2 = new TreeNode("</" + xNode.Name + ">");
             tNode.Nodes.Add(node2);
         }
     }
 }
-
