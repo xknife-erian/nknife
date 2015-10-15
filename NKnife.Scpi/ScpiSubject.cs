@@ -12,7 +12,7 @@ namespace ScpiKnife
         public ScpiSubject()
         {
             Collect = new ScpiGroup {Category = ScpiCommandGroupCategory.Collect};
-            Preload = new ScpiGroup {Category = ScpiCommandGroupCategory.Initializtion};
+            Initializtion = new ScpiGroup {Category = ScpiCommandGroupCategory.Initializtion};
         }
 
         /// <summary>
@@ -20,9 +20,9 @@ namespace ScpiKnife
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// 前导指令集合
+        /// 初始化指令集合
         /// </summary>
-        public ScpiGroup Preload { get; set; }
+        public ScpiGroup Initializtion { get; set; }
         /// <summary>
         /// 采集指令集合
         /// </summary>
@@ -44,7 +44,7 @@ namespace ScpiKnife
             element.SetAttribute("description", Description);
 
             var groupElement = document.CreateElement("group");
-            Preload.Build(ref groupElement);
+            Initializtion.Build(ref groupElement);
             element.AppendChild(groupElement);
 
             groupElement = document.CreateElement("group");
@@ -79,7 +79,7 @@ namespace ScpiKnife
                         switch (way)
                         {
                             case "init":
-                                scpiSubject.Preload = ScpiGroup.Prase(groupElement);
+                                scpiSubject.Initializtion = ScpiGroup.Prase(groupElement);
                                 break;
                             case "collect":
                                 scpiSubject.Collect = ScpiGroup.Prase(groupElement);

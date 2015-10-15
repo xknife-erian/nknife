@@ -7,9 +7,29 @@ namespace ScpiKnife
     /// <summary>
     ///     一组指令，将按顺序执行
     /// </summary>
-    public class ScpiGroup : LinkedList<ScpiCommand>
+    public class ScpiGroup : List<ScpiCommand>
     {
         public ScpiCommandGroupCategory Category { get; set; }
+
+        public bool UpItem(int index)
+        {
+            if (index <= 0 || index > Count - 1)
+                return false;
+            var item = this[index];
+            RemoveAt(index);
+            Insert(index - 1, item);
+            return true;
+        }
+
+        public bool DownItem(int index)
+        {
+            if (index < 0 || index >= Count - 1)
+                return false;
+            var item = this[index];
+            RemoveAt(index);
+            Insert(index + 1, item);
+            return true;
+        }
 
         public static ScpiGroup Prase(XmlElement groupElement)
         {
@@ -33,7 +53,7 @@ namespace ScpiKnife
                 var scpiCommand = ScpiCommand.Parse(scpiElement);
                 if (scpiCommand == null)
                     continue;
-                group.AddLast(scpiCommand);
+                group.Add(scpiCommand);
             }
             return group;
         }
@@ -53,7 +73,7 @@ namespace ScpiKnife
                     element.SetAttribute("way", "none");
                     break;
             }
-            foreach (ScpiCommand scpiCommand in this)
+            foreach (var scpiCommand in this)
             {
                 Debug.Assert(element.OwnerDocument != null, "element.OwnerDocument != null");
                 var commandElement = element.OwnerDocument.CreateElement("scpi");
