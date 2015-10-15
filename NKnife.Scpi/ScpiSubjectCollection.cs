@@ -13,6 +13,11 @@ namespace ScpiKnife
     {
         protected ScpisXmlFile _ScpiFile;
 
+        public ScpiSubjectCollection()
+        {
+            Version = new Version("1.0");
+        }
+
         public Version Version { get; set; }
 
         /// <summary>
@@ -86,7 +91,8 @@ namespace ScpiKnife
                 Version = Version.Parse(_ScpiFile.DocumentElement.GetAttribute("version")); //Scpi文件格式版本
 
             var meterinfoElement = _ScpiFile.DocumentElement.SelectSingleNode("//information") as XmlElement;
-            Debug.Assert(meterinfoElement != null, "meterinfoElement != null");
+            if (meterinfoElement == null)
+                return false;
             Brand = meterinfoElement.GetAttribute("brand");
             Name = meterinfoElement.GetAttribute("name");
             Description = meterinfoElement.GetAttribute("description");
