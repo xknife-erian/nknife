@@ -18,7 +18,7 @@ namespace ScpiKnife
         /// <summary>
         /// 工作指令主题的描述
         /// </summary>
-        public string Description { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// 初始化指令集合
         /// </summary>
@@ -41,7 +41,7 @@ namespace ScpiKnife
                 return;
 
             element.RemoveAll();
-            element.SetAttribute("description", Description);
+            element.SetAttribute("description", Name);
 
             var groupElement = document.CreateElement("group");
             Initializtion.Build(ref groupElement);
@@ -61,7 +61,7 @@ namespace ScpiKnife
                     continue;
                 var scpiSubject = new ScpiSubject();
                 var ele = subjectNode as XmlElement;
-                scpiSubject.Description = ele.GetAttribute("description");
+                scpiSubject.Name = ele.GetAttribute("description");
 
                 var groupNodes = ele.SelectNodes("group");
                 if (groupNodes == null)
