@@ -43,6 +43,11 @@ namespace ScpiKnife
             _ScpiFile = new ScpisXmlFile(fileFullName); //如果文件不存在，会自动创建
         }
 
+        public ScpisXmlFile GetXmlFile()
+        {
+            return _ScpiFile;
+        }
+
         public bool Save()
         {
             Debug.Assert(_ScpiFile.DocumentElement != null, "_ScpiFile.DocumentElement != null");
