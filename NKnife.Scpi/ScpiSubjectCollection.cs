@@ -85,7 +85,7 @@ namespace ScpiKnife
             return true;
         }
 
-        public bool TryParse(IScpiFileVersionProcessor scpiFileVersionProcessor)
+        public bool TryParse(IScpiFileVersionProcessor scpiFileVersionProcessor, bool isCompleteParse = true)
         {
             if (scpiFileVersionProcessor != null)
                 _ScpiFile = scpiFileVersionProcessor.Update(_ScpiFile, true);
@@ -102,17 +102,20 @@ namespace ScpiKnife
             Name = meterinfoElement.GetAttribute("name");
             Description = meterinfoElement.GetAttribute("description");
 
-            //命令集部份-----------------
-            var scpigroups = _ScpiFile.Groups();
-            if (scpigroups == null)
+            if (isCompleteParse)//当有些时候只需要解析文件中仪器的基本信息时
             {
-                return false;
-            }
-            var array = ScpiSubject.Parse(scpigroups);
-            foreach (var scpiSubject in array)
-            {
-                scpiSubject.OwnerCollection = this;
-                Add(scpiSubject);
+                //命令集部份-----------------
+                var scpigroups = _ScpiFile.Groups();
+                if (scpigroups == null)
+                {
+                    return false;
+                }
+                var array = ScpiSubject.Parse(scpigroups);
+                foreach (var scpiSubject in array)
+                {
+                    scpiSubject.OwnerCollection = this;
+                    Add(scpiSubject);
+                }
             }
 
             return true;
