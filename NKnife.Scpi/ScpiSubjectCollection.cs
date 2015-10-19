@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 
@@ -102,7 +103,7 @@ namespace ScpiKnife
             Name = meterinfoElement.GetAttribute("name");
             Description = meterinfoElement.GetAttribute("description");
 
-            if (isCompleteParse)//当有些时候只需要解析文件中仪器的基本信息时
+            if (isCompleteParse) //当有些时候只需要解析文件中仪器的基本信息时
             {
                 //命令集部份-----------------
                 var scpigroups = _ScpiFile.Groups();
@@ -117,6 +118,12 @@ namespace ScpiKnife
                     Add(scpiSubject);
                 }
             }
+
+            Sort((x, y) =>
+            {
+                CultureInfo ci = CultureInfo.CurrentUICulture;
+                return ci.CompareInfo.Compare(x.Name, y.Name);
+            });
 
             return true;
         }

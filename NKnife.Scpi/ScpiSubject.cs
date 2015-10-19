@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Xml;
 
 namespace ScpiKnife
@@ -91,5 +92,6 @@ namespace ScpiKnife
             }
             return subjects;
         }
+
     }
 }
