@@ -289,6 +289,10 @@ namespace NKnife.Tunnel.Base
                         {
                             handler.Recevied(id, protocol);
                         }
+                        else
+                        {
+                            _logger.Trace(string.Format("协议未处理：{0}", protocol.Command));
+                        }
                     }
                 }
             }

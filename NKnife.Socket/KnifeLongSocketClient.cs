@@ -81,9 +81,9 @@ namespace SocketKnife
                 }
                 catch (Exception e)
                 {
-                    _logger.Warn("socket客户端关闭时有异常", e);
+                    _logger.Warn("Socket客户端关闭时有异常", e);
                 }
-                _logger.Debug("socket客户端关闭");
+                _logger.Debug("Socket客户端关闭");
             }
         }
 
@@ -306,7 +306,7 @@ namespace SocketKnife
         {
             try
             {
-                Close();
+                //Close();
 
                 if (_SocketSession.AcceptSocket == null || !_SocketSession.AcceptSocket.Connected)
                 {
@@ -352,63 +352,57 @@ namespace SocketKnife
 
         private void ReceiveDatagram()
         {
-            //lock (_lockObj)
+            try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
             {
-                try // 一个客户端连续做连接 或连接后立即断开，容易在该处产生错误，系统不认为是错误
-                {
-                    // 开始接受来自该客户端的数据
-                    _SocketSession.AcceptSocket.BeginReceive(_SocketSession.ReceiveBuffer, 0, _SocketSession.ReceiveBufferSize, SocketFlags.None, EndReceiveDatagram, this);
-                }
-                catch (Exception err) // 读 Socket 异常，准备关闭该会话
-                {
-                    _SocketSession.DisconnectType = DisconnectType.Exception;
-                    _SocketSession.State = SessionState.Inactive;
+                // 开始接受来自该客户端的数据
+                _SocketSession.AcceptSocket.BeginReceive(_SocketSession.ReceiveBuffer, 0, _SocketSession.ReceiveBufferSize, SocketFlags.None, EndReceiveDatagram, this);
+            }
+            catch (Exception err) // 读 Socket 异常，准备关闭该会话
+            {
+                _SocketSession.DisconnectType = DisconnectType.Exception;
+                _SocketSession.State = SessionState.Inactive;
 
-                    OnSessionReceiveException();
-                }
+                OnSessionReceiveException();
             }
         }
 
         private void EndReceiveDatagram(IAsyncResult iar)
         {
-            //lock (_lockObj)
+            if (!_SocketSession.AcceptSocket.Connected)
             {
-                if (!_SocketSession.AcceptSocket.Connected)
+                OnSessionReceiveException();
+                return;
+            }
+
+            try
+            {
+                // Shutdown 时将调用 ReceiveData，此时也可能收到 0 长数据包
+                var readBytesLength = _SocketSession.AcceptSocket.EndReceive(iar);
+                iar.AsyncWaitHandle.Close();
+
+                if (readBytesLength == 0)
                 {
+                    _SocketSession.DisconnectType = DisconnectType.Normal;
+                    _SocketSession.State = SessionState.Inactive;
+                }
+                else // 正常数据包
+                {
+                    _SocketSession.LastSessionTime = DateTime.Now;
+                    // 合并报文，按报文头、尾字符标志抽取报文，将包交给数据处理器
+                    var data = new byte[readBytesLength];
+                    Array.Copy(_SocketSession.ReceiveBuffer, 0, data, 0, readBytesLength);
+                    PrcessReceiveData(data);
+                    ReceiveDatagram();
+                }
+            }
+            catch (Exception err) // 读 socket 异常，关闭该会话，系统不认为是错误（这种错误可能太多）
+            {
+                if (_SocketSession.State == SessionState.Active)
+                {
+                    _SocketSession.DisconnectType = DisconnectType.Exception;
+                    _SocketSession.State = SessionState.Inactive;
+
                     OnSessionReceiveException();
-                    return;
-                }
-
-                try
-                {
-                    // Shutdown 时将调用 ReceiveData，此时也可能收到 0 长数据包
-                    var readBytesLength = _SocketSession.AcceptSocket.EndReceive(iar);
-                    iar.AsyncWaitHandle.Close();
-
-                    if (readBytesLength == 0)
-                    {
-                        _SocketSession.DisconnectType = DisconnectType.Normal;
-                        _SocketSession.State = SessionState.Inactive;
-                    }
-                    else // 正常数据包
-                    {
-                        _SocketSession.LastSessionTime = DateTime.Now;
-                        // 合并报文，按报文头、尾字符标志抽取报文，将包交给数据处理器
-                        var data = new byte[readBytesLength];
-                        Array.Copy(_SocketSession.ReceiveBuffer, 0, data, 0, readBytesLength);
-                        PrcessReceiveData(data);
-                        ReceiveDatagram();
-                    }
-                }
-                catch (Exception err) // 读 socket 异常，关闭该会话，系统不认为是错误（这种错误可能太多）
-                {
-                    if (_SocketSession.State == SessionState.Active)
-                    {
-                        _SocketSession.DisconnectType = DisconnectType.Exception;
-                        _SocketSession.State = SessionState.Inactive;
-
-                        OnSessionReceiveException();
-                    }
                 }
             }
         }
