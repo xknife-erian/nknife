@@ -432,9 +432,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\WinForm\IPAddressControl\FieldChangedEventArgs.cs" />
-    <Compile Include="GUI\WinForm\IPAddressControl\FieldControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="GUI\WinForm\IPAddressControl\FieldControl.cs" />
     <Compile Include="GUI\WinForm\IPAddressControl\IPAddressControl.cs">
       <SubType>Component</SubType>
     </Compile>

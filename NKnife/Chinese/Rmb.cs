@@ -310,7 +310,7 @@ namespace NKnife.Chinese
                 if (i == index - 1 && tmpStringNum == "0")
                 {
                     //最后一位（分）为0时，加上“整” 
-                    result = result + '整';
+                    result = result + "整";
                 }
             }
             if (num == 0)
