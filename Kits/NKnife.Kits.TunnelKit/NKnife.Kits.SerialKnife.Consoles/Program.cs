@@ -21,8 +21,8 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             _logger.Info("DI初始化结束....");
 
-            var server1 = new SerialClient(4);
-            server1.Start();
+            var server = new SerialClient(4);
+            server.Start();
 
             Thread.Sleep(100);
 
@@ -37,7 +37,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
                     if (j == 216)
                         continue;
                     var command = GetA0(UtilityConvert.ConvertTo<byte>(j));
-                    server1.Send(command);
+                    server.Send(command);
                 }
             }
             sw.Stop();

@@ -19,7 +19,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         private const string FAMILY_NAME = "care-usb";
         private static readonly ILog _logger = LogManager.GetLogger<SerialClient>();
         private readonly ISerialConnector _DataConnector;
-        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
+        private readonly ITunnel _Tunnel = DI.Get<ITunnel>("Server");
 
         public SerialClient(int port)
         {
