@@ -1,32 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Common.Logging;
 using NKnife.IoC;
-using NKnife.Kits.SocketKnife.StressTest.TestCase;
 using NKnife.Kits.SocketKnife.StressTest.View;
-using NKnife.NLog3.Controls;
-using NKnife.Utility;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.SocketKnife.StressTest
 {
     public partial class MainForm : Form
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<MainForm>();
+        private readonly DockPanel _DockPanel = new DockPanel();
 
         private readonly string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
-        private readonly DockPanel _DockPanel = new DockPanel();
         private readonly DockContent _LogView = DI.Get<LogView>();
-        private readonly DockContent _ServerView = DI.Get<ServerView>();
         private readonly DockContent _MockClientView = DI.Get<MockClientView>();
         private readonly DockContent _ProtocolView = DI.Get<ProtocolView>();
+        private readonly DockContent _ServerView = DI.Get<ServerView>();
+
         public MainForm()
         {
             InitializeComponent();
@@ -37,6 +29,7 @@ namespace NKnife.Kits.SocketKnife.StressTest
         {
             InitializeDockPanel();
         }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             try
@@ -74,13 +67,13 @@ namespace NKnife.Kits.SocketKnife.StressTest
 
         private IDockContent GetContentForm(string xml)
         {
-            if (xml == typeof(LogView).ToString())
+            if (xml == typeof (LogView).ToString())
                 return _LogView;
-            if (xml == typeof(ServerView).ToString())
+            if (xml == typeof (ServerView).ToString())
                 return _ServerView;
-            if (xml == typeof(MockClientView).ToString())
+            if (xml == typeof (MockClientView).ToString())
                 return _MockClientView;
-            if (xml == typeof(ProtocolView).ToString())
+            if (xml == typeof (ProtocolView).ToString())
                 return _ProtocolView;
             return null;
         }
@@ -98,20 +91,14 @@ namespace NKnife.Kits.SocketKnife.StressTest
         }
 
 
-
-
-
-
         private void ExitToolStripMenuItemClick(object sender, EventArgs e)
         {
             Close();
         }
 
 
-
         private void AboutToolStripMenuItemClick(object sender, EventArgs e)
         {
-
         }
 
         private void ServiceSettingToolStripMenuItemClick(object sender, EventArgs e)
@@ -122,13 +109,13 @@ namespace NKnife.Kits.SocketKnife.StressTest
 
         private void LogViewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if(_LogView !=null)
+            if (_LogView != null)
                 _LogView.Show();
         }
 
         private void ServerViewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if(_ServerView !=null)
+            if (_ServerView != null)
                 _ServerView.Show();
         }
 
@@ -140,14 +127,8 @@ namespace NKnife.Kits.SocketKnife.StressTest
 
         private void ProtocolViewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if(_ProtocolView !=null)
+            if (_ProtocolView != null)
                 _ProtocolView.Show();
         }
-
-
-
-
-
-
     }
 }

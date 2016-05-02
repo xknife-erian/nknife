@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NKnife.NLog3.Controls;
+using NKnife.NLog.Controls;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.SocketKnife.StressTest.View

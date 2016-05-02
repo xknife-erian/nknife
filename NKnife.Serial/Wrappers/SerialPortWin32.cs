@@ -223,7 +223,6 @@ namespace SerialKnife.Wrappers
                 int bytesWritten = 0;
 
                 //ovlCommPort.hEvent = CreateEvent(IntPtr.Zero, false, true, "WriteEvent");
-                //WriteFile(hComm, WriteBytes, intSize, ref BytesWritten, ref ovlCommPort);
                 WriteFile(_HComm, writeBytes, intSize, ref bytesWritten, ref ovlCommPort);
                 //if (!bWriteStat)
                 //{

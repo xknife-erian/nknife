@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using NKnife.IoC;
-using NKnife.NLog3.Controls.WPF;
 
 namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {

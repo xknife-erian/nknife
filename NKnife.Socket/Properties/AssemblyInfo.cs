@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("xknife.net")]
 [assembly: AssemblyProduct("NKinfe.Socket")]
-[assembly: AssemblyCopyright("Copyright © xknife.net 2014")]
+[assembly: AssemblyCopyright("Copyright © xknife.net 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,5 +20,5 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("NKnife.Socket.UnitTest")]
 
-[assembly: AssemblyVersion("15.1.1.0410")]
-[assembly: AssemblyFileVersion("15.1.1.0410")]
+[assembly: AssemblyVersion("16.0.0.430")]
+[assembly: AssemblyFileVersion("16.0.0.430")]

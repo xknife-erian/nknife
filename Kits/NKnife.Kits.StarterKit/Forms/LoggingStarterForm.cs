@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.NLog3.Controls;
+using NKnife.NLog.Controls;
 using NKnife.Utility;
 
 namespace NKnife.Kits.StarterKit.Forms

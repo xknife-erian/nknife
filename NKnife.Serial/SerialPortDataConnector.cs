@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Logging;
 using NKnife.IoC;
+using NKnife.Tunnel;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;
 using SerialKnife.Common;
@@ -16,7 +17,7 @@ namespace SerialKnife
         public SerialPortDataConnector()
         {
             IsInitialized = false;
-            SerialType = SerialType.DotNet; //默认使用winapi实现
+            SerialType = SerialType.DotNet; 
         }
 
         public SerialType SerialType { get; set; }
@@ -36,7 +37,7 @@ namespace SerialKnife
         {
             var handler = SessionBuilt;
             if (handler != null)
-                handler(this, e);
+                handler.Invoke(this, e);
         }
 
         protected virtual void OnSessionBuilt()
@@ -51,7 +52,7 @@ namespace SerialKnife
         {
             var handler = SessionBroken;
             if (handler != null)
-                handler(this, e);
+                handler.Invoke(this, e);
         }
 
         protected virtual void OnSessionBroken()
@@ -66,7 +67,7 @@ namespace SerialKnife
         {
             var handler = DataReceived;
             if (handler != null)
-                handler(this, e);
+                handler.Invoke(this, e);
         }
 
         protected virtual void OnDataReceived(byte[] data)
@@ -83,7 +84,7 @@ namespace SerialKnife
         {
             var handler = DataSent;
             if (handler != null)
-                handler(this, e);
+                handler.Invoke(this, e);
         }
 
         protected virtual void OnDataSent(byte[] data)
@@ -115,16 +116,16 @@ namespace SerialKnife
             }
         }
 
-        public void SendAll(byte[] data)
+        void IDataConnector.SendAll(byte[] data)
         {
             if (_Serial == null)
                 return;
             byte[] received;
             _Serial.SendReceived(data, out received);
-            OnDataSent(data);//激发发放完成事件
+            OnDataSent(data); //激发发送完成事件
             if (received != null)
             {
-                OnDataReceived(received);//激发接收到数据的事件
+                OnDataReceived(received); //激发接收到数据的事件
             }
         }
 
@@ -191,6 +192,5 @@ namespace SerialKnife
         }
 
         #endregion
-
     }
 }

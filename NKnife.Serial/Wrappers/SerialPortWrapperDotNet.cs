@@ -149,7 +149,7 @@ namespace SerialKnife.Wrappers
                 _SerialPort.Write(cmd, 0, cmd.Length);
                 if (_Reset.WaitOne(_TimeOut))
                 {
-                    //收到返回
+                    //异步事件收到返回的数据
                     recv = new byte[_SyncBuffer.Length];
                     if (recv.Length > 0)
                         Buffer.BlockCopy(_SyncBuffer, 0, recv, 0, _SyncBuffer.Length);
@@ -193,7 +193,7 @@ namespace SerialKnife.Wrappers
             }
             catch (TimeoutException ex)
             {
-                Console.WriteLine("读取到时,非异常。{0}", ex.Message);
+                Console.WriteLine("串口读取异常：{0}", ex.Message);
             }
             catch (IOException ex)
             {

@@ -107,9 +107,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NKnife.NLog3\NKnife.NLog3.csproj">
-      <Project>{3D1D08D2-46B0-4C33-A214-A5A76A998102}</Project>
-      <Name>NKnife.NLog3</Name>
+    <ProjectReference Include="..\..\NKnife.NLog4\NKnife.NLog4.csproj">
+      <Project>{24af3e97-0817-4cbb-a471-15a9fa4004c3}</Project>
+      <Name>NKnife.NLog4</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
