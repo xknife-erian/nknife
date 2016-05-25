@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 using NLog;
 
 namespace NKnife.NLog.Controls
 {
-    /// <summary>日志显示面板控件，日志等级通过左上角的日志等级列表进行筛选
+    /// <summary>
+    ///     日志显示面板控件，日志等级通过左上角的日志等级列表进行筛选
     /// </summary>
     public sealed partial class LogPanel : UserControl
     {
         #region 单件实例
 
         /// <summary>
-        /// 获得一个本类型的单件实例.
+        ///     获得一个本类型的单件实例.
         /// </summary>
         /// <value>The instance.</value>
         public static LogPanel Instance
@@ -26,8 +29,9 @@ namespace NKnife.NLog.Controls
         #endregion
 
         #region 辅助方法
+
         /// <summary>
-        /// 初始化LogPanel到指定容器
+        ///     初始化LogPanel到指定容器
         /// </summary>
         /// <param name="container"></param>
         public static void AppendLogPanelToContainer(Panel container)
@@ -57,11 +61,12 @@ namespace NKnife.NLog.Controls
             logPanel.ToolStripVisible = true;
             container.Controls.Add(logPanel);
         }
+
         #endregion
 
         private LogPanel()
         {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Global.Culture);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Global.Culture);
             SetStyle
                 (
                     ControlStyles.DoubleBuffer |
@@ -87,7 +92,8 @@ namespace NKnife.NLog.Controls
             _FatalMenuItem.Checked = true;
         }
 
-        /// <summary>是否显示工具栏
+        /// <summary>
+        ///     是否显示工具栏
         /// </summary>
         public bool ToolStripVisible
         {
@@ -95,7 +101,8 @@ namespace NKnife.NLog.Controls
             set { _ToolStrip.Visible = value; }
         }
 
-        /// <summary>设置View中需隐藏的列
+        /// <summary>
+        ///     设置View中需隐藏的列
         /// </summary>
         public void SetColumnVisible(params ushort[] columnIndexs)
         {
@@ -106,7 +113,8 @@ namespace NKnife.NLog.Controls
             }
         }
 
-        /// <summary>日志View的列标头的样式
+        /// <summary>
+        ///     日志View的列标头的样式
         /// </summary>
         public ColumnHeaderStyle HeaderStyle
         {
@@ -127,7 +135,8 @@ namespace NKnife.NLog.Controls
             }
         }
 
-        /// <summary>设置Log显示的ListView中各列的宽度
+        /// <summary>
+        ///     设置Log显示的ListView中各列的宽度
         /// </summary>
         private void SetViewColumnSize()
         {
@@ -141,12 +150,13 @@ namespace NKnife.NLog.Controls
             }
         }
 
-        /// <summary>增加一条新的日志
+        /// <summary>
+        ///     增加一条新的日志
         /// </summary>
         /// <param name="logEvent">The log event.</param>
         internal void AddLog(LogEventInfo logEvent)
         {
-            Level level = GetTopLevel(logEvent.Level);
+            var level = GetTopLevel(logEvent.Level);
             if (_CurrLevel.HasFlag(level))
             {
                 _LogView.AddLog(logEvent);
@@ -178,7 +188,7 @@ namespace NKnife.NLog.Controls
             Info = 4,
             Warn = 8,
             Error = 16,
-            Fatal = 32,
+            Fatal = 32
         }
 
         private void LevelToolButtonClick(object sender, EventArgs e)

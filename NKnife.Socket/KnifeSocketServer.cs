@@ -31,8 +31,8 @@ namespace SocketKnife
         private int _Port;
         private int _SessionCount;
 
-        protected SocketSessionMap _SessionMap = new SocketSessionMap();
-        protected SocketServerConfig _Config = DI.Get<SocketServerConfig>();
+        private readonly SocketSessionMap _SessionMap = new SocketSessionMap();
+        private SocketServerConfig _Config = DI.Get<SocketServerConfig>();
 
         #region 构造
 
@@ -86,6 +86,12 @@ namespace SocketKnife
         public event EventHandler<SessionEventArgs> SessionBuilt;
         public event EventHandler<SessionEventArgs> SessionBroken;
         public event EventHandler<SessionEventArgs> DataReceived;
+        public event EventHandler<SessionEventArgs> DataSent;
+
+        protected virtual void OnDataSent(SessionEventArgs e)
+        {
+            DataSent?.Invoke(this, e);
+        }
 
         public SocketConfig Config
         {
@@ -696,6 +702,7 @@ namespace SocketKnife
         }
 
         #endregion
+
     }
 
     public enum DisconnectType

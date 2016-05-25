@@ -152,7 +152,8 @@ namespace SerialKnife.Wrappers
         public virtual void SetTimeOut(int timeout)
         {
             ReadTimeout = timeout;
-            if (_HComm < 0) return;
+            if (_HComm < 0)
+                return;
             var ctoCommPort = new COMMTIMEOUTS();
 
             // 设置通信超时时间

@@ -54,7 +54,7 @@ namespace NKnife.NLog.IoC
             //配置Common.Logging适配器
             var properties = new NameValueCollection();
             properties["configType"] = "FILE";
-            properties["configFile"] = "~/NLog.config";//string.Format("~/{0}", CONFIG_FILE_NAME);
+            properties["configFile"] = $"~/{CONFIG_FILE_NAME}";
             LogManager.Adapter = new NLogLoggerFactoryAdapter(properties);
 
             Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
