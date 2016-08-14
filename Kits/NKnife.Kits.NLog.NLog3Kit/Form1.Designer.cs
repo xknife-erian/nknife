@@ -1,4 +1,6 @@
-﻿namespace NKnife.Kits.NLog.NLog3Kit
+﻿using NKnife.NLog3.Controls;
+
+namespace NKnife.Kits.NLog.NLog3Kit
 {
     partial class Form1
     {
@@ -34,17 +36,6 @@
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // logPanel1
-            // 
-            this.logPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.logPanel1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
-            this.logPanel1.Location = new System.Drawing.Point(0, 0);
-            this.logPanel1.Name = "logPanel1";
-            this.logPanel1.Size = new System.Drawing.Size(635, 376);
-            this.logPanel1.TabIndex = 0;
-            this.logPanel1.ToolStripVisible = true;
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -62,14 +53,15 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(100, 22);
             this.toolStripButton1.Text = "日志显示测试";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 376);
+            this.ClientSize = new System.Drawing.Size(635, 407);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.logPanel1);
+            this.MinimumSize = new System.Drawing.Size(120, 149);
             this.Name = "Form1";
             this.Text = "NLog3Kit";
             this.toolStrip1.ResumeLayout(false);
@@ -81,7 +73,6 @@
 
         #endregion
 
-        private NLog3.Controls.LogPanel logPanel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
