@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using NKnife.IoC;
 
 namespace NKnife.Kits.NLog.NLog3Kit
 {
@@ -15,6 +16,7 @@ namespace NKnife.Kits.NLog.NLog3Kit
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            DI.Initialize();
             Application.Run(new Form1());
         }
     }
