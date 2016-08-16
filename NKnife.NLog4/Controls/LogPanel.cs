@@ -159,7 +159,10 @@ namespace NKnife.NLog.Controls
             var level = GetTopLevel(logEvent.Level);
             if (_CurrLevel.HasFlag(level))
             {
-                _LogView.AddLog(logEvent);
+                lock (_LogView)
+                {
+                    _LogView.AddLog(logEvent);
+                }
             }
         }
 
@@ -191,7 +194,31 @@ namespace NKnife.NLog.Controls
             Fatal = 32
         }
 
-        private void LevelToolButtonClick(object sender, EventArgs e)
+        public void SetDebugMode(bool isDebug)
+        {
+            if (isDebug)
+            {
+                _CurrLevel = Level.Trace | Level.Debug | Level.Info | Level.Warn | Level.Error | Level.Fatal;
+                _TraceMenuItem.Checked = true;
+                _DebugMenuItem.Checked = true;
+                _InfoMenuItem.Checked = true;
+                _WarnMenuItem.Checked = true;
+                _ErrorMenuItem.Checked = true;
+                _FatalMenuItem.Checked = true;
+            }
+            else
+            {
+                _CurrLevel = Level.Info | Level.Warn | Level.Error | Level.Fatal;
+                _TraceMenuItem.Checked = false;
+                _DebugMenuItem.Checked = false;
+                _InfoMenuItem.Checked = true;
+                _WarnMenuItem.Checked = true;
+                _ErrorMenuItem.Checked = true;
+                _FatalMenuItem.Checked = true;
+            }
+        }
+
+        private void LevelToolButton_Click(object sender, EventArgs e)
         {
             var item = (ToolStripMenuItem) sender;
             item.Checked = !item.Checked;
@@ -210,7 +237,7 @@ namespace NKnife.NLog.Controls
                 _CurrLevel = _CurrLevel | Level.Fatal;
         }
 
-        private void ClearToolButtonClick(object sender, EventArgs e)
+        private void ClearToolButton_Click(object sender, EventArgs e)
         {
             lock (_LogView)
             {

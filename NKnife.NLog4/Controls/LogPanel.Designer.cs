@@ -66,43 +66,43 @@
             // 
             resources.ApplyResources(this._TraceMenuItem, "_TraceMenuItem");
             this._TraceMenuItem.Name = "_TraceMenuItem";
-            this._TraceMenuItem.Click += new System.EventHandler(this.LevelToolButtonClick);
+            this._TraceMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _DebugMenuItem
             // 
             resources.ApplyResources(this._DebugMenuItem, "_DebugMenuItem");
             this._DebugMenuItem.Name = "_DebugMenuItem";
-            this._DebugMenuItem.Click += new System.EventHandler(this.LevelToolButtonClick);
+            this._DebugMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _InfoMenuItem
             // 
             resources.ApplyResources(this._InfoMenuItem, "_InfoMenuItem");
             this._InfoMenuItem.Name = "_InfoMenuItem";
-            this._InfoMenuItem.Click += new System.EventHandler(this.LevelToolButtonClick);
+            this._InfoMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _WarnMenuItem
             // 
             resources.ApplyResources(this._WarnMenuItem, "_WarnMenuItem");
             this._WarnMenuItem.Name = "_WarnMenuItem";
-            this._WarnMenuItem.Click += new System.EventHandler(this.LevelToolButtonClick);
+            this._WarnMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _ErrorMenuItem
             // 
             resources.ApplyResources(this._ErrorMenuItem, "_ErrorMenuItem");
             this._ErrorMenuItem.Name = "_ErrorMenuItem";
-            this._ErrorMenuItem.Click += new System.EventHandler(this.LevelToolButtonClick);
+            this._ErrorMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _FatalMenuItem
             // 
             resources.ApplyResources(this._FatalMenuItem, "_FatalMenuItem");
             this._FatalMenuItem.Name = "_FatalMenuItem";
-            this._FatalMenuItem.Click += new System.EventHandler(this.LevelToolButtonClick);
+            this._FatalMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _ClearToolButton
             // 
             resources.ApplyResources(this._ClearToolButton, "_ClearToolButton");
             this._ClearToolButton.Name = "_ClearToolButton";
-            this._ClearToolButton.Click += new System.EventHandler(this.ClearToolButtonClick);
+            this._ClearToolButton.Click += new System.EventHandler(this.ClearToolButton_Click);
             // 
             // _LogView
             // 
