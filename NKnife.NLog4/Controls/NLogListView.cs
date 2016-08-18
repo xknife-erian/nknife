@@ -13,20 +13,18 @@ namespace NKnife.NLog.Controls
     /// </summary>
     public class NLogListView : ListView
     {
-        private static readonly ConcurrentDictionary<string, ListViewGroup> _LevelGroups = new ConcurrentDictionary<string, ListViewGroup>();
-
-        private int _MaxRowCount = 120;
+        private static readonly ConcurrentDictionary<string, ListViewGroup> _levelGroups = new ConcurrentDictionary<string, ListViewGroup>();
 
         public NLogListView()
         {
-            if (_LevelGroups.Count <= 0)
+            if (_levelGroups.Count <= 0)
             {
-                _LevelGroups.TryAdd(LogLevel.Trace.Name, new ListViewGroup(LogLevel.Trace.Name));
-                _LevelGroups.TryAdd(LogLevel.Debug.Name, new ListViewGroup(LogLevel.Debug.Name));
-                _LevelGroups.TryAdd(LogLevel.Info.Name, new ListViewGroup(LogLevel.Info.Name));
-                _LevelGroups.TryAdd(LogLevel.Warn.Name, new ListViewGroup(LogLevel.Warn.Name));
-                _LevelGroups.TryAdd(LogLevel.Error.Name, new ListViewGroup(LogLevel.Error.Name));
-                _LevelGroups.TryAdd(LogLevel.Fatal.Name, new ListViewGroup(LogLevel.Fatal.Name));
+                _levelGroups.TryAdd(LogLevel.Trace.Name, new ListViewGroup(LogLevel.Trace.Name));
+                _levelGroups.TryAdd(LogLevel.Debug.Name, new ListViewGroup(LogLevel.Debug.Name));
+                _levelGroups.TryAdd(LogLevel.Info.Name, new ListViewGroup(LogLevel.Info.Name));
+                _levelGroups.TryAdd(LogLevel.Warn.Name, new ListViewGroup(LogLevel.Warn.Name));
+                _levelGroups.TryAdd(LogLevel.Error.Name, new ListViewGroup(LogLevel.Error.Name));
+                _levelGroups.TryAdd(LogLevel.Fatal.Name, new ListViewGroup(LogLevel.Fatal.Name));
             }
 
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -62,11 +60,7 @@ namespace NKnife.NLog.Controls
         /// <summary>控件中最大显示行数，默认120行，即保留最后120条日志
         /// </summary>
         /// <value>The max row count.</value>
-        public int MaxRowCount
-        {
-            get { return _MaxRowCount; }
-            set { _MaxRowCount = value; }
-        }
+        public int MaxRowCount { get; set; } = 120;
 
         /// <summary>添加一条日志
         /// </summary>
@@ -74,7 +68,7 @@ namespace NKnife.NLog.Controls
         internal void AddLog(LogEventInfo logEvent)
         {
             if (InvokeRequired)
-                BeginInvoke(new AddLogToControlDelegate(AddLog), new object[] {logEvent});
+                BeginInvoke(new AddLogToControlDelegate(AddLog), logEvent);
             else
                 AddLogMethod(logEvent);
         }

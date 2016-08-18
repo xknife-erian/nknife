@@ -158,12 +158,7 @@ namespace NKnife.NLog.Controls
         {
             var level = GetTopLevel(logEvent.Level);
             if (_CurrLevel.HasFlag(level))
-            {
-                lock (_LogView)
-                {
-                    _LogView.AddLog(logEvent);
-                }
-            }
+                _LogView.AddLog(logEvent);
         }
 
         private Level GetTopLevel(LogLevel logLevel)
