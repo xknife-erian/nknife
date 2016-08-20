@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
+using NKnife.NLog.Controls;
 using NKnife.NLog.Properties;
 
-namespace NKnife.NLog.Controls
+namespace NKnife.NLog
 {
     public partial class NLogForm : Form
     {
@@ -13,11 +13,8 @@ namespace NKnife.NLog.Controls
             InitializeComponent();
             Icon = OwnResources.NLogForm;
             Padding = new Padding(3);
-            var logPanel = LogPanel.Instance;
-            logPanel.Dock = DockStyle.Fill;
-            logPanel.Font = new Font("Tahoma", 8.25F);
+            var logPanel = LogPanel.AppendLogPanelToContainer(this);
             logPanel.HeaderStyle = ColumnHeaderStyle.Clickable;
-            Controls.Add(logPanel);
         }
 
         protected override void OnShown(EventArgs e)

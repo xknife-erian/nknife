@@ -1,4 +1,4 @@
-﻿namespace NKnife.NLog.Controls
+﻿namespace NKnife.NLog
 {
     partial class NLogForm
     {

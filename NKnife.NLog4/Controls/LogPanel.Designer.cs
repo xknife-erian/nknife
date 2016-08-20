@@ -38,21 +38,21 @@
             this._ErrorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._FatalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._ClearToolButton = new System.Windows.Forms.ToolStripButton();
-            this._LogView = new NLogListView();
+            this._LogGridView = new System.Windows.Forms.DataGridView();
             this._ToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._LogGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // _ToolStrip
             // 
-            resources.ApplyResources(this._ToolStrip, "_ToolStrip");
             this._ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._LevelToolButton,
             this._ClearToolButton});
+            resources.ApplyResources(this._ToolStrip, "_ToolStrip");
             this._ToolStrip.Name = "_ToolStrip";
             // 
             // _LevelToolButton
             // 
-            resources.ApplyResources(this._LevelToolButton, "_LevelToolButton");
             this._LevelToolButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._TraceMenuItem,
             this._DebugMenuItem,
@@ -61,78 +61,78 @@
             this._ErrorMenuItem,
             this._FatalMenuItem});
             this._LevelToolButton.Name = "_LevelToolButton";
+            resources.ApplyResources(this._LevelToolButton, "_LevelToolButton");
             // 
             // _TraceMenuItem
             // 
-            resources.ApplyResources(this._TraceMenuItem, "_TraceMenuItem");
             this._TraceMenuItem.Name = "_TraceMenuItem";
+            resources.ApplyResources(this._TraceMenuItem, "_TraceMenuItem");
             this._TraceMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _DebugMenuItem
             // 
-            resources.ApplyResources(this._DebugMenuItem, "_DebugMenuItem");
             this._DebugMenuItem.Name = "_DebugMenuItem";
+            resources.ApplyResources(this._DebugMenuItem, "_DebugMenuItem");
             this._DebugMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _InfoMenuItem
             // 
-            resources.ApplyResources(this._InfoMenuItem, "_InfoMenuItem");
             this._InfoMenuItem.Name = "_InfoMenuItem";
+            resources.ApplyResources(this._InfoMenuItem, "_InfoMenuItem");
             this._InfoMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _WarnMenuItem
             // 
-            resources.ApplyResources(this._WarnMenuItem, "_WarnMenuItem");
             this._WarnMenuItem.Name = "_WarnMenuItem";
+            resources.ApplyResources(this._WarnMenuItem, "_WarnMenuItem");
             this._WarnMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _ErrorMenuItem
             // 
-            resources.ApplyResources(this._ErrorMenuItem, "_ErrorMenuItem");
             this._ErrorMenuItem.Name = "_ErrorMenuItem";
+            resources.ApplyResources(this._ErrorMenuItem, "_ErrorMenuItem");
             this._ErrorMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _FatalMenuItem
             // 
-            resources.ApplyResources(this._FatalMenuItem, "_FatalMenuItem");
             this._FatalMenuItem.Name = "_FatalMenuItem";
+            resources.ApplyResources(this._FatalMenuItem, "_FatalMenuItem");
             this._FatalMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
             // 
             // _ClearToolButton
             // 
-            resources.ApplyResources(this._ClearToolButton, "_ClearToolButton");
             this._ClearToolButton.Name = "_ClearToolButton";
+            resources.ApplyResources(this._ClearToolButton, "_ClearToolButton");
             this._ClearToolButton.Click += new System.EventHandler(this.ClearToolButton_Click);
             // 
-            // _LogView
+            // _LogGridView
             // 
-            resources.ApplyResources(this._LogView, "_LogView");
-            this._LogView.FullRowSelect = true;
-            this._LogView.GridLines = true;
-            this._LogView.MaxRowCount = 120;
-            this._LogView.MultiSelect = false;
-            this._LogView.Name = "_LogView";
-            this._LogView.ShowItemToolTips = true;
-            this._LogView.UseCompatibleStateImageBehavior = false;
-            this._LogView.View = System.Windows.Forms.View.Details;
+            this._LogGridView.AllowUserToAddRows = false;
+            this._LogGridView.AllowUserToDeleteRows = false;
+            this._LogGridView.AllowUserToResizeRows = false;
+            this._LogGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resources.ApplyResources(this._LogGridView, "_LogGridView");
+            this._LogGridView.MultiSelect = false;
+            this._LogGridView.Name = "_LogGridView";
+            this._LogGridView.RowTemplate.Height = 23;
+            this._LogGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             // 
             // LogPanel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this._LogView);
+            this.Controls.Add(this._LogGridView);
             this.Controls.Add(this._ToolStrip);
             this.Name = "LogPanel";
             this._ToolStrip.ResumeLayout(false);
             this._ToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._LogGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private NLogListView _LogView;
         private System.Windows.Forms.ToolStrip _ToolStrip;
         private System.Windows.Forms.ToolStripButton _ClearToolButton;
         private System.Windows.Forms.ToolStripDropDownButton _LevelToolButton;
@@ -142,5 +142,6 @@
         private System.Windows.Forms.ToolStripMenuItem _WarnMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _ErrorMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _FatalMenuItem;
+        private System.Windows.Forms.DataGridView _LogGridView;
     }
 }

@@ -117,52 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;_ErrorMenuItem.Name" xml:space="preserve">
-    <value>_ErrorMenuItem</value>
-  </data>
+  <metadata name="_ToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="_WarnMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 22</value>
+  <data name="_ToolStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="&gt;&gt;_TraceMenuItem.Name" xml:space="preserve">
-    <value>_TraceMenuItem</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
+  <data name="_ToolStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 25</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="_ToolStrip.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="_WarnMenuItem.Text" xml:space="preserve">
-    <value>Warn</value>
+  <data name="&gt;&gt;_ToolStrip.Name" xml:space="preserve">
+    <value>_ToolStrip</value>
   </data>
-  <data name="&gt;&gt;_ClearToolButton.Name" xml:space="preserve">
-    <value>_ClearToolButton</value>
-  </data>
-  <data name="_ToolStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>LogPanel</value>
+  <data name="&gt;&gt;_ToolStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;_ToolStrip.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;_LogView.Name" xml:space="preserve">
-    <value>_LogView</value>
-  </data>
   <data name="&gt;&gt;_ToolStrip.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;_LevelToolButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="_LevelToolButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 22</value>
   </data>
-  <data name="_FatalMenuItem.Text" xml:space="preserve">
-    <value>Fatal</value>
+  <data name="_LevelToolButton.Text" xml:space="preserve">
+    <value>日志等级</value>
+  </data>
+  <data name="_TraceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 22</value>
+  </data>
+  <data name="_TraceMenuItem.Text" xml:space="preserve">
+    <value>Trace</value>
+  </data>
+  <data name="_DebugMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 22</value>
+  </data>
+  <data name="_DebugMenuItem.Text" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="_InfoMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 22</value>
+  </data>
+  <data name="_InfoMenuItem.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="_WarnMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 22</value>
+  </data>
+  <data name="_WarnMenuItem.Text" xml:space="preserve">
+    <value>Warn</value>
   </data>
   <data name="_ErrorMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 22</value>
@@ -170,113 +179,104 @@
   <data name="_ErrorMenuItem.Text" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="_TraceMenuItem.Text" xml:space="preserve">
-    <value>Trace</value>
+  <data name="_FatalMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 22</value>
   </data>
-  <data name="&gt;&gt;_ErrorMenuItem.Type" xml:space="preserve">
+  <data name="_FatalMenuItem.Text" xml:space="preserve">
+    <value>Fatal</value>
+  </data>
+  <data name="_ClearToolButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 22</value>
+  </data>
+  <data name="_ClearToolButton.Text" xml:space="preserve">
+    <value>清空</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="_LogGridView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_LogGridView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="_LogGridView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 398</value>
+  </data>
+  <data name="_LogGridView.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;_LogGridView.Name" xml:space="preserve">
+    <value>_LogGridView</value>
+  </data>
+  <data name="&gt;&gt;_LogGridView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_LogGridView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_LogGridView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 423</value>
+  </data>
+  <data name="&gt;&gt;_LevelToolButton.Name" xml:space="preserve">
+    <value>_LevelToolButton</value>
+  </data>
+  <data name="&gt;&gt;_LevelToolButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_TraceMenuItem.Name" xml:space="preserve">
+    <value>_TraceMenuItem</value>
+  </data>
+  <data name="&gt;&gt;_TraceMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_DebugMenuItem.Name" xml:space="preserve">
+    <value>_DebugMenuItem</value>
+  </data>
+  <data name="&gt;&gt;_DebugMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;_InfoMenuItem.Name" xml:space="preserve">
     <value>_InfoMenuItem</value>
   </data>
-  <data name="_LogView.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;_DebugMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="_ClearToolButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 22</value>
-  </data>
-  <data name="&gt;&gt;_ClearToolButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_WarnMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="_ToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 25</value>
-  </data>
-  <data name="&gt;&gt;_LogView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;_ToolStrip.Name" xml:space="preserve">
-    <value>_ToolStrip</value>
-  </data>
-  <data name="&gt;&gt;_DebugMenuItem.Name" xml:space="preserve">
-    <value>_DebugMenuItem</value>
-  </data>
-  <data name="&gt;&gt;_FatalMenuItem.Name" xml:space="preserve">
-    <value>_FatalMenuItem</value>
-  </data>
   <data name="&gt;&gt;_InfoMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="_LogView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;_LevelToolButton.Name" xml:space="preserve">
-    <value>_LevelToolButton</value>
-  </data>
-  <data name="_ClearToolButton.Text" xml:space="preserve">
-    <value>清空</value>
-  </data>
-  <data name="_DebugMenuItem.Text" xml:space="preserve">
-    <value>Debug</value>
-  </data>
-  <data name="_TraceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 22</value>
-  </data>
-  <data name="&gt;&gt;_FatalMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="_DebugMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 22</value>
-  </data>
-  <data name="_FatalMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 22</value>
-  </data>
-  <data name="_LogView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
-  </data>
-  <data name="_LevelToolButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 22</value>
-  </data>
-  <data name="&gt;&gt;_TraceMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="_LevelToolButton.Text" xml:space="preserve">
-    <value>日志等级</value>
-  </data>
-  <data name="&gt;&gt;_LogView.Parent" xml:space="preserve">
-    <value>$this</value>
   </data>
   <data name="&gt;&gt;_WarnMenuItem.Name" xml:space="preserve">
     <value>_WarnMenuItem</value>
   </data>
-  <data name="_InfoMenuItem.Text" xml:space="preserve">
-    <value>Info</value>
+  <data name="&gt;&gt;_WarnMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_LogView.Type" xml:space="preserve">
-    <value>Pansoft.LogBase.Base.NLogListView, Pansoft.LogBase, Version=2012.5.5134.31758, Culture=neutral, PublicKeyToken=null</value>
+  <data name="&gt;&gt;_ErrorMenuItem.Name" xml:space="preserve">
+    <value>_ErrorMenuItem</value>
   </data>
-  <data name="&gt;&gt;_ToolStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;_ErrorMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="_LogView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 398</value>
+  <data name="&gt;&gt;_FatalMenuItem.Name" xml:space="preserve">
+    <value>_FatalMenuItem</value>
   </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 423</value>
+  <data name="&gt;&gt;_FatalMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="_InfoMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 22</value>
+  <data name="&gt;&gt;_ClearToolButton.Name" xml:space="preserve">
+    <value>_ClearToolButton</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="_ToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="&gt;&gt;_ClearToolButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>LogPanel</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
