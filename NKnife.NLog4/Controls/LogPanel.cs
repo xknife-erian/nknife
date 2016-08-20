@@ -34,7 +34,7 @@ namespace NKnife.NLog.Controls
         ///     初始化LogPanel到指定容器
         /// </summary>
         /// <param name="container"></param>
-        public static void AppendLogPanelToContainer(Panel container)
+        public static LogPanel AppendLogPanelToContainer(Panel container)
         {
             var logPanel = Instance;
             logPanel.Dock = DockStyle.Fill;
@@ -46,9 +46,10 @@ namespace NKnife.NLog.Controls
             logPanel.TabIndex = 0;
             logPanel.ToolStripVisible = true;
             container.Controls.Add(logPanel);
+            return logPanel;
         }
 
-        public static void AppendLogPanelToContainer(Form container)
+        public static LogPanel AppendLogPanelToContainer(Form container)
         {
             var logPanel = Instance;
             logPanel.Dock = DockStyle.Fill;
@@ -60,6 +61,7 @@ namespace NKnife.NLog.Controls
             logPanel.TabIndex = 0;
             logPanel.ToolStripVisible = true;
             container.Controls.Add(logPanel);
+            return logPanel;
         }
 
         #endregion

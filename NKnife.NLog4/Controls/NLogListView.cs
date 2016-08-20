@@ -101,11 +101,6 @@ namespace NKnife.NLog.Controls
 
                 var viewItem = new ListViewItem();
                 viewItem.Tag = logEvent;
-                //TODO:日志分组导致出现一些无法理解的异常，暂时未处理
-//            ListViewGroup group;
-//            _LevelGroups.TryGetValue(logEvent.Level.Name, out group);
-//            if (group != null)
-//                viewItem.Group = group;
                 viewItem.Text = logDatetime;
                 viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, logMsg));
                 viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, logLoggerName));
@@ -145,12 +140,12 @@ namespace NKnife.NLog.Controls
             {
                 if (nameSource.Contains("[["))
                 {
-                    var ns = nameSource.Substring(0, nameSource.LastIndexOf("`1"));
+                    var ns = nameSource.Substring(0, nameSource.LastIndexOf("`1", StringComparison.Ordinal));
                     var className = ns.Substring(ns.LastIndexOf('.') + 1);
 
-                    var fxIndex = nameSource.LastIndexOf("[[") + 2;
+                    var fxIndex = nameSource.LastIndexOf("[[", StringComparison.Ordinal) + 2;
                     var fx = nameSource.Substring(fxIndex, nameSource.IndexOf(',', fxIndex) - fxIndex);
-                    return string.Format("{0}<{1}>", className, fx.Substring(fx.LastIndexOf('.') + 1));
+                    return $"{className}<{fx.Substring(fx.LastIndexOf('.') + 1)}>";
                 }
                 return nameSource.Substring(nameSource.LastIndexOf('.') + 1);
             }
@@ -177,10 +172,6 @@ namespace NKnife.NLog.Controls
             }
         }
 
-        #region Nested type: AddLogToControlDelegate
-
         private delegate void AddLogToControlDelegate(LogEventInfo logEvent);
-
-        #endregion
     }
 }

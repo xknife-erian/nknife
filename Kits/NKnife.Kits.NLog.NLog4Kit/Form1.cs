@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Common.Logging;
 using NKnife.NLog.Controls;
@@ -29,15 +30,26 @@ namespace NKnife.Kits.NLog.NLog4Kit
         private int _Count = 0;
         private void Input100LogButton_Click(object sender, EventArgs e)
         {
-            _Count = 0;
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 20; i++)
             {
-                _logger.Trace($"{_Count} ////>> {_IdGenerator.Generate()}"); _Count++;
-                _logger.Debug($"{_Count} ////>> {_IdGenerator.Generate()}"); _Count++;
-                _logger.Info($"{_Count} ////>> {_IdGenerator.Generate()}"); _Count++;
-                _logger.Warn($"{_Count} ////>> {_IdGenerator.Generate()}"); _Count++;
-                _logger.Error($"{_Count} ////>> {_IdGenerator.Generate()}"); _Count++;
-                _logger.Fatal($"{_Count} ////>> {_IdGenerator.Generate()}"); _Count++;
+                Thread thread = new Thread(Add200Log) {Name = $"T{i}"};
+                thread.Start();
+            }
+            Add200Log();
+        }
+
+        private void Add200Log()
+        {
+            _Count = 0;
+            for (int i = 0; i < 200; i++)
+            {
+                _logger.Trace($"{_Count} >> {Thread.CurrentThread.Name}{_IdGenerator.Generate()}");
+                _logger.Debug($"{_Count} >> {Thread.CurrentThread.Name}{_IdGenerator.Generate()}");
+                _logger.Info($"{_Count} >> {Thread.CurrentThread.Name}{_IdGenerator.Generate()}");
+                _logger.Warn($"{_Count} >> {Thread.CurrentThread.Name}{_IdGenerator.Generate()}");
+                _logger.Error($"{_Count} >> {Thread.CurrentThread.Name}{_IdGenerator.Generate()}");
+                _logger.Fatal($"{_Count} >> {Thread.CurrentThread.Name}{_IdGenerator.Generate()}");
+                _Count++;
             }
         }
 

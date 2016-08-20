@@ -26,7 +26,7 @@ namespace NKnife.NLog.Controls
             }
             catch (Exception e)
             {
-                Console.WriteLine(string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace));
+                Console.WriteLine($"向控件写日志发生异常.{e.Message}{e.StackTrace}");
             }
         }
     }

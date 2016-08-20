@@ -32,28 +32,28 @@ namespace NKnife.Kits.NLog.NLog3Kit
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this._Input100LogButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this._Input100LogButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(635, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // _Input100LogButton
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(100, 22);
-            this.toolStripButton1.Text = "日志显示测试";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this._Input100LogButton.Image = ((System.Drawing.Image)(resources.GetObject("_Input100LogButton.Image")));
+            this._Input100LogButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._Input100LogButton.Name = "_Input100LogButton";
+            this._Input100LogButton.Size = new System.Drawing.Size(100, 22);
+            this._Input100LogButton.Text = "日志显示测试";
+            this._Input100LogButton.Click += new System.EventHandler(this.Input100LogButton_Click);
             // 
             // Form1
             // 
@@ -74,7 +74,7 @@ namespace NKnife.Kits.NLog.NLog3Kit
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton _Input100LogButton;
     }
 }
 
