@@ -32,12 +32,14 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this._Input100LogButton = new System.Windows.Forms.ToolStripButton();
             this._SetDebugModeButton = new System.Windows.Forms.ToolStripButton();
+            this._SimpleTestButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._SimpleTestButton,
             this._Input100LogButton,
             this._SetDebugModeButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -64,6 +66,15 @@
             this._SetDebugModeButton.Text = "设置调试模式";
             this._SetDebugModeButton.Click += new System.EventHandler(this._SetDebugModeButton_Click);
             // 
+            // _SimpleTestButton
+            // 
+            this._SimpleTestButton.Image = ((System.Drawing.Image)(resources.GetObject("_SimpleTestButton.Image")));
+            this._SimpleTestButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._SimpleTestButton.Name = "_SimpleTestButton";
+            this._SimpleTestButton.Size = new System.Drawing.Size(76, 22);
+            this._SimpleTestButton.Text = "简单测试";
+            this._SimpleTestButton.Click += new System.EventHandler(this._SimpleTestButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -85,6 +96,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton _Input100LogButton;
         private System.Windows.Forms.ToolStripButton _SetDebugModeButton;
+        private System.Windows.Forms.ToolStripButton _SimpleTestButton;
     }
 }
 

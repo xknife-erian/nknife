@@ -4,9 +4,9 @@ using Common.Logging;
 using Common.Logging.Configuration;
 using Common.Logging.NLog;
 using Ninject.Modules;
-using NKnife.NLog.Controls;
-using NKnife.NLog.Controls.WPF;
 using NKnife.NLog.Properties;
+using NKnife.NLog.WinForm;
+using NKnife.NLog.WPF;
 
 namespace NKnife.NLog.IoC
 {
@@ -57,8 +57,24 @@ namespace NKnife.NLog.IoC
             properties["configFile"] = $"~/{CONFIG_FILE_NAME}";
             LogManager.Adapter = new NLogLoggerFactoryAdapter(properties);
 
-            Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
-            Bind<LogMessageFilter>().ToSelf().InSingletonScope();
+
+            /****日志组件相关的IoC实例****/
+            switch (Style)
+            {
+                case AppStyle.WPF:
+                {
+                    Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
+                    Bind<LogMessageFilter>().ToSelf().InSingletonScope();
+                    break;
+                }
+                case AppStyle.WinForm:
+                {
+                    Bind<LoggerInfoDetailForm>().ToSelf().InSingletonScope();
+                    Bind<LoggerCollectionViewModel>().ToSelf();
+                    Bind<CustomLogInfo>().ToSelf();
+                    break;
+                }
+            }
         }
     }
 }

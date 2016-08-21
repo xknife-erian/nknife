@@ -1,13 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 using NKnife.IoC;
 using NKnife.ShareResources;
 using NKnife.Utility;
 using NLog;
 
-namespace NKnife.NLog.Controls
+namespace NKnife.NLog.WinForm
 {
     /// <summary>日志详细信息展现窗体
     /// </summary>
@@ -23,7 +25,7 @@ namespace NKnife.NLog.Controls
 
         public LoggerInfoDetailForm()
         {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Global.Culture);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Global.Culture);
             components = new Container();
             SuspendLayout();
             AutoScaleMode = AutoScaleMode.Font;
@@ -48,7 +50,7 @@ namespace NKnife.NLog.Controls
         private void FillLogInfo(LogEventInfo info)
         {
             _LevelTextBox.Text = info.Level.Name;
-            _TimeTextBox.Text = info.TimeStamp.ToString();
+            _TimeTextBox.Text = info.TimeStamp.ToString(CultureInfo.InvariantCulture);
             _LogInfoTextBox.Text = info.FormattedMessage;
             _SourceTextBox.Text = info.LoggerName;
             switch (info.Level.Name)

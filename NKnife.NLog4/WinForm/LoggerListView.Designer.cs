@@ -1,6 +1,6 @@
-﻿namespace NKnife.NLog.Controls
+﻿namespace NKnife.NLog.WinForm
 {
-    sealed partial class LogPanel
+    sealed partial class LoggerListView
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogPanel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoggerListView));
             this._ToolStrip = new System.Windows.Forms.ToolStrip();
             this._LevelToolButton = new System.Windows.Forms.ToolStripDropDownButton();
             this._TraceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,9 +38,8 @@
             this._ErrorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._FatalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._ClearToolButton = new System.Windows.Forms.ToolStripButton();
-            this._LogGridView = new System.Windows.Forms.DataGridView();
+            this._ListView = new System.Windows.Forms.ListView();
             this._ToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._LogGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // _ToolStrip
@@ -67,37 +66,37 @@
             // 
             this._TraceMenuItem.Name = "_TraceMenuItem";
             resources.ApplyResources(this._TraceMenuItem, "_TraceMenuItem");
-            this._TraceMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
+            this._TraceMenuItem.Click += new System.EventHandler(this.SetLevelGroupToolButton_Click);
             // 
             // _DebugMenuItem
             // 
             this._DebugMenuItem.Name = "_DebugMenuItem";
             resources.ApplyResources(this._DebugMenuItem, "_DebugMenuItem");
-            this._DebugMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
+            this._DebugMenuItem.Click += new System.EventHandler(this.SetLevelGroupToolButton_Click);
             // 
             // _InfoMenuItem
             // 
             this._InfoMenuItem.Name = "_InfoMenuItem";
             resources.ApplyResources(this._InfoMenuItem, "_InfoMenuItem");
-            this._InfoMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
+            this._InfoMenuItem.Click += new System.EventHandler(this.SetLevelGroupToolButton_Click);
             // 
             // _WarnMenuItem
             // 
             this._WarnMenuItem.Name = "_WarnMenuItem";
             resources.ApplyResources(this._WarnMenuItem, "_WarnMenuItem");
-            this._WarnMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
+            this._WarnMenuItem.Click += new System.EventHandler(this.SetLevelGroupToolButton_Click);
             // 
             // _ErrorMenuItem
             // 
             this._ErrorMenuItem.Name = "_ErrorMenuItem";
             resources.ApplyResources(this._ErrorMenuItem, "_ErrorMenuItem");
-            this._ErrorMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
+            this._ErrorMenuItem.Click += new System.EventHandler(this.SetLevelGroupToolButton_Click);
             // 
             // _FatalMenuItem
             // 
             this._FatalMenuItem.Name = "_FatalMenuItem";
             resources.ApplyResources(this._FatalMenuItem, "_FatalMenuItem");
-            this._FatalMenuItem.Click += new System.EventHandler(this.LevelToolButton_Click);
+            this._FatalMenuItem.Click += new System.EventHandler(this.SetLevelGroupToolButton_Click);
             // 
             // _ClearToolButton
             // 
@@ -105,28 +104,21 @@
             resources.ApplyResources(this._ClearToolButton, "_ClearToolButton");
             this._ClearToolButton.Click += new System.EventHandler(this.ClearToolButton_Click);
             // 
-            // _LogGridView
+            // _ListView
             // 
-            this._LogGridView.AllowUserToAddRows = false;
-            this._LogGridView.AllowUserToDeleteRows = false;
-            this._LogGridView.AllowUserToResizeRows = false;
-            this._LogGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            resources.ApplyResources(this._LogGridView, "_LogGridView");
-            this._LogGridView.MultiSelect = false;
-            this._LogGridView.Name = "_LogGridView";
-            this._LogGridView.RowTemplate.Height = 23;
-            this._LogGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            resources.ApplyResources(this._ListView, "_ListView");
+            this._ListView.Name = "_ListView";
+            this._ListView.UseCompatibleStateImageBehavior = false;
             // 
-            // LogPanel
+            // LoggerListView
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this._LogGridView);
+            this.Controls.Add(this._ListView);
             this.Controls.Add(this._ToolStrip);
-            this.Name = "LogPanel";
+            this.Name = "LoggerListView";
             this._ToolStrip.ResumeLayout(false);
             this._ToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._LogGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +134,6 @@
         private System.Windows.Forms.ToolStripMenuItem _WarnMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _ErrorMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _FatalMenuItem;
-        private System.Windows.Forms.DataGridView _LogGridView;
+        private System.Windows.Forms.ListView _ListView;
     }
 }

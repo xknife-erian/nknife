@@ -69,7 +69,7 @@ namespace NKnife.NLog.Properties {
         ///  &lt;/extensions&gt;
         ///  &lt;targets async=&quot;true&quot;&gt;
         ///    &lt;!--在主程序的界面上显示日志--&gt;
-        ///    &lt;target name=&quot;logpanel&quot; xsi:type=&quot;LogPanel&quot; /&gt;
+        ///    &lt;target name=&quot;logpanel&quot; xsi:type=&quot;_LogPanel&quot; /&gt;
         ///    &lt;!--记录详细日志彩色控制台--&gt;
         ///    &lt;target name=&quot;console&quot; xsi:type=&quot;ColoredConsole&quot; layout=&quot;${date:format=mm\:ss\.fff} : ${message}&quot; /&gt;
         ///  &lt;/targets&gt;

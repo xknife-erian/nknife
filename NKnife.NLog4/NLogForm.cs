@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using NKnife.NLog.Controls;
 using NKnife.NLog.Properties;
+using NKnife.NLog.WinForm;
 
 namespace NKnife.NLog
 {
@@ -13,8 +13,7 @@ namespace NKnife.NLog
             InitializeComponent();
             Icon = OwnResources.NLogForm;
             Padding = new Padding(3);
-            var logPanel = LogPanel.AppendLogPanelToContainer(this);
-            logPanel.HeaderStyle = ColumnHeaderStyle.Clickable;
+            LoggerGridView.AppendLogPanelToContainer(this);
         }
 
         protected override void OnShown(EventArgs e)

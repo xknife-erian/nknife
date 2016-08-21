@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NLog;
 
-namespace NKnife.NLog.Controls.WPF
+namespace NKnife.NLog.WPF
 {
     public class LogMessageFilter : IList<LogLevel>
     {

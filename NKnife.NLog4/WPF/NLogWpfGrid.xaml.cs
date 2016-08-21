@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using NKnife.IoC;
 using NLog;
 
-namespace NKnife.NLog.Controls.WPF
+namespace NKnife.NLog.WPF
 {
     /// <summary>
     /// NLogWpfListView.xaml 的交互逻辑
