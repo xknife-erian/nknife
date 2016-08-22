@@ -1,63 +1,60 @@
-﻿namespace Gean.Client.XPathTool
-{
-    using System;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Windows.Forms;
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
+namespace NKnife.App.XPath
+{
     public class HelpForm : Form
     {
+        private readonly Container components = null;
         private TextBox textBox1;
-        private Container components = null;
 
         public HelpForm()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.components != null))
+            if (disposing && (components != null))
             {
-                this.components.Dispose();
+                components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
+            textBox1 = new TextBox();
+            SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(5, 5);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(378, 156);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "simpkan@gmail.com\r\n2010-08-04 17:27:26";
+            textBox1.Dock = DockStyle.Fill;
+            textBox1.Location = new Point(5, 5);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.ScrollBars = ScrollBars.Vertical;
+            textBox1.Size = new Size(378, 156);
+            textBox1.TabIndex = 0;
+            textBox1.Text = "simpkan@gmail.com\r\n2010-08-04 17:27:26";
             // 
             // HelpForm
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-            this.ClientSize = new System.Drawing.Size(388, 166);
-            this.Controls.Add(this.textBox1);
-            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "HelpForm";
-            this.Padding = new System.Windows.Forms.Padding(5);
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.Text = "Help";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleBaseSize = new Size(5, 14);
+            ClientSize = new Size(388, 166);
+            Controls.Add(textBox1);
+            Font = new Font("Tahoma", 8.25F);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "HelpForm";
+            Padding = new Padding(5);
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            Text = "Help";
+            ResumeLayout(false);
+            PerformLayout();
         }
     }
 }
-

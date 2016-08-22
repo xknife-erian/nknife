@@ -93,6 +93,33 @@ namespace System
             return str;
         }
 
+        public static string TrimZero(this string str)
+        {
+            var n = str.LastIndexOf('.');
+            if (n > 0)
+            {
+                bool allIsZero = true;
+                int i;
+                for (i = str.Length - 1; i >= n + 1; i--)
+                {
+                    if (str[i] != '0')
+                    {
+                        allIsZero = false;
+                        break;
+                    }
+                }
+                string result;
+                if (!allIsZero)
+                    result = str.Substring(0, i + 1);
+                else
+                    result = str.Substring(0, n);
+                return result;
+            }
+            if (str.IsEmptyAndZero())
+                return "0";
+            return str;
+        }
+
         /// <summary>
         /// 清除给定字符串中的回车及换行符
         /// </summary>

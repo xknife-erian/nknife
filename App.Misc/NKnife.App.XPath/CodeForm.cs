@@ -1,97 +1,95 @@
-﻿namespace Gean.Client.XPathTool
-{
-    using System;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Windows.Forms;
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
+namespace NKnife.App.XPath
+{
     public class CodeForm : Form
     {
         private Button btnCopy;
-        private Container components = null;
+        private readonly Container components = null;
         private Label label1;
         private TextBox txtCode;
 
         public CodeForm(string code)
         {
-            this.InitializeComponent();
-            this.txtCode.Text = code;
+            InitializeComponent();
+            txtCode.Text = code;
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            if (this.txtCode.Text != "")
+            if (txtCode.Text != "")
             {
-                this.txtCode.SelectAll();
-                this.txtCode.Copy();
-                this.label1.Text = "Code is copied to the clipboard";
+                txtCode.SelectAll();
+                txtCode.Copy();
+                label1.Text = "Code is copied to the clipboard";
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.components != null))
+            if (disposing && (components != null))
             {
-                this.components.Dispose();
+                components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.txtCode = new System.Windows.Forms.TextBox();
-            this.btnCopy = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            txtCode = new TextBox();
+            btnCopy = new Button();
+            label1 = new Label();
+            SuspendLayout();
             // 
             // txtCode
             // 
-            this.txtCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCode.Font = new System.Drawing.Font("Courier New", 8.25F);
-            this.txtCode.Location = new System.Drawing.Point(5, 5);
-            this.txtCode.Multiline = true;
-            this.txtCode.Name = "txtCode";
-            this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCode.Size = new System.Drawing.Size(462, 272);
-            this.txtCode.TabIndex = 0;
+            txtCode.Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom)
+                              | AnchorStyles.Left)
+                             | AnchorStyles.Right;
+            txtCode.Font = new Font("Courier New", 8.25F);
+            txtCode.Location = new Point(5, 5);
+            txtCode.Multiline = true;
+            txtCode.Name = "txtCode";
+            txtCode.ScrollBars = ScrollBars.Vertical;
+            txtCode.Size = new Size(462, 272);
+            txtCode.TabIndex = 0;
             // 
             // btnCopy
             // 
-            this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCopy.Location = new System.Drawing.Point(377, 283);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(90, 25);
-            this.btnCopy.TabIndex = 1;
-            this.btnCopy.Text = "&Copy";
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            btnCopy.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnCopy.Location = new Point(377, 283);
+            btnCopy.Name = "btnCopy";
+            btnCopy.Size = new Size(90, 25);
+            btnCopy.TabIndex = 1;
+            btnCopy.Text = "&Copy";
+            btnCopy.Click += btnCopy_Click;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(0, 379);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(566, 25);
-            this.label1.TabIndex = 2;
+            label1.Location = new Point(0, 379);
+            label1.Name = "label1";
+            label1.Size = new Size(566, 25);
+            label1.TabIndex = 2;
             // 
             // CodeForm
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-            this.ClientSize = new System.Drawing.Size(472, 325);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnCopy);
-            this.Controls.Add(this.txtCode);
-            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.Name = "CodeForm";
-            this.Padding = new System.Windows.Forms.Padding(5);
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "CodeForm";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleBaseSize = new Size(5, 14);
+            ClientSize = new Size(472, 325);
+            Controls.Add(label1);
+            Controls.Add(btnCopy);
+            Controls.Add(txtCode);
+            Font = new Font("Tahoma", 8.25F);
+            Name = "CodeForm";
+            Padding = new Padding(5);
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "CodeForm";
+            ResumeLayout(false);
+            PerformLayout();
         }
     }
 }
-

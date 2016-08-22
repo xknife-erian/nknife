@@ -1,42 +1,40 @@
-﻿namespace Gean.Client.XPathTool
-{
-    using System;
-    using System.Text;
+﻿using System.Text;
 
+namespace NKnife.App.XPath
+{
     public class BooleanOp
     {
-        private StringBuilder xpathStr;
+        private readonly StringBuilder xpathStr;
 
         public BooleanOp()
         {
-            this.xpathStr = new StringBuilder();
+            xpathStr = new StringBuilder();
         }
 
         public BooleanOp(string query)
         {
-            this.xpathStr = new StringBuilder();
-            this.xpathStr.Append(query);
+            xpathStr = new StringBuilder();
+            xpathStr.Append(query);
         }
 
         public string And(string query)
         {
-            if (!this.xpathStr.ToString().Equals(""))
+            if (!xpathStr.ToString().Equals(""))
             {
-                this.xpathStr.Append(" and ");
+                xpathStr.Append(" and ");
             }
-            this.xpathStr.Append(query);
-            return this.xpathStr.ToString();
+            xpathStr.Append(query);
+            return xpathStr.ToString();
         }
 
         public string Or(string query)
         {
-            if (!this.xpathStr.ToString().Equals(""))
+            if (!xpathStr.ToString().Equals(""))
             {
-                this.xpathStr.Append(" | ");
+                xpathStr.Append(" | ");
             }
-            this.xpathStr.Append(query);
-            return this.xpathStr.ToString();
+            xpathStr.Append(query);
+            return xpathStr.ToString();
         }
     }
 }
-

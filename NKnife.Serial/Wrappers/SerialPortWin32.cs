@@ -152,7 +152,8 @@ namespace SerialKnife.Wrappers
         public virtual void SetTimeOut(int timeout)
         {
             ReadTimeout = timeout;
-            if (_HComm < 0) return;
+            if (_HComm < 0)
+                return;
             var ctoCommPort = new COMMTIMEOUTS();
 
             // 设置通信超时时间
@@ -223,7 +224,6 @@ namespace SerialKnife.Wrappers
                 int bytesWritten = 0;
 
                 //ovlCommPort.hEvent = CreateEvent(IntPtr.Zero, false, true, "WriteEvent");
-                //WriteFile(hComm, WriteBytes, intSize, ref BytesWritten, ref ovlCommPort);
                 WriteFile(_HComm, writeBytes, intSize, ref bytesWritten, ref ovlCommPort);
                 //if (!bWriteStat)
                 //{

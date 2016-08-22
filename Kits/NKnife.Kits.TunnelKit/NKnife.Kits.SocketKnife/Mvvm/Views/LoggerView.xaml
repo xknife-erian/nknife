@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-             xmlns:nlogControl="clr-namespace:NKnife.NLog3.Controls.WPF;assembly=NKnife.NLog3"
+             xmlns:wpf="clr-namespace:NKnife.NLog.Controls.WPF;assembly=NKnife.NLog4"
              mc:Ignorable="d"
              Title="系统日志" AutoHideHeight="250" IconSource="/Attachments/logger-view-icon.png">
-    <nlogControl:NLogWpfGrid/>
+    <wpf:NLogWpfGrid/>
 </xcad:LayoutAnchorable>

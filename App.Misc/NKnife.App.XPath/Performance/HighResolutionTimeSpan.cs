@@ -1,50 +1,39 @@
-﻿namespace Performance
-{
-    using System;
-    using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
+namespace NKnife.App.XPath.Performance
+{
     public class HighResolutionTimeSpan
     {
-        private long m_Frequency;
-        private float m_Miliseconds;
+        private readonly long m_Frequency;
 
         public HighResolutionTimeSpan()
         {
-            this.m_Frequency = 0L;
-            this.m_Miliseconds = 0f;
-            QueryPerformanceFrequency(ref this.m_Frequency);
+            m_Frequency = 0L;
+            Miliseconds = 0f;
+            QueryPerformanceFrequency(ref m_Frequency);
         }
 
         public HighResolutionTimeSpan(long Ticks)
         {
-            this.m_Frequency = 0L;
-            this.m_Miliseconds = 0f;
-            QueryPerformanceFrequency(ref this.m_Frequency);
-            this.m_Miliseconds = 1000f * (((float) Ticks) / ((float) this.m_Frequency));
-        }
-
-        [DllImport("KERNEL32")]
-        private static extern bool QueryPerformanceFrequency(ref long lpFrequency);
-        public override string ToString()
-        {
-            return string.Format("{0}", this.m_Miliseconds);
+            m_Frequency = 0L;
+            Miliseconds = 0f;
+            QueryPerformanceFrequency(ref m_Frequency);
+            Miliseconds = 1000f*(Ticks/((float) m_Frequency));
         }
 
         public long Frequency
         {
-            get
-            {
-                return this.m_Frequency;
-            }
+            get { return m_Frequency; }
         }
 
-        public float Miliseconds
+        public float Miliseconds { get; private set; }
+
+        [DllImport("KERNEL32")]
+        private static extern bool QueryPerformanceFrequency(ref long lpFrequency);
+
+        public override string ToString()
         {
-            get
-            {
-                return this.m_Miliseconds;
-            }
+            return string.Format("{0}", Miliseconds);
         }
     }
 }
-

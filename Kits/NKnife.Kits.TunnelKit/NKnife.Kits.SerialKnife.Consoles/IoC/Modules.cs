@@ -3,6 +3,8 @@ using Ninject.Activation;
 using Ninject.Modules;
 using NKnife.Kits.SerialKnife.Consoles.CareOne;
 using NKnife.Protocol.Generic;
+using NKnife.Tunnel;
+using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Generic;
 using SerialKnife;
 using SerialKnife.Interfaces;
@@ -14,6 +16,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.IoC
         public override void Load()
         {
             Bind<ISerialConnector>().To<SerialPortDataConnector>();
+            Bind<ITunnel>().To<KnifeTunnel>().Named("Server");
 
             Bind<BytesCodec>().To<CareOneCodec>();
             Bind<BytesProtocolCommandParser>().To<CareOneProtocolCommandParser>().InSingletonScope();
@@ -23,7 +26,6 @@ namespace NKnife.Kits.SerialKnife.Consoles.IoC
 
             Bind<BytesProtocolPacker>().To<CareOneProtocolPacker>().InSingletonScope();
             Bind<BytesProtocolUnPacker>().To<CareOneProtocolUnPacker>().InSingletonScope();
-
         }
     }
 }

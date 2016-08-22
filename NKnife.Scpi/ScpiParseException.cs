@@ -8,5 +8,6 @@ namespace ScpiKnife
 {
     public class ScpiParseException : NKnifeException
     {
+
     }
 }

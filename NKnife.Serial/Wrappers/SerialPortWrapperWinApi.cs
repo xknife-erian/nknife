@@ -20,7 +20,7 @@ namespace SerialKnife.Wrappers
         /// </summary>
         public bool IsOpen { get; set; }
 
-        /// <summary>初始化操作器通讯串口
+        /// <summary>初始化通讯串口
         /// </summary>
         /// <param name="portName"></param>
         /// <param name="config"></param>
@@ -35,12 +35,6 @@ namespace SerialKnife.Wrappers
                 BaudRate = config.BaudRate,
                 ByteSize = (byte) config.DataBits,
                 ReadTimeout = config.ReadTimeout,
-//                DataBits = config.DataBits,//8,
-//                ReceivedBytesThreshold = config.ReceivedBytesThreshold,//1,
-//                ReadBufferSize = config.ReadBufferSize,//32,
-//                DtrEnable = config.DtrEnable,
-//                Parity = config.Parity,
-//                RtsEnable = config.RtsEnable
             };
 
             try
@@ -111,7 +105,7 @@ namespace SerialKnife.Wrappers
             try
             {
                 _SerialPort.Write(cmd, cmd.Length);
-                Thread.Sleep(3);
+                Thread.Sleep(3);//TODO:发送后的读取延时有待考究
                 var buffer = new byte[_SerialConfig.ReadBufferSize];
                 int readcount = _SerialPort.Read(ref buffer, buffer.Length);
                 if (readcount > 0)

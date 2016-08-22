@@ -1,17 +1,18 @@
-﻿namespace Gean.Client.XPathTool
-{
-    using System;
+﻿using System;
 
+namespace NKnife.App.XPath
+{
     public class DisplayForm
     {
         public static bool isVerbose = false;
 
         public static string GetAllElementsName(string elementName)
         {
-            string str = "[";
+            var str = "[";
             if (elementName.IndexOf(str, 0, elementName.Length) != -1)
             {
-                return elementName.Remove(elementName.LastIndexOf(str), elementName.Length - elementName.LastIndexOf(str));
+                return elementName.Remove(elementName.LastIndexOf(str),
+                    elementName.Length - elementName.LastIndexOf(str));
             }
             return elementName;
         }
@@ -53,4 +54,3 @@
         }
     }
 }
-

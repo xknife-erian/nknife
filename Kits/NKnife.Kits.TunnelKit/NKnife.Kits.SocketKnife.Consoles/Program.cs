@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Common.Logging;
+using Ninject.Activation;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Consoles.Demos;
 using SocketKnife.Generic;
@@ -23,7 +24,7 @@ namespace NKnife.Kits.SocketKnife.Consoles
 
             _logger.Info("DI初始化结束....");
 
-            var serverConfig = DI.Get<SocketConfig>("Server");
+            var serverConfig = new SocketServerConfig();//DI.Get<SocketConfig>("Server");
 
             var server = new DemoServer();
             server.Initialize(serverConfig, new DemoServerHandler());
@@ -38,5 +39,6 @@ namespace NKnife.Kits.SocketKnife.Consoles
             Console.WriteLine("--------------------");
             Console.ReadLine();
         }
+
     }
 }

@@ -1,76 +1,61 @@
-﻿namespace Performance
-{
-    using System;
-    using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
+namespace NKnife.App.XPath.Performance
+{
     public class PerformanceTimer
     {
-        private long m_ElapsedCount = 0L;
-        private long m_Frequency = 0L;
-        private long m_StartCount = 0L;
-        private long m_StopCount = 0L;
+        private readonly long m_Frequency;
+        private long m_StartCount;
+        private long m_StopCount;
 
         public PerformanceTimer()
         {
-            this.m_Frequency = 0L;
-            QueryPerformanceFrequency(ref this.m_Frequency);
+            Elapsed = 0L;
+            m_Frequency = 0L;
+            QueryPerformanceFrequency(ref m_Frequency);
         }
 
-        [DllImport("KERNEL32")]
-        private static extern bool QueryPerformanceCounter(ref long lpPerformanceCount);
-        [DllImport("KERNEL32")]
-        private static extern bool QueryPerformanceFrequency(ref long lpFrequency);
-        public void Reset()
-        {
-            this.m_StartCount = 0L;
-            this.m_StopCount = 0L;
-            this.m_ElapsedCount = 0L;
-        }
-
-        public void Start()
-        {
-            this.m_StartCount = 0L;
-            QueryPerformanceCounter(ref this.m_StartCount);
-        }
-
-        public void Stop()
-        {
-            this.m_StopCount = 0L;
-            QueryPerformanceCounter(ref this.m_StopCount);
-            this.m_ElapsedCount = this.m_StopCount - this.m_StartCount;
-        }
-
-        public long Elapsed
-        {
-            get
-            {
-                return this.m_ElapsedCount;
-            }
-        }
+        public long Elapsed { get; private set; }
 
         public HighResolutionTimeSpan ElapsedTime
         {
-            get
-            {
-                return new HighResolutionTimeSpan(this.m_ElapsedCount);
-            }
+            get { return new HighResolutionTimeSpan(Elapsed); }
         }
 
         public long Frequency
         {
-            get
-            {
-                return this.m_Frequency;
-            }
+            get { return m_Frequency; }
         }
 
         public float Seconds
         {
-            get
-            {
-                return (((float) this.m_ElapsedCount) / ((float) this.m_Frequency));
-            }
+            get { return (Elapsed/((float) m_Frequency)); }
+        }
+
+        [DllImport("KERNEL32")]
+        private static extern bool QueryPerformanceCounter(ref long lpPerformanceCount);
+
+        [DllImport("KERNEL32")]
+        private static extern bool QueryPerformanceFrequency(ref long lpFrequency);
+
+        public void Reset()
+        {
+            m_StartCount = 0L;
+            m_StopCount = 0L;
+            Elapsed = 0L;
+        }
+
+        public void Start()
+        {
+            m_StartCount = 0L;
+            QueryPerformanceCounter(ref m_StartCount);
+        }
+
+        public void Stop()
+        {
+            m_StopCount = 0L;
+            QueryPerformanceCounter(ref m_StopCount);
+            Elapsed = m_StopCount - m_StartCount;
         }
     }
 }
-

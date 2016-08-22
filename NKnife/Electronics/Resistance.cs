@@ -7,6 +7,11 @@ namespace NKnife.Electronics
     /// </summary>
     public class Resistance : ICloneable, IComparable, IComparable<Resistance>
     {
+        public enum Unit
+        {
+            Ω,K,M,G
+        }
+
         /// <summary>电阻的阻值，单位欧姆(Ω)。
         /// </summary>
         public double Value { get; set; }
@@ -95,6 +100,7 @@ namespace NKnife.Electronics
                 case 'O': //Ω
                 case 'K':
                 case 'M':
+                case 'G':
                 default:
                     return ToString();
             }

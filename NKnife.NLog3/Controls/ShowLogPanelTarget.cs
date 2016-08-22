@@ -13,21 +13,21 @@ namespace NKnife.NLog3.Controls
     {
         public ShowLogPanelTarget()
         {
-            LogPanel = LogPanel.Instance;
+            _LogPanel = LogPanel.Instance;
         }
 
-        protected LogPanel LogPanel { get; private set; }
+        private readonly LogPanel _LogPanel;
 
         protected override void Write(LogEventInfo logEvent)
         {
             try
             {
-                if (null != LogPanel && !LogPanel.IsDisposed)
-                    LogPanel.AddLog(logEvent);
+                if (null != _LogPanel && !_LogPanel.IsDisposed)
+                    _LogPanel.AddLog(logEvent);
             }
             catch (Exception e)
             {
-                Console.WriteLine(string.Format("向控件写日志发生异常.{0}{1}", e.Message, e.StackTrace));
+                Console.WriteLine($"向控件写日志发生异常.{e.Message}{e.StackTrace}");
             }
         }
     }

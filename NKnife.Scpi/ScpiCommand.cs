@@ -14,11 +14,16 @@ namespace ScpiKnife
     /// </summary>
     public class ScpiCommand
     {
+        /// <summary>
+        /// 从一个XML节点解析SCPI命令
+        /// </summary>
+        /// <param name="element">一个按照规则制定描述SCPI命令的XML节点元素</param>
+        /// <returns>SCPI命令类型</returns>
         public static ScpiCommand Parse(XmlElement element)
         {
             //样本
-            //<scpi interval="200" hex="true" return="true">
-            //  <![CDATA[]]>
+            //<scpi interval="200" hex="true" return="true" selected="false" description="读取万用表读数">
+            //  <![CDATA[READ?]]>
             //</scpi>
             var command = new ScpiCommand();
             var cdata = element.GetCDataElement();
@@ -33,20 +38,41 @@ namespace ScpiKnife
             bool isHex;
             if (bool.TryParse(element.GetAttribute("hex"), out isHex))
                 command.IsHex = isHex;
+            bool selected;
+            if (bool.TryParse(element.GetAttribute("selected"), out selected))
+                command.Selected = selected;
             bool isReturn;
             if (bool.TryParse(element.GetAttribute("return"), out isReturn))
                 command.IsReturn = isReturn;
+            if (element.HasAttribute("description"))
+                command.Description = element.GetAttribute("description");
             return command;
         }
 
-        public static void Build(ScpiCommand command, ref XmlElement element)
+        /// <summary>
+        /// 根据当前值创建XML节点元素
+        /// </summary>
+        /// <param name="element">要返回的XML节点元素</param>
+        public void Build(ref XmlElement element)
         {
+            if (element == null)
+                throw new ScpiParseException();
+            element.SetAttribute("interval", Interval.ToString());
+            element.SetAttribute("hex", IsHex.ToString());
+            element.SetAttribute("return", IsReturn.ToString());
+            if (!Selected)
+                element.SetAttribute("selected", Selected.ToString());
+            if (!string.IsNullOrEmpty(Description))
+                element.SetAttribute("description", Description);
+            element.SetCDataElement(Command);
         }
 
         public ScpiCommand()
         {
             Interval = 200;
             IsHex = false;
+            IsReturn = true;
+            Selected = true;
         }
 
         /// <summary>
@@ -68,6 +94,11 @@ namespace ScpiKnife
         /// 命令主体是用原生字符串表达,还是16进制字符串表达
         /// </summary>
         public bool IsHex { get; set; }
+
+        /// <summary>
+        /// 命令是否被选择
+        /// </summary>
+        public bool Selected { get; set; }
 
         /// <summary>
         /// 命令的解释
