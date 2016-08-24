@@ -30,6 +30,7 @@
         {
             this.OkButton = new System.Windows.Forms.Button();
             this.MessageTextBox = new System.Windows.Forms.TextBox();
+            this.ExportButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // OkButton
@@ -52,11 +53,22 @@
             this.MessageTextBox.Size = new System.Drawing.Size(579, 320);
             this.MessageTextBox.TabIndex = 2;
             // 
+            // ExportButton
+            // 
+            this.ExportButton.Location = new System.Drawing.Point(328, 347);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(89, 35);
+            this.ExportButton.TabIndex = 3;
+            this.ExportButton.Text = "导出";
+            this.ExportButton.UseVisualStyleBackColor = true;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            // 
             // TestCaseResultDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(603, 406);
+            this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.MessageTextBox);
             this.Controls.Add(this.OkButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -74,5 +86,6 @@
 
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.TextBox MessageTextBox;
+        private System.Windows.Forms.Button ExportButton;
     }
 }

@@ -16,7 +16,7 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
-    public class SpeechEchoTestCase : ITestCase
+    public class SpeechEchoTestCase : AbstractTestCase
     {
         private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
         private IKernel _Kernel;
@@ -29,7 +29,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private Dictionary<long, long> _SessionAddressFrameCountMap = new Dictionary<long, long>();
         #region ITestCase
 
-        public void Start(IKernel kernel, object testCaseParam = default(SpeechTestParam))
+        public override void Start(IKernel kernel, object testCaseParam = default(SpeechTestParam))
         {
             var param = testCaseParam as SpeechTestParam;
             if (param == null)
@@ -86,7 +86,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了设置语音模式的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
                 _logger.Info("开始语音Echo");
-                Thread.Sleep(1000 * param.SpeechDuration); //持续5秒钟时间
+
+                KeepRunning(param.SpeechDuration);
 
                 //第四步：执行设置语音模式，使A进入idle模式
 
@@ -108,15 +109,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 OnTestCaseFinished(true, VerifyTestCaseResult(param));
             });
         }
-
-        public void Abort()
-        {
-
-        }
-
-        public event EventHandler<TestCaseResultEventArgs> Finished;
-        public event EventHandler<TestCaseResultEventArgs> Aborted;
-
         #endregion
 
         private string VerifyTestCaseResult(SpeechTestParam param)

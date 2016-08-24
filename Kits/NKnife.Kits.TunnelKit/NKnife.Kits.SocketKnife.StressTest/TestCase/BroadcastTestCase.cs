@@ -16,7 +16,7 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
-    public class BroadcastTestCase : ITestCase
+    public class BroadcastTestCase : AbstractTestCase
     {
         private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
         private IKernel _Kernel;
@@ -33,7 +33,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 
         #region ITestCase
 
-        public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
+        public override void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
         {
             param = testCaseParam as ExecuteHardwareTestParam;
             if (param == null)
@@ -77,7 +77,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //持续一段时间，进行数据发送
 
                 //第三步：记录接下来收到的数据，并持续一段时间
-                Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
+                KeepRunning(param.SendDuration);
 
                 //第四步：调用停止执行测试用例
                 //停止发送
@@ -338,15 +338,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             _TestResultMap.Add(index, message.ToString());
             return true;
         }
-
-        public void Abort()
-        {
-
-        }
-
-        public event EventHandler<TestCaseResultEventArgs> Finished;
-        public event EventHandler<TestCaseResultEventArgs> Aborted;
-
         #endregion
 
 

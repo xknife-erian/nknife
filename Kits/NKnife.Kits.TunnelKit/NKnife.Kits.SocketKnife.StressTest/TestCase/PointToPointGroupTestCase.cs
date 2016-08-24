@@ -16,7 +16,7 @@ using NKnife.Protocol.Generic;
 
 namespace NKnife.Kits.SocketKnife.StressTest.TestCase
 {
-    public class PointToPointGroupTestCase : ITestCase
+    public class PointToPointGroupTestCase : AbstractTestCase
     {
         private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
         private IKernel _Kernel;
@@ -31,9 +31,10 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private Dictionary<int, string> _TestResultMap = new Dictionary<int, string>(); 
         private ExecuteHardwareTestParam param;
         private bool _OnDataTransfer;
+
         #region ITestCase
 
-        public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
+        public override void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
         {
             param = testCaseParam as ExecuteHardwareTestParam;
             if (param == null)
@@ -168,7 +169,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             //收到了执行测试用例的回复
             //第三步：记录接下来收到的数据，并持续一段时间
             _OnDataTransfer = true;
-            Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
+            KeepRunning(param.SendDuration);
             _OnDataTransfer = false;
 
             //第四步：调用停止执行测试用例
@@ -215,7 +216,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 _logger.Warn(string.Format("向session{0}发送协议ReadTestCaseResult后，未能解析结果", sessionIdA));
                 return false;
             }
-            message.Append(string.Format("{0}\r\n", VerifyTestCaseResult("发送端返回", _SessionIdTestResultMap[sessionIdA])));
+            message.Append(string.Format("{0}\r\n", VerifyTestCaseResult(string.Format("[{0}]",sessionAddressA.ToHexString()), _SessionIdTestResultMap[sessionIdA])));
 
             //读取SessionB测试用例执行结果
             SetOnWaitProtocol(sessionIdB,ReadTestCaseResultReply.CommandIntValue);
@@ -233,7 +234,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 _logger.Warn(string.Format("向session{0}发送协议ReadTestCaseResult后，未能解析结果", sessionIdB));
                 return false;
             }
-            message.Append(string.Format("{0}\r\n", VerifyTestCaseResult("接收端返回", _SessionIdTestResultMap[sessionIdB])));
+            message.Append(string.Format("{0}\r\n", VerifyTestCaseResult(string.Format("[{0}]", sessionAddressB.ToHexString()), _SessionIdTestResultMap[sessionIdB])));
 
 
             //第六步，比对检测到的数据和返回的测试用例结果是否一致，进行分析，发出报告
@@ -241,14 +242,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
             _logger.Debug(string.Format("第{0}组增加测试结果：{1}",index / 2 + 1,message));
             return true;
         }
-
-        public void Abort()
-        {
-
-        }
-
-        public event EventHandler<TestCaseResultEventArgs> Finished;
-        public event EventHandler<TestCaseResultEventArgs> Aborted;
 
         #endregion
 

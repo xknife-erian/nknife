@@ -23,7 +23,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
     /// <summary>
     ///  针对一个下位机按照步骤顺序一步一步来
     /// </summary>
-    public class SingleTalkTestCase:ITestCase
+    public class SingleTalkTestCase:AbstractTestCase
     {
         private static readonly ILog _logger = LogManager.GetLogger<SingleTalkTestCase>();
         private IKernel _Kernel;
@@ -35,7 +35,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private TestCaseResult _RepliedResult; //从下位机读取到的结果
 
         #region ITestCase
-        public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
+        public override void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
         {
             var param = testCaseParam as ExecuteHardwareTestParam;
             if (param == null)
@@ -93,7 +93,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了执行测试用例的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
 
-                Thread.Sleep(1000*param.SendDuration); //持续5秒钟时间
+               KeepRunning(param.SendDuration);
 
                 //第四步：调用停止执行测试用例
 
@@ -140,14 +140,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 _RepliedResult.FrameLost);
             return string.Format("{0}\r\n{1}", monitored, replied);
         }
-
-
-        public void Abort()
-        {
-        }
-
-        public event EventHandler<TestCaseResultEventArgs> Finished;
-        public event EventHandler<TestCaseResultEventArgs> Aborted;
         #endregion
 
         private int _CurrentCommandIntValue;

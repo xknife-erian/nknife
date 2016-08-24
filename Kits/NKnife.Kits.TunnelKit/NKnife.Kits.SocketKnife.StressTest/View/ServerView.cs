@@ -28,6 +28,8 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         private static readonly ILog _logger = LogManager.GetLogger<ServerView>();
         private TestKernel _Kernel = DI.Get<TestKernel>();
         private BytesCodec _Codec = DI.Get<BytesCodec>();
+        private ITestCase _CurrentTestcase = null;
+        private bool _TestcaseOnRunning;
 
 
         private bool _OnTesting;
@@ -715,44 +717,53 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
                 MessageBox.Show("请选择要执行的测试案例");
                 return;
             }
-            ITestCase testcase = null;
 
-            switch (TestCaseListComboBox.SelectedIndex)
+            if (_TestcaseOnRunning && _CurrentTestcase !=null)
             {
-                case 0:
-                    testcase= new SingleTalkTestCase();
-                    break;
-                case 1:
-                    testcase = new PointToPointTestCase();
-                    break;
-                case 2:
-                    testcase = new PointToPointDualTestCase();
-                    break;
-                case 3:
-                    testcase = new SpeechTalkTestCase();
-                    break;
-                case 4:
-                    testcase = new PointToPointGroupTestCase();
-                    break;
-                case 5:
-                    testcase = new BroadcastTestCase();
-                    break;
-                case 6:
-                    testcase = new SpeechBroadcastTestCase();
-                    break;
-                case 7:
-                    testcase = new SpeechEchoTestCase();
-                    break;
+                _CurrentTestcase.Abort();
             }
-
-            if (testcase != null)
+            else
             {
-                testcase.Finished += TestcaseFinished;
 
-                _TestCaseStartTime = System.Environment.TickCount;
-                testcase.Start(_Kernel, _CurrentTestcaseParam);
+                switch (TestCaseListComboBox.SelectedIndex)
+                {
+                    case 0:
+                        _CurrentTestcase = new SingleTalkTestCase();
+                        break;
+                    case 1:
+                        _CurrentTestcase = new PointToPointTestCase();
+                        break;
+                    case 2:
+                        _CurrentTestcase = new PointToPointDualTestCase();
+                        break;
+                    case 3:
+                        _CurrentTestcase = new SpeechTalkTestCase();
+                        break;
+                    case 4:
+                        _CurrentTestcase = new PointToPointGroupTestCase();
+                        break;
+                    case 5:
+                        _CurrentTestcase = new BroadcastTestCase();
+                        break;
+                    case 6:
+                        _CurrentTestcase = new SpeechBroadcastTestCase();
+                        break;
+                    case 7:
+                        _CurrentTestcase = new SpeechEchoTestCase();
+                        break;
+                }
 
-                ExecuteTestCaseButton.Enabled = false;
+                if (_CurrentTestcase != null)
+                {
+                    _CurrentTestcase.Finished += TestcaseFinished;
+
+                    _TestCaseStartTime = System.Environment.TickCount;
+                    _CurrentTestcase.Start(_Kernel, _CurrentTestcaseParam);
+
+                    _TestcaseOnRunning = true;
+                    TestCaseListComboBox.Enabled = false;
+                    ExecuteTestCaseButton.Text = "停止测试案例";
+                }
             }
         }
 
@@ -765,7 +776,9 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
             _logger.Info(string.Format("测试案例执行约{0}秒，结果{1}",duration, result ? "成功" : "失败"));
             ExecuteTestCaseButton.ThreadSafeInvoke(()=>
             {
-                ExecuteTestCaseButton.Enabled = true;
+                _TestcaseOnRunning = false;
+                TestCaseListComboBox.Enabled = true;
+                ExecuteTestCaseButton.Text = "执行测试案例";
                 var dlg = new TestCaseResultDialog(message);
                 dlg.ShowDialog();
                 //MessageBox.Show(this, message, "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);

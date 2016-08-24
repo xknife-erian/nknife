@@ -19,7 +19,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
     /// <summary>
     /// 1对1对传测试
     /// </summary>
-    public class PointToPointDualTestCase : ITestCase
+    public class PointToPointDualTestCase : AbstractTestCase
     {
         private static readonly ILog _logger = LogManager.GetLogger<PointToPointDualTestCase>();
         private IKernel _Kernel;
@@ -37,7 +37,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
         private int _LastTick;
         #region ITestCase
 
-        public void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
+        public override void Start(IKernel kernel, object testCaseParam = default(ExecuteHardwareTestParam))
         {
             _LastTick = Environment.TickCount;
             var param = testCaseParam as ExecuteHardwareTestParam;
@@ -137,7 +137,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 //收到了执行测试用例的回复
                 //第三步：记录接下来收到的数据，并持续一段时间
                 _OnDataTransfer = true;
-                Thread.Sleep(1000 * param.SendDuration); //持续5秒钟时间
+                KeepRunning(param.SendDuration);
                 _OnDataTransfer = false;
 
                 //第四步：调用停止执行测试用例
@@ -202,15 +202,6 @@ namespace NKnife.Kits.SocketKnife.StressTest.TestCase
                 OnTestCaseFinished(true, message.ToString());
             });
         }
-
-        public void Abort()
-        {
-
-        }
-
-        public event EventHandler<TestCaseResultEventArgs> Finished;
-        public event EventHandler<TestCaseResultEventArgs> Aborted;
-
         #endregion
 
         private string VerifyTestCaseResult(string from, TestCaseResult testCaseResult)
