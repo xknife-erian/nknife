@@ -105,6 +105,9 @@
     <Compile Include="GUI\WinForm\CollapsibleSplitContainer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\WinForm\DataSetBindableListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\WinForm\ToolStripDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -616,6 +619,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\WinForm\DataSetBindableListView.resx">
+      <DependentUpon>DataSetBindableListView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\WinForm\DataSelector\DataItemSelector.resx">
       <DependentUpon>DataItemSelector.cs</DependentUpon>
       <SubType>Designer</SubType>

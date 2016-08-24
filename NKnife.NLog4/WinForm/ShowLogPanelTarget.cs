@@ -9,24 +9,24 @@ namespace NKnife.NLog.WinForm
     ///     lukan@xknfe.net
     ///     2016.08.21
     /// </summary>
-    [Target("LoggerGridView")]
+    [Target("LoggerListView")]
     public class ShowLogPanelTarget : TargetWithLayout
     {
-        private readonly LoggerGridView _LoggerGridView;
+        private readonly LoggerListView _LoggerListView;
 
         public ShowLogPanelTarget()
         {
-            _LoggerGridView = LoggerGridView.Instance;
+            _LoggerListView = LoggerListView.Instance;
         }
 
         protected override void Write(LogEventInfo logEvent)
         {
             try
             {
-                if (null != _LoggerGridView && !_LoggerGridView.IsDisposed)
+                if (null != _LoggerListView && !_LoggerListView.IsDisposed)
                 {
-                    _LoggerGridView.ThreadSafeInvoke(
-                        () => _LoggerGridView.ViewModel.AddLogInfo(logEvent));//.LogInfos.Insert(0, new CustomLogInfo(logEvent)));
+                    _LoggerListView.ThreadSafeInvoke(
+                        () => _LoggerListView.ViewModel.AddLogInfo(logEvent));
                 }
             }
             catch (Exception e)

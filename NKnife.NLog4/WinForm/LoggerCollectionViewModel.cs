@@ -1,22 +1,19 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Forms;
 using NLog;
 
 namespace NKnife.NLog.WinForm
 {
     public class LoggerCollectionViewModel
     {
-        public LoggerCollectionViewModel()
-        {
-            LogInfos = new BindingList<CustomLogInfo>();
-        }
-
-        internal Level CurrentLevel { get; set; } = Level.Trace | Level.Debug | Level.Info | Level.Warn | Level.Error |
-                                                    Level.Fatal;
+        internal Level CurrentLevel { get; set; } 
+            = Level.Trace | Level.Debug | Level.Info | Level.Warn | Level.Error | Level.Fatal;
 
         public int MaxViewCount { get; set; } = 300;
 
-        public BindingList<CustomLogInfo> LogInfos { get; }
+        public ObservableCollection<CustomLogInfo> LogInfos { get; } = new ObservableCollection<CustomLogInfo>();
 
         public void AddLogInfo(LogEventInfo logEvent)
         {

@@ -173,13 +173,10 @@ namespace NKnife.NLog3.Controls
         protected void LoggerListViewDoubleClick(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo si = HitTest(e.X, e.Y);
-            if (si.Item != null)
+            var info = (LogEventInfo) si.Item?.Tag;
+            if (info != null)
             {
-                var info = (LogEventInfo) si.Item.Tag;
-                if (info != null)
-                {
-                    LoggerInfoDetailForm.Show(info);
-                }
+                LoggerInfoDetailForm.Show(info);
             }
         }
 

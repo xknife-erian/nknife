@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using NKnife.IoC;
+using NKnife.ShareResources;
+using NKnife.Utility;
 using NLog;
 
 namespace NKnife.NLog.WinForm
@@ -10,8 +15,10 @@ namespace NKnife.NLog.WinForm
     /// <summary>
     ///     日志显示面板控件，日志等级通过左上角的日志等级列表进行筛选
     /// </summary>
-    public sealed partial class LoggerListView : UserControl
+    public partial class LoggerListView : UserControl
     {
+        public LoggerCollectionViewModel ViewModel { get; private set; } = new LoggerCollectionViewModel();
+
         private LoggerListView()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Global.Culture);
@@ -39,9 +46,75 @@ namespace NKnife.NLog.WinForm
             _FatalMenuItem.Checked = true;
 
             #endregion
+
+            ViewModel.LogInfos.CollectionChanged += LogInfos_CollectionChanged;
+            SizeChanged += (s, e) => { SetViewColumnSize(); };
         }
 
-        public LoggerCollectionViewModel ViewModel { get; set; }
+        /// <summary>设置Log显示的ListView中各列的宽度
+        /// </summary>
+        private void SetViewColumnSize()
+        {
+            if (_ListView.Columns.Count >= 2)
+            {
+                if (_ListView.Columns[0].Width != 0)
+                    _ListView.Columns[0].Width = 80;
+                if (_ListView.Columns[2].Width != 0)
+                    _ListView.Columns[2].Width = 200;
+                _ListView.Columns[1].Width = Width - _ListView.Columns[0].Width - _ListView.Columns[2].Width - 22;
+            }
+        }
+
+        private void LogInfos_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                {
+                    var info = ViewModel.LogInfos[e.NewStartingIndex];
+                    var viewItem = new ListViewItem();
+                    viewItem.Tag = info.LogInfo;
+                    viewItem.Text = info.DateTime.ToString("HH:mm:ss.fff");
+                    viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, info.LogInfo.FormattedMessage));
+                    viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem,
+                        LogUtil.ParseLoggerName(info.Source)));
+                    switch (info.LogLevel.Name)
+                    {
+                        case "Trace":
+                            viewItem.ForeColor = Color.CornflowerBlue;
+                            break;
+                        case "Debug":
+                            viewItem.ForeColor = Color.Blue;
+                            break;
+                        case "Info":
+                            break;
+                        case "Warn":
+                            viewItem.BackColor = Color.Khaki;
+                            break;
+                        case "Error":
+                            viewItem.BackColor = Color.Orange;
+                            break;
+                        case "Fatal":
+                            viewItem.ForeColor = Color.White;
+                            viewItem.BackColor = Color.OrangeRed;
+                            break;
+                    }
+                    _ListView.Items.Insert(0, viewItem);
+                    break;
+                }
+                case NotifyCollectionChangedAction.Remove:
+                {
+                    _ListView.Items.RemoveAt(e.OldStartingIndex);
+                    break;
+                }
+                case NotifyCollectionChangedAction.Reset:
+                {
+                    if (ViewModel.LogInfos.Count <= 0)
+                        _ListView.Items.Clear();
+                    break;
+                }
+            }
+        }
 
         /// <summary>
         ///     是否显示工具栏
@@ -54,69 +127,45 @@ namespace NKnife.NLog.WinForm
 
         private void BuildLoggerInfoColumn()
         {
-            var timeColumn = new DataGridViewTextBoxColumn();
-            var levelColumn = new DataGridViewTextBoxColumn();
-            var infoColumn = new DataGridViewTextBoxColumn();
-            var sourceColumn = new DataGridViewTextBoxColumn();
+            var timeHeader = new ColumnHeader();
+            timeHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Time_Header");
+            timeHeader.Width = 80;
 
-            timeColumn.Name = "time";
-            timeColumn.HeaderText = "时间";
-            timeColumn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            timeColumn.DataPropertyName = nameof(CustomLogInfo.DateTime);
-            timeColumn.Width = 76;
-            timeColumn.ReadOnly = true;
-            timeColumn.DefaultCellStyle.Format = "HH:mm:ss fff";
-            //---------
-            levelColumn.Name = "level";
-            levelColumn.HeaderText = string.Empty;
-            levelColumn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            levelColumn.DataPropertyName = nameof(CustomLogInfo.LogLevel);
-            levelColumn.Width = 40;
-            levelColumn.ReadOnly = true;
-            //---------
-            infoColumn.Name = "info";
-            infoColumn.HeaderText = "日志";
-            infoColumn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            infoColumn.DataPropertyName = nameof(CustomLogInfo.LogInfo);
-            infoColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            infoColumn.ReadOnly = true;
-            //---------
-            sourceColumn.Name = "source";
-            sourceColumn.HeaderText = "日志源";
-            sourceColumn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            sourceColumn.DataPropertyName = nameof(CustomLogInfo.Source);
-            sourceColumn.Width = 160;
-            sourceColumn.ReadOnly = true;
-            //---------
-            //_ListView.Columns.AddRange(timeColumn, levelColumn, infoColumn, sourceColumn);
+            var logMessageHeader = new ColumnHeader();
+            logMessageHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Info_Header");
+            logMessageHeader.Width = 380;
+
+            var loggerNameHeader = new ColumnHeader();
+            loggerNameHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Source_Header");
+            loggerNameHeader.Width = 200;
+
+            _ListView.Columns.AddRange(
+                new[]
+                    {
+                        timeHeader,
+                        logMessageHeader,
+                        loggerNameHeader
+                    });
+            _ListView.GridLines = true;
+            _ListView.MultiSelect = false;
+            _ListView.FullRowSelect = true;
+            _ListView.View = View.Details;
+            _ListView.ShowItemToolTips = true;
+            _ListView.MouseDoubleClick += LoggerListViewDoubleClick;
         }
 
-        private void LogGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            switch (_ListView.Items[e.ColumnIndex].Name)
-            {
-                case "info":
-                    var loginfo = (LogEventInfo) e.Value;
-                    e.Value = loginfo.FormattedMessage;
-                    break;
-                case "source":
-                    e.Value = LogUtil.ParseLoggerName(e.Value.ToString());
-                    break;
-            }
-        }
 
         /// <summary>
-        ///     双击一条日志弹出详细窗口
+        /// 双击一条日志弹出详细窗口
         /// </summary>
         private void LoggerListViewDoubleClick(object sender, MouseEventArgs e)
         {
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            ViewModel = new LoggerCollectionViewModel();
-            //TODO:_ListView.DataBindings
+            ListViewHitTestInfo si = _ListView.HitTest(e.X, e.Y);
+            var info = (LogEventInfo) si.Item?.Tag;
+            if (info != null)
+            {
+                LoggerInfoDetailForm.Show(info);
+            }
         }
 
         public void SetDebugMode(bool isDebug)
