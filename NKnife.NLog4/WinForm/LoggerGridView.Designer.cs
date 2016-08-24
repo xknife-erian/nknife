@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoggerGridView));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this._ToolStrip = new System.Windows.Forms.ToolStrip();
             this._LevelToolButton = new System.Windows.Forms.ToolStripDropDownButton();
             this._TraceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,16 +115,28 @@
             resources.ApplyResources(this._LogGridView, "_LogGridView");
             this._LogGridView.MultiSelect = false;
             this._LogGridView.Name = "_LogGridView";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this._LogGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this._LogGridView.RowTemplate.Height = 23;
             this._LogGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this._LogGridView.ShowCellErrors = false;
+            this._LogGridView.ShowCellToolTips = false;
+            this._LogGridView.ShowEditingIcon = false;
+            this._LogGridView.ShowRowErrors = false;
             // 
-            // _LogPanel
+            // LoggerGridView
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this._LogGridView);
             this.Controls.Add(this._ToolStrip);
-            this.Name = "LogPanel";
+            this.Name = "LoggerGridView";
             this._ToolStrip.ResumeLayout(false);
             this._ToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._LogGridView)).EndInit();

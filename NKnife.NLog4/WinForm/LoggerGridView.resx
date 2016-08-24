@@ -121,34 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="_ToolStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="_ToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 25</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="_ToolStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;_ToolStrip.Name" xml:space="preserve">
-    <value>_ToolStrip</value>
-  </data>
-  <data name="&gt;&gt;_ToolStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_ToolStrip.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;_ToolStrip.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="_LevelToolButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 22</value>
-  </data>
-  <data name="_LevelToolButton.Text" xml:space="preserve">
-    <value>日志等级</value>
-  </data>
   <data name="_TraceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 22</value>
   </data>
@@ -185,11 +157,39 @@
   <data name="_FatalMenuItem.Text" xml:space="preserve">
     <value>Fatal</value>
   </data>
+  <data name="_LevelToolButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 22</value>
+  </data>
+  <data name="_LevelToolButton.Text" xml:space="preserve">
+    <value>日志等级</value>
+  </data>
   <data name="_ClearToolButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 22</value>
   </data>
   <data name="_ClearToolButton.Text" xml:space="preserve">
     <value>清空</value>
+  </data>
+  <data name="_ToolStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="_ToolStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 25</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="_ToolStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;_ToolStrip.Name" xml:space="preserve">
+    <value>_ToolStrip</value>
+  </data>
+  <data name="&gt;&gt;_ToolStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_ToolStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_ToolStrip.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="_LogGridView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -197,6 +197,9 @@
   </data>
   <data name="_LogGridView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 25</value>
+  </data>
+  <data name="_LogGridView.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>12</value>
   </data>
   <data name="_LogGridView.Size" type="System.Drawing.Size, System.Drawing">
     <value>610, 398</value>
@@ -274,7 +277,7 @@
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>LogPanel</value>
+    <value>LoggerGridView</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

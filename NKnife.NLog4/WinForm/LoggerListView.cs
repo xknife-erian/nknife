@@ -88,7 +88,7 @@ namespace NKnife.NLog.WinForm
             sourceColumn.Width = 160;
             sourceColumn.ReadOnly = true;
             //---------
-            _ListView.Columns.AddRange(timeColumn, levelColumn, infoColumn, sourceColumn);
+            //_ListView.Columns.AddRange(timeColumn, levelColumn, infoColumn, sourceColumn);
         }
 
         private void LogGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -116,7 +116,7 @@ namespace NKnife.NLog.WinForm
         {
             base.OnLoad(e);
             ViewModel = new LoggerCollectionViewModel();
-            _ListView.DataBindings
+            //TODO:_ListView.DataBindings
         }
 
         public void SetDebugMode(bool isDebug)
@@ -176,7 +176,7 @@ namespace NKnife.NLog.WinForm
         ///     初始化LogPanel到指定容器
         /// </summary>
         /// <param name="container"></param>
-        public static LoggerGridView AppendLogPanelToContainer(Panel container)
+        public static LoggerListView AppendLogPanelToContainer(Panel container)
         {
             var logPanel = Instance;
             logPanel.Dock = DockStyle.Fill;
@@ -190,7 +190,7 @@ namespace NKnife.NLog.WinForm
             return logPanel;
         }
 
-        public static LoggerGridView AppendLogPanelToContainer(Form container)
+        public static LoggerListView AppendLogPanelToContainer(Form container)
         {
             var logPanel = Instance;
             logPanel.Dock = DockStyle.Fill;

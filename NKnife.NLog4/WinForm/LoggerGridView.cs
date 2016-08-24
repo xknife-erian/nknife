@@ -20,6 +20,7 @@ namespace NKnife.NLog.WinForm
                 true);
             UpdateStyles();
             InitializeComponent();
+
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Tahoma", 8.25F);
             BuildLoggerInfoColumn();
@@ -91,6 +92,17 @@ namespace NKnife.NLog.WinForm
             _LogGridView.Columns.AddRange(timeColumn, levelColumn, infoColumn, sourceColumn);
             _LogGridView.CellFormatting += LogGridView_CellFormatting;
             _LogGridView.DataBindingComplete += LogGridView_DataBindingComplete;
+            _LogGridView.CellDoubleClick += LogGridView_CellDoubleClick;
+        }
+
+        private void LogGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var rowIndex = e.RowIndex;
+            var info = ViewModel.LogInfos[rowIndex];
+            if (info?.LogInfo != null)
+            {
+                LoggerInfoDetailForm.Show(info.LogInfo);
+            }
         }
 
         private void LogGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -103,6 +115,29 @@ namespace NKnife.NLog.WinForm
         {
             switch (_LogGridView.Columns[e.ColumnIndex].Name)
             {
+                case "level":
+                    switch (e.Value.ToString())
+                    {
+                        case nameof(Level.Trace):
+                            _LogGridView.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.CornflowerBlue;
+                            break;
+                        case nameof(Level.Debug):
+                            _LogGridView.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Blue;
+                            break;
+                        case nameof(Level.Info):
+                            break;
+                        case nameof(Level.Warn):
+                            _LogGridView.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Khaki;
+                            break;
+                        case nameof(Level.Error):
+                            _LogGridView.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Orange;
+                            break;
+                        case nameof(Level.Fatal):
+                            _LogGridView.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.OrangeRed;
+                            _LogGridView.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+                            break;
+                    }
+                    break;
                 case "info":
                     var loginfo = (LogEventInfo) e.Value;
                     e.Value = loginfo.FormattedMessage;
@@ -111,13 +146,6 @@ namespace NKnife.NLog.WinForm
                     e.Value = LogUtil.ParseLoggerName(e.Value.ToString());
                     break;
             }
-        }
-
-        /// <summary>
-        ///     双击一条日志弹出详细窗口
-        /// </summary>
-        private void LoggerListViewDoubleClick(object sender, MouseEventArgs e)
-        {
         }
 
         protected override void OnLoad(EventArgs e)
