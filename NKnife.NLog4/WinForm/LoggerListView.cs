@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
-using NKnife.IoC;
 using NKnife.ShareResources;
 using NKnife.Utility;
 using NLog;
@@ -17,19 +15,14 @@ namespace NKnife.NLog.WinForm
     /// </summary>
     public partial class LoggerListView : UserControl
     {
-        public LoggerCollectionViewModel ViewModel { get; private set; } = new LoggerCollectionViewModel();
-
         private LoggerListView()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Global.Culture);
-            SetStyle(
-                ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint,
-                true);
+            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             UpdateStyles();
             InitializeComponent();
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Tahoma", 8.25F);
-            BuildLoggerInfoColumn();
 
             #region Menu Checked
 
@@ -49,9 +42,22 @@ namespace NKnife.NLog.WinForm
 
             ViewModel.LogInfos.CollectionChanged += LogInfos_CollectionChanged;
             SizeChanged += (s, e) => { SetViewColumnSize(); };
+            _ListView.MouseDoubleClick += LoggerListViewDoubleClick;
         }
 
-        /// <summary>设置Log显示的ListView中各列的宽度
+        public LoggerCollectionViewModel ViewModel { get; } = new LoggerCollectionViewModel();
+
+        /// <summary>
+        ///     是否显示工具栏
+        /// </summary>
+        public bool ToolStripVisible
+        {
+            get { return _ToolStrip.Visible; }
+            set { _ToolStrip.Visible = value; }
+        }
+
+        /// <summary>
+        ///     设置Log显示的ListView中各列的宽度
         /// </summary>
         private void SetViewColumnSize()
         {
@@ -117,50 +123,11 @@ namespace NKnife.NLog.WinForm
         }
 
         /// <summary>
-        ///     是否显示工具栏
-        /// </summary>
-        public bool ToolStripVisible
-        {
-            get { return _ToolStrip.Visible; }
-            set { _ToolStrip.Visible = value; }
-        }
-
-        private void BuildLoggerInfoColumn()
-        {
-            var timeHeader = new ColumnHeader();
-            timeHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Time_Header");
-            timeHeader.Width = 80;
-
-            var logMessageHeader = new ColumnHeader();
-            logMessageHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Info_Header");
-            logMessageHeader.Width = 380;
-
-            var loggerNameHeader = new ColumnHeader();
-            loggerNameHeader.Text = UtilityResource.GetString(StringResource.ResourceManager, "LogPanel_Source_Header");
-            loggerNameHeader.Width = 200;
-
-            _ListView.Columns.AddRange(
-                new[]
-                    {
-                        timeHeader,
-                        logMessageHeader,
-                        loggerNameHeader
-                    });
-            _ListView.GridLines = true;
-            _ListView.MultiSelect = false;
-            _ListView.FullRowSelect = true;
-            _ListView.View = View.Details;
-            _ListView.ShowItemToolTips = true;
-            _ListView.MouseDoubleClick += LoggerListViewDoubleClick;
-        }
-
-
-        /// <summary>
-        /// 双击一条日志弹出详细窗口
+        ///     双击一条日志弹出详细窗口
         /// </summary>
         private void LoggerListViewDoubleClick(object sender, MouseEventArgs e)
         {
-            ListViewHitTestInfo si = _ListView.HitTest(e.X, e.Y);
+            var si = _ListView.HitTest(e.X, e.Y);
             var info = (LogEventInfo) si.Item?.Tag;
             if (info != null)
             {

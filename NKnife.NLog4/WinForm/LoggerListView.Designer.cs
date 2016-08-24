@@ -38,7 +38,7 @@
             this._ErrorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._FatalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._ClearToolButton = new System.Windows.Forms.ToolStripButton();
-            this._ListView = new System.Windows.Forms.ListView();
+            this._ListView = new NotFlickerListView();
             this._ToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,6 +134,6 @@
         private System.Windows.Forms.ToolStripMenuItem _WarnMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _ErrorMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _FatalMenuItem;
-        private System.Windows.Forms.ListView _ListView;
+        private NotFlickerListView _ListView;
     }
 }

@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogUtil.cs" />
+    <Compile Include="NotFlickerListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WinForm\CustomLogInfo.cs" />
     <Compile Include="WinForm\LoggerCollectionViewModel.cs" />
     <Compile Include="IoC\NLogModules.cs" />
