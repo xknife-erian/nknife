@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading;
+using System.Windows.Forms;
+using NKnife.Collections;
 using NLog;
 using NLog.Targets;
 
@@ -14,9 +17,34 @@ namespace NKnife.NLog.WinForm
     {
         private readonly LoggerListView _LoggerListView;
 
+        private readonly SyncQueue<LogEventInfo> _LogQueue = new SyncQueue<LogEventInfo>();
+        private bool _WriteEnable = true;
+
         public ShowLogPanelTarget()
         {
             _LoggerListView = LoggerListView.Instance;
+            var thread = new Thread(() =>
+            {
+                while (_WriteEnable)
+                {
+                    if (_LogQueue.Count <= 0)
+                        _LogQueue.AutoResetEvent.WaitOne();
+                    var logEvent = _LogQueue.Dequeue();
+                    _LoggerListView.ThreadSafeInvoke(() =>
+                    {
+                        if (logEvent != null)
+                            _LoggerListView.ViewModel.AddLogInfo(logEvent);
+                    });
+                }
+            }) {Name = "NKnife-NLog4ListView-Thread"};
+            Application.ApplicationExit += (s, e) =>
+            {
+                _WriteEnable = false;
+                _LogQueue.AutoResetEvent.Set();
+                Thread.Sleep(10);
+                thread.Abort();
+            };
+            thread.Start();
         }
 
         protected override void Write(LogEventInfo logEvent)
@@ -25,8 +53,7 @@ namespace NKnife.NLog.WinForm
             {
                 if (null != _LoggerListView && !_LoggerListView.IsDisposed)
                 {
-                    _LoggerListView.ThreadSafeInvoke(
-                        () => _LoggerListView.ViewModel.AddLogInfo(logEvent));
+                    _LogQueue.Enqueue(logEvent);
                 }
             }
             catch (Exception e)
