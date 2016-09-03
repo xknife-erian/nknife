@@ -21,11 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SerialKnife.Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Tunnel.UnitTest", "UnitTests\NKnife.Tunnel.UnitTest\NKnife.Tunnel.UnitTest.csproj", "{1B229168-2C13-46E6-87D1-42DFA82E36EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.StressTest", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SocketKnife.StressTest\NKnife.Kits.SocketKnife.StressTest.csproj", "{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.StressTest.UnitTest", "UnitTests\NKnife.Kits.SocketKnife.StressTest.UnitTest\NKnife.Kits.SocketKnife.StressTest.UnitTest.csproj", "{E15AA080-A108-4E9C-B899-A8BFFCA73C76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog4", "NKnife.NLog4\NKnife.NLog4.csproj", "{24AF3E97-0817-4CBB-A471-15A9FA4004C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.StressTest", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SocketKnife.StressTest\NKnife.Kits.SocketKnife.StressTest.csproj", "{DB0BF21C-A88C-4D11-AB1F-49BEA30A324D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +65,6 @@ Global
 		{1B229168-2C13-46E6-87D1-42DFA82E36EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B229168-2C13-46E6-87D1-42DFA82E36EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B229168-2C13-46E6-87D1-42DFA82E36EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E15AA080-A108-4E9C-B899-A8BFFCA73C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +73,10 @@ Global
 		{24AF3E97-0817-4CBB-A471-15A9FA4004C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24AF3E97-0817-4CBB-A471-15A9FA4004C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24AF3E97-0817-4CBB-A471-15A9FA4004C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB0BF21C-A88C-4D11-AB1F-49BEA30A324D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB0BF21C-A88C-4D11-AB1F-49BEA30A324D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB0BF21C-A88C-4D11-AB1F-49BEA30A324D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB0BF21C-A88C-4D11-AB1F-49BEA30A324D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

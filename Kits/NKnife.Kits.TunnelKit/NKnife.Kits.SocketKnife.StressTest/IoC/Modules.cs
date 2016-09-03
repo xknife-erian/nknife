@@ -15,7 +15,6 @@ using NKnife.Tunnel;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Filters;
 using NKnife.Tunnel.Generic;
-using SerialKnife.Generic.Filters;
 
 namespace NKnife.Kits.SocketKnife.StressTest.IoC
 {

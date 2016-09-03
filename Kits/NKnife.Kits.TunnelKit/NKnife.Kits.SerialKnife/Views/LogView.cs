@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NKnife.NLog.Controls;
+using NKnife.NLog.WinForm;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.SerialKnife.Views
 {
     public class LogView : DockContent
     {
-        private LogPanel _LogPanel;
+        private LoggerListView _LogPanel;
 
         public LogView()
         {
@@ -17,14 +17,13 @@ namespace NKnife.Kits.SerialKnife.Views
         }
         private void InitializeComponent()
         {
-            this._LogPanel = LogPanel.Instance;
+            this._LogPanel = LoggerListView.Instance;
             this.SuspendLayout();
             // 
             // _LogPanel
             // 
             this._LogPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this._LogPanel.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this._LogPanel.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Clickable;
             this._LogPanel.Location = new System.Drawing.Point(0, 0);
             this._LogPanel.Name = "_LogPanel";
             this._LogPanel.Size = new System.Drawing.Size(673, 227);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NKnife.NLog.Controls;
+using NKnife.NLog.WinForm;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.SocketKnife.StressTest.View
@@ -12,7 +12,7 @@ namespace NKnife.Kits.SocketKnife.StressTest.View
         public LogView()
         {
             InitializeComponent();
-            LogPanel.AppendLogPanelToContainer(this);
+            LoggerListView.AppendLogPanelToContainer(this);
         }
         private void InitializeComponent()
         {

@@ -11,7 +11,6 @@ using NKnife.Kits.SocketKnife.StressTest.Protocol.Server;
 using NKnife.Protocol;
 using NKnife.Protocol.Generic;
 using NKnife.Tunnel.Base;
-using SerialKnife.Pan.Common;
 
 namespace NKnife.Kits.SocketKnife.StressTest.Kernel
 {

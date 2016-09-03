@@ -1,21 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{DB0BF21C-A88C-4D11-AB1F-49BEA30A324D}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NKnife.Kits.SocketKnife.StressTest</RootNamespace>
     <AssemblyName>NKnife.Kits.SocketKnife.StressTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,20 +29,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging, Version=3.4.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Common.Logging.3.4.0-Alpha1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    <Reference Include="Common.Logging.Core, Version=3.4.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Common.Logging.Core.3.4.0-Alpha1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ninject">
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,11 +48,10 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\DockPanelSuite.2.10.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -69,22 +62,20 @@
     <Compile Include="Base\IKernel.cs" />
     <Compile Include="Base\ITestCase.cs" />
     <Compile Include="Base\NangleProtocol.cs" />
+    <Compile Include="Base\NangleProtocolEventArgs.cs" />
+    <Compile Include="Base\ServerStateEventArgs.cs" />
     <Compile Include="Base\SessionWrapper.cs" />
     <Compile Include="Base\TestCaseResultEventArgs.cs" />
     <Compile Include="Codec\NangleCodecUtility.cs" />
-    <Compile Include="Kernel\ExecuteTestCaseParam.cs" />
-    <Compile Include="Kernel\NangleServerFilter.cs" />
-    <Compile Include="Protocol\Client\ExecuteTestCaseReply.cs" />
-    <Compile Include="Protocol\Client\InitializeConnectionReply.cs" />
-    <Compile Include="Protocol\Client\ReadTestCaseResultReply.cs" />
-    <Compile Include="Protocol\Client\SetSpeechModeReply.cs" />
-    <Compile Include="Protocol\Client\StopExecuteTestCaseReply.cs" />
-    <Compile Include="Protocol\Generic\NangleProtocolUtility.cs" />
-    <Compile Include="Protocol\Server\ExecuteTestCase.cs" />
-    <Compile Include="Protocol\Generic\NangleCommandParser.cs" />
     <Compile Include="Codec\NangleDatagramDecoder.cs" />
     <Compile Include="Codec\NangleDatagramEncoder.cs" />
     <Compile Include="IoC\Modules.cs" />
+    <Compile Include="Kernel\ExecuteTestCaseParam.cs" />
+    <Compile Include="Kernel\MainTestOption.cs" />
+    <Compile Include="Kernel\MockClientHandler.cs" />
+    <Compile Include="Kernel\NangleServerFilter.cs" />
+    <Compile Include="Kernel\ServerHandler.cs" />
+    <Compile Include="Kernel\TestKernel.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,35 +84,39 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs" />
+    <Compile Include="Protocol\Client\ExecuteTestCaseReply.cs" />
+    <Compile Include="Protocol\Client\InitializeConnectionReply.cs" />
+    <Compile Include="Protocol\Client\ReadTestCaseResultReply.cs" />
+    <Compile Include="Protocol\Client\SetSpeechModeReply.cs" />
+    <Compile Include="Protocol\Client\StopExecuteTestCaseReply.cs" />
+    <Compile Include="Protocol\Generic\NangleCommandParser.cs" />
     <Compile Include="Protocol\Generic\NangleProtocolPacker.cs" />
     <Compile Include="Protocol\Generic\NangleProtocolUnPacker.cs" />
+    <Compile Include="Protocol\Generic\NangleProtocolUtility.cs" />
+    <Compile Include="Protocol\Server\ExecuteTestCase.cs" />
     <Compile Include="Protocol\Server\InitializeConnection.cs" />
     <Compile Include="Protocol\Server\ReadTestCaseResult.cs" />
     <Compile Include="Protocol\Server\SetSpeechMode.cs" />
     <Compile Include="Protocol\Server\StopExecuteTestCase.cs" />
     <Compile Include="Protocol\SpeechRawData.cs" />
     <Compile Include="Protocol\TestRawData.cs" />
-    <Compile Include="Base\NangleProtocolEventArgs.cs" />
-    <Compile Include="Kernel\TestKernel.cs" />
-    <Compile Include="Kernel\MockClientHandler.cs" />
-    <Compile Include="Kernel\ServerHandler.cs" />
-    <Compile Include="Kernel\MainTestOption.cs" />
-    <Compile Include="Base\ServerStateEventArgs.cs" />
     <Compile Include="TestCase\BroadcastTestCase.cs" />
+    <Compile Include="TestCase\ExecuteHardwareTestParam.cs" />
     <Compile Include="TestCase\PointToPointDualTestCase.cs" />
     <Compile Include="TestCase\PointToPointGroupTestCase.cs" />
     <Compile Include="TestCase\PointToPointTestCase.cs" />
     <Compile Include="TestCase\SingleTalkTestCase.cs" />
-    <Compile Include="TestCase\ExecuteHardwareTestParam.cs" />
     <Compile Include="TestCase\SpeechBroadcastTestCase.cs" />
     <Compile Include="TestCase\SpeechEchoTestCase.cs" />
     <Compile Include="TestCase\SpeechTalkTestCase.cs" />
     <Compile Include="TestCase\SpeechTestParam.cs" />
     <Compile Include="TestCase\TestCaseResult.cs" />
-    <Compile Include="View\MockClientView.cs">
+    <Compile Include="View\LogView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\LogView.cs">
+    <Compile Include="View\MockClientView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\ProtocolView.cs">
@@ -142,18 +137,13 @@
     <Compile Include="View\TestCaseResultDialog.Designer.cs">
       <DependentUpon>TestCaseResultDialog.cs</DependentUpon>
     </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx" />
     <EmbeddedResource Include="View\MockClientView.resx">
       <DependentUpon>MockClientView.cs</DependentUpon>
     </EmbeddedResource>
@@ -169,20 +159,15 @@
     <EmbeddedResource Include="View\TestCaseResultDialog.resx">
       <DependentUpon>TestCaseResultDialog.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="app.config" />
-    <None Include="nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="nlog.config" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <None Include="Properties\Settings.settings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\NKnife.NLog4\NKnife.NLog4.csproj">
@@ -194,7 +179,7 @@
       <Name>NKnife.Serial</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\NKnife.Socket\NKnife.Socket.csproj">
-      <Project>{f3299ac1-2d25-4b91-a4d9-f9c1ab6f0825}</Project>
+      <Project>{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825}</Project>
       <Name>NKnife.Socket</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\NKnife\NKnife.csproj">
@@ -202,16 +187,7 @@
       <Name>NKnife</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
-    <Content Include="logo.ico" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
