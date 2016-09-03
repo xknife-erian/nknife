@@ -4,8 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
-using NKnife.ShareResources;
-using NKnife.Utility;
+using NKnife.Base;
 using NLog;
 
 namespace NKnife.NLog.WinForm
@@ -15,6 +14,13 @@ namespace NKnife.NLog.WinForm
     /// </summary>
     public partial class LoggerListView : UserControl
     {
+        private Pair<Color, Color> _TrackColor = Pair<Color, Color>.Build(Color.CornflowerBlue, Color.White);
+        private Pair<Color, Color> _DebugColor = Pair<Color, Color>.Build(Color.DarkSlateBlue, Color.White);
+        private Pair<Color, Color> _InfoColor = Pair<Color, Color>.Build(Color.Black, Color.White);
+        private Pair<Color, Color> _WarnColor = Pair<Color, Color>.Build(Color.Black, Color.Khaki);
+        private Pair<Color, Color> _ErrorColor = Pair<Color, Color>.Build(Color.Black, Color.Orange);
+        private Pair<Color, Color> _FatalColor = Pair<Color, Color>.Build(Color.White, Color.OrangeRed);
+
         private LoggerListView()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Global.Culture);
@@ -71,6 +77,17 @@ namespace NKnife.NLog.WinForm
             }
         }
 
+        public void SetColors(Pair<Color, Color> trace, Pair<Color, Color> debug, Pair<Color, Color> info, Pair<Color, Color> warn, Pair<Color, Color> error,
+            Pair<Color, Color> fatal)
+        {
+            _TrackColor = trace;
+            _DebugColor = debug;
+            _InfoColor = info;
+            _WarnColor = warn;
+            _ErrorColor = error;
+            _FatalColor = fatal;
+        }
+
         private void LogInfos_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
@@ -87,22 +104,28 @@ namespace NKnife.NLog.WinForm
                     switch (info.LogLevel.Name)
                     {
                         case "Trace":
-                            viewItem.ForeColor = Color.CornflowerBlue;
+                            viewItem.ForeColor = _TrackColor.First;
+                            viewItem.BackColor = _TrackColor.Second;
                             break;
                         case "Debug":
-                            viewItem.ForeColor = Color.Blue;
+                            viewItem.ForeColor = _DebugColor.First;
+                            viewItem.BackColor = _DebugColor.Second;
                             break;
                         case "Info":
+                            viewItem.ForeColor = _InfoColor.First;
+                            viewItem.BackColor = _InfoColor.Second;
                             break;
                         case "Warn":
-                            viewItem.BackColor = Color.Khaki;
+                            viewItem.ForeColor = _WarnColor.First;
+                            viewItem.BackColor = _WarnColor.Second;
                             break;
                         case "Error":
-                            viewItem.BackColor = Color.Orange;
+                            viewItem.ForeColor = _ErrorColor.First;
+                            viewItem.BackColor = _ErrorColor.Second;
                             break;
                         case "Fatal":
-                            viewItem.ForeColor = Color.White;
-                            viewItem.BackColor = Color.OrangeRed;
+                            viewItem.ForeColor = _FatalColor.First;
+                            viewItem.BackColor = _FatalColor.Second;
                             break;
                     }
                     _ListView.Items.Insert(0, viewItem);

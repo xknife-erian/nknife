@@ -36,7 +36,7 @@ namespace NKnife.NLog.WinForm
                             _LoggerListView.ViewModel.AddLogInfo(logEvent);
                     });
                 }
-            }) {Name = "NKnife-NLog4ListView-Thread"};
+            }) {Name = "NKnife-NLog4ListView-Thread", IsBackground = true};
             Application.ApplicationExit += (s, e) =>
             {
                 _WriteEnable = false;
