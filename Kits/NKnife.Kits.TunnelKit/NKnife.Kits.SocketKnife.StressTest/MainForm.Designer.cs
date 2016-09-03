@@ -50,7 +50,7 @@
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 25);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(684, 579);
+            this.MainPanel.Size = new System.Drawing.Size(940, 601);
             this.MainPanel.TabIndex = 4;
             // 
             // MainMenuStrip
@@ -61,7 +61,7 @@
             this.HelpToolStripMenuItem});
             this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip.Name = "MainMenuStrip";
-            this.MainMenuStrip.Size = new System.Drawing.Size(684, 25);
+            this.MainMenuStrip.Size = new System.Drawing.Size(940, 25);
             this.MainMenuStrip.TabIndex = 3;
             this.MainMenuStrip.Text = "menuStrip1";
             // 
@@ -144,13 +144,14 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 604);
+            this.ClientSize = new System.Drawing.Size(940, 626);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.MainMenuStrip);
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(700, 600);
+            this.MinimumSize = new System.Drawing.Size(700, 647);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SocketKnife压力测试";
