@@ -8,7 +8,7 @@ using NKnife.App.Cute.Base.Interfaces;
 using NKnife.App.Cute.Datas;
 using NKnife.App.Cute.Implement.Industry.Bank;
 using NKnife.App.Cute.Kernel.IoC;
-using NKnife.Database;
+using NKnife.Databases;
 using NKnife.IoC;
 
 namespace Cute.Demo

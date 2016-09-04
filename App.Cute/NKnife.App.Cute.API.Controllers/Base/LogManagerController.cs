@@ -3,7 +3,7 @@ using AttributeRouting.Web.Http;
 using MongoDB.Driver.Builders;
 using NKnife.App.Cute.Datas;
 using NKnife.App.Cute.Kernel.IoC;
-using NKnife.Database;
+using NKnife.Databases;
 using NKnife.IoC;
 
 namespace NKnife.App.Cute.API.Controllers.Base
@@ -22,9 +22,9 @@ namespace NKnife.App.Cute.API.Controllers.Base
                                 Count = (uint) param.rows
                             };
             var sort = (param.sord== Sord.asc) ? SortBy.Ascending("Id") : SortBy.Descending("Id");
-            var loglist = logs.Find(query, pager, sort);
-            var json = new JqGridResult {Data = loglist};
-            return json;
+            //var loglist = logs.Find(query, pager, sort);
+            //var json = new JqGridResult {Data = loglist};
+            return null;
         }
     }
 }

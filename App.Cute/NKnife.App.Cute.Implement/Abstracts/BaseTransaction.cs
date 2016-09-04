@@ -1,12 +1,11 @@
 using System;
 using NKnife.App.Cute.Base.Interfaces;
-using NKnife.Mvvm;
 
 namespace NKnife.App.Cute.Implement.Abstracts
 {
     /// <summary>交易信息。
     /// </summary>
-    public abstract class BaseTransaction : NotificationObject, ITransaction, IEquatable<BaseTransaction>
+    public abstract class BaseTransaction : ITransaction, IEquatable<BaseTransaction>
     {
         protected BaseTransaction()
         {
