@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkBenchForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据连接器设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.操作面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,8 +40,6 @@
             this.模拟串口连接器面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.数据连接器设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +51,7 @@
             this.帮助ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(559, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1008, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -64,6 +64,18 @@
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
             this.设置ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.设置ToolStripMenuItem.Text = "设置";
+            // 
+            // 数据连接器设置ToolStripMenuItem
+            // 
+            this.数据连接器设置ToolStripMenuItem.Name = "数据连接器设置ToolStripMenuItem";
+            this.数据连接器设置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.数据连接器设置ToolStripMenuItem.Text = "数据连接器设置";
+            this.数据连接器设置ToolStripMenuItem.Click += new System.EventHandler(this.数据连接器设置ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
             // 
             // ExitToolStripMenuItem
             // 
@@ -114,32 +126,22 @@
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 25);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(559, 449);
+            this.MainPanel.Size = new System.Drawing.Size(1008, 705);
             this.MainPanel.TabIndex = 1;
-            // 
-            // 数据连接器设置ToolStripMenuItem
-            // 
-            this.数据连接器设置ToolStripMenuItem.Name = "数据连接器设置ToolStripMenuItem";
-            this.数据连接器设置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.数据连接器设置ToolStripMenuItem.Text = "数据连接器设置";
-            this.数据连接器设置ToolStripMenuItem.Click += new System.EventHandler(this.数据连接器设置ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
             // 
             // WorkBenchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(559, 474);
+            this.ClientSize = new System.Drawing.Size(1008, 730);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "WorkBenchForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SerialKnife-Kits";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.WorkBenchForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

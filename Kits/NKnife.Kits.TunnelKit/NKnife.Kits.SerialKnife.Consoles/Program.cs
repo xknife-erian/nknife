@@ -21,7 +21,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
 
             _logger.Info("DI初始化结束....");
 
-            var server = new SerialClient(3);
+            var server = new SerialClient(10);
             server.Start();
 
             Thread.Sleep(100);

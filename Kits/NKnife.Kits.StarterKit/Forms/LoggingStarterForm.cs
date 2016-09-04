@@ -5,14 +5,14 @@ using System.Windows.Forms;
 using Common.Logging;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.NLog.Controls;
+using NKnife.NLog.WinForm;
 using NKnife.Utility;
 
 namespace NKnife.Kits.StarterKit.Forms
 {
     public partial class LoggingStarterForm : Form
     {
-        private readonly ILog _Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILog _Logger = LogManager.GetLogger<LoggingStarterForm>();
 
         private Thread _Thread;
         private bool _IsLogger = true;
@@ -21,7 +21,7 @@ namespace NKnife.Kits.StarterKit.Forms
         {
             InitializeComponent();
 
-            var logPanel = LogPanel.Instance;
+            var logPanel = LoggerListView.Instance;
             logPanel.Dock = DockStyle.Fill;
             logPanel.Font = new Font("Tahoma", 8.25F);         
             Controls.Add(logPanel);

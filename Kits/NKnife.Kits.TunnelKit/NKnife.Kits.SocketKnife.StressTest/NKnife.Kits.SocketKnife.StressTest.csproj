@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DB0BF21C-A88C-4D11-AB1F-49BEA30A324D}</ProjectGuid>
+    <ProjectGuid>{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NKnife.Kits.SocketKnife.StressTest</RootNamespace>

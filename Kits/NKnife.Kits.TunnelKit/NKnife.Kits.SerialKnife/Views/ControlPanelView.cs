@@ -32,6 +32,8 @@ namespace NKnife.Kits.SerialKnife.Views
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button ClearReceiveListButton;
         private System.Windows.Forms.TabPage Pan485PackageTabPage;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ListBox Pan485ProtocolListBox;
         public ControlPanelView()
         {
@@ -43,6 +45,8 @@ namespace NKnife.Kits.SerialKnife.Views
             this._StartTunnelButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.ManualPackageTabPage = new System.Windows.Forms.TabPage();
+            this.Pan485PackageTabPage = new System.Windows.Forms.TabPage();
+            this.Pan485ProtocolListBox = new System.Windows.Forms.ListBox();
             this.BytesProtocolPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.SendProtocolToRemoteButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -50,20 +54,29 @@ namespace NKnife.Kits.SerialKnife.Views
             this.ReceivedProtocolListBox = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ClearReceiveListButton = new System.Windows.Forms.Button();
-            this.Pan485PackageTabPage = new System.Windows.Forms.TabPage();
-            this.Pan485ProtocolListBox = new System.Windows.Forms.ListBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControl1.SuspendLayout();
+            this.Pan485PackageTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.Pan485PackageTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // _StartTunnelButton
             // 
-            this._StartTunnelButton.Location = new System.Drawing.Point(275, 463);
+            this._StartTunnelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._StartTunnelButton.Location = new System.Drawing.Point(9, 500);
             this._StartTunnelButton.Name = "_StartTunnelButton";
-            this._StartTunnelButton.Size = new System.Drawing.Size(106, 35);
+            this._StartTunnelButton.Size = new System.Drawing.Size(82, 31);
             this._StartTunnelButton.TabIndex = 55;
             this._StartTunnelButton.Text = "启动";
             this._StartTunnelButton.UseVisualStyleBackColor = true;
@@ -77,7 +90,7 @@ namespace NKnife.Kits.SerialKnife.Views
             this.tabControl1.Location = new System.Drawing.Point(3, 17);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(467, 218);
+            this.tabControl1.Size = new System.Drawing.Size(643, 228);
             this.tabControl1.TabIndex = 56;
             // 
             // ManualPackageTabPage
@@ -85,79 +98,10 @@ namespace NKnife.Kits.SerialKnife.Views
             this.ManualPackageTabPage.Location = new System.Drawing.Point(4, 22);
             this.ManualPackageTabPage.Name = "ManualPackageTabPage";
             this.ManualPackageTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ManualPackageTabPage.Size = new System.Drawing.Size(459, 192);
+            this.ManualPackageTabPage.Size = new System.Drawing.Size(635, 202);
             this.ManualPackageTabPage.TabIndex = 0;
             this.ManualPackageTabPage.Text = "自由组包";
             this.ManualPackageTabPage.UseVisualStyleBackColor = true;
-            // 
-            // BytesProtocolPropertyGrid
-            // 
-            this.BytesProtocolPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BytesProtocolPropertyGrid.Location = new System.Drawing.Point(3, 17);
-            this.BytesProtocolPropertyGrid.Name = "BytesProtocolPropertyGrid";
-            this.BytesProtocolPropertyGrid.Size = new System.Drawing.Size(478, 400);
-            this.BytesProtocolPropertyGrid.TabIndex = 57;
-            // 
-            // SendProtocolToRemoteButton
-            // 
-            this.SendProtocolToRemoteButton.Location = new System.Drawing.Point(144, 463);
-            this.SendProtocolToRemoteButton.Name = "SendProtocolToRemoteButton";
-            this.SendProtocolToRemoteButton.Size = new System.Drawing.Size(106, 35);
-            this.SendProtocolToRemoteButton.TabIndex = 58;
-            this.SendProtocolToRemoteButton.Text = "发送";
-            this.SendProtocolToRemoteButton.UseVisualStyleBackColor = true;
-            this.SendProtocolToRemoteButton.Click += new System.EventHandler(this.SendProtocolToRemoteButton_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.tabControl1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(473, 238);
-            this.groupBox1.TabIndex = 59;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "协议发送";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.ReceivedProtocolListBox);
-            this.groupBox2.Location = new System.Drawing.Point(12, 256);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(473, 179);
-            this.groupBox2.TabIndex = 60;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "协议接收";
-            // 
-            // ReceivedProtocolListBox
-            // 
-            this.ReceivedProtocolListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReceivedProtocolListBox.FormattingEnabled = true;
-            this.ReceivedProtocolListBox.ItemHeight = 12;
-            this.ReceivedProtocolListBox.Location = new System.Drawing.Point(3, 17);
-            this.ReceivedProtocolListBox.Name = "ReceivedProtocolListBox";
-            this.ReceivedProtocolListBox.Size = new System.Drawing.Size(467, 159);
-            this.ReceivedProtocolListBox.TabIndex = 0;
-            this.ReceivedProtocolListBox.Click += new System.EventHandler(this.ReceivedProtocolListBox_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.BytesProtocolPropertyGrid);
-            this.groupBox3.Location = new System.Drawing.Point(502, 12);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(484, 420);
-            this.groupBox3.TabIndex = 61;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "协议内容";
-            // 
-            // ClearReceiveListButton
-            // 
-            this.ClearReceiveListButton.Location = new System.Drawing.Point(15, 463);
-            this.ClearReceiveListButton.Name = "ClearReceiveListButton";
-            this.ClearReceiveListButton.Size = new System.Drawing.Size(106, 35);
-            this.ClearReceiveListButton.TabIndex = 62;
-            this.ClearReceiveListButton.Text = "清空";
-            this.ClearReceiveListButton.UseVisualStyleBackColor = true;
-            this.ClearReceiveListButton.Click += new System.EventHandler(this.ClearReceiveListButton_Click);
             // 
             // Pan485PackageTabPage
             // 
@@ -179,13 +123,122 @@ namespace NKnife.Kits.SerialKnife.Views
             this.Pan485ProtocolListBox.Size = new System.Drawing.Size(459, 192);
             this.Pan485ProtocolListBox.TabIndex = 0;
             // 
+            // BytesProtocolPropertyGrid
+            // 
+            this.BytesProtocolPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BytesProtocolPropertyGrid.Location = new System.Drawing.Point(3, 17);
+            this.BytesProtocolPropertyGrid.Name = "BytesProtocolPropertyGrid";
+            this.BytesProtocolPropertyGrid.Size = new System.Drawing.Size(327, 469);
+            this.BytesProtocolPropertyGrid.TabIndex = 57;
+            // 
+            // SendProtocolToRemoteButton
+            // 
+            this.SendProtocolToRemoteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SendProtocolToRemoteButton.Location = new System.Drawing.Point(185, 500);
+            this.SendProtocolToRemoteButton.Name = "SendProtocolToRemoteButton";
+            this.SendProtocolToRemoteButton.Size = new System.Drawing.Size(82, 31);
+            this.SendProtocolToRemoteButton.TabIndex = 58;
+            this.SendProtocolToRemoteButton.Text = "发送";
+            this.SendProtocolToRemoteButton.UseVisualStyleBackColor = true;
+            this.SendProtocolToRemoteButton.Click += new System.EventHandler(this.SendProtocolToRemoteButton_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tabControl1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(649, 248);
+            this.groupBox1.TabIndex = 59;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "协议发送";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.ReceivedProtocolListBox);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(649, 237);
+            this.groupBox2.TabIndex = 60;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "协议接收";
+            // 
+            // ReceivedProtocolListBox
+            // 
+            this.ReceivedProtocolListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReceivedProtocolListBox.FormattingEnabled = true;
+            this.ReceivedProtocolListBox.ItemHeight = 12;
+            this.ReceivedProtocolListBox.Location = new System.Drawing.Point(3, 17);
+            this.ReceivedProtocolListBox.Name = "ReceivedProtocolListBox";
+            this.ReceivedProtocolListBox.Size = new System.Drawing.Size(643, 217);
+            this.ReceivedProtocolListBox.TabIndex = 0;
+            this.ReceivedProtocolListBox.Click += new System.EventHandler(this.ReceivedProtocolListBox_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.BytesProtocolPropertyGrid);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(333, 489);
+            this.groupBox3.TabIndex = 61;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "协议内容";
+            // 
+            // ClearReceiveListButton
+            // 
+            this.ClearReceiveListButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ClearReceiveListButton.Location = new System.Drawing.Point(97, 500);
+            this.ClearReceiveListButton.Name = "ClearReceiveListButton";
+            this.ClearReceiveListButton.Size = new System.Drawing.Size(82, 31);
+            this.ClearReceiveListButton.TabIndex = 62;
+            this.ClearReceiveListButton.Text = "清空";
+            this.ClearReceiveListButton.UseVisualStyleBackColor = true;
+            this.ClearReceiveListButton.Click += new System.EventHandler(this.ClearReceiveListButton_Click);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(5, 6);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.groupBox3);
+            this.splitContainer1.Size = new System.Drawing.Size(986, 489);
+            this.splitContainer1.SplitterDistance = 649;
+            this.splitContainer1.TabIndex = 63;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.groupBox2);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.groupBox1);
+            this.splitContainer2.Size = new System.Drawing.Size(649, 489);
+            this.splitContainer2.SplitterDistance = 237;
+            this.splitContainer2.TabIndex = 0;
+            // 
             // ControlPanelView
             // 
             this.ClientSize = new System.Drawing.Size(998, 543);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.ClearReceiveListButton);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SendProtocolToRemoteButton);
             this.Controls.Add(this._StartTunnelButton);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -193,10 +246,18 @@ namespace NKnife.Kits.SerialKnife.Views
             this.Text = "操作面板";
             this.Load += new System.EventHandler(this.ControlPanelView_Load);
             this.tabControl1.ResumeLayout(false);
+            this.Pan485PackageTabPage.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.Pan485PackageTabPage.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
