@@ -157,3 +157,4 @@ $RECYCLE.BIN/
 /App.WebpageBuilder/NKnife.App.WebpageBuilder/Bin
 /.nuget
 /NKnife.NLog3/FakesAssemblies
+/.vs
