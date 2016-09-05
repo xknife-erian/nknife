@@ -16,7 +16,7 @@ namespace NKnife.MongoDb
     /// <typeparam name="TId">实体的Id的类型</typeparam>
     public abstract class AbstractMongoDbStore<T, TId> : IMongoDbStore<T, TId>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<AbstractMongoDbStore<T, TId>>();
 
         private readonly MongoDatabase _Database;
         private readonly MongoServer _Mongo;
