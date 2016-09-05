@@ -85,14 +85,17 @@ namespace System
             }
             for (int i = str.Length; i >= 0; i--)
             {
-                if (str[i].Equals(" ") || str[i].Equals("\r") || str[i].Equals("\n"))
+                if (str[i].Equals(' ') || str[i].Equals('\r') || str[i].Equals('\n'))
                 {
-                    str.Remove(i, 1);
+                    str = str.Remove(i, 1);
                 }
             }
             return str;
         }
 
+        /// <summary>
+        /// 去除字符串尾部的“0”字符
+        /// </summary>
         public static string TrimZero(this string str)
         {
             var n = str.LastIndexOf('.');
@@ -108,11 +111,7 @@ namespace System
                         break;
                     }
                 }
-                string result;
-                if (!allIsZero)
-                    result = str.Substring(0, i + 1);
-                else
-                    result = str.Substring(0, n);
+                var result = !allIsZero ? str.Substring(0, i + 1) : str.Substring(0, n);
                 return result;
             }
             if (str.IsEmptyAndZero())
