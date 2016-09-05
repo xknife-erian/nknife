@@ -7,6 +7,8 @@ using Ninject.Modules;
 using NKnife.NLog.Properties;
 using NKnife.NLog.WinForm;
 using NKnife.NLog.WPF;
+using NLog;
+using LogManager = Common.Logging.LogManager;
 
 namespace NKnife.NLog.IoC
 {
