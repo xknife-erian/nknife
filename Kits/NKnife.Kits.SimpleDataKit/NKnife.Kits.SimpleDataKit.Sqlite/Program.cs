@@ -14,7 +14,7 @@ namespace NKnife.Kits.SimpleDataKit.Sqlite
 {
     class Program
     {
-        private const string FILE01 = @"d:\simple-data-books.db";
+        private const string FILE01 = @"z:\simple-data-books.db";
         private const string FILE02 = ":memory:";
         private static readonly string _connectionString = string.Format("Data Source={0};Version=3", FILE01);
 
