@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -58,9 +57,9 @@ namespace NKnife.Compress
                 if (_Disposed || !_SharpZipFile.GetEntry(filename).IsFile)
                     return null;
                 var buffer = new byte[((int) _SharpZipFile.GetEntry(filename).Size) + 1];
-                ZipEntry zipEntry = _SharpZipFile.GetEntry(filename);
+                var zipEntry = _SharpZipFile.GetEntry(filename);
                 var size = (int) _SharpZipFile.GetEntry(filename).Size;
-                Stream stream = _SharpZipFile.GetInputStream(zipEntry);
+                var stream = _SharpZipFile.GetInputStream(zipEntry);
                 stream.Read(buffer, 0, size);
                 return buffer;
             }
@@ -144,7 +143,7 @@ namespace NKnife.Compress
                     Directory.CreateDirectory(directory);
                 using (var stream = new FileStream(directory + @"\" + filename, FileMode.CreateNew))
                 {
-                    byte[] array = this[filename];
+                    var array = this[filename];
                     stream.Write(array, 0, array.Length);
                     stream.Close();
                     stream.Dispose();
@@ -191,6 +190,5 @@ namespace NKnife.Compress
         }
 
         #endregion
-
     }
 }
