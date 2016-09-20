@@ -117,6 +117,7 @@
     <Compile Include="API\API.Kernel32.cs" />
     <Compile Include="Attributes\EnvironmentItemAttribute.cs" />
     <Compile Include="Collections\AsyncObservableCollection`.cs" />
+    <Compile Include="Collections\EnumSet.cs" />
     <Compile Include="Converts\Converting.cs" />
     <Compile Include="Converts\UtilityConvert.cs" />
     <Compile Include="Databases\Common\DatabaseCoderSetting.cs" />
@@ -147,6 +148,12 @@
     </Compile>
     <Compile Include="GUI\WinForm\DataSetBindableListView.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\TextArrayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\WinForm\TextArrayDialog.designer.cs">
+      <DependentUpon>TextArrayDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\WinForm\ToolStripDateTimePicker.cs">
       <SubType>Component</SubType>
