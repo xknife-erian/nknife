@@ -13,7 +13,7 @@ namespace NKnife.NLog
             InitializeComponent();
             Icon = OwnResources.NLogForm;
             Padding = new Padding(3);
-            LoggerGridView.AppendLogPanelToContainer(this);
+            LoggerListView.AppendLogPanelToContainer(this);
         }
 
         protected override void OnShown(EventArgs e)
