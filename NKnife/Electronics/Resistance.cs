@@ -84,7 +84,7 @@ namespace NKnife.Electronics
         /// </returns>
         public override string ToString()
         {
-            return Value.ToString();
+            return ToString('O');
         }
 
         /// <summary>Returns a <see cref="System.String" /> that represents this instance.
