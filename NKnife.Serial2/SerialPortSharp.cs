@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-namespace SerialKnife.Wrappers
+namespace SerialKnife2
 {
     /// <summary>
     ///     Class that allows for serial communication in Windows.
@@ -18,7 +18,7 @@ namespace SerialKnife.Wrappers
 
         private Thread _Thread;
 
-        public SerialPortSharp(int baudRate, StopBits stopBits, Parity parity, byte byteSize)
+        public SerialPortSharp(int baudRate = 9600, StopBits stopBits = StopBits.One, Parity parity = Parity.None, byte byteSize = 8)
         {
             if (stopBits == StopBits.None)
                 throw new ArgumentException("stopBits cannot be StopBits.None", nameof(stopBits));
@@ -40,22 +40,6 @@ namespace SerialKnife.Wrappers
             {
                 _Overlapped.hEvent = hEvent;
             }
-            //this.handShake = System.IO.Ports.Handshake.None;
-        }
-
-        public SerialPortSharp(int baudRate, StopBits stopBits, Parity parity)
-            : this(baudRate, stopBits, parity, 8)
-        {
-        }
-
-        public SerialPortSharp(int baudRate)
-            : this(baudRate, StopBits.One, Parity.None)
-        {
-        }
-
-        public SerialPortSharp()
-            : this(9600, StopBits.One, Parity.None)
-        {
         }
 
         public Parity Parity { get; }
@@ -122,7 +106,7 @@ namespace SerialKnife.Wrappers
         public unsafe int Read(byte[] buffer, int index, int count)
         {
             if (null == buffer)
-                throw new ArgumentOutOfRangeException("buffer == null", nameof(buffer));
+                throw new ArgumentOutOfRangeException(nameof(buffer), "buffer == null");
             //int n = 0;
             var n = index;
             uint lpNumberOfBytesWritten;
@@ -148,7 +132,7 @@ namespace SerialKnife.Wrappers
         public string ReadString(int maxBytesToRead)
         {
             if (maxBytesToRead < 1)
-                throw new ArgumentOutOfRangeException("maxBytesToRead < 1", nameof(maxBytesToRead));
+                throw new ArgumentOutOfRangeException(nameof(maxBytesToRead), "maxBytesToRead < 1");
 
             if (BytesToRead() < 1)
                 return string.Empty;
