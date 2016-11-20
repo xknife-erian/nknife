@@ -35,6 +35,5 @@ namespace NKnife.Kits.SocketKnife.Mvvm
             new InputGestureCollection(new InputGesture[] {}));
 
         #endregion
-
     }
 }

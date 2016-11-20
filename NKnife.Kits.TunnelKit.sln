@@ -27,10 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog4", "NKnife.NLog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SocketKnife.StressTest", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SocketKnife.StressTest\NKnife.Kits.SocketKnife.StressTest.csproj", "{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Serial2", "NKnife.Serial2\NKnife.Serial2.csproj", "{9B069D96-09F8-4AF4-A87D-B4310F0FB1DB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.SerialKnife2.Consoles", "Kits\NKnife.Kits.TunnelKit\NKnife.Kits.SerialKnife2.Consoles\NKnife.Kits.SerialKnife2.Consoles.csproj", "{9B6FF175-6C4B-463B-B2FE-359C67907E2C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,14 +77,6 @@ Global
 		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFD2E6FF-F7CE-4161-96D3-F42A6BB6FB8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B069D96-09F8-4AF4-A87D-B4310F0FB1DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B069D96-09F8-4AF4-A87D-B4310F0FB1DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B069D96-09F8-4AF4-A87D-B4310F0FB1DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B069D96-09F8-4AF4-A87D-B4310F0FB1DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B6FF175-6C4B-463B-B2FE-359C67907E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B6FF175-6C4B-463B-B2FE-359C67907E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B6FF175-6C4B-463B-B2FE-359C67907E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B6FF175-6C4B-463B-B2FE-359C67907E2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +86,5 @@ Global
 		{3B1BA8E0-29DD-4CFC-8593-889B9D547AB7} = {43865573-55F7-4689-AAD6-23B5C49D809F}
 		{F3299AC1-2D25-4B91-A4D9-F9C1AB6F0825} = {43865573-55F7-4689-AAD6-23B5C49D809F}
 		{24AF3E97-0817-4CBB-A471-15A9FA4004C3} = {43865573-55F7-4689-AAD6-23B5C49D809F}
-		{9B069D96-09F8-4AF4-A87D-B4310F0FB1DB} = {43865573-55F7-4689-AAD6-23B5C49D809F}
 	EndGlobalSection
 EndGlobal

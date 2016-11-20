@@ -35,9 +35,7 @@ namespace SerialKnife
 
         protected virtual void OnSessionBuilt(SessionEventArgs e)
         {
-            var handler = SessionBuilt;
-            if (handler != null)
-                handler.Invoke(this, e);
+            SessionBuilt?.Invoke(this, e);
         }
 
         protected virtual void OnSessionBuilt()
@@ -50,9 +48,7 @@ namespace SerialKnife
 
         protected virtual void OnSessionBroken(SessionEventArgs e)
         {
-            var handler = SessionBroken;
-            if (handler != null)
-                handler.Invoke(this, e);
+            SessionBroken?.Invoke(this, e);
         }
 
         protected virtual void OnSessionBroken()
@@ -65,9 +61,7 @@ namespace SerialKnife
 
         protected virtual void OnDataReceived(SessionEventArgs e)
         {
-            var handler = DataReceived;
-            if (handler != null)
-                handler.Invoke(this, e);
+            DataReceived?.Invoke(this, e);
         }
 
         protected virtual void OnDataReceived(byte[] data)
@@ -82,9 +76,7 @@ namespace SerialKnife
 
         protected virtual void OnDataSent(SessionEventArgs e)
         {
-            var handler = DataSent;
-            if (handler != null)
-                handler.Invoke(this, e);
+            DataSent?.Invoke(this, e);
         }
 
         protected virtual void OnDataSent(byte[] data)
@@ -166,18 +158,18 @@ namespace SerialKnife
             {
                 return true;
             }
-            var port = string.Format("COM{0}", PortNumber);
+            var port = $"COM{PortNumber}";
             if (SerialConfig == null)
                 SerialConfig = new SerialConfig();
             var result = _Serial.Initialize(port, SerialConfig);
             if (result)
             {
-                _logger.Info(string.Format("串口{0}初始化完成：{1}", port, true));
+                _logger.Info($"串口{port}初始化完成：{true}");
                 OnSessionBuilt();
             }
             else
             {
-                _logger.Warn(string.Format("串口{0}初始化完成：{1}", port, false));
+                _logger.Warn($"串口{port}初始化完成：{false}");
             }
             IsInitialized = true;
             return result;

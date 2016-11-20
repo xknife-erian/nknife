@@ -45,9 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\NKnife.Serial2\NKnife.Serial2.csproj">
-      <Project>{9b069d96-09f8-4af4-a87d-b4310f0fb1db}</Project>
-      <Name>NKnife.Serial2</Name>
+    <ProjectReference Include="..\..\..\NKnife.Serial\NKnife.Serial.csproj">
+      <Project>{3b1ba8e0-29dd-4cfc-8593-889b9d547ab7}</Project>
+      <Name>NKnife.Serial</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

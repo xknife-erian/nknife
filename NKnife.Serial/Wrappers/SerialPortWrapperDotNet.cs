@@ -28,7 +28,7 @@ namespace SerialKnife.Wrappers
 
         private byte[] _SyncBuffer = new byte[512]; //当同步读取时的Buffer
 
-        private int _TimeOut = 150;
+        private int _TimeOut = 100;
 
         /// <summary>
         ///     接收到数据
@@ -53,11 +53,11 @@ namespace SerialKnife.Wrappers
             }
             catch (TimeoutException ex)
             {
-                Console.WriteLine("串口读取异常：{0}", ex.Message);
+                _logger.Warn($"串口读取超时异常：{ex.Message}", ex);
             }
             catch (IOException ex)
             {
-                _logger.Warn(string.Format("串口读取异常：{0}", ex.Message), ex);
+                _logger.Warn($"串口读取异常：{ex.Message}", ex);
             }
         }
 
@@ -104,13 +104,10 @@ namespace SerialKnife.Wrappers
                 if (_SerialPort.IsOpen)
                 {
                     _SerialPort.Close();
-                    _SerialPort.Open();
                 }
-                else
-                {
-                    _SerialPort.Open();
-                }
-                IsOpen = _SerialPort.IsOpen;
+                var thread = new Thread(()=> _SerialPort.Open());
+                thread.Name = $"{portName}-Thread";
+                thread.Start();
                 if (IsOpen)
                 {
                     _logger.Info($"通讯:成功打开串口:{portName}。{_SerialPort.BaudRate},{_SerialPort.ReceivedBytesThreshold},{_SerialPort.ReadTimeout}");
@@ -136,7 +133,7 @@ namespace SerialKnife.Wrappers
                 if (_SerialPort.IsOpen)
                 {
                     _SerialPort.Close();
-                    _logger.Info(string.Format("通讯:成功关闭串口:{0}。", _SerialPort.PortName));
+                    _logger.Info($"通讯:成功关闭串口:{_SerialPort.PortName}。");
                 }
                 IsOpen = false;
                 return true;
@@ -187,7 +184,7 @@ namespace SerialKnife.Wrappers
             }
             catch (Exception e)
             {
-                _logger.Warn(string.Format("串口发送与接收时底层异常:{0}", e.Message), e);
+                _logger.Warn($"串口发送与接收时底层异常:{e.Message}", e);
                 recv = new byte[0];
                 return 0;
             }
