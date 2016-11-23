@@ -10,6 +10,7 @@ using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
 using NKnife.IoC;
 using SocketKnife;
+using SocketKnife.Common;
 
 namespace NKnife.App.TouchKnife.Core
 {

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using NKnife.App.TouchKnife.Properties;
 using NKnife.Interface;
 using NKnife.IoC;
-using NKnife.NLog3.Controls;
+using NKnife.NLog;
 using NKnife.Utility;
 
 namespace NKnife.App.TouchKnife.Core
