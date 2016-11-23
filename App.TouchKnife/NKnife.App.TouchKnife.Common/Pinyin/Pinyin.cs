@@ -8,7 +8,7 @@ namespace NKnife.App.TouchKnife.Common.Pinyin
 {
     public class Pinyin
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<Pinyin>();
 
         /// <summary>
         /// 获取指定拼音的汉字集合

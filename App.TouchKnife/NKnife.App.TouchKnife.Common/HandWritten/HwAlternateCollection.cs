@@ -12,7 +12,7 @@ namespace NKnife.App.TouchKnife.Common.HandWritten
     /// </summary>
     public class HwAlternateCollection : ObservableCollection<string>
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger<HwAlternateCollection>();
 
         private Visibility _HasAlternates = Visibility.Hidden;
 
