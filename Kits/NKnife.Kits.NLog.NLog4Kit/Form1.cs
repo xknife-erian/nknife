@@ -11,6 +11,7 @@ using Common.Logging;
 using NKnife.NLog.WinForm;
 using NKnife.Wrapper;
 using NKnife.IoC;
+using NKnife.NLog;
 
 namespace NKnife.Kits.NLog.NLog4Kit
 {
@@ -65,6 +66,12 @@ namespace NKnife.Kits.NLog.NLog4Kit
         private void _SimpleTestButton_Click(object sender, EventArgs e)
         {
             AddLogs(5);
+        }
+
+        private void _LoggerFormButton_Click(object sender, EventArgs e)
+        {
+            var loggerForm = new NLogForm { TopMost = true };
+            loggerForm.Show();
         }
     }
 }

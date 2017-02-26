@@ -30,9 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this._SimpleTestButton = new System.Windows.Forms.ToolStripButton();
             this._Input100LogButton = new System.Windows.Forms.ToolStripButton();
             this._SetDebugModeButton = new System.Windows.Forms.ToolStripButton();
-            this._SimpleTestButton = new System.Windows.Forms.ToolStripButton();
+            this._LoggerFormButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,12 +42,22 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._SimpleTestButton,
             this._Input100LogButton,
-            this._SetDebugModeButton});
+            this._SetDebugModeButton,
+            this._LoggerFormButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(866, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // _SimpleTestButton
+            // 
+            this._SimpleTestButton.Image = ((System.Drawing.Image)(resources.GetObject("_SimpleTestButton.Image")));
+            this._SimpleTestButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._SimpleTestButton.Name = "_SimpleTestButton";
+            this._SimpleTestButton.Size = new System.Drawing.Size(76, 22);
+            this._SimpleTestButton.Text = "简单测试";
+            this._SimpleTestButton.Click += new System.EventHandler(this._SimpleTestButton_Click);
             // 
             // _Input100LogButton
             // 
@@ -66,14 +77,14 @@
             this._SetDebugModeButton.Text = "设置调试模式";
             this._SetDebugModeButton.Click += new System.EventHandler(this._SetDebugModeButton_Click);
             // 
-            // _SimpleTestButton
+            // _LoggerFormButton
             // 
-            this._SimpleTestButton.Image = ((System.Drawing.Image)(resources.GetObject("_SimpleTestButton.Image")));
-            this._SimpleTestButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._SimpleTestButton.Name = "_SimpleTestButton";
-            this._SimpleTestButton.Size = new System.Drawing.Size(76, 22);
-            this._SimpleTestButton.Text = "简单测试";
-            this._SimpleTestButton.Click += new System.EventHandler(this._SimpleTestButton_Click);
+            this._LoggerFormButton.Image = ((System.Drawing.Image)(resources.GetObject("_LoggerFormButton.Image")));
+            this._LoggerFormButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._LoggerFormButton.Name = "_LoggerFormButton";
+            this._LoggerFormButton.Size = new System.Drawing.Size(76, 22);
+            this._LoggerFormButton.Text = "日志窗体";
+            this._LoggerFormButton.Click += new System.EventHandler(this._LoggerFormButton_Click);
             // 
             // Form1
             // 
@@ -97,6 +108,7 @@
         private System.Windows.Forms.ToolStripButton _Input100LogButton;
         private System.Windows.Forms.ToolStripButton _SetDebugModeButton;
         private System.Windows.Forms.ToolStripButton _SimpleTestButton;
+        private System.Windows.Forms.ToolStripButton _LoggerFormButton;
     }
 }
 
