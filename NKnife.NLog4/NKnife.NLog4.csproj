@@ -90,7 +90,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.3.11\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.3\lib\net40\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -129,12 +129,6 @@
     <Compile Include="WinForm\LoggerInfoDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinForm\LoggerGridView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForm\LoggerGridView.Designer.cs">
-      <DependentUpon>LoggerGridView.cs</DependentUpon>
-    </Compile>
     <Compile Include="WinForm\ShowLogPanelTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WPF\LogMessage.cs" />
@@ -165,16 +159,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForm\LoggerInfoDetailForm.zh-CN.resx">
       <DependentUpon>LoggerInfoDetailForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForm\LoggerGridView.en-US.resx">
-      <DependentUpon>LoggerGridView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForm\LoggerGridView.resx">
-      <DependentUpon>LoggerGridView.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForm\LoggerGridView.zh-CN.resx">
-      <DependentUpon>LoggerGridView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\OwnResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

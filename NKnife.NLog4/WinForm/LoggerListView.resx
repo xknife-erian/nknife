@@ -208,7 +208,7 @@
     <value>_ListView</value>
   </data>
   <data name="&gt;&gt;_ListView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>NKnife.NLog.NotFlickerListView, NKnife.NLog4, Version=16.3.0.906, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;_ListView.Parent" xml:space="preserve">
     <value>$this</value>

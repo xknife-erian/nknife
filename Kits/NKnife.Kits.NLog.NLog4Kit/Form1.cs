@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -11,6 +14,8 @@ using Common.Logging;
 using NKnife.NLog.WinForm;
 using NKnife.Wrapper;
 using NKnife.IoC;
+using NKnife.NLog;
+using NKnife.Utility;
 
 namespace NKnife.Kits.NLog.NLog4Kit
 {
@@ -27,6 +32,20 @@ namespace NKnife.Kits.NLog.NLog4Kit
             Controls.Add(_LogPanel);
             _LogPanel.BringToFront();
             _LogPanel.Dock = DockStyle.Fill;
+            _MyVersionLabel.Text = Application.ProductVersion;
+            _NLogVersionLabel.Text = GetNLogVersionText();
+            _LoggerFormButton.Click += (sender, args) =>
+            {
+                var form = new NLogForm();
+                form.Show(this);
+            };
+        }
+
+        private string GetNLogVersionText()
+        {
+            var path = Application.StartupPath;
+            FileVersionInfo info = FileVersionInfo.GetVersionInfo(Path.Combine(path, "nlog.dll"));
+            return $"NLog: {info.ProductVersion}";
         }
 
         private int _Count = 0;

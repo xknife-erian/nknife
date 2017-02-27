@@ -38,7 +38,7 @@
             this._ErrorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._FatalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._ClearToolButton = new System.Windows.Forms.ToolStripButton();
-            this._ListView = new NotFlickerListView();
+            this._ListView = new NKnife.NLog.NotFlickerListView();
             this._ToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -107,8 +107,13 @@
             // _ListView
             // 
             resources.ApplyResources(this._ListView, "_ListView");
+            this._ListView.FullRowSelect = true;
+            this._ListView.GridLines = true;
+            this._ListView.MultiSelect = false;
             this._ListView.Name = "_ListView";
+            this._ListView.ShowItemToolTips = true;
             this._ListView.UseCompatibleStateImageBehavior = false;
+            this._ListView.View = System.Windows.Forms.View.Details;
             // 
             // LoggerListView
             // 
@@ -125,6 +130,7 @@
         }
 
         #endregion
+
         private System.Windows.Forms.ToolStrip _ToolStrip;
         private System.Windows.Forms.ToolStripButton _ClearToolButton;
         private System.Windows.Forms.ToolStripDropDownButton _LevelToolButton;
