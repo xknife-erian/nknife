@@ -37,6 +37,7 @@
             this.iMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.汉字使用频率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.自定义工具栏控件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +56,8 @@
             // 控件ToolStripMenuItem
             // 
             this.控件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.图片浏览容器ToolStripMenuItem});
+            this.图片浏览容器ToolStripMenuItem,
+            this.自定义工具栏控件ToolStripMenuItem});
             this.控件ToolStripMenuItem.Name = "控件ToolStripMenuItem";
             this.控件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.控件ToolStripMenuItem.Text = "控件";
@@ -63,7 +65,7 @@
             // 图片浏览容器ToolStripMenuItem
             // 
             this.图片浏览容器ToolStripMenuItem.Name = "图片浏览容器ToolStripMenuItem";
-            this.图片浏览容器ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.图片浏览容器ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.图片浏览容器ToolStripMenuItem.Text = "图片浏览容器";
             this.图片浏览容器ToolStripMenuItem.Click += new System.EventHandler(this.图片浏览容器ToolStripMenuItem_Click);
             // 
@@ -112,6 +114,13 @@
             this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
             this.statusStrip1.TabIndex = 0;
             // 
+            // 自定义工具栏控件ToolStripMenuItem
+            // 
+            this.自定义工具栏控件ToolStripMenuItem.Name = "自定义工具栏控件ToolStripMenuItem";
+            this.自定义工具栏控件ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.自定义工具栏控件ToolStripMenuItem.Text = "自定义工具栏控件";
+            this.自定义工具栏控件ToolStripMenuItem.Click += new System.EventHandler(this.自定义工具栏控件ToolStripMenuItem_Click);
+            // 
             // KitListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -143,6 +152,7 @@
         private System.Windows.Forms.ToolStripMenuItem 汉字使用频率ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 控件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 图片浏览容器ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 自定义工具栏控件ToolStripMenuItem;
     }
 }
 

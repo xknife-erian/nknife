@@ -47,5 +47,12 @@ namespace NKnife.Kits.StarterKit
             form.MdiParent = this;
             form.Show();
         }
+
+        private void 自定义工具栏控件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new UserToolStripForm();
+            form.MdiParent = this;
+            form.Show();
+        }
     }
 }
