@@ -10,12 +10,13 @@ using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
 using NKnife.IoC;
 using SocketKnife;
+using SocketKnife.Common;
 
 namespace NKnife.App.TouchKnife.Core
 {
     public class Kernel
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(Kernel));
 
         private AsynListener _Listener;
         private ITouchInput _TouchInput;
@@ -62,18 +63,18 @@ namespace NKnife.App.TouchKnife.Core
 
         private void Listener_ReceivedData(object sender, AsynListener.ReceivedDataEventArgs e)
         {
-            _logger.Info(string.Format("收到控制:{0}", e.Data.ToLower()));
+            _logger.Info($"收到控制:{e.Data.ToLower()}");
             string command = e.Data.ToLower().Replace(_Listener.Tail.ToString(), "");
             if (command.IndexOf("keepalivetestfromclient", StringComparison.Ordinal)>=0)
             {
                 const string RESPONSE = "KeepAliveTestFromServer`";
                 _Listener.Send(e.Client, RESPONSE);
-                _logger.Trace(string.Format("心跳回复:{0}", RESPONSE));
+                _logger.Trace($"心跳回复:{RESPONSE}");
                 return;
             }
             if (!Regex.IsMatch(command, @"\d{16}"))
             {
-                _logger.Warn(string.Format("不识别的指令:{0}", command));
+                _logger.Warn($"不识别的指令:{command}");
                 return;
             }
 
@@ -84,7 +85,7 @@ namespace NKnife.App.TouchKnife.Core
 
             if (xw > 4 || yw > 4)
             {
-                _logger.Warn(string.Format("不识别的指令:{0}", command));
+                _logger.Warn($"不识别的指令:{command}");
                 return;
             }
 
@@ -113,7 +114,7 @@ namespace NKnife.App.TouchKnife.Core
         {
             var command = (Command) state;
             SetLocation(command);
-            _logger.Trace(string.Format("窗体控制:{0},{1},{2}", command.Mode, command.X, command.Y));
+            _logger.Trace($"窗体控制:{command.Mode},{command.X},{command.Y}");
             try
             {
                 //1.拼音;2.手写;3.符号;4.小写英文;5.大写英文;6.数字
