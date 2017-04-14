@@ -28,8 +28,11 @@ namespace NKnife.NLog.WinForm
                 while (_WriteEnable)
                 {
                     if (_LogQueue.Count <= 0)
-                        _LogQueue.AutoResetEvent.WaitOne();
-                    var logEvent = _LogQueue.Dequeue();
+                        _LogQueue.AddEvent.WaitOne();
+                    LogEventInfo logEvent;
+                    bool has = _LogQueue.TryDequeue(out logEvent);
+                    if (!has)
+                        continue;
                     _LoggerListView.ThreadSafeInvoke(() =>
                     {
                         if (logEvent != null)
@@ -40,7 +43,7 @@ namespace NKnife.NLog.WinForm
             Application.ApplicationExit += (s, e) =>
             {
                 _WriteEnable = false;
-                _LogQueue.AutoResetEvent.Set();
+                _LogQueue.AddEvent.Set();
                 Thread.Sleep(10);
                 thread.Abort();
             };

@@ -37,7 +37,7 @@ namespace NKnife.Tunnel.Base
             if (_DataMonitors.TryGetValue(id, out monitor))
             {
                 monitor.IsMonitor = false;
-                monitor.ReceiveQueue.AutoResetEvent.Set();
+                monitor.ReceiveQueue.AddEvent.Set();
             }
         }
 
@@ -221,8 +221,9 @@ namespace NKnife.Tunnel.Base
                         if (dataMonitor.ReceiveQueue.Count > 0)
                         {
                             //_logger.Debug(string.Format("dataMonitor 处理数据{0}",_TempCount));
-                            byte[] data = dataMonitor.ReceiveQueue.Dequeue();
-                            if (UtilityCollection.IsNullOrEmpty(data))
+                            byte[] data;
+                            var d = dataMonitor.ReceiveQueue.TryDequeue(out data);
+                            if (!d || UtilityCollection.IsNullOrEmpty(data))
                                 continue;
                             IEnumerable<IProtocol<T>> protocols = ProcessDataPacket(data, ref unFinished);
                             //_logger.Debug(string.Format("dataMonitor 处理数据{0}完成", _TempCount));
@@ -237,7 +238,7 @@ namespace NKnife.Tunnel.Base
                         }
                         else
                         {
-                            dataMonitor.ReceiveQueue.AutoResetEvent.WaitOne();
+                            dataMonitor.ReceiveQueue.AddEvent.WaitOne();
                         }
                     }
                 }

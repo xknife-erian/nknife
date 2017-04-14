@@ -36,6 +36,7 @@ namespace NKnife.Kits.NLog.NLog4Kit
             for (int i = 0; i < 20; i++)
             {
                 Thread thread = new Thread(() => AddLogs(50)) {Name = $"T{i}"};
+                thread.IsBackground = true;
                 thread.Start();
             }
         }

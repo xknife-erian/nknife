@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -9,12 +10,11 @@ namespace NKnife.Collections
     /// </summary>
     public class SyncQueue<T> : ICollection
     {
-        private readonly object _Lock = new object();
-        private readonly Queue<T> _Q = new Queue<T>();
+        protected readonly ConcurrentQueue<T> _Q = new ConcurrentQueue<T>();
 
         public SyncQueue()
         {
-            AutoResetEvent = new AutoResetEvent(false);
+            AddEvent = new AutoResetEvent(false);
         }
 
         public SyncQueue(IEnumerable<T> collection)
@@ -26,36 +26,21 @@ namespace NKnife.Collections
             }
         }
 
-        public SyncQueue(int capacity)
-            : this()
-        {
-            _Q = new Queue<T>(capacity);
-        }
-
-        public AutoResetEvent AutoResetEvent { get; protected set; }
+        public AutoResetEvent AddEvent { get; protected set; }
 
         public void Clear()
         {
-            while (_Q.Count > 0)
+            bool isDequeueSucess = true;
+            while (isDequeueSucess)
             {
-                Dequeue();
+                T value;
+                isDequeueSucess = _Q.TryDequeue(out value);
             }
         }
 
-        public T Dequeue()
+        public bool TryDequeue(out T value)
         {
-            T r = default(T);
-            if (_Q.Count > 0)
-            {
-                lock (_Lock)
-                {
-                    if (_Q.Count > 0) //锁内还需有判断，因为有可能进入锁的时候Queue已经没数据了
-                    {
-                        r = _Q.Dequeue();
-                    }
-                }
-            }
-            return r;
+            return _Q.TryDequeue(out value);
         }
 
         /// <summary>向队列中压入一条指定类型的数据
@@ -63,43 +48,18 @@ namespace NKnife.Collections
         /// <param name="item"></param>
         public void Enqueue(T item)
         {
-            lock (_Lock)
-            {
-                _Q.Enqueue(item);
-            }
-            AutoResetEvent.Set();
+            _Q.Enqueue(item);
+            AddEvent.Set();
         }
 
-        public T Peek()
+        public bool TryPeek(out T value)
         {
-            T t = default(T);
-            if (_Q.Count > 0)
-            {
-                lock (_Lock)
-                {
-                    if (_Q.Count > 0) //锁内还需有判断，因为有可能进入锁的时候Queue已经没数据了
-                    {
-                        t = _Q.Peek();
-                    }
-                }
-            }
-            return t;
+            return _Q.TryPeek(out value);
         }
 
         public T[] ToArray()
         {
-            lock (_Lock)
-            {
-                return _Q.ToArray();
-            }
-        }
-
-        public void TrimExcess()
-        {
-            lock (_Lock)
-            {
-                _Q.TrimExcess();
-            }
+            return _Q.ToArray();
         }
 
         #region Implementation of IEnumerable
@@ -112,10 +72,7 @@ namespace NKnife.Collections
         /// </returns>
         public IEnumerator GetEnumerator()
         {
-            lock (_Lock)
-            {
-                return _Q.GetEnumerator();
-            }
+            return _Q.GetEnumerator();
         }
 
         #endregion
@@ -141,10 +98,7 @@ namespace NKnife.Collections
         {
             if (!(array is T[]))
                 throw new ArgumentException("传入数据不是指定的类型，应传入T[]。");
-            lock (_Lock)
-            {
-                _Q.CopyTo((T[]) array, index);
-            }
+            _Q.CopyTo((T[]) array, index);
         }
 
         /// <summary>
@@ -152,34 +106,19 @@ namespace NKnife.Collections
         /// </summary>
         /// <returns>
         ///   <see cref="T:System.Collections.ICollection"/> 中包含的元素数。</returns>
-        public int Count
-        {
-            get
-            {
-                lock (_Lock)
-                {
-                    return _Q.Count;
-                }
-            }
-        }
+        public int Count => _Q.Count;
 
         /// <summary>
         /// 获取一个可用于同步对 <see cref="T:System.Collections.ICollection"/> 的访问的对象。
         /// </summary>
         /// <returns>可用于同步对 <see cref="T:System.Collections.ICollection"/> 的访问的对象。</returns>
-        object ICollection.SyncRoot
-        {
-            get { return ((ICollection)_Q).SyncRoot; }
-        }
+        object ICollection.SyncRoot => ((ICollection)_Q).SyncRoot;
 
         /// <summary>
         /// 获取一个值，该值指示是否同步对 <see cref="T:System.Collections.ICollection"/> 的访问（线程安全）。
         /// </summary>
         /// <returns>如果对 <see cref="T:System.Collections.ICollection"/> 的访问是同步的（线程安全），则为 true；否则为 false。</returns>
-        bool ICollection.IsSynchronized
-        {
-            get { return ((ICollection)_Q).IsSynchronized; }
-        }
+        bool ICollection.IsSynchronized => ((ICollection)_Q).IsSynchronized;
 
         #endregion
     }
