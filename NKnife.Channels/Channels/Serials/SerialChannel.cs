@@ -368,25 +368,9 @@ namespace NKnife.Channels.Channels.Serials
         /// </summary>
         public override void AutoSend(Action<IQuestion<byte[]>> sendAction)
         {
-            var question = _QuestionGroup.Current;
-            if (question.IsLoop)//循环发送
-            {
-                _AutoSendThread = new Thread(AutoSendThread) {Name = $"{_SerialPort.PortName}-AutoSendThread"};
-                _AutoSendThread.IsBackground = true;
-                _AutoSendThread.Start(sendAction);
-            }
-            else//单次发送
-            {
-                try
-                {
-                    _SerialPort.Write(question.Data, 0, question.Data.Length);
-                    sendAction?.Invoke(question);
-                }
-                catch (Exception e)
-                {
-                    _logger.Warn($"发送异常:{e.Message}", e);
-                }
-            }
+            _AutoSendThread = new Thread(AutoSendThread) {Name = $"{_SerialPort.PortName}-AutoSendThread"};
+            _AutoSendThread.IsBackground = true;
+            _AutoSendThread.Start(sendAction);
         }
 
         protected void AutoSendThread(object parameter)
