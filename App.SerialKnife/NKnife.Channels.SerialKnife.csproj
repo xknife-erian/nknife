@@ -7,8 +7,8 @@
     <ProjectGuid>{24820BA4-FD74-4F02-B44D-77021D2A540F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocketKnife</RootNamespace>
-    <AssemblyName>SocketKnife</AssemblyName>
+    <RootNamespace>NKnife.Channels.SerialKnife</RootNamespace>
+    <AssemblyName>SerialKnife</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -7,7 +7,6 @@ using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.NLog;
 using SocketKnife.Dialogs;
-using SocketKnife.Properties;
 using SocketKnife.Services;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -23,7 +22,7 @@ namespace SocketKnife.Views
         public Workbench()
         {
             InitializeComponent();
-            Icon = Resources.socket_knife;
+            Icon = NKnife.Channels.SerialKnife.Properties.Resources.socket_knife;
             _VersionStatusLabel.Text = DI.Get<IAbout>().AssemblyVersion.ToString();
             _TotalStatusLabel.Text = string.Empty;
             _CurrentPortStatusLabel.Text = string.Empty;

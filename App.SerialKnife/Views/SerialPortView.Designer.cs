@@ -86,7 +86,7 @@ namespace SocketKnife.Views
             // _StartButton
             // 
             this._StartButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._StartButton.Image = global::SocketKnife.Properties.Resources.play_16px;
+            this._StartButton.Image = global::NKnife.Channels.SerialKnife.Properties.Resources.play_16px;
             this._StartButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._StartButton.Margin = new System.Windows.Forms.Padding(2);
             this._StartButton.Name = "_StartButton";
@@ -96,7 +96,7 @@ namespace SocketKnife.Views
             // _PauseButton
             // 
             this._PauseButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._PauseButton.Image = global::SocketKnife.Properties.Resources.pause_16px;
+            this._PauseButton.Image = global::NKnife.Channels.SerialKnife.Properties.Resources.pause_16px;
             this._PauseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._PauseButton.Margin = new System.Windows.Forms.Padding(2);
             this._PauseButton.Name = "_PauseButton";
@@ -106,7 +106,7 @@ namespace SocketKnife.Views
             // _StopButton
             // 
             this._StopButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._StopButton.Image = global::SocketKnife.Properties.Resources.stop_16px;
+            this._StopButton.Image = global::NKnife.Channels.SerialKnife.Properties.Resources.stop_16px;
             this._StopButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._StopButton.Margin = new System.Windows.Forms.Padding(2);
             this._StopButton.Name = "_StopButton";
@@ -123,7 +123,7 @@ namespace SocketKnife.Views
             this._SwitchSyncSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._SyncMenuItem,
             this._AsyncMenuItem});
-            this._SwitchSyncSplitButton.Image = global::SocketKnife.Properties.Resources.async_16px;
+            this._SwitchSyncSplitButton.Image = global::NKnife.Channels.SerialKnife.Properties.Resources.async_16px;
             this._SwitchSyncSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._SwitchSyncSplitButton.Name = "_SwitchSyncSplitButton";
             this._SwitchSyncSplitButton.Size = new System.Drawing.Size(61, 22);
@@ -131,14 +131,14 @@ namespace SocketKnife.Views
             // 
             // _SyncMenuItem
             // 
-            this._SyncMenuItem.Image = global::SocketKnife.Properties.Resources.sync_16px;
+            this._SyncMenuItem.Image = global::NKnife.Channels.SerialKnife.Properties.Resources.sync_16px;
             this._SyncMenuItem.Name = "_SyncMenuItem";
             this._SyncMenuItem.Size = new System.Drawing.Size(100, 22);
             this._SyncMenuItem.Text = "同步";
             // 
             // _AsyncMenuItem
             // 
-            this._AsyncMenuItem.Image = global::SocketKnife.Properties.Resources.async_16px;
+            this._AsyncMenuItem.Image = global::NKnife.Channels.SerialKnife.Properties.Resources.async_16px;
             this._AsyncMenuItem.Name = "_AsyncMenuItem";
             this._AsyncMenuItem.Size = new System.Drawing.Size(100, 22);
             this._AsyncMenuItem.Text = "异步";
@@ -164,7 +164,7 @@ namespace SocketKnife.Views
             // _DataClearButton
             // 
             this._DataClearButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._DataClearButton.Image = global::SocketKnife.Properties.Resources.dataclear_16px;
+            this._DataClearButton.Image = global::NKnife.Channels.SerialKnife.Properties.Resources.dataclear_16px;
             this._DataClearButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._DataClearButton.Name = "_DataClearButton";
             this._DataClearButton.Size = new System.Drawing.Size(23, 22);
