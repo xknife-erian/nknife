@@ -35,7 +35,7 @@ namespace NKnife.Channels.Channels
         /// <summary>
         ///     默认大小.
         /// </summary>
-        private const int DEFAULT_SIZE = 8*1024;
+        private const int DEFAULT_SIZE = 8 * 1024;
 
         /// <summary>
         ///     缓冲区所使用的数组.
@@ -56,6 +56,7 @@ namespace NKnife.Channels.Channels
         ///     如果当前缓冲区中有数据可读, 它将会被设置.
         /// </summary>
         private readonly Semaphore _ReadSemaphore = new Semaphore(0, 1);
+
         private readonly Semaphore _WriteSemaphore = new Semaphore(1, 1);
 
         /// <summary>

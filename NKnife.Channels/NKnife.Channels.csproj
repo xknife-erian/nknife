@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\NKnife\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="Channels\Base\AnswerBase`.cs" />
     <Compile Include="Channels\Base\ChannelBase`.cs" />
     <Compile Include="Channels\Base\MultiChannelBase.cs" />

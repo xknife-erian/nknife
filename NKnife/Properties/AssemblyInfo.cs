@@ -17,6 +17,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("FF91ADC1-A814-4D02-B97E-36422DE23646")]
 
 [assembly: InternalsVisibleTo("NKnife.UnitTest")]
-
-[assembly: AssemblyVersion("17.0.2.414")]
-[assembly: AssemblyFileVersion("17.0.2.414")]

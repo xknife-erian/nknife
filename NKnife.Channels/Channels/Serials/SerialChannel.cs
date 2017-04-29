@@ -368,6 +368,7 @@ namespace NKnife.Channels.Channels.Serials
         /// </summary>
         public override void AutoSend(Action<IQuestion<byte[]>> sendAction)
         {
+            _AutoSendThread?.Abort();
             _AutoSendThread = new Thread(AutoSendThread) {Name = $"{_SerialPort.PortName}-AutoSendThread"};
             _AutoSendThread.IsBackground = true;
             _AutoSendThread.Start(sendAction);
@@ -396,10 +397,14 @@ namespace NKnife.Channels.Channels.Serials
 
             public void Run(object stateInfo)
             {
+                var autoEvent = (AutoResetEvent)stateInfo;
                 try
                 {
                     if (QuestionGroup == null || QuestionGroup.Count <= 0)
+                    {
+                        autoEvent.Set();
                         return;
+                    }
                     var question = QuestionGroup.Current;
                     SendAction?.Invoke(question);
                     SerialPort.Write(question.Data, 0, question.Data.Length);
@@ -416,8 +421,7 @@ namespace NKnife.Channels.Channels.Serials
                     }
                     if (IsStopFlag)
                     {
-                        var reset = (AutoResetEvent) stateInfo;
-                        reset.Set();
+                        autoEvent.Set();
                     }
                 }
                 catch (Exception e)

@@ -212,6 +212,7 @@
     <Compile Include="Maths\Permutations.cs" />
     <Compile Include="Maths\UtilityMath.cs" />
     <Compile Include="Entities\AssemblyWrapper.cs" />
+    <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Protocol\Generic\BytesProtocol.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolCommandParser.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolFamily.cs" />
