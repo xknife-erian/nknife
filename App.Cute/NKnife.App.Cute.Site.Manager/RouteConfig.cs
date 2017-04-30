@@ -1,5 +1,4 @@
-﻿using System.Web.Mvc;
-using System.Web.Routing;
+﻿using System.Web.Routing;
 
 namespace NKnife.App.Cute.Site.Manager
 {
@@ -7,13 +6,13 @@ namespace NKnife.App.Cute.Site.Manager
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.Ignore("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new {controller = "Home", action = "Index", id = UrlParameter.Optional}
-                );
+//            routes.MapPageRoute(
+//                routeName: "Default",
+//                routeUrl: "{controller}/{action}/{id}",
+//                defaults: ""
+//            );
         }
     }
 }

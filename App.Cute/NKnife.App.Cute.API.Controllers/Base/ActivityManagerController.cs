@@ -2,7 +2,6 @@
 using System.Web.Http;
 using AttributeRouting.Web.Http;
 using NKnife.App.Cute.Implement.Environment;
-using NKnife.App.Cute.Kernel.IoC;
 using NKnife.IoC;
 
 namespace NKnife.App.Cute.API.Controllers.Base
@@ -14,7 +13,7 @@ namespace NKnife.App.Cute.API.Controllers.Base
         {
             var json = new JqGridResult();
             var attrs = DI.Get<ActivityPool>().Attributes;
-            json.Data = attrs;
+            //json.Data = attrs;
             json.records = attrs.Count();
             json.total = json.records / 10;
             return json;

@@ -22,7 +22,7 @@ namespace NKnife.App.Cute.API.Controllers.Base
             {
                 UserPoolDemo();
             }
-            json.Data = users;
+            //json.Data = users;
             json.records = users.Count();
             json.total = json.records / 10;
             return json;

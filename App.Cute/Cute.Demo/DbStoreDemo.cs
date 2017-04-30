@@ -20,6 +20,7 @@ namespace Cute.Demo
         private static readonly MongoStore<ITransaction, string> _store = DI.Get<DataService>().Transactions;
         private const int DEMO_SIZE = 5 * 1000;
 
+        /*
         public static void Run()
         {
             Console.Clear();
@@ -174,6 +175,7 @@ namespace Cute.Demo
             var count = _store.Count();
             _logger.Info(string.Format("[0.1.4]集合中数据个数:{0}", count));
         }
+        */
 
         private static ITransaction[] GetEntities(int size, bool isLog = true)
         {

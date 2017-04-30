@@ -52,7 +52,7 @@ namespace Cute.Demo
                 switch (key)
                 {
                     case "9":
-                        DbStoreDemo.Run();
+                        //DbStoreDemo.Run();
                         break;
                     case "b":
                         BankDemo.Run();

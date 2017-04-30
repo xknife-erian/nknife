@@ -1,5 +1,4 @@
 ﻿using System.Web;
-using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using NKnife.App.Cute.API.Controllers;
@@ -11,10 +10,10 @@ namespace NKnife.App.Cute.Site
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            //AreaRegistration.RegisterAllAreas();
 
             AttributeRoutingHttp.Start();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }

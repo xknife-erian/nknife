@@ -1,4 +1,7 @@
-using System.Web.Mvc;
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Web.Http.Results;
 
 namespace NKnife.App.Cute.API.Controllers
 {
@@ -9,9 +12,9 @@ namespace NKnife.App.Cute.API.Controllers
     ///    repeatitems: false
     /// }</code>
     /// </summary>
-    public class JqGridResult : JsonResult
+    public class JqGridResult : JsonResult<string>
     {
-        public JqGridResult()
+        public JqGridResult():base(String.Empty,null,Encoding.Default,new HttpRequestMessage())
         {
             page = 1;
         }
