@@ -16,8 +16,10 @@ namespace NKnife.Channels.Channels.Serials
 
         public SerialChannel(SerialConfig serialConfig)
         {
-            if(serialConfig==null)
+            if (serialConfig == null)
                 throw new ArgumentNullException(nameof(serialConfig), $"{nameof(serialConfig)}不能为空");
+            if (serialConfig.Port <= 0)
+                throw new ArgumentNullException(nameof(serialConfig), $"串口号必须设置。");
             _SerialConfig = serialConfig;
         }
 
@@ -256,21 +258,23 @@ namespace NKnife.Channels.Channels.Serials
             var w = (SyncSendReceivingParams) param;
             try
             {
-                foreach (var ask in _QuestionGroup)
+                while (_QuestionGroup.Count > 0)
                 {
-                    _SerialPort.Write(ask.Data, 0, ask.Data.Length);
+                    var question = _QuestionGroup.PeekOrDequeue();
+                    _SerialPort.Write(question.Data, 0, question.Data.Length);
                     _OnSyncReceive = true;
-                    w.SendAction.Invoke(ask);
+                    w.SendAction.Invoke(question);
                     var complate = false;
                     while (!complate)
                     {
+                        // 这个等待是同步时每次对话的时间
                         if (_SyncReset.WaitOne((int) TalkTotalTimeout)) //监听从事件收到返回的数据
                         {
                             if (_SyncBuffer.Length > 0)
                             {
                                 var currBuffer = new byte[_SyncBuffer.Length];
                                 Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
-                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(this, ask.Device, ask.Exhibit, currBuffer));
+                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(this, question.Device, question.Exhibit, currBuffer));
                             }
                         }
                     }
@@ -395,7 +399,7 @@ namespace NKnife.Channels.Channels.Serials
             public bool IsStopFlag { private get; set; }
             public Action<IQuestion<byte[]>> SendAction { get; set; }
 
-            public void Run(object stateInfo)
+            public void Run(object stateInfo)//依靠Timer在指定的时间间隔不断的进行循环
             {
                 var autoEvent = (AutoResetEvent)stateInfo;
                 try
@@ -405,20 +409,9 @@ namespace NKnife.Channels.Channels.Serials
                         autoEvent.Set();
                         return;
                     }
-                    var question = QuestionGroup.Current;
+                    var question = QuestionGroup.PeekOrDequeue();
                     SendAction?.Invoke(question);
                     SerialPort.Write(question.Data, 0, question.Data.Length);
-                    if (!question.IsLoop)
-                    {
-                        QuestionGroup.Remove(question);
-                    }
-                    else
-                    {
-                        if (QuestionGroup.CurrentIndex < QuestionGroup.Count - 1)
-                            QuestionGroup.CurrentIndex++;
-                        else
-                            QuestionGroup.CurrentIndex = 0;
-                    }
                     if (IsStopFlag)
                     {
                         autoEvent.Set();

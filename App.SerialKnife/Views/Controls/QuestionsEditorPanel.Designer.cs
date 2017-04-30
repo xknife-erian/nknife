@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Views.Controls
+﻿namespace NKnife.Channels.SerialKnife.Views.Controls
 {
     sealed partial class QuestionsEditorPanel
     {

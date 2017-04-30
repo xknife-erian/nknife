@@ -2,9 +2,9 @@ using System;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Windows.Forms;
-using SocketKnife.Common;
+using NKnife.Channels.SerialKnife.Common;
 
-namespace SocketKnife.Views.Controls
+namespace NKnife.Channels.SerialKnife.Views.Controls
 {
     public partial class ChannelDataListView : UserControl
     {

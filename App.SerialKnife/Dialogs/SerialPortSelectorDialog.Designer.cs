@@ -1,6 +1,6 @@
 ﻿using NKnife.GUI.WinForm;
 
-namespace SocketKnife.Dialogs
+namespace NKnife.Channels.SerialKnife.Dialogs
 {
     partial class SerialPortSelectorDialog
     {

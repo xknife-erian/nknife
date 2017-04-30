@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using NKnife.Channels.SerialKnife.Services;
 using NKnife.IoC;
-using SocketKnife.Services;
 
-namespace SocketKnife.Views
+namespace NKnife.Channels.SerialKnife.Views
 {
     public class WorkbenchViewModel
     {

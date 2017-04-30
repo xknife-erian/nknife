@@ -2,17 +2,15 @@
 using System.Text;
 using Common.Logging;
 using GalaSoft.MvvmLight;
-using NKnife.Channels.Channels.Base;
 using NKnife.Channels.Channels.EventParams;
 using NKnife.Channels.Channels.Serials;
 using NKnife.Channels.Interfaces.Channels;
+using NKnife.Channels.SerialKnife.Common;
+using NKnife.Channels.SerialKnife.Services;
+using NKnife.Channels.SerialKnife.Views.Controls;
 using NKnife.IoC;
-using SocketKnife.Common;
-using SocketKnife.Controls;
-using SocketKnife.Services;
-using SocketKnife.Views.Controls;
 
-namespace SocketKnife.Views
+namespace NKnife.Channels.SerialKnife.Views
 {
     public class SerialPortViewModel : ViewModelBase
     {

@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Common.Logging;
-using SocketKnife.Common;
+using NKnife.Channels.SerialKnife.Common;
 
-namespace SocketKnife.Views.Controls
+namespace NKnife.Channels.SerialKnife.Views.Controls
 {
     public sealed partial class QuestionsEditorPanel : UserControl
     {

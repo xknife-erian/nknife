@@ -1,7 +1,7 @@
-﻿using NKnife.GUI.WinForm;
-using SocketKnife.Views.Controls;
+﻿using NKnife.Channels.SerialKnife.Views.Controls;
+using NKnife.GUI.WinForm;
 
-namespace SocketKnife.Views
+namespace NKnife.Channels.SerialKnife.Views
 {
     partial class SerialPortView
     {
@@ -314,7 +314,7 @@ namespace SocketKnife.Views
         private System.Windows.Forms.ToolStripButton _StopButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private Controls.ChannelDataListView _ListView;
+        private ChannelDataListView _ListView;
         private System.Windows.Forms.ToolStripButton _DataClearButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripDropDownButton _SwitchSyncSplitButton;
@@ -326,8 +326,8 @@ namespace SocketKnife.Views
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel _RxCountLabel;
         private System.Windows.Forms.Panel _RightPanel;
-        private Controls.QuestionsEditorPanel _QuestionsEditorPanel;
-        private Controls.ConfigPanel _SerialConfigPanel;
+        private QuestionsEditorPanel _QuestionsEditorPanel;
+        private ConfigPanel _SerialConfigPanel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         private System.Windows.Forms.ToolStripStatusLabel _BaudRateLabel;
         private ToolStripCheckBox _IsDisplayQuestionCheckbox;

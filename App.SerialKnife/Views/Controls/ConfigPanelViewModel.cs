@@ -3,7 +3,7 @@ using System.IO.Ports;
 using GalaSoft.MvvmLight;
 using NKnife.Channels.Channels.Serials;
 
-namespace SocketKnife.Views.Controls
+namespace NKnife.Channels.SerialKnife.Views.Controls
 {
     public class ConfigPanelViewModel : ViewModelBase
     {

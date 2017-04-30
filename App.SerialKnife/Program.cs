@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using Common.Logging;
-using NKnife;
+using NKnife.Channels.SerialKnife.Views;
 using NKnife.IoC;
-using SocketKnife.Views;
 
-namespace SocketKnife
+namespace NKnife.Channels.SerialKnife
 {
     class Program
     {

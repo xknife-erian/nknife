@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using SocketKnife.Common;
+using NKnife.Channels.SerialKnife.Common;
 
-namespace SocketKnife.Views.Controls
+namespace NKnife.Channels.SerialKnife.Views.Controls
 {
     public class ChannelDataViewModel
     {

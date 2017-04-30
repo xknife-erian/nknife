@@ -2,11 +2,11 @@
 using System.Threading;
 using Common.Logging;
 using NKnife.Channels.Channels.Serials;
+using NKnife.Channels.SerialKnife.Common;
 using NKnife.IoC;
-using SocketKnife.Common;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace SocketKnife.Views
+namespace NKnife.Channels.SerialKnife.Views
 {
     public partial class SerialPortView : DockContent
     {

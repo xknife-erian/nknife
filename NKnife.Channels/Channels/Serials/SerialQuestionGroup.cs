@@ -5,8 +5,14 @@ namespace NKnife.Channels.Channels.Serials
 {
     public class SerialQuestionGroup : List<SerialQuestion>, IQuestionGroup<byte[]>
     {
+        /// <summary>
+        /// 获取当前Group中需要处理的Question所在的索引
+        /// </summary>
         public int CurrentIndex { get; set; } = 0;
 
+        /// <summary>
+        /// 获取当前Group中需要处理的Question
+        /// </summary>
         public SerialQuestion Current
         {
             get
@@ -15,6 +21,42 @@ namespace NKnife.Channels.Channels.Serials
                     return this[CurrentIndex];
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 取出一条Question。当该Question需要Loop时，保留Question在Group中；当该Question不需要Loop时，弹出并从Group中移除。
+        /// </summary>
+        public SerialQuestion PeekOrDequeue()
+        {
+            var question = Current;
+            if (question == null)
+            {
+                return null;
+            }
+            if (!question.IsLoop)
+            {
+                Remove(question);
+                if (CurrentIndex == Count)
+                    SetCurrent();
+            }
+            else
+            {
+                SetCurrent();
+            }
+            return question;
+        }
+
+        private void SetCurrent()
+        {
+            if (CurrentIndex < Count - 1)
+                CurrentIndex++;
+            else
+                CurrentIndex = 0;
+        }
+
+        public void Add(params SerialQuestion[] questions)
+        {
+            AddRange(questions);
         }
 
         #region Implementation of IEnumerable<out IQuestion>
@@ -88,7 +130,7 @@ namespace NKnife.Channels.Channels.Serials
         /// <exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.ICollection`1" /> 是只读的。</exception>
         bool ICollection<IQuestion<byte[]>>.Remove(IQuestion<byte[]> item)
         {
-            return (Remove((SerialQuestion) item));
+            return Remove((SerialQuestion) item);
         }
 
         /// <summary>

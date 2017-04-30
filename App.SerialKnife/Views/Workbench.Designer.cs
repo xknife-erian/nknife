@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace SocketKnife.Views
+namespace NKnife.Channels.SerialKnife.Views
 {
     partial class Workbench
     {
@@ -110,7 +110,7 @@ namespace SocketKnife.Views
             // _SpringStatusLabel
             // 
             this._SpringStatusLabel.Name = "_SpringStatusLabel";
-            this._SpringStatusLabel.Size = new System.Drawing.Size(637, 17);
+            this._SpringStatusLabel.Size = new System.Drawing.Size(737, 17);
             this._SpringStatusLabel.Spring = true;
             // 
             // _VersionStatusLabel
@@ -220,6 +220,7 @@ namespace SocketKnife.Views
             this.ClientSize = new System.Drawing.Size(884, 662);
             this.Controls.Add(this._StripContainer);
             this.Font = new System.Drawing.Font("Verdana", 8.5F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(20, 20);
             this.MainMenuStrip = this._MenuStrip;
             this.Name = "Workbench";

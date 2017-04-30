@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Forms;
 using Common.Logging;
+using NKnife.Channels.SerialKnife.Dialogs;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.NLog;
-using SocketKnife.Dialogs;
-using SocketKnife.Services;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace SocketKnife.Views
+namespace NKnife.Channels.SerialKnife.Views
 {
     public partial class Workbench : Form
     {
@@ -22,7 +20,6 @@ namespace SocketKnife.Views
         public Workbench()
         {
             InitializeComponent();
-            Icon = NKnife.Channels.SerialKnife.Properties.Resources.socket_knife;
             _VersionStatusLabel.Text = DI.Get<IAbout>().AssemblyVersion.ToString();
             _TotalStatusLabel.Text = string.Empty;
             _CurrentPortStatusLabel.Text = string.Empty;

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ninject.Modules;
-using SocketKnife.Views;
+﻿using Ninject.Modules;
+using NKnife.Channels.SerialKnife.Views;
 
-namespace SocketKnife.IoC
+namespace NKnife.Channels.SerialKnife.IoC
 {
     public class ViewModelModules : NinjectModule
     {

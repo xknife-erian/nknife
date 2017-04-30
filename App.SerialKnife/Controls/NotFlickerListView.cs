@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace SocketKnife.Controls
+namespace NKnife.Channels.SerialKnife.Controls
 {
     internal class NotFlickerListView : ListView
     {

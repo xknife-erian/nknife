@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO.Ports;
-using System.Management;
-using System.Threading;
+﻿using System.Threading;
 using NKnife.Channels.Channels.Serials;
 
-namespace SocketKnife
+namespace NKnife.Channels.SerialKnife
 {
     internal class Kernel
     {

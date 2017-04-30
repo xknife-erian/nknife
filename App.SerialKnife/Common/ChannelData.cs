@@ -1,4 +1,4 @@
-﻿namespace SocketKnife.Common
+﻿namespace NKnife.Channels.SerialKnife.Common
 {
     public class ChannelData
     {

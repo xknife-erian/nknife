@@ -1,6 +1,6 @@
-﻿using SocketKnife.Controls;
+﻿using NKnife.Channels.SerialKnife.Controls;
 
-namespace SocketKnife.Views.Controls
+namespace NKnife.Channels.SerialKnife.Views.Controls
 {
     partial class ChannelDataListView
     {

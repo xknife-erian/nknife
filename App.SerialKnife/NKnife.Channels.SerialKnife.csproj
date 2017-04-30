@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Properties\socket-knife.ico</ApplicationIcon>
+    <ApplicationIcon>Properties\serial-knife.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
@@ -194,7 +194,7 @@
     <Content Include="Properties\Images\play_16px.png" />
     <Content Include="Properties\Images\stop_16px.png" />
     <Content Include="Properties\Images\sync_16px.png" />
-    <Content Include="Properties\socket-knife.ico" />
+    <Content Include="Properties\serial-knife.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NKnife.Channels\NKnife.Channels.csproj">

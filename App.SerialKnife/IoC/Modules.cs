@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using Ninject.Modules;
+﻿using Ninject.Modules;
+using NKnife.Channels.SerialKnife.Services;
 using NKnife.Interface;
-using SocketKnife.Services;
+using NKnife.Wrapper;
 
-namespace SocketKnife.IoC
+namespace NKnife.Channels.SerialKnife.IoC
 {
     public class Modules : NinjectModule
     {
@@ -16,7 +12,7 @@ namespace SocketKnife.IoC
         /// </summary>
         public override void Load()
         {
-            Bind<IAbout>().To<Global.About>().InSingletonScope();
+            Bind<About>().To<Global.About>().InSingletonScope();
             Bind<SerialChannelService>().ToSelf().InSingletonScope();
         }
     }

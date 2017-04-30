@@ -1,8 +1,7 @@
 ﻿using System;
-using SocketKnife.Controls;
-using SocketKnife.Views.Controls;
+using NKnife.Channels.SerialKnife.Views.Controls;
 
-namespace SocketKnife.Common
+namespace NKnife.Channels.SerialKnife.Common
 {
     public class AskEventArgs : EventArgs
     {

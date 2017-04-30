@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO.Ports;
-using System.Linq;
-using System.Management;
-using System.Security;
-using System.Security.Permissions;
-using System.Text;
-using System.Windows.Forms;
-using Microsoft.Win32;
+﻿using System.Windows.Forms;
 using NKnife.Channels.Channels.Serials;
 using NKnife.GUI.WinForm;
-using NKnife.Utility;
 
-namespace SocketKnife.Dialogs
+namespace NKnife.Channels.SerialKnife.Dialogs
 {
     public partial class SerialPortSelectorDialog : SimpleForm
     {

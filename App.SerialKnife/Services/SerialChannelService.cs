@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using NKnife.Base;
 using NKnife.Channels.Channels.Serials;
-using NKnife.Events;
 
-namespace SocketKnife.Services
+namespace NKnife.Channels.SerialKnife.Services
 {
     public class SerialChannelService : IDictionary<ushort, Pair<SerialConfig, SerialChannel>>
     {
