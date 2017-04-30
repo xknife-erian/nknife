@@ -169,10 +169,6 @@
       <Project>{24af3e97-0817-4cbb-a471-15a9fa4004c3}</Project>
       <Name>NKnife.NLog4</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NKnife.Socket\NKnife.Socket.csproj">
-      <Project>{f3299ac1-2d25-4b91-a4d9-f9c1ab6f0825}</Project>
-      <Name>NKnife.Socket</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>

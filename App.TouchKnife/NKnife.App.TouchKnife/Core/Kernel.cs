@@ -4,19 +4,16 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Windows.Forms;
 using Common.Logging;
 using NKnife.Configuring.Interfaces;
 using NKnife.Interface;
 using NKnife.IoC;
-using SocketKnife;
-using SocketKnife.Common;
 
 namespace NKnife.App.TouchKnife.Core
 {
     public class Kernel
     {
-        private static readonly ILog _logger = LogManager.GetLogger(typeof(Kernel));
+        private static readonly ILog _logger = LogManager.GetLogger<Kernel>();
 
         private AsynListener _Listener;
         private ITouchInput _TouchInput;
