@@ -1,1 +1,0 @@
-"c:\Program Files\EWSoftware\Sandcastle Help File Builder\SandcastleBuilderConsole.exe" .\SharpZipLib.shfb
