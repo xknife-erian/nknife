@@ -8,9 +8,9 @@ namespace NKnife.AutoUpdater.Common
 {
     internal static class Logger
     {
-        private static readonly string _BaseDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Logs");
-        private static readonly SyncQueue<Pair<bool, string>> _Infos = new SyncQueue<Pair<bool, string>>();
-        private static readonly LogFile _LogFile = new LogFile(_BaseDirectory, "Pansoft.Updater");
+        private static readonly string _baseDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Logs");
+        private static readonly SyncQueue<Pair<bool, string>> _infos = new SyncQueue<Pair<bool, string>>();
+        private static readonly LogFile _logFile = new LogFile(_baseDirectory, "Pansoft.Updater");
 
         static Logger()
         {
@@ -30,7 +30,7 @@ namespace NKnife.AutoUpdater.Common
         {
             string formateInfo = FormatLogInfo(info, e);
             Console.WriteLine(formateInfo);
-            _Infos.Enqueue(new Pair<bool, string> {First = isCoreInfo, Second = formateInfo});
+            _infos.Enqueue(new Pair<bool, string> {First = isCoreInfo, Second = formateInfo});
         }
 
         private static string FormatLogInfo(string info, Exception e = null)
@@ -45,15 +45,16 @@ namespace NKnife.AutoUpdater.Common
 
         private static void Write()
         {
-            _LogFile.Write("===========================================");
+            _logFile.Write("===========================================");
             while (IsRun)
             {
-                if (_Infos.Count > 0)
+                if (_infos.Count > 0)
                 {
-                    Pair<bool, string> info = _Infos.Dequeue();
-                    _LogFile.Write(info.Second, info.First);
+                    Pair<bool, string> info;
+                    if (_infos.TryDequeue(out info))
+                        _logFile.Write(info.Second, info.First);
                 }
-                _Infos.AutoResetEvent.WaitOne();
+                _infos.AddEvent.WaitOne();
             }
         }
     }
