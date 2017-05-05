@@ -12,7 +12,7 @@ namespace NKnife.Channels.SerialKnife.IoC
         /// </summary>
         public override void Load()
         {
-            Bind<About>().To<Global.About>().InSingletonScope();
+            Bind<IAbout>().To<Global.About>().InSingletonScope();
             Bind<SerialChannelService>().ToSelf().InSingletonScope();
         }
     }
