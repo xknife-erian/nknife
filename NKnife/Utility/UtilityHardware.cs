@@ -9,35 +9,34 @@ namespace NKnife.Utility
 {
     public class UtilityHardware
     {
-        private static CPUInfo[] _Infos;
-        private static string[] _MacAddressArray;
+        private static CPUInfo[] _infos;
+        private static string[] _macAddressArray;
 
-        /// <summary>获取系统串口数量
+        /// <summary>
+        ///     获取系统串口数量
         /// </summary>
         /// <returns></returns>
         public static string[] GetSerialCommList()
         {
-            RegistryKey keyCom = Registry.LocalMachine.OpenSubKey("Hardware\\DeviceMap\\SerialComm");
-            if (keyCom != null)
-            {
-                return keyCom.GetValueNames();
-            }
-            return null;
+            var keyCom = Registry.LocalMachine.OpenSubKey("Hardware\\DeviceMap\\SerialComm");
+            return keyCom?.GetValueNames();
         }
 
-        /// <summary>获取指定编号的CPU信息
+        /// <summary>
+        ///     获取指定编号的CPU信息
         /// </summary>
         public static CPUInfo GetCPUInfo(int n = 0)
         {
-            if (_Infos == null)
+            if (_infos == null)
             {
                 var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
-                ManagementObjectCollection collection = searcher.Get();
-                _Infos = new CPUInfo[collection.Count];
-                int i = 0;
-                foreach (ManagementObject mo in collection)
+                var collection = searcher.Get();
+                _infos = new CPUInfo[collection.Count];
+                var i = 0;
+                foreach (var o in collection)
                 {
-                    _Infos[i] = new CPUInfo();
+                    var mo = (ManagementObject) o;
+                    _infos[i] = new CPUInfo();
                     try
                     {
                         object propertyValue;
@@ -46,7 +45,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("ProcessorId");
                             if (propertyValue != null)
-                                _Infos[i].ProcessorId = propertyValue.ToString().Trim();
+                                _infos[i].ProcessorId = propertyValue.ToString().Trim();
                         }
                         catch (Exception e)
                         {
@@ -59,7 +58,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("CurrentVoltage");
                             if (propertyValue != null)
-                                _Infos[i].CurrentVoltage = propertyValue.ToString();
+                                _infos[i].CurrentVoltage = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -69,7 +68,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("ExtClock");
                             if (propertyValue != null)
-                                _Infos[i].ExtClock = propertyValue.ToString();
+                                _infos[i].ExtClock = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -79,7 +78,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("L2CacheSize");
                             if (propertyValue != null)
-                                _Infos[i].L2CacheSize = propertyValue.ToString();
+                                _infos[i].L2CacheSize = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -89,7 +88,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("Manufacturer");
                             if (propertyValue != null)
-                                _Infos[i].Manufacturer = propertyValue.ToString();
+                                _infos[i].Manufacturer = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -99,7 +98,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("Name");
                             if (propertyValue != null)
-                                _Infos[i].Name = propertyValue.ToString();
+                                _infos[i].Name = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -109,7 +108,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("Version");
                             if (propertyValue != null)
-                                _Infos[i].Version = propertyValue.ToString();
+                                _infos[i].Version = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -119,7 +118,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("LoadPercentage");
                             if (propertyValue != null)
-                                _Infos[i].LoadPercentage = propertyValue.ToString();
+                                _infos[i].LoadPercentage = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -129,7 +128,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("MaxClockSpeed");
                             if (propertyValue != null)
-                                _Infos[i].MaxClockSpeed = propertyValue.ToString();
+                                _infos[i].MaxClockSpeed = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -139,7 +138,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("CurrentClockSpeed");
                             if (propertyValue != null)
-                                _Infos[i].CurrentClockSpeed = propertyValue.ToString();
+                                _infos[i].CurrentClockSpeed = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -149,7 +148,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("AddressWidth");
                             if (propertyValue != null)
-                                _Infos[i].AddressWidth = propertyValue.ToString();
+                                _infos[i].AddressWidth = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -159,7 +158,7 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("DataWidth");
                             if (propertyValue != null)
-                                _Infos[i].DataWidth = propertyValue.ToString();
+                                _infos[i].DataWidth = propertyValue.ToString();
                         }
                         catch (Exception e)
                         {
@@ -172,27 +171,26 @@ namespace NKnife.Utility
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(string.Format("获取计算机信息异常"), e.Message);
+                        Console.WriteLine("获取计算机信息异常", e.Message);
                     }
                     i++;
                 }
-                if (_Infos.Length > 0)
+                if (_infos.Length > 0)
                 {
                     var mos = new ManagementObjectSearcher("Select * FROM Win32_BaseBoard");
-                    foreach (ManagementObject mo in mos.Get())
+                    foreach (var o in mos.Get())
                     {
+                        var mo = (ManagementObject) o;
                         object propertyValue;
 
                         try
                         {
                             propertyValue = mo.GetPropertyValue("Manufacturer");
                             if (propertyValue != null)
-                            {
-                                foreach (var cpuInfo in _Infos)
+                                foreach (var cpuInfo in _infos)
                                     cpuInfo.CurrBaseBoard.Manufacturer = propertyValue.ToString();
-                            }
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.WriteLine("无Manufacturer属性");
                         }
@@ -201,12 +199,10 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("Product");
                             if (propertyValue != null)
-                            {
-                                foreach (var cpuInfo in _Infos)
+                                foreach (var cpuInfo in _infos)
                                     cpuInfo.CurrBaseBoard.Product = propertyValue.ToString();
-                            }
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.WriteLine("无Manufacturer属性");
                         }
@@ -215,12 +211,10 @@ namespace NKnife.Utility
                         {
                             propertyValue = mo.GetPropertyValue("SerialNumber");
                             if (propertyValue != null)
-                            {
-                                foreach (var cpuInfo in _Infos)
+                                foreach (var cpuInfo in _infos)
                                     cpuInfo.CurrBaseBoard.SerialNumber = propertyValue.ToString().Trim();
-                            }
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.WriteLine("无Manufacturer属性");
                         }
@@ -228,34 +222,34 @@ namespace NKnife.Utility
                     }
                 }
             }
-            if (_Infos != null && n < _Infos.Length)
-            {
-                return _Infos[n];
-            }
+            if (_infos != null && n < _infos.Length)
+                return _infos[n];
             return new CPUInfo();
         }
 
-        /// <summary>获取CPU编号
+        /// <summary>
+        ///     获取CPU编号
         /// </summary>
-        public static string GetCpuID(int n = 0)
+        public static string GetCPUId(int n = 0)
         {
-            string cpuId = GetCPUInfo(n).ProcessorId;
+            var cpuId = GetCPUInfo(n).ProcessorId;
             return !string.IsNullOrWhiteSpace(cpuId) ? cpuId : "CPU0";
         }
 
         /// <summary>
-        /// 获取本机的Mac地址
+        ///     获取本机的Mac地址
         /// </summary>
         public static string GetMacAddress(int n = 0)
         {
-            if (_MacAddressArray == null)
+            if (_macAddressArray == null)
             {
                 var mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
-                ManagementObjectCollection moc = mc.GetInstances();
+                var moc = mc.GetInstances();
                 var maclist = new List<string>();
-                foreach (ManagementObject mo in moc)
+                foreach (var o in moc)
                 {
-                    bool enable = false;
+                    var mo = (ManagementObject) o;
+                    var enable = false;
                     object propertyValue;
                     try
                     {
@@ -267,8 +261,7 @@ namespace NKnife.Utility
                     {
                         Console.WriteLine("无IPEnabled属性");
                     }
-                    if(enable)
-                    {
+                    if (enable)
                         try
                         {
                             propertyValue = mo.GetPropertyValue("MacAddress");
@@ -279,26 +272,26 @@ namespace NKnife.Utility
                         {
                             Console.WriteLine("无MacAddress属性");
                         }
-                    }
                     mo.Dispose();
                 }
-                _MacAddressArray = maclist.ToArray();
+                _macAddressArray = maclist.ToArray();
             }
-            if (_MacAddressArray != null && n < _MacAddressArray.Length)
+            if (_macAddressArray != null && n < _macAddressArray.Length)
             {
-                var mac = _MacAddressArray[n];
+                var mac = _macAddressArray[n];
                 return !string.IsNullOrWhiteSpace(mac) ? mac : "MAC0";
             }
             return "MAC99";
         }
 
-        /// <summary>获取第一块硬盘编号
+        /// <summary>
+        ///     获取第一块硬盘编号
         /// </summary>
         /// <returns></returns>
-        public static string GetHardDiskID()
+        public static string GetHardDiskId()
         {
             var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMedia");
-            ManagementObjectCollection moc = searcher.Get();
+            var moc = searcher.Get();
             return (from ManagementObject mo in moc select mo["SerialNumber"].ToString().Trim()).FirstOrDefault();
         }
     }

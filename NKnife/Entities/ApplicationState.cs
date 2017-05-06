@@ -16,7 +16,7 @@ namespace NKnife.Entities
     {
         public ApplicationStateWrapper()
         {
-            Id = string.Format("{0}-{1}", UtilityHardware.GetMacAddress(), UtilityHardware.GetCpuID());
+            Id = string.Format("{0}-{1}", UtilityHardware.GetMacAddress(), UtilityHardware.GetCPUId());
             State = ApplicationState.Single;
             ServerIpAddress = "127.0.0.1";
         }

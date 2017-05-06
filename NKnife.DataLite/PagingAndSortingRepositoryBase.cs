@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LiteDB;
 using NKnife.DataLite.Interfaces;
 
 namespace NKnife.DataLite
@@ -7,6 +8,11 @@ namespace NKnife.DataLite
     {
         protected PagingAndSortingRepositoryBase(string repositoryPath)
             : base(repositoryPath)
+        {
+        }
+
+        protected PagingAndSortingRepositoryBase(LiteDatabase database)
+            : base(database)
         {
         }
 

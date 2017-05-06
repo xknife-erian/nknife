@@ -53,7 +53,7 @@ namespace NKnife.Entities
 
         public static string GetMachineId()
         {
-            return string.Format("{0}-{1}", UtilityHardware.GetMacAddress(), UtilityHardware.GetCpuID()).Replace(":", "");
+            return string.Format("{0}-{1}", UtilityHardware.GetMacAddress(), UtilityHardware.GetCPUId()).Replace(":", "");
         }
 
         public static MultiMachine Parse(string content)

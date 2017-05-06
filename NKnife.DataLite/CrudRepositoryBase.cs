@@ -5,14 +5,19 @@ using NKnife.DataLite.Interfaces;
 
 namespace NKnife.DataLite
 {
-    public abstract class CrudRepositoryBase<T, ID> : RepositoryBase<T>, ICrudRepository<T, ID>
+    public abstract class CrudRepositoryBase<T, TId> : RepositoryBase<T>, ICrudRepository<T, TId>
     {
         protected CrudRepositoryBase(string repositoryPath)
             : base(repositoryPath)
         {
         }
 
-        #region Implementation of ICrudRepository<T,ID>
+        protected CrudRepositoryBase(LiteDatabase database)
+            : base(database)
+        {
+        }
+
+        #region Implementation of ICrudRepository<T,TId>
 
         /// <summary>
         ///     Saves a given entity. Use the returned instance for further operations as the save operation might have changed the
@@ -47,7 +52,7 @@ namespace NKnife.DataLite
         /// <summary>
         ///     Retrieves an entity by its id.
         /// </summary>
-        public T FindOne(ID id)
+        public T FindOne(TId id)
         {
             return _Collection.FindById(new BsonValue(id));
         }
@@ -55,7 +60,7 @@ namespace NKnife.DataLite
         /// <summary>
         ///     Returns whether an entity with the given id exists.
         /// </summary>
-        public bool Exists(ID id)
+        public bool Exists(TId id)
         {
             return _Collection.Exists(Query.EQ("_id", new BsonValue(id)));
         }
@@ -71,9 +76,9 @@ namespace NKnife.DataLite
         /// <summary>
         ///     Returns all instances of the type with the given IDs.
         /// </summary>
-        public IEnumerable<T> FindAll(IEnumerable<ID> ids)
+        public IEnumerable<T> FindAll(IEnumerable<TId> ids)
         {
-            var enumerable = ids as ID[] ?? ids.ToArray();
+            var enumerable = ids as TId[] ?? ids.ToArray();
             var list = new List<T>(enumerable.Count());
             list.AddRange(enumerable.Select(id => _Collection.FindById(new BsonValue(id))));
             return list;
@@ -88,7 +93,7 @@ namespace NKnife.DataLite
         ///     Deletes the entity with the given id.
         /// </summary>
         /// <param name="id">id must not be null</param>
-        public void Delete(ID id)
+        public void Delete(TId id)
         {
             _Collection.Delete(new BsonValue(id));
         }
@@ -118,7 +123,7 @@ namespace NKnife.DataLite
         /// </summary>
         public void DeleteAll()
         {
-            _Database.DropCollection(nameof(T));
+            Database.DropCollection(nameof(T));
         }
 
         #endregion
