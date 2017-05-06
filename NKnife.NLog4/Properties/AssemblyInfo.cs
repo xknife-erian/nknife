@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("xknife.net")]
 [assembly: AssemblyProduct("NKnife.NLog4")]
-[assembly: AssemblyCopyright("Copyright © xknife.net 2016")]
+[assembly: AssemblyCopyright("Copyright © xknife.net 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

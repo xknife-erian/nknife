@@ -29,6 +29,8 @@ namespace NKnife.GUI.WinForm
             SetStyle(
                 ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint, true);
+            UpdateStyles();
+
             FlowDirection = FlowDirection.LeftToRight;
             AutoScroll = true;
             BackColor = SystemColors.ControlLight;
@@ -188,6 +190,11 @@ namespace NKnife.GUI.WinForm
 
             public ImageBox(Color imageBoxColor, Color imageBoxLabelColor, Font imageBoxLabelFont)
             {
+                SetStyle(
+                    ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint |
+                    ControlStyles.AllPaintingInWmPaint, true);
+                UpdateStyles();
+
                 SuspendLayout();
 
                 _Label.Dock = DockStyle.Bottom;

@@ -1,6 +1,6 @@
 ﻿namespace NKnife.Kits.StarterKit.Forms
 {
-    partial class ImagesPanelDemo
+    partial class ImagesPanelControlTestDockView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImagesPanelDemo));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImagesPanelControlTestDockView));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this._ImagesPanel = new NKnife.GUI.WinForm.ImagesPanel();
             this._PropertyGrid = new System.Windows.Forms.PropertyGrid();
@@ -104,7 +104,7 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // ImagesPanelDemo
+            // ImagesPanelControlTestDockView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -112,7 +112,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.Name = "ImagesPanelDemo";
+            this.Name = "ImagesPanelControlTestDockView";
             this.ShowIcon = false;
             this.Text = "ImagesPanel控件测试";
             this.splitContainer1.Panel1.ResumeLayout(false);

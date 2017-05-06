@@ -6,12 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.StarterKit.Forms
 {
-    public partial class UserToolStripForm : Form
+    public partial class CustomStripControlTestDockView : DockContent
     {
-        public UserToolStripForm()
+        public CustomStripControlTestDockView()
         {
             InitializeComponent();
             _Checkbox.CheckBox.CheckedChanged += (s, e) => checkBox1.Checked = _Checkbox.CheckBox.Checked;

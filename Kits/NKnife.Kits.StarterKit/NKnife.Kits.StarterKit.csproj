@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Properties\main.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChnCharInfo">
       <HintPath>..\..\.library\Simplified Chinese Pin-Yin Conversion Library\ChnCharInfo.dll</HintPath>
@@ -62,55 +65,65 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.13.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DockPanelSuite.2.14.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=2.13.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DockPanelSuite.ThemeVS2015.2.14.0\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\ChineseCharUseFrequency.cs">
+    <Compile Include="..\..\NKnife\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="Forms\ChineseCharUseFrequencyDockView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ChineseCharUseFrequency.Designer.cs">
-      <DependentUpon>ChineseCharUseFrequency.cs</DependentUpon>
+    <Compile Include="Forms\ChineseCharUseFrequencyDockView.Designer.cs">
+      <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ImagesPanelDemo.cs">
+    <Compile Include="Forms\ImagesPanelControlTestDockView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ImagesPanelDemo.Designer.cs">
-      <DependentUpon>ImagesPanelDemo.cs</DependentUpon>
+    <Compile Include="Forms\ImagesPanelControlTestDockView.Designer.cs">
+      <DependentUpon>ImagesPanelControlTestDockView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LoggingStarterForm.cs">
+    <Compile Include="IoC\Modules.cs" />
+    <Compile Include="LoggingDockView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LoggingStarterForm.Designer.cs">
-      <DependentUpon>LoggingStarterForm.cs</DependentUpon>
+    <Compile Include="LoggingDockView.Designer.cs">
+      <DependentUpon>LoggingDockView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UserToolStripForm.cs">
+    <Compile Include="Forms\CustomStripControlTestDockView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UserToolStripForm.Designer.cs">
-      <DependentUpon>UserToolStripForm.cs</DependentUpon>
+    <Compile Include="Forms\CustomStripControlTestDockView.Designer.cs">
+      <DependentUpon>CustomStripControlTestDockView.cs</DependentUpon>
     </Compile>
-    <Compile Include="KitListForm.cs">
+    <Compile Include="LibraryDemoWorkbench.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KitListForm.Designer.cs">
-      <DependentUpon>KitListForm.cs</DependentUpon>
+    <Compile Include="LibraryDemoWorkbench.Designer.cs">
+      <DependentUpon>LibraryDemoWorkbench.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\ChineseCharUseFrequency.resx">
-      <DependentUpon>ChineseCharUseFrequency.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ChineseCharUseFrequencyDockView.resx">
+      <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ImagesPanelDemo.resx">
-      <DependentUpon>ImagesPanelDemo.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ImagesPanelControlTestDockView.resx">
+      <DependentUpon>ImagesPanelControlTestDockView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LoggingStarterForm.resx">
-      <DependentUpon>LoggingStarterForm.cs</DependentUpon>
+    <EmbeddedResource Include="LoggingDockView.resx">
+      <DependentUpon>LoggingDockView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UserToolStripForm.resx">
-      <DependentUpon>UserToolStripForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CustomStripControlTestDockView.resx">
+      <DependentUpon>CustomStripControlTestDockView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KitListForm.resx">
-      <DependentUpon>KitListForm.cs</DependentUpon>
+    <EmbeddedResource Include="LibraryDemoWorkbench.resx">
+      <DependentUpon>LibraryDemoWorkbench.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -124,6 +137,9 @@
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

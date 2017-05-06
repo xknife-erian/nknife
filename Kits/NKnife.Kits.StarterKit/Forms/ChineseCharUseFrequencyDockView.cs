@@ -4,12 +4,13 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using NKnife.Chinese;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.StarterKit.Forms
 {
-    public partial class ChineseCharUseFrequency : Form
+    public partial class ChineseCharUseFrequencyDockView : DockContent
     {
-        public ChineseCharUseFrequency()
+        public ChineseCharUseFrequencyDockView()
         {
             InitializeComponent();
         }

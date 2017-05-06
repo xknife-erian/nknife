@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Kits.StarterKit.Forms
 {
-    public partial class ImagesPanelDemo : Form
+    public partial class ImagesPanelControlTestDockView : DockContent
     {
-        public ImagesPanelDemo()
+        public ImagesPanelControlTestDockView()
         {
             InitializeComponent();
             _PropertyGrid.SelectedObject = _ImagesPanel;

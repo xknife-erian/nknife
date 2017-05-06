@@ -1,6 +1,6 @@
 ﻿namespace NKnife.Kits.StarterKit.Forms
 {
-    partial class ChineseCharUseFrequency
+    partial class ChineseCharUseFrequencyDockView
     {
         /// <summary>
         /// Required designer variable.
@@ -200,7 +200,7 @@
             this._TimeLabel.Name = "_TimeLabel";
             this._TimeLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // ChineseCharUseFrequency
+            // ChineseCharUseFrequencyDockView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -209,7 +209,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "ChineseCharUseFrequency";
+            this.Name = "ChineseCharUseFrequencyDockView";
             this.ShowIcon = false;
             this.Text = "汉字使用频率";
             this.groupBox1.ResumeLayout(false);

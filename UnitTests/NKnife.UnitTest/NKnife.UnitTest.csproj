@@ -63,6 +63,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\..\NKnife\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="Electronics\ResistancesTest.cs" />
     <Compile Include="Electronics\ResistanceValueResolveTest.cs" />
     <Compile Include="Extensions\BytesExtensionTest.cs" />

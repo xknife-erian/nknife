@@ -1,6 +1,6 @@
-﻿namespace NKnife.Kits.StarterKit.Forms
+﻿namespace NKnife.Kits.StarterKit
 {
-    partial class LoggingStarterForm
+    partial class LoggingDockView
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // LoggingStarterForm
+            // LoggingDockView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(548, 393);
-            this.Name = "LoggingStarterForm";
-            this.Text = "LoggingStarterForm";
+            this.Name = "LoggingDockView";
+            this.Text = "LoggingDockView";
             this.ResumeLayout(false);
 
         }
