@@ -2,7 +2,7 @@
 
 namespace NKnife.DataLite.Interfaces
 {
-    public interface ICrudRepository<T, TId> : IRepository<T>
+    public interface ICrudRepository<T, in TId> : IRepository<T>
     {
         /// <summary>
         /// Saves a given entity. Use the returned instance for further operations as the save operation might have changed the entity instance completely.

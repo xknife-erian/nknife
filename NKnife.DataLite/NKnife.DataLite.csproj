@@ -51,6 +51,7 @@
     <Compile Include="CrudRepositoryBase.cs" />
     <Compile Include="Exceptions\ArgumentByEntityException.cs" />
     <Compile Include="Exceptions\DatabaseFileInvalidOperationException.cs" />
+    <Compile Include="Interfaces\ISelectable.cs" />
     <Compile Include="PagingAndSortingRepositoryBase.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="Page.cs" />

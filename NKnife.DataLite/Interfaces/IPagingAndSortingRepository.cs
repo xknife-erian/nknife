@@ -6,8 +6,8 @@ namespace NKnife.DataLite.Interfaces
     /// Extension of {@link CrudRepository} to provide additional methods to retrieve entities using the pagination and sorting abstraction.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="ID"></typeparam>
-    public interface IPagingAndSortingRepository<T, ID> : ICrudRepository<T, ID>
+    /// <typeparam name="TId"></typeparam>
+    public interface IPagingAndSortingRepository<T, in TId> : ICrudRepository<T, TId>
     {
 
         /// <summary>

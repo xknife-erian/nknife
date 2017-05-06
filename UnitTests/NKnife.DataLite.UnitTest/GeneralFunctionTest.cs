@@ -310,8 +310,30 @@ namespace NKnife.DataLite.UnitTest
                 cr.Count.Should().Be(map.Count);
                 cr.FindAll().Count().Should().Be(map.Count);
 
+                for (int i = 0; i < count-1; i++)
+                {
+                    string[] idArray = GetIdArray(i, map);
+                    var result = cr.FindAll(idArray);
+                    idArray.Should().HaveCount(25);
+                    result.Count().Should().Be(idArray.Length);
+                }
                 
             }
+        }
+
+        private string[] GetIdArray(int index, Dictionary<string, Company> map)
+        {
+            var mapkeys = map.Keys.ToArray();
+            var array = new List<string>();
+            for (int i = 0; i < 25; i++)
+            {
+                var k = i + index;
+                if (k >= mapkeys.Length)
+                    k = k - mapkeys.Length;
+                var id = mapkeys[k];
+                array.Add(id);
+            }
+            return array.ToArray();
         }
 
         [Test]
