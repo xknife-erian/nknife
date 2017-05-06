@@ -9,6 +9,11 @@ namespace NKnife.DataLite.UnitTest.Entities
             base(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{nameof(CompanyRepository)}.litedb"))
         {
         }
+
+        public CompanyRepository(string repositoryPath) :
+            base(repositoryPath)
+        {
+        }
     }
 
 }

@@ -4,15 +4,10 @@ using NKnife.DataLite.Interfaces;
 
 namespace NKnife.DataLite
 {
-    public abstract class PagingAndSortingRepositoryBase<T, ID> : CrudRepositoryBase<T, ID>, IPagingAndSortingRepository<T, ID>
+    public abstract class PagingAndSortingRepositoryBase<T, TId> : CrudRepositoryBase<T, TId>, IPagingAndSortingRepository<T, TId>
     {
         protected PagingAndSortingRepositoryBase(string repositoryPath)
             : base(repositoryPath)
-        {
-        }
-
-        protected PagingAndSortingRepositoryBase(LiteDatabase database)
-            : base(database)
         {
         }
 

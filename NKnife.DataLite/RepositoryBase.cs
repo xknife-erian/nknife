@@ -1,6 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using LiteDB;
+using NKnife.DataLite.Exceptions;
 using NKnife.DataLite.Interfaces;
 using NKnife.Utility;
 
@@ -10,15 +10,26 @@ namespace NKnife.DataLite
     {
         private LiteCollection<T> _Collection;
         private LiteDatabase _Database;
-        protected bool _NeedDispose = false;
+        protected bool _NeedDispose;
 
         protected RepositoryBase(string repositoryPath)
         {
             if (string.IsNullOrWhiteSpace(repositoryPath))
-                throw new ArgumentNullException(nameof(repositoryPath), "数据库文件路径不能为空");
-            var dir = new DirectoryInfo(repositoryPath);
-            if (dir.Exists)
-                UtilityFile.CreateDirectory(dir.FullName);
+                throw new DatabaseFileInvalidOperationException("数据库文件路径不能为空", nameof(repositoryPath));
+            DirectoryInfo directory;
+            try
+            {
+                directory = new DirectoryInfo(repositoryPath);
+            }
+            catch
+            {
+                throw new DatabaseFileInvalidOperationException("目录无效", nameof(repositoryPath));
+            }
+            if (!directory.Exists)
+                if (directory.Parent != null)
+                    UtilityFile.CreateDirectory(directory.Parent.FullName);
+                else
+                    throw new DatabaseFileInvalidOperationException("无法创建目录", nameof(repositoryPath));
             RepositoryPath = repositoryPath;
         }
 
@@ -32,7 +43,7 @@ namespace NKnife.DataLite
                 if (_Database == null)
                 {
                     _Database = new LiteDatabase(RepositoryPath);
-                    _NeedDispose = true;
+                    _NeedDispose = true; //如果当多个集全在一个数据库文件时，不能轻易Dispose数据库，由外部自行控制数据库操作的释放
                 }
                 return _Database;
             }
@@ -43,6 +54,9 @@ namespace NKnife.DataLite
         /// </summary>
         protected virtual LiteCollection<T> Collection => _Collection ?? (_Collection = Database.GetCollection<T>(nameof(T)));
 
+        /// <summary>
+        ///     数据库主文件的实际路径
+        /// </summary>
         public string RepositoryPath { get; }
 
         #region IDisposable

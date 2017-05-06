@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LiteDB;
+using NKnife.DataLite.Exceptions;
 using NKnife.DataLite.Interfaces;
 
 namespace NKnife.DataLite
@@ -12,11 +13,6 @@ namespace NKnife.DataLite
         {
         }
 
-        protected CrudRepositoryBase(LiteDatabase database)
-            : base(database)
-        {
-        }
-
         #region Implementation of ICrudRepository<T,TId>
 
         /// <summary>
@@ -24,29 +20,33 @@ namespace NKnife.DataLite
         ///     entity instance completely.
         /// </summary>
         /// <param name="entity"></param>
-        /// <returns>return the saved entity</returns>
-        public T Save(T entity)
+        /// <returns>当是新document时，插入，返加true；当是已有document时，更新，且返回false。</returns>
+        public bool Save(T entity)
         {
-            {
-                var i = _Collection.Insert(entity);
-                if (i == 1)
-                    return entity;
-                return default(T);
-            }
+            if (entity == null)
+                throw new ArgumentByEntityException("实体不能为空", nameof(entity));
+            return Collection.Upsert(entity);
         }
 
         /// <summary>
         ///     Saves all given entities.
         /// </summary>
         /// <returns>return the saved entities</returns>
-        public IEnumerable<T> Save(IEnumerable<T> entities)
+        public int Save(IEnumerable<T> entities)
         {
+            if (entities == null)
+                throw new ArgumentByEntityException("实体不能为空", nameof(entities));
+
             var enumerable = entities as T[] ?? entities.ToArray();
-            foreach (var entity in enumerable)
+            var i = 0;
+            foreach (var item in enumerable)
             {
-                _Collection.Insert(entity);
+                if (item == null)
+                    continue;
+                if (Collection.Upsert(item))
+                    i++;
             }
-            return enumerable;
+            return i;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace NKnife.DataLite
         /// </summary>
         public T FindOne(TId id)
         {
-            return _Collection.FindById(new BsonValue(id));
+            return Collection.FindById(new BsonValue(id));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace NKnife.DataLite
         /// </summary>
         public bool Exists(TId id)
         {
-            return _Collection.Exists(Query.EQ("_id", new BsonValue(id)));
+            return Collection.Exists(Query.EQ("_id", new BsonValue(id)));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace NKnife.DataLite
         /// </summary>
         public IEnumerable<T> FindAll()
         {
-            return _Collection.FindAll();
+            return Collection.FindAll();
         }
 
         /// <summary>
@@ -78,44 +78,26 @@ namespace NKnife.DataLite
         /// </summary>
         public IEnumerable<T> FindAll(IEnumerable<TId> ids)
         {
+            if (ids == null)
+                throw new ArgumentByEntityException("查询时，传入参数不能为空", nameof(ids));
             var enumerable = ids as TId[] ?? ids.ToArray();
-            var list = new List<T>(enumerable.Count());
-            list.AddRange(enumerable.Select(id => _Collection.FindById(new BsonValue(id))));
+            var list = new List<T>(enumerable.Length);
+            list.AddRange(enumerable.Select(id => Collection.FindById(new BsonValue(id))));
             return list;
         }
 
         /// <summary>
         ///     Returns the number of entities available.
         /// </summary>
-        public long Count => _Collection.Count();
+        public long Count => Collection.Count();
 
         /// <summary>
         ///     Deletes the entity with the given id.
         /// </summary>
         /// <param name="id">id must not be null</param>
-        public void Delete(TId id)
+        public bool Delete(TId id)
         {
-            _Collection.Delete(new BsonValue(id));
-        }
-
-        /// <summary>
-        ///     Deletes a given entity.
-        /// </summary>
-        public void Delete(T entity)
-        {
-            _Collection.Delete(new BsonValue(entity));
-        }
-
-        /// <summary>
-        ///     deletes the given entities.
-        /// </summary>
-        /// <param name="entities">entities</param>
-        public void Delete(IEnumerable<T> entities)
-        {
-            foreach (var entity in entities)
-            {
-                Delete(entity);
-            }
+            return Collection.Delete(new BsonValue(id));
         }
 
         /// <summary>

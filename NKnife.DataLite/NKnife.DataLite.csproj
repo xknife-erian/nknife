@@ -49,6 +49,8 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="CrudRepositoryBase.cs" />
+    <Compile Include="Exceptions\ArgumentByEntityException.cs" />
+    <Compile Include="Exceptions\DatabaseFileInvalidOperationException.cs" />
     <Compile Include="PagingAndSortingRepositoryBase.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="Page.cs" />

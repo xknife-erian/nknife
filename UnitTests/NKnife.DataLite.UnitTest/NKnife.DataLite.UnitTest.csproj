@@ -57,6 +57,7 @@
     <Compile Include="Entities\MeasureData.cs" />
     <Compile Include="Entities\Meter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryBaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
