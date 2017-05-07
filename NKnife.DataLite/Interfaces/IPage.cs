@@ -3,77 +3,79 @@
 namespace NKnife.DataLite.Interfaces
 {
     /// <summary>
-    ///     A page is a sublist of a list of objects. It allows gain information about the position of it in the containing
-    ///     entire list.
+    ///     这是一个描述捕获分页请求后的处理结果及元信息。
+    ///     分页请求的处理结果一般来讲是所有Document的总集列表的子集列表。同时，允许获取该集合的相关信息。
     /// </summary>
     public interface IPage<T>
     {
         /// <summary>
-        ///     Returns the number of the current {@link Slice}. Is always non-negative.
+        ///     当前页码
         /// </summary>
         uint Number { get; }
 
         /// <summary>
-        ///     Returns the size of the {@link Slice}.
+        ///     当前页中的期望项目数量
         /// </summary>
         uint Size { get; }
 
         /// <summary>
-        ///     Returns the number of elements currently on this {@link Slice}.
+        ///     当前页中的实际项目数量，因查询条件或尾页等原因，有可能小于期望项目数量
         /// </summary>
         uint NumberOfElements { get; }
 
         /// <summary>
-        ///     Returns the page content as {@link List}.
+        ///     当前页的处理结果。即项目的集合。
         /// </summary>
         ICollection<T> Content { get; }
 
         /// <summary>
-        ///     Returns whether the {@link Slice} has content at all.
+        ///     是否有结果。
         /// </summary>
         bool HasContent { get; }
 
         /// <summary>
-        ///     Returns whether the current {@link Slice} is the first one.
+        ///     是否是首页
         /// </summary>
         bool IsFirst { get; }
 
         /// <summary>
-        ///     Returns whether the current {@link Slice} is the last one.
+        ///     是否是尾页
         /// </summary>
         bool IsLast { get; }
 
         /// <summary>
-        ///     Returns if there is a next {@link Slice}.
+        ///     是否有下一页
         /// </summary>
         bool HasNext { get; }
 
         /// <summary>
-        ///     Returns if there is a previous {@link Slice}.
+        ///     是否有上一页
         /// </summary>
         bool HasPrevious { get; }
 
         /// <summary>
-        ///     Returns the {@link Pageable} to request the next {@link Slice}. Can be {@literal null} in case the current {@link
-        ///     Slice} is already the last one. Clients should check {@link #hasNext()} before calling this method to make sure
-        ///     they receive a non-{@literal null} value.
+        ///     依据当前页创建下一页的请求
         /// </summary>
-        IPageable NextPageable { get; }
+        IPageable<T> NextPageable { get; }
 
         /// <summary>
-        ///     Returns the {@link Pageable} to request the previous {@link Slice}. Can be {@literal null} in case the current
-        ///     {@link Slice} is already the first one. Clients should check {@link #hasPrevious()} before calling this method make
-        ///     sure receive a non-{@literal null} value.
+        ///     依据当前页创建上一页的请求
         /// </summary>
-        IPageable PreviousPageable { get; }
+        IPageable<T> PreviousPageable { get; }
 
         /// <summary>
-        ///     Returns the sorting parameters for the {@link Slice}.
+        ///     排序比较器
         /// </summary>
-        IComparer<T> GetComparer();
+        IComparer<T> Comparer { get; }
 
+        /// <summary>
+        ///     总页数
+        /// </summary>
         uint TotalPages { get; }
 
+        /// <summary>
+        ///     总项目数
+        /// </summary>
         ulong TotalElements { get; }
     }
 }

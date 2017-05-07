@@ -37,6 +37,16 @@ namespace NKnife.DataLite.Interfaces
         IEnumerable<T> FindAll(IEnumerable<TId> ids);
 
         /// <summary>
+        /// Returns all entities sorted by the given options.
+        /// </summary>
+        IEnumerable<T> FindAll(IComparer<T> comparer);
+
+        /// <summary>
+        /// Returns all entities sorted by the given options.
+        /// </summary>
+        IEnumerable<T> FindAll(IEnumerable<TId> ids, IComparer<T> comparer);
+
+        /// <summary>
         /// Returns the number of entities available.
         /// </summary>
         long Count { get; }

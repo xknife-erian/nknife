@@ -52,7 +52,7 @@ namespace NKnife.DataLite
         /// <summary>
         ///     数据集合
         /// </summary>
-        protected virtual LiteCollection<T> Collection => _Collection ?? (_Collection = Database.GetCollection<T>(nameof(T)));
+        protected virtual LiteCollection<T> Collection => _Collection ?? (_Collection = Database.GetCollection<T>(typeof(T).Name));
 
         /// <summary>
         ///     数据库主文件的实际路径

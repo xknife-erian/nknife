@@ -11,13 +11,8 @@ namespace NKnife.DataLite.Interfaces
     {
 
         /// <summary>
-        /// Returns all entities sorted by the given options.
+        /// Returns a <see cref="IPage{T}"/> of entities meeting the paging restriction provided in the {@code Pageable} object.
         /// </summary>
-        IEnumerable<T> FindAll(IComparer<T> comparer);
-
-        /// <summary>
-        /// Returns a {@link Page} of entities meeting the paging restriction provided in the {@code Pageable} object.
-        /// </summary>
-        IPage<T> FindAll(IPageable pageable);
+        IPage<T> FindAll(IPageable<T> pageable);
     }
 }

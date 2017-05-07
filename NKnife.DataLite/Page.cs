@@ -5,12 +5,12 @@ using NKnife.DataLite.Interfaces;
 namespace NKnife.DataLite
 {
     /// <summary>
-    /// A page is a sublist of a list of objects. It allows gain information about the position of it in the containing entire list.
+    ///     这是一个描述捕获分页请求后的处理结果及元信息。
+    ///     分页请求的处理结果一般来讲是所有Document的总集列表的子集列表。同时，允许获取该集合的相关信息。
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class Page<T> : IPage<T>
     {
-        protected readonly IPageable _Pageable;
+        protected readonly IPageable<T> _Pageable;
         protected readonly ulong _Total;
 
         /// <summary>Constructor</summary>
@@ -20,9 +20,9 @@ namespace NKnife.DataLite
         ///     the total amount of items available. The total might be adapted considering the length of the
         ///     content given, if it is going to be the content of the last page.This is in place to mitigate inconsistencies
         /// </param>
-        public Page(ICollection<T> content, IPageable pageable, ulong total)
+        public Page(ICollection<T> content, IPageable<T> pageable, ulong total)
         {
-            Content = content;
+            Content = content ?? throw new ArgumentNullException(nameof(content), "页项目集合不能为空");
             _Pageable = pageable;
             _Total = !(content.Count <= 0) && pageable != null && pageable.Offset + pageable.PageSize > total
                 ? (ulong) (pageable.Offset + content.Count)
@@ -32,63 +32,59 @@ namespace NKnife.DataLite
         #region Implementation of IPage<T>
 
         /// <summary>
-        ///     Returns the number of the current <see cref="IPage{T}" />. Is always non-negative.
+        ///     当前页码
         /// </summary>
         public uint Number => _Pageable?.PageNumber ?? 0;
 
         /// <summary>
-        ///     Returns the size of the <see cref="IPage{T}" />.
+        ///     当前页中的期望项目数量
         /// </summary>
         public uint Size => _Pageable?.PageSize ?? 0;
 
         /// <summary>
-        ///     Returns the number of elements currently on this <see cref="IPage{T}" />.
+        ///     当前页中的实际项目数量，因查询条件或尾页等原因，有可能小于期望项目数量
         /// </summary>
         public uint NumberOfElements => (uint) Content.Count;
 
         /// <summary>
-        ///     Returns the page content as {@link List}.
+        ///     当前页的处理结果。即项目的集合。
         /// </summary>
         public ICollection<T> Content { get; }
 
         /// <summary>
-        ///     Returns whether the <see cref="IPage{T}" /> has content at all.
+        ///     是否有结果。
         /// </summary>
         public bool HasContent => Content?.Count > 0;
 
         /// <summary>
-        ///     Returns whether the current <see cref="IPage{T}" /> is the first one.
+        ///     是否是首页
         /// </summary>
         public bool IsFirst => !HasPrevious;
 
         /// <summary>
-        ///     Returns whether the current <see cref="IPage{T}" /> is the last one.
+        ///     是否是尾页
         /// </summary>
         public bool IsLast => !HasNext;
 
         /// <summary>
-        ///     Returns if there is a next <see cref="IPage{T}" />.
+        ///     是否有下一页
         /// </summary>
         public bool HasNext => Number + 1 < TotalPages;
 
         /// <summary>
-        ///     Returns if there is a previous <see cref="IPage{T}" />.
+        ///     是否有上一页
         /// </summary>
         public bool HasPrevious => Number > 0;
 
         /// <summary>
-        ///     Returns the <see cref="IPageable" /> to request the next <see cref="IPage{T}" />. Can be not null in case the
-        ///     current <see cref="IPage{T}" /> is already the last one. Clients should check HasNext before calling this method to
-        ///     make sure they receive a not null value.
+        ///     依据当前页创建下一页的请求
         /// </summary>
-        public IPageable NextPageable => HasNext ? _Pageable.Next() : null;
+        public IPageable<T> NextPageable => HasNext ? _Pageable.Next() : null;
 
         /// <summary>
-        ///     Returns the <see cref="IPageable" /> to request the previous <see cref="IPage{T}" />. Can be null in case
-        ///     the current <see cref="IPage{T}" /> is already the first one. Clients should check HasPrevious before calling this
-        ///     method make sure receive a not null value.
+        ///     依据当前页创建上一页的请求
         /// </summary>
-        public IPageable PreviousPageable
+        public IPageable<T> PreviousPageable
         {
             get
             {
@@ -99,15 +95,21 @@ namespace NKnife.DataLite
         }
 
         /// <summary>
-        ///     Returns the sorting parameters for the <see cref="IPage{T}" />.
+        ///     排序比较器
         /// </summary>
-        public IComparer<T> GetComparer()
+        public IComparer<T> Comparer
         {
-            return (IComparer<T>) _Pageable.GetComparer();
+            get { return (IComparer<T>) _Pageable.Comparer; }
         }
 
+        /// <summary>
+        ///     总页数
+        /// </summary>
         public uint TotalPages => Size == 0 ? 1 : (uint) Math.Ceiling(_Total / (double) Size);
 
+        /// <summary>
+        ///     总项目数
+        /// </summary>
         public ulong TotalElements => _Total;
 
         #endregion

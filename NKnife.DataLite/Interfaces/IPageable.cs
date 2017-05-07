@@ -1,58 +1,64 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using LiteDB;
 
 namespace NKnife.DataLite.Interfaces
 {
     /// <summary>
-    ///     Abstract interface for pagination information.
+    ///    这是一个描述分页请求的接口
     /// </summary>
-    public interface IPageable
+    public interface IPageable<T>
     {
         /// <summary>
-        ///     Returns the page to be returned.
+        ///     页码
         /// </summary>
         uint PageNumber { get; }
 
         /// <summary>
-        ///     Returns the number of items to be returned.
+        ///     当前页中的项目数量
         /// </summary>
         uint PageSize { get; }
 
-
         /// <summary>
-        ///     Returns the offset to be taken according to the underlying page and page size.
+        ///     当本次请求结束后在总记录中的偏移量。
         /// </summary>
         uint Offset { get; }
 
         /// <summary>
-        ///     Returns the sorting parameters.
+        ///     当前将要被使用的用于排序的比较器
         /// </summary>
-        IComparer GetComparer();
+        IComparer<T> Comparer { get; }
 
         /// <summary>
-        ///     Returns the {@link Pageable} requesting the first page.
+        ///     基于本次请求返回一个“首页”的新请求<see cref="IPageable"/>。
         /// </summary>
-        IPageable First();
+        IPageable<T> First();
 
         /// <summary>
-        ///     Returns the {@link Pageable} requesting the next {@link Page}.
+        ///     基于本次请求返回一个“下一页”的新请求<see cref="IPageable"/>。
         /// </summary>
-        IPageable Next();
+        IPageable<T> Next();
 
         /// <summary>
-        /// Returns the {@link Pageable} requesting the previous {@link Page}.
+        ///     基于本次请求返回一个“上一页”的新请求<see cref="IPageable"/>。
         /// </summary>
-        IPageable Previous();
+        IPageable<T> Previous();
 
         /// <summary>
-        ///     Returns the previous {@link Pageable} or the first {@link Pageable} if the current one already is the first one.
+        ///     基于本次请求返回一个“上一页”的新请求<see cref="IPageable"/>，如果“上一页”是第一页时，返回“首页”请求。
         /// </summary>
-        IPageable PreviousOrFirst();
-
+        IPageable<T> PreviousOrFirst();
 
         /// <summary>
-        ///     Returns whether there's a previous {@link Pageable} we can access from the current one. Will return {@literal
-        ///     false} in case the current {@link Pageable} already refers to the first page.
+        ///     是否有“上一页”，即当前页是否是“首页”
         /// </summary>
-        bool HasPrevious();
+        bool HasPrevious { get; }
+
+        /// <summary>
+        ///     分页的查询条件
+        /// </summary>
+        Expression<Func<T, bool>> Predicate { get; }
     }
 }

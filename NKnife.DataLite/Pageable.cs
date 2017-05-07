@@ -1,85 +1,90 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using NKnife.DataLite.Interfaces;
 
 namespace NKnife.DataLite
 {
-    public class Pageable : IPageable
+    /// <summary>
+    ///    这是一个描述分页请求的接口
+    /// </summary>
+    public class Pageable<T> : IPageable<T>
     {
-        protected readonly IComparer _Comparer;
-
-        protected Pageable(uint number, uint size, IComparer comparer)
+        public Pageable(uint number, uint size, IComparer<T> comparer, Expression<Func<T, bool>> predicate)
         {
             PageNumber = number;
             PageSize = size;
-            _Comparer = comparer;
+            Comparer = comparer;
+            Predicate = predicate;
         }
 
         #region Implementation of IPageable
 
         /// <summary>
-        ///     Returns the page to be returned.
+        ///     页码
         /// </summary>
         public uint PageNumber { get; protected set; }
 
         /// <summary>
-        ///     Returns the number of items to be returned.
+        ///     当前页中的项目数量
         /// </summary>
         public uint PageSize { get; protected set; }
 
         /// <summary>
-        ///     Returns the offset to be taken according to the underlying page and page size.
+        ///     当本次请求结束后在总记录中的偏移量。
         /// </summary>
         public uint Offset => PageNumber * PageSize;
 
         /// <summary>
-        ///     Returns the sorting parameters.
+        ///     当前将要被使用的用于排序的比较器
         /// </summary>
-        public IComparer GetComparer()
+        public IComparer<T> Comparer { get; }
+
+        /// <summary>
+        ///     基于本次请求返回一个“首页”的新请求<see cref="IPageable{T}"/>。
+        /// </summary>
+        public IPageable<T> First()
         {
-            return _Comparer;
+            return new Pageable<T>(0, PageSize, Comparer, Predicate);
         }
 
         /// <summary>
-        ///     Returns the <see cref="IPageable" /> requesting the first page.
+        ///     基于本次请求返回一个“下一页”的新请求<see cref="IPageable{T}"/>。
         /// </summary>
-        public IPageable First()
+        public IPageable<T> Next()
         {
-            return new Pageable(0, PageSize, _Comparer);
+            return new Pageable<T>(PageNumber + 1, PageSize, Comparer, Predicate);
         }
 
         /// <summary>
-        ///     Returns the <see cref="IPageable" /> requesting the next <see cref="IPage{T}" />.
+        ///     基于本次请求返回一个“上一页”的新请求<see cref="IPageable{T}"/>。
         /// </summary>
-        public IPageable Next()
+        public IPageable<T> Previous()
         {
-            return new Pageable(PageNumber + 1, PageSize, _Comparer);
+            return PageNumber == 0 ? this : new Pageable<T>(PageNumber + 1, PageSize, Comparer, Predicate);
         }
 
         /// <summary>
-        ///     Returns the <see cref="IPageable" /> requesting the previous <see cref="IPage{T}" />.
+        ///     基于本次请求返回一个“上一页”的新请求<see cref="IPageable{T}"/>，如果“上一页”是第一页时，返回“首页”请求。
         /// </summary>
-        public IPageable Previous()
+        public IPageable<T> PreviousOrFirst()
         {
-            return PageNumber == 0 ? this : new Pageable(PageNumber + 1, PageSize, _Comparer);
+            return HasPrevious ? Previous() : First();
         }
 
         /// <summary>
-        ///     Returns the previous <see cref="IPageable" /> or the first <see cref="IPageable" /> if the current one already is
-        ///     the first one.
+        ///     是否有“上一页”，即当前页是否是“首页”
         /// </summary>
-        public IPageable PreviousOrFirst()
+        public bool HasPrevious
         {
-            return HasPrevious() ? Previous() : First();
+            get { return PageNumber > 0; }
         }
 
         /// <summary>
-        ///     Returns whether there's a previous <see cref="IPageable" /> we can access from the current one. Will return
-        ///     false in case the current <see cref="IPageable" /> already refers to the first page.
+        ///     分页的查询条件
         /// </summary>
-        public bool HasPrevious()
-        {
-            return PageNumber > 0;
-        }
+        public Expression<Func<T, bool>> Predicate { get; }
 
         #endregion
     }

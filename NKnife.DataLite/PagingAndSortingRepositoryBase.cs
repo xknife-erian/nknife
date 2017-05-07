@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using LiteDB;
 using NKnife.DataLite.Interfaces;
 
@@ -14,25 +16,15 @@ namespace NKnife.DataLite
         #region Implementation of IPagingAndSortingRepository<T,ID>
 
         /// <summary>
-        /// Returns all entities sorted by the given options.
+        /// Returns a <see cref="IPage{T}"/> of entities meeting the paging restriction provided in the {@code Pageable} object.
         /// </summary>
-        public IEnumerable<T> FindAll(IComparer<T> comparer)
+        public IPage<T> FindAll(IPageable<T> pageable)
         {
-            var all = FindAll();
-            var list = new List<T>(all);
-            list.Sort(comparer);
-            return list;
-        }
-        
-        /// <summary>
-        /// Returns a {@link Page} of entities meeting the paging restriction provided in the {@code Pageable} object.
-        /// </summary>
-        public IPage<T> FindAll(IPageable pageable)
-        {
-            long count = Count;
-            //TODO: 就差这个复杂的页查询
-            ICollection<T> list = null;//FindAll(Query.with(pageable));
-            return new Page<T>(list, pageable, (ulong)Count);
+            var result = Collection.Find(pageable.Predicate, (int) pageable.Offset, (int) pageable.PageSize);
+            var list = new List<T>(result);
+            if (pageable.Comparer != null)
+                list.Sort(pageable.Comparer);
+            return new Page<T>(list.ToList(), pageable, (ulong) Count);
         }
 
         #endregion

@@ -87,6 +87,28 @@ namespace NKnife.DataLite
         }
 
         /// <summary>
+        /// Returns all entities sorted by the given options.
+        /// </summary>
+        public IEnumerable<T> FindAll(IComparer<T> comparer)
+        {
+            var all = FindAll();
+            var list = new List<T>(all);
+            list.Sort(comparer);
+            return list;
+        }
+
+        /// <summary>
+        /// Returns all entities sorted by the given options.
+        /// </summary>
+        public IEnumerable<T> FindAll(IEnumerable<TId> ids, IComparer<T> comparer)
+        {
+            var all = FindAll(ids);
+            var list = new List<T>(all);
+            list.Sort(comparer);
+            return list;
+        }
+
+        /// <summary>
         ///     Returns the number of entities available.
         /// </summary>
         public long Count => Collection.Count();
