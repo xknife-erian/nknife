@@ -313,14 +313,27 @@ namespace NKnife.DataLite.UnitTest
                 for (int i = 0; i < count-1; i++)
                 {
                     string[] idArray = GetIdArray(i, map);
-                    var result = cr.FindAll(idArray);
                     idArray.Should().HaveCount(25);
-                    result.Count().Should().Be(idArray.Length);
+
+                    var result = cr.FindAll(idArray).ToArray();//从已存数据中找到指定ID的的数据
+                    result.Length.Should().Be(idArray.Length);
+                    foreach (var company in result)
+                    {
+                        var id = company.Id;
+                        var src = map[id];
+                        company.Id.Should().Be(src.Id);
+                        company.Address.Should().Be(src.Address);
+                        company.Name.Should().Be(src.Name);
+                        company.WorkerCount.Should().Be(src.WorkerCount);
+                    }
                 }
                 
             }
         }
 
+        /// <summary>
+        /// 生成一个由25个ID组成的集合，供FindAll方法测试与验证使用
+        /// </summary>
         private string[] GetIdArray(int index, Dictionary<string, Company> map)
         {
             var mapkeys = map.Keys.ToArray();
