@@ -22,7 +22,9 @@ namespace NKnife.DataLite
         /// </param>
         public Page(ICollection<T> content, IPageable<T> pageable, ulong total)
         {
-            Content = content ?? throw new ArgumentNullException(nameof(content), "页项目集合不能为空");
+            if(content==null)
+                throw new ArgumentNullException(nameof(content), "页项目集合不能为空");
+            Content = content;
             _Pageable = pageable;
             _Total = !(content.Count <= 0) && pageable != null && pageable.Offset + pageable.PageSize > total
                 ? (ulong) (pageable.Offset + content.Count)

@@ -57,6 +57,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\NKnife\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="Common\Rectangles.cs" />
     <Compile Include="Controls\Base\RectangleOperation.cs" />
     <Compile Include="Controls\Frames\Event\BoardDraggingEventArgs.cs" />
