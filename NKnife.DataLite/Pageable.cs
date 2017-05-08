@@ -7,10 +7,17 @@ using NKnife.DataLite.Interfaces;
 namespace NKnife.DataLite
 {
     /// <summary>
-    ///    这是一个描述分页请求的接口
+    ///    这是一个描述分页请求的接口的实现。
     /// </summary>
     public class Pageable<T> : IPageable<T>
     {
+        /// <summary>
+        /// 构造函数。描述分页请求。
+        /// </summary>
+        /// <param name="number">页码。索引从0开始。</param>
+        /// <param name="size">项目数</param>
+        /// <param name="comparer">排序比较器</param>
+        /// <param name="predicate">查询条件</param>
         public Pageable(uint number, uint size, IComparer<T> comparer, Expression<Func<T, bool>> predicate)
         {
             PageNumber = number;
@@ -22,7 +29,7 @@ namespace NKnife.DataLite
         #region Implementation of IPageable
 
         /// <summary>
-        ///     页码
+        ///     页码。索引从0开始。
         /// </summary>
         public uint PageNumber { get; protected set; }
 

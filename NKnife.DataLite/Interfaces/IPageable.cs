@@ -12,7 +12,7 @@ namespace NKnife.DataLite.Interfaces
     public interface IPageable<T>
     {
         /// <summary>
-        ///     页码
+        ///     页码。索引从0开始。
         /// </summary>
         uint PageNumber { get; }
 
