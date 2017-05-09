@@ -69,7 +69,7 @@ namespace NKnife.DataLite
         /// </summary>
         public IPageable<T> Previous()
         {
-            return PageNumber == 0 ? this : new Pageable<T>(PageNumber + 1, PageSize, Comparer, Predicate);
+            return PageNumber == 0 ? this : new Pageable<T>(PageNumber - 1, PageSize, Comparer, Predicate);
         }
 
         /// <summary>

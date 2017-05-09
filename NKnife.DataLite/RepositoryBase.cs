@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using LiteDB;
 using NKnife.DataLite.Exceptions;
 using NKnife.DataLite.Interfaces;
@@ -6,12 +7,19 @@ using NKnife.Utility;
 
 namespace NKnife.DataLite
 {
+    /// <summary>
+    /// 抽象类。本类型描述数据库中的一个表名。
+    /// </summary>
     public abstract class RepositoryBase<T> : IRepository<T>
     {
         private LiteCollection<T> _Collection;
         private LiteDatabase _Database;
         protected bool _NeedDispose;
 
+        /// <summary>
+        /// 构造函数。本类型描述数据库中的一个表名。
+        /// </summary>
+        /// <param name="repositoryPath">数据库文件全名。含路径。</param>
         protected RepositoryBase(string repositoryPath)
         {
             if (string.IsNullOrWhiteSpace(repositoryPath))
@@ -26,10 +34,12 @@ namespace NKnife.DataLite
                 throw new DatabaseFileInvalidOperationException("目录无效", nameof(repositoryPath));
             }
             if (!directory.Exists)
+            {
                 if (directory.Parent != null)
                     UtilityFile.CreateDirectory(directory.Parent.FullName);
                 else
                     throw new DatabaseFileInvalidOperationException("无法创建目录", nameof(repositoryPath));
+            }
             RepositoryPath = repositoryPath;
         }
 
@@ -52,7 +62,7 @@ namespace NKnife.DataLite
         /// <summary>
         ///     数据集合
         /// </summary>
-        protected virtual LiteCollection<T> Collection => _Collection ?? (_Collection = Database.GetCollection<T>(typeof(T).Name));
+        protected virtual LiteCollection<T> Collection => _Collection ?? (_Collection = Database.GetCollection<T>(BuildCollectionName()));
 
         /// <summary>
         ///     数据库主文件的实际路径
@@ -69,5 +79,23 @@ namespace NKnife.DataLite
         }
 
         #endregion
+
+        /// <summary>
+        ///     默认数据库文件路径。存储在程序目录下。以类名+Repository为数据库文件名。
+        /// </summary>
+        /// <returns>默认数据库文件路径</returns>
+        public static string BuildDefaultDatabaseName()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{typeof(T).Name}Repository.litedb");
+        }
+
+        /// <summary>
+        ///     获取集合(表)名
+        /// </summary>
+        /// <returns>集合(表)名</returns>
+        protected virtual string BuildCollectionName()
+        {
+            return typeof(T).Name;
+        }
     }
 }

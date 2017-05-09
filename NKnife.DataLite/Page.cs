@@ -25,8 +25,10 @@ namespace NKnife.DataLite
             if(content==null)
                 throw new ArgumentNullException(nameof(content), "页项目集合不能为空");
             Content = content;
+            if (pageable == null)
+                throw new ArgumentNullException(nameof(pageable), "页请求不能为空");
             _Pageable = pageable;
-            _Total = !(content.Count <= 0) && pageable != null && pageable.Offset + pageable.PageSize > total
+            _Total = !(content.Count <= 0) && pageable.Offset + pageable.PageSize > total
                 ? (ulong) (pageable.Offset + content.Count)
                 : total;
         }
