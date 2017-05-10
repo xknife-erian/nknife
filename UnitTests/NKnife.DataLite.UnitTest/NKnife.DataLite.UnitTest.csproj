@@ -67,6 +67,7 @@
     <Compile Include="Entities\MeasureData.cs" />
     <Compile Include="Entities\Meter.cs" />
     <Compile Include="PageableTest.cs" />
+    <Compile Include="PageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBaseTest.cs" />
   </ItemGroup>

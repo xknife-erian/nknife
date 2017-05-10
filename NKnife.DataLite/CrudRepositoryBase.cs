@@ -125,9 +125,9 @@ namespace NKnife.DataLite
         /// <summary>
         ///     Deletes all entities managed by the repository.
         /// </summary>
-        public void DeleteAll()
+        public bool DeleteAll()
         {
-            Database.DropCollection(nameof(T));
+            return Database.DropCollection(BuildCollectionName());
         }
 
         #endregion

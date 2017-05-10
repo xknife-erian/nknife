@@ -5,32 +5,32 @@ using NKnife.DataLite.Interfaces;
 namespace NKnife.DataLite
 {
     /// <summary>
-    ///     这是一个描述捕获分页请求后的处理结果及元信息。
+    ///     这是一个描述捕获分页请求后的处理结果及元信息的类型。
     ///     分页请求的处理结果一般来讲是所有Document的总集列表的子集列表。同时，允许获取该集合的相关信息。
     /// </summary>
     public class Page<T> : IPage<T>
     {
         protected readonly IPageable<T> _Pageable;
-        protected readonly ulong _Total;
+        protected readonly ulong _TotalElements;
 
-        /// <summary>Constructor</summary>
-        /// <param name="content">the content of this page, must not be null.</param>
-        /// <param name="pageable">the paging information, can be null.</param>
-        /// <param name="total">
-        ///     the total amount of items available. The total might be adapted considering the length of the
-        ///     content given, if it is going to be the content of the last page.This is in place to mitigate inconsistencies
-        /// </param>
-        public Page(ICollection<T> content, IPageable<T> pageable, ulong total)
+        /// <summary>
+        ///     构造函数：这是描述捕获分页请求后的处理结果及元信息的类型。
+        ///     通过构造函数将各分页请求的引用回传给调用方。并将核心的一些数据集合元信息给入，以便于调用方进行处理。
+        /// </summary>
+        /// <param name="pageable">分页请求。</param>
+        /// <param name="content">页中的内容集合。</param>
+        /// <param name="totalElement">合计总的项目数量。一般来讲，应在处理分页请求后，将集合的Count数量给入。</param>
+        public Page(IPageable<T> pageable, ICollection<T> content, ulong totalElement = 0)
         {
-            if(content==null)
+            if (content == null)
                 throw new ArgumentNullException(nameof(content), "页项目集合不能为空");
             Content = content;
             if (pageable == null)
                 throw new ArgumentNullException(nameof(pageable), "页请求不能为空");
             _Pageable = pageable;
-            _Total = !(content.Count <= 0) && pageable.Offset + pageable.PageSize > total
-                ? (ulong) (pageable.Offset + content.Count)
-                : total;
+            _TotalElements = (pageable.Offset + content.Count > (long) totalElement)//当给入的总数量小于已能计算的偏移量+当前内容量时
+                ? (ulong) (pageable.Offset + content.Count)//非正确的集合的Count数量给入，故计算总项目数量。
+                : totalElement;//正确的集合的Count数量给入。
         }
 
         #region Implementation of IPage<T>
@@ -109,12 +109,12 @@ namespace NKnife.DataLite
         /// <summary>
         ///     总页数
         /// </summary>
-        public uint TotalPages => Size == 0 ? 1 : (uint) Math.Ceiling(_Total / (double) Size);
+        public uint TotalPages => Size == 0 ? 1 : (uint) Math.Ceiling(_TotalElements / (double) Size);
 
         /// <summary>
-        ///     总项目数
+        ///     合计总的项目数量。一般来讲，应在处理分页请求后，将集合的Count数量给入。
         /// </summary>
-        public ulong TotalElements => _Total;
+        public ulong TotalElements => _TotalElements;
 
         #endregion
     }

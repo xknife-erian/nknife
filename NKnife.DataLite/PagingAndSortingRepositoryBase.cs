@@ -24,7 +24,7 @@ namespace NKnife.DataLite
             var list = new List<T>(result);
             if (pageable.Comparer != null)
                 list.Sort(pageable.Comparer);
-            return new Page<T>(list.ToList(), pageable, (ulong) Count);
+            return new Page<T>(pageable, list.ToList(), (ulong) Count);
         }
 
         #endregion

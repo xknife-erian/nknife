@@ -9,6 +9,11 @@ namespace NKnife.DataLite.Interfaces
     public interface IPage<T>
     {
         /// <summary>
+        ///     当前页的处理结果。即项目的集合。
+        /// </summary>
+        ICollection<T> Content { get; }
+
+        /// <summary>
         ///     当前页码
         /// </summary>
         uint Number { get; }
@@ -22,11 +27,6 @@ namespace NKnife.DataLite.Interfaces
         ///     当前页中的实际项目数量，因查询条件或尾页等原因，有可能小于期望项目数量
         /// </summary>
         uint NumberOfElements { get; }
-
-        /// <summary>
-        ///     当前页的处理结果。即项目的集合。
-        /// </summary>
-        ICollection<T> Content { get; }
 
         /// <summary>
         ///     是否有结果。
@@ -74,8 +74,9 @@ namespace NKnife.DataLite.Interfaces
         uint TotalPages { get; }
 
         /// <summary>
-        ///     总项目数
+        ///     合计总的项目数量。一般来讲，应在处理分页请求后，将集合的Count数量给入。
         /// </summary>
         ulong TotalElements { get; }
+
     }
 }

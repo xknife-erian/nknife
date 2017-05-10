@@ -60,6 +60,6 @@ namespace NKnife.DataLite.Interfaces
         /// <summary>
         /// Deletes all entities managed by the repository.
         /// </summary>
-        void DeleteAll();
+        bool DeleteAll();
     }
 }

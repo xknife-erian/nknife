@@ -268,6 +268,7 @@ namespace NKnife.DataLite.UnitTest
             }
             using (var cr = BuildRepository())
             {
+                cr.Count.Should().Be(0);
                 cr.Save(map.Values);
                 cr.Count.Should().Be(map.Count);
 
