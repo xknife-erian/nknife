@@ -133,10 +133,6 @@
       <Project>{3b1ba8e0-29dd-4cfc-8593-889b9d547ab7}</Project>
       <Name>NKnife.Serial</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\NKnife.WinFormUI\NKnife.WinFormUI.csproj">
-      <Project>{48dcfea4-948a-45f8-8fa5-010a1e095c19}</Project>
-      <Name>NKnife.WinFormUI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
