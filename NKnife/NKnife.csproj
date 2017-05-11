@@ -143,68 +143,6 @@
     <Compile Include="Encrypt\TripleDESHelper.cs" />
     <Compile Include="Encrypt\UtilityEncrypt.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
-    <Compile Include="GUI\WinForm\CollapsibleSplitContainer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\DataSetBindableListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\TextArrayDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\TextArrayDialog.designer.cs">
-      <DependentUpon>TextArrayDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\ToolStripDateTimePicker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\Grouper\Constants.cs" />
-    <Compile Include="GUI\WinForm\Grouper\Grouper.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\HorizontalLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\ISplashForm.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\AntiAliasGraphics.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\ControlBoxManager.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\ControlBoxState.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\ControlBoxStyle.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\ControlPaintEx.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\GraphicsPathHelper.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\MouseOperate.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\NativeMethods.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\RenderHelper.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\RoundStyle.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\SkinForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\SkinForm\SkinFormBackgroundRenderEvent.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\SkinFormBorderRenderEvent.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\SkinFormCaptionRenderEvent.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\SkinFormColorTable.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\SkinFormControlBoxRenderEvent.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\SkinFormProfessionalRenderer.cs" />
-    <Compile Include="GUI\WinForm\SkinForm\SkinFormRenderer.cs" />
-    <Compile Include="GUI\WinForm\Splasher.cs" />
-    <Compile Include="GUI\WinForm\TabControlEx\Events.cs" />
-    <Compile Include="GUI\WinForm\TabControlEx\NativeMethods.cs" />
-    <Compile Include="GUI\WinForm\TabControlEx\TabControlEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\ToolStripCheckBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\VirticalLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\WinFormContainer\AppFileNameEditor.cs" />
-    <Compile Include="GUI\WinForm\WinFormContainer\WinFormContainer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\WinFormContainer\WinFormContainer.Designer.cs">
-      <DependentUpon>WinFormContainer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Interface\IInitializer.cs" />
     <Compile Include="Interface\Datas\NoSql\ICrudRepository.cs" />
     <Compile Include="Interface\Datas\NoSql\IPage.cs" />
@@ -302,19 +240,7 @@
     <Compile Include="FTP\FtpWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\WinForm\ImagesPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\XmlTreeView.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="API\API.Shell32.cs" />
-    <Compile Include="GUI\Wpf\DownButton.xaml.cs">
-      <DependentUpon>DownButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\Wpf\RotateButton.xaml.cs">
-      <DependentUpon>RotateButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="IoC\ConfiguringModule.cs" />
     <Compile Include="Utility\UtilityWndMsg.cs" />
     <Compile Include="Utility\UtilityReflection.cs">
@@ -377,7 +303,6 @@
     <Compile Include="Electronics\Resistance.cs" />
     <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="GUI\Wpf\CircularPanel.cs" />
     <Compile Include="Interface\IFileCompress.cs" />
     <Compile Include="Interface\ITouchInput.cs" />
     <Compile Include="IoC\DI.cs" />
@@ -408,150 +333,7 @@
       <DependentUpon>StringResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\UtilityData.cs" />
-    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoControlType.cs" />
-    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanelAttribute.cs" />
-    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanelComparer.cs" />
-    <Compile Include="GUI\WinForm\AutoLayoutPanel\AutoLayoutPanelXmlDocument.cs" />
-    <Compile Include="GUI\WinForm\AutoLayoutPanel\GroupBoxEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\AutoLayoutPanel\ValueControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\BoundleMenuStripButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\CloudsControl\CloudCollection.cs" />
-    <Compile Include="GUI\WinForm\CloudsControl\CloudLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\CloudsControl\CloudsPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\Common\FileSelectControlStyle.cs" />
-    <Compile Include="GUI\WinForm\DataSelector\DataItemSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\DataSelector\DataItemSelector.Designer.cs">
-      <DependentUpon>DataItemSelector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\DataSelector\SelectForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\DockForm\BouncingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\DockForm\BouncingForm.Designer.cs">
-      <DependentUpon>BouncingForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\DockForm\Common\FormAsyncUpdateDelegate.cs" />
-    <Compile Include="GUI\WinForm\ExceptionUI\ExceptionDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\ExceptionUI\ExceptionDialog.designer.cs">
-      <DependentUpon>ExceptionDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\ExceptionUI\InformationPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Extensions\ListViewExtension.cs" />
-    <Compile Include="GUI\WinForm\FileSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\Forms\IWelcomeForm.cs" />
-    <Compile Include="GUI\WinForm\Forms\WelcomerScreen.cs" />
-    <Compile Include="GUI\WinForm\GifBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\GroupboxPro\CheckGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\GroupboxPro\CheckGroupBox.Designer.cs">
-      <DependentUpon>CheckGroupBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\GroupboxPro\RadioButtonPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\GroupboxPro\RadioGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\GroupboxPro\RadioGroupBox.Designer.cs">
-      <DependentUpon>RadioGroupBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\ImageButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IPAddressControl\DotControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IPAddressControl\FieldChangedEventArgs.cs" />
-    <Compile Include="GUI\WinForm\IPAddressControl\FieldControl.cs" />
-    <Compile Include="GUI\WinForm\IPAddressControl\IPAddressControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\IPAddressControl\IPAddressControlDesigner.cs" />
-    <Compile Include="GUI\WinForm\IPAddressControl\NativeMethods.cs" />
-    <Compile Include="GUI\WinForm\LxLedControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\MarqueeControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\MultipleImageToolStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\NumericLedBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\QuickTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\RegexTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\SelectGroup.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\SexSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\SimpleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\SingleLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\SingleRowCheckedListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\SpinnerControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\TaskbarNotifier.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\ToolStripNetVelocityLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\ToolTipPro.cs" />
-    <Compile Include="GUI\WinForm\TouchNumberBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\TouchNumberBoxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\WaitMessageForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\WinForm\WaitMessageForm.Designer.cs">
-      <DependentUpon>WaitMessageForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WinForm\WeekGroup.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Utility\UtilityResource.cs" />
     <Compile Include="Interface\IConverting.cs" />
     <Compile Include="Interface\IGenerator.cs" />
@@ -662,54 +444,6 @@
     <Compile Include="Zip\GZipResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="GUI\Wpf\DownButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\Wpf\RotateButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="GUI\WinForm\DataSetBindableListView.resx">
-      <DependentUpon>DataSetBindableListView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\DataSelector\DataItemSelector.resx">
-      <DependentUpon>DataItemSelector.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\DockForm\BouncingForm.resx">
-      <DependentUpon>BouncingForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\ExceptionUI\ExceptionDialog.resx">
-      <DependentUpon>ExceptionDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\ExceptionUI\InformationPanel.resx">
-      <DependentUpon>InformationPanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\GroupboxPro\RadioGroupBox.resx">
-      <DependentUpon>RadioGroupBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\Grouper\Grouper.resx">
-      <DependentUpon>Grouper.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\MarqueeControl.resx">
-      <DependentUpon>MarqueeControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\SexSelector.resx">
-      <DependentUpon>SexSelector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\WaitMessageForm.resx">
-      <DependentUpon>WaitMessageForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WinForm\WeekGroup.resx">
-      <DependentUpon>WeekGroup.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ShareResources\ArgumentValidationString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ArgumentValidationString.Designer.cs</LastGenOutput>
@@ -746,8 +480,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuring\readme.txt" />
-    <EmbeddedResource Include="GUI\WinForm\Grouper\Grouper.bmp" />
-    <EmbeddedResource Include="GUI\WinForm\WinFormContainer\WinFormContainer.bmp" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

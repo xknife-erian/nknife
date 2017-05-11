@@ -19,8 +19,6 @@ namespace NKnife.Kits.StarterKit.IoC
 
             Bind<LoggingDockView>().ToSelf().InSingletonScope();
             Bind<ChineseCharUseFrequencyDockView>().ToSelf().InSingletonScope();
-            Bind<ImagesPanelControlTestDockView>().ToSelf().InSingletonScope();
-            Bind<CustomStripControlTestDockView>().ToSelf().InSingletonScope();
         }
 
         #endregion

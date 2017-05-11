@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using NKnife.GUI.WinForm;
+using NKnife.Draws.WinForm;
 
 namespace NKnife.Kits.SerialKnife.Views
 {

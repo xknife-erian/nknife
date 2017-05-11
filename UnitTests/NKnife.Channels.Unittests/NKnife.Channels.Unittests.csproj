@@ -60,6 +60,10 @@
       <Project>{a0ede97d-50d9-451c-bb0f-3a5cb95ccda3}</Project>
       <Name>NKnife.Channels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NKnife\NKnife.csproj">
+      <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
+      <Name>NKnife</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

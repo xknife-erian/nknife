@@ -43,16 +43,6 @@ namespace NKnife.Kits.StarterKit
                 var form = DI.Get<ChineseCharUseFrequencyDockView>();
                 form.Show(_DockPanel, DockState.Document);
             };
-            _CustomStripControlTestMenuItem.Click += (s, e) =>
-            {
-                var form = DI.Get<CustomStripControlTestDockView>();
-                form.Show(_DockPanel, DockState.Document);
-            };
-            _ImagesPanelMenuItem.Click += (s, e) =>
-            {
-                var form = DI.Get<ImagesPanelControlTestDockView>();
-                form.Show(_DockPanel, DockState.Document);
-            };
         }
 
         public class CurrentAbout : About

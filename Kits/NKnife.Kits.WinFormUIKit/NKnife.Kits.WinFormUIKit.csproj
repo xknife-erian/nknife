@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D333325-56BE-4442-A337-9CF859AA8132}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NKnife.Kits.WinFormUIKit</RootNamespace>
+    <AssemblyName>NKnife.Kits.WinFormUIKit</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Properties\main.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\..\.library\Simplified Chinese Pin-Yin Conversion Library\ChnCharInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.13.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DockPanelSuite.2.14.0\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=2.13.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DockPanelSuite.ThemeVS2015.2.14.0\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\NKnife\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="Forms\ChineseCharUseFrequencyDockView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChineseCharUseFrequencyDockView.Designer.cs">
+      <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ImagesPanelControlTestDockView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImagesPanelControlTestDockView.Designer.cs">
+      <DependentUpon>ImagesPanelControlTestDockView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IoC\Modules.cs" />
+    <Compile Include="Forms\CustomStripControlTestDockView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomStripControlTestDockView.Designer.cs">
+      <DependentUpon>CustomStripControlTestDockView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LibraryDemoWorkbench.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LibraryDemoWorkbench.Designer.cs">
+      <DependentUpon>LibraryDemoWorkbench.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\ChineseCharUseFrequencyDockView.resx">
+      <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImagesPanelControlTestDockView.resx">
+      <DependentUpon>ImagesPanelControlTestDockView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomStripControlTestDockView.resx">
+      <DependentUpon>CustomStripControlTestDockView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LibraryDemoWorkbench.resx">
+      <DependentUpon>LibraryDemoWorkbench.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.WinFormUI\NKnife.WinFormUI.csproj">
+      <Project>{48dcfea4-948a-45f8-8fa5-010a1e095c19}</Project>
+      <Name>NKnife.WinFormUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NKnife\NKnife.csproj">
+      <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
+      <Name>NKnife</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>

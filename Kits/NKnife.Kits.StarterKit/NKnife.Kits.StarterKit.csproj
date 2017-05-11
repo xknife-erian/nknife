@@ -83,24 +83,12 @@
     <Compile Include="Forms\ChineseCharUseFrequencyDockView.Designer.cs">
       <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ImagesPanelControlTestDockView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ImagesPanelControlTestDockView.Designer.cs">
-      <DependentUpon>ImagesPanelControlTestDockView.cs</DependentUpon>
-    </Compile>
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="LoggingDockView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LoggingDockView.Designer.cs">
       <DependentUpon>LoggingDockView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CustomStripControlTestDockView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CustomStripControlTestDockView.Designer.cs">
-      <DependentUpon>CustomStripControlTestDockView.cs</DependentUpon>
     </Compile>
     <Compile Include="LibraryDemoWorkbench.cs">
       <SubType>Form</SubType>
@@ -113,14 +101,8 @@
     <EmbeddedResource Include="Forms\ChineseCharUseFrequencyDockView.resx">
       <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ImagesPanelControlTestDockView.resx">
-      <DependentUpon>ImagesPanelControlTestDockView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoggingDockView.resx">
       <DependentUpon>LoggingDockView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CustomStripControlTestDockView.resx">
-      <DependentUpon>CustomStripControlTestDockView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LibraryDemoWorkbench.resx">
       <DependentUpon>LibraryDemoWorkbench.cs</DependentUpon>
