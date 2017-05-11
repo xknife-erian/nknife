@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using LiteDB;
 
-namespace NKnife.DataLite.Interfaces
+namespace NKnife.Interface.Datas.NoSql
 {
     /// <summary>
     ///    这是一个描述分页请求的接口

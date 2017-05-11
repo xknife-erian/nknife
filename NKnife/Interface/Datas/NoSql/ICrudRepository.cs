@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace NKnife.DataLite.Interfaces
+namespace NKnife.Interface.Datas.NoSql
 {
     public interface ICrudRepository<T, in TId> : IRepository<T>
     {
         /// <summary>
-        /// Saves a given entity. Use the returned instance for further operations as the save operation might have changed the entity instance completely.
+        ///     存储一条Document，可能是新建或者修改
         /// </summary>
-        /// <param name="entity"></param>
+        /// <returns>当是新document时，插入，返加true；当是已有document时，更新，且返回false。</returns>
         bool Save(T entity);
 
         /// <summary>

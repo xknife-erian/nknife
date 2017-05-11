@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NKnife.DataLite.Interfaces
+namespace NKnife.Interface.Datas.NoSql
 {
     /// <summary>
     ///     这是一个描述捕获分页请求后的处理结果及元信息。
@@ -26,7 +26,7 @@ namespace NKnife.DataLite.Interfaces
         /// <summary>
         ///     当前页中的实际项目数量，因查询条件或尾页等原因，有可能小于期望项目数量
         /// </summary>
-        uint NumberOfElements { get; }
+        uint SizeOfElements { get; }
 
         /// <summary>
         ///     是否有结果。

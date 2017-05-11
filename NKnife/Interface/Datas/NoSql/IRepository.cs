@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.DataLite.Interfaces
+namespace NKnife.Interface.Datas.NoSql
 {
     public interface IRepository<T>: IDisposable
     {

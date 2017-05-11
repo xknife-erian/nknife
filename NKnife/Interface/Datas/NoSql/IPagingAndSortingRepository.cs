@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NKnife.DataLite.Interfaces
+﻿namespace NKnife.Interface.Datas.NoSql
 {
     /// <summary>
     /// Extension of {@link CrudRepository} to provide additional methods to retrieve entities using the pagination and sorting abstraction.
@@ -13,6 +11,6 @@ namespace NKnife.DataLite.Interfaces
         /// <summary>
         /// Returns a <see cref="IPage{T}"/> of entities meeting the paging restriction provided in the {@code Pageable} object.
         /// </summary>
-        IPage<T> FindAll(IPageable<T> pageable);
+        IPage<T> FindMulti(IPageable<T> pageable);
     }
 }

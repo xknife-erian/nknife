@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace NKnife.DataLite.UnitTest
 {
     [TestFixture]
-    public class GeneralFunctionTest
+    public class CrudRepositoryTest
     {
         private static CompanyRepository BuildRepository()
         {

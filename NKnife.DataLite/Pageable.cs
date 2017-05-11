@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using NKnife.DataLite.Interfaces;
+using NKnife.Interface.Datas.NoSql;
 
 namespace NKnife.DataLite
 {

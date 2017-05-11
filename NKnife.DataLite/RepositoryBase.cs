@@ -2,7 +2,7 @@
 using System.IO;
 using LiteDB;
 using NKnife.DataLite.Exceptions;
-using NKnife.DataLite.Interfaces;
+using NKnife.Interface.Datas.NoSql;
 using NKnife.Utility;
 
 namespace NKnife.DataLite

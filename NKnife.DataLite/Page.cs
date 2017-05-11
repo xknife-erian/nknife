@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using NKnife.DataLite.Interfaces;
+using NKnife.Interface.Datas.NoSql;
 
 namespace NKnife.DataLite
 {
@@ -48,7 +48,7 @@ namespace NKnife.DataLite
         /// <summary>
         ///     当前页中的实际项目数量，因查询条件或尾页等原因，有可能小于期望项目数量
         /// </summary>
-        public uint NumberOfElements => (uint) Content.Count;
+        public uint SizeOfElements => (uint) Content.Count;
 
         /// <summary>
         ///     当前页的处理结果。即项目的集合。

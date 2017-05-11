@@ -206,6 +206,11 @@
       <DependentUpon>WinFormContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="Interface\IInitializer.cs" />
+    <Compile Include="Interface\Datas\NoSql\ICrudRepository.cs" />
+    <Compile Include="Interface\Datas\NoSql\IPage.cs" />
+    <Compile Include="Interface\Datas\NoSql\IPageable.cs" />
+    <Compile Include="Interface\Datas\NoSql\IPagingAndSortingRepository.cs" />
+    <Compile Include="Interface\Datas\NoSql\IRepository.cs" />
     <Compile Include="Interface\IParser.cs" />
     <Compile Include="Maths\BigInteger.cs" />
     <Compile Include="Maths\Combinations.cs" />

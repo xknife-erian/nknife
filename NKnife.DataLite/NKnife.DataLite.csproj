@@ -33,16 +33,8 @@
     <Reference Include="LiteDB, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.3.1.0\lib\net35\LiteDB.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\NKnife\Properties\AssemblyVersion.cs">
@@ -51,16 +43,10 @@
     <Compile Include="CrudRepositoryBase.cs" />
     <Compile Include="Exceptions\ArgumentByEntityException.cs" />
     <Compile Include="Exceptions\DatabaseFileInvalidOperationException.cs" />
-    <Compile Include="Interfaces\ISelectable.cs" />
     <Compile Include="PagingAndSortingRepositoryBase.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Pageable.cs" />
-    <Compile Include="Interfaces\ICrudRepository.cs" />
-    <Compile Include="Interfaces\IPage.cs" />
-    <Compile Include="Interfaces\IPageable.cs" />
-    <Compile Include="Interfaces\IPagingAndSortingRepository.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
