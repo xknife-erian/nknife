@@ -149,8 +149,5 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
-/packages
-/packages
-/Packages.dgml
-/NKnife.App/packages
 /.nuget
+~nubin/

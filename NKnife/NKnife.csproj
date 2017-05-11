@@ -76,6 +76,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Properties\nknife-main.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
@@ -109,29 +112,24 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algrithm\AsyncOperation.cs" />
-    <Compile Include="Algrithm\AsyncOperationQueue.cs" />
-    <Compile Include="Algrithm\BubbleSort.cs" />
-    <Compile Include="Algrithm\IAsyncOperation.cs" />
-    <Compile Include="Algrithm\OperationResult.cs" />
     <Compile Include="API\API.Kernel32.cs" />
     <Compile Include="Attributes\EnvironmentItemAttribute.cs" />
     <Compile Include="Collections\AsyncObservableCollection`.cs" />
     <Compile Include="Collections\EnumSet.cs" />
     <Compile Include="Converts\Converting.cs" />
     <Compile Include="Converts\UtilityConvert.cs" />
-    <Compile Include="Databases\Common\DatabaseCoderSetting.cs" />
-    <Compile Include="Databases\Common\DatabaseHelper.cs" />
-    <Compile Include="Databases\Common\DatabaseParms.cs" />
-    <Compile Include="Databases\DbHelper\SqlDbHelper.cs" />
-    <Compile Include="Databases\Interface\IDbStore`.cs" />
-    <Compile Include="Databases\Interface\IDatabaseHelper.cs" />
-    <Compile Include="Databases\Interface\IDataBaseParameters.cs" />
-    <Compile Include="Databases\Interface\IDataReaderProcess.cs" />
-    <Compile Include="Databases\Interface\IDataSetProcess.cs" />
-    <Compile Include="Databases\PagerInfo.cs" />
-    <Compile Include="Databases\Process\ArrayProcess.cs" />
-    <Compile Include="Databases\Process\IntProcess.cs" />
+    <Compile Include="Datas\Common\DatabaseCoderSetting.cs" />
+    <Compile Include="Datas\Common\DatabaseHelper.cs" />
+    <Compile Include="Datas\Common\DatabaseParms.cs" />
+    <Compile Include="Datas\DbHelper\SqlDbHelper.cs" />
+    <Compile Include="Datas\Interface\IDbStore`.cs" />
+    <Compile Include="Datas\Interface\IDatabaseHelper.cs" />
+    <Compile Include="Datas\Interface\IDataBaseParameters.cs" />
+    <Compile Include="Datas\Interface\IDataReaderProcess.cs" />
+    <Compile Include="Datas\Interface\IDataSetProcess.cs" />
+    <Compile Include="Datas\PagerInfo.cs" />
+    <Compile Include="Datas\Process\ArrayProcess.cs" />
+    <Compile Include="Datas\Process\IntProcess.cs" />
     <Compile Include="Domains\AppDomainProxy.cs" />
     <Compile Include="Domains\AppDomainFirster.cs" />
     <Compile Include="Domains\AppDomainDynamicLoader.cs" />
@@ -154,7 +152,6 @@
     <Compile Include="Maths\Combinations.cs" />
     <Compile Include="Maths\Permutations.cs" />
     <Compile Include="Maths\UtilityMath.cs" />
-    <Compile Include="Entities\AssemblyWrapper.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Protocol\Generic\BytesProtocol.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolCommandParser.cs" />
@@ -186,9 +183,6 @@
     <Compile Include="Protocol\IProtocolUnPacker`.cs" />
     <Compile Include="Protocol\ProtocolExtension.cs" />
     <Compile Include="Protocol\Generic\StringProtocolCommandParser.cs" />
-    <Compile Include="Tests\ITestCase.cs" />
-    <Compile Include="Tests\TestCaseAttribute.cs" />
-    <Compile Include="Tests\TestMode.cs" />
     <Compile Include="Tunnel\Base\BaseDatagramDecoder`.cs" />
     <Compile Include="Tunnel\Base\BaseDatagramEncoder`.cs" />
     <Compile Include="Tunnel\Common\Heartbeat.cs" />
@@ -222,7 +216,6 @@
     <Compile Include="Utility\UtilityAssembly.cs" />
     <Compile Include="Utility\UtilityConsole.cs" />
     <Compile Include="Utility\UtilityWebService.cs" />
-    <Compile Include="Wrapper\ClassLoader.cs" />
     <Compile Include="Attributes\EntityColumnAttribute.cs" />
     <Compile Include="Chinese\IdCardChecker.cs" />
     <Compile Include="Chinese\Rmb.cs" />
@@ -230,14 +223,12 @@
     <Compile Include="Chinese\Spell.cs" />
     <Compile Include="Chinese\SpellRandom.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
-    <Compile Include="Configuring\Common\UtilityOption.cs" />
-    <Compile Include="Configuring\Interfaces\IOption.cs" />
     <Compile Include="Extensions\WindowExtension.cs" />
-    <Compile Include="FTP\FtpFileListStyle.cs" />
-    <Compile Include="FTP\FtpFileStruct.cs" />
-    <Compile Include="FTP\FtpDelegates.cs" />
-    <Compile Include="FTP\FtpException.cs" />
-    <Compile Include="FTP\FtpWebClient.cs">
+    <Compile Include="Wrapper\FTP\FtpFileListStyle.cs" />
+    <Compile Include="Wrapper\FTP\FtpFileStruct.cs" />
+    <Compile Include="Wrapper\FTP\FtpDelegates.cs" />
+    <Compile Include="Wrapper\FTP\FtpException.cs" />
+    <Compile Include="Wrapper\FTP\FtpWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="API\API.Shell32.cs" />
@@ -247,16 +238,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Wrapper\About.cs" />
-    <Compile Include="Entities\ApplicationState.cs" />
     <Compile Include="Base\CloneableObject.cs" />
-    <Compile Include="Entities\CommandList.cs" />
-    <Compile Include="Entities\MultiMachine.cs" />
-    <Compile Include="Entities\MultiMachineState.cs" />
+    <Compile Include="Collections\CommandList.cs" />
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\Triplet.cs" />
-    <Compile Include="Collections\Definition.cs" />
     <Compile Include="Collections\DictionaryOrdered.cs" />
-    <Compile Include="Collections\IndexCollection.cs" />
     <Compile Include="Collections\NotifySerializableMap.cs" />
     <Compile Include="Collections\PairList.cs" />
     <Compile Include="Collections\SerializableMap.cs" />
@@ -264,37 +250,8 @@
     <Compile Include="Interface\Patterns\ICommandPattern.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Configuring\Common\HasModifiedEventArgs.cs" />
-    <Compile Include="Configuring\Common\OptionItemAttribute.cs" />
-    <Compile Include="Configuring\Common\OptionLoadEventArgs.cs" />
-    <Compile Include="Configuring\Common\OptionPanelPrecondition.cs" />
-    <Compile Include="Configuring\Common\OptionTableChangedEventArgs.cs" />
-    <Compile Include="Configuring\Controls\AbstractOptionBoxItem.cs" />
-    <Compile Include="Configuring\Controls\AbstractOptionItemBase.cs" />
-    <Compile Include="Configuring\Controls\OptionControlBase.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Configuring\Delegates.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionBoxItem.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionCaseManager.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionControl.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionDataStore.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionItemManager.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionListItem.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionManager.cs" />
-    <Compile Include="Configuring\Interfaces\IOptionPanelPrecondition.cs" />
-    <Compile Include="Configuring\Interfaces\IUserApplicationData.cs" />
-    <Compile Include="Configuring\OptionCase\AbstractOptionCaseManager.cs" />
-    <Compile Include="Configuring\OptionCase\OptionCaseItem.cs" />
-    <Compile Include="Configuring\OptionCase\OptionCaseMode.cs" />
-    <Compile Include="Configuring\OptionServiceCoderSetting.cs" />
-    <Compile Include="Configuring\Option\AbstractOptionManager.cs" />
-    <Compile Include="Configuring\Option\OptionDataTable.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Configuring\Option\XmlDataStore.cs" />
-    <Compile Include="Configuring\Option\ZipDataStore.cs" />
-    <Compile Include="Configuring\UserData\UserApplicationData.cs" />
+    <Compile Include="Interface\IUserApplicationData.cs" />
+    <Compile Include="Wrapper\UserApplicationData.cs" />
     <Compile Include="Electronics\CircuitType.cs" />
     <Compile Include="Electronics\Collections\Resistances.cs" />
     <Compile Include="Electronics\Exceptions\ResistanceCollectionException.cs" />
@@ -372,8 +329,8 @@
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
     <Compile Include="Wrapper\ByteClass.cs" />
-    <Compile Include="Databases\DbHelper\AccessHelper.cs" />
-    <Compile Include="Databases\DbHelper\MsSqlServerHelper.cs" />
+    <Compile Include="Datas\DbHelper\AccessHelper.cs" />
+    <Compile Include="Datas\DbHelper\MsSqlServerHelper.cs" />
     <Compile Include="Utility\UtilityByte.cs" />
     <Compile Include="Utility\UtilityClipboard.cs" />
     <Compile Include="Utility\UtilityCollection.cs" />
@@ -401,7 +358,7 @@
     <Compile Include="Entities\CPUInfo.cs" />
     <Compile Include="Wrapper\CSVFile.cs" />
     <Compile Include="Wrapper\Duration.cs" />
-    <Compile Include="FTP\FtpClient.cs" />
+    <Compile Include="Wrapper\FTP\FtpClient.cs" />
     <Compile Include="Wrapper\Files\FileEnums.cs" />
     <Compile Include="Wrapper\Files\FileSearching.cs" />
     <Compile Include="Wrapper\Files\TextFileEncoding.cs" />
@@ -409,24 +366,21 @@
     <Compile Include="Wrapper\GlobalHotkey.cs" />
     <Compile Include="Interface\IAbout.cs" />
     <Compile Include="Wrapper\JWebs.cs" />
-    <Compile Include="Wrapper\PcInterfaces.cs" />
-    <Compile Include="Wrapper\ServiceForm.cs" />
+    <Compile Include="Wrapper\WindowServiceFormLoader.cs" />
     <Compile Include="Zip\CompressHelper.cs" />
     <Compile Include="Zip\GZip.cs" />
     <Compile Include="Entities\IDCardData.cs" />
     <Compile Include="Wrapper\IDGenerator.cs" />
     <Compile Include="Wrapper\IniFile.cs" />
     <Compile Include="Wrapper\LocalRegistry.cs" />
-    <Compile Include="Mail\MailSender.cs" />
+    <Compile Include="Wrapper\Mail\MailSender.cs" />
     <Compile Include="Zip\GZipCompressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Zip\GZipFileEntry.cs" />
-    <Compile Include="Mp3\Mp3Player.cs" />
-    <Compile Include="Mp3\Mp3Tag.cs" />
+    <Compile Include="Wrapper\Mp3\Mp3Player.cs" />
+    <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Entities\PersonSex.cs" />
-    <Compile Include="Wrapper\SerialPorter.cs" />
-    <Compile Include="Wrapper\SmartDate.cs" />
     <Compile Include="Wrapper\SnipScreen.cs" />
     <Compile Include="Wrapper\SystemDateTime.cs" />
     <Compile Include="Wrapper\TaskAlarm.cs" />
@@ -439,7 +393,6 @@
     <Compile Include="XML\XmlFormat.cs" />
     <Compile Include="XML\XmlHelper.cs" />
     <Compile Include="XML\XmlSchemaValidator.cs" />
-    <Compile Include="Xaml\XamlHelper.cs" />
     <Compile Include="Zip\GZipFileInfo.cs" />
     <Compile Include="Zip\GZipResult.cs" />
   </ItemGroup>
@@ -473,15 +426,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Databases\Database.template" />
+    <None Include="Datas\Database.template" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configuring\readme.txt" />
+    <None Include="Properties\nknife-main.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Common.Logging;
+using NKnife.Extensions;
 using NKnife.IoC;
 using NKnife.Tunnel.Common;
 using NKnife.Tunnel.Events;

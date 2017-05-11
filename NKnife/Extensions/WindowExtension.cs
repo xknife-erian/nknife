@@ -1,5 +1,7 @@
-﻿using System.Windows.Threading;
+﻿using System.Windows;
+using System.Windows.Threading;
 
+// ReSharper disable once CheckNamespace
 namespace System.Windows
 {
     public static class WindowExtension

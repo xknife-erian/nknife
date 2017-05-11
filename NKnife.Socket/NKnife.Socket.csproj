@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\NKnife\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="Common\AsynListener.cs" />
     <Compile Include="Common\BufferContainer.cs" />
     <Compile Include="Common\BrokenCause.cs" />

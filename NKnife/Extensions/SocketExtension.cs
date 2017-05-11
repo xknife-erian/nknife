@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Net.Sockets;
 
-namespace NKnife.Extensions
+// ReSharper disable once CheckNamespace
+namespace System.Net.Sockets
 {
     internal static class SocketExtension
 	{

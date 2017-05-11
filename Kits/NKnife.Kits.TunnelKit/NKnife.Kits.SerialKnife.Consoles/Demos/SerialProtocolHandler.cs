@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Common.Logging;
 using MonitorKnife.Tunnels.Common;
+using NKnife.Extensions;
 using NKnife.Protocol;
 using NKnife.Tunnel.Base;
 

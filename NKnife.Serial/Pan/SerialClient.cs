@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Common.Logging;
+using NKnife.Extensions;
 using NKnife.IoC;
 using SerialKnife.Common;
 using SerialKnife.Interfaces;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using Common.Logging;
+using NKnife.Extensions;
 using SerialKnife.Common;
 using SerialKnife.Interfaces;
 using SerialKnife.Pan.Interfaces;

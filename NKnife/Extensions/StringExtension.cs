@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.VisualBasic;
 using NKnife.Utility;
 
+// ReSharper disable once CheckNamespace
 namespace System
 {
     public static class StringExtension

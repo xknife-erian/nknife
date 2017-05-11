@@ -4,6 +4,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Input;
 using Common.Logging;
+using NKnife.Extensions;
 using NKnife.Interface;
 using NKnife.IoC;
 using NKnife.Kits.SocketKnife.Common;

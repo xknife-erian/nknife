@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using NKnife.Collections;
+using NKnife.Extensions;
 using NLog;
 using NLog.Targets;
 

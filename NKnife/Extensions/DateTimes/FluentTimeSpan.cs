@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace System
+namespace NKnife.Extensions.DateTimes
 {
 
 #if (!SILVERLIGHT)

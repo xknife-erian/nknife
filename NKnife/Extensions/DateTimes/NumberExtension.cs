@@ -1,15 +1,15 @@
 ﻿
+using System;
+using NKnife.Extensions.DateTimes;
+
+// ReSharper disable once CheckNamespace
 namespace System
 {
-    using System;
-
-	/// <summary>
+    /// <summary>
     /// Static class containing Fluent <see cref="DateTime"/> extension methods.
     /// </summary>
     public static class NumberExtensions
     {
-
-
         /// <summary>
         /// Generates <see cref="TimeSpan"/> value for given number of Years.
         /// </summary>

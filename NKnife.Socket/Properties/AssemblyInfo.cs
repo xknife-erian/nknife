@@ -19,6 +19,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("487c65ed-0834-45ff-bc95-ccc8f0d17fe8")]
 
 [assembly: InternalsVisibleTo("NKnife.Socket.UnitTest")]
-
-[assembly: AssemblyVersion("16.0.0.430")]
-[assembly: AssemblyFileVersion("16.0.0.430")]

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Common.Logging;
+using NKnife.Extensions;
 using NKnife.IoC;
 using NKnife.Kits.SerialKnife.Kernel;
 using NKnife.Protocol;

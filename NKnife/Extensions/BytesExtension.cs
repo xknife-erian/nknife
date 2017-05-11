@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using NKnife.Utility;
 
+// ReSharper disable once CheckNamespace
 namespace System
 {
     public static class BytesExtension

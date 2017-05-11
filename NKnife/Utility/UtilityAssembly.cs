@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using NKnife.Extensions;
 
 namespace NKnife.Utility
 {

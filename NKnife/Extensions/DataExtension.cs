@@ -3,14 +3,17 @@ using System.Data;
 using System.Linq;
 using Common.Logging;
 using NKnife.Attributes;
-using NKnife.Interface;
 
+// ReSharper disable once CheckNamespace
 namespace System.Data
 {
     public static class DataExtensions
     {
+        private class LoggerHolder
+        {
+        }
 
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();  
+        private static readonly ILog _logger = LogManager.GetLogger<LoggerHolder>();  
         
         /// <summary>像Linq to DataSet中得到字段值的操作
         /// </summary>

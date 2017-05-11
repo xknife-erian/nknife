@@ -6,11 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using NKnife.Draws.WinForm;
 
 namespace NKnife.Kits.SerialKnife.Views
 {
-    public partial class SettingForm : SimpleForm
+    public partial class SettingForm : Form
     {
         public SettingForm()
         {

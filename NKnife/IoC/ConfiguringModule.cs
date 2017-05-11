@@ -1,7 +1,7 @@
 ﻿using Ninject.Activation;
 using Ninject.Modules;
-using NKnife.Configuring.Interfaces;
-using NKnife.Configuring.UserData;
+using NKnife.Interface;
+using NKnife.Wrapper;
 
 namespace NKnife.IoC
 {

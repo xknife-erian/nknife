@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Common.Logging;
 using NKnife.Converts;
+using NKnife.Extensions;
 using NKnife.Tunnel.Base;
 using NKnife.Tunnel.Generic;
 

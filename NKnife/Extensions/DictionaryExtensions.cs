@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
-namespace System.Collections.Generic
+// ReSharper disable once CheckNamespace
+namespace System.Collections
 {
     public static class DictionaryExtensions
     {

@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
 using NKnife.Utility;
 
-namespace NKnife.Zip
+// ReSharper disable once CheckNamespace
+namespace System
 {
     /// <summary>对一些压缩方法的封装
     /// </summary>
-    public class CompressHelper
+    public static class CompressHelper
     {
         /// <summary>判断指定的字节数组是否是被GZip压缩过的
         /// </summary>
@@ -15,7 +15,7 @@ namespace NKnife.Zip
         /// <returns>
         ///   <c>true</c> if the specified bytes is compressed; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsCompressed(byte[] bytes)
+        public static bool IsCompressed(this byte[] bytes)
         {
             if (UtilityCollection.IsNullOrEmpty(bytes))
                 return false;
@@ -26,7 +26,7 @@ namespace NKnife.Zip
         /// </summary>
         /// <param name="bytes">The bytes.</param>
         /// <returns></returns>
-        public static byte[] Compress(byte[] bytes)
+        public static byte[] Compress(this byte[] bytes)
         {
             using (var ms = new MemoryStream())
             {
@@ -41,7 +41,7 @@ namespace NKnife.Zip
         /// </summary>
         /// <param name="bytes">The bytes.</param>
         /// <returns></returns>
-        public static byte[] Decompress(Byte[] bytes)
+        public static byte[] Decompress(this byte[] bytes)
         {
             using (var ms = new MemoryStream())
             {

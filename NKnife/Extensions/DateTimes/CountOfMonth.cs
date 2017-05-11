@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace System
+namespace NKnife.Extensions.DateTimes
 {
     /// <summary>描述某月中的第几周的第几天，如果是第0周，那么 Count 属性描述的是该月的第几天
     /// </summary>

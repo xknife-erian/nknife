@@ -1,4 +1,4 @@
-﻿namespace System
+﻿namespace NKnife.Extensions.DateTimes
 {
 	public enum RoundTo
 	{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Management;
+using NKnife.Extensions;
 
 namespace NKnife.Channels.Channels.Serials
 {

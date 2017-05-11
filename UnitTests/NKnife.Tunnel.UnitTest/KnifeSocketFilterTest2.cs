@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NKnife.Extensions;
 using NKnife.Tunnel.Filters;
 using SocketKnife.Generic;
 using SocketKnife.Generic.Filters;
