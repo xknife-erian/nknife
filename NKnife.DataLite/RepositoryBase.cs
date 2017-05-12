@@ -13,8 +13,12 @@ namespace NKnife.DataLite
     public abstract class RepositoryBase<T> : IRepository<T>
     {
         private LiteCollection<T> _Collection;
-        private LiteDatabase _Database;
+        protected LiteDatabase _Database;
         protected bool _NeedDispose;
+
+        protected RepositoryBase()
+        {
+        }
 
         /// <summary>
         /// 构造函数。本类型描述数据库中的一个表名。
@@ -52,6 +56,8 @@ namespace NKnife.DataLite
             {
                 if (_Database == null)
                 {
+                    if (string.IsNullOrWhiteSpace(RepositoryPath))
+                        RepositoryPath = BuildDefaultDatabaseName();
                     _Database = new LiteDatabase(RepositoryPath);
                     _NeedDispose = true; //如果当多个集全在一个数据库文件时，不能轻易Dispose数据库，由外部自行控制数据库操作的释放
                 }
@@ -67,7 +73,7 @@ namespace NKnife.DataLite
         /// <summary>
         ///     数据库主文件的实际路径
         /// </summary>
-        public string RepositoryPath { get; }
+        public string RepositoryPath { get; private set; }
 
         #region IDisposable
 

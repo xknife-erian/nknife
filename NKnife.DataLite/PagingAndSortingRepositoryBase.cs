@@ -8,6 +8,10 @@ namespace NKnife.DataLite
 {
     public abstract class PagingAndSortingRepositoryBase<T, TId> : CrudRepositoryBase<T, TId>, IPagingAndSortingRepository<T, TId>
     {
+        protected PagingAndSortingRepositoryBase()
+        {
+        }
+
         protected PagingAndSortingRepositoryBase(string repositoryPath)
             : base(repositoryPath)
         {

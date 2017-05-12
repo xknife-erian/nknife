@@ -8,6 +8,10 @@ namespace NKnife.DataLite
 {
     public abstract class CrudRepositoryBase<T, TId> : RepositoryBase<T>, ICrudRepository<T, TId>
     {
+        protected CrudRepositoryBase()
+        {
+        }
+
         protected CrudRepositoryBase(string repositoryPath)
             : base(repositoryPath)
         {
