@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife", "NKnife\NKnife.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.DataLite.UnitTest", "UnitTests\NKnife.DataLite.UnitTest\NKnife.DataLite.UnitTest.csproj", "{11BD0E0A-A344-418D-8F2F-3B082FA69677}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteDB", "..\..\github-fork\LiteDB\LiteDB\LiteDB.csproj", "{E808051A-83B7-4FA9-B004-D064EA162B60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{11BD0E0A-A344-418D-8F2F-3B082FA69677}.Release|x64.Build.0 = Release|Any CPU
 		{11BD0E0A-A344-418D-8F2F-3B082FA69677}.Release|x86.ActiveCfg = Release|Any CPU
 		{11BD0E0A-A344-418D-8F2F-3B082FA69677}.Release|x86.Build.0 = Release|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Debug|x64.Build.0 = Debug|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Debug|x86.Build.0 = Debug|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Release|x64.ActiveCfg = Release|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Release|x64.Build.0 = Release|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Release|x86.ActiveCfg = Release|Any CPU
+		{E808051A-83B7-4FA9-B004-D064EA162B60}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
