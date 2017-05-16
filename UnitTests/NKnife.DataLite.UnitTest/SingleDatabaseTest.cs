@@ -38,7 +38,7 @@ namespace NKnife.DataLite.UnitTest
                 meters.Save(meter).Should().BeTrue();
 
                 var bike = new Bike();
-                bike.Id = i*i;
+                bike.Id = 3-i;
                 bike.ProductionDate = DateTime.Now;
                 bikes.Save(bike).Should().BeTrue();
 
