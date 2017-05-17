@@ -7,6 +7,8 @@ namespace NKnife.DataLite.UnitTest.SingleDatabase
 {
     public class DatabaseService : IDisposable
     {
+        #region 简单单例
+
         static DatabaseService()
         {
             Instance = new DatabaseService();
@@ -15,6 +17,8 @@ namespace NKnife.DataLite.UnitTest.SingleDatabase
         public static DatabaseService Instance { get; }
 
         private readonly LiteDatabase _Database;
+
+        #endregion
 
         private DatabaseService()
         {

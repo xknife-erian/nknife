@@ -22,8 +22,8 @@ namespace NKnife.DataLite.UnitTest
             bikes.RepositoryPath.Should().Be(meters.RepositoryPath);
             meters.RepositoryPath.Should().Be(bikes.RepositoryPath);
 
-            bikes.Db.Should().Be(meters.Db);
-            meters.Db.Should().Be(bikes.Db);
+            bikes.DatabaseToTest.Should().Be(meters.DatabaseToTest);
+            meters.DatabaseToTest.Should().Be(bikes.DatabaseToTest);
 
             bikes.DeleteAll();
             meters.DeleteAll();

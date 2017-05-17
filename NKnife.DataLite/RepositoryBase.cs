@@ -101,7 +101,10 @@ namespace NKnife.DataLite
         /// <returns>集合(表)名</returns>
         protected virtual string BuildCollectionName()
         {
-            return typeof(T).Name;
+            var name = typeof(T).Name;
+            if (name.Contains("`"))//当一些泛型类型的名字需要替换掉的字符
+                name = name.Replace("`", "-");
+            return name;
         }
     }
 }

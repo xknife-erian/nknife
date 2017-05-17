@@ -10,7 +10,7 @@ namespace NKnife.DataLite.UnitTest.SingleDatabase
         {
         }
 
-        public LiteDatabase Db
+        public LiteDatabase DatabaseToTest
         {
             get { return _Database; }
         }
