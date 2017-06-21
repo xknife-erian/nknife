@@ -44,5 +44,23 @@ namespace NKnife.Channels.Channels.Serials
         /// 当 ReceivedBytesThreshold 引发 DataReceived 事件后，等待 ReadWait 的时间，待串口数据接收到阶段性时再进行读取
         /// </summary>
         public int ReadWait { get; set; } = 0;
+
+        protected bool Equals(SerialConfig other)
+        {
+            return Port == other.Port;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((SerialConfig) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Port.GetHashCode();
+        }
     }
 }

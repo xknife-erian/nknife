@@ -64,6 +64,7 @@
     <Compile Include="Channels\EventParams\SerialChannelAnswerDataEventArgs.cs" />
     <Compile Include="Channels\Serials\SerialAnswer.cs" />
     <Compile Include="Channels\Serials\SerialChannel.cs" />
+    <Compile Include="Channels\Serials\SerialChannelMap.cs" />
     <Compile Include="Channels\Serials\SerialConfig.cs" />
     <Compile Include="Channels\Serials\SerialQuestion.cs" />
     <Compile Include="Channels\Serials\SerialQuestionGroup.cs" />
