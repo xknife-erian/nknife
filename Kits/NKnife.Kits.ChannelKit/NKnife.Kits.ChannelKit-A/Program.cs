@@ -27,7 +27,6 @@ namespace NKnife.Kits.ChannelKit
             _serialChannel.DataArrived += Serial_DataArrived;
 
             Send();
-
             Console.WriteLine("=== Press any key exit. =========================");
             Console.ReadKey();
         }
