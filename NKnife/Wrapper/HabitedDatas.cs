@@ -3,21 +3,20 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Xml;
-using NKnife.Interface;
 using NKnife.Utility;
 using NKnife.XML;
 
 namespace NKnife.Wrapper
 {
     /// <summary>
-    ///     这是一个保存用户目录下的选项文件，该文件可以不存在，当使用时发现该文件不存在时，将创建，并创建默认值
+    ///     描述用户习惯的数据，这是一个保存用户目录下的数据文件，该文件可以不存在，当使用时发现该文件不存在时，将创建，并创建默认值。
     /// </summary>
-    public class UserApplicationData : IUserApplicationData
+    public class HabitedDatas
     {
         protected string _FileName;
         protected string _UserApplicationDataPath;
 
-        protected UserApplicationData()
+        protected HabitedDatas()
         {
             Load();
         }
@@ -37,7 +36,7 @@ namespace NKnife.Wrapper
             get
             {
                 if (string.IsNullOrEmpty(_FileName))
-                    _FileName = UserApplicationDataPath + "\\" + GetType().Name + ".UserApplicationData";
+                    _FileName = UserApplicationDataPath + "\\" + GetType().Name + ".HabitedDatas";
                 return _FileName;
             }
         }
@@ -52,11 +51,11 @@ namespace NKnife.Wrapper
             {
                 if (string.IsNullOrEmpty(_UserApplicationDataPath))
                 {
-                    const Environment.SpecialFolder FOLDER = Environment.SpecialFolder.ApplicationData;
-                    string path = Environment.GetFolderPath(FOLDER);
+                    const Environment.SpecialFolder folder = Environment.SpecialFolder.ApplicationData;
+                    string path = Environment.GetFolderPath(folder);
                     string namespaceStr = Assembly.GetEntryAssembly().GetName().Name;
                     if (string.IsNullOrWhiteSpace(namespaceStr))
-                        namespaceStr = "NKnife.UserData";
+                        namespaceStr = "HabitedDatasKnife";
                     string subpath = namespaceStr.Replace('.', '\\').Insert(0, "\\");
                     _UserApplicationDataPath = path + subpath;
                     if (!Directory.Exists(_UserApplicationDataPath))

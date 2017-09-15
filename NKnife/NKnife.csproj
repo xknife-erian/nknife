@@ -230,7 +230,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="API\API.Shell32.cs" />
-    <Compile Include="IoC\ConfiguringModule.cs" />
     <Compile Include="Utility\UtilityWndMsg.cs" />
     <Compile Include="Utility\UtilityReflection.cs">
       <SubType>Code</SubType>
@@ -248,8 +247,7 @@
     <Compile Include="Interface\Patterns\ICommandPattern.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interface\IUserApplicationData.cs" />
-    <Compile Include="Wrapper\UserApplicationData.cs" />
+    <Compile Include="Wrapper\HabitedDatas.cs" />
     <Compile Include="Electronics\CircuitType.cs" />
     <Compile Include="Electronics\Collections\Resistances.cs" />
     <Compile Include="Electronics\Exceptions\ResistanceCollectionException.cs" />
