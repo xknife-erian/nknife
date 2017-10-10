@@ -1,15 +1,16 @@
 ﻿using NKnife.Channels.Interfaces;
 using NKnife.Channels.Interfaces.Channels;
+using NKnife.Interface;
 
 namespace NKnife.Channels.Channels.Base
 {
     public class AnswerBase<T> : IAnswer<T>
     {
-        protected AnswerBase(IChannel<T> channel, IDevice device, IExhibit exhibit, T data)
+        protected AnswerBase(IChannel<T> channel, IDevice device, IId target, T data)
         {
             Channel = channel;
             Device = device;
-            Exhibit = exhibit;
+            Target = target;
             Data = data;
         }
 
@@ -33,7 +34,7 @@ namespace NKnife.Channels.Channels.Base
         /// <summary>
         /// 被采集、观察的对象，如电阻源，电压源等。
         /// </summary>
-        public IExhibit Exhibit { get; }
+        public IId Target { get; }
 
         #endregion
     }

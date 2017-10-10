@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NKnife.Channels.Channels.EventParams;
 using NKnife.Channels.Interfaces.Channels;
+using NKnife.Interface;
 
 namespace NKnife.Channels.Channels.Base
 {
@@ -38,7 +39,7 @@ namespace NKnife.Channels.Channels.Base
         /// <summary>
         ///     当前数据采集通道的所面向的实际采集源。
         /// </summary>
-        public List<IExhibit> Exhibits { get; } = new List<IExhibit>(1);
+        public List<IId> Targets { get; } = new List<IId>(1);
 
         /// <summary>
         ///     打开采集通道

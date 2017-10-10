@@ -1,5 +1,6 @@
 ﻿using NKnife.Channels.Interfaces;
 using NKnife.Channels.Interfaces.Channels;
+using NKnife.Interface;
 
 namespace NKnife.Channels.Channels.Base
 {
@@ -8,11 +9,11 @@ namespace NKnife.Channels.Channels.Base
     /// </summary>
     public abstract class QuestionBase<T> : IQuestion<T>
     {
-        protected QuestionBase(IChannel<T> channel, IDevice device, IExhibit exhibit, bool isLoop, T data)
+        protected QuestionBase(IChannel<T> channel, IDevice device, IId target, bool isLoop, T data)
         {
             Channel = channel;
             Device = device;
-            Exhibit = exhibit;
+            Target = target;
             IsLoop = isLoop;
             Data = data;
         }
@@ -42,7 +43,7 @@ namespace NKnife.Channels.Channels.Base
         /// <summary>
         /// 被采集、观察的对象，如电阻源，电压源等。
         /// </summary>
-        public IExhibit Exhibit { get; }
+        public IId Target { get; }
 
         #endregion
     }

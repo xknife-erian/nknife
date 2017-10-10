@@ -1,4 +1,6 @@
-﻿namespace NKnife.Channels.Interfaces.Channels
+﻿using NKnife.Interface;
+
+namespace NKnife.Channels.Interfaces.Channels
 {
     /// <summary>
     /// 代表数据交换的一个方向的描述。如PC向Device询问时，本接口将询问的内容，询问的通道，谁询问，问谁等等信息封装在一起。
@@ -24,6 +26,6 @@
         /// <summary>
         ///     被问询的设备可能工作于不同的子对象,子工作
         /// </summary>
-        IExhibit Exhibit { get; }
+        IId Target { get; }
     }
 }

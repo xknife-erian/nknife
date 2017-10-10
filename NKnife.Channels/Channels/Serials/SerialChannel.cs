@@ -274,7 +274,7 @@ namespace NKnife.Channels.Channels.Serials
                             {
                                 var currBuffer = new byte[_SyncBuffer.Length];
                                 Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
-                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(this, question.Device, question.Exhibit, currBuffer));
+                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(this, question.Device, question.Target, currBuffer));
                             }
                         }
                     }
@@ -358,7 +358,7 @@ namespace NKnife.Channels.Channels.Serials
                 if (_QuestionGroup != null && _QuestionGroup.Count > 0)
                 {
                     var q = _QuestionGroup[_QuestionGroup.CurrentIndex];
-                    OnDataArrived(new SerialChannelAnswerDataEventArgs(this, q.Device, q.Exhibit, buffer));
+                    OnDataArrived(new SerialChannelAnswerDataEventArgs(this, q.Device, q.Target, buffer));
                 }
                 else
                 {

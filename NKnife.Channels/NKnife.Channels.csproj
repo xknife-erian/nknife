@@ -73,7 +73,6 @@
     <Compile Include="Interfaces\Channels\IAnswer.cs" />
     <Compile Include="Interfaces\Channels\IChannel.cs" />
     <Compile Include="Interfaces\Channels\IChannelConfig.cs" />
-    <Compile Include="Interfaces\Channels\IExhibit.cs" />
     <Compile Include="Interfaces\Channels\IMultiChannel.cs" />
     <Compile Include="Interfaces\Channels\IQuestion.cs" />
     <Compile Include="Interfaces\Channels\IQuestionGroup.cs" />

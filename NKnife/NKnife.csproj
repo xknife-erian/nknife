@@ -139,6 +139,7 @@
     <Compile Include="Encrypt\TripleDESHelper.cs" />
     <Compile Include="Encrypt\UtilityEncrypt.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Interface\IId.cs" />
     <Compile Include="Interface\IInitializer.cs" />
     <Compile Include="Interface\Datas\NoSql\ICrudRepository.cs" />
     <Compile Include="Interface\Datas\NoSql\IPage.cs" />
