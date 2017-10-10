@@ -304,6 +304,7 @@ namespace NKnife.Channels.Channels.Serials
             }
             try
             {
+                //_SyncBuffer是交换数据的缓冲区
                 _SyncBuffer = new byte[_SerialPort.BytesToRead];
                 _SerialPort.Read(_SyncBuffer, 0, _SyncBuffer.Length);
             }
