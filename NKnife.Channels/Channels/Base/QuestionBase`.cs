@@ -9,10 +9,10 @@ namespace NKnife.Channels.Channels.Base
     /// </summary>
     public abstract class QuestionBase<T> : IQuestion<T>
     {
-        protected QuestionBase(IChannel<T> channel, IDevice device, IId target, bool isLoop, T data)
+        protected QuestionBase(IChannel<T> channel, IId instrument, IId target, bool isLoop, T data)
         {
             Channel = channel;
-            Device = device;
+            Instrument = instrument;
             Target = target;
             IsLoop = isLoop;
             Data = data;
@@ -36,9 +36,9 @@ namespace NKnife.Channels.Channels.Base
         public IChannel<T> Channel { get; }
 
         /// <summary>
-        /// 数据采集的仪器
+        ///     被问询的设备（执行采集的仪器）
         /// </summary>
-        public IDevice Device { get; }
+        public IId Instrument { get; }
 
         /// <summary>
         /// 被采集、观察的对象，如电阻源，电压源等。

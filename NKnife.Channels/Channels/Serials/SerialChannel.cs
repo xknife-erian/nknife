@@ -247,8 +247,7 @@ namespace NKnife.Channels.Channels.Serials
         {
             ThreadPool.QueueUserWorkItem(SendReceiving, new SyncSendReceivingParams(sendAction, receivedFunc));
 #if DEBUG
-            int a, b = 0;
-            ThreadPool.GetAvailableThreads(out a, out b);
+            ThreadPool.GetAvailableThreads(out int a, out int b);
             _logger.Trace($"WorkerThreads: {a}, CompletionPortThreads: {b}");
 #endif
         }
@@ -274,7 +273,7 @@ namespace NKnife.Channels.Channels.Serials
                             {
                                 var currBuffer = new byte[_SyncBuffer.Length];
                                 Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
-                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(this, question.Device, question.Target, currBuffer));
+                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(this, question.Instrument, question.Target, currBuffer));
                             }
                         }
                     }
@@ -359,7 +358,7 @@ namespace NKnife.Channels.Channels.Serials
                 if (_QuestionGroup != null && _QuestionGroup.Count > 0)
                 {
                     var q = _QuestionGroup[_QuestionGroup.CurrentIndex];
-                    OnDataArrived(new SerialChannelAnswerDataEventArgs(this, q.Device, q.Target, buffer));
+                    OnDataArrived(new SerialChannelAnswerDataEventArgs(this, q.Instrument, q.Target, buffer));
                 }
                 else
                 {

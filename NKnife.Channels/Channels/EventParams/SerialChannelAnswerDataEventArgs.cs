@@ -7,8 +7,8 @@ namespace NKnife.Channels.Channels.EventParams
 {
     public class SerialChannelAnswerDataEventArgs : ChannelAnswerDataEventArgs<byte[]>
     {
-        public SerialChannelAnswerDataEventArgs(IChannel<byte[]> channel, IDevice device, IId target, byte[] data) 
-            : base(new SerialAnswer(channel, device, target, data))
+        public SerialChannelAnswerDataEventArgs(IChannel<byte[]> channel, IId instrument, IId target, byte[] data) 
+            : base(new SerialAnswer(channel, instrument, target, data))
         {
         }
     }

@@ -19,9 +19,9 @@ namespace NKnife.Channels.Interfaces.Channels
         IChannel<T> Channel { get; }
 
         /// <summary>
-        ///     被问询的设备
+        ///     被问询的设备（执行采集的仪器）
         /// </summary>
-        IDevice Device { get; }
+        IId Instrument { get; }
 
         /// <summary>
         ///     被问询的设备可能工作于不同的子对象,子工作

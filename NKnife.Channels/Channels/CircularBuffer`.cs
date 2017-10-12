@@ -115,7 +115,7 @@ namespace NKnife.Channels.Channels
         /// </summary>
         public int Capacity
         {
-            get { return _Capacity; }
+            get => _Capacity;
             set
             {
                 lock (_BufferLock)

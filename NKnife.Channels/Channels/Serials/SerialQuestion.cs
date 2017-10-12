@@ -15,8 +15,8 @@ namespace NKnife.Channels.Channels.Serials
         /// <summary>
         /// 描述设备向PC串口返回的交换数据
         /// </summary>
-        public SerialQuestion(IChannel<byte[]> channel, IDevice device, IId target, bool isLoop, byte[] data) 
-            : base(channel, device, target, isLoop, data)
+        public SerialQuestion(IChannel<byte[]> channel, IId instrument, IId target, bool isLoop, byte[] data) 
+            : base(channel, instrument, target, isLoop, data)
         {
             _Id = Guid.NewGuid();
         }

@@ -77,7 +77,6 @@
     <Compile Include="Interfaces\Channels\IQuestion.cs" />
     <Compile Include="Interfaces\Channels\IQuestionGroup.cs" />
     <Compile Include="Interfaces\Channels\ISwap.cs" />
-    <Compile Include="Interfaces\IDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

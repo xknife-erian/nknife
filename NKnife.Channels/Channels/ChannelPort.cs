@@ -15,11 +15,6 @@ namespace NKnife.Channels.Channels
         private IPEndPoint _IpEndPoint;
         private string[] _SerialPortInfo;
 
-        protected ChannelPort()
-        {
-            _Id = Guid.NewGuid().ToString("N").ToUpper();
-        }
-
         public ChannelType ChannelType { get; private set; }
 
         /// <summary>
@@ -114,12 +109,13 @@ namespace NKnife.Channels.Channels
             return _Id.Equals(other._Id) && ChannelType == other.ChannelType;
         }
 
+        private readonly int _Hash = (Guid.NewGuid().GetHashCode() >> 28) * 31;
+
+        /// <summary>用作特定类型的哈希函数。</summary>
+        /// <returns>当前 <see cref="T:System.Object" /> 的哈希代码。</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (_Id.GetHashCode()*397) ^ (short) ChannelType;
-            }
+            return _Hash;
         }
     }
 }
