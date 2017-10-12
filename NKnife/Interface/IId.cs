@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NKnife.Interface
+﻿namespace NKnife.Interface
 {
     /// <summary>
     /// 描述一个有ID的对象
@@ -8,7 +6,7 @@ namespace NKnife.Interface
     public interface IId
     {
         /// <summary>
-        /// 观察点的ID
+        /// 对象的ID
         /// </summary>
         string Id { get; set; }
     }
