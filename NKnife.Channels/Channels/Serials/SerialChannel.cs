@@ -266,14 +266,18 @@ namespace NKnife.Channels.Channels.Serials
                     var complate = false;
                     while (!complate)
                     {
+                        // 发出后等待
+                        var timeout = (int)TalkTotalTimeout;
+                        if (question.LoopInterval > 0)
+                            timeout = question.LoopInterval;//如果这条指定设置了等待时长
                         // 这个等待是同步时每次对话的时间
-                        if (_SyncReset.WaitOne((int) TalkTotalTimeout)) //监听从事件收到返回的数据
+                        if (_SyncReset.WaitOne(timeout)) //监听从事件收到返回的数据
                         {
                             if (_SyncBuffer.Length > 0)
                             {
                                 var currBuffer = new byte[_SyncBuffer.Length];
                                 Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
-                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(this, question.Instrument, question.Target, currBuffer));
+                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
                             }
                         }
                     }
@@ -358,11 +362,11 @@ namespace NKnife.Channels.Channels.Serials
                 if (_QuestionGroup != null && _QuestionGroup.Count > 0)
                 {
                     var q = _QuestionGroup[_QuestionGroup.CurrentIndex];
-                    OnDataArrived(new SerialChannelAnswerDataEventArgs(this, q.Instrument, q.Target, buffer));
+                    OnDataArrived(new SerialChannelAnswerDataEventArgs(q.Instrument, buffer));
                 }
                 else
                 {
-                    OnDataArrived(new SerialChannelAnswerDataEventArgs(this, null, null, buffer));
+                    OnDataArrived(new SerialChannelAnswerDataEventArgs(null, buffer));
                 }
             }
         }

@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using NKnife.Channels.Channels.EventParams;
 using NKnife.Channels.Channels.Serials;
-using NKnife.Channels.Interfaces.Channels;
 
 namespace NKnife.Kits.ChannelKit
 {
-    class Program
+    internal class Program
     {
         private static SerialChannel _serialChannel;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             SerialUtils.RefreshSerialPorts();
 
@@ -22,7 +16,7 @@ namespace NKnife.Kits.ChannelKit
             Console.WriteLine("=== Serial Channel Demo. =========================");
             var port = GetSerialPort();
             Console.WriteLine($"=== 准备开启串口{port}...");
-            _serialChannel = new SerialChannel(new SerialConfig(port){BaudRate = 115200});
+            _serialChannel = new SerialChannel(new SerialConfig(port) {BaudRate = 115200});
             _serialChannel.Open();
             _serialChannel.DataArrived += Serial_DataArrived;
 
@@ -38,20 +32,18 @@ namespace NKnife.Kits.ChannelKit
             {
                 var line = Console.ReadLine();
                 if (line != null)
-                {
                     switch (line.ToLower())
                     {
-                        case "x"://退出发送
+                        case "x": //退出发送
                             isSend = false;
                             break;
-                        case "+"://增加发送的内容
+                        case "+": //增加发送的内容
                             AddAsk();
                             break;
-                        case "%"://仅一条发送的内容
+                        case "%": //仅一条发送的内容
                             SendAsk();
                             break;
                     }
-                }
             }
         }
 
@@ -59,7 +51,7 @@ namespace NKnife.Kits.ChannelKit
         {
             Console.WriteLine("-- 请输入一条需要发送的内容:");
             var line = Console.ReadLine();
-            var question = new SerialQuestion(_serialChannel,null,null,true,line.ToBytes());
+            var question = new SerialQuestion(null, true, 100, line.ToBytes());
             var group = new SerialQuestionGroup();
             group.Add(question);
             _serialChannel.UpdateQuestionGroup(group);
@@ -85,13 +77,9 @@ namespace NKnife.Kits.ChannelKit
                 Console.WriteLine("-- 请输入串口号：");
                 var line = Console.ReadLine();
                 if (ushort.TryParse(line, out num))
-                {
                     isNum = true;
-                }
                 else
-                {
                     Console.WriteLine("!!! 不是正确的串口号，请重新输入。");
-                }
             }
             return num;
         }

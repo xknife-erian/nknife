@@ -6,11 +6,12 @@ namespace NKnife.Channels.Channels.Base
 {
     public class AnswerBase<T> : IAnswer<T>
     {
-        protected AnswerBase(IChannel<T> channel, IId device, IId target, T data)
+        //protected AnswerBase(IChannel<T> channel, IId device, IId target, T data)
+        protected AnswerBase(IId device, T data)
         {
-            Channel = channel;
+            //Channel = channel;
             Instrument = device;
-            Target = target;
+            //Target = target;
             Data = data;
         }
 
@@ -24,7 +25,7 @@ namespace NKnife.Channels.Channels.Base
         /// <summary>
         /// 数据采集通道
         /// </summary>
-        public IChannel<T> Channel { get; }
+        //public IChannel<T> Channel { get; }
 
         /// <summary>
         /// 执行数据采集的仪器
@@ -34,7 +35,7 @@ namespace NKnife.Channels.Channels.Base
         /// <summary>
         /// 被采集、观察的对象，如电阻源，电压源等。
         /// </summary>
-        public IId Target { get; }
+        //public IId Target { get; }
 
         #endregion
     }

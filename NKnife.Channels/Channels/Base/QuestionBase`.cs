@@ -9,11 +9,13 @@ namespace NKnife.Channels.Channels.Base
     /// </summary>
     public abstract class QuestionBase<T> : IQuestion<T>
     {
-        protected QuestionBase(IChannel<T> channel, IId instrument, IId target, bool isLoop, T data)
+        //protected QuestionBase(IChannel<T> channel, IId instrument, IId target, bool isLoop, T data)
+        protected QuestionBase(IId instrument, bool isLoop, int loopInterval, T data)
         {
-            Channel = channel;
+            //Channel = channel;
             Instrument = instrument;
-            Target = target;
+            LoopInterval = loopInterval;
+            //Target = target;
             IsLoop = isLoop;
             Data = data;
         }
@@ -26,6 +28,11 @@ namespace NKnife.Channels.Channels.Base
         public bool IsLoop { get; set; }
 
         /// <summary>
+        /// 当循环时的间隔
+        /// </summary>
+        public int LoopInterval { get; set; }
+
+        /// <summary>
         /// 本次交换的数据
         /// </summary>
         public T Data { get; set; }
@@ -33,17 +40,12 @@ namespace NKnife.Channels.Channels.Base
         /// <summary>
         /// 数据采集通道
         /// </summary>
-        public IChannel<T> Channel { get; }
+        //public IChannel<T> Channel { get; }
 
         /// <summary>
-        ///     被问询的设备（执行采集的仪器）
+        ///     被问询的设备
         /// </summary>
         public IId Instrument { get; }
-
-        /// <summary>
-        /// 被采集、观察的对象，如电阻源，电压源等。
-        /// </summary>
-        public IId Target { get; }
 
         #endregion
     }

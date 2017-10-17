@@ -18,10 +18,5 @@ namespace NKnife.Channels.Unittests
         {
         }
         #endregion
-
-        [Test]
-        public void CapacityExceptionTest()
-        {
-        }
     }
 }

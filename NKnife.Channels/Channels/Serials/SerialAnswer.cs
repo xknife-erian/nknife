@@ -7,8 +7,8 @@ namespace NKnife.Channels.Channels.Serials
 {
     public class SerialAnswer : AnswerBase<byte[]>
     {
-        public SerialAnswer(IChannel<byte[]> channel, IId instrument, IId target, byte[] data) 
-            : base(channel, instrument, target, data)
+        public SerialAnswer(IId instrument, byte[] data) 
+            : base(instrument, data)
         {
         }
     }

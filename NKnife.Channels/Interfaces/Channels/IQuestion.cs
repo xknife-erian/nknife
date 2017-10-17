@@ -9,5 +9,10 @@
         /// 该询问是否需要循环。true时需要,false时仅问询一次。
         /// </summary>
         bool IsLoop { get; set; }
+
+        /// <summary>
+        /// 当循环时的间隔
+        /// </summary>
+        int LoopInterval { get; set; }
     }
 }

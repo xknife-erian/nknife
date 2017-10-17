@@ -12,11 +12,12 @@ namespace NKnife.Channels.Channels.Serials
     public class SerialQuestion : QuestionBase<byte[]>
     {
         private readonly Guid _Id;
+
         /// <summary>
         /// 描述设备向PC串口返回的交换数据
         /// </summary>
-        public SerialQuestion(IChannel<byte[]> channel, IId instrument, IId target, bool isLoop, byte[] data) 
-            : base(channel, instrument, target, isLoop, data)
+        public SerialQuestion(IId instrument, bool isLoop, int loopInterval, byte[] data)
+            : base(instrument, isLoop, loopInterval, data)
         {
             _Id = Guid.NewGuid();
         }
