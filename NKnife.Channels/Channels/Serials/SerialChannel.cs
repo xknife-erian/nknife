@@ -32,6 +32,11 @@ namespace NKnife.Channels.Channels.Serials
         #region Overrides of ChannelBase
 
         /// <summary>
+        /// 打开串口默认等待的时长。默认1.5秒钟。
+        /// </summary>
+        public int OpenTimeout { get; set; } = 1500;
+
+        /// <summary>
         ///     打开采集通道
         /// </summary>
         /// <returns></returns>
@@ -91,7 +96,7 @@ namespace NKnife.Channels.Channels.Serials
                 }) {Name = $"{_SerialPort.PortName}-Thread"};
                 thread.IsBackground = true;
                 thread.Start();
-                openReset.WaitOne(1200); //打开串口等待1.2秒
+                openReset.WaitOne(OpenTimeout); //打开串口等待1.5秒
                 if (IsOpen)
                 {
                     OnOpened();
@@ -105,7 +110,7 @@ namespace NKnife.Channels.Channels.Serials
             }
             catch (Exception e)
             {
-                _logger.Warn($"无法打开串口:COM{_SerialConfig.Port}, {e.Message}", e);
+                _logger.Error($"无法打开串口:COM{_SerialConfig.Port}, {e.Message}", e);
                 IsOpen = false;
             }
             return IsOpen;
@@ -141,7 +146,7 @@ namespace NKnife.Channels.Channels.Serials
         /// <returns></returns>
         public override bool Close()
         {
-            if (_SerialPort.IsOpen)
+            if (IsOpen && _SerialPort.IsOpen)
             {
                 try
                 {
@@ -257,16 +262,17 @@ namespace NKnife.Channels.Channels.Serials
             var w = (SyncSendReceivingParams) param;
             try
             {
-                while (_QuestionGroup.Count > 0)
+                while (_QuestionGroup.Count > 0)//只要指令集合有指令就一直持续循环
                 {
                     var question = _QuestionGroup.PeekOrDequeue();
                     _SerialPort.Write(question.Data, 0, question.Data.Length);
-                    _OnSyncReceive = true;
+                    _OnSyncReceive = true;//标记
                     w.SendAction.Invoke(question);
                     var complate = false;
                     while (!complate)
                     {
                         // 发出后等待
+                        _OnSyncReceive = true;//标记
                         var timeout = (int)TalkTotalTimeout;
                         if (question.LoopInterval > 0)
                             timeout = question.LoopInterval;//如果这条指定设置了等待时长
@@ -277,6 +283,8 @@ namespace NKnife.Channels.Channels.Serials
                             {
                                 var currBuffer = new byte[_SyncBuffer.Length];
                                 Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
+                                //将读取到的数据抛出进行解析，如果认为已完成本次询问进入下一次对话。
+                                //如果未完成本次询问再次进入等待回答(读取)状态。
                                 complate = w.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
                             }
                         }
@@ -302,12 +310,14 @@ namespace NKnife.Channels.Channels.Serials
         {
             if (!_OnSyncReceive)
             {
+                // 不是要对话，即发起询问后的等待期内，这时候得到的数据一概丢弃。
                 _SerialPort.DiscardInBuffer();
                 return;
             }
             try
             {
                 //_SyncBuffer是交换数据的缓冲区
+                //触发读取后，读取，读取本次以后进入下一次询问对话
                 _SyncBuffer = new byte[_SerialPort.BytesToRead];
                 _SerialPort.Read(_SyncBuffer, 0, _SyncBuffer.Length);
             }
@@ -321,6 +331,7 @@ namespace NKnife.Channels.Channels.Serials
             }
             finally
             {
+                _OnSyncReceive = false;
                 _SyncReset.Set(); //通知SendReceiving函数继续
             }
         }
