@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NKnife.Electronics;
+﻿using NKnife.Electronics;
 using NKnife.Electronics.Collections;
 using NKnife.Electronics.Helper;
+using NUnit.Framework;
 
 namespace NKnife.UnitTest.Electronics
 {
-    [TestClass]
+    [TestFixture]
     public class ResistanceValueResolveTest
     {
         public const string RESS =
@@ -23,7 +23,7 @@ namespace NKnife.UnitTest.Electronics
 
         /// <summary>基础测试
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TryGetResolveResultTestMethod1()
         {
             var solve = new ResistanceValueResolve();
@@ -52,7 +52,7 @@ namespace NKnife.UnitTest.Electronics
 
         /// <summary>复杂值测试(无余数)
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TryGetResolveResultTestMethod2()
         {
             var solve = new ResistanceValueResolve();
@@ -90,7 +90,7 @@ namespace NKnife.UnitTest.Electronics
 
         /// <summary>复杂值测试(有余数)
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TryGetResolveResultTestMethod3()
         {
             var solve = new ResistanceValueResolve();
@@ -127,7 +127,7 @@ namespace NKnife.UnitTest.Electronics
 
         /// <summary>复杂值测试(有余数)
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TryGetResolveResultTestMethod4()
         {
             var solve = new ResistanceValueResolve();
@@ -145,7 +145,7 @@ namespace NKnife.UnitTest.Electronics
 
         /// <summary>无法分解
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TryGetResolveResultTestMethod5()
         {
             var solve = new ResistanceValueResolve();
@@ -164,7 +164,7 @@ namespace NKnife.UnitTest.Electronics
 
         /// <summary>无法分解
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TryGetResolveResultTestMethod6()
         {
             var solve = new ResistanceValueResolve();

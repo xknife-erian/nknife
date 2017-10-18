@@ -1,17 +1,17 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NKnife.Electronics;
 using NKnife.Electronics.Collections;
+using NUnit.Framework;
 
 namespace NKnife.UnitTest.Electronics
 {
     /// <summary>
     /// 
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ResistancesTest
     {
-        [TestMethod]
+        [Test]
         public void SortTestMethod1()
         {
             var r = new Resistances();
@@ -34,7 +34,7 @@ namespace NKnife.UnitTest.Electronics
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ParallelingValueGetterTestMethod1()
         {
             var r = new Resistances();
@@ -45,7 +45,7 @@ namespace NKnife.UnitTest.Electronics
             Assert.AreEqual(1, r.EquivalentValue);
         }
 
-        [TestMethod]
+        [Test]
         public void ParallelingValueGetterTestMethod2()
         {
             var r = new Resistances();
@@ -56,7 +56,7 @@ namespace NKnife.UnitTest.Electronics
             Assert.AreEqual(2.6387, Math.Round(r.EquivalentValue,4));
         }
 
-        [TestMethod]
+        [Test]
         public void ParallelingValueGetterTestMethod3()
         {
             var r = new Resistances();

@@ -285,6 +285,7 @@ namespace NKnife.Channels.Channels.Serials
                                 Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
                                 //将读取到的数据抛出进行解析，如果认为已完成本次询问进入下一次对话。
                                 //如果未完成本次询问再次进入等待回答(读取)状态。
+                                _SyncBuffer = new byte[0];
                                 complate = w.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
                             }
                         }
