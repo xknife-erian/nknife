@@ -277,6 +277,7 @@ namespace NKnife.Channels.Channels.Serials
                             {
                                 var currBuffer = new byte[_SyncBuffer.Length];
                                 Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
+                                _SyncBuffer = new byte[0];
                                 complate = w.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
                             }
                         }

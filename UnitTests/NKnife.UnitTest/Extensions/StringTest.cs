@@ -1,13 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using NKnife.Extensions;
+using NUnit.Framework;
 
 namespace NKnife.UnitTest.Extensions
 {
-    [TestClass]
+    [TestFixture]
     public class StringTest
     {
-        [TestMethod]
+        [Test]
         public void TrimZeroTest1()
         {
             var testString = "1.234000";
@@ -15,7 +16,7 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("1.234", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest2()
         {
             var testString = "1234.00000";
@@ -23,7 +24,7 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("1234", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest3()
         {
             var testString = "100.00000";
@@ -31,7 +32,7 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("100", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest4()
         {
             var testString = "ABC0.00000";
@@ -39,7 +40,7 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("ABC0", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest5()
         {
             var testString = "1.00000";
@@ -47,7 +48,7 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("1", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest6()
         {
             var testString = "123000";
@@ -55,7 +56,7 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("123000", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest7()
         {
             var testString = "0000";
@@ -63,7 +64,7 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("0", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest8()
         {
             var testString = "0.005000";
@@ -71,12 +72,28 @@ namespace NKnife.UnitTest.Extensions
             Assert.AreEqual("0.005", act);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimZeroTest9()
         {
             var testString = "0.00";
             var act = testString.TrimZero();
             Assert.AreEqual("0", act);
+        }
+
+        [Test]
+        public void ToBytesTest1()
+        {
+            var abcd = "abcd";
+            var bs = abcd.ToBytes();
+            bs.Should().BeEquivalentTo(0x61, 0x62, 0x63, 0x64);
+        }
+
+        [Test]
+        public void ToBytesTest2()
+        {
+            var abcd = "a,b,c,d";
+            var bs = abcd.ToBytes(new char[]{','});
+            bs.Should().BeEquivalentTo(0x61, 0x62, 0x63, 0x64);
         }
     }
 }

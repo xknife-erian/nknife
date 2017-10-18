@@ -417,7 +417,7 @@ namespace System
             var result = new byte[strs.Length];
             for (int i = 0; i < strs.Length; i++)
             {
-                result[i] = (byte) Convert.ToInt32(strs[i], 16);
+                result[i] = (byte) Convert.ToInt32(strs[i]);
             }
             return result;
         }
