@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using NKnife.Converts;
 using NKnife.Utility;
 
 // ReSharper disable once CheckNamespace
@@ -10,9 +8,8 @@ namespace System
 {
     public static class StringExtension
     {
-
         /// <summary>
-        /// 判断指定字符串在指定字符串数组中的位置
+        ///     判断指定字符串在指定字符串数组中的位置
         /// </summary>
         /// <param name="srcString">字符串</param>
         /// <param name="stringArray">字符串数组</param>
@@ -20,28 +17,22 @@ namespace System
         /// <returns>字符串在指定字符串数组中的位置, 如不存在则返回-1</returns>
         public static int GetInArrayIndex(this string srcString, string[] stringArray, bool caseInsensetive)
         {
-            for (int i = 0; i < stringArray.Length; i++)
-            {
+            for (var i = 0; i < stringArray.Length; i++)
                 if (caseInsensetive)
                 {
                     if (srcString.ToLower() == stringArray[i].ToLower())
-                    {
                         return i;
-                    }
                 }
                 else
                 {
                     if (srcString == stringArray[i])
-                    {
                         return i;
-                    }
                 }
-            }
             return -1;
         }
 
         /// <summary>
-        /// 判断指定字符串在指定字符串数组中的位置
+        ///     判断指定字符串在指定字符串数组中的位置
         /// </summary>
         /// <param name="srcString">字符串</param>
         /// <param name="stringArray">字符串数组</param>
@@ -52,7 +43,7 @@ namespace System
         }
 
         /// <summary>
-        /// 判断指定字符串是否属于指定字符串数组中的一个元素
+        ///     判断指定字符串是否属于指定字符串数组中的一个元素
         /// </summary>
         /// <param name="srcString">字符串</param>
         /// <param name="stringArray">字符串数组</param>
@@ -64,7 +55,7 @@ namespace System
         }
 
         /// <summary>
-        /// 判断指定字符串是否属于指定字符串数组中的一个元素
+        ///     判断指定字符串是否属于指定字符串数组中的一个元素
         /// </summary>
         /// <param name="srcString">字符串</param>
         /// <param name="stringarray">字符串数组</param>
@@ -75,44 +66,36 @@ namespace System
         }
 
         /// <summary>
-        /// 删除字符串尾部的回车/换行/空格
+        ///     删除字符串尾部的回车/换行/空格
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
         public static string TrimTail(this string str)
         {
             if (string.IsNullOrEmpty(str))
-            {
                 return string.Empty;
-            }
-            for (int i = str.Length; i >= 0; i--)
-            {
+            for (var i = str.Length; i >= 0; i--)
                 if (str[i].Equals(' ') || str[i].Equals('\r') || str[i].Equals('\n'))
-                {
                     str = str.Remove(i, 1);
-                }
-            }
             return str;
         }
 
         /// <summary>
-        /// 去除字符串尾部的“0”字符
+        ///     去除字符串尾部的“0”字符
         /// </summary>
         public static string TrimZero(this string str)
         {
             var n = str.LastIndexOf('.');
             if (n > 0)
             {
-                bool allIsZero = true;
+                var allIsZero = true;
                 int i;
                 for (i = str.Length - 1; i >= n + 1; i--)
-                {
                     if (str[i] != '0')
                     {
                         allIsZero = false;
                         break;
                     }
-                }
                 var result = !allIsZero ? str.Substring(0, i + 1) : str.Substring(0, n);
                 return result;
             }
@@ -122,7 +105,7 @@ namespace System
         }
 
         /// <summary>
-        /// 清除给定字符串中的回车及换行符
+        ///     清除给定字符串中的回车及换行符
         /// </summary>
         /// <param name="str">要清除的字符串</param>
         /// <returns>清除后返回的字符串</returns>
@@ -130,41 +113,39 @@ namespace System
         {
             Match m = null;
             for (m = UtilityRegex.Br.Match(str); m.Success; m = m.NextMatch())
-            {
                 str = str.Replace(m.Groups[0].ToString(), "");
-            }
             return str;
         }
 
-        /// <summary>是否是Null,空,全部是空白或全部为0的字符串
+        /// <summary>
+        ///     是否是Null,空,全部是空白或全部为0的字符串
         /// </summary>
         /// <param name="str">The STR.</param>
         /// <returns>
-        ///   <c>true</c> if [is composed by zero] [the specified STR]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [is composed by zero] [the specified STR]; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsEmptyAndZero(this string str)
         {
-            if (String.IsNullOrWhiteSpace(str))
-            {
+            if (string.IsNullOrWhiteSpace(str))
                 return true;
-            }
-            int n = str.Length;
-            string mStr = "[0]{" + n + ",}";
+            var n = str.Length;
+            var mStr = "[0]{" + n + ",}";
             return Regex.Match(str, mStr).Success;
         }
 
-        /// <summary>是否是拉丁字母（大小写均可）
+        /// <summary>
+        ///     是否是拉丁字母（大小写均可）
         /// </summary>
-        public static bool IslLatinLetter(this char c) 
+        public static bool IslLatinLetter(this char c)
         {
             const string PATTEN = "^[A-Za-z]+$";
-            var r = new Regex(PATTEN); 
-            Match m = r.Match(c.ToString()); 
+            var r = new Regex(PATTEN);
+            var m = r.Match(c.ToString());
             return m.Success;
         }
 
         /// <summary>
-        /// 判断是否邮箱地址
+        ///     判断是否邮箱地址
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
@@ -175,7 +156,7 @@ namespace System
         }
 
         /// <summary>
-        /// 判断是否正整数
+        ///     判断是否正整数
         /// </summary>
         /// <param name="data"></param>
         /// <param name="result"></param>
@@ -206,7 +187,7 @@ namespace System
         }
 
         /// <summary>
-        /// 判断是否正整数，并位于 min 和 max之间
+        ///     判断是否整数，并位于 min 和 max之间
         /// </summary>
         /// <param name="data"></param>
         /// <param name="result"></param>
@@ -239,7 +220,7 @@ namespace System
         }
 
         /// <summary>
-        /// 判断是否为null,empty,或由指定字符组成
+        ///     判断是否为null,empty,或由指定字符组成
         /// </summary>
         /// <param name="data"></param>
         /// <param name="element"> </param>
@@ -250,139 +231,118 @@ namespace System
         }
 
         /// <summary>
-        /// 判断是否由数字组成
+        ///     判断是否由数字组成
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
         public static bool IsNumeric(this string str)
         {
             var n = str.Length;
-            var mStr = "[0-9]{" + n.ToString() + ",}";
+            var mStr = "[0-9]{" + n + ",}";
             return Regex.Match(str, mStr).Success;
         }
 
         /// <summary>
-        /// 判断是否手机号码
+        ///     判断是否手机号码
         /// </summary>
         /// <param name="str"></param>
         /// <param name="matchString"></param>
         /// <returns></returns>
         public static bool IsMobilePhone(this string str, string matchString = "")
         {
-            string mStr = string.IsNullOrEmpty(matchString) ? @"^[1]+([35]|[86]|[38]|[37])+\d{9}" : matchString;
+            var mStr = string.IsNullOrEmpty(matchString) ? @"^[1]+([35]|[86]|[38]|[37])+\d{9}" : matchString;
             return Regex.Match(str, mStr).Success;
         }
 
         // ~~ 判断字符是否为中文 ~~~~~~~
 
         /// <summary>
-        /// 给定一个字符串，判断其是否是中文字符串
+        ///     给定一个字符串，判断其是否是中文字符串
         /// </summary>
         /// <param name="src">The SRC.</param>
         /// <returns>
-        /// 	<c>true</c> if [is chinese letter] [the specified SRC]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [is chinese letter] [the specified SRC]; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsChineseLetter(this string src)
         {
-            for (int i = 0; i < src.Length; i++)
+            for (var i = 0; i < src.Length; i++)
             {
                 // \u4e00-\u9fa5 汉字的范围。
                 // ^[\u4e00-\u9fa5]$ 汉字的范围的正则
                 var rx = new Regex("^[\u4e00-\u9fa5]$");
-                if (rx.IsMatch(src.Substring(i, 1)))
-                    return true;
-                else
-                    return false;
+                return rx.IsMatch(src.Substring(i, 1));
             }
             return true;
         }
 
         /// <summary>
-        /// 给定一个字符串，判断其是否仅仅包含有汉字
+        ///     给定一个字符串，判断其是否仅仅包含有汉字
         /// </summary>
         public static bool IsOnlyContainsChinese(this string srcStr)
         {
-            char[] words = srcStr.ToCharArray();
-            foreach (char word in words)
-            {
+            var words = srcStr.ToCharArray();
+            foreach (var word in words)
                 if (IsGBCode(word.ToString()) || IsGBKCode(word.ToString())) // it is a GB2312 or GBK chinese word
-                {
                     continue;
-                }
                 else
-                {
                     return false;
-                }
-            }
             return true;
         }
 
         /// <summary>
-        /// 判断一个word是否为GB2312编码的汉字
+        ///     判断一个word是否为GB2312编码的汉字
         /// </summary>
         public static bool IsGBCode(this string word)
         {
-            byte[] bytes = Encoding.GetEncoding("GB2312").GetBytes(word);
+            var bytes = Encoding.GetEncoding("GB2312").GetBytes(word);
             if (bytes.Length <= 1) // if there is only one byte, it is ASCII code or other code
-            {
                 return false;
-            }
-            byte byte1 = bytes[0];
-            byte byte2 = bytes[1];
+            var byte1 = bytes[0];
+            var byte2 = bytes[1];
             if (byte1 >= 176 && byte1 <= 247 && byte2 >= 160 && byte2 <= 254) //判断是否是GB2312
-            {
                 return true;
-            }
             return false;
         }
 
         /// <summary>
-        /// 判断一个word是否为GBK编码的汉字
+        ///     判断一个word是否为GBK编码的汉字
         /// </summary>
-        /// <param ></param>
+        /// <param></param>
         /// <param name="word"></param>
         /// <returns></returns>
         public static bool IsGBKCode(this string word)
         {
-            byte[] bytes = Encoding.GetEncoding("GBK").GetBytes(word);
+            var bytes = Encoding.GetEncoding("GBK").GetBytes(word);
             if (bytes.Length <= 1) // if there is only one byte, it is ASCII code
-            {
                 return false;
-            }
-            byte byte1 = bytes[0];
-            byte byte2 = bytes[1];
+            var byte1 = bytes[0];
+            var byte2 = bytes[1];
             if (byte1 >= 129 && byte1 <= 254 && byte2 >= 64 && byte2 <= 254) //判断是否是GBK编码
-            {
                 return true;
-            }
             return false;
         }
 
         /// <summary>
-        /// 判断一个word是否为Big5编码的汉字
+        ///     判断一个word是否为Big5编码的汉字
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
         public static bool IsBig5Code(this string word)
         {
-            byte[] bytes = Encoding.GetEncoding("Big5").GetBytes(word);
+            var bytes = Encoding.GetEncoding("Big5").GetBytes(word);
             if (bytes.Length <= 1) // if there is only one byte, it is ASCII code
-            {
                 return false;
-            }
-            byte byte1 = bytes[0];
-            byte byte2 = bytes[1];
-            if ((byte1 >= 129 && byte1 <= 254) && ((byte2 >= 64 && byte2 <= 126) || (byte2 >= 161 && byte2 <= 254))) //判断是否是Big5编码
-            {
+            var byte1 = bytes[0];
+            var byte2 = bytes[1];
+            if (byte1 >= 129 && byte1 <= 254 && (byte2 >= 64 && byte2 <= 126 || byte2 >= 161 && byte2 <= 254)) //判断是否是Big5编码
                 return true;
-            }
             return false;
         }
 
         /// <summary>
-        /// 判断字符串是否能被(filters)过滤
-        /// strictMatch=true时，是严格过滤模式，src必须完全等于filters中的某一项，才算Match，return true
-        /// strictMatch=false时，是宽松过滤模式，src只要包含filters中的某一项，算Match，return true
+        ///     判断字符串是否能被(filters)过滤
+        ///     strictMatch=true时，是严格过滤模式，src必须完全等于filters中的某一项，才算Match，return true
+        ///     strictMatch=false时，是宽松过滤模式，src只要包含filters中的某一项，算Match，return true
         /// </summary>
         /// <param name="src"></param>
         /// <param name="filters"></param>
@@ -393,34 +353,31 @@ namespace System
             if (filters == null)
                 return false;
             foreach (var filter in filters)
-            {
                 if (strictMatch)
                 {
                     if (src.Equals(filter))
-                    {
                         return true;
-                    }
                 }
                 else
                 {
                     if (src.IndexOf(filter, StringComparison.Ordinal) > -1)
-                    {
                         return true;
-                    }
                 }
-            }
             return false;
         }
 
-        public static byte[] ToBytes(this string src, params char[] separator)
+        /// <summary>
+        ///     将用分隔符分隔ACSII字节的字符串转换成字节数组（去除分隔符）
+        /// </summary>
+        /// <param name="arrayString">用分隔符分隔ACSII字节的字符串</param>
+        /// <param name="separator">分隔符</param>
+        /// <returns>去除分隔符的字符串的字节数组</returns>
+        public static byte[] ToBytes(this string arrayString, params char[] separator)
         {
-            var strs = src.Split(separator);
-            var result = new byte[strs.Length];
-            for (int i = 0; i < strs.Length; i++)
-            {
-                result[i] = Convert.ToByte(Convert.ToChar(strs[i]));
-            }
-            return result;
+            var newStr = arrayString;
+            foreach (var sep in separator)
+                newStr = newStr.Replace(sep.ToString(), "");
+            return Encoding.ASCII.GetBytes(newStr);
         }
     }
 }

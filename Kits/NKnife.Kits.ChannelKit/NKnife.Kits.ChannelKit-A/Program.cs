@@ -15,10 +15,10 @@ namespace NKnife.Kits.ChannelKit
             Console.WriteLine();
             Console.WriteLine("=== Serial Channel Demo. =========================");
             var port = GetSerialPort();
-            Console.WriteLine($"=== 准备开启串口{port}...");
             _serialChannel = new SerialChannel(new SerialConfig(port) {BaudRate = 115200});
             _serialChannel.Open();
             _serialChannel.DataArrived += Serial_DataArrived;
+            Console.WriteLine($"=== 已开启串口{port}");
 
             Send();
             Console.WriteLine("=== Press any key exit. =========================");

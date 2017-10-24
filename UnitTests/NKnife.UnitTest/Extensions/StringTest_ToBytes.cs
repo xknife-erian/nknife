@@ -11,7 +11,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var abcd = "ab";
             var bs = abcd.ToBytes();
-            bs.Should().BeEquivalentTo(97, 98);
+            bs.Should().Equal(97, 98);
         }
 
         [Test]
@@ -19,7 +19,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var abcd = "abcd";
             var bs = abcd.ToBytes();
-            bs.Should().BeEquivalentTo(97, 98, 99, 100);
+            bs.Should().Equal(97, 98, 99, 100);
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var abcd = "a,b,c,d";
             var bs = abcd.ToBytes(',');
-            bs.Should().BeAssignableTo(0x61, 0x62, 0x63, 0x64);
+            bs.Should().Equal(0x61, 0x62, 0x63, 0x64);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var abcd = "a__b__c__d";
             var bs = abcd.ToBytes('_', '_');
-            bs.Should().BeEquivalentTo(97, 98, 99, 100);
+            bs.Should().Equal(97, 98, 99, 100);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace NKnife.UnitTest.Extensions
         {
             var abcd = "a,b_c,d";
             var bs = abcd.ToBytes(',', '_');
-            bs.Should().BeEquivalentTo(97, 98, 99, 100);
+            bs.Should().Equal(97, 98, 99, 100);
         }
     }
 }
