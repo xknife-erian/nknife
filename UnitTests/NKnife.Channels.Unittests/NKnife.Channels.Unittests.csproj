@@ -10,6 +10,7 @@
     <RootNamespace>NKnife.Channels.Unittests</RootNamespace>
     <AssemblyName>NKnife.Channels.Unittests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+	<TestProjectType>UnitTest</TestProjectType>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace NKnife.UnitTest.Extensions
 {
     [TestFixture]
-    public class StringTest
+    public partial class StringTest
     {
         [Test]
         public void TrimZeroTest1()
@@ -79,21 +79,7 @@ namespace NKnife.UnitTest.Extensions
             var act = testString.TrimZero();
             Assert.AreEqual("0", act);
         }
-
-        [Test]
-        public void ToBytesTest1()
-        {
-            var abcd = "abcd";
-            var bs = abcd.ToBytes();
-            bs.Should().BeEquivalentTo(0x61, 0x62, 0x63, 0x64);
-        }
-
-        [Test]
-        public void ToBytesTest2()
-        {
-            var abcd = "a,b,c,d";
-            var bs = abcd.ToBytes(new char[]{','});
-            bs.Should().BeEquivalentTo(0x61, 0x62, 0x63, 0x64);
-        }
     }
+
+
 }

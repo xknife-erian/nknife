@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using NKnife.Converts;
 using NKnife.Utility;
 
 // ReSharper disable once CheckNamespace
@@ -417,7 +418,7 @@ namespace System
             var result = new byte[strs.Length];
             for (int i = 0; i < strs.Length; i++)
             {
-                result[i] = (byte) Convert.ToInt32(strs[i]);
+                result[i] = Convert.ToByte(Convert.ToChar(strs[i]));
             }
             return result;
         }
