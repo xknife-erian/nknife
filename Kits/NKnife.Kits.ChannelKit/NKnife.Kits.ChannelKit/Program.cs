@@ -1,5 +1,6 @@
 ﻿using System;
 using NKnife.Channels.EventParams;
+using NKnife.Channels.Interfaces;
 using NKnife.Channels.Serials;
 
 namespace NKnife.Kits.ChannelKit
@@ -13,13 +14,13 @@ namespace NKnife.Kits.ChannelKit
             SerialUtils.RefreshSerialPorts();
 
             Console.WriteLine();
-            Console.WriteLine("=== Serial Channel Demo. =========================");
+            Console.WriteLine("=== Serial Channel Demo. ==================================================");
             var port = GetSerialPort();
             _serialChannel = new SerialChannel(new SerialConfig(port) {BaudRate = 115200});
             _serialChannel.IsSynchronous = GetSyncModel();
             _serialChannel.Open();
             _serialChannel.DataArrived += Serial_DataArrived;
-            Console.WriteLine($"=== 已开启串口{port}");
+            Console.WriteLine($"=== 已开启串口{port}.  ==================================================");
 
             Send();
             Console.WriteLine("=== Press any key exit. =========================");
@@ -48,7 +49,7 @@ namespace NKnife.Kits.ChannelKit
             var isSend = true;
             while (isSend)
             {
-                Console.WriteLine("-- x.退出发送; +.循环发送的内容; =.仅一条发送的内容");
+                Console.WriteLine("\n-- (x).退出发送; (=).循环发送的内容; (+).仅一条发送的内容");
                 var line = Console.ReadLine();
                 if (line != null)
                 {
@@ -57,18 +58,18 @@ namespace NKnife.Kits.ChannelKit
                         case "x": //退出发送
                             isSend = false;
                             break;
-                        case "+": //循环发送的内容
-                            AddAsk();
+                        case "=": //循环发送的内容
+                            AddQuestion();
                             break;
-                        case "=": //仅一条发送的内容
-                            SendAsk();
+                        case "+": //仅一条发送的内容
+                            SendQuestion();
                             break;
                     }
                 }
             }
         }
 
-        private static void SendAsk()
+        private static void SendQuestion()
         {
             Console.WriteLine("-- 请输入一条需要发送的内容:");
             var line = Console.ReadLine();
@@ -76,10 +77,10 @@ namespace NKnife.Kits.ChannelKit
             var group = new SerialQuestionGroup();
             group.Add(question);
             _serialChannel.UpdateQuestionGroup(group);
-            _serialChannel.AutoSend(null);
+            _serialChannel.AutoSend(Serial_DataSend);
         }
 
-        private static void AddAsk()
+        private static void AddQuestion()
         {
             Console.WriteLine("-- 请输入一条需要发送的内容:");
             var line = Console.ReadLine();
@@ -87,12 +88,19 @@ namespace NKnife.Kits.ChannelKit
             var group = new SerialQuestionGroup();
             group.Add(question);
             _serialChannel.UpdateQuestionGroup(group);
-            _serialChannel.AutoSend(null);
+            _serialChannel.AutoSend(Serial_DataSend);
+        }
+
+        private static void Serial_DataSend(IQuestion<byte[]> question)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($">>> {DateTime.Now:mm:ss,fff} \t {question.Data.ToHexString()}");
         }
 
         private static void Serial_DataArrived(object sender, ChannelAnswerDataEventArgs<byte[]> e)
         {
-            Console.WriteLine($"<<< {DateTime.Now:mm:ss,fff} {e.Answer.Data.ToHexString()}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"<<< {DateTime.Now:mm:ss,fff} \t {e.Answer.Data.ToHexString()}");
         }
 
         private static ushort GetSerialPort()
