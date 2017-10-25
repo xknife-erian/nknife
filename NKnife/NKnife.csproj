@@ -223,6 +223,7 @@
     <Compile Include="Chinese\SpellRandom.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="Extensions\WindowExtension.cs" />
+    <Compile Include="Wrapper\Bit.cs" />
     <Compile Include="Wrapper\FTP\FtpFileListStyle.cs" />
     <Compile Include="Wrapper\FTP\FtpFileStruct.cs" />
     <Compile Include="Wrapper\FTP\FtpDelegates.cs" />

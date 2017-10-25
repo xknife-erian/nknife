@@ -1,10 +1,8 @@
 using System;
-using NKnife.Channels.Channels.Base;
-using NKnife.Channels.Interfaces;
-using NKnife.Channels.Interfaces.Channels;
+using NKnife.Channels.Base;
 using NKnife.Interface;
 
-namespace NKnife.Channels.Channels.Serials
+namespace NKnife.Channels.Serials
 {
     /// <summary>
     /// 描述设备向PC串口返回的交换数据

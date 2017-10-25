@@ -1,6 +1,6 @@
 ﻿using System;
-using NKnife.Channels.Channels.EventParams;
-using NKnife.Channels.Channels.Serials;
+using NKnife.Channels.EventParams;
+using NKnife.Channels.Serials;
 
 namespace NKnife.Kits.ChannelKit
 {

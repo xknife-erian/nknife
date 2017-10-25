@@ -1,8 +1,7 @@
 ﻿using NKnife.Channels.Interfaces;
-using NKnife.Channels.Interfaces.Channels;
 using NKnife.Interface;
 
-namespace NKnife.Channels.Channels.Base
+namespace NKnife.Channels.Base
 {
     /// <summary>
     /// 描述仪器向PC采集端返回的交换数据的基类

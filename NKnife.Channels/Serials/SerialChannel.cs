@@ -2,11 +2,11 @@ using System;
 using System.IO.Ports;
 using System.Threading;
 using Common.Logging;
-using NKnife.Channels.Channels.Base;
-using NKnife.Channels.Channels.EventParams;
-using NKnife.Channels.Interfaces.Channels;
+using NKnife.Channels.Base;
+using NKnife.Channels.EventParams;
+using NKnife.Channels.Interfaces;
 
-namespace NKnife.Channels.Channels.Serials
+namespace NKnife.Channels.Serials
 {
     public class SerialChannel : ChannelBase<byte[]>
     {
@@ -35,6 +35,28 @@ namespace NKnife.Channels.Channels.Serials
         /// 打开串口默认等待的时长。默认1.5秒钟。
         /// </summary>
         public int OpenTimeout { get; set; } = 1500;
+
+        #region Overrides of ChannelBase
+
+        protected override void OnChannelModeChanged(ChannelModeChangedEventArgs e)
+        {
+            if (_SerialPort == null)
+            {
+                base.OnChannelModeChanged(e);
+                return;
+            }
+            if (e.IsSynchronous)
+            {
+                _SerialPort.DataReceived += SyncSerialPortDataReceived;
+                _SerialPort.DataReceived -= AsyncDataReceived;
+            }
+            else
+            {
+                _SerialPort.DataReceived += AsyncDataReceived;
+                _SerialPort.DataReceived -= SyncSerialPortDataReceived;
+            }
+            base.OnChannelModeChanged(e);
+        }
 
         /// <summary>
         ///     打开采集通道
@@ -116,30 +138,6 @@ namespace NKnife.Channels.Channels.Serials
             return IsOpen;
         }
 
-        #region Overrides of ChannelBase
-
-        protected override void OnChannelModeChanged(ChannelModeChangedEventArgs e)
-        {
-            if (_SerialPort == null)
-            {
-                base.OnChannelModeChanged(e);
-                return;
-            }
-            if (e.IsSynchronous)
-            {
-                _SerialPort.DataReceived += SyncSerialPortDataReceived;
-                _SerialPort.DataReceived -= AsyncDataReceived;
-            }
-            else
-            {
-                _SerialPort.DataReceived += AsyncDataReceived;
-                _SerialPort.DataReceived -= SyncSerialPortDataReceived;
-            }
-            base.OnChannelModeChanged(e);
-        }
-
-        #endregion
-
         /// <summary>
         ///     关闭采集通道
         /// </summary>
@@ -220,6 +218,8 @@ namespace NKnife.Channels.Channels.Serials
             _SerialConfig.WriteTotalTimeoutConstant = writeTotalTimeoutConstant;
             _SerialPort.WriteTimeout = writeTotalTimeoutConstant;
         }
+
+        #endregion
 
         #region Sync-SendReceiving
 

@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using NKnife.Channels.Channels.Serials;
+using NKnife.Channels.Serials;
 using NUnit.Framework;
 
 namespace NKnife.Channels.Unittests

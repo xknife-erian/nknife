@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Text;
-using NKnife.Channels.Channels.Enums;
+using NKnife.Channels.Enums;
 
-namespace NKnife.Channels.Channels
+namespace NKnife.Channels
 {
     /// <summary>
     /// 描述一个数据端口，一般是只能打开一次的独占数据端口。比如串口，TCPIP端口等。

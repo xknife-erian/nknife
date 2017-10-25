@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NKnife.Base;
 
-namespace NKnife.Channels.Channels.Serials
+namespace NKnife.Channels.Serials
 {
     public class SerialChannelMap : IDictionary<ushort, Pair<SerialConfig, SerialChannel>>
     {

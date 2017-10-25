@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using NKnife.Channels.Interfaces.Channels;
+using NKnife.Channels.Interfaces;
 
-namespace NKnife.Channels.Channels.Serials
+namespace NKnife.Channels.Serials
 {
     public class SerialQuestionGroup : List<SerialQuestion>, IQuestionGroup<byte[]>
     {

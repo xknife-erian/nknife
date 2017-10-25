@@ -1,4 +1,4 @@
-﻿namespace NKnife.Channels.Interfaces.Channels
+﻿namespace NKnife.Channels.Interfaces
 {
     public interface IChannelConfig
     {

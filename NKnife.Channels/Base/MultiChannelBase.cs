@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NKnife.Channels.Interfaces.Channels;
+using NKnife.Channels.Interfaces;
 
-namespace NKnife.Channels.Channels.Base
+namespace NKnife.Channels.Base
 {
     public abstract class MultiChannelBase<T> : IMultiChannel<T>
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using NKnife.Channels.Channels.EventParams;
-using NKnife.Channels.Interfaces.Channels;
+using NKnife.Channels.EventParams;
+using NKnife.Channels.Interfaces;
 using NKnife.Interface;
 
-namespace NKnife.Channels.Channels.Base
+namespace NKnife.Channels.Base
 {
     public abstract class ChannelBase<T> : IChannel<T>
     {

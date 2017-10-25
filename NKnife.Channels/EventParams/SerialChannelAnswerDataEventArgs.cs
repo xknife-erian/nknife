@@ -1,9 +1,7 @@
-using NKnife.Channels.Channels.Serials;
-using NKnife.Channels.Interfaces;
-using NKnife.Channels.Interfaces.Channels;
+using NKnife.Channels.Serials;
 using NKnife.Interface;
 
-namespace NKnife.Channels.Channels.EventParams
+namespace NKnife.Channels.EventParams
 {
     public class SerialChannelAnswerDataEventArgs : ChannelAnswerDataEventArgs<byte[]>
     {

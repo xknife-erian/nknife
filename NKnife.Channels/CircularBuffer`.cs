@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace NKnife.Channels.Channels
+namespace NKnife.Channels
 {
     /**
         * 缓冲区的可能状态:

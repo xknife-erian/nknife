@@ -1,4 +1,4 @@
-﻿namespace NKnife.Channels.Interfaces.Channels
+﻿namespace NKnife.Channels.Interfaces
 {
     /// <summary>
     ///     一个描述对指定输入数据进行实时处理的算法的接口

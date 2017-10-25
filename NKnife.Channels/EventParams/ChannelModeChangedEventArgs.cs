@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NKnife.Channels.Channels.EventParams
+namespace NKnife.Channels.EventParams
 {
     public class ChannelModeChangedEventArgs : EventArgs
     {

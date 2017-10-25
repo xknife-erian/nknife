@@ -1,8 +1,7 @@
 ﻿using NKnife.Channels.Interfaces;
-using NKnife.Channels.Interfaces.Channels;
 using NKnife.Interface;
 
-namespace NKnife.Channels.Channels.Base
+namespace NKnife.Channels.Base
 {
     public class AnswerBase<T> : IAnswer<T>
     {

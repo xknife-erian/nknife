@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using NKnife.Channels.Channels.EventParams;
+using NKnife.Channels.EventParams;
 using NKnife.Interface;
 
-namespace NKnife.Channels.Interfaces.Channels
+namespace NKnife.Channels.Interfaces
 {
     /// <summary>
     ///     描述一个数据采集通道。该来源可以是某个串口，某个TCPIP端口，某类驱动调用等等。

@@ -1,4 +1,4 @@
-﻿namespace NKnife.Channels.Interfaces.Channels
+﻿namespace NKnife.Channels.Interfaces
 {
     /// <summary>
     /// 本接口描述向一个观察点回答的数据封装

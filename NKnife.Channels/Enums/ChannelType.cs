@@ -1,4 +1,4 @@
-﻿namespace NKnife.Channels.Channels.Enums
+﻿namespace NKnife.Channels.Enums
 {
     public enum ChannelType : short
     {

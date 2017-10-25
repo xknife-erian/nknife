@@ -52,31 +52,32 @@
     <Compile Include="..\NKnife\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Channels\Base\AnswerBase`.cs" />
-    <Compile Include="Channels\Base\ChannelBase`.cs" />
-    <Compile Include="Channels\Base\MultiChannelBase.cs" />
-    <Compile Include="Channels\Base\QuestionBase`.cs" />
-    <Compile Include="Channels\ChannelPort.cs" />
-    <Compile Include="Channels\CircularBuffer`.cs" />
-    <Compile Include="Channels\Enums\ChannelType.cs" />
-    <Compile Include="Channels\EventParams\ChannelAnswerDataEventArgs.cs" />
-    <Compile Include="Channels\EventParams\ChannelModeChangedEventArgs.cs" />
-    <Compile Include="Channels\EventParams\SerialChannelAnswerDataEventArgs.cs" />
-    <Compile Include="Channels\Serials\SerialAnswer.cs" />
-    <Compile Include="Channels\Serials\SerialChannel.cs" />
-    <Compile Include="Channels\Serials\SerialChannelMap.cs" />
-    <Compile Include="Channels\Serials\SerialConfig.cs" />
-    <Compile Include="Channels\Serials\SerialQuestion.cs" />
-    <Compile Include="Channels\Serials\SerialQuestionGroup.cs" />
-    <Compile Include="Channels\Serials\SerialUtils.cs" />
-    <Compile Include="Interfaces\Channels\IAlgorithm.cs" />
-    <Compile Include="Interfaces\Channels\IAnswer.cs" />
-    <Compile Include="Interfaces\Channels\IChannel.cs" />
-    <Compile Include="Interfaces\Channels\IChannelConfig.cs" />
-    <Compile Include="Interfaces\Channels\IMultiChannel.cs" />
-    <Compile Include="Interfaces\Channels\IQuestion.cs" />
-    <Compile Include="Interfaces\Channels\IQuestionGroup.cs" />
-    <Compile Include="Interfaces\Channels\ISwap.cs" />
+    <Compile Include="Base\AnswerBase`.cs" />
+    <Compile Include="Base\ChannelBase`.cs" />
+    <Compile Include="Base\MultiChannelBase.cs" />
+    <Compile Include="Base\QuestionBase`.cs" />
+    <Compile Include="Bytes.cs" />
+    <Compile Include="ChannelPort.cs" />
+    <Compile Include="CircularBuffer`.cs" />
+    <Compile Include="Enums\ChannelType.cs" />
+    <Compile Include="EventParams\ChannelAnswerDataEventArgs.cs" />
+    <Compile Include="EventParams\ChannelModeChangedEventArgs.cs" />
+    <Compile Include="EventParams\SerialChannelAnswerDataEventArgs.cs" />
+    <Compile Include="Serials\SerialAnswer.cs" />
+    <Compile Include="Serials\SerialChannel.cs" />
+    <Compile Include="Serials\SerialChannelMap.cs" />
+    <Compile Include="Serials\SerialConfig.cs" />
+    <Compile Include="Serials\SerialQuestion.cs" />
+    <Compile Include="Serials\SerialQuestionGroup.cs" />
+    <Compile Include="Serials\SerialUtils.cs" />
+    <Compile Include="Interfaces\IAlgorithm.cs" />
+    <Compile Include="Interfaces\IAnswer.cs" />
+    <Compile Include="Interfaces\IChannel.cs" />
+    <Compile Include="Interfaces\IChannelConfig.cs" />
+    <Compile Include="Interfaces\IMultiChannel.cs" />
+    <Compile Include="Interfaces\IQuestion.cs" />
+    <Compile Include="Interfaces\IQuestionGroup.cs" />
+    <Compile Include="Interfaces\ISwap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
