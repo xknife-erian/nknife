@@ -95,12 +95,14 @@ namespace NKnife.Kits.ChannelKit
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($">>> {DateTime.Now:mm:ss,fff} \t {question.Data.ToHexString()}");
+            Console.ResetColor();
         }
 
         private static void Serial_DataArrived(object sender, ChannelAnswerDataEventArgs<byte[]> e)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"<<< {DateTime.Now:mm:ss,fff} \t {e.Answer.Data.ToHexString()}");
+            Console.ResetColor();
         }
 
         private static ushort GetSerialPort()
