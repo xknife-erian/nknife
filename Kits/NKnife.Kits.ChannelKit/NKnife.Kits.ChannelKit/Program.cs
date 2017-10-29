@@ -12,36 +12,39 @@ namespace NKnife.Kits.ChannelKit
         private static void Main(string[] args)
         {
             SerialUtils.RefreshSerialPorts();
-
-            Console.WriteLine();
-            Console.WriteLine("=== Serial Channel Demo. ==================================================");
+                Console.WriteLine();
+            Console.WriteLine($"=== 串口测试. ===========================================================");
             var port = GetSerialPort();
             _serialChannel = new SerialChannel(new SerialConfig(port) {BaudRate = 115200});
             _serialChannel.IsSynchronous = GetSyncModel();
             _serialChannel.Open();
-            _serialChannel.DataArrived += Serial_DataArrived;
+            _serialChannel.DataArrived += Serial_DataAsyncArrived;
             Console.WriteLine($"=== 已开启串口{port}.  ==================================================");
 
             Send();
-            Console.WriteLine("=== Press any key exit. =========================");
+
+            _serialChannel.Close();
+            Console.WriteLine($"=== Press any key exit. ================================================");
             Console.ReadKey();
         }
 
         private static bool GetSyncModel()
         {
-            Console.WriteLine("-- 1.Sync; 2.Async");
+            Console.WriteLine("--> 1.Sync; 2.Async");
             var line = Console.ReadLine();
             switch (line)
             {
-                case "1":
-                    Console.WriteLine("-- 选择同步模式");
-                    return true;
                 case "2":
-                    Console.WriteLine("-- 选择异步模式");
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine("--< 选择异步模式");
+                    Console.ResetColor();
                     return false;
+                default:
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine("--< 选择同步模式");
+                    Console.ResetColor();
+                    return true;
             }
-            Console.WriteLine("-- 选择同步模式");
-            return true;
         }
 
         private static void Send()
@@ -77,18 +80,24 @@ namespace NKnife.Kits.ChannelKit
             var group = new SerialQuestionGroup();
             group.Add(question);
             _serialChannel.UpdateQuestionGroup(group);
-            _serialChannel.AutoSend(Serial_DataSend);
+            if (_serialChannel.IsSynchronous)
+                _serialChannel.SendReceiving(Serial_DataSend, Serial_DataSyncArrived);
+            else
+                _serialChannel.AutoSend(Serial_DataSend);
         }
 
         private static void AddQuestion()
         {
-            Console.WriteLine("-- 请输入一条需要发送的内容:");
+            Console.WriteLine("-- 请输入一条需要循环发送的内容:");
             var line = Console.ReadLine();
-            var question = new SerialQuestion(null, true, 100, line.ToBytes());
+            var question = new SerialQuestion(null, true, 3000, line.ToBytes());
             var group = new SerialQuestionGroup();
             group.Add(question);
             _serialChannel.UpdateQuestionGroup(group);
-            _serialChannel.AutoSend(Serial_DataSend);
+            if (_serialChannel.IsSynchronous)
+                _serialChannel.SendReceiving(Serial_DataSend, Serial_DataSyncArrived);
+            else
+                _serialChannel.AutoSend(Serial_DataSend);
         }
 
         private static void Serial_DataSend(IQuestion<byte[]> question)
@@ -98,7 +107,15 @@ namespace NKnife.Kits.ChannelKit
             Console.ResetColor();
         }
 
-        private static void Serial_DataArrived(object sender, ChannelAnswerDataEventArgs<byte[]> e)
+        private static bool Serial_DataSyncArrived(IAnswer<byte[]> e)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"<<< {DateTime.Now:mm:ss,fff} \t {e.Data.ToHexString()}");
+            Console.ResetColor();
+            return true;
+        }
+
+        private static void Serial_DataAsyncArrived(object sender, ChannelAnswerDataEventArgs<byte[]> e)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"<<< {DateTime.Now:mm:ss,fff} \t {e.Answer.Data.ToHexString()}");

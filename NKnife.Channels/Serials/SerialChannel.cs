@@ -162,7 +162,7 @@ namespace NKnife.Channels.Serials
                         _SerialPort.DataReceived -= AsyncDataReceived;
                     if (_AutoSendThread != null && _AutoSendThread.IsAlive)
                         _AutoSendThread.Abort();
-                    _StatusChecker.IsStopFlag = true;
+                    _AsyncStatusChecker.IsStopFlag = true;
                     _SerialPort.Close();
                     _logger.Info($"通讯:成功关闭串口:{_SerialPort.PortName}。");
                 }
@@ -224,6 +224,7 @@ namespace NKnife.Channels.Serials
         #region Sync-SendReceiving
 
         private readonly AutoResetEvent _SyncReset = new AutoResetEvent(false);
+        private SyncStatusChecker _SyncStatusChecker = new SyncStatusChecker();
         /// <summary>
         /// 当同步读取时的Buffer
         /// </summary>
@@ -259,23 +260,39 @@ namespace NKnife.Channels.Serials
 
         protected void SendReceiving(object param)
         {
-            var w = (SyncSendReceivingParams) param;
+            var autoEvent = new AutoResetEvent(false);
+            _SyncStatusChecker.QuestionGroup = _QuestionGroup;
+            _SyncStatusChecker.SerialPort = _SerialPort;
+            _SyncStatusChecker.IsStopFlag = false;
+            _SyncStatusChecker.Params = param as SyncSendReceivingParams;
+            var autoSendTimer = new Timer(_SyncStatusChecker.Run, autoEvent, 0, TalkTotalTimeout);
+            _logger.Info("异步自动发送数据线程开始..");
+            autoEvent.WaitOne();
+            autoSendTimer.Dispose();
+            _logger.Info("异步自动发送数据线程中止..");
+
+            SendReceiving((SyncSendReceivingParams) param);
+        }
+
+        protected void SendReceiving(SyncSendReceivingParams param)
+        {
             try
             {
-                while (_QuestionGroup.Count > 0)//只要指令集合有指令就一直持续循环
+                while (_QuestionGroup.Count > 0) //只要指令集合有指令就一直持续循环
                 {
                     var question = _QuestionGroup.PeekOrDequeue();
                     _SerialPort.Write(question.Data, 0, question.Data.Length);
-                    _OnSyncReceive = true;//标记
-                    w.SendAction.Invoke(question);
+                    _OnSyncReceive = true; //标记
+                    param.SendAction.Invoke(question);
                     var complate = false;
                     while (!complate)
                     {
+                        Console.Write("/");
                         // 发出后等待
-                        _OnSyncReceive = true;//标记
-                        var timeout = (int)TalkTotalTimeout;
+                        _OnSyncReceive = true; //标记
+                        var timeout = (int) TalkTotalTimeout;
                         if (question.LoopInterval > 0)
-                            timeout = question.LoopInterval;//如果这条指定设置了等待时长
+                            timeout = question.LoopInterval; //如果这条指定设置了等待时长
                         // 这个等待是同步时每次对话的时间
                         if (_SyncReset.WaitOne(timeout)) //监听从事件收到返回的数据
                         {
@@ -286,7 +303,7 @@ namespace NKnife.Channels.Serials
                                 _SyncBuffer = new byte[0];
                                 //将读取到的数据抛出进行解析，如果认为已完成本次询问进入下一次对话。
                                 //如果未完成本次询问再次进入等待回答(读取)状态。
-                                complate = w.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
+                                complate = param.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
                             }
                         }
                     }
@@ -311,7 +328,7 @@ namespace NKnife.Channels.Serials
         {
             if (!_OnSyncReceive)
             {
-                // 不是要对话，即发起询问后的等待期内，这时候得到的数据一概丢弃。
+                // 因为是对话模式，在非 OnSyncReceive 期内，这时候得到的数据一概丢弃。
                 _SerialPort.DiscardInBuffer();
                 return;
             }
@@ -337,13 +354,45 @@ namespace NKnife.Channels.Serials
             }
         }
 
+        protected class SyncStatusChecker
+        {
+            public SerialQuestionGroup QuestionGroup { get; set; }
+            public SerialPort SerialPort { get; set; }
+            public bool IsStopFlag { private get; set; }
+            public SyncSendReceivingParams Params { get; set; }
+
+            public void Run(object stateInfo)//依靠Timer在指定的时间间隔不断的进行循环
+            {
+                var autoEvent = (AutoResetEvent)stateInfo;
+                try
+                {
+                    if (QuestionGroup == null || QuestionGroup.Count <= 0)
+                    {
+                        autoEvent.Set();
+                        return;
+                    }
+                    var question = QuestionGroup.PeekOrDequeue();
+                    Params?.SendAction.Invoke(question);
+                    SerialPort.Write(question.Data, 0, question.Data.Length);
+                    if (IsStopFlag)
+                    {
+                        autoEvent.Set();
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Warn($"串口发送时(异步)底层异常:{e.Message}", e);
+                }
+            }
+        }
+
         #endregion
 
         #region Async-SendReceiving
 
         private Thread _AutoSendThread;
 
-        private readonly StatusChecker _StatusChecker = new StatusChecker();
+        private readonly AsyncStatusChecker _AsyncStatusChecker = new AsyncStatusChecker();
 
         protected virtual void AsyncDataReceived(object sender, SerialDataReceivedEventArgs eventArgs)
         {
@@ -396,19 +445,19 @@ namespace NKnife.Channels.Serials
 
         protected void AutoSendThread(object parameter)
         {
-            _StatusChecker.QuestionGroup = _QuestionGroup;
-            _StatusChecker.SerialPort = _SerialPort;
-            _StatusChecker.IsStopFlag = false;
-            _StatusChecker.SendAction = parameter as Action<IQuestion<byte[]>>;
             var autoEvent = new AutoResetEvent(false);
-            var autoSendTimer = new Timer(_StatusChecker.Run, autoEvent, 0, TalkTotalTimeout);
+            _AsyncStatusChecker.QuestionGroup = _QuestionGroup;
+            _AsyncStatusChecker.SerialPort = _SerialPort;
+            _AsyncStatusChecker.IsStopFlag = false;
+            _AsyncStatusChecker.SendAction = parameter as Action<IQuestion<byte[]>>;
+            var autoSendTimer = new Timer(_AsyncStatusChecker.Run, autoEvent, 0, TalkTotalTimeout);
             _logger.Info("异步自动发送数据线程开始..");
             autoEvent.WaitOne();
             autoSendTimer.Dispose();
             _logger.Info("异步自动发送数据线程中止..");
         }
 
-        protected class StatusChecker
+        protected class AsyncStatusChecker
         {
             public SerialQuestionGroup QuestionGroup { get; set; }
             public SerialPort SerialPort { get; set; }
@@ -445,7 +494,7 @@ namespace NKnife.Channels.Serials
         /// </summary>
         public override void Break()
         {
-            _StatusChecker.IsStopFlag = true;
+            _AsyncStatusChecker.IsStopFlag = true;
         }
 
         #endregion
