@@ -266,6 +266,8 @@ namespace NKnife.Channels.Serials
             _SyncStatusChecker.IsStopFlag = false;
             _SyncStatusChecker.Params = param as SyncSendReceivingParams;
             var autoSendTimer = new Timer(_SyncStatusChecker.Run, autoEvent, 0, TalkTotalTimeout);
+            //autoSendTimer.Change(3, 3);
+            //https://technet.microsoft.com/zh-CN/library/317hx6fa(v=vs.95)
             _logger.Info("异步自动发送数据线程开始..");
             autoEvent.WaitOne();
             autoSendTimer.Dispose();
@@ -374,6 +376,10 @@ namespace NKnife.Channels.Serials
                     var question = QuestionGroup.PeekOrDequeue();
                     Params?.SendAction.Invoke(question);
                     SerialPort.Write(question.Data, 0, question.Data.Length);
+
+
+
+
                     if (IsStopFlag)
                     {
                         autoEvent.Set();
