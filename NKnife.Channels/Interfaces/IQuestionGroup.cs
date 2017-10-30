@@ -7,5 +7,6 @@ namespace NKnife.Channels.Interfaces
     /// </summary>
     public interface IQuestionGroup<T> : ICollection<IQuestion<T>>
     {
+        int GetMaxTimeout();
     }
 }

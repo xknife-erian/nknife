@@ -13,19 +13,9 @@ namespace NKnife.Channels.Interfaces
         /// </summary>
         T Data { get; set; }
 
-//        /// <summary>
-//        ///     该问询流向的通道
-//        /// </summary>
-//        IChannel<T> Channel { get; }
-
         /// <summary>
         ///     被问询的设备
         /// </summary>
         IId Instrument { get; }
-
-        /// <summary>
-        ///     被问询的设备可能工作于不同的子对象,子工作
-        /// </summary>
-        //IId Target { get; }
     }
 }

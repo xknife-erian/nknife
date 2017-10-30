@@ -31,6 +31,11 @@ namespace NKnife.Channels.Base
         /// </summary>
         public int LoopInterval { get; set; }
 
+        public int GetTimeout()
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// 本次交换的数据
         /// </summary>

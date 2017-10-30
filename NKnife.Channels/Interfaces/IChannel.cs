@@ -22,11 +22,6 @@ namespace NKnife.Channels.Interfaces
         List<IId> Targets { get; }
 
         /// <summary>
-        ///     描述一次对话(PC采集端询问+被采集设备回答)的超时时长。这个时长没有严格的忽略掉通道的写超时与读超时的。
-        /// </summary>
-        uint TalkTotalTimeout { get; set; }
-
-        /// <summary>
         ///     通道是否打开
         /// </summary>
         bool IsOpen { get; }

@@ -29,11 +29,6 @@ namespace NKnife.Channels.Base
             }
         }
 
-        /// <summary>
-        ///     描述一次对话(PC采集端询问+设备回答)的超时时长。这个时长没有严格的忽略掉通道的写超时与读超时(PC的计时精度不足，可以忽略)。
-        /// </summary>
-        public uint TalkTotalTimeout { get; set; } = 1000;
-
         public bool IsOpen { get; protected set; } = false;
 
         /// <summary>

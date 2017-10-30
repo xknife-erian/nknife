@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NKnife.Channels.Interfaces;
 
@@ -142,5 +143,17 @@ namespace NKnife.Channels.Serials
         bool ICollection<IQuestion<byte[]>>.IsReadOnly => ((ICollection<IQuestion<byte[]>>) this).IsReadOnly;
 
         #endregion
+
+        public int GetMaxTimeout()
+        {
+            int max = 0;
+            foreach (var question in this)
+            {
+                var timeout = question.GetTimeout();
+                if (timeout > max)
+                    max = timeout;
+            }
+            return max;
+        }
     }
 }

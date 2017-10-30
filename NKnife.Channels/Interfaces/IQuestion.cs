@@ -14,5 +14,7 @@
         /// 当循环时的间隔
         /// </summary>
         int LoopInterval { get; set; }
+
+        int GetTimeout();
     }
 }
