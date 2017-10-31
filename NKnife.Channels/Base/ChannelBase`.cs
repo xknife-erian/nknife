@@ -65,7 +65,7 @@ namespace NKnife.Channels.Base
         /// </summary>
         /// <param name="sendAction">当发送完成时</param>
         /// <param name="receivedFunc">当采集到数据(返回的数据)的处理方法,当返回true时，表示接收数据是完整的，返回flase时，表示接收数据不完整，还需要继续接收</param>
-        public abstract void SendReceiving(Action<IQuestion<T>> sendAction, Func<IAnswer<T>, bool> receivedFunc);
+        public abstract void SendReceiver(Action<IQuestion<T>> sendAction, Func<IAnswer<T>, bool> receivedFunc);
 
         /// <summary>
         ///     自动发送数据

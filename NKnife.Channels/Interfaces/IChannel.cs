@@ -56,7 +56,7 @@ namespace NKnife.Channels.Interfaces
         /// <param name="sendAction">当发送完成时</param>
         /// <param name="onReceived">当采集到数据(返回的数据)的处理方法,当返回true时，表示接收数据是完整的，返回flase时，表示接收数据不完整，还需要继续接收</param>
         /// <returns>是否采集到数据</returns>
-        void SendReceiving(Action<IQuestion<T>> sendAction, Func<IAnswer<T>, bool> onReceived);
+        void SendReceiver(Action<IQuestion<T>> sendAction, Func<IAnswer<T>, bool> onReceived);
 
         /// <summary>
         ///     自动发送数据并同步等待数据返回
@@ -64,7 +64,7 @@ namespace NKnife.Channels.Interfaces
         void AutoSend(Action<IQuestion<T>> sendAction);
 
         /// <summary>
-        ///     当自动发送模式时，中断正在不断进行的自动模式
+        ///     中断正在进行的发送接线过程，无论是异步与同步。
         /// </summary>
         void Break();
 

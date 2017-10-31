@@ -49,5 +49,14 @@ namespace NKnife.Channels.Serials
         #endregion
 
         #endregion
+
+        #region Overrides of QuestionBase<byte[]>
+
+        /// <summary>
+        /// 本次询问的超时时长
+        /// </summary>
+        public override int Timeout { get; set; }
+
+        #endregion
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NKnife.Base;
 using NKnife.Channels.Interfaces;
 
 namespace NKnife.Channels.Serials
@@ -144,16 +145,24 @@ namespace NKnife.Channels.Serials
 
         #endregion
 
+        /// <summary>
+        /// 返回本组询问中最长的超时
+        /// </summary>
         public int GetMaxTimeout()
         {
             int max = 0;
             foreach (var question in this)
             {
-                var timeout = question.GetTimeout();
+                var timeout = question.Timeout;
                 if (timeout > max)
                     max = timeout;
             }
             return max;
         }
+
+        /// <summary>
+        /// 返回本组询问中第一个询问的超时与循环周期
+        /// </summary>
+        public IQuestion<byte[]> First => this[0];
     }
 }

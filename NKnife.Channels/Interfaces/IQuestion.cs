@@ -15,6 +15,9 @@
         /// </summary>
         int LoopInterval { get; set; }
 
-        int GetTimeout();
+        /// <summary>
+        /// 本次询问的超时时长
+        /// </summary>
+        int Timeout { get; set; }
     }
 }

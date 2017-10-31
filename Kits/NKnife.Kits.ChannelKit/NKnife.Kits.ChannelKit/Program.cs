@@ -81,7 +81,7 @@ namespace NKnife.Kits.ChannelKit
             group.Add(question);
             _serialChannel.UpdateQuestionGroup(group);
             if (_serialChannel.IsSynchronous)
-                _serialChannel.SendReceiving(Serial_DataSend, Serial_DataSyncArrived);
+                _serialChannel.SendReceiver(Serial_DataSend, Serial_DataSyncArrived);
             else
                 _serialChannel.AutoSend(Serial_DataSend);
         }
@@ -95,7 +95,7 @@ namespace NKnife.Kits.ChannelKit
             group.Add(question);
             _serialChannel.UpdateQuestionGroup(group);
             if (_serialChannel.IsSynchronous)
-                _serialChannel.SendReceiving(Serial_DataSend, Serial_DataSyncArrived);
+                _serialChannel.SendReceiver(Serial_DataSend, Serial_DataSyncArrived);
             else
                 _serialChannel.AutoSend(Serial_DataSend);
         }

@@ -8,7 +8,6 @@ namespace NKnife.Channels.Base
     /// </summary>
     public abstract class QuestionBase<T> : IQuestion<T>
     {
-        //protected QuestionBase(IChannel<T> channel, IId instrument, IId target, bool isLoop, T data)
         protected QuestionBase(IId instrument, bool isLoop, int loopInterval, T data)
         {
             //Channel = channel;
@@ -31,20 +30,15 @@ namespace NKnife.Channels.Base
         /// </summary>
         public int LoopInterval { get; set; }
 
-        public int GetTimeout()
-        {
-            throw new System.NotImplementedException();
-        }
+        /// <summary>
+        /// 本次询问的超时时长
+        /// </summary>
+        public abstract int Timeout { get; set; }
 
         /// <summary>
         /// 本次交换的数据
         /// </summary>
         public T Data { get; set; }
-
-        /// <summary>
-        /// 数据采集通道
-        /// </summary>
-        //public IChannel<T> Channel { get; }
 
         /// <summary>
         ///     被问询的设备

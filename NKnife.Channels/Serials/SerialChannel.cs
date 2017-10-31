@@ -193,7 +193,7 @@ namespace NKnife.Channels.Serials
         public override void UpdateQuestionGroup(IQuestionGroup<byte[]> questionGroup)
         {
             if (!(questionGroup is SerialQuestionGroup))
-                throw new ArgumentException(nameof(questionGroup), $"{nameof(questionGroup)} need is {(typeof (SerialQuestionGroup)).Name}");
+                throw new ArgumentException(nameof(questionGroup), $"{nameof(questionGroup)} need is {(typeof(SerialQuestionGroup)).Name}");
             UpdateQuestionGroup((SerialQuestionGroup) questionGroup);
         }
 
@@ -221,33 +221,32 @@ namespace NKnife.Channels.Serials
 
         #endregion
 
-        #region Sync-SendReceiving
+        #region Sync-SendReceiver
 
-        private readonly AutoResetEvent _SyncMethodWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _SyncLoopTimerWaiter = new AutoResetEvent(false);
+        private readonly AutoResetEvent _SyncReceiveWaiter = new AutoResetEvent(false);
+
         private bool _OnSyncSent = false;
         private Timer _LoopTimer;
+
         /// <summary>
         /// 当同步读取时的Buffer
         /// </summary>
-        private byte[] _SyncBuffer = new byte[0]; 
+        private byte[] _SyncBuffer = new byte[0];
 
-        protected class SyncMethodParams
+        protected class TalkInfo
         {
-            public SyncMethodParams(Action<IQuestion<byte[]>> sendAction, Func<AnswerBase<byte[]>, bool> receivedFunc)
+            public TalkInfo(Action<IQuestion<byte[]>> sendAction, Func<AnswerBase<byte[]>, bool> receivedFunc)
             {
                 SendAction = sendAction;
                 ReceivedFunc = receivedFunc;
             }
-
-            public bool IsStopFlag { get; set; }
 
             public SerialQuestionGroup QuestionGroup { get; set; }
             public SerialPort SerialPort { get; set; }
 
             public Action<IQuestion<byte[]>> SendAction { get; set; }
             public Func<AnswerBase<byte[]>, bool> ReceivedFunc { get; set; }
-
-            public AutoResetEvent TimerWaiter { get; set; }
         }
 
         /// <summary>
@@ -256,94 +255,82 @@ namespace NKnife.Channels.Serials
         /// <param name="sendAction">当发送完成时</param>
         /// <param name="receivedFunc">当采集到数据(返回的数据)的处理方法。当返回true时，表示接收数据是完整的；返回flase时，表示接收数据不完整，还需要继续接收。</param>
         /// <returns>是否采集到数据</returns>
-        public override void SendReceiving(Action<IQuestion<byte[]>> sendAction, Func<IAnswer<byte[]>, bool> receivedFunc)
+        public override void SendReceiver(Action<IQuestion<byte[]>> sendAction, Func<IAnswer<byte[]>, bool> receivedFunc)
         {
-            ThreadPool.QueueUserWorkItem(SendReceiving, new SyncMethodParams(sendAction, receivedFunc));
+            ThreadPool.QueueUserWorkItem(StartSendTimer, new TalkInfo(sendAction, receivedFunc));
 #if DEBUG
             ThreadPool.GetAvailableThreads(out int a, out int b);
             _logger.Trace($"WorkerThreads: {a}, CompletionPortThreads: {b}");
 #endif
         }
 
-        protected void SendReceiving(object param)
+        protected void StartSendTimer(object param)
         {
-            var timerWaiter = new AutoResetEvent(false);
-            var methodParams = (SyncMethodParams)param;
-            methodParams.QuestionGroup = _QuestionGroup;
-            methodParams.SerialPort = _SerialPort;
-            methodParams.IsStopFlag = false;
-            methodParams.TimerWaiter = timerWaiter;
-
-            _LoopTimer = new Timer(SyncMethodRun, methodParams, 0, _QuestionGroup.GetMaxTimeout());
-            _logger.Info("同步自动发送数据线程开始..");
-            timerWaiter.WaitOne();
-            _LoopTimer.Dispose();
-            _logger.Info("同步自动发送数据线程中止..");
+            if (_QuestionGroup != null && _QuestionGroup.Count > 0)
+            {
+                var talkinfo = (TalkInfo) param;
+                talkinfo.QuestionGroup = _QuestionGroup;
+                talkinfo.SerialPort = _SerialPort;
+                //先设置为最大间隔
+                _LoopTimer = new Timer(SyncMethodRun, talkinfo, 0, _QuestionGroup.First.LoopInterval);
+                _logger.Info("同步自动发送数据线程开始..");
+                _SyncLoopTimerWaiter.WaitOne();//当QuestionGroup中有需要不断循环的询问时，进程将阻塞在此，直到收到信号
+                _LoopTimer.Dispose();
+                _logger.Info("同步自动发送数据线程中止..");
+            }
+            else
+            {
+                _logger.Info("SendReceiver无待发送的数据");
+            }
         }
 
-        public void SyncMethodRun(object stateInfo)//依靠Timer在指定的时间间隔不断的进行循环
+        public void SyncMethodRun(object param) //依靠Timer在指定的时间间隔不断的进行循环
         {
-            var methodParams = (SyncMethodParams)stateInfo;
+            var methodParams = (TalkInfo) param;
             if (methodParams == null)
                 return;
+            if (_QuestionGroup.Count <= 0)//所有询问都被消费完毕
+            {
+                _SyncLoopTimerWaiter.Set();
+                return;
+            }
+
+            var complate = false;//是否读取到了完整的数据，即这次对话是否完成
+            var question = _QuestionGroup.PeekOrDequeue();
             try
             {
-                while (methodParams.IsStopFlag)
+                methodParams.SendAction.Invoke(question);//回调执行前方法
+
+                _OnSyncSent = true; //即将发出前置标记，以保证可读取数据
+                _SerialPort.Write(question.Data, 0, question.Data.Length);
+
+                while (!complate)
                 {
-                    if (_QuestionGroup == null || _QuestionGroup.Count <= 0)
-                    {
-                        methodParams.TimerWaiter.Set();
-                        return;
-                    }
-                    var question = _QuestionGroup.PeekOrDequeue();
-                    var timeout = question.GetTimeout();
-                    _LoopTimer.Change(0, question.LoopInterval); //更替本次Timer的等待期限为本条question的周期设置
-
-                    methodParams.SendAction.Invoke(question);
+                    Console.Write("/");
+                    // 发出后等待
                     _OnSyncSent = true; //标记
-                    _SerialPort.Write(question.Data, 0, question.Data.Length);
-
-                    try
+                    // 这个等待是同步时每次对话的时间
+                    if (_SyncReceiveWaiter.WaitOne(question.Timeout)) //监听从事件收到返回的数据
                     {
-                        var complate = false;
-                        while (!complate)
+                        if (_SyncBuffer.Length > 0)
                         {
-                            Console.Write("/");
-                            // 发出后等待
-                            _OnSyncSent = true; //标记
-                            // 这个等待是同步时每次对话的时间
-                            if (_SyncMethodWaiter.WaitOne(question.GetTimeout())) //监听从事件收到返回的数据
-                            {
-                                if (_SyncBuffer.Length > 0)
-                                {
-                                    var currBuffer = new byte[_SyncBuffer.Length];
-                                    Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
-                                    _SyncBuffer = new byte[0];
-                                    //将读取到的数据抛出进行解析，如果认为已完成本次询问进入下一次对话。
-                                    //如果未完成本次询问再次进入等待回答(读取)状态。
-                                    complate = methodParams.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
-                                }
-                            }
+                            var currBuffer = new byte[_SyncBuffer.Length];
+                            Buffer.BlockCopy(_SyncBuffer, 0, currBuffer, 0, _SyncBuffer.Length);
+                            _SyncBuffer = new byte[0];
+                            //将读取到的数据抛出进行解析，如果认为已完成本次询问进入下一次对话。
+                            //如果未完成本次询问再次进入等待回答(读取)状态。
+                            complate = methodParams.ReceivedFunc.Invoke(new SerialAnswer(question.Instrument, currBuffer));
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.Warn($"串口发送与接收时底层异常:{e.Message}", e);
-                    }
-                    finally
-                    {
-                        _OnSyncSent = false;
-                    }
-
-                    if (methodParams.IsStopFlag)
-                    {
-                        methodParams.TimerWaiter.Set();
                     }
                 }
             }
             catch (Exception e)
             {
-                _logger.Warn($"串口发送时(异步)底层异常:{e.Message}", e);
+                _logger.Warn($"串口发送与接收时底层异常:{e.Message}", e);
+            }
+            finally
+            {
+                _OnSyncSent = false;
             }
         }
 
@@ -378,13 +365,13 @@ namespace NKnife.Channels.Serials
             finally
             {
                 _OnSyncSent = false;
-                _SyncMethodWaiter.Set(); //通知SendReceiving函数继续
+                _SyncReceiveWaiter.Set(); //通知SendReceiving函数继续
             }
         }
 
         #endregion
 
-        #region Async-SendReceiving
+        #region Async-StartSendTimer
 
         private Thread _AutoSendThread;
 
@@ -460,9 +447,9 @@ namespace NKnife.Channels.Serials
             public bool IsStopFlag { private get; set; }
             public Action<IQuestion<byte[]>> SendAction { get; set; }
 
-            public void Run(object stateInfo)//依靠Timer在指定的时间间隔不断的进行循环
+            public void Run(object stateInfo) //依靠Timer在指定的时间间隔不断的进行循环
             {
-                var autoEvent = (AutoResetEvent)stateInfo;
+                var autoEvent = (AutoResetEvent) stateInfo;
                 try
                 {
                     if (QuestionGroup == null || QuestionGroup.Count <= 0)
@@ -485,15 +472,15 @@ namespace NKnife.Channels.Serials
             }
         }
 
+        #endregion
+
         /// <summary>
-        ///     当自动发送模式时，中断正在不断进行的自动模式
+        ///     中断正在进行的发送接线过程，无论是异步与同步。
         /// </summary>
         public override void Break()
         {
             _AsyncStatusChecker.IsStopFlag = true;
         }
-
-        #endregion
 
         #endregion
     }
