@@ -81,6 +81,12 @@
     <Compile Include="Forms\ChineseCharUseFrequencyDockView.Designer.cs">
       <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ThreadTimerTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ThreadTimerTestForm.Designer.cs">
+      <DependentUpon>ThreadTimerTestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="LoggingDockView.cs">
       <SubType>Form</SubType>
@@ -98,6 +104,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\ChineseCharUseFrequencyDockView.resx">
       <DependentUpon>ChineseCharUseFrequencyDockView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ThreadTimerTestForm.resx">
+      <DependentUpon>ThreadTimerTestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoggingDockView.resx">
       <DependentUpon>LoggingDockView.cs</DependentUpon>

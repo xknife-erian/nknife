@@ -43,10 +43,20 @@ namespace NKnife.Kits.StarterKit
                 var form = DI.Get<ChineseCharUseFrequencyDockView>();
                 form.Show(_DockPanel, DockState.Document);
             };
+            _ThreadTimerToolStripMenuItem.Click += (sender, args) =>
+            {
+                var form = new ThreadTimerTestForm();
+                form.Show(_DockPanel, DockState.Document);
+            };
         }
 
         public class CurrentAbout : About
         {
+        }
+
+        private void _ThreadTimerToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+
         }
     }
 }
