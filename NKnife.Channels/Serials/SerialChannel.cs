@@ -23,12 +23,6 @@ namespace NKnife.Channels.Serials
             _SerialConfig = serialConfig;
         }
 
-        protected virtual void SerialPortErrorReceived(object sender, SerialErrorReceivedEventArgs e)
-        {
-            _logger.Warn($"SerialPortErrorReceived:{e.EventType}");
-            _SerialPort.DiscardInBuffer();
-        }
-
         #region Overrides of ChannelBase
 
         /// <summary>
@@ -184,6 +178,12 @@ namespace NKnife.Channels.Serials
             return true;
         }
 
+        protected virtual void SerialPortErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        {
+            _logger.Warn($"SerialPortErrorReceived:{e.EventType}");
+            _SerialPort.DiscardInBuffer();
+        }
+
         private SerialQuestionGroup _QuestionGroup;
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace NKnife.Channels.Serials
             }
         }
 
-        public void SyncMethodRun(object param) //依靠Timer在指定的时间间隔不断的进行循环
+        public async void SyncMethodRun(object param) //依靠Timer在指定的时间间隔不断的进行循环
         {
             var methodParams = (TalkInfo) param;
             if (methodParams == null)
