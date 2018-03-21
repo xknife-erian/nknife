@@ -284,11 +284,13 @@ namespace NKnife.Channels.Serials
             }
         }
 
-        public async void SyncMethodRun(object param) //依靠Timer在指定的时间间隔不断的进行循环
+        protected void SyncMethodRun(object param) //依靠Timer在指定的时间间隔不断的进行循环
         {
             var methodParams = (TalkInfo) param;
             if (methodParams == null)
+            {
                 return;
+            }
             if (_QuestionGroup.Count <= 0)//所有询问都被消费完毕
             {
                 _SyncLoopTimerWaiter.Set();
