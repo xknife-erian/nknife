@@ -31,11 +31,11 @@ namespace NKnife.DataLite.UnitTest
 
             // 有null值传入
             Action action = () => new Page<Meter>(null, list, 15);
-            //action.ShouldThrow<ArgumentNullException>().Where(e => e.Message.Contains("页请求不能为空"));
+            action.Should().Throw<ArgumentNullException>().Where(e => e.Message.Contains("页请求不能为空"));
 
             pageable = new Pageable<Meter>(0, 15, comparerMock.Object, _expression);
             action = () => new Page<Meter>(pageable, null, 15);
-            //action.ShouldThrow<ArgumentNullException>().Where(e => e.Message.Contains("页项目集合不能为空"));
+            action.Should().Throw<ArgumentNullException>().Where(e => e.Message.Contains("页项目集合不能为空"));
 
             // 对构造函数进行测试。尤其是Total计算进行测试。
 

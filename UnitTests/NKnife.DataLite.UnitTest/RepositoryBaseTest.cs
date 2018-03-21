@@ -18,14 +18,14 @@ namespace NKnife.DataLite.UnitTest
         public void RepositoryDirectoryTest1()
         {
             Action action = () => new CompanyRepository(" ");
-            //action.ShouldThrow<DatabaseFileInvalidOperationException>().Where(e => e.Message.Contains("数据库文件路径不能为空"));
+            action.Should().Throw<DatabaseFileInvalidOperationException>().Where(e => e.Message.Contains("数据库文件路径不能为空"));
         }
 
         [Test]
         public void RepositoryDirectoryTest2()
         {
             Action action = () => new CompanyRepository(string.Empty);
-            //action.ShouldThrow<DatabaseFileInvalidOperationException>().Where(e => e.Message.Contains("数据库文件路径不能为空"));
+            action.Should().Throw<DatabaseFileInvalidOperationException>().Where(e => e.Message.Contains("数据库文件路径不能为空"));
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace NKnife.DataLite.UnitTest
         {
             var dir = @"****";
             Action action = () => new CompanyRepository(dir);
-            //action.ShouldThrow<DatabaseFileInvalidOperationException>().Where(e => e.Message.Contains("目录无效"));
+            action.Should().Throw<DatabaseFileInvalidOperationException>().Where(e => e.Message.Contains("目录无效"));
         }
 
         [Test]
