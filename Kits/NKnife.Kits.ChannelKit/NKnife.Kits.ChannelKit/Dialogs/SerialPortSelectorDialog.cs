@@ -10,10 +10,12 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             InitializeComponent();
 
             _ListView.Items.Clear();
+            var i = 1;
             foreach (var p in SerialUtils.LocalSerialPorts)
             {
-                var listitem = new ListViewItem(new[] {"", "", p.Key, p.Value});
+                var listitem = new ListViewItem(new[] {i.ToString(), p.Key, p.Value});
                 _ListView.Items.Add(listitem);
+                i++;
             }
 
             _AcceptButton.Click += (sender, args) =>
@@ -21,7 +23,7 @@ namespace NKnife.Kits.ChannelKit.Dialogs
                 if (_ListView.SelectedItems.Count > 0)
                 {
                     var item = _ListView.SelectedItems[0];
-                    var port = item.SubItems[2].Text.ToUpper().Trim().TrimStart('C', 'O', 'M');
+                    var port = item.SubItems[1].Text.ToUpper().Trim().TrimStart('C', 'O', 'M');
                     ushort p = 0;
                     ushort.TryParse(port, out p);
                     SerialPort = p;
@@ -39,6 +41,6 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             };
         }
 
-        public ushort SerialPort { get; private set; }
+        public ushort SerialPort { get; private set; } = 1;
     }
 }

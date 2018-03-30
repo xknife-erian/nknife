@@ -10,10 +10,6 @@ namespace NKnife.Channels.Serials
             Port = port;
         }
 
-        private SerialConfig()
-        {
-        }
-
         public ushort Port { get; }
         public int BaudRate { get; set; } = 9600;
         public int DataBits { get; set; } = 8;

@@ -1,16 +1,16 @@
-﻿namespace NKnife.Kits.ChannelKit.Controls
+﻿namespace NKnife.Kits.ChannelKit.Dialogs
 {
-    sealed partial class QuestionsEditorPanel
+    partial class QuestionsEditorDialog
     {
-        /// <summary> 
-        /// 必需的设计器变量。
+        /// <summary>
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// 清理所有正在使用的资源。
+        /// <summary>
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,15 +20,16 @@
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Windows Form Designer generated code
 
-        /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this._AcceptButton = new System.Windows.Forms.Button();
+            this._CancelButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this._IsHexDisplayCheckBox = new System.Windows.Forms.CheckBox();
             this._QuestionTabControl = new System.Windows.Forms.TabControl();
@@ -42,7 +43,6 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this._UserPage = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this._QuestionTabControl.SuspendLayout();
             this._SinglePage.SuspendLayout();
@@ -51,14 +51,31 @@
             this._UserPage.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // _AcceptButton
             // 
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(364, 221);
-            this.panel1.TabIndex = 0;
+            this._AcceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._AcceptButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this._AcceptButton.Location = new System.Drawing.Point(197, 229);
+            this._AcceptButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this._AcceptButton.Name = "_AcceptButton";
+            this._AcceptButton.Size = new System.Drawing.Size(102, 32);
+            this._AcceptButton.TabIndex = 4;
+            this._AcceptButton.Text = "确定(&A)";
+            this._AcceptButton.UseVisualStyleBackColor = true;
+            this._AcceptButton.Click += new System.EventHandler(this._AcceptButton_Click);
+            // 
+            // _CancelButton
+            // 
+            this._CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this._CancelButton.Location = new System.Drawing.Point(308, 229);
+            this._CancelButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this._CancelButton.Name = "_CancelButton";
+            this._CancelButton.Size = new System.Drawing.Size(102, 32);
+            this._CancelButton.TabIndex = 3;
+            this._CancelButton.Text = "取消(&C)";
+            this._CancelButton.UseVisualStyleBackColor = true;
+            this._CancelButton.Click += new System.EventHandler(this._CancelButton_Click);
             // 
             // groupBox1
             // 
@@ -67,10 +84,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this._IsHexDisplayCheckBox);
             this.groupBox1.Controls.Add(this._QuestionTabControl);
-            this.groupBox1.Location = new System.Drawing.Point(27, 3);
+            this.groupBox1.Location = new System.Drawing.Point(22, 11);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(314, 215);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.Size = new System.Drawing.Size(387, 215);
+            this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "发送";
             // 
@@ -80,7 +97,7 @@
             this._IsHexDisplayCheckBox.AutoSize = true;
             this._IsHexDisplayCheckBox.Location = new System.Drawing.Point(10, 191);
             this._IsHexDisplayCheckBox.Name = "_IsHexDisplayCheckBox";
-            this._IsHexDisplayCheckBox.Size = new System.Drawing.Size(89, 17);
+            this._IsHexDisplayCheckBox.Size = new System.Drawing.Size(97, 17);
             this._IsHexDisplayCheckBox.TabIndex = 5;
             this._IsHexDisplayCheckBox.Text = "HEX(16进制)";
             this._IsHexDisplayCheckBox.UseVisualStyleBackColor = true;
@@ -97,7 +114,7 @@
             this._QuestionTabControl.Location = new System.Drawing.Point(6, 20);
             this._QuestionTabControl.Name = "_QuestionTabControl";
             this._QuestionTabControl.SelectedIndex = 0;
-            this._QuestionTabControl.Size = new System.Drawing.Size(302, 170);
+            this._QuestionTabControl.Size = new System.Drawing.Size(375, 170);
             this._QuestionTabControl.TabIndex = 4;
             // 
             // _SinglePage
@@ -110,7 +127,7 @@
             this._SinglePage.Location = new System.Drawing.Point(4, 26);
             this._SinglePage.Name = "_SinglePage";
             this._SinglePage.Padding = new System.Windows.Forms.Padding(6);
-            this._SinglePage.Size = new System.Drawing.Size(294, 140);
+            this._SinglePage.Size = new System.Drawing.Size(367, 140);
             this._SinglePage.TabIndex = 0;
             this._SinglePage.Text = "单条";
             this._SinglePage.UseVisualStyleBackColor = true;
@@ -121,7 +138,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(130, 117);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(20, 13);
+            this.label1.Size = new System.Drawing.Size(24, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "ms";
             // 
@@ -154,7 +171,7 @@
             this._IsSingleLoopCheckBox.AutoSize = true;
             this._IsSingleLoopCheckBox.Location = new System.Drawing.Point(6, 116);
             this._IsSingleLoopCheckBox.Name = "_IsSingleLoopCheckBox";
-            this._IsSingleLoopCheckBox.Size = new System.Drawing.Size(54, 17);
+            this._IsSingleLoopCheckBox.Size = new System.Drawing.Size(55, 17);
             this._IsSingleLoopCheckBox.TabIndex = 2;
             this._IsSingleLoopCheckBox.Text = "定时:";
             this._IsSingleLoopCheckBox.UseVisualStyleBackColor = true;
@@ -163,7 +180,7 @@
             // 
             this._SingleAskButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._SingleAskButton.Enabled = false;
-            this._SingleAskButton.Location = new System.Drawing.Point(214, 111);
+            this._SingleAskButton.Location = new System.Drawing.Point(287, 111);
             this._SingleAskButton.Name = "_SingleAskButton";
             this._SingleAskButton.Size = new System.Drawing.Size(75, 26);
             this._SingleAskButton.TabIndex = 1;
@@ -180,7 +197,7 @@
             this._SingleQuestionTextbox.Multiline = true;
             this._SingleQuestionTextbox.Name = "_SingleQuestionTextbox";
             this._SingleQuestionTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this._SingleQuestionTextbox.Size = new System.Drawing.Size(281, 103);
+            this._SingleQuestionTextbox.Size = new System.Drawing.Size(354, 103);
             this._SingleQuestionTextbox.TabIndex = 0;
             // 
             // _MultitermPage
@@ -189,7 +206,7 @@
             this._MultitermPage.Location = new System.Drawing.Point(4, 26);
             this._MultitermPage.Name = "_MultitermPage";
             this._MultitermPage.Padding = new System.Windows.Forms.Padding(3);
-            this._MultitermPage.Size = new System.Drawing.Size(294, 140);
+            this._MultitermPage.Size = new System.Drawing.Size(367, 140);
             this._MultitermPage.TabIndex = 1;
             this._MultitermPage.Text = "多条";
             this._MultitermPage.UseVisualStyleBackColor = true;
@@ -199,7 +216,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(6, 6);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(77, 17);
+            this.checkBox1.Size = new System.Drawing.Size(88, 17);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -210,7 +227,7 @@
             this._UserPage.Location = new System.Drawing.Point(4, 26);
             this._UserPage.Name = "_UserPage";
             this._UserPage.Padding = new System.Windows.Forms.Padding(3);
-            this._UserPage.Size = new System.Drawing.Size(294, 140);
+            this._UserPage.Size = new System.Drawing.Size(367, 140);
             this._UserPage.TabIndex = 2;
             this._UserPage.Text = "协议";
             this._UserPage.UseVisualStyleBackColor = true;
@@ -224,15 +241,25 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // QuestionsEditorPanel
+            // QuestionsEditorDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AcceptButton = this._AcceptButton;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
-            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.Name = "QuestionsEditorPanel";
-            this.Size = new System.Drawing.Size(364, 221);
-            this.panel1.ResumeLayout(false);
+            this.CancelButton = this._CancelButton;
+            this.ClientSize = new System.Drawing.Size(433, 277);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this._AcceptButton);
+            this.Controls.Add(this._CancelButton);
+            this.Font = new System.Drawing.Font("Verdana", 8.25F);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "QuestionsEditorDialog";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "协议编辑";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this._QuestionTabControl.ResumeLayout(false);
@@ -247,20 +274,20 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button _AcceptButton;
+        private System.Windows.Forms.Button _CancelButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox _IsHexDisplayCheckBox;
         private System.Windows.Forms.TabControl _QuestionTabControl;
         private System.Windows.Forms.TabPage _SinglePage;
-        private System.Windows.Forms.TextBox _SingleQuestionTextbox;
-        private System.Windows.Forms.TabPage _MultitermPage;
-        private System.Windows.Forms.TabPage _UserPage;
-        private System.Windows.Forms.Button _SingleAskButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown _LoopTimeNumericUpDown;
         private System.Windows.Forms.CheckBox _IsSingleLoopCheckBox;
+        private System.Windows.Forms.Button _SingleAskButton;
+        private System.Windows.Forms.TextBox _SingleQuestionTextbox;
+        private System.Windows.Forms.TabPage _MultitermPage;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TabPage _UserPage;
         private System.Windows.Forms.Button button1;
     }
 }

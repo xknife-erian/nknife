@@ -3,14 +3,14 @@ using System.IO.Ports;
 using GalaSoft.MvvmLight;
 using NKnife.Channels.Serials;
 
-namespace NKnife.Kits.ChannelKit.Controls
+namespace NKnife.Kits.ChannelKit.Dialogs
 {
-    public class ConfigPanelViewModel : ViewModelBase
+    public class SerialConfigDialogViewModel : ViewModelBase
     {
         private bool _IsHexShow = true;
         private bool _IsFormatText = false;
 
-        public ConfigPanelViewModel()
+        public SerialConfigDialogViewModel()
         {
             SelectBaudRate = SerialUtils.DefaultBaudRate;
             SelectStopBit = SerialUtils.DefaultStopBit;
@@ -32,13 +32,13 @@ namespace NKnife.Kits.ChannelKit.Controls
 
         public bool IsHexShow
         {
-            get { return _IsHexShow; }
+            get => _IsHexShow;
             set { Set(() => IsHexShow, ref _IsHexShow, value); }
         }
 
         public bool IsFormatText
         {
-            get { return _IsFormatText; }
+            get => _IsFormatText;
             set { Set(() => IsFormatText, ref _IsFormatText, value); }
         }
 
@@ -47,9 +47,9 @@ namespace NKnife.Kits.ChannelKit.Controls
         /// <summary>
         ///     导出Serial配置
         /// </summary>
-        public SerialConfig Export(ushort port)
+        public SerialConfig Export()
         {
-            var config = new SerialConfig(port);
+            var config = new SerialConfig(0);
 
             var list0 = new List<object>();
             list0.AddRange(SerialUtils.BaudRates);
@@ -71,6 +71,11 @@ namespace NKnife.Kits.ChannelKit.Controls
             config.ReadBufferSize = BufferSpace;
 
             return config;
+        }
+
+        public void Import(SerialConfig config)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,26 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using NKnife.Channels.SerialKnife.Views.Controls;
+using NKnife.Kits.ChannelKit.Commons;
 
-namespace NKnife.Kits.ChannelKit.Controls
+namespace NKnife.Kits.ChannelKit.Dialogs
 {
-    public sealed partial class QuestionsEditorPanel : UserControl
+    public partial class QuestionsEditorDialog : Form
     {
         private bool _CurrentIsHex;
 
         private bool _IsSingleAsk;
-        private QuestionsEditorPanelViewModel _ViewData;
+        private QuestionsEditorDialogViewModel _ViewData;
 
-        public QuestionsEditorPanel()
+        public QuestionsEditorDialog()
         {
             InitializeComponent();
             _SingleQuestionTextbox.BackColor = Color.PapayaWhip;
             ControlEventManage();
         }
 
-        public QuestionsEditorPanelViewModel ViewData
+        public QuestionsEditorDialogViewModel ViewData
         {
             get { return _ViewData; }
             set
@@ -33,11 +38,11 @@ namespace NKnife.Kits.ChannelKit.Controls
                     switch (args.PropertyName)
                     {
                         case nameof(_ViewData.SerialEnable):
-                        {
-                            if (!_SingleQuestionTextbox.IsEmptyText())
-                                _SingleAskButton.Enabled = true;
-                            break;
-                        }
+                            {
+                                if (!_SingleQuestionTextbox.IsEmptyText())
+                                    _SingleAskButton.Enabled = true;
+                                break;
+                            }
                     }
                 };
             }
@@ -71,9 +76,9 @@ namespace NKnife.Kits.ChannelKit.Controls
             _IsSingleLoopCheckBox.CheckedChanged += (sender, args) =>
             {
                 ViewData.SingleQuestions.IsLoop = _IsSingleLoopCheckBox.Checked;
-                ViewData.SingleQuestions.Time = (uint) _LoopTimeNumericUpDown.Value;
+                ViewData.SingleQuestions.Time = (uint)_LoopTimeNumericUpDown.Value;
             };
-            _LoopTimeNumericUpDown.ValueChanged += (sender, args) => ViewData.SingleQuestions.Time = (uint) _LoopTimeNumericUpDown.Value;
+            _LoopTimeNumericUpDown.ValueChanged += (sender, args) => ViewData.SingleQuestions.Time = (uint)_LoopTimeNumericUpDown.Value;
             _SingleQuestionTextbox.TextChanged += (sender, args) =>
             {
                 if (!_SingleQuestionTextbox.IsEmptyText())
@@ -147,6 +152,15 @@ namespace NKnife.Kits.ChannelKit.Controls
         private void OnAsked(AskEventArgs e)
         {
             Asked?.Invoke(this, e);
+        }
+        private void _AcceptButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _CancelButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

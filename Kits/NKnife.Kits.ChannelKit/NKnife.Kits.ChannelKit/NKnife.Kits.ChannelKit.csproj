@@ -34,6 +34,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Properties\Channel-Serial-Kit.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonServiceLocator.2.0.3\lib\net45\CommonServiceLocator.dll</HintPath>
@@ -63,23 +66,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AskEventArgs.cs" />
-    <Compile Include="AskMode.cs" />
+    <Compile Include="Commons\AskEventArgs.cs" />
+    <Compile Include="Commons\AskMode.cs" />
     <Compile Include="Consoles.cs" />
-    <Compile Include="Controls\ConfigPanel.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Dialogs\SerialConfigDialogViewModel.cs" />
+    <Compile Include="Dialogs\QuestionsEditorDialogViewModel.cs" />
+    <Compile Include="Dialogs\SerialConfigDialog.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigPanel.Designer.cs">
-      <DependentUpon>ConfigPanel.cs</DependentUpon>
+    <Compile Include="Dialogs\SerialConfigDialog.Designer.cs">
+      <DependentUpon>SerialConfigDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConfigPanelViewModel.cs" />
-    <Compile Include="Controls\QuestionsEditorPanel.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Dialogs\QuestionsEditorDialog.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\QuestionsEditorPanel.Designer.cs">
-      <DependentUpon>QuestionsEditorPanel.cs</DependentUpon>
+    <Compile Include="Dialogs\QuestionsEditorDialog.Designer.cs">
+      <DependentUpon>QuestionsEditorDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\QuestionsEditorPanelViewModel.cs" />
     <Compile Include="Dialogs\SerialPortSelectorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,11 +119,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\ConfigPanel.resx">
-      <DependentUpon>ConfigPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\SerialConfigDialog.resx">
+      <DependentUpon>SerialConfigDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\QuestionsEditorPanel.resx">
-      <DependentUpon>QuestionsEditorPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\QuestionsEditorDialog.resx">
+      <DependentUpon>QuestionsEditorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SerialPortSelectorDialog.resx">
       <DependentUpon>SerialPortSelectorDialog.cs</DependentUpon>
@@ -131,6 +134,9 @@
     <EmbeddedResource Include="SimpleSerialPanel.resx">
       <DependentUpon>SimpleSerialPanel.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\Channel-Serial-Kit.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

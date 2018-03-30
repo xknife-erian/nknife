@@ -30,7 +30,7 @@ namespace NKnife.Kits.ChannelKit.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-            this._ListView = new ListView();
+            this._ListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -43,7 +43,6 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             this._ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._ListView.CheckBoxes = true;
             this._ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -52,11 +51,12 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             this._ListView.GridLines = true;
             this._ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this._ListView.HideSelection = false;
-            this._ListView.Location = new System.Drawing.Point(13, 13);
+            this._ListView.Location = new System.Drawing.Point(15, 13);
+            this._ListView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._ListView.MultiSelect = false;
             this._ListView.Name = "_ListView";
             this._ListView.ShowGroups = false;
-            this._ListView.Size = new System.Drawing.Size(471, 170);
+            this._ListView.Size = new System.Drawing.Size(448, 164);
             this._ListView.TabIndex = 2;
             this._ListView.UseCompatibleStateImageBehavior = false;
             this._ListView.View = System.Windows.Forms.View.Details;
@@ -78,9 +78,10 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             // _AcceptButton
             // 
             this._AcceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._AcceptButton.Location = new System.Drawing.Point(328, 189);
+            this._AcceptButton.Location = new System.Drawing.Point(281, 183);
+            this._AcceptButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._AcceptButton.Name = "_AcceptButton";
-            this._AcceptButton.Size = new System.Drawing.Size(75, 29);
+            this._AcceptButton.Size = new System.Drawing.Size(88, 29);
             this._AcceptButton.TabIndex = 0;
             this._AcceptButton.Text = "确定(&A)";
             this._AcceptButton.UseVisualStyleBackColor = true;
@@ -89,9 +90,10 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             // 
             this._CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._CancelButton.Location = new System.Drawing.Point(409, 189);
+            this._CancelButton.Location = new System.Drawing.Point(376, 183);
+            this._CancelButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._CancelButton.Name = "_CancelButton";
-            this._CancelButton.Size = new System.Drawing.Size(75, 29);
+            this._CancelButton.Size = new System.Drawing.Size(88, 29);
             this._CancelButton.TabIndex = 1;
             this._CancelButton.Text = "取消(&C)";
             this._CancelButton.UseVisualStyleBackColor = true;
@@ -99,19 +101,22 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             // SerialPortSelectorDialog
             // 
             this.AcceptButton = this._AcceptButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CancelButton;
-            this.ClientSize = new System.Drawing.Size(496, 230);
+            this.ClientSize = new System.Drawing.Size(477, 224);
             this.Controls.Add(this._CancelButton);
             this.Controls.Add(this._AcceptButton);
             this.Controls.Add(this._ListView);
+            this.Font = new System.Drawing.Font("Verdana", 8.25F);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SerialPortSelectorDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "选择串口";
             this.ResumeLayout(false);
 

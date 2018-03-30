@@ -1,4 +1,4 @@
-﻿namespace NKnife.Kits.ChannelKit
+﻿namespace NKnife.Kits.ChannelKit.Commons
 {
     public enum AskMode
     {

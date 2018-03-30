@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using NKnife.Channels.Serials;
 
 namespace NKnife.Kits.ChannelKit
 {
@@ -6,6 +7,7 @@ namespace NKnife.Kits.ChannelKit
     {
         public MainForm()
         {
+            SerialUtils.RefreshSerialPorts();
             InitializeComponent();
         }
     }

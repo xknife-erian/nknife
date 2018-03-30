@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight;
-using NKnife.Kits.ChannelKit;
+using NKnife.Kits.ChannelKit.Commons;
 
-namespace NKnife.Channels.SerialKnife.Views.Controls
+namespace NKnife.Kits.ChannelKit.Dialogs
 {
-    public class QuestionsEditorPanelViewModel : ViewModelBase
+    public class QuestionsEditorDialogViewModel : ViewModelBase
     {
         private bool _SerialEnable;
 
