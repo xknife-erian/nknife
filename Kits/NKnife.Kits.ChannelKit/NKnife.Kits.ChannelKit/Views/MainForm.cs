@@ -1,13 +1,15 @@
 ﻿using System.Windows.Forms;
-using NKnife.Channels.Serials;
+using NKnife.IoC;
+using NKnife.Kits.ChannelKit.ViewModels;
 
-namespace NKnife.Kits.ChannelKit
+namespace NKnife.Kits.ChannelKit.Views
 {
     public partial class MainForm : Form
     {
+        private MainViewmodel _Viewmodel = DI.Get<MainViewmodel>();
+
         public MainForm()
         {
-            SerialUtils.RefreshSerialPorts();
             InitializeComponent();
         }
     }

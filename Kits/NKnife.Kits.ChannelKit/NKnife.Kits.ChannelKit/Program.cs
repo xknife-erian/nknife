@@ -13,7 +13,7 @@ namespace NKnife.Kits.ChannelKit
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(AppEnvironment.Instance());
         }
     }
 }

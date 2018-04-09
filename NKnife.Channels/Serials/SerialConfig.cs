@@ -12,7 +12,7 @@ namespace NKnife.Channels.Serials
 
         public ushort Port { get; }
         public int BaudRate { get; set; } = 9600;
-        public int DataBits { get; set; } = 8;
+        public int DataBit { get; set; } = 8;
 
         /// <summary>
         ///     读串口数据的固定超时。
@@ -34,7 +34,7 @@ namespace NKnife.Channels.Serials
         public bool DtrEnable { get; set; } = false;
         public Parity Parity { get; set; } = Parity.None;
         public bool RtsEnable { get; set; } = true;
-        public StopBits StopBits { get; set; } = StopBits.One;
+        public StopBits StopBit { get; set; } = StopBits.One;
 
         /// <summary>
         /// 当 ReceivedBytesThreshold 引发 DataReceived 事件后，等待 ReadWait 的时间，待串口数据接收到阶段性时再进行读取

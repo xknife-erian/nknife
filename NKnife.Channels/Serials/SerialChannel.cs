@@ -61,9 +61,9 @@ namespace NKnife.Channels.Serials
             _SerialPort = new SerialPort
             {
                 PortName = $"COM{_SerialConfig.Port}",
-                StopBits = _SerialConfig.StopBits,
+                StopBits = _SerialConfig.StopBit,
                 BaudRate = _SerialConfig.BaudRate,
-                DataBits = _SerialConfig.DataBits, //8,
+                DataBits = _SerialConfig.DataBit, //8,
                 WriteTimeout = _SerialConfig.WriteTotalTimeoutConstant, //1000
                 ReadTimeout = _SerialConfig.ReadTotalTimeoutConstant, //1000,
                 ReceivedBytesThreshold = _SerialConfig.ReceivedBytesThreshold, //1,

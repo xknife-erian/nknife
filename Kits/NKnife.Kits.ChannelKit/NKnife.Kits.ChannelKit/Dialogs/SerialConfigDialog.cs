@@ -20,22 +20,18 @@ namespace NKnife.Kits.ChannelKit.Dialogs
             InitializeComponent();
 
             _BaudRatesComboBox.Items.AddRange(SerialUtils.BaudRates);
-            _ParitysComboBox.Items.AddRange(SerialUtils.Paritys);
+            _ParitysComboBox.Items.AddRange(SerialUtils.Parities);
             _StopBitsesComboBox.Items.AddRange(SerialUtils.StopBits);
             _DatabitComboBox.Items.AddRange(SerialUtils.DataBits);
 
-            ViewDataBinding();
+            ViewModelDataBinding();
+            ViewModelEventManage();
             ControlEventManage();
         }
 
-        public SerialConfig SerialConfig
+        public void ImportConfig(SerialConfig config)
         {
-            get => _ViewData.Export();
-            set
-            {
-                _ViewData.Import(value);
-                ViewDataBinding();
-            }
+            _ViewData.Import(config);
         }
 
         private void ControlEventManage()
@@ -49,35 +45,74 @@ namespace NKnife.Kits.ChannelKit.Dialogs
 
             _IsDTRCheckBox.CheckedChanged += (s, e) => { _ViewData.IsDTR = _IsDTRCheckBox.Checked; };
             _IsRTSCheckBox.CheckedChanged += (s, e) => { _ViewData.IsRTS = _IsRTSCheckBox.Checked; };
-            _IsFormatTextCheckBox.CheckedChanged += (s, e) => { _ViewData.IsFormatText = _IsFormatTextCheckBox.Checked; };
+            _IsFormatTextCheckBox.CheckedChanged += (s, e) => { _ViewData.DisplayFormatTextEnable = _IsFormatTextCheckBox.Checked; };
             _IsHexViewCheckBox.CheckedChanged += (s, e) =>
             {
                 _IsFormatTextCheckBox.Enabled = !_IsHexViewCheckBox.Checked;
-                _ViewData.IsHexShow = _IsHexViewCheckBox.Checked;
+                _ViewData.HexShowEnable = _IsHexViewCheckBox.Checked;
             };
         }
 
-        private void ViewDataBinding()
+        private void ViewModelDataBinding()
         {
             _BaudRatesComboBox.SelectedIndex = _ViewData.SelectBaudRate;
             _ParitysComboBox.SelectedIndex = _ViewData.SelectParity;
             _StopBitsesComboBox.SelectedIndex = _ViewData.SelectStopBit;
             _DatabitComboBox.SelectedIndex = _ViewData.SelectDataBit;
+
             _BufferSpaceBox.Value = _ViewData.BufferSpace;
             _IsDTRCheckBox.Checked = _ViewData.IsDTR;
             _IsRTSCheckBox.Checked = _ViewData.IsRTS;
-            _IsHexViewCheckBox.Checked = _ViewData.IsHexShow;
-            _IsFormatTextCheckBox.Checked = _ViewData.IsFormatText;
+
+            _IsHexViewCheckBox.Checked = _ViewData.HexShowEnable;
+            _IsFormatTextCheckBox.Checked = _ViewData.DisplayFormatTextEnable;
+        }
+
+        private void ViewModelEventManage()
+        {
+            _ViewData.PropertyChanged += (s, e) =>
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(_ViewData.BufferSpace):
+                        _BufferSpaceBox.Value = _ViewData.BufferSpace;
+                        break;
+                    case nameof(_ViewData.IsDTR):
+                        _IsDTRCheckBox.Checked = _ViewData.IsDTR;
+                        break;
+                    case nameof(_ViewData.IsRTS):
+                        _IsRTSCheckBox.Checked = _ViewData.IsRTS;
+                        break;
+                    case nameof(_ViewData.SelectBaudRate):
+                        _BaudRatesComboBox.SelectedIndex = _ViewData.SelectBaudRate;
+                        break;
+                    case nameof(_ViewData.SelectDataBit):
+                        _DatabitComboBox.SelectedIndex = _ViewData.SelectDataBit;
+                        break;
+                    case nameof(_ViewData.SelectParity):
+                        _ParitysComboBox.SelectedIndex = _ViewData.SelectParity;
+                        break;
+                    case nameof(_ViewData.SelectStopBit):
+                        _StopBitsesComboBox.SelectedIndex = _ViewData.SelectStopBit;
+                        break;
+                    case nameof(_ViewData.DisplayFormatTextEnable):
+                        _IsFormatTextCheckBox.Checked = _ViewData.DisplayFormatTextEnable;
+                        break;
+                    case nameof(_ViewData.HexShowEnable):
+                        _IsHexViewCheckBox.Checked = _ViewData.HexShowEnable;
+                        break;
+                }
+            };
         }
 
         private void _AcceptButton_Click(object sender, EventArgs e)
         {
-
+            DialogResult = DialogResult.OK;
         }
 
         private void _CancelButton_Click(object sender, EventArgs e)
         {
-
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

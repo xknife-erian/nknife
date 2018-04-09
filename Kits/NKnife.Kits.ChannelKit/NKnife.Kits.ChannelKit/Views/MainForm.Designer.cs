@@ -1,4 +1,4 @@
-﻿namespace NKnife.Kits.ChannelKit
+﻿namespace NKnife.Kits.ChannelKit.Views
 {
     partial class MainForm
     {
@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.simpleSerialPanel1 = new NKnife.Kits.ChannelKit.SimpleSerialPanel();
-            this.simpleSerialPanel2 = new NKnife.Kits.ChannelKit.SimpleSerialPanel();
+            this.simpleSerialPanel1 = new SingleSerialPanel();
+            this.simpleSerialPanel2 = new SingleSerialPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -88,7 +88,7 @@
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(4, 1, 4, 3);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NKnife.Channel测试工具";
+            this.Text = "NKnife串口调试器";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -100,8 +100,8 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private SimpleSerialPanel simpleSerialPanel1;
-        private SimpleSerialPanel simpleSerialPanel2;
+        private SingleSerialPanel simpleSerialPanel1;
+        private SingleSerialPanel simpleSerialPanel2;
     }
 }
 

@@ -9,8 +9,8 @@ namespace NKnife.Channels.Serials
     {
         static SerialUtils()
         {
-            var list = new List<uint>();
-            uint n = 600;
+            var list = new List<int>();
+            int n = 600;
             for (var i = 1; i <= 10; i++)
             {
                 n = n + n;
@@ -19,7 +19,7 @@ namespace NKnife.Channels.Serials
             list.Add(57600);
             list.Add(128000);
             list.Add(256000);
-            for (uint i = 1; i < 16; i = i + 2)
+            for (int i = 1; i < 16; i = i + 2)
             {
                 list.Add(115200*i);
             }
@@ -37,7 +37,7 @@ namespace NKnife.Channels.Serials
                 System.IO.Ports.StopBits.Two
             };
             DataBits = new object[] {5, 6, 7, 8};
-            Paritys = new object[] {Parity.Even, Parity.Mark, Parity.None, Parity.Odd, Parity.Space};
+            Parities = new object[] {Parity.Even, Parity.Mark, Parity.None, Parity.Odd, Parity.Space};
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace NKnife.Channels.Serials
 
         public static object[] DataBits { get; private set; }
 
-        public static object[] Paritys { get; private set; }
+        public static object[] Parities { get; private set; }
 
         /// <summary>
         ///     找到本机的所有串口
