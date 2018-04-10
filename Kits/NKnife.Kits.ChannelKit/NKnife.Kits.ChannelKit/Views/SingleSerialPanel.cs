@@ -20,14 +20,14 @@ namespace NKnife.Kits.ChannelKit.Views
 
         private void InitializeControlEnable()
         {
-            if (_Viewmodel.Config == null)
+            if (_Viewmodel.Port == 0)
             {
-                _OperatingPortButton.Enabled = false;
+                _OpenOrClosePortButton.Enabled = false;
                 _ConfigurePortButton.Enabled = false;
             }
             else
             {
-                _OperatingPortButton.Enabled = true;
+                _OpenOrClosePortButton.Enabled = true;
                 _ConfigurePortButton.Enabled = true;
             }
             _StartButton.Enabled = _Viewmodel.IsOpen;
@@ -44,8 +44,8 @@ namespace NKnife.Kits.ChannelKit.Views
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 var port = dialog.SerialPort;
-                _Viewmodel.Config = new SerialConfig(port);
-                _PortLabel.Text = $"COM{dialog.SerialPort}";
+                _Viewmodel.Port = port;
+                _PortLabel.Text = $"COM{port}";
                 InitializeControlEnable();
             }
         }
@@ -55,10 +55,10 @@ namespace NKnife.Kits.ChannelKit.Views
         /// </summary>
         private void _ConfigurePortButton_Click(object sender, EventArgs e)
         {
-            var dialog = new SerialConfigDialog();
-            dialog.ImportConfig(_Viewmodel.Config);
+            var dialog = new SerialConfigDialog {SelfModels = _Viewmodel.FromConfig()};
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                _Viewmodel.UpdataConfig(dialog.SelfModels);
             }
         }
 
@@ -67,14 +67,14 @@ namespace NKnife.Kits.ChannelKit.Views
         /// </summary>
         private void _OperatingPortButton_Click(object sender, EventArgs e)
         {
-            if (_Viewmodel.OperatingPort())
+            if (_Viewmodel.OpenOrClosePort())
             {
-                MessageBox.Show(this, $"{_OperatingPortButton.Text}串口端口操作成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _OperatingPortButton.Text = _Viewmodel.IsOpen ? "关闭" : "打开";
+                MessageBox.Show(this, $"{_OpenOrClosePortButton.Text}串口端口操作成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _OpenOrClosePortButton.Text = _Viewmodel.IsOpen ? "关闭" : "打开";
             }
             else
             {
-                MessageBox.Show(this, $"{_OperatingPortButton.Text}串口端口操作失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, $"{_OpenOrClosePortButton.Text}串口端口操作失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             InitializeControlEnable();
         }

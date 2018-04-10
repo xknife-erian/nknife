@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SingleSerialPanel));
             this._ToolStrip = new System.Windows.Forms.ToolStrip();
             this._ChoosePortButton = new System.Windows.Forms.ToolStripButton();
-            this._OperatingPortButton = new System.Windows.Forms.ToolStripButton();
+            this._OpenOrClosePortButton = new System.Windows.Forms.ToolStripButton();
             this._ConfigurePortButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this._StartButton = new System.Windows.Forms.ToolStripButton();
@@ -53,7 +53,7 @@
             this._ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._ChoosePortButton,
             this._ConfigurePortButton,
-            this._OperatingPortButton,
+            this._OpenOrClosePortButton,
             this.toolStripSeparator2,
             this._StartButton,
             this._PauseButton,
@@ -76,15 +76,15 @@
             this._ChoosePortButton.Text = "选择";
             this._ChoosePortButton.Click += new System.EventHandler(this._ChoosePortButton_Click);
             // 
-            // _OperatingPortButton
+            // _OpenOrClosePortButton
             // 
-            this._OperatingPortButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this._OperatingPortButton.Image = ((System.Drawing.Image)(resources.GetObject("_OperatingPortButton.Image")));
-            this._OperatingPortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._OperatingPortButton.Name = "_OperatingPortButton";
-            this._OperatingPortButton.Size = new System.Drawing.Size(36, 22);
-            this._OperatingPortButton.Text = "打开";
-            this._OperatingPortButton.Click += new System.EventHandler(this._OperatingPortButton_Click);
+            this._OpenOrClosePortButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._OpenOrClosePortButton.Image = ((System.Drawing.Image)(resources.GetObject("_OpenOrClosePortButton.Image")));
+            this._OpenOrClosePortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._OpenOrClosePortButton.Name = "_OpenOrClosePortButton";
+            this._OpenOrClosePortButton.Size = new System.Drawing.Size(36, 22);
+            this._OpenOrClosePortButton.Text = "打开";
+            this._OpenOrClosePortButton.Click += new System.EventHandler(this._OperatingPortButton_Click);
             // 
             // _ConfigurePortButton
             // 
@@ -219,6 +219,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton _QuestionsEditorButton;
         private System.Windows.Forms.ToolStripButton _StopButton;
-        private System.Windows.Forms.ToolStripButton _OperatingPortButton;
+        private System.Windows.Forms.ToolStripButton _OpenOrClosePortButton;
     }
 }

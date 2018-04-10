@@ -31,7 +31,7 @@
             this._CancelButton = new System.Windows.Forms.Button();
             this._AcceptButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this._IsFormatTextCheckBox = new System.Windows.Forms.CheckBox();
+            this._IsFormatTextViewCheckBox = new System.Windows.Forms.CheckBox();
             this._IsHexViewCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this._BufferSpaceBox = new System.Windows.Forms.NumericUpDown();
@@ -82,7 +82,7 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this._IsFormatTextCheckBox);
+            this.groupBox2.Controls.Add(this._IsFormatTextViewCheckBox);
             this.groupBox2.Controls.Add(this._IsHexViewCheckBox);
             this.groupBox2.Location = new System.Drawing.Point(27, 217);
             this.groupBox2.Name = "groupBox2";
@@ -91,16 +91,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "接收";
             // 
-            // _IsFormatTextCheckBox
+            // _IsFormatTextViewCheckBox
             // 
-            this._IsFormatTextCheckBox.AutoSize = true;
-            this._IsFormatTextCheckBox.Enabled = false;
-            this._IsFormatTextCheckBox.Location = new System.Drawing.Point(50, 42);
-            this._IsFormatTextCheckBox.Name = "_IsFormatTextCheckBox";
-            this._IsFormatTextCheckBox.Size = new System.Drawing.Size(110, 17);
-            this._IsFormatTextCheckBox.TabIndex = 9;
-            this._IsFormatTextCheckBox.Text = "以格式文本显示";
-            this._IsFormatTextCheckBox.UseVisualStyleBackColor = true;
+            this._IsFormatTextViewCheckBox.AutoSize = true;
+            this._IsFormatTextViewCheckBox.Enabled = false;
+            this._IsFormatTextViewCheckBox.Location = new System.Drawing.Point(50, 42);
+            this._IsFormatTextViewCheckBox.Name = "_IsFormatTextViewCheckBox";
+            this._IsFormatTextViewCheckBox.Size = new System.Drawing.Size(110, 17);
+            this._IsFormatTextViewCheckBox.TabIndex = 9;
+            this._IsFormatTextViewCheckBox.Text = "以格式文本显示";
+            this._IsFormatTextViewCheckBox.UseVisualStyleBackColor = true;
             // 
             // _IsHexViewCheckBox
             // 
@@ -316,7 +316,7 @@
         private System.Windows.Forms.Button _CancelButton;
         private System.Windows.Forms.Button _AcceptButton;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox _IsFormatTextCheckBox;
+        private System.Windows.Forms.CheckBox _IsFormatTextViewCheckBox;
         private System.Windows.Forms.CheckBox _IsHexViewCheckBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown _BufferSpaceBox;

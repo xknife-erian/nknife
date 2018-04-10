@@ -70,7 +70,6 @@
     <Compile Include="Commons\AskEventArgs.cs" />
     <Compile Include="Commons\AskMode.cs" />
     <Compile Include="Consoles.cs" />
-    <Compile Include="Dialogs\SerialConfigDialogViewModel.cs" />
     <Compile Include="Dialogs\QuestionsEditorDialogViewModel.cs" />
     <Compile Include="Dialogs\SerialConfigDialog.cs">
       <SubType>Form</SubType>
@@ -147,6 +146,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SingleSerialPanel.resx">
       <DependentUpon>SingleSerialPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

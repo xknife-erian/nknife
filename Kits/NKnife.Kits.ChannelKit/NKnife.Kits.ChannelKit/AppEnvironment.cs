@@ -38,9 +38,8 @@ namespace NKnife.Kits.ChannelKit
         private AppEnvironment(string[] args)
         {
             // 注册应用程序事件
-            Application.ApplicationExit += OnApplicationExit;
-            AppDomain.CurrentDomain.DomainUnload += CurrentDomainDomainUnload;
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomainDomainUnload;
+            AppDomain.CurrentDomain.DomainUnload += CurrentDomainUnload;
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomainUnload;
 
             GetMainFormSize(out var w, out var h);
             var startFrom = new Form
@@ -76,17 +75,16 @@ namespace NKnife.Kits.ChannelKit
                     LoadServices();
                     startFrom.Close();
                 };
-                mainForm.FormClosed += (s3, e3) => { Application.Exit(); };
+                mainForm.FormClosed += (s3, e3) =>
+                {
+                    UnloadServices();
+                    Application.Exit();
+                };
                 mainForm.Show();
                 mainForm.Refresh();
             };
             startFrom.Show();
             startFrom.Refresh();
-        }
-
-        private void CurrentDomainDomainUnload(object sender, EventArgs e)
-        {
-            OnApplicationExit(sender, e);
         }
 
         private static void GetMainFormSize(out int width, out int height)
@@ -109,18 +107,17 @@ namespace NKnife.Kits.ChannelKit
         {
             DI.Initialize();
             DI.Get<ChannelService>().Initialize();
-            Thread.Sleep(1000);
+#if Release
+            Thread.Sleep(800);
+#endif
         }
 
         private void UnloadServices()
         {
+            DI.Get<ChannelService>().Dispose();
         }
 
-        /// <summary> 应用程序退出
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnApplicationExit(object sender, EventArgs e)
+        private void CurrentDomainUnload(object sender, EventArgs e)
         {
         }
 
