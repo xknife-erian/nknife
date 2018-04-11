@@ -8,7 +8,7 @@ namespace NKnife.Kits.ChannelKit.ViewModels
 {
     public class SingleSerialViewmodel : ViewModelBase
     {
-        private ChannelService _ChannelService = DI.Get<ChannelService>();
+        private readonly ChannelService _ChannelService = DI.Get<ChannelService>();
 
         private bool _HexShowEnable;
         private bool _DisplayFormatTextEnable;
@@ -17,18 +17,27 @@ namespace NKnife.Kits.ChannelKit.ViewModels
         public ushort Port { get; set; } = 0;
 
         /// <summary>
-        /// 操作串口，并返回操作的动作成功状态
+        /// 打开串口
         /// </summary>
         /// <returns>返回操作的动作成功状态</returns>
-        public bool OpenOrClosePort()
+        public bool OpenPort()
         {
             var channel = _ChannelService.GetChannel(Port);
             //会根据实际对串口的操作状态来描述串口的当前状态
-            var success = !IsOpen ? channel.Open() : channel.Close();
+            channel.Open();
+            return IsOpen = true;
+        }
 
-            if (success)
-                IsOpen = !IsOpen;
-            return success;
+        /// <summary>
+        /// 关闭串口
+        /// </summary>
+        /// <returns>返回操作的动作成功状态</returns>
+        public bool ClosePort()
+        {
+            _ChannelService.RemoveChannel(Port);
+            Port = 0;
+            //会根据实际对串口的操作状态来描述串口的当前状态
+            return IsOpen = false;
         }
 
         public SerialConfigDialog.SelfModel FromConfig()
@@ -53,7 +62,7 @@ namespace NKnife.Kits.ChannelKit.ViewModels
             return model;
         }
 
-        public void UpdataConfig(SerialConfigDialog.SelfModel model)
+        public void UpdateConfig(SerialConfigDialog.SelfModel model)
         {
             var config = _ChannelService.GetConfig(Port);
 

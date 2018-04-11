@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using NKnife.Channels.Serials;
 using NKnife.IoC;
 using NKnife.Kits.ChannelKit.Dialogs;
+using NKnife.Kits.ChannelKit.Properties;
 using NKnife.Kits.ChannelKit.ViewModels;
 
 namespace NKnife.Kits.ChannelKit.Views
@@ -14,25 +15,24 @@ namespace NKnife.Kits.ChannelKit.Views
         public SingleSerialPanel()
         {
             InitializeComponent();
-            InitializeControlEnable();
+            RefreshControlEnable();
             _PortLabel.Text = string.Empty;
         }
 
-        private void InitializeControlEnable()
+        private void RefreshControlEnable()
         {
-            if (_Viewmodel.Port == 0)
-            {
-                _OpenOrClosePortButton.Enabled = false;
-                _ConfigurePortButton.Enabled = false;
-            }
-            else
-            {
-                _OpenOrClosePortButton.Enabled = true;
-                _ConfigurePortButton.Enabled = true;
-            }
+            SuspendLayout();
+            _ChoosePortButton.Enabled = _Viewmodel.Port == 0;
+            _ConfigurePortButton.Enabled = _Viewmodel.Port != 0;
+            _QuestionsEditorButton.Enabled = _Viewmodel.Port != 0;
+            _OpenPortButton.Enabled = _Viewmodel.Port != 0 && !_Viewmodel.IsOpen;
+            _ClosePortButton.Enabled = _Viewmodel.IsOpen;
+
             _StartButton.Enabled = _Viewmodel.IsOpen;
             _PauseButton.Enabled = _Viewmodel.IsOpen;
             _StopButton.Enabled = _Viewmodel.IsOpen;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace NKnife.Kits.ChannelKit.Views
                 var port = dialog.SerialPort;
                 _Viewmodel.Port = port;
                 _PortLabel.Text = $"COM{port}";
-                InitializeControlEnable();
+                RefreshControlEnable();
             }
         }
 
@@ -58,40 +58,44 @@ namespace NKnife.Kits.ChannelKit.Views
             var dialog = new SerialConfigDialog {SelfModels = _Viewmodel.FromConfig()};
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _Viewmodel.UpdataConfig(dialog.SelfModels);
+                _Viewmodel.UpdateConfig(dialog.SelfModels);
             }
         }
 
         /// <summary>
-        /// 操作串口(打开或关闭)的动作
+        /// 打开串口
         /// </summary>
-        private void _OperatingPortButton_Click(object sender, EventArgs e)
+        private void _OpenPortButton_Click(object sender, EventArgs e)
         {
-            if (_Viewmodel.OpenOrClosePort())
-            {
-                MessageBox.Show(this, $"{_OpenOrClosePortButton.Text}串口端口操作成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _OpenOrClosePortButton.Text = _Viewmodel.IsOpen ? "关闭" : "打开";
-            }
+            if (_Viewmodel.OpenPort())
+                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口打开成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-            {
-                MessageBox.Show(this, $"{_OpenOrClosePortButton.Text}串口端口操作失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            InitializeControlEnable();
+                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口打开失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            RefreshControlEnable();
+        }
+
+        /// <summary>
+        /// 关闭串口
+        /// </summary>
+        private void _ClosePortButton_Click(object sender, EventArgs e)
+        {
+            if (_Viewmodel.ClosePort())
+                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口关闭成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口关闭失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            RefreshControlEnable();
         }
 
         private void _StartButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void _PauseButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void _StopButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void _QuestionsEditorButton_Click(object sender, EventArgs e)
@@ -101,6 +105,5 @@ namespace NKnife.Kits.ChannelKit.Views
             {
             }
         }
-
     }
 }

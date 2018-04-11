@@ -19,7 +19,6 @@ namespace NKnife.Kits.ChannelKit.Services
             if (!_ChannelMap.TryGetValue(config, out var channel))
             {
                 channel = new SerialChannel(config);
-                _ConfigMap.Add(config.Port, config);
                 _ChannelMap.Add(config, channel);
             }
             return channel;
@@ -27,10 +26,11 @@ namespace NKnife.Kits.ChannelKit.Services
 
         public SerialChannel GetChannel(ushort port)
         {
-            return _ChannelMap[_ConfigMap[port]];
+            var config = GetConfig(port);
+            return GetChannel(config);
         }
 
-        public void DisposeChannel(SerialConfig config)
+        public void RemoveChannel(SerialConfig config)
         {
             if (_ChannelMap.TryGetValue(config, out var channel))
             {
@@ -39,6 +39,11 @@ namespace NKnife.Kits.ChannelKit.Services
                 _ConfigMap.Remove(config.Port);
                 _ChannelMap.Remove(config);
             }
+        }
+
+        public void RemoveChannel(ushort port)
+        {
+            RemoveChannel(GetConfig(port));
         }
 
         public SerialConfig GetConfig(ushort port)

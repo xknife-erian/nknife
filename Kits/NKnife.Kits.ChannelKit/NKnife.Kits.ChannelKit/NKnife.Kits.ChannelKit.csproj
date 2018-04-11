@@ -154,6 +154,15 @@
     <None Include="Properties\Channel-Serial-Kit.png" />
     <None Include="Properties\Welcome.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Properties\strip-button-png\close.png" />
+    <Content Include="Properties\strip-button-png\config.png" />
+    <Content Include="Properties\strip-button-png\open.png" />
+    <Content Include="Properties\strip-button-png\pause.png" />
+    <Content Include="Properties\strip-button-png\protocol.png" />
+    <Content Include="Properties\strip-button-png\select.png" />
+    <Content Include="Properties\strip-button-png\start.png" />
+    <Content Include="Properties\strip-button-png\stop.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
