@@ -2,5 +2,5 @@
 
 // 有关程序集的常规信息通过下列属性集控制。
 
-[assembly: AssemblyVersion("17.5.6.1025")]
-[assembly: AssemblyFileVersion("17.5.6.1025")]
+[assembly: AssemblyVersion("18.0.1.412")]
+[assembly: AssemblyFileVersion("18.0.1.412")]

@@ -79,15 +79,17 @@ namespace NKnife.Kits.ChannelKit.Views
         /// </summary>
         private void _ClosePortButton_Click(object sender, EventArgs e)
         {
+            var port = _Viewmodel.Port;
             if (_Viewmodel.ClosePort())
-                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口关闭成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(this, $"串口(COM{port})端口关闭成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口关闭失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, $"串口(COM{port})端口关闭失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             RefreshControlEnable();
         }
 
         private void _StartButton_Click(object sender, EventArgs e)
         {
+            _Viewmodel.Start();
         }
 
         private void _PauseButton_Click(object sender, EventArgs e)

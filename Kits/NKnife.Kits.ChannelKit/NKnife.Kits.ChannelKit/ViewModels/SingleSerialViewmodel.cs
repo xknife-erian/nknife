@@ -1,5 +1,9 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using System.Collections;
+using GalaSoft.MvvmLight;
+using NKnife.Channels.Interfaces;
 using NKnife.Channels.Serials;
+using NKnife.Events;
 using NKnife.IoC;
 using NKnife.Kits.ChannelKit.Dialogs;
 using NKnife.Kits.ChannelKit.Services;
@@ -37,7 +41,31 @@ namespace NKnife.Kits.ChannelKit.ViewModels
             _ChannelService.RemoveChannel(Port);
             Port = 0;
             //会根据实际对串口的操作状态来描述串口的当前状态
-            return IsOpen = false;
+            IsOpen = false;
+            return true;
+        }
+
+        public void Start()
+        {
+            var channel = _ChannelService.GetChannel(Port);
+            var sqg = new SerialQuestionGroup();
+            sqg.Add(new SerialQuestion(null, true, 500, new byte[] { 0x11, 0x22 }));
+            sqg.Add(new SerialQuestion(null, true, 100, new byte[] { 0xAA, 0xBB, 0xCC, 0xDD }));
+            channel.UpdateQuestionGroup(sqg);
+            channel.AutoSend(SendAction);
+        }
+
+        private void SendAction(IQuestion<byte[]> question)
+        {
+            var hex = question.Data.ToHexString();
+            OnViewUpdated(new EventArgs<string>(hex));
+        }
+
+        public event EventHandler<EventArgs<string>> ViewUpdated;
+
+        protected virtual void OnViewUpdated(EventArgs<string> e)
+        {
+            ViewUpdated?.Invoke(this, e);
         }
 
         public SerialConfigDialog.SelfModel FromConfig()

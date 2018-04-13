@@ -157,6 +157,9 @@
     <Compile Include="Protocol\Generic\BytesProtocolFamily.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolPacker.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolUnPacker.cs" />
+    <Compile Include="Interface\IJobPoolItem.cs" />
+    <Compile Include="Timers\Job.cs" />
+    <Compile Include="Timers\JobPool.cs" />
     <Compile Include="Tunnel\Base\BaseProtocolHandler`.cs" />
     <Compile Include="Protocol\Generic\StringProtocol.cs" />
     <Compile Include="Protocol\Generic\StringProtocolFamily.cs" />
@@ -223,6 +226,7 @@
     <Compile Include="Chinese\SpellRandom.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="Extensions\WindowExtension.cs" />
+    <Compile Include="Timers\JobFlow.cs" />
     <Compile Include="Wrapper\Bit.cs" />
     <Compile Include="Wrapper\FTP\FtpFileListStyle.cs" />
     <Compile Include="Wrapper\FTP\FtpFileStruct.cs" />

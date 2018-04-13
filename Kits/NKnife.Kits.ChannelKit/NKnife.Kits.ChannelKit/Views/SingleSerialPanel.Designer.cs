@@ -30,7 +30,6 @@
         {
             this._ToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._StatusStrip = new System.Windows.Forms.StatusStrip();
             this._InfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._SpaceLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -52,30 +51,24 @@
             // 
             this._ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._ChoosePortButton,
-            this._ConfigurePortButton,
             this._OpenPortButton,
             this._ClosePortButton,
+            this._QuestionsEditorButton,
+            this._ConfigurePortButton,
             this.toolStripSeparator2,
             this._StartButton,
             this._PauseButton,
-            this._StopButton,
-            this.toolStripSeparator1,
-            this._QuestionsEditorButton});
+            this._StopButton});
             this._ToolStrip.Location = new System.Drawing.Point(0, 0);
             this._ToolStrip.Name = "_ToolStrip";
-            this._ToolStrip.Size = new System.Drawing.Size(367, 31);
+            this._ToolStrip.Size = new System.Drawing.Size(367, 34);
             this._ToolStrip.TabIndex = 0;
             this._ToolStrip.Text = "toolStrip1";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 34);
             // 
             // _StatusStrip
             // 
@@ -111,9 +104,9 @@
             this._ListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this._ListBox.FormattingEnabled = true;
             this._ListBox.ItemHeight = 12;
-            this._ListBox.Location = new System.Drawing.Point(0, 31);
+            this._ListBox.Location = new System.Drawing.Point(0, 34);
             this._ListBox.Name = "_ListBox";
-            this._ListBox.Size = new System.Drawing.Size(367, 378);
+            this._ListBox.Size = new System.Drawing.Size(367, 375);
             this._ListBox.TabIndex = 2;
             // 
             // _ChoosePortButton
@@ -122,7 +115,7 @@
             this._ChoosePortButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.select;
             this._ChoosePortButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._ChoosePortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._ChoosePortButton.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
+            this._ChoosePortButton.Margin = new System.Windows.Forms.Padding(3);
             this._ChoosePortButton.Name = "_ChoosePortButton";
             this._ChoosePortButton.Size = new System.Drawing.Size(28, 28);
             this._ChoosePortButton.Text = "选择串口";
@@ -134,7 +127,7 @@
             this._ConfigurePortButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.config;
             this._ConfigurePortButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._ConfigurePortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._ConfigurePortButton.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
+            this._ConfigurePortButton.Margin = new System.Windows.Forms.Padding(3);
             this._ConfigurePortButton.Name = "_ConfigurePortButton";
             this._ConfigurePortButton.Size = new System.Drawing.Size(28, 28);
             this._ConfigurePortButton.Text = "编辑串口配置";
@@ -146,7 +139,7 @@
             this._OpenPortButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.open;
             this._OpenPortButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._OpenPortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._OpenPortButton.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
+            this._OpenPortButton.Margin = new System.Windows.Forms.Padding(3);
             this._OpenPortButton.Name = "_OpenPortButton";
             this._OpenPortButton.Size = new System.Drawing.Size(28, 28);
             this._OpenPortButton.Text = "打开串口";
@@ -158,7 +151,7 @@
             this._ClosePortButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.close;
             this._ClosePortButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._ClosePortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._ClosePortButton.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
+            this._ClosePortButton.Margin = new System.Windows.Forms.Padding(3);
             this._ClosePortButton.Name = "_ClosePortButton";
             this._ClosePortButton.Size = new System.Drawing.Size(28, 28);
             this._ClosePortButton.Text = "关闭串口";
@@ -170,7 +163,7 @@
             this._StartButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.start;
             this._StartButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._StartButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._StartButton.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
+            this._StartButton.Margin = new System.Windows.Forms.Padding(3);
             this._StartButton.Name = "_StartButton";
             this._StartButton.Size = new System.Drawing.Size(28, 28);
             this._StartButton.Text = "开始 发送与监听数据";
@@ -182,7 +175,7 @@
             this._PauseButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.pause;
             this._PauseButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._PauseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._PauseButton.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
+            this._PauseButton.Margin = new System.Windows.Forms.Padding(3);
             this._PauseButton.Name = "_PauseButton";
             this._PauseButton.Size = new System.Drawing.Size(28, 28);
             this._PauseButton.Text = "暂停 发送与监听数据";
@@ -194,7 +187,7 @@
             this._StopButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.stop;
             this._StopButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._StopButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._StopButton.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
+            this._StopButton.Margin = new System.Windows.Forms.Padding(3);
             this._StopButton.Name = "_StopButton";
             this._StopButton.Size = new System.Drawing.Size(28, 28);
             this._StopButton.Text = "停止 发送与监听数据";
@@ -206,7 +199,7 @@
             this._QuestionsEditorButton.Image = global::NKnife.Kits.ChannelKit.Properties.Resources.protocol;
             this._QuestionsEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._QuestionsEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._QuestionsEditorButton.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
+            this._QuestionsEditorButton.Margin = new System.Windows.Forms.Padding(3);
             this._QuestionsEditorButton.Name = "_QuestionsEditorButton";
             this._QuestionsEditorButton.Size = new System.Drawing.Size(28, 28);
             this._QuestionsEditorButton.Text = "编辑发送的数据";
@@ -238,7 +231,6 @@
         private System.Windows.Forms.ToolStripButton _ChoosePortButton;
         private System.Windows.Forms.ToolStripButton _StartButton;
         private System.Windows.Forms.ToolStripButton _PauseButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton _ConfigurePortButton;
         private System.Windows.Forms.ToolStripStatusLabel _InfoLabel;
         private System.Windows.Forms.ToolStripStatusLabel _SpaceLabel;

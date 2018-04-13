@@ -146,16 +146,19 @@ namespace NKnife.Channels.Serials
         #endregion
 
         /// <summary>
-        /// 返回本组询问中最长的超时
+        /// 返回本组询问中最长的超时。超时包括两个时间值，一个是循环间隔，和等待超时，取出最长的做为大循环的等待。
         /// </summary>
         public int GetMaxTimeout()
         {
             int max = 0;
             foreach (var question in this)
             {
-                var timeout = question.Timeout;
-                if (timeout > max)
-                    max = timeout;
+                var time = question.LoopInterval;
+                if (time > max)
+                    max = time;
+                time = question.Timeout;
+                if (time > max)
+                    max = time;
             }
             return max;
         }
