@@ -28,7 +28,7 @@ namespace NKnife.Timers
         /// <summary>
         /// 注入本工作的执行方法。返回true表明执行完成，并实现了期望的效果；false反之，可能出现了执行异常，例如，发送对话请求后，未得到远端回应。
         /// </summary>
-        public Func<bool> Func { get; set; }
+        public Func<Job, bool> Func { get; set; }
 
         #region Implementation of IJobPoolItem
 
