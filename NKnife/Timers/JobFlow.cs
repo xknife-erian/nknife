@@ -12,12 +12,17 @@ namespace NKnife.Timers
     /// </summary>
     public class JobFlow
     {
-        protected readonly AutoResetEvent _Flow = new AutoResetEvent(false);
+        private readonly AutoResetEvent _Flow = new AutoResetEvent(false);
 
         /// <summary>
         /// 中断工作流的标记。
         /// </summary>
-        protected bool _BreakFlag = false;
+        private bool _BreakFlag = false;
+
+        /// <summary>
+        /// 暂停工作流的标记
+        /// </summary>
+        private bool _PauseFlag = false;
 
         /// <summary>
         /// 构造函数。描述一个Job的顺序工作流，其中包括仅执行一次的Job,和需要循环执行的Job。
@@ -33,30 +38,51 @@ namespace NKnife.Timers
         public JobPool Pool { get; } = new JobPool();
 
         /// <summary>
-        /// 中断工作流
+        /// 运行工作流
         /// </summary>
-        public void Break()
-        {
-            _BreakFlag = true;
-        }
-
-        public void Run()
+        public virtual void Run()
         {
             _BreakFlag = false;
             RunMethod(Pool);
         }
 
         /// <summary>
+        /// 中断工作流
+        /// </summary>
+        public virtual void Break()
+        {
+            _BreakFlag = true;
+        }
+
+        /// <summary>
+        /// 暂停工作流，工作流只是暂停，下次启动时，会从断点处继续。
+        /// </summary>
+        public virtual void Pause()
+        {
+            _PauseFlag = true;
+        }
+
+        /// <summary>
+        /// 从断点处继续工作流
+        /// </summary>
+        public virtual void Resume()
+        {
+            _PauseFlag = false;
+            _Flow.Set();
+        }
+
+        /// <summary>
         /// 当前Job的执行次数
         /// </summary>
-        protected int _LoopNumber = 0;
+        private int _LoopNumber = 0;
 
         /// <summary>
         /// 递归完成内部所有的Job
         /// </summary>
-        protected void RunMethod(IList<IJobPoolItem> list)
+        protected virtual void RunMethod(IList<IJobPoolItem> list)
         {
             var hasBreak = false;
+
             foreach (var jobItem in list)
             {
                 if (_BreakFlag)//当检测到中断信号时，不再运行Job
@@ -88,7 +114,7 @@ namespace NKnife.Timers
         /// 运行单个Job
         /// </summary>
         /// <param name="job">单个Job</param>
-        protected void RunJob(Job job)
+        protected virtual void RunJob(Job job)
         {
             if (_BreakFlag)//当检测到中断信号时，不再运行Job
                 return;
@@ -97,6 +123,8 @@ namespace NKnife.Timers
             OnRan(new EventArgs<Job>(job));
             //当运行异常时，静置至超时时长，否则静默至间隔时长即结束
             _Flow.WaitOne(success ? job.Interval : job.Timeout);
+            if (_PauseFlag)//检测暂停标记
+                _Flow.Reset();
             _LoopNumber++;
             //当该Job需要循环
             //当没有设置循环次数，即无限循环
