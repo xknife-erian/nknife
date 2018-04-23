@@ -158,8 +158,8 @@
     <Compile Include="Protocol\Generic\BytesProtocolPacker.cs" />
     <Compile Include="Protocol\Generic\BytesProtocolUnPacker.cs" />
     <Compile Include="Interface\IJobPoolItem.cs" />
-    <Compile Include="Timers\Job.cs" />
-    <Compile Include="Timers\JobPool.cs" />
+    <Compile Include="Interface\IJob.cs" />
+    <Compile Include="Interface\IJobPool.cs" />
     <Compile Include="Tunnel\Base\BaseProtocolHandler`.cs" />
     <Compile Include="Protocol\Generic\StringProtocol.cs" />
     <Compile Include="Protocol\Generic\StringProtocolFamily.cs" />

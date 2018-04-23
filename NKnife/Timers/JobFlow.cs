@@ -35,7 +35,7 @@ namespace NKnife.Timers
         /// <summary>
         /// 工作池。工作池中的Job将会被顺序执行一次（当某Job设定为无限循环时如果没有外部打断，将不会全部执行完毕）。
         /// </summary>
-        public JobPool Pool { get; } = new JobPool();
+        public IJobPool Pool { get; set; }
 
         /// <summary>
         /// 运行工作流
@@ -81,19 +81,15 @@ namespace NKnife.Timers
         /// </summary>
         protected virtual void RunMethod(IList<IJobPoolItem> list)
         {
-            var hasBreak = false;
-
             foreach (var jobItem in list)
             {
                 if (_BreakFlag)//当检测到中断信号时，不再运行Job
                 {
-                    hasBreak = true;
                     break;
                 }
-
                 if (!jobItem.IsPool)
                 {
-                    if (jobItem is Job job)
+                    if (jobItem is IJob job)
                     {
                         _LoopNumber = 0;
                         RunJob(job); //执行单个Job的运行
@@ -101,12 +97,11 @@ namespace NKnife.Timers
                 }
                 else
                 {
-                    if (jobItem is JobPool pool)
+                    if (jobItem is IJobPool pool)
                         RunMethod(pool); //递归
                 }
             }
-
-            if (!hasBreak)//如是有中断信号，那么不算是所有工作完成
+            if (!_BreakFlag)//如是有中断信号，那么不算是所有工作完成
                 OnAllWorkDone();
         }
 
@@ -114,13 +109,13 @@ namespace NKnife.Timers
         /// 运行单个Job
         /// </summary>
         /// <param name="job">单个Job</param>
-        protected virtual void RunJob(Job job)
+        protected virtual void RunJob(IJob job)
         {
             if (_BreakFlag)//当检测到中断信号时，不再运行Job
                 return;
-            OnRunning(new EventArgs<Job>(job));
+            OnRunning(new EventArgs<IJob>(job));
             var success = job.Func.Invoke(job);
-            OnRan(new EventArgs<Job>(job));
+            OnRan(new EventArgs<IJob>(job));
             //当运行异常时，静置至超时时长，否则静默至间隔时长即结束
             _Flow.WaitOne(success ? job.Interval : job.Timeout);
             if (_PauseFlag)//检测暂停标记
@@ -144,19 +139,19 @@ namespace NKnife.Timers
         /// <summary>
         /// 当Job即将被执行时发生
         /// </summary>
-        public event EventHandler<EventArgs<Job>> Running;
+        public event EventHandler<EventArgs<IJob>> Running;
 
         /// <summary>
         /// 当Job执行完成后发生
         /// </summary>
-        public event EventHandler<EventArgs<Job>> Ran;
+        public event EventHandler<EventArgs<IJob>> Ran;
 
-        protected virtual void OnRunning(EventArgs<Job> e)
+        protected virtual void OnRunning(EventArgs<IJob> e)
         {
             Running?.Invoke(this, e);
         }
 
-        protected virtual void OnRan(EventArgs<Job> e)
+        protected virtual void OnRan(EventArgs<IJob> e)
         {
             Ran?.Invoke(this, e);
         }
