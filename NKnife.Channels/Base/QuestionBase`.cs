@@ -1,4 +1,5 @@
-﻿using NKnife.Channels.Interfaces;
+﻿using System;
+using NKnife.Channels.Interfaces;
 using NKnife.Interface;
 
 namespace NKnife.Channels.Base
@@ -10,13 +11,13 @@ namespace NKnife.Channels.Base
     {
         protected QuestionBase(IId instrument, bool isLoop, int loopInterval, T data)
         {
-            //Channel = channel;
             Instrument = instrument;
-            LoopInterval = loopInterval;
-            //Target = target;
+            Interval = loopInterval;
             IsLoop = isLoop;
             Data = data;
         }
+
+        public bool IsPool { get; } = false;
 
         #region Implementation of IDeviceSwap
 
@@ -25,15 +26,14 @@ namespace NKnife.Channels.Base
         /// </summary>
         public bool IsLoop { get; set; }
 
-        /// <summary>
-        /// 当循环时的间隔
-        /// </summary>
-        public int LoopInterval { get; set; }
+        public int Interval { get; set; }
+        public int LoopNumber { get; set; }
+        public Func<IJob, bool> Func { get; set; }
 
         /// <summary>
         /// 本次询问的超时时长
         /// </summary>
-        public abstract int Timeout { get; set; }
+        public int Timeout { get; set; }
 
         /// <summary>
         /// 本次交换的数据
@@ -46,5 +46,6 @@ namespace NKnife.Channels.Base
         public IId Instrument { get; }
 
         #endregion
+
     }
 }

@@ -10,7 +10,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "全部是需要循环的")]
         public void PeekOrDequeueTest1()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, true, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -37,7 +37,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在8")]
         public void PeekOrDequeueTest10()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, false, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -62,7 +62,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在9")]
         public void PeekOrDequeueTest11()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, false, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, false, 1, new byte[] {0x02});
@@ -87,7 +87,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在10")]
         public void PeekOrDequeueTest12()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, false, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -122,7 +122,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在11")]
         public void PeekOrDequeueTest13()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, true, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -158,7 +158,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在12")]
         public void PeekOrDequeueTest14()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, true, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -193,7 +193,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "全部是不需要循环的")]
         public void PeekOrDequeueTest2()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, false, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, false, 1, new byte[] {0x02});
@@ -215,7 +215,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在1")]
         public void PeekOrDequeueTest3()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, true, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, false, 1, new byte[] {0x02});
@@ -248,7 +248,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在2")]
         public void PeekOrDequeueTest4()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, false, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -280,7 +280,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在3")]
         public void PeekOrDequeueTest5()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, true, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -313,7 +313,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在4")]
         public void PeekOrDequeueTest6()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, false, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, false, 1, new byte[] {0x02});
@@ -343,7 +343,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在5")]
         public void PeekOrDequeueTest7()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, true, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, false, 1, new byte[] {0x02});
@@ -373,7 +373,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在6")]
         public void PeekOrDequeueTest8()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, false, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, true, 1, new byte[] {0x02});
@@ -405,7 +405,7 @@ namespace NKnife.Channels.Unittests
         [Test(Description = "需要循环的和不需要循环的均存在7")]
         public void PeekOrDequeueTest9()
         {
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
 
             var q1 = new SerialQuestion(null, true, 1, new byte[] {0x01});
             var q2 = new SerialQuestion(null, false, 1, new byte[] {0x02});

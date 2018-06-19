@@ -184,26 +184,26 @@ namespace NKnife.Channels.Serials
             _SerialPort.DiscardInBuffer();
         }
 
-        private SerialQuestionGroup _QuestionGroup;
+        private SerialQuestionPool _QuestionPool;
 
         /// <summary>
         ///     更新即将发送的数据
         /// </summary>
-        /// <param name="questionGroup">即将发送的数据</param>
-        public override void UpdateQuestionGroup(IQuestionGroup<byte[]> questionGroup)
+        /// <param name="questionPool">即将发送的数据</param>
+        public override void UpdateQuestionPool(IQuestionPool questionPool)
         {
-            if (!(questionGroup is SerialQuestionGroup))
-                throw new ArgumentException(nameof(questionGroup), $"{nameof(questionGroup)} need is {(typeof(SerialQuestionGroup)).Name}");
-            UpdateQuestionGroup((SerialQuestionGroup) questionGroup);
+            if (!(questionPool is SerialQuestionPool))
+                throw new ArgumentException(nameof(questionPool), $"{nameof(questionPool)} need is {(typeof(SerialQuestionPool)).Name}");
+            UpdateQuestionPool((SerialQuestionPool) questionPool);
         }
 
         /// <summary>
         ///     更新即将发送的数据
         /// </summary>
-        /// <param name="questionGroup">即将发送的数据</param>
-        public void UpdateQuestionGroup(SerialQuestionGroup questionGroup)
+        /// <param name="questionPool">即将发送的数据</param>
+        public void UpdateQuestionPool(SerialQuestionPool questionPool)
         {
-            _QuestionGroup = questionGroup;
+            _QuestionPool = questionPool;
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace NKnife.Channels.Serials
                 ReceivedFunc = receivedFunc;
             }
 
-            public SerialQuestionGroup QuestionGroup { get; set; }
+            public SerialQuestionPool QuestionPool { get; set; }
             public SerialPort SerialPort { get; set; }
 
             public Action<IQuestion<byte[]>> SendAction { get; set; }
@@ -266,13 +266,13 @@ namespace NKnife.Channels.Serials
 
         protected void StartSendTimer(object param)
         {
-            if (_QuestionGroup != null && _QuestionGroup.Count > 0)
+            if (_QuestionPool != null && _QuestionPool.Count > 0)
             {
                 var talkinfo = (TalkInfo) param;
-                talkinfo.QuestionGroup = _QuestionGroup;
+                talkinfo.QuestionPool = _QuestionPool;
                 talkinfo.SerialPort = _SerialPort;
                 //先设置为最大间隔
-                _LoopTimer = new Timer(SyncMethodRun, talkinfo, 0, _QuestionGroup.First.LoopInterval);
+                _LoopTimer = new Timer(SyncMethodRun, talkinfo, 0, _QuestionPool.First.LoopInterval);
                 _logger.Info("同步自动发送数据线程开始..");
                 _SyncLoopTimerWaiter.WaitOne();//当QuestionGroup中有需要不断循环的询问时，进程将阻塞在此，直到收到信号
                 _LoopTimer.Dispose();
@@ -291,14 +291,14 @@ namespace NKnife.Channels.Serials
             {
                 return;
             }
-            if (_QuestionGroup.Count <= 0)//所有询问都被消费完毕
+            if (_QuestionPool.Count <= 0)//所有询问都被消费完毕
             {
                 _SyncLoopTimerWaiter.Set();
                 return;
             }
 
             var complate = false;//是否读取到了完整的数据，即这次对话是否完成
-            var question = _QuestionGroup.PeekOrDequeue();
+            var question = _QuestionPool.PeekOrDequeue();
             try
             {
                 methodParams.SendAction.Invoke(question);//回调执行前方法
@@ -405,9 +405,9 @@ namespace NKnife.Channels.Serials
             }
             if (buffer != null && buffer.Length > 0)
             {
-                if (_QuestionGroup != null && _QuestionGroup.Count > 0)
+                if (_QuestionPool != null && _QuestionPool.Count > 0)
                 {
-                    var q = _QuestionGroup[_QuestionGroup.CurrentIndex];
+                    var q = _QuestionPool[_QuestionPool.CurrentIndex];
                     OnDataArrived(new SerialChannelAnswerDataEventArgs(q.Instrument, buffer));
                 }
                 else
@@ -431,11 +431,11 @@ namespace NKnife.Channels.Serials
         protected void AutoSendThread(object parameter)
         {
             var autoEvent = new AutoResetEvent(false);
-            _AsyncStatusChecker.QuestionGroup = _QuestionGroup;
+            _AsyncStatusChecker.QuestionPool = _QuestionPool;
             _AsyncStatusChecker.SerialPort = _SerialPort;
             _AsyncStatusChecker.IsStopFlag = false;
             _AsyncStatusChecker.SendAction = parameter as Action<IQuestion<byte[]>>;
-            var autoSendTimer = new Timer(_AsyncStatusChecker.Run, autoEvent, 0, _QuestionGroup.GetMaxTimeout());
+            var autoSendTimer = new Timer(_AsyncStatusChecker.Run, autoEvent, 0, _QuestionPool.GetMaxTimeout());
             _logger.Info("异步自动发送数据线程开始..");
             autoEvent.WaitOne();
             autoSendTimer.Dispose();
@@ -444,7 +444,7 @@ namespace NKnife.Channels.Serials
 
         protected class AsyncStatusChecker
         {
-            public SerialQuestionGroup QuestionGroup { get; set; }
+            public SerialQuestionPool QuestionPool { get; set; }
             public SerialPort SerialPort { get; set; }
             public bool IsStopFlag { private get; set; }
             public Action<IQuestion<byte[]>> SendAction { get; set; }
@@ -454,12 +454,12 @@ namespace NKnife.Channels.Serials
                 var autoEvent = (AutoResetEvent) stateInfo;
                 try
                 {
-                    if (QuestionGroup == null || QuestionGroup.Count <= 0)
+                    if (QuestionPool == null || QuestionPool.Count <= 0)
                     {
                         autoEvent.Set();
                         return;
                     }
-                    var question = QuestionGroup.PeekOrDequeue();
+                    var question = QuestionPool.PeekOrDequeue();
                     SendAction?.Invoke(question);
                     SerialPort.Write(question.Data, 0, question.Data.Length);
                     if (IsStopFlag)

@@ -48,10 +48,10 @@ namespace NKnife.Kits.ChannelKit.ViewModels
         public void Start()
         {
             var channel = _ChannelService.GetChannel(Port);
-            var sqg = new SerialQuestionGroup();
+            var sqg = new SerialQuestionPool();
             sqg.Add(new SerialQuestion(null, true, 500, new byte[] { 0x11, 0x22 }));
             sqg.Add(new SerialQuestion(null, true, 100, new byte[] { 0xAA, 0xBB, 0xCC, 0xDD }));
-            channel.UpdateQuestionGroup(sqg);
+            channel.UpdateQuestionPool(sqg);
             channel.AutoSend(SendAction);
         }
 

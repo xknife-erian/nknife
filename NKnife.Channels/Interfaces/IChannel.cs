@@ -47,8 +47,8 @@ namespace NKnife.Channels.Interfaces
         /// <summary>
         ///     更新即将发送的数据
         /// </summary>
-        /// <param name="questionGroup">即将发送的数据</param>
-        void UpdateQuestionGroup(IQuestionGroup<T> questionGroup);
+        /// <param name="questionPool">即将发送的数据</param>
+        void UpdateQuestionPool(IQuestionPool questionPool);
 
         /// <summary>
         ///     发送数据并同步等待数据返回

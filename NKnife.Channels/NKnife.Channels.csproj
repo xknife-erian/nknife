@@ -69,7 +69,7 @@
     <Compile Include="Serials\SerialChannelMap.cs" />
     <Compile Include="Serials\SerialConfig.cs" />
     <Compile Include="Serials\SerialQuestion.cs" />
-    <Compile Include="Serials\SerialQuestionGroup.cs" />
+    <Compile Include="Serials\SerialQuestionPool.cs" />
     <Compile Include="Serials\SerialUtils.cs" />
     <Compile Include="Interfaces\IAlgorithm.cs" />
     <Compile Include="Interfaces\IAnswer.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="Interfaces\IChannelConfig.cs" />
     <Compile Include="Interfaces\IMultiChannel.cs" />
     <Compile Include="Interfaces\IQuestion.cs" />
-    <Compile Include="Interfaces\IQuestionGroup.cs" />
+    <Compile Include="Interfaces\IQuestionPool.cs" />
     <Compile Include="Interfaces\ISwap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

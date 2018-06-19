@@ -77,9 +77,9 @@ namespace NKnife.Kits.ChannelKit
             Console.WriteLine("-- 请输入一条需要发送的内容:");
             var line = Console.ReadLine();
             var question = new SerialQuestion(null, false, 100, line.ToBytes());
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
             group.Add(question);
-            _serialChannel.UpdateQuestionGroup(group);
+            _serialChannel.UpdateQuestionPool(group);
             if (_serialChannel.IsSynchronous)
                 _serialChannel.SendReceiver(Serial_DataSend, Serial_DataSyncArrived);
             else
@@ -91,9 +91,9 @@ namespace NKnife.Kits.ChannelKit
             Console.WriteLine("-- 请输入一条需要循环发送的内容:");
             var line = Console.ReadLine();
             var question = new SerialQuestion(null, true, 3000, line.ToBytes());
-            var group = new SerialQuestionGroup();
+            var group = new SerialQuestionPool();
             group.Add(question);
-            _serialChannel.UpdateQuestionGroup(group);
+            _serialChannel.UpdateQuestionPool(group);
             if (_serialChannel.IsSynchronous)
                 _serialChannel.SendReceiver(Serial_DataSend, Serial_DataSyncArrived);
             else

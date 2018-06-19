@@ -2,7 +2,7 @@
 
 namespace NKnife.Interface
 {
-    public interface IJobPool : IList<IJobPoolItem>, IJobPoolItem
+    public interface IJobPool : ICollection<IJobPoolItem>, IJobPoolItem
     {
         void AddRange(IEnumerable<IJobPoolItem> jobs);
     }
