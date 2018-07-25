@@ -79,7 +79,7 @@ namespace NKnife.Timers
         /// <summary>
         /// 递归完成内部所有的Job
         /// </summary>
-        protected virtual void RunMethod(IList<IJobPoolItem> list)
+        protected virtual void RunMethod(ICollection<IJobPoolItem> list)
         {
             foreach (var jobItem in list)
             {
