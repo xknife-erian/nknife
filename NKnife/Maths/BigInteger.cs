@@ -180,10 +180,9 @@ namespace NKnife.Maths
         private readonly uint[] _Data; // stores bytes from the Big Integer
         // number of actual chars used
 
-        //***********************************************************************
-        // Constructor (Default value for BigInteger is 0
-        //***********************************************************************
-
+        ///***********************************************************************
+        /// Constructor (Default value for BigInteger is 0
+        ///***********************************************************************
         public BigInteger()
         {
             _Data = new uint[MAX_LENGTH];
