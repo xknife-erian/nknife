@@ -1,4 +1,5 @@
-﻿using NKnife.Channels.Interfaces;
+﻿using System;
+using NKnife.Channels.Interfaces;
 using NKnife.Interface;
 
 namespace NKnife.Channels.Base
@@ -30,6 +31,13 @@ namespace NKnife.Channels.Base
         /// 执行数据采集的仪器
         /// </summary>
         public IId Instrument { get; }
+        public int Timeout { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsLoop { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Interval { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int LoopNumber { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Func<IJob, bool> Func { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public bool IsPool => throw new NotImplementedException();
 
         /// <summary>
         /// 被采集、观察的对象，如电阻源，电压源等。

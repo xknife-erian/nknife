@@ -58,7 +58,6 @@
     <Compile Include="BytesTests.cs" />
     <Compile Include="SerialChannelUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerialQuestionGroupUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NKnife.Channels\NKnife.Channels.csproj">

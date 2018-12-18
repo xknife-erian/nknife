@@ -5,6 +5,7 @@ using Common.Logging;
 using NKnife.Channels.Base;
 using NKnife.Channels.EventParams;
 using NKnife.Channels.Interfaces;
+using NKnife.Interface;
 
 namespace NKnife.Channels.Serials
 {
@@ -190,7 +191,7 @@ namespace NKnife.Channels.Serials
         ///     更新即将发送的数据
         /// </summary>
         /// <param name="questionPool">即将发送的数据</param>
-        public override void UpdateQuestionPool(IQuestionPool questionPool)
+        public override void UpdateQuestionPool(IJobPool questionPool)
         {
             if (!(questionPool is SerialQuestionPool))
                 throw new ArgumentException(nameof(questionPool), $"{nameof(questionPool)} need is {(typeof(SerialQuestionPool)).Name}");
@@ -272,7 +273,7 @@ namespace NKnife.Channels.Serials
                 talkinfo.QuestionPool = _QuestionPool;
                 talkinfo.SerialPort = _SerialPort;
                 //先设置为最大间隔
-                _LoopTimer = new Timer(SyncMethodRun, talkinfo, 0, _QuestionPool.First.LoopInterval);
+                //----------------_LoopTimer = new Timer(SyncMethodRun, talkinfo, 0, _QuestionPool[0].);
                 _logger.Info("同步自动发送数据线程开始..");
                 _SyncLoopTimerWaiter.WaitOne();//当QuestionGroup中有需要不断循环的询问时，进程将阻塞在此，直到收到信号
                 _LoopTimer.Dispose();
@@ -298,6 +299,7 @@ namespace NKnife.Channels.Serials
             }
 
             var complate = false;//是否读取到了完整的数据，即这次对话是否完成
+            /*
             var question = _QuestionPool.PeekOrDequeue();
             try
             {
@@ -325,6 +327,7 @@ namespace NKnife.Channels.Serials
                         }
                     }
                 }
+                
             }
             catch (Exception e)
             {
@@ -333,7 +336,7 @@ namespace NKnife.Channels.Serials
             finally
             {
                 _OnSyncSent = false;
-            }
+            }*/
         }
 
         /// <summary>
@@ -405,6 +408,7 @@ namespace NKnife.Channels.Serials
             }
             if (buffer != null && buffer.Length > 0)
             {
+                /*
                 if (_QuestionPool != null && _QuestionPool.Count > 0)
                 {
                     var q = _QuestionPool[_QuestionPool.CurrentIndex];
@@ -413,7 +417,7 @@ namespace NKnife.Channels.Serials
                 else
                 {
                     OnDataArrived(new SerialChannelAnswerDataEventArgs(null, buffer));
-                }
+                }*/
             }
         }
 
@@ -435,11 +439,12 @@ namespace NKnife.Channels.Serials
             _AsyncStatusChecker.SerialPort = _SerialPort;
             _AsyncStatusChecker.IsStopFlag = false;
             _AsyncStatusChecker.SendAction = parameter as Action<IQuestion<byte[]>>;
+            /*
             var autoSendTimer = new Timer(_AsyncStatusChecker.Run, autoEvent, 0, _QuestionPool.GetMaxTimeout());
             _logger.Info("异步自动发送数据线程开始..");
             autoEvent.WaitOne();
             autoSendTimer.Dispose();
-            _logger.Info("异步自动发送数据线程中止..");
+            _logger.Info("异步自动发送数据线程中止..");*/
         }
 
         protected class AsyncStatusChecker
@@ -459,9 +464,10 @@ namespace NKnife.Channels.Serials
                         autoEvent.Set();
                         return;
                     }
+                    /*
                     var question = QuestionPool.PeekOrDequeue();
                     SendAction?.Invoke(question);
-                    SerialPort.Write(question.Data, 0, question.Data.Length);
+                    SerialPort.Write(question.Data, 0, question.Data.Length);*/
                     if (IsStopFlag)
                     {
                         autoEvent.Set();
