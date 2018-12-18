@@ -19,7 +19,7 @@ namespace NKnife.NLog.Properties {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class OwnResources {
@@ -47,7 +47,7 @@ namespace NKnife.NLog.Properties {
         }
         
         /// <summary>
-        ///   使用此强类型资源类，为所有资源查找
+        ///   重写当前线程的 CurrentUICulture 属性
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -65,16 +65,16 @@ namespace NKnife.NLog.Properties {
         ///
         ///&lt;nlog xmlns=&quot;http://www.nlog-project.org/schemas/NLog.xsd&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
         ///  &lt;extensions&gt;
-        ///    &lt;add assembly=&quot;NKnife.NLog3&quot; /&gt;
+        ///    &lt;add assembly=&quot;NKnife.NLog4&quot; /&gt;
         ///  &lt;/extensions&gt;
         ///  &lt;targets async=&quot;true&quot;&gt;
         ///    &lt;!--在主程序的界面上显示日志--&gt;
-        ///    &lt;target name=&quot;logpanel&quot; xsi:type=&quot;_LogPanel&quot; /&gt;
+        ///    &lt;target name=&quot;logger-list-view&quot; xsi:type=&quot;LoggerListView&quot; /&gt;
         ///    &lt;!--记录详细日志彩色控制台--&gt;
         ///    &lt;target name=&quot;console&quot; xsi:type=&quot;ColoredConsole&quot; layout=&quot;${date:format=mm\:ss\.fff} : ${message}&quot; /&gt;
         ///  &lt;/targets&gt;
         ///  &lt;rules&gt;
-        ///    &lt;logger name=&quot;*&quot; minLev [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &lt;logger n [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string nlog_winform_config {
             get {
@@ -87,7 +87,7 @@ namespace NKnife.NLog.Properties {
         ///
         ///&lt;nlog xmlns=&quot;http://www.nlog-project.org/schemas/NLog.xsd&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
         ///  &lt;extensions&gt;
-        ///    &lt;add assembly=&quot;NKnife.NLog3&quot; /&gt;
+        ///    &lt;add assembly=&quot;NKnife.NLog4&quot; /&gt;
         ///  &lt;/extensions&gt;
         ///  &lt;targets async=&quot;true&quot;&gt;
         ///    &lt;!--在主程序的界面上显示日志--&gt;
@@ -105,7 +105,7 @@ namespace NKnife.NLog.Properties {
         }
         
         /// <summary>
-        ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Icon NLogForm {
             get {
