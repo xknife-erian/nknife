@@ -259,12 +259,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Wrapper\HabitedDatas.cs" />
-    <Compile Include="Electronics\CircuitType.cs" />
-    <Compile Include="Electronics\Collections\Resistances.cs" />
-    <Compile Include="Electronics\Exceptions\ResistanceCollectionException.cs" />
-    <Compile Include="Electronics\Helper\ResistanceValueResolve.cs" />
-    <Compile Include="Electronics\Helper\ResistanceValueResolveModel.cs" />
-    <Compile Include="Electronics\Resistance.cs" />
     <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Interface\IFileCompress.cs" />
