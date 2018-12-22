@@ -15,9 +15,9 @@ namespace MonitorKnife.Tunnels.Common
     /// </summary>
     public class CareOneDatagramDecoder : BytesDatagramDecoder
     {
-        private static readonly ILog _logger = LogManager.GetLogger<CareOneDatagramDecoder>();
+        private static readonly ILog _Logger = LogManager.GetLogger<CareOneDatagramDecoder>();
 
-        public const byte LEAD = 0x09;
+        public const byte Lead = 0x09;
 
         public override byte[][] Execute(byte[] data, out int finishedIndex)
         {
@@ -26,7 +26,7 @@ namespace MonitorKnife.Tunnels.Common
             bool hasData = true;//是否有数据未解析完成
             while (hasData)
             {
-                if (data.Length > finishedIndex && data[finishedIndex] == LEAD)
+                if (data.Length > finishedIndex && data[finishedIndex] == Lead)
                 {
                     int length;
                     byte[] cs;
@@ -72,8 +72,8 @@ namespace MonitorKnife.Tunnels.Common
             }
             catch (Exception e)
             {
-                _logger.Warn(string.Format("解析单条数据时异常:{0}", e.Message), e);
-                _logger.Warn(data.ToHexString());
+                _Logger.Warn(string.Format("解析单条数据时异常:{0}", e.Message), e);
+                _Logger.Warn(data.ToHexString());
                 length = 0;
                 cs = new byte[0];
                 return false;

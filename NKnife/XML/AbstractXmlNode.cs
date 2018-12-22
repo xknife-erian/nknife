@@ -10,26 +10,26 @@ namespace NKnife.XML
         /// <summary>
         /// 内部的XmlNode（组合）
         /// </summary>
-        internal protected XmlNode BaseXmlNode;
+        internal protected XmlNode _BaseXmlNode;
 
         public virtual void AppendChild(AbstractBaseXmlNode baseNode)
         {
-            this.BaseXmlNode.AppendChild(baseNode.BaseXmlNode);
+            this._BaseXmlNode.AppendChild(baseNode._BaseXmlNode);
         }
 
         public virtual void RemoveChild(AbstractBaseXmlNode baseNode)
         {
-            this.BaseXmlNode.RemoveChild(baseNode.BaseXmlNode);
+            this._BaseXmlNode.RemoveChild(baseNode._BaseXmlNode);
         }
 
         public virtual string GetAttribute(string name)
         {
-            return (this.BaseXmlNode as XmlElement).GetAttribute(name);
+            return (this._BaseXmlNode as XmlElement).GetAttribute(name);
         }
 
         public virtual void SetAttribute(string name, string value)
         {
-            (this.BaseXmlNode as XmlElement).SetAttribute(name, value);
+            (this._BaseXmlNode as XmlElement).SetAttribute(name, value);
         }
     }
 }

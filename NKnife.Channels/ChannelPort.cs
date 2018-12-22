@@ -10,10 +10,10 @@ namespace NKnife.Channels
     /// </summary>
     public class ChannelPort
     {
-        private readonly int[] _SerialPort = {-1, 115200};
-        private string _Id;
-        private IPEndPoint _IpEndPoint;
-        private string[] _SerialPortInfo;
+        private readonly int[] _serialPort = {-1, 115200};
+        private string _id;
+        private IPEndPoint _ipEndPoint;
+        private string[] _serialPortInfo;
 
         public ChannelType ChannelType { get; private set; }
 
@@ -23,30 +23,30 @@ namespace NKnife.Channels
         /// <returns>一般由2个值构成，第1个值是串口，第2个值是该串口的波特率</returns>
         public int[] GetSerialPortInfo()
         {
-            if (_SerialPort[0] == -1)
+            if (_serialPort[0] == -1)
             {
-                string port = _SerialPortInfo[0].ToUpper().TrimStart(new[] {'C', 'O', 'M'});
-                if (!int.TryParse(port, out _SerialPort[0]))
-                    _SerialPort[0] = 0;
-                if (!int.TryParse(_SerialPortInfo[1], out _SerialPort[1]))
-                    _SerialPort[1] = 115200;
+                string port = _serialPortInfo[0].ToUpper().TrimStart(new[] {'C', 'O', 'M'});
+                if (!int.TryParse(port, out _serialPort[0]))
+                    _serialPort[0] = 0;
+                if (!int.TryParse(_serialPortInfo[1], out _serialPort[1]))
+                    _serialPort[1] = 115200;
             }
-            return _SerialPort;
+            return _serialPort;
         }
 
         public IPEndPoint GetIpEndPoint()
         {
-            if (_IpEndPoint == null)
+            if (_ipEndPoint == null)
             {
                 IPAddress ip;
-                if (!IPAddress.TryParse(_SerialPortInfo[0], out ip))
+                if (!IPAddress.TryParse(_serialPortInfo[0], out ip))
                     ip = new IPAddress(new byte[] {0x00, 0x00, 0x00, 0x00});
                 int port = 0;
-                if (!int.TryParse(_SerialPortInfo[1], out port))
+                if (!int.TryParse(_serialPortInfo[1], out port))
                     port = 5025;
-                _IpEndPoint = new IPEndPoint(ip, port);
+                _ipEndPoint = new IPEndPoint(ip, port);
             }
-            return _IpEndPoint;
+            return _ipEndPoint;
         }
 
         public static ChannelPort Build(ChannelType channelType, params string[] ports)
@@ -54,17 +54,17 @@ namespace NKnife.Channels
             var port = new ChannelPort
             {
                 ChannelType = channelType,
-                _SerialPortInfo = ports
+                _serialPortInfo = ports
             };
             switch (channelType)
             {
                 case ChannelType.Serial:
                 {
-                    if (!int.TryParse(ports[0], out port._SerialPort[0]))
-                        port._SerialPort[0] = 0;
-                    if (ports.Length == 1 || !int.TryParse(ports[1], out port._SerialPort[1]))
-                        port._SerialPort[1] = 115200;
-                    port._Id = $"{port._SerialPort[0]}:{port._SerialPort[1]}";
+                    if (!int.TryParse(ports[0], out port._serialPort[0]))
+                        port._serialPort[0] = 0;
+                    if (ports.Length == 1 || !int.TryParse(ports[1], out port._serialPort[1]))
+                        port._serialPort[1] = 115200;
+                    port._id = $"{port._serialPort[0]}:{port._serialPort[1]}";
                     break;
                 }
                 case ChannelType.Tcpip:
@@ -72,8 +72,8 @@ namespace NKnife.Channels
                     IPAddress ip = IPAddress.Parse(ports[0]);
                     int p = int.Parse(ports[1]);
                     var ipe = new IPEndPoint(ip, p);
-                    port._IpEndPoint = ipe;
-                    port._Id = ipe.ToString();
+                    port._ipEndPoint = ipe;
+                    port._id = ipe.ToString();
                     break;
                 }
             }
@@ -106,16 +106,16 @@ namespace NKnife.Channels
 
         protected bool Equals(ChannelPort other)
         {
-            return _Id.Equals(other._Id) && ChannelType == other.ChannelType;
+            return _id.Equals(other._id) && ChannelType == other.ChannelType;
         }
 
-        private readonly int _Hash = (Guid.NewGuid().GetHashCode() >> 28) * 31;
+        private readonly int _hash = (Guid.NewGuid().GetHashCode() >> 28) * 31;
 
         /// <summary>用作特定类型的哈希函数。</summary>
         /// <returns>当前 <see cref="T:System.Object" /> 的哈希代码。</returns>
         public override int GetHashCode()
         {
-            return _Hash;
+            return _hash;
         }
     }
 }

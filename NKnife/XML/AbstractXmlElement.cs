@@ -14,7 +14,7 @@ namespace NKnife.XML
         /// <param name="localname">Element的Localname</param>
         public AbstractXmlElement(AbstractXmlDocument doc, string localname)
         {
-            this.BaseXmlNode = (doc.BaseXmlNode as XmlDocument).CreateElement(localname);
+            this._BaseXmlNode = (doc._BaseXmlNode as XmlDocument).CreateElement(localname);
         }
     }
 }

@@ -11,12 +11,12 @@ namespace NKnife.Wrapper
     /// <summary>
     ///     描述用户习惯的数据，这是一个保存用户目录下的数据文件，该文件可以不存在，当使用时发现该文件不存在时，将创建，并创建默认值。
     /// </summary>
-    public class HabitedDatas
+    public class HabitData
     {
         protected string _FileName;
         protected string _UserApplicationDataPath;
 
-        protected HabitedDatas()
+        protected HabitData()
         {
             Load();
         }
@@ -36,7 +36,7 @@ namespace NKnife.Wrapper
             get
             {
                 if (string.IsNullOrEmpty(_FileName))
-                    _FileName = UserApplicationDataPath + "\\" + GetType().Name + ".HabitedDatas";
+                    _FileName = UserApplicationDataPath + "\\" + GetType().Name + ".HabitData";
                 return _FileName;
             }
         }
@@ -55,7 +55,7 @@ namespace NKnife.Wrapper
                     string path = Environment.GetFolderPath(folder);
                     string namespaceStr = Assembly.GetEntryAssembly().GetName().Name;
                     if (string.IsNullOrWhiteSpace(namespaceStr))
-                        namespaceStr = "HabitedDatasKnife";
+                        namespaceStr = "HabitDataKnife";
                     string subpath = namespaceStr.Replace('.', '\\').Insert(0, "\\");
                     _UserApplicationDataPath = path + subpath;
                     if (!Directory.Exists(_UserApplicationDataPath))

@@ -26,11 +26,11 @@ namespace NKnife.Kits.SocketKnife.Dialogs
     /// </summary>
     public partial class ProtocolEditorDialog : Window
     {
-        private readonly DialogViewModel _ViewModel = new DialogViewModel();
+        private readonly DialogViewModel _viewModel = new DialogViewModel();
 
         public ProtocolEditorDialog()
         {
-            DataContext = _ViewModel;
+            DataContext = _viewModel;
             InitializeComponent();
 
             var packers = UtilityType.FindTypesByDirectory(AppDomain.CurrentDomain.BaseDirectory, typeof(IProtocolPacker<>), true);
@@ -62,12 +62,12 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             CurrentProtocol.Command = _CommandTextBox.Text;
             CurrentProtocol.CommandParam = _CommandParamTextBox.Text;
             CurrentProtocol.Infomations.Clear();
-            foreach (var data in _ViewModel.PairDatas)
+            foreach (var data in _viewModel.PairDatas)
             {
                 CurrentProtocol.Infomations.Add(data.Key, data.Value);
             }
             CurrentProtocol.Tags.Clear();
-            foreach (var data in _ViewModel.Values)
+            foreach (var data in _viewModel.Values)
             {
                CurrentProtocol.Tags.Add(data);
             }
@@ -88,7 +88,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             var dialogResult = dialog.ShowDialog(this);
             if (dialogResult == true)
             {
-                _ViewModel.PairDatas.Add(new DialogViewModel.ProtocolPairData(dialog.Key, dialog.Value));
+                _viewModel.PairDatas.Add(new DialogViewModel.ProtocolPairData(dialog.Key, dialog.Value));
             }
         }
 
@@ -118,7 +118,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             var dialogResult = dialog.ShowDialog(this);
             if (dialogResult == true)
             {
-                _ViewModel.Values.Add(dialog.Value);
+                _viewModel.Values.Add(dialog.Value);
             }
         }
 
@@ -154,8 +154,8 @@ namespace NKnife.Kits.SocketKnife.Dialogs
 
             public class ProtocolPairData : ObservableObject
             {
-                private string _Key;
-                private string _Value;
+                private string _key;
+                private string _value;
 
                 public ProtocolPairData()
                 {
@@ -164,26 +164,26 @@ namespace NKnife.Kits.SocketKnife.Dialogs
 
                 public ProtocolPairData(string key, string value)
                 {
-                    _Key = key;
-                    _Value = value;
+                    _key = key;
+                    _value = value;
                 }
 
                 public string Key
                 {
-                    get { return _Key; }
+                    get { return _key; }
                     set
                     {
-                        _Key = value;
+                        _key = value;
                         RaisePropertyChanged(() => Key);
                     }
                 }
 
                 public string Value
                 {
-                    get { return _Value; }
+                    get { return _value; }
                     set
                     {
-                        _Value = value;
+                        _value = value;
                         RaisePropertyChanged(() => Value);
                     }
                 }

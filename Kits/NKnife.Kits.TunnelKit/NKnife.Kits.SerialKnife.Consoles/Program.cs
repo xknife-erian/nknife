@@ -10,27 +10,27 @@ namespace NKnife.Kits.SerialKnife.Consoles
 {
     internal class Program
     {
-        private static readonly ILog _logger = LogManager.GetLogger<Program>();
+        private static readonly ILog _Logger = LogManager.GetLogger<Program>();
 
         private static void Main(string[] args)
         {
             Console.ResetColor();
             Console.WriteLine("**** START ****************************");
 
-            DI.Initialize();
+            Di.Initialize();
 
-            _logger.Info("DI初始化结束....");
+            _Logger.Info("DI初始化结束....");
 
             var server = new SerialClient(10);
             server.Start();
 
             Thread.Sleep(100);
 
-            const int COUNT = 50;
-            Console.WriteLine("--{0}--------------", COUNT);
+            const int count = 50;
+            Console.WriteLine("--{0}--------------", count);
             var sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < COUNT; i++)
+            for (int i = 0; i < count; i++)
             {
                 for (int j = 209; j < 221; j++)
                 {
@@ -46,7 +46,7 @@ namespace NKnife.Kits.SerialKnife.Consoles
                 Thread.Sleep(1);
             }
             Console.WriteLine();
-            Console.WriteLine("--{0}--{1}-----", sw.ElapsedMilliseconds, sw.ElapsedMilliseconds/(COUNT*(12)));
+            Console.WriteLine("--{0}--{1}-----", sw.ElapsedMilliseconds, sw.ElapsedMilliseconds/(count*(12)));
             Console.ReadLine();
         }
 

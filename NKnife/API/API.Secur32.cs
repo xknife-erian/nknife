@@ -16,157 +16,157 @@ namespace NKnife.API
 
 	public enum SecurityStatus : uint
 	{
-		SEC_E_OK = 0x00000000,
-		SEC_E_INSUFFICIENT_MEMORY = 0x80090300,
-		SEC_E_INVALID_HANDLE = 0x80090301,
-		SEC_E_UNSUPPORTED_FUNCTION = 0x80090302,
-		SEC_E_TARGET_UNKNOWN = 0x80090303,
-		SEC_E_INTERNAL_ERROR = 0x80090304,
-		SEC_E_SECPKG_NOT_FOUND = 0x80090305,
-		SEC_E_NOT_OWNER = 0x80090306,
-		SEC_E_CANNOT_INSTALL = 0x80090307,
-		SEC_E_INVALID_TOKEN = 0x80090308,
-		SEC_E_CANNOT_PACK = 0x80090309,
-		SEC_E_QOP_NOT_SUPPORTED = 0x8009030A,
-		SEC_E_NO_IMPERSONATION = 0x8009030B,
-		SEC_E_LOGON_DENIED = 0x8009030C,
-		SEC_E_UNKNOWN_CREDENTIALS = 0x8009030D,
-		SEC_E_NO_CREDENTIALS = 0x8009030E,
-		SEC_E_MESSAGE_ALTERED = 0x8009030F,
-		SEC_E_OUT_OF_SEQUENCE = 0x80090310,
-		SEC_E_NO_AUTHENTICATING_AUTHORITY = 0x80090311,
-		SEC_I_CONTINUE_NEEDED = 0x00090312,
-		SEC_I_COMPLETE_NEEDED = 0x00090313,
-		SEC_I_COMPLETE_AND_CONTINUE = 0x00090314,
-		SEC_I_LOCAL_LOGON = 0x00090315,
-		SEC_E_BAD_PKGID = 0x80090316,
-		SEC_E_CONTEXT_EXPIRED = 0x80090317,
-		SEC_E_INCOMPLETE_MESSAGE = 0x80090318,
-		SEC_E_INCOMPLETE_CREDENTIALS = 0x80090320,
-		SEC_E_BUFFER_TOO_SMALL = 0x80090321,
-		SEC_I_INCOMPLETE_CREDENTIALS = 0x00090320,
-		SEC_I_RENEGOTIATE = 0x00090321,
-		SEC_E_WRONG_PRINCIPAL = 0x80090322,
-		SEC_E_ALGORITHM_MISMATCH = 0x80090331,
-		SEC_E_ENCRYPT_FAILURE = 0x80090329,
-		SEC_E_DECRYPT_FAILURE = 0x80090330,
+		SecEOk = 0x00000000,
+		SecEInsufficientMemory = 0x80090300,
+		SecEInvalidHandle = 0x80090301,
+		SecEUnsupportedFunction = 0x80090302,
+		SecETargetUnknown = 0x80090303,
+		SecEInternalError = 0x80090304,
+		SecESecpkgNotFound = 0x80090305,
+		SecENotOwner = 0x80090306,
+		SecECannotInstall = 0x80090307,
+		SecEInvalidToken = 0x80090308,
+		SecECannotPack = 0x80090309,
+		SecEQopNotSupported = 0x8009030A,
+		SecENoImpersonation = 0x8009030B,
+		SecELogonDenied = 0x8009030C,
+		SecEUnknownCredentials = 0x8009030D,
+		SecENoCredentials = 0x8009030E,
+		SecEMessageAltered = 0x8009030F,
+		SecEOutOfSequence = 0x80090310,
+		SecENoAuthenticatingAuthority = 0x80090311,
+		SecIContinueNeeded = 0x00090312,
+		SecICompleteNeeded = 0x00090313,
+		SecICompleteAndContinue = 0x00090314,
+		SecILocalLogon = 0x00090315,
+		SecEBadPkgid = 0x80090316,
+		SecEContextExpired = 0x80090317,
+		SecEIncompleteMessage = 0x80090318,
+		SecEIncompleteCredentials = 0x80090320,
+		SecEBufferTooSmall = 0x80090321,
+		SecIIncompleteCredentials = 0x00090320,
+		SecIRenegotiate = 0x00090321,
+		SecEWrongPrincipal = 0x80090322,
+		SecEAlgorithmMismatch = 0x80090331,
+		SecEEncryptFailure = 0x80090329,
+		SecEDecryptFailure = 0x80090330,
 
-		SEC_E_UNKNOW_ERROR = 0xFFFFFFFF,
+		SecEUnknowError = 0xFFFFFFFF,
 	}
 
 	public enum CredentialUse
 	{
-		SECPKG_CRED_INBOUND = 1,
-		SECPKG_CRED_OUTBOUND = 2,
-		SECPKG_CRED_BOTH = 3,
+		SecpkgCredInbound = 1,
+		SecpkgCredOutbound = 2,
+		SecpkgCredBoth = 3,
 	}
 
 	public enum TargetDataRep
 	{
-		SECURITY_NETWORK_DREP = 0x00000000,
-		SECURITY_NATIVE_DREP = 0x00000010
+		SecurityNetworkDrep = 0x00000000,
+		SecurityNativeDrep = 0x00000010
 	}
 
 	public enum ContextReq
 	{
-		ASC_REQ_DELEGATE = 0x00000001,
-		ASC_REQ_MUTUAL_AUTH = 0x00000002,
-		ASC_REQ_REPLAY_DETECT = 0x00000004,
-		ASC_REQ_SEQUENCE_DETECT = 0x00000008,
-		ASC_REQ_CONFIDENTIALITY = 0x00000010,
-		ASC_REQ_USE_SESSION_KEY = 0x00000020,
-		ASC_REQ_ALLOCATE_MEMORY = 0x00000100,
-		ASC_REQ_USE_DCE_STYLE = 0x00000200,
-		ASC_REQ_DATAGRAM = 0x00000400,
-		ASC_REQ_CONNECTION = 0x00000800,
-		ASC_REQ_CALL_LEVEL = 0x00001000,
-		ASC_REQ_EXTENDED_ERROR = 0x00008000,
-		ASC_REQ_STREAM = 0x00010000,
-		ASC_REQ_INTEGRITY = 0x00020000,
-		ASC_REQ_LICENSING = 0x00040000,
-		ASC_REQ_IDENTIFY = 0x00080000,
-		ASC_REQ_ALLOW_NULL_SESSION = 0x00100000,
-		ASC_REQ_ALLOW_NON_USER_LOGONS = 0x00200000,
-		ASC_REQ_ALLOW_CONTEXT_REPLAY = 0x00400000,
-		ASC_REQ_FRAGMENT_TO_FIT = 0x00800000,
-		ASC_REQ_FRAGMENT_SUPPLIED = 0x00002000,
-		ASC_REQ_NO_TOKEN = 0x01000000,
+		AscReqDelegate = 0x00000001,
+		AscReqMutualAuth = 0x00000002,
+		AscReqReplayDetect = 0x00000004,
+		AscReqSequenceDetect = 0x00000008,
+		AscReqConfidentiality = 0x00000010,
+		AscReqUseSessionKey = 0x00000020,
+		AscReqAllocateMemory = 0x00000100,
+		AscReqUseDceStyle = 0x00000200,
+		AscReqDatagram = 0x00000400,
+		AscReqConnection = 0x00000800,
+		AscReqCallLevel = 0x00001000,
+		AscReqExtendedError = 0x00008000,
+		AscReqStream = 0x00010000,
+		AscReqIntegrity = 0x00020000,
+		AscReqLicensing = 0x00040000,
+		AscReqIdentify = 0x00080000,
+		AscReqAllowNullSession = 0x00100000,
+		AscReqAllowNonUserLogons = 0x00200000,
+		AscReqAllowContextReplay = 0x00400000,
+		AscReqFragmentToFit = 0x00800000,
+		AscReqFragmentSupplied = 0x00002000,
+		AscReqNoToken = 0x01000000,
 	}
 
 	public enum ContextAttr
 	{
-		ASC_RET_DELEGATE = 0x00000001,
-		ASC_RET_MUTUAL_AUTH = 0x00000002,
-		ASC_RET_REPLAY_DETECT = 0x00000004,
-		ASC_RET_SEQUENCE_DETECT = 0x00000008,
-		ASC_RET_CONFIDENTIALITY = 0x00000010,
-		ASC_RET_USE_SESSION_KEY = 0x00000020,
-		ASC_RET_ALLOCATED_MEMORY = 0x00000100,
-		ASC_RET_USED_DCE_STYLE = 0x00000200,
-		ASC_RET_DATAGRAM = 0x00000400,
-		ASC_RET_CONNECTION = 0x00000800,
-		ASC_RET_CALL_LEVEL = 0x00002000,
-		ASC_RET_THIRD_LEG_FAILED = 0x00004000,
-		ASC_RET_EXTENDED_ERROR = 0x00008000,
-		ASC_RET_STREAM = 0x00010000,
-		ASC_RET_INTEGRITY = 0x00020000,
-		ASC_RET_LICENSING = 0x00040000,
-		ASC_RET_IDENTIFY = 0x00080000,
-		ASC_RET_NULL_SESSION = 0x00100000,
-		ASC_RET_ALLOW_NON_USER_LOGONS = 0x00200000,
-		ASC_RET_FRAGMENT_ONLY = 0x00800000,
-		ASC_RET_NO_TOKEN = 0x01000000,
+		AscRetDelegate = 0x00000001,
+		AscRetMutualAuth = 0x00000002,
+		AscRetReplayDetect = 0x00000004,
+		AscRetSequenceDetect = 0x00000008,
+		AscRetConfidentiality = 0x00000010,
+		AscRetUseSessionKey = 0x00000020,
+		AscRetAllocatedMemory = 0x00000100,
+		AscRetUsedDceStyle = 0x00000200,
+		AscRetDatagram = 0x00000400,
+		AscRetConnection = 0x00000800,
+		AscRetCallLevel = 0x00002000,
+		AscRetThirdLegFailed = 0x00004000,
+		AscRetExtendedError = 0x00008000,
+		AscRetStream = 0x00010000,
+		AscRetIntegrity = 0x00020000,
+		AscRetLicensing = 0x00040000,
+		AscRetIdentify = 0x00080000,
+		AscRetNullSession = 0x00100000,
+		AscRetAllowNonUserLogons = 0x00200000,
+		AscRetFragmentOnly = 0x00800000,
+		AscRetNoToken = 0x01000000,
 	}
 
 	public enum BufferType
 	{
-		SECBUFFER_VERSION = 0,
+		SecbufferVersion = 0,
 
-		SECBUFFER_EMPTY = 0,				// Undefined, replaced by provider
-		SECBUFFER_DATA = 1,					// Packet data
-		SECBUFFER_TOKEN = 2,				// Security token
-		SECBUFFER_PKG_PARAMS = 3,			// Package specific parameters
-		SECBUFFER_MISSING = 4,				// Missing Data indicator
-		SECBUFFER_EXTRA = 5,				// Extra data
-		SECBUFFER_STREAM_TRAILER = 6,		// Security Trailer
-		SECBUFFER_STREAM_HEADER = 7,		// Security Header
-		SECBUFFER_NEGOTIATION_INFO = 8,		// Hints from the negotiation pkg
-		SECBUFFER_PADDING = 9,				// non-data padding
-		SECBUFFER_STREAM = 10,				// whole encrypted message
-		SECBUFFER_MECHLIST = 11,
-		SECBUFFER_MECHLIST_SIGNATURE = 12,
-		SECBUFFER_TARGET = 13,				// obsolete
-		SECBUFFER_CHANNEL_BINDINGS = 14,
-		SECBUFFER_CHANGE_PASS_RESPONSE = 15,
+		SecbufferEmpty = 0,				// Undefined, replaced by provider
+		SecbufferData = 1,					// Packet data
+		SecbufferToken = 2,				// Security token
+		SecbufferPkgParams = 3,			// Package specific parameters
+		SecbufferMissing = 4,				// Missing Data indicator
+		SecbufferExtra = 5,				// Extra data
+		SecbufferStreamTrailer = 6,		// Security Trailer
+		SecbufferStreamHeader = 7,		// Security Header
+		SecbufferNegotiationInfo = 8,		// Hints from the negotiation pkg
+		SecbufferPadding = 9,				// non-data padding
+		SecbufferStream = 10,				// whole encrypted message
+		SecbufferMechlist = 11,
+		SecbufferMechlistSignature = 12,
+		SecbufferTarget = 13,				// obsolete
+		SecbufferChannelBindings = 14,
+		SecbufferChangePassResponse = 15,
 	}
 
 	public enum UlAttribute
 	{
-		SECPKG_ATTR_SIZES = 0,
-		SECPKG_ATTR_NAMES = 1,
-		SECPKG_ATTR_LIFESPAN = 2,
-		SECPKG_ATTR_DCE_INFO = 3,
-		SECPKG_ATTR_STREAM_SIZES = 4,
-		SECPKG_ATTR_KEY_INFO = 5,
-		SECPKG_ATTR_AUTHORITY = 6,
-		SECPKG_ATTR_PROTO_INFO = 7,
-		SECPKG_ATTR_PASSWORD_EXPIRY = 8,
-		SECPKG_ATTR_SESSION_KEY = 9,
-		SECPKG_ATTR_PACKAGE_INFO = 10,
-		SECPKG_ATTR_USER_FLAGS = 11,
-		SECPKG_ATTR_NEGOTIATION_INFO = 12,
-		SECPKG_ATTR_NATIVE_NAMES = 13,
-		SECPKG_ATTR_FLAGS = 14,
+		SecpkgAttrSizes = 0,
+		SecpkgAttrNames = 1,
+		SecpkgAttrLifespan = 2,
+		SecpkgAttrDceInfo = 3,
+		SecpkgAttrStreamSizes = 4,
+		SecpkgAttrKeyInfo = 5,
+		SecpkgAttrAuthority = 6,
+		SecpkgAttrProtoInfo = 7,
+		SecpkgAttrPasswordExpiry = 8,
+		SecpkgAttrSessionKey = 9,
+		SecpkgAttrPackageInfo = 10,
+		SecpkgAttrUserFlags = 11,
+		SecpkgAttrNegotiationInfo = 12,
+		SecpkgAttrNativeNames = 13,
+		SecpkgAttrFlags = 14,
 		// These attributes exist only in Win XP and greater
-		SECPKG_ATTR_USE_VALIDATED = 15,
-		SECPKG_ATTR_CREDENTIAL_NAME = 16,
-		SECPKG_ATTR_TARGET_INFORMATION = 17,
-		SECPKG_ATTR_ACCESS_TOKEN = 18,
+		SecpkgAttrUseValidated = 15,
+		SecpkgAttrCredentialName = 16,
+		SecpkgAttrTargetInformation = 17,
+		SecpkgAttrAccessToken = 18,
 		// These attributes exist only in Win2K3 and greater
-		SECPKG_ATTR_TARGET = 19,
-		SECPKG_ATTR_AUTHENTICATION_ID = 20,
+		SecpkgAttrTarget = 19,
+		SecpkgAttrAuthenticationId = 20,
 		// These attributes exist only in Win2K3SP1 and greater
-		SECPKG_ATTR_LOGOFF_TIME = 21,
+		SecpkgAttrLogoffTime = 21,
 	}
 
 	public enum SchProtocols
@@ -323,10 +323,10 @@ namespace NKnife.API
 
 	public struct SecBufferEx
 	{
-		public BufferType BufferType;
-		public int Size;
-		public int Offset;
-		public object Buffer;
+		public BufferType _BufferType;
+		public int _Size;
+		public int _Offset;
+		public object _Buffer;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -339,81 +339,81 @@ namespace NKnife.API
 
 	public unsafe class SecBufferDescEx
 	{
-		internal SecBufferDesc SecBufferDesc;
-		internal SecBuffer[] SecBuffers;
+		internal SecBufferDesc _SecBufferDesc;
+		internal SecBuffer[] _SecBuffers;
 
-		private GCHandle[] Handles;
-		private GCHandle DescHandle;
+		private GCHandle[] _handles;
+		private GCHandle _descHandle;
 
-		public SecBufferEx[] Buffers;
+		public SecBufferEx[] _Buffers;
 
 		public SecBufferDescEx(SecBufferEx[] buffers)
 		{
-			SecBufferDesc.ulVersion = (int)BufferType.SECBUFFER_VERSION;
-			SecBufferDesc.cBuffers = 0;
-			SecBufferDesc.pBuffers = IntPtr.Zero;
-			Handles = null;
-			SecBuffers = null;
-			Buffers = buffers;
+			_SecBufferDesc.ulVersion = (int)BufferType.SecbufferVersion;
+			_SecBufferDesc.cBuffers = 0;
+			_SecBufferDesc.pBuffers = IntPtr.Zero;
+			_handles = null;
+			_SecBuffers = null;
+			_Buffers = buffers;
 		}
 
 		public int GetBufferIndex(BufferType type, int from)
 		{
-			for (int i = from; i < Buffers.Length; i++)
-				if (Buffers[i].BufferType == type)
+			for (int i = from; i < _Buffers.Length; i++)
+				if (_Buffers[i]._BufferType == type)
 					return i;
 			return -1;
 		}
 
 		internal void Pin()
 		{
-			if (SecBuffers == null || SecBuffers.Length != Buffers.Length)
+			if (_SecBuffers == null || _SecBuffers.Length != _Buffers.Length)
 			{
-				SecBuffers = new SecBuffer[Buffers.Length];
-				Handles = new GCHandle[Buffers.Length];
+				_SecBuffers = new SecBuffer[_Buffers.Length];
+				_handles = new GCHandle[_Buffers.Length];
 			}
 
-			for (int i = 0; i < Buffers.Length; i++)
+			for (int i = 0; i < _Buffers.Length; i++)
 			{
-				if (Buffers[i].Buffer != null)
-					Handles[i] = GCHandle.Alloc(Buffers[i].Buffer, GCHandleType.Pinned);
+				if (_Buffers[i]._Buffer != null)
+					_handles[i] = GCHandle.Alloc(_Buffers[i]._Buffer, GCHandleType.Pinned);
 
-				SecBuffers[i].BufferType = (int)Buffers[i].BufferType;
-				SecBuffers[i].cbBuffer = Buffers[i].Size;
+				_SecBuffers[i].BufferType = (int)_Buffers[i]._BufferType;
+				_SecBuffers[i].cbBuffer = _Buffers[i]._Size;
 
-				if (Buffers[i].Buffer == null)
-					SecBuffers[i].pvBuffer = IntPtr.Zero;
+				if (_Buffers[i]._Buffer == null)
+					_SecBuffers[i].pvBuffer = IntPtr.Zero;
 				else
-					SecBuffers[i].pvBuffer = AddToPtr(Handles[i].AddrOfPinnedObject(), Buffers[i].Offset);
+					_SecBuffers[i].pvBuffer = AddToPtr(_handles[i].AddrOfPinnedObject(), _Buffers[i]._Offset);
 			}
 
-			DescHandle = GCHandle.Alloc(SecBuffers, GCHandleType.Pinned);
+			_descHandle = GCHandle.Alloc(_SecBuffers, GCHandleType.Pinned);
 
-			SecBufferDesc.ulVersion = (int)BufferType.SECBUFFER_VERSION;
-			SecBufferDesc.cBuffers = SecBuffers.Length;
-			SecBufferDesc.pBuffers = DescHandle.AddrOfPinnedObject();
+			_SecBufferDesc.ulVersion = (int)BufferType.SecbufferVersion;
+			_SecBufferDesc.cBuffers = _SecBuffers.Length;
+			_SecBufferDesc.pBuffers = _descHandle.AddrOfPinnedObject();
 		}
 
 		internal void Free()
 		{
-			object buffer = Buffers[0].Buffer;
-			IntPtr bufferPtr = Handles[0].AddrOfPinnedObject();
+			object buffer = _Buffers[0]._Buffer;
+			IntPtr bufferPtr = _handles[0].AddrOfPinnedObject();
 
-			for (int i = 0; i < Buffers.Length; i++)
+			for (int i = 0; i < _Buffers.Length; i++)
 			{
-				Buffers[i].BufferType = (BufferType)SecBuffers[i].BufferType;
-				Buffers[i].Size = SecBuffers[i].cbBuffer;
+				_Buffers[i]._BufferType = (BufferType)_SecBuffers[i].BufferType;
+				_Buffers[i]._Size = _SecBuffers[i].cbBuffer;
 
-				if (Buffers[i].Size == 0 || Buffers[i].BufferType == BufferType.SECBUFFER_EMPTY)
+				if (_Buffers[i]._Size == 0 || _Buffers[i]._BufferType == BufferType.SecbufferEmpty)
 				{
-					Buffers[i].Buffer = null;
-					Buffers[i].Offset = 0;
+					_Buffers[i]._Buffer = null;
+					_Buffers[i]._Offset = 0;
 				}
 				else
 				{
-					Buffers[i].Buffer = buffer;
-					if (SecBuffers[i].pvBuffer != IntPtr.Zero)
-						Buffers[i].Offset = SubPtr(bufferPtr, SecBuffers[i].pvBuffer);
+					_Buffers[i]._Buffer = buffer;
+					if (_SecBuffers[i].pvBuffer != IntPtr.Zero)
+						_Buffers[i]._Offset = SubPtr(bufferPtr, _SecBuffers[i].pvBuffer);
 					else
 					{
 						// FIX: AcceptSecurityContext returns zero pointer for extra data
@@ -429,13 +429,13 @@ namespace NKnife.API
 				}
 			}
 
-			for (int i = 0; i < Buffers.Length; i++)
+			for (int i = 0; i < _Buffers.Length; i++)
 			{
-				if (Handles[i].IsAllocated)
-					Handles[i].Free();
+				if (_handles[i].IsAllocated)
+					_handles[i].Free();
 			}
 
-			DescHandle.Free();
+			_descHandle.Free();
 		}
 
 		private int SubPtr(IntPtr begin, IntPtr current)
@@ -450,7 +450,7 @@ namespace NKnife.API
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct SecPkgContext_Sizes
+	public struct SecPkgContextSizes
 	{
 		public int cbMaxToken;
 		public int cbMaxSignature;
@@ -459,13 +459,13 @@ namespace NKnife.API
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct SecPkgContext_Names
+	public struct SecPkgContextNames
 	{
 		public IntPtr sUserName;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	struct SecPkgContext_StreamSizes
+	struct SecPkgContextStreamSizes
 	{
 		public int cbHeader;
 		public int cbTrailer;
@@ -481,29 +481,29 @@ namespace NKnife.API
 	[SuppressUnmanagedCodeSecurity]
 	public class SafeCredHandle : SafeHandle
 	{
-		internal CredHandle Handle;
+		internal CredHandle _Handle;
 
 		public SafeCredHandle(CredHandle credHandle)
 			: base(IntPtr.Zero, true)
 		{
-			this.Handle = credHandle;
+			this._Handle = credHandle;
 		}
 
 		public override bool IsInvalid
 		{
-			get { return Handle.IsInvalid; }
+			get { return _Handle.IsInvalid; }
 		}
 
 		protected override bool ReleaseHandle()
 		{
-			return Secur32Dll.FreeCredentialsHandle(ref Handle) == 0;
+			return Secur32Dll.FreeCredentialsHandle(ref _Handle) == 0;
 		}
 	}
 
 	[SuppressUnmanagedCodeSecurity]
 	public class SafeCtxtHandle : SafeHandle
 	{
-		internal CtxtHandle Handle;
+		internal CtxtHandle _Handle;
 
 		public SafeCtxtHandle()
 			: base(IntPtr.Zero, true)
@@ -513,17 +513,17 @@ namespace NKnife.API
 		public SafeCtxtHandle(CtxtHandle ctxtHandle)
 			: base(IntPtr.Zero, true)
 		{
-			this.Handle = ctxtHandle;
+			this._Handle = ctxtHandle;
 		}
 
 		public override bool IsInvalid
 		{
-			get { return Handle.IsInvalid; }
+			get { return _Handle.IsInvalid; }
 		}
 
 		protected override bool ReleaseHandle()
 		{
-			return Secur32Dll.DeleteSecurityContext(ref Handle) == 0;
+			return Secur32Dll.DeleteSecurityContext(ref _Handle) == 0;
 		}
 	}
 
@@ -620,7 +620,7 @@ namespace NKnife.API
 			{
 				int error = Secur32Dll.AcquireCredentialsHandleA(
 					null,
-					Secur32Dll.UNISP_NAME,
+					Secur32Dll.UnispName,
 					(int)credentialUse,
 					null,
 					&authData,
@@ -660,16 +660,16 @@ namespace NKnife.API
 				input.Pin();
 				output.Pin();
 
-				fixed (void* fixedContext = &context.Handle)
+				fixed (void* fixedContext = &context._Handle)
 				{
 					int error = Secur32Dll.AcceptSecurityContext(
-						ref credential.Handle,
+						ref credential._Handle,
 						(context.IsInvalid) ? null : fixedContext,
-						ref input.SecBufferDesc,
+						ref input._SecBufferDesc,
 						contextReq,
 						(int)targetDataRep,
-						ref newContext.Handle,
-						ref output.SecBufferDesc,
+						ref newContext._Handle,
+						ref output._SecBufferDesc,
 						out contextAttr,
 						out timeStamp);
 
@@ -680,7 +680,7 @@ namespace NKnife.API
 			{
 				contextAttr = 0;
 				timeStamp = 0;
-				return SecurityStatus.SEC_E_UNKNOW_ERROR;
+				return SecurityStatus.SecEUnknowError;
 			}
 			finally
 			{
@@ -692,24 +692,24 @@ namespace NKnife.API
 		public unsafe static SecurityStatus SafeDecryptMessage(
 			ref SafeCtxtHandle context,
 			ref SecBufferDescEx message,
-			uint MessageSeqNo,
-			void* pfQOP)
+			uint messageSeqNo,
+			void* pfQop)
 		{
 			try
 			{
 				message.Pin();
 
 				int error = Secur32Dll.DecryptMessage(
-					ref context.Handle,
-					ref message.SecBufferDesc,
-					MessageSeqNo,
-					pfQOP);
+					ref context._Handle,
+					ref message._SecBufferDesc,
+					messageSeqNo,
+					pfQop);
 
 				return Convert(error);
 			}
 			catch
 			{
-				return SecurityStatus.SEC_E_UNKNOW_ERROR;
+				return SecurityStatus.SecEUnknowError;
 			}
 			finally
 			{
@@ -720,18 +720,18 @@ namespace NKnife.API
 		public unsafe static void EncryptMessage(
 			ref SafeCtxtHandle context,
 			ref SecBufferDescEx message,
-			uint MessageSeqNo,
-			void* pfQOP)
+			uint messageSeqNo,
+			void* pfQop)
 		{
 			try
 			{
 				message.Pin();
 
 				int error = Secur32Dll.EncryptMessage(
-					ref context.Handle,
-					pfQOP,
-					ref message.SecBufferDesc,
-					MessageSeqNo);
+					ref context._Handle,
+					pfQop,
+					ref message._SecBufferDesc,
+					messageSeqNo);
 
 				if (error != 0)
 					throw new SspiException(error, @"EncryptMessage");
@@ -744,10 +744,10 @@ namespace NKnife.API
 
 		public unsafe static void QueryContextAttributes(
 			ref SafeCtxtHandle context,
-			out SecPkgContext_StreamSizes streamSizes)
+			out SecPkgContextStreamSizes streamSizes)
 		{
 			fixed (void* buffer = &streamSizes)
-				QueryContextAttributes(ref context, UlAttribute.SECPKG_ATTR_STREAM_SIZES, buffer);
+				QueryContextAttributes(ref context, UlAttribute.SecpkgAttrStreamSizes, buffer);
 		}
 
 		public unsafe static void QueryContextAttributes(
@@ -756,7 +756,7 @@ namespace NKnife.API
 			void* buffer)
 		{
 			int error = Secur32Dll.QueryContextAttributesA(
-				ref context.Handle,
+				ref context._Handle,
 				(uint)attribute,
 				buffer);
 
@@ -766,10 +766,10 @@ namespace NKnife.API
 
 		public unsafe static SecurityStatus SafeQueryContextAttributes(
 			ref SafeCtxtHandle context,
-			out SecPkgContext_StreamSizes streamSizes)
+			out SecPkgContextStreamSizes streamSizes)
 		{
 			fixed (void* buffer = &streamSizes)
-				return SafeQueryContextAttributes(ref context, UlAttribute.SECPKG_ATTR_STREAM_SIZES, buffer);
+				return SafeQueryContextAttributes(ref context, UlAttribute.SecpkgAttrStreamSizes, buffer);
 		}
 
 		public unsafe static SecurityStatus SafeQueryContextAttributes(
@@ -780,7 +780,7 @@ namespace NKnife.API
 			try
 			{
 				int error = Secur32Dll.QueryContextAttributesA(
-					ref context.Handle,
+					ref context._Handle,
 					(uint)attribute,
 					buffer);
 
@@ -788,7 +788,7 @@ namespace NKnife.API
 			}
 			catch
 			{
-				return SecurityStatus.SEC_E_UNKNOW_ERROR;
+				return SecurityStatus.SecEUnknowError;
 			}
 		}
 
@@ -796,106 +796,106 @@ namespace NKnife.API
 		{
 			if (Enum.IsDefined(typeof(SecurityStatus), (uint)error))
 				return (SecurityStatus)error;
-			return SecurityStatus.SEC_E_UNKNOW_ERROR;
+			return SecurityStatus.SecEUnknowError;
 		}
 	}
 
 	[SuppressUnmanagedCodeSecurity]
 	static class Secur32Dll
 	{
-		private const string SECUR32 = @"secur32.dll";
-		public const string UNISP_NAME = "Microsoft Unified Security Protocol Provider";
+		private const string Secur32 = @"secur32.dll";
+		public const string UnispName = "Microsoft Unified Security Protocol Provider";
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
 		public static extern int FreeContextBuffer(
 			[In] IntPtr pvContextBuffer);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
 		public static extern int FreeCredentialsHandle(
 			[In] ref CredHandle phCredential);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		public static extern int EnumerateSecurityPackagesA(
 			[Out] out int pcPackages,
 			[Out] out SafeContextBufferHandle ppPackageInfo);
 
-		[DllImport(SECUR32, ExactSpelling = true, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true, SetLastError = true)]
 		public unsafe static extern int AcquireCredentialsHandleA(
 			[In, MarshalAs(UnmanagedType.LPStr)] string pszPrincipal,
 			[In, MarshalAs(UnmanagedType.LPStr)] string pszPackage,
 			[In] int fCredentialUse,
-			[In] void* pvLogonID,
+			[In] void* pvLogonId,
 			[In] void* pAuthData,
 			[In] void* pGetKeyFn,
 			[In] void* pvGetKeyArgument,
 			[Out] out CredHandle phCredential,
 			[Out] out long ptsExpiry);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 		public unsafe static extern int AcceptSecurityContext(
 			[In] ref CredHandle phCredential,
 			[In, Out] void* phContext,
 			[In] ref SecBufferDesc pInput,
 			[In] int fContextReq,
-			[In] int TargetDataRep,
+			[In] int targetDataRep,
 			[In, Out] ref CtxtHandle phNewContext,
 			[In, Out] ref SecBufferDesc pOutput,
 			[Out] out int pfContextAttr,
 			[Out] out long ptsTimeStamp);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
 		public static extern int DeleteSecurityContext(
 			[In] ref CtxtHandle phContext);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 		public unsafe static extern int QueryContextAttributesA(
 			[In] ref CtxtHandle phContext,
 			[In] uint ulAttribute,
 			[Out] void* pBuffer);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 		public static extern int MakeSignature(
 			[In] ref SecHandle phContext,
-			[In] int fQOP,
+			[In] int fQop,
 			[In, Out] ref SecBufferDesc pMessage,
-			[In] int MessageSeqNo);
+			[In] int messageSeqNo);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 		public static extern int VerifySignature(
 			[In] ref SecHandle phContext,
 			[In] ref SecBufferDesc pMessage,
-			[In] int MessageSeqNo,
-			[Out] out int pfQOP);
+			[In] int messageSeqNo,
+			[Out] out int pfQop);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 		public static extern int DecryptMessage(
 			[In] ref CtxtHandle phContext,
 			[In, Out] ref SecBufferDesc pMessage,
-			[In] uint MessageSeqNo,
-			[Out] out uint pfQOP);
+			[In] uint messageSeqNo,
+			[Out] out uint pfQop);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 		public unsafe static extern int DecryptMessage(
 			[In] ref CtxtHandle phContext,
 			[In, Out] ref SecBufferDesc pMessage,
-			[In] uint MessageSeqNo,
-			[Out] void* pfQOP);
+			[In] uint messageSeqNo,
+			[Out] void* pfQop);
 
-		[DllImport(SECUR32, ExactSpelling = true, SetLastError = true)]
+		[DllImport(Secur32, ExactSpelling = true, SetLastError = true)]
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 		public unsafe static extern int EncryptMessage(
 			[In] ref CtxtHandle phContext,
-			[Out] void* pfQOP,
+			[Out] void* pfQop,
 			[In, Out] ref SecBufferDesc pMessage,
-			[In] uint MessageSeqNo);
+			[In] uint messageSeqNo);
 	}
 }

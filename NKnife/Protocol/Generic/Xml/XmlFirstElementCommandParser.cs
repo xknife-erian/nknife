@@ -11,7 +11,7 @@ namespace NKnife.Protocol.Generic.Xml
     /// </summary>
     public class XmlFirstElementCommandParser : StringProtocolCommandParser
     {
-        private static readonly ILog _logger = LogManager.GetLogger<XmlFirstElementCommandParser>();
+        private static readonly ILog _Logger = LogManager.GetLogger<XmlFirstElementCommandParser>();
         
         public override string GetCommand(string protocol)
         {
@@ -33,7 +33,7 @@ namespace NKnife.Protocol.Generic.Xml
                 }
                 catch (Exception e)
                 {
-                    _logger.Warn(string.Format("无法解析的协议字符串。{0}，异常：{1}", protocol, e));
+                    _Logger.Warn(string.Format("无法解析的协议字符串。{0}，异常：{1}", protocol, e));
                 }
             }
             return command;

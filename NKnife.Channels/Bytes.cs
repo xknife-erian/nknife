@@ -4,24 +4,24 @@ namespace NKnife.Channels
 {
     public struct Bytes
     {
-        private readonly byte _Byte1;
-        private readonly byte _Byte2;
-        private readonly byte _Byte3;
-        private readonly byte _Byte4;
+        private readonly byte _byte1;
+        private readonly byte _byte2;
+        private readonly byte _byte3;
+        private readonly byte _byte4;
 
         public Bytes(int kind, int room, int bed, bool isBge = false)
         {
-            Build(isBge, kind, room, bed, out _Byte1, out _Byte2, out _Byte3, out _Byte4);
-            ByteArray = new[] {_Byte1, _Byte2, _Byte3, _Byte4};
+            Build(isBge, kind, room, bed, out _byte1, out _byte2, out _byte3, out _byte4);
+            ByteArray = new[] {_byte1, _byte2, _byte3, _byte4};
         }
 
-        public byte Byte1 => _Byte1;
+        public byte Byte1 => _byte1;
 
-        public byte Byte2 => _Byte2;
+        public byte Byte2 => _byte2;
 
-        public byte Byte3 => _Byte3;
+        public byte Byte3 => _byte3;
 
-        public byte Byte4 => _Byte4;
+        public byte Byte4 => _byte4;
 
         public byte[] ByteArray { get; }
 

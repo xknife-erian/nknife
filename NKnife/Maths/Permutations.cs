@@ -10,11 +10,11 @@ namespace NKnife.Maths
     /// <typeparam name="T"></typeparam>
     public class Permutations<T> : IEnumerable<IList<T>>
     {
-        private readonly List<int[]> _Indices;
-        private readonly int _Length;
-        private readonly List<IList<T>> _Permutations;
-        private int _Level = -1;
-        private int[] _Value;
+        private readonly List<int[]> _indices;
+        private readonly int _length;
+        private readonly List<IList<T>> _permutations;
+        private int _level = -1;
+        private int[] _value;
 
         public Permutations(IList<T> items)
             : this(items, items.Count)
@@ -23,72 +23,72 @@ namespace NKnife.Maths
 
         public Permutations(IList<T> items, int length)
         {
-            _Length = length;
-            _Permutations = new List<IList<T>>();
-            _Indices = new List<int[]>();
+            _length = length;
+            _permutations = new List<IList<T>>();
+            _indices = new List<int[]>();
             BuildIndices();
             foreach (var oneCom in new Combinations<T>(items, length))
             {
-                _Permutations.AddRange(GetPermutations(oneCom));
+                _permutations.AddRange(GetPermutations(oneCom));
             }
         }
 
         public int Count
         {
-            get { return _Permutations.Count; }
+            get { return _permutations.Count; }
         }
 
         public IEnumerator<IList<T>> GetEnumerator()
         {
-            return _Permutations.GetEnumerator();
+            return _permutations.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _Permutations.GetEnumerator();
+            return _permutations.GetEnumerator();
         }
 
         private void BuildIndices()
         {
-            _Value = new int[_Length];
+            _value = new int[_length];
             Visit(0);
         }
 
         private void Visit(int k)
         {
-            _Level += 1;
-            _Value[k] = _Level;
+            _level += 1;
+            _value[k] = _level;
 
-            if (_Level == _Length)
+            if (_level == _length)
             {
-                _Indices.Add(_Value);
-                var newValue = new int[_Length];
-                Array.Copy(_Value, newValue, _Length);
-                _Value = newValue;
+                _indices.Add(_value);
+                var newValue = new int[_length];
+                Array.Copy(_value, newValue, _length);
+                _value = newValue;
             }
             else
             {
-                for (int i = 0; i < _Length; i++)
+                for (int i = 0; i < _length; i++)
                 {
-                    if (_Value[i] == 0)
+                    if (_value[i] == 0)
                     {
                         Visit(i);
                     }
                 }
             }
 
-            _Level -= 1;
-            _Value[k] = 0;
+            _level -= 1;
+            _value[k] = 0;
         }
 
         private IEnumerable<IList<T>> GetPermutations(IList<T> oneCom)
         {
             var t = new List<IList<T>>();
 
-            foreach (var idxs in _Indices)
+            foreach (var idxs in _indices)
             {
-                var onePerm = new T[_Length];
-                for (int i = 0; i < _Length; i++)
+                var onePerm = new T[_length];
+                for (int i = 0; i < _length; i++)
                 {
                     onePerm[i] = oneCom[idxs[i] - 1];
                 }

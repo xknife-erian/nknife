@@ -13,9 +13,9 @@ namespace NKnife.NLog.WPF
     [Target("Log_Collection")]
     public class ObservableCollectionTarget : TargetWithLayout
     {
-        private const int LOGGER_VIEW_COUNT = 500;
+        private const int LoggerViewCount = 500;
 
-        private readonly LogMessageObservableCollection _LogList = LogMessageObservableCollection.Instance;
+        private readonly LogMessageObservableCollection _logList = LogMessageObservableCollection.Instance;
 
         protected override void Write(LogEventInfo logEvent)
         {
@@ -43,16 +43,16 @@ namespace NKnife.NLog.WPF
         protected void AddLogMessage(LogEventInfo logEvent)
         {
             TrimLogMessageCollection();
-            if (DI.Get<LogMessageFilter>().Contains(logEvent.Level))
-                _LogList.Insert(0, LogMessage.Build(logEvent));
+            if (Di.Get<LogMessageFilter>().Contains(logEvent.Level))
+                _logList.Insert(0, LogMessage.Build(logEvent));
         }
 
         private void TrimLogMessageCollection()
         {
-            if (_LogList.Count >= LOGGER_VIEW_COUNT)
+            if (_logList.Count >= LoggerViewCount)
             {
-                while (_LogList.Count >= LOGGER_VIEW_COUNT)
-                    _LogList.RemoveAt(_LogList.Count - 1);
+                while (_logList.Count >= LoggerViewCount)
+                    _logList.RemoveAt(_logList.Count - 1);
             }
         }
 

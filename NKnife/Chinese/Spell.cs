@@ -72,14 +72,14 @@ namespace NKnife.Chinese
         /// <summary>
         ///     包含要排除处理的字符的字符串数组。
         /// </summary>
-        private static string[] _Bad =
+        private static string[] _bad =
         {
             "，", "。", "“", "”", "‘", "’", "￥", "＄", "（", "「", "『", "）", "」", "』", "［", "〖", "【", "］", "〗", "】", "—", "…", "《", "＜",
             "》", "＞"
         };
 
 
-        private static Dictionary<string, string> _SpecialPhrase;
+        private static Dictionary<string, string> _specialPhrase;
 
         /// <summary>
         ///     设置或获取包含例外词组读音的键/值对的组合。
@@ -88,18 +88,18 @@ namespace NKnife.Chinese
         {
             get
             {
-                if (_SpecialPhrase == null)
+                if (_specialPhrase == null)
                 {
-                    _SpecialPhrase = new Dictionary<string, string>();
+                    _specialPhrase = new Dictionary<string, string>();
 
-                    _SpecialPhrase.Add("重庆", "Chong Qing");
-                    _SpecialPhrase.Add("深圳", "Shen Zhen");
-                    _SpecialPhrase.Add("什么", "Shen Me");
+                    _specialPhrase.Add("重庆", "Chong Qing");
+                    _specialPhrase.Add("深圳", "Shen Zhen");
+                    _specialPhrase.Add("什么", "Shen Me");
                 }
 
-                return _SpecialPhrase;
+                return _specialPhrase;
             }
-            set { _SpecialPhrase = value; }
+            set { _specialPhrase = value; }
         }
 
 

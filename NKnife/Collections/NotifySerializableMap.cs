@@ -16,7 +16,7 @@ namespace NKnife.Collections
     /// <typeparam name="TValue">The type of the value.</typeparam>
     public class NotifySerializableMap<TKey, TValue> : IDictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged, IXmlSerializable, ISerializable, ICloneable
     {
-        private readonly SerializableMap<TKey, TValue> _Map = new SerializableMap<TKey, TValue>();
+        private readonly SerializableMap<TKey, TValue> _map = new SerializableMap<TKey, TValue>();
 
         #region Implementation of INotifyCollectionChanged
 
@@ -34,7 +34,7 @@ namespace NKnife.Collections
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            return _Map.GetEnumerator();
+            return _map.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -53,7 +53,7 @@ namespace NKnife.Collections
 
         public void Clear()
         {
-            _Map.Clear();
+            _map.Clear();
             var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
             OnCollectionChanged(e);
             OnPropertyChanged("Count");
@@ -62,14 +62,14 @@ namespace NKnife.Collections
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            return _Map.ContainsKey(item.Key) && _Map.ContainsValue(item.Value);
+            return _map.ContainsKey(item.Key) && _map.ContainsValue(item.Value);
         }
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            if (array.Length < arrayIndex + _Map.Count)
-                Array.Resize(ref array, arrayIndex + _Map.Count);
-            foreach (var pair in _Map)
+            if (array.Length < arrayIndex + _map.Count)
+                Array.Resize(ref array, arrayIndex + _map.Count);
+            foreach (var pair in _map)
             {
                 array[arrayIndex] = pair;
                 arrayIndex++;
@@ -83,7 +83,7 @@ namespace NKnife.Collections
 
         public int Count
         {
-            get { return _Map.Count; }
+            get { return _map.Count; }
         }
 
         public bool IsReadOnly
@@ -103,20 +103,20 @@ namespace NKnife.Collections
 
         public bool ContainsKey(TKey key)
         {
-            return _Map.ContainsKey(key);
+            return _map.ContainsKey(key);
         }
 
         public void Add(TKey key, TValue value)
         {
-            if (_Map.ContainsKey(key))
+            if (_map.ContainsKey(key))
             {
-                _Map[key] = value;
+                _map[key] = value;
                 var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value);
                 OnCollectionChanged(e);
             }
             else
             {
-                _Map.Add(key, value);
+                _map.Add(key, value);
                 var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value);
                 OnCollectionChanged(e);
             }
@@ -126,9 +126,9 @@ namespace NKnife.Collections
 
         public bool Remove(TKey key)
         {
-            if (_Map.ContainsKey(key))
+            if (_map.ContainsKey(key))
             {
-                bool removeFlag = _Map.Remove(key);
+                bool removeFlag = _map.Remove(key);
                 if (removeFlag)
                 {
                     var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, key);
@@ -143,23 +143,23 @@ namespace NKnife.Collections
 
         public bool TryGetValue(TKey key, out TValue value)
         {
-            return _Map.TryGetValue(key, out value);
+            return _map.TryGetValue(key, out value);
         }
 
         public TValue this[TKey key]
         {
-            get { return _Map[key]; }
+            get { return _map[key]; }
             set { Add(key, value); }
         }
 
         public ICollection<TKey> Keys
         {
-            get { return _Map.Keys; }
+            get { return _map.Keys; }
         }
 
         public ICollection<TValue> Values
         {
-            get { return _Map.Values; }
+            get { return _map.Values; }
         }
 
         #endregion
@@ -168,17 +168,17 @@ namespace NKnife.Collections
 
         public XmlSchema GetSchema()
         {
-            return ((IXmlSerializable) _Map).GetSchema();
+            return ((IXmlSerializable) _map).GetSchema();
         }
 
         public void ReadXml(XmlReader reader)
         {
-            ((IXmlSerializable) _Map).ReadXml(reader);
+            ((IXmlSerializable) _map).ReadXml(reader);
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            ((IXmlSerializable) _Map).WriteXml(writer);
+            ((IXmlSerializable) _map).WriteXml(writer);
         }
 
         #endregion
@@ -187,7 +187,7 @@ namespace NKnife.Collections
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            ((ISerializable) _Map).GetObjectData(info, context);
+            ((ISerializable) _map).GetObjectData(info, context);
         }
 
         #endregion
@@ -196,7 +196,7 @@ namespace NKnife.Collections
 
         public object Clone()
         {
-            return _Map.Clone();
+            return _map.Clone();
         }
 
         #endregion

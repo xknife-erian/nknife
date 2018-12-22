@@ -29,32 +29,32 @@ namespace NKnife.Protocol.Generic
 
         public string FamilyName { get; set; }
 
-        private BytesProtocolCommandParser _CommandParser;
-        private bool _HasSetCommandParser;
+        private BytesProtocolCommandParser _commandParser;
+        private bool _hasSetCommandParser;
         public BytesProtocolCommandParser CommandParser
         {
             get
             {
-                if (!_HasSetCommandParser) //如果没有设，则从DI取
+                if (!_hasSetCommandParser) //如果没有设，则从DI取
                 {
                     try
                     {
-                        _CommandParser = string.IsNullOrEmpty(FamilyName)
-                            ? DI.Get<BytesProtocolCommandParser>()
-                            : DI.Get<BytesProtocolCommandParser>(FamilyName);
+                        _commandParser = string.IsNullOrEmpty(FamilyName)
+                            ? Di.Get<BytesProtocolCommandParser>()
+                            : Di.Get<BytesProtocolCommandParser>(FamilyName);
                     }
                     catch (ActivationException ex)
                     {
-                        _CommandParser = DI.Get<BytesProtocolCommandParser>();
+                        _commandParser = Di.Get<BytesProtocolCommandParser>();
                     }
-                    _HasSetCommandParser = true;
+                    _hasSetCommandParser = true;
                 }
-                return _CommandParser;
+                return _commandParser;
             }
             set
             {
-                _CommandParser = value;
-                _HasSetCommandParser = true;
+                _commandParser = value;
+                _hasSetCommandParser = true;
             }
         }
 
@@ -106,7 +106,7 @@ namespace NKnife.Protocol.Generic
             }
             else 
             {
-                result = _DefaultProtocolBuilder == null ? DI.Get<BytesProtocol>() : _DefaultProtocolBuilder.Invoke(command);
+                result = _DefaultProtocolBuilder == null ? Di.Get<BytesProtocol>() : _DefaultProtocolBuilder.Invoke(command);
             }
             result.Family = FamilyName;
             result.Command = command;
@@ -157,7 +157,7 @@ namespace NKnife.Protocol.Generic
                 {
                     if (_DefaultProtocolUnPackerGetter == null)
                     {
-                        DI.Get<BytesProtocolUnPacker>().Execute(protocol, datagram, command);
+                        Di.Get<BytesProtocolUnPacker>().Execute(protocol, datagram, command);
                     }
                     else
                     {
@@ -185,7 +185,7 @@ namespace NKnife.Protocol.Generic
                 return _ProtocolPackerGetterMap[command].Invoke(command).Combine(protocol);
             }
             return _DefaultProtocolPackerGetter == null ? 
-                DI.Get<BytesProtocolPacker>().Combine(protocol) : 
+                Di.Get<BytesProtocolPacker>().Combine(protocol) : 
                 _DefaultProtocolPackerGetter.Invoke(command).Combine(protocol);
         }
 
@@ -203,7 +203,7 @@ namespace NKnife.Protocol.Generic
                 return _ProtocolPackerGetterMap[command].Invoke(param).Combine(protocol);
             }
             return _DefaultProtocolPackerGetter == null ?
-                DI.Get<BytesProtocolPacker>().Combine(protocol) :
+                Di.Get<BytesProtocolPacker>().Combine(protocol) :
                 _DefaultProtocolPackerGetter.Invoke(param).Combine(protocol);
         }
 

@@ -16,7 +16,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class TcpServerView
     {
-        private readonly TcpServerViewModel _ViewModel;
+        private readonly TcpServerViewModel _viewModel;
 
         public SocketConfig Config { get; set; }
         internal SocketCustomSetting CustomSetting { get; set; }
@@ -24,10 +24,10 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         public TcpServerView()
         {
             InitializeComponent();
-            _ViewModel = new TcpServerViewModel();
-            _MainGrid.DataContext = _ViewModel;
+            _viewModel = new TcpServerViewModel();
+            _MainGrid.DataContext = _viewModel;
 
-            _SessionDataGrid.ItemsSource = _ViewModel.Sessions;
+            _SessionDataGrid.ItemsSource = _viewModel.Sessions;
 
             _OnlyOnceRadioButton.Checked += ReplayModeRadioButtonOnClick;
             _FixTimeRadioButton.Checked += ReplayModeRadioButtonOnClick;
@@ -51,14 +51,14 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         protected override void OnClosed()
         {
             base.OnClosed();
-            _ViewModel.StopServer();
+            _viewModel.StopServer();
         }
 
         private void Start(object sender, RoutedEventArgs e)
         {
             _StartButton.IsEnabled = false;
             _StopButton.IsEnabled = true;
-            _ViewModel.StartServer(Config, CustomSetting);
+            _viewModel.StartServer(Config, CustomSetting);
             _StartReplayButton.IsEnabled = true;
         }
 
@@ -66,7 +66,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _StartButton.IsEnabled = true;
             _StopButton.IsEnabled = false;
-            _ViewModel.StopServer();
+            _viewModel.StopServer();
             _StartReplayButton.IsEnabled = false;
             _StopReplayButton.IsEnabled = false;
         }
@@ -83,14 +83,14 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             var dialog = sender as ProtocolEditorDialog;
             if (dialog != null && dialog.CurrentProtocol != null)
             {
-                _ViewModel.CurrentProtocol = dialog.CurrentProtocol;
+                _viewModel.CurrentProtocol = dialog.CurrentProtocol;
             }
         }
 
         private void _SelectAllClientCheckBox_OnClick(object sender, RoutedEventArgs e)
         {
             var isChecked = ((CheckBox) sender).IsChecked;
-            foreach (var session in _ViewModel.Sessions)
+            foreach (var session in _viewModel.Sessions)
             {
                 if (isChecked != null) 
                     session.IsSelected = (bool) isChecked;
@@ -101,17 +101,17 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             _StopReplayButton.IsEnabled = false;
             _StartReplayButton.IsEnabled = true;
-            _ViewModel.StopReplay();
+            _viewModel.StopReplay();
         }
 
         private void _StartReplayButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_ViewModel.IsFixTime || _ViewModel.IsRandomTime)
+            if (_viewModel.IsFixTime || _viewModel.IsRandomTime)
             {
                 _StartReplayButton.IsEnabled = false;
                 _StopReplayButton.IsEnabled = true;
             }
-            _ViewModel.Replay();
+            _viewModel.Replay();
         }
     }
 }

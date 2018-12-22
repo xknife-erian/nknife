@@ -146,7 +146,7 @@ namespace NKnife.Maths
         /// <summary>
         ///     maximum length of the BigInteger in uint (4 bytes), change this to suit the required level of precision.
         /// </summary>
-        private const int MAX_LENGTH = 70;
+        private const int MaxLength = 70;
 
         /// <summary>
         ///     primes smaller than 2000 to test the generated prime number
@@ -177,7 +177,7 @@ namespace NKnife.Maths
             #endregion
         };
 
-        private readonly uint[] _Data; // stores bytes from the Big Integer
+        private readonly uint[] _data; // stores bytes from the Big Integer
         // number of actual chars used
 
         ///***********************************************************************
@@ -185,34 +185,34 @@ namespace NKnife.Maths
         ///***********************************************************************
         public BigInteger()
         {
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
             DataLength = 1;
         }
 
         public BigInteger(long value)
         {
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
             long tempVal = value;
 
             // copy bytes from long to BigInteger without any assumption of
             // the length of the long datatype
 
             DataLength = 0;
-            while (value != 0 && DataLength < MAX_LENGTH)
+            while (value != 0 && DataLength < MaxLength)
             {
-                _Data[DataLength] = (uint) (value & 0xFFFFFFFF);
+                _data[DataLength] = (uint) (value & 0xFFFFFFFF);
                 value >>= 32;
                 DataLength++;
             }
 
             if (tempVal > 0) // overflow check for +ve value
             {
-                if (value != 0 || (_Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+                if (value != 0 || (_data[MaxLength - 1] & 0x80000000) != 0)
                     throw (new ArithmeticException("Positive overflow in constructor."));
             }
             else if (tempVal < 0) // underflow check for -ve value
             {
-                if (value != -1 || (_Data[DataLength - 1] & 0x80000000) == 0)
+                if (value != -1 || (_data[DataLength - 1] & 0x80000000) == 0)
                     throw (new ArithmeticException("Negative underflow in constructor."));
             }
 
@@ -222,20 +222,20 @@ namespace NKnife.Maths
 
         public BigInteger(ulong value)
         {
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
 
             // copy bytes from ulong to BigInteger without any assumption of
             // the length of the ulong datatype
 
             DataLength = 0;
-            while (value != 0 && DataLength < MAX_LENGTH)
+            while (value != 0 && DataLength < MaxLength)
             {
-                _Data[DataLength] = (uint) (value & 0xFFFFFFFF);
+                _data[DataLength] = (uint) (value & 0xFFFFFFFF);
                 value >>= 32;
                 DataLength++;
             }
 
-            if (value != 0 || (_Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+            if (value != 0 || (_data[MaxLength - 1] & 0x80000000) != 0)
                 throw (new ArithmeticException("Positive overflow in constructor."));
 
             if (DataLength == 0)
@@ -244,12 +244,12 @@ namespace NKnife.Maths
 
         public BigInteger(BigInteger bi)
         {
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
 
             DataLength = bi.DataLength;
 
             for (int i = 0; i < DataLength; i++)
-                _Data[i] = bi._Data[i];
+                _data[i] = bi._data[i];
         }
 
         public BigInteger(string value, int radix)
@@ -294,18 +294,18 @@ namespace NKnife.Maths
 
             if (value[0] == '-') // negative values
             {
-                if ((result._Data[MAX_LENGTH - 1] & 0x80000000) == 0)
+                if ((result._data[MaxLength - 1] & 0x80000000) == 0)
                     throw (new ArithmeticException("Negative underflow in constructor."));
             }
             else // positive values
             {
-                if ((result._Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+                if ((result._data[MaxLength - 1] & 0x80000000) != 0)
                     throw (new ArithmeticException("Positive overflow in constructor."));
             }
 
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
             for (int i = 0; i < result.DataLength; i++)
-                _Data[i] = result._Data[i];
+                _data[i] = result._data[i];
 
             DataLength = result.DataLength;
         }
@@ -319,26 +319,26 @@ namespace NKnife.Maths
                 DataLength++;
 
 
-            if (DataLength > MAX_LENGTH)
+            if (DataLength > MaxLength)
                 throw (new ArithmeticException("Byte overflow in constructor."));
 
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
 
             for (int i = inData.Length - 1, j = 0; i >= 3; i -= 4, j++)
             {
-                _Data[j] = (uint) ((inData[i - 3] << 24) + (inData[i - 2] << 16) +
+                _data[j] = (uint) ((inData[i - 3] << 24) + (inData[i - 2] << 16) +
                                    (inData[i - 1] << 8) + inData[i]);
             }
 
             if (leftOver == 1)
-                _Data[DataLength - 1] = inData[0];
+                _data[DataLength - 1] = inData[0];
             else if (leftOver == 2)
-                _Data[DataLength - 1] = (uint) ((inData[0] << 8) + inData[1]);
+                _data[DataLength - 1] = (uint) ((inData[0] << 8) + inData[1]);
             else if (leftOver == 3)
-                _Data[DataLength - 1] = (uint) ((inData[0] << 16) + (inData[1] << 8) + inData[2]);
+                _data[DataLength - 1] = (uint) ((inData[0] << 16) + (inData[1] << 8) + inData[2]);
 
 
-            while (DataLength > 1 && _Data[DataLength - 1] == 0)
+            while (DataLength > 1 && _data[DataLength - 1] == 0)
                 DataLength--;
 
             //Console.WriteLine("Len = " + dataLength);
@@ -352,30 +352,30 @@ namespace NKnife.Maths
             if (leftOver != 0) // length not multiples of 4
                 DataLength++;
 
-            if (DataLength > MAX_LENGTH || inLen > inData.Length)
+            if (DataLength > MaxLength || inLen > inData.Length)
                 throw (new ArithmeticException("Byte overflow in constructor."));
 
 
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
 
             for (int i = inLen - 1, j = 0; i >= 3; i -= 4, j++)
             {
-                _Data[j] = (uint) ((inData[i - 3] << 24) + (inData[i - 2] << 16) +
+                _data[j] = (uint) ((inData[i - 3] << 24) + (inData[i - 2] << 16) +
                                    (inData[i - 1] << 8) + inData[i]);
             }
 
             if (leftOver == 1)
-                _Data[DataLength - 1] = inData[0];
+                _data[DataLength - 1] = inData[0];
             else if (leftOver == 2)
-                _Data[DataLength - 1] = (uint) ((inData[0] << 8) + inData[1]);
+                _data[DataLength - 1] = (uint) ((inData[0] << 8) + inData[1]);
             else if (leftOver == 3)
-                _Data[DataLength - 1] = (uint) ((inData[0] << 16) + (inData[1] << 8) + inData[2]);
+                _data[DataLength - 1] = (uint) ((inData[0] << 16) + (inData[1] << 8) + inData[2]);
 
 
             if (DataLength == 0)
                 DataLength = 1;
 
-            while (DataLength > 1 && _Data[DataLength - 1] == 0)
+            while (DataLength > 1 && _data[DataLength - 1] == 0)
                 DataLength--;
 
             //Console.WriteLine("Len = " + dataLength);
@@ -385,15 +385,15 @@ namespace NKnife.Maths
         {
             DataLength = inData.Length;
 
-            if (DataLength > MAX_LENGTH)
+            if (DataLength > MaxLength)
                 throw (new ArithmeticException("Byte overflow in constructor."));
 
-            _Data = new uint[MAX_LENGTH];
+            _data = new uint[MaxLength];
 
             for (int i = DataLength - 1, j = 0; i >= 0; i--, j++)
-                _Data[j] = inData[i];
+                _data[j] = inData[i];
 
-            while (DataLength > 1 && _Data[DataLength - 1] == 0)
+            while (DataLength > 1 && _data[DataLength - 1] == 0)
                 DataLength--;
 
             //Console.WriteLine("Len = " + dataLength);
@@ -414,7 +414,7 @@ namespace NKnife.Maths
 
             for (int i = 0; i < DataLength; i++)
             {
-                if (_Data[i] != bi._Data[i])
+                if (_data[i] != bi._data[i])
                     return false;
             }
             return true;
@@ -455,7 +455,7 @@ namespace NKnife.Maths
             BigInteger a = this;
 
             bool negative = false;
-            if ((a._Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+            if ((a._data[MaxLength - 1] & 0x80000000) != 0)
             {
                 negative = true;
                 try
@@ -471,18 +471,18 @@ namespace NKnife.Maths
             var remainder = new BigInteger();
             var biRadix = new BigInteger(radix);
 
-            if (a.DataLength == 1 && a._Data[0] == 0)
+            if (a.DataLength == 1 && a._data[0] == 0)
                 result = "0";
             else
             {
-                while (a.DataLength > 1 || (a.DataLength == 1 && a._Data[0] != 0))
+                while (a.DataLength > 1 || (a.DataLength == 1 && a._data[0] != 0))
                 {
                     SingleByteDivide(a, biRadix, quotient, remainder);
 
-                    if (remainder._Data[0] < 10)
-                        result = remainder._Data[0] + result;
+                    if (remainder._data[0] < 10)
+                        result = remainder._data[0] + result;
                     else
-                        result = charSet[(int) remainder._Data[0] - 10] + result;
+                        result = charSet[(int) remainder._data[0] - 10] + result;
 
                     a = quotient;
                 }
@@ -506,11 +506,11 @@ namespace NKnife.Maths
         /// <returns></returns>
         public string ToHexString()
         {
-            string result = _Data[DataLength - 1].ToString("X");
+            string result = _data[DataLength - 1].ToString("X");
 
             for (int i = DataLength - 2; i >= 0; i--)
             {
-                result += _Data[i].ToString("X8");
+                result += _data[i].ToString("X8");
             }
 
             return result;
@@ -545,25 +545,25 @@ namespace NKnife.Maths
             long carry = 0;
             for (int i = 0; i < result.DataLength; i++)
             {
-                long sum = bi1._Data[i] + (long) bi2._Data[i] + carry;
+                long sum = bi1._data[i] + (long) bi2._data[i] + carry;
                 carry = sum >> 32;
-                result._Data[i] = (uint) (sum & 0xFFFFFFFF);
+                result._data[i] = (uint) (sum & 0xFFFFFFFF);
             }
 
-            if (carry != 0 && result.DataLength < MAX_LENGTH)
+            if (carry != 0 && result.DataLength < MaxLength)
             {
-                result._Data[result.DataLength] = (uint) (carry);
+                result._data[result.DataLength] = (uint) (carry);
                 result.DataLength++;
             }
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
 
             // overflow check
-            int lastPos = MAX_LENGTH - 1;
-            if ((bi1._Data[lastPos] & 0x80000000) == (bi2._Data[lastPos] & 0x80000000) &&
-                (result._Data[lastPos] & 0x80000000) != (bi1._Data[lastPos] & 0x80000000))
+            int lastPos = MaxLength - 1;
+            if ((bi1._data[lastPos] & 0x80000000) == (bi2._data[lastPos] & 0x80000000) &&
+                (result._data[lastPos] & 0x80000000) != (bi1._data[lastPos] & 0x80000000))
             {
                 throw (new ArithmeticException());
             }
@@ -578,12 +578,12 @@ namespace NKnife.Maths
             long val, carry = 1;
             int index = 0;
 
-            while (carry != 0 && index < MAX_LENGTH)
+            while (carry != 0 && index < MaxLength)
             {
-                val = result._Data[index];
+                val = result._data[index];
                 val++;
 
-                result._Data[index] = (uint) (val & 0xFFFFFFFF);
+                result._data[index] = (uint) (val & 0xFFFFFFFF);
                 carry = val >> 32;
 
                 index++;
@@ -593,18 +593,18 @@ namespace NKnife.Maths
                 result.DataLength = index;
             else
             {
-                while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+                while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                     result.DataLength--;
             }
 
             // overflow check
-            int lastPos = MAX_LENGTH - 1;
+            int lastPos = MaxLength - 1;
 
             // overflow if initial value was +ve but ++ caused a sign
             // change to negative.
 
-            if ((bi1._Data[lastPos] & 0x80000000) == 0 &&
-                (result._Data[lastPos] & 0x80000000) != (bi1._Data[lastPos] & 0x80000000))
+            if ((bi1._data[lastPos] & 0x80000000) == 0 &&
+                (result._data[lastPos] & 0x80000000) != (bi1._data[lastPos] & 0x80000000))
             {
                 throw (new ArithmeticException("Overflow in ++."));
             }
@@ -622,8 +622,8 @@ namespace NKnife.Maths
             {
                 long diff;
 
-                diff = bi1._Data[i] - (long) bi2._Data[i] - carryIn;
-                result._Data[i] = (uint) (diff & 0xFFFFFFFF);
+                diff = bi1._data[i] - (long) bi2._data[i] - carryIn;
+                result._data[i] = (uint) (diff & 0xFFFFFFFF);
 
                 if (diff < 0)
                     carryIn = 1;
@@ -634,20 +634,20 @@ namespace NKnife.Maths
             // roll over to negative
             if (carryIn != 0)
             {
-                for (int i = result.DataLength; i < MAX_LENGTH; i++)
-                    result._Data[i] = 0xFFFFFFFF;
-                result.DataLength = MAX_LENGTH;
+                for (int i = result.DataLength; i < MaxLength; i++)
+                    result._data[i] = 0xFFFFFFFF;
+                result.DataLength = MaxLength;
             }
 
             // fixed in v1.03 to give correct datalength for a - (-b)
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
             // overflow check
 
-            int lastPos = MAX_LENGTH - 1;
-            if ((bi1._Data[lastPos] & 0x80000000) != (bi2._Data[lastPos] & 0x80000000) &&
-                (result._Data[lastPos] & 0x80000000) != (bi1._Data[lastPos] & 0x80000000))
+            int lastPos = MaxLength - 1;
+            if ((bi1._data[lastPos] & 0x80000000) != (bi2._data[lastPos] & 0x80000000) &&
+                (result._data[lastPos] & 0x80000000) != (bi1._data[lastPos] & 0x80000000))
             {
                 throw (new ArithmeticException());
             }
@@ -663,12 +663,12 @@ namespace NKnife.Maths
             bool carryIn = true;
             int index = 0;
 
-            while (carryIn && index < MAX_LENGTH)
+            while (carryIn && index < MaxLength)
             {
-                val = result._Data[index];
+                val = result._data[index];
                 val--;
 
-                result._Data[index] = (uint) (val & 0xFFFFFFFF);
+                result._data[index] = (uint) (val & 0xFFFFFFFF);
 
                 if (val >= 0)
                     carryIn = false;
@@ -679,17 +679,17 @@ namespace NKnife.Maths
             if (index > result.DataLength)
                 result.DataLength = index;
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
             // overflow check
-            int lastPos = MAX_LENGTH - 1;
+            int lastPos = MaxLength - 1;
 
             // overflow if initial value was -ve but -- caused a sign
             // change to positive.
 
-            if ((bi1._Data[lastPos] & 0x80000000) != 0 &&
-                (result._Data[lastPos] & 0x80000000) != (bi1._Data[lastPos] & 0x80000000))
+            if ((bi1._data[lastPos] & 0x80000000) != 0 &&
+                (result._data[lastPos] & 0x80000000) != (bi1._data[lastPos] & 0x80000000))
             {
                 throw (new ArithmeticException("Underflow in --."));
             }
@@ -699,18 +699,18 @@ namespace NKnife.Maths
 
         public static BigInteger operator *(BigInteger bi1, BigInteger bi2)
         {
-            int lastPos = MAX_LENGTH - 1;
+            int lastPos = MaxLength - 1;
             bool bi1Neg = false, bi2Neg = false;
 
             // take the absolute value of the inputs
             try
             {
-                if ((bi1._Data[lastPos] & 0x80000000) != 0) // bi1 negative
+                if ((bi1._data[lastPos] & 0x80000000) != 0) // bi1 negative
                 {
                     bi1Neg = true;
                     bi1 = -bi1;
                 }
-                if ((bi2._Data[lastPos] & 0x80000000) != 0) // bi2 negative
+                if ((bi2._data[lastPos] & 0x80000000) != 0) // bi2 negative
                 {
                     bi2Neg = true;
                     bi2 = -bi2;
@@ -727,21 +727,21 @@ namespace NKnife.Maths
             {
                 for (int i = 0; i < bi1.DataLength; i++)
                 {
-                    if (bi1._Data[i] == 0) continue;
+                    if (bi1._data[i] == 0) continue;
 
                     ulong mcarry = 0;
                     for (int j = 0, k = i; j < bi2.DataLength; j++, k++)
                     {
                         // k = i + j
-                        ulong val = (bi1._Data[i]*(ulong) bi2._Data[j]) +
-                                    result._Data[k] + mcarry;
+                        ulong val = (bi1._data[i]*(ulong) bi2._data[j]) +
+                                    result._data[k] + mcarry;
 
-                        result._Data[k] = (uint) (val & 0xFFFFFFFF);
+                        result._data[k] = (uint) (val & 0xFFFFFFFF);
                         mcarry = (val >> 32);
                     }
 
                     if (mcarry != 0)
-                        result._Data[i + bi2.DataLength] = (uint) mcarry;
+                        result._data[i + bi2.DataLength] = (uint) mcarry;
                 }
             }
             catch (Exception)
@@ -751,16 +751,16 @@ namespace NKnife.Maths
 
 
             result.DataLength = bi1.DataLength + bi2.DataLength;
-            if (result.DataLength > MAX_LENGTH)
-                result.DataLength = MAX_LENGTH;
+            if (result.DataLength > MaxLength)
+                result.DataLength = MaxLength;
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
             // overflow check (result is -ve)
-            if ((result._Data[lastPos] & 0x80000000) != 0)
+            if ((result._data[lastPos] & 0x80000000) != 0)
             {
-                if (bi1Neg != bi2Neg && result._Data[lastPos] == 0x80000000) // different sign
+                if (bi1Neg != bi2Neg && result._data[lastPos] == 0x80000000) // different sign
                 {
                     // handle the special case where multiplication produces
                     // a max negative number in 2's complement.
@@ -770,7 +770,7 @@ namespace NKnife.Maths
                     bool isMaxNeg = true;
                     for (int i = 0; i < result.DataLength - 1 && isMaxNeg; i++)
                     {
-                        if (result._Data[i] != 0)
+                        if (result._data[i] != 0)
                             isMaxNeg = false;
                     }
 
@@ -791,12 +791,12 @@ namespace NKnife.Maths
         public static BigInteger operator <<(BigInteger bi1, int shiftVal)
         {
             var result = new BigInteger(bi1);
-            result.DataLength = shiftLeft(result._Data, shiftVal);
+            result.DataLength = ShiftLeft(result._data, shiftVal);
 
             return result;
         }
 
-        private static int shiftLeft(uint[] buffer, int shiftVal)
+        private static int ShiftLeft(uint[] buffer, int shiftVal)
         {
             int shiftAmount = 32;
             int bufLen = buffer.Length;
@@ -837,30 +837,30 @@ namespace NKnife.Maths
         public static BigInteger operator >>(BigInteger bi1, int shiftVal)
         {
             var result = new BigInteger(bi1);
-            result.DataLength = shiftRight(result._Data, shiftVal);
+            result.DataLength = ShiftRight(result._data, shiftVal);
 
 
-            if ((bi1._Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((bi1._data[MaxLength - 1] & 0x80000000) != 0) // negative
             {
-                for (int i = MAX_LENGTH - 1; i >= result.DataLength; i--)
-                    result._Data[i] = 0xFFFFFFFF;
+                for (int i = MaxLength - 1; i >= result.DataLength; i--)
+                    result._data[i] = 0xFFFFFFFF;
 
                 uint mask = 0x80000000;
                 for (int i = 0; i < 32; i++)
                 {
-                    if ((result._Data[result.DataLength - 1] & mask) != 0)
+                    if ((result._data[result.DataLength - 1] & mask) != 0)
                         break;
 
-                    result._Data[result.DataLength - 1] |= mask;
+                    result._data[result.DataLength - 1] |= mask;
                     mask >>= 1;
                 }
-                result.DataLength = MAX_LENGTH;
+                result.DataLength = MaxLength;
             }
 
             return result;
         }
 
-        private static int shiftRight(uint[] buffer, int shiftVal)
+        private static int ShiftRight(uint[] buffer, int shiftVal)
         {
             int shiftAmount = 32;
             int invShift = 0;
@@ -904,12 +904,12 @@ namespace NKnife.Maths
         {
             var result = new BigInteger(bi1);
 
-            for (int i = 0; i < MAX_LENGTH; i++)
-                result._Data[i] = ~(bi1._Data[i]);
+            for (int i = 0; i < MaxLength; i++)
+                result._data[i] = ~(bi1._data[i]);
 
-            result.DataLength = MAX_LENGTH;
+            result.DataLength = MaxLength;
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
             return result;
@@ -920,36 +920,36 @@ namespace NKnife.Maths
             // handle neg of zero separately since it'll cause an overflow
             // if we proceed.
 
-            if (bi1.DataLength == 1 && bi1._Data[0] == 0)
+            if (bi1.DataLength == 1 && bi1._data[0] == 0)
                 return (new BigInteger());
 
             var result = new BigInteger(bi1);
 
             // 1's complement
-            for (int i = 0; i < MAX_LENGTH; i++)
-                result._Data[i] = ~(bi1._Data[i]);
+            for (int i = 0; i < MaxLength; i++)
+                result._data[i] = ~(bi1._data[i]);
 
             // add one to result of 1's complement
             long val, carry = 1;
             int index = 0;
 
-            while (carry != 0 && index < MAX_LENGTH)
+            while (carry != 0 && index < MaxLength)
             {
-                val = result._Data[index];
+                val = result._data[index];
                 val++;
 
-                result._Data[index] = (uint) (val & 0xFFFFFFFF);
+                result._data[index] = (uint) (val & 0xFFFFFFFF);
                 carry = val >> 32;
 
                 index++;
             }
 
-            if ((bi1._Data[MAX_LENGTH - 1] & 0x80000000) == (result._Data[MAX_LENGTH - 1] & 0x80000000))
+            if ((bi1._data[MaxLength - 1] & 0x80000000) == (result._data[MaxLength - 1] & 0x80000000))
                 throw (new ArithmeticException("Overflow in negation.\n"));
 
-            result.DataLength = MAX_LENGTH;
+            result.DataLength = MaxLength;
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
             return result;
         }
@@ -966,23 +966,23 @@ namespace NKnife.Maths
 
         public static bool operator >(BigInteger bi1, BigInteger bi2)
         {
-            int pos = MAX_LENGTH - 1;
+            int pos = MaxLength - 1;
 
             // bi1 is negative, bi2 is positive
-            if ((bi1._Data[pos] & 0x80000000) != 0 && (bi2._Data[pos] & 0x80000000) == 0)
+            if ((bi1._data[pos] & 0x80000000) != 0 && (bi2._data[pos] & 0x80000000) == 0)
                 return false;
 
                 // bi1 is positive, bi2 is negative
-            if ((bi1._Data[pos] & 0x80000000) == 0 && (bi2._Data[pos] & 0x80000000) != 0)
+            if ((bi1._data[pos] & 0x80000000) == 0 && (bi2._data[pos] & 0x80000000) != 0)
                 return true;
 
             // same sign
             int len = (bi1.DataLength > bi2.DataLength) ? bi1.DataLength : bi2.DataLength;
-            for (pos = len - 1; pos >= 0 && bi1._Data[pos] == bi2._Data[pos]; pos--) ;
+            for (pos = len - 1; pos >= 0 && bi1._data[pos] == bi2._data[pos]; pos--) ;
 
             if (pos >= 0)
             {
-                if (bi1._Data[pos] > bi2._Data[pos])
+                if (bi1._data[pos] > bi2._data[pos])
                     return true;
                 return false;
             }
@@ -991,23 +991,23 @@ namespace NKnife.Maths
 
         public static bool operator <(BigInteger bi1, BigInteger bi2)
         {
-            int pos = MAX_LENGTH - 1;
+            int pos = MaxLength - 1;
 
             // bi1 is negative, bi2 is positive
-            if ((bi1._Data[pos] & 0x80000000) != 0 && (bi2._Data[pos] & 0x80000000) == 0)
+            if ((bi1._data[pos] & 0x80000000) != 0 && (bi2._data[pos] & 0x80000000) == 0)
                 return true;
 
                 // bi1 is positive, bi2 is negative
-            if ((bi1._Data[pos] & 0x80000000) == 0 && (bi2._Data[pos] & 0x80000000) != 0)
+            if ((bi1._data[pos] & 0x80000000) == 0 && (bi2._data[pos] & 0x80000000) != 0)
                 return false;
 
             // same sign
             int len = (bi1.DataLength > bi2.DataLength) ? bi1.DataLength : bi2.DataLength;
-            for (pos = len - 1; pos >= 0 && bi1._Data[pos] == bi2._Data[pos]; pos--) ;
+            for (pos = len - 1; pos >= 0 && bi1._data[pos] == bi2._data[pos]; pos--) ;
 
             if (pos >= 0)
             {
-                if (bi1._Data[pos] < bi2._Data[pos])
+                if (bi1._data[pos] < bi2._data[pos])
                     return true;
                 return false;
             }
@@ -1029,15 +1029,15 @@ namespace NKnife.Maths
             var quotient = new BigInteger();
             var remainder = new BigInteger();
 
-            int lastPos = MAX_LENGTH - 1;
+            int lastPos = MaxLength - 1;
             bool divisorNeg = false, dividendNeg = false;
 
-            if ((bi1._Data[lastPos] & 0x80000000) != 0) // bi1 negative
+            if ((bi1._data[lastPos] & 0x80000000) != 0) // bi1 negative
             {
                 bi1 = -bi1;
                 dividendNeg = true;
             }
-            if ((bi2._Data[lastPos] & 0x80000000) != 0) // bi2 negative
+            if ((bi2._data[lastPos] & 0x80000000) != 0) // bi2 negative
             {
                 bi2 = -bi2;
                 divisorNeg = true;
@@ -1064,15 +1064,15 @@ namespace NKnife.Maths
             var quotient = new BigInteger();
             var remainder = new BigInteger(bi1);
 
-            int lastPos = MAX_LENGTH - 1;
+            int lastPos = MaxLength - 1;
             bool dividendNeg = false;
 
-            if ((bi1._Data[lastPos] & 0x80000000) != 0) // bi1 negative
+            if ((bi1._data[lastPos] & 0x80000000) != 0) // bi1 negative
             {
                 bi1 = -bi1;
                 dividendNeg = true;
             }
-            if ((bi2._Data[lastPos] & 0x80000000) != 0) // bi2 negative
+            if ((bi2._data[lastPos] & 0x80000000) != 0) // bi2 negative
                 bi2 = -bi2;
 
             if (bi1 < bi2)
@@ -1099,13 +1099,13 @@ namespace NKnife.Maths
 
             for (int i = 0; i < len; i++)
             {
-                uint sum = bi1._Data[i] & bi2._Data[i];
-                result._Data[i] = sum;
+                uint sum = bi1._data[i] & bi2._data[i];
+                result._data[i] = sum;
             }
 
-            result.DataLength = MAX_LENGTH;
+            result.DataLength = MaxLength;
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
             return result;
@@ -1119,13 +1119,13 @@ namespace NKnife.Maths
 
             for (int i = 0; i < len; i++)
             {
-                uint sum = bi1._Data[i] | bi2._Data[i];
-                result._Data[i] = sum;
+                uint sum = bi1._data[i] | bi2._data[i];
+                result._data[i] = sum;
             }
 
-            result.DataLength = MAX_LENGTH;
+            result.DataLength = MaxLength;
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
             return result;
@@ -1139,13 +1139,13 @@ namespace NKnife.Maths
 
             for (int i = 0; i < len; i++)
             {
-                uint sum = bi1._Data[i] ^ bi2._Data[i];
-                result._Data[i] = sum;
+                uint sum = bi1._data[i] ^ bi2._data[i];
+                result._data[i] = sum;
             }
 
-            result.DataLength = MAX_LENGTH;
+            result.DataLength = MaxLength;
 
-            while (result.DataLength > 1 && result._Data[result.DataLength - 1] == 0)
+            while (result.DataLength > 1 && result._data[result.DataLength - 1] == 0)
                 result.DataLength--;
 
             return result;
@@ -1153,13 +1153,13 @@ namespace NKnife.Maths
 
         private static void MultiByteDivide(BigInteger bi1, BigInteger bi2, BigInteger outQuotient, BigInteger outRemainder)
         {
-            var result = new uint[MAX_LENGTH];
+            var result = new uint[MaxLength];
 
             int remainderLen = bi1.DataLength + 1;
             var remainder = new uint[remainderLen];
 
             uint mask = 0x80000000;
-            uint val = bi2._Data[bi2.DataLength - 1];
+            uint val = bi2._data[bi2.DataLength - 1];
             int shift = 0, resultPos = 0;
 
             while (mask != 0 && (val & mask) == 0)
@@ -1172,8 +1172,8 @@ namespace NKnife.Maths
             //Console.WriteLine("Before bi1 Len = {0}, bi2 Len = {1}", bi1.dataLength, bi2.dataLength);
 
             for (int i = 0; i < bi1.DataLength; i++)
-                remainder[i] = bi1._Data[i];
-            shiftLeft(remainder, shift);
+                remainder[i] = bi1._data[i];
+            ShiftLeft(remainder, shift);
             bi2 = bi2 << shift;
 
             /*
@@ -1187,8 +1187,8 @@ namespace NKnife.Maths
             int j = remainderLen - bi2.DataLength;
             int pos = remainderLen - 1;
 
-            ulong firstDivisorByte = bi2._Data[bi2.DataLength - 1];
-            ulong secondDivisorByte = bi2._Data[bi2.DataLength - 2];
+            ulong firstDivisorByte = bi2._data[bi2.DataLength - 1];
+            ulong secondDivisorByte = bi2._data[bi2.DataLength - 2];
 
             int divisorLen = bi2.DataLength + 1;
             var dividendPart = new uint[divisorLen];
@@ -1198,8 +1198,8 @@ namespace NKnife.Maths
                 ulong dividend = ((ulong) remainder[pos] << 32) + remainder[pos - 1];
                 //Console.WriteLine("dividend = {0}", dividend);
 
-                ulong q_hat = dividend/firstDivisorByte;
-                ulong r_hat = dividend%firstDivisorByte;
+                ulong qHat = dividend/firstDivisorByte;
+                ulong rHat = dividend%firstDivisorByte;
 
                 //Console.WriteLine("q_hat = {0:X}, r_hat = {1:X}", q_hat, r_hat);
 
@@ -1208,13 +1208,13 @@ namespace NKnife.Maths
                 {
                     done = true;
 
-                    if (q_hat == 0x100000000 ||
-                        (q_hat*secondDivisorByte) > ((r_hat << 32) + remainder[pos - 2]))
+                    if (qHat == 0x100000000 ||
+                        (qHat*secondDivisorByte) > ((rHat << 32) + remainder[pos - 2]))
                     {
-                        q_hat--;
-                        r_hat += firstDivisorByte;
+                        qHat--;
+                        rHat += firstDivisorByte;
 
-                        if (r_hat < 0x100000000)
+                        if (rHat < 0x100000000)
                             done = false;
                     }
                 }
@@ -1223,12 +1223,12 @@ namespace NKnife.Maths
                     dividendPart[h] = remainder[pos - h];
 
                 var kk = new BigInteger(dividendPart);
-                BigInteger ss = bi2*(long) q_hat;
+                BigInteger ss = bi2*(long) qHat;
 
                 //Console.WriteLine("ss before = " + ss);
                 while (ss > kk)
                 {
-                    q_hat--;
+                    qHat--;
                     ss -= bi2;
                     //Console.WriteLine(ss);
                 }
@@ -1239,7 +1239,7 @@ namespace NKnife.Maths
                 //Console.WriteLine("yy = " + yy);
 
                 for (int h = 0; h < divisorLen; h++)
-                    remainder[pos - h] = yy._Data[bi2.DataLength - h];
+                    remainder[pos - h] = yy._data[bi2.DataLength - h];
 
                 /*
                 Console.WriteLine("dividend = ");
@@ -1248,7 +1248,7 @@ namespace NKnife.Maths
                 Console.WriteLine("\n************ q_hat = {0:X}\n", q_hat);
                 */
 
-                result[resultPos++] = (uint) q_hat;
+                result[resultPos++] = (uint) qHat;
 
                 pos--;
                 j--;
@@ -1257,40 +1257,40 @@ namespace NKnife.Maths
             outQuotient.DataLength = resultPos;
             int y = 0;
             for (int x = outQuotient.DataLength - 1; x >= 0; x--, y++)
-                outQuotient._Data[y] = result[x];
-            for (; y < MAX_LENGTH; y++)
-                outQuotient._Data[y] = 0;
+                outQuotient._data[y] = result[x];
+            for (; y < MaxLength; y++)
+                outQuotient._data[y] = 0;
 
-            while (outQuotient.DataLength > 1 && outQuotient._Data[outQuotient.DataLength - 1] == 0)
+            while (outQuotient.DataLength > 1 && outQuotient._data[outQuotient.DataLength - 1] == 0)
                 outQuotient.DataLength--;
 
             if (outQuotient.DataLength == 0)
                 outQuotient.DataLength = 1;
 
-            outRemainder.DataLength = shiftRight(remainder, shift);
+            outRemainder.DataLength = ShiftRight(remainder, shift);
 
             for (y = 0; y < outRemainder.DataLength; y++)
-                outRemainder._Data[y] = remainder[y];
-            for (; y < MAX_LENGTH; y++)
-                outRemainder._Data[y] = 0;
+                outRemainder._data[y] = remainder[y];
+            for (; y < MaxLength; y++)
+                outRemainder._data[y] = 0;
         }
 
         private static void SingleByteDivide(BigInteger bi1, BigInteger bi2, BigInteger outQuotient, BigInteger outRemainder)
         {
-            var result = new uint[MAX_LENGTH];
+            var result = new uint[MaxLength];
             int resultPos = 0;
 
             // copy dividend to reminder
-            for (int i = 0; i < MAX_LENGTH; i++)
-                outRemainder._Data[i] = bi1._Data[i];
+            for (int i = 0; i < MaxLength; i++)
+                outRemainder._data[i] = bi1._data[i];
             outRemainder.DataLength = bi1.DataLength;
 
-            while (outRemainder.DataLength > 1 && outRemainder._Data[outRemainder.DataLength - 1] == 0)
+            while (outRemainder.DataLength > 1 && outRemainder._data[outRemainder.DataLength - 1] == 0)
                 outRemainder.DataLength--;
 
-            ulong divisor = bi2._Data[0];
+            ulong divisor = bi2._data[0];
             int pos = outRemainder.DataLength - 1;
-            ulong dividend = outRemainder._Data[pos];
+            ulong dividend = outRemainder._data[pos];
 
             //Console.WriteLine("divisor = " + divisor + " dividend = " + dividend);
             //Console.WriteLine("divisor = " + bi2 + "\ndividend = " + bi1);
@@ -1300,7 +1300,7 @@ namespace NKnife.Maths
                 ulong quotient = dividend/divisor;
                 result[resultPos++] = (uint) quotient;
 
-                outRemainder._Data[pos] = (uint) (dividend%divisor);
+                outRemainder._data[pos] = (uint) (dividend%divisor);
             }
             pos--;
 
@@ -1308,29 +1308,29 @@ namespace NKnife.Maths
             {
                 //Console.WriteLine(pos);
 
-                dividend = ((ulong) outRemainder._Data[pos + 1] << 32) + outRemainder._Data[pos];
+                dividend = ((ulong) outRemainder._data[pos + 1] << 32) + outRemainder._data[pos];
                 ulong quotient = dividend/divisor;
                 result[resultPos++] = (uint) quotient;
 
-                outRemainder._Data[pos + 1] = 0;
-                outRemainder._Data[pos--] = (uint) (dividend%divisor);
+                outRemainder._data[pos + 1] = 0;
+                outRemainder._data[pos--] = (uint) (dividend%divisor);
                 //Console.WriteLine(">>>> " + bi1);
             }
 
             outQuotient.DataLength = resultPos;
             int j = 0;
             for (int i = outQuotient.DataLength - 1; i >= 0; i--, j++)
-                outQuotient._Data[j] = result[i];
-            for (; j < MAX_LENGTH; j++)
-                outQuotient._Data[j] = 0;
+                outQuotient._data[j] = result[i];
+            for (; j < MaxLength; j++)
+                outQuotient._data[j] = 0;
 
-            while (outQuotient.DataLength > 1 && outQuotient._Data[outQuotient.DataLength - 1] == 0)
+            while (outQuotient.DataLength > 1 && outQuotient._data[outQuotient.DataLength - 1] == 0)
                 outQuotient.DataLength--;
 
             if (outQuotient.DataLength == 0)
                 outQuotient.DataLength = 1;
 
-            while (outRemainder.DataLength > 1 && outRemainder._Data[outRemainder.DataLength - 1] == 0)
+            while (outRemainder.DataLength > 1 && outRemainder._data[outRemainder.DataLength - 1] == 0)
                 outRemainder.DataLength--;
         }
 
@@ -1360,7 +1360,7 @@ namespace NKnife.Maths
         /// <returns></returns>
         public BigInteger Absolute()
         {
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+            if ((_data[MaxLength - 1] & 0x80000000) != 0)
                 return (-this);
             return (new BigInteger(this));
         }
@@ -1369,16 +1369,16 @@ namespace NKnife.Maths
         // Modulo Exponentiation
         //***********************************************************************
 
-        public BigInteger modPow(BigInteger exp, BigInteger n)
+        public BigInteger ModPow(BigInteger exp, BigInteger n)
         {
-            if ((exp._Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+            if ((exp._data[MaxLength - 1] & 0x80000000) != 0)
                 throw (new ArithmeticException("Positive exponents only."));
 
             BigInteger resultNum = 1;
             BigInteger tempNum;
             bool thisNegative = false;
 
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative this
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative this
             {
                 tempNum = -this%n;
                 thisNegative = true;
@@ -1386,14 +1386,14 @@ namespace NKnife.Maths
             else
                 tempNum = this%n; // ensures (tempNum * tempNum) < b^(2k)
 
-            if ((n._Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative n
+            if ((n._data[MaxLength - 1] & 0x80000000) != 0) // negative n
                 n = -n;
 
             // calculate constant = b^(2k) / m
             var constant = new BigInteger();
 
             int i = n.DataLength << 1;
-            constant._Data[i] = 0x00000001;
+            constant._data[i] = 0x00000001;
             constant.DataLength = i + 1;
 
             constant = constant/n;
@@ -1408,7 +1408,7 @@ namespace NKnife.Maths
 
                 for (int index = 0; index < 32; index++)
                 {
-                    if ((exp._Data[pos] & mask) != 0)
+                    if ((exp._data[pos] & mask) != 0)
                         resultNum = BarrettReduction(resultNum*tempNum, n, constant);
 
                     mask <<= 1;
@@ -1416,9 +1416,9 @@ namespace NKnife.Maths
                     tempNum = BarrettReduction(tempNum*tempNum, n, constant);
 
 
-                    if (tempNum.DataLength == 1 && tempNum._Data[0] == 1)
+                    if (tempNum.DataLength == 1 && tempNum._data[0] == 1)
                     {
-                        if (thisNegative && (exp._Data[0] & 0x1) != 0) //odd exp
+                        if (thisNegative && (exp._data[0] & 0x1) != 0) //odd exp
                             return -resultNum;
                         return resultNum;
                     }
@@ -1428,7 +1428,7 @@ namespace NKnife.Maths
                 }
             }
 
-            if (thisNegative && (exp._Data[0] & 0x1) != 0) //odd exp
+            if (thisNegative && (exp._data[0] & 0x1) != 0) //odd exp
                 return -resultNum;
 
             return resultNum;
@@ -1452,7 +1452,7 @@ namespace NKnife.Maths
 
             // q1 = x / b^(k-1)
             for (int i = kMinusOne, j = 0; i < x.DataLength; i++, j++)
-                q1._Data[j] = x._Data[i];
+                q1._data[j] = x._data[i];
             q1.DataLength = x.DataLength - kMinusOne;
             if (q1.DataLength <= 0)
                 q1.DataLength = 1;
@@ -1463,7 +1463,7 @@ namespace NKnife.Maths
 
             // q3 = q2 / b^(k+1)
             for (int i = kPlusOne, j = 0; i < q2.DataLength; i++, j++)
-                q3._Data[j] = q2._Data[i];
+                q3._data[j] = q2._data[i];
             q3.DataLength = q2.DataLength - kPlusOne;
             if (q3.DataLength <= 0)
                 q3.DataLength = 1;
@@ -1474,7 +1474,7 @@ namespace NKnife.Maths
             var r1 = new BigInteger();
             int lengthToCopy = (x.DataLength > kPlusOne) ? kPlusOne : x.DataLength;
             for (int i = 0; i < lengthToCopy; i++)
-                r1._Data[i] = x._Data[i];
+                r1._data[i] = x._data[i];
             r1.DataLength = lengthToCopy;
 
 
@@ -1484,32 +1484,32 @@ namespace NKnife.Maths
             var r2 = new BigInteger();
             for (int i = 0; i < q3.DataLength; i++)
             {
-                if (q3._Data[i] == 0) continue;
+                if (q3._data[i] == 0) continue;
 
                 ulong mcarry = 0;
                 int t = i;
                 for (int j = 0; j < n.DataLength && t < kPlusOne; j++, t++)
                 {
                     // t = i + j
-                    ulong val = (q3._Data[i]*(ulong) n._Data[j]) +
-                                r2._Data[t] + mcarry;
+                    ulong val = (q3._data[i]*(ulong) n._data[j]) +
+                                r2._data[t] + mcarry;
 
-                    r2._Data[t] = (uint) (val & 0xFFFFFFFF);
+                    r2._data[t] = (uint) (val & 0xFFFFFFFF);
                     mcarry = (val >> 32);
                 }
 
                 if (t < kPlusOne)
-                    r2._Data[t] = (uint) mcarry;
+                    r2._data[t] = (uint) mcarry;
             }
             r2.DataLength = kPlusOne;
-            while (r2.DataLength > 1 && r2._Data[r2.DataLength - 1] == 0)
+            while (r2.DataLength > 1 && r2._data[r2.DataLength - 1] == 0)
                 r2.DataLength--;
 
             r1 -= r2;
-            if ((r1._Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((r1._data[MaxLength - 1] & 0x80000000) != 0) // negative
             {
                 var val = new BigInteger();
-                val._Data[kPlusOne] = 0x00000001;
+                val._data[kPlusOne] = 0x00000001;
                 val.DataLength = kPlusOne + 1;
                 r1 += val;
             }
@@ -1524,24 +1524,24 @@ namespace NKnife.Maths
         // Returns gcd(this, bi)
         //***********************************************************************
 
-        public BigInteger gcd(BigInteger bi)
+        public BigInteger Gcd(BigInteger bi)
         {
             BigInteger x;
             BigInteger y;
 
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative
                 x = -this;
             else
                 x = this;
 
-            if ((bi._Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((bi._data[MaxLength - 1] & 0x80000000) != 0) // negative
                 y = -bi;
             else
                 y = bi;
 
             BigInteger g = y;
 
-            while (x.DataLength > 1 || (x.DataLength == 1 && x._Data[0] != 0))
+            while (x.DataLength > 1 || (x.DataLength == 1 && x._data[0] != 0))
             {
                 g = x;
                 x = y%x;
@@ -1564,25 +1564,25 @@ namespace NKnife.Maths
             if (remBits != 0)
                 dwords++;
 
-            if (dwords > MAX_LENGTH)
+            if (dwords > MaxLength)
                 throw (new ArithmeticException("Number of required bits > maxLength."));
 
             for (int i = 0; i < dwords; i++)
-                _Data[i] = (uint) (rand.NextDouble()*0x100000000);
+                _data[i] = (uint) (rand.NextDouble()*0x100000000);
 
-            for (int i = dwords; i < MAX_LENGTH; i++)
-                _Data[i] = 0;
+            for (int i = dwords; i < MaxLength; i++)
+                _data[i] = 0;
 
             if (remBits != 0)
             {
                 var mask = (uint) (0x01 << (remBits - 1));
-                _Data[dwords - 1] |= mask;
+                _data[dwords - 1] |= mask;
 
                 mask = 0xFFFFFFFF >> (32 - remBits);
-                _Data[dwords - 1] &= mask;
+                _data[dwords - 1] &= mask;
             }
             else
-                _Data[dwords - 1] |= 0x80000000;
+                _data[dwords - 1] |= 0x80000000;
 
             DataLength = dwords;
 
@@ -1600,10 +1600,10 @@ namespace NKnife.Maths
         /// <returns></returns>
         public int BitCount()
         {
-            while (DataLength > 1 && _Data[DataLength - 1] == 0)
+            while (DataLength > 1 && _data[DataLength - 1] == 0)
                 DataLength--;
 
-            uint value = _Data[DataLength - 1];
+            uint value = _data[DataLength - 1];
             uint mask = 0x80000000;
             int bits = 32;
 
@@ -1641,7 +1641,7 @@ namespace NKnife.Maths
         public bool FermatLittleTest(int confidence)
         {
             BigInteger thisVal;
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative
                 thisVal = -this;
             else
                 thisVal = this;
@@ -1649,18 +1649,18 @@ namespace NKnife.Maths
             if (thisVal.DataLength == 1)
             {
                 // test small numbers
-                if (thisVal._Data[0] == 0 || thisVal._Data[0] == 1)
+                if (thisVal._data[0] == 0 || thisVal._data[0] == 1)
                     return false;
-                if (thisVal._Data[0] == 2 || thisVal._Data[0] == 3)
+                if (thisVal._data[0] == 2 || thisVal._data[0] == 3)
                     return true;
             }
 
-            if ((thisVal._Data[0] & 0x1) == 0) // even numbers
+            if ((thisVal._data[0] & 0x1) == 0) // even numbers
                 return false;
 
             int bits = thisVal.BitCount();
             var a = new BigInteger();
-            BigInteger p_sub1 = thisVal - (new BigInteger(1));
+            BigInteger pSub1 = thisVal - (new BigInteger(1));
             var rand = new Random();
 
             for (int round = 0; round < confidence; round++)
@@ -1680,23 +1680,23 @@ namespace NKnife.Maths
                     int byteLen = a.DataLength;
 
                     // make sure "a" is not 0
-                    if (byteLen > 1 || (byteLen == 1 && a._Data[0] != 1))
+                    if (byteLen > 1 || (byteLen == 1 && a._data[0] != 1))
                         done = true;
                 }
 
                 // check whether a factor exists (fix for version 1.03)
-                BigInteger gcdTest = a.gcd(thisVal);
-                if (gcdTest.DataLength == 1 && gcdTest._Data[0] != 1)
+                BigInteger gcdTest = a.Gcd(thisVal);
+                if (gcdTest.DataLength == 1 && gcdTest._data[0] != 1)
                     return false;
 
                 // calculate a^(p-1) mod p
-                BigInteger expResult = a.modPow(p_sub1, thisVal);
+                BigInteger expResult = a.ModPow(pSub1, thisVal);
 
                 int resultLen = expResult.DataLength;
 
                 // is NOT prime is a^(p-1) mod p != 1
 
-                if (resultLen > 1 || (resultLen == 1 && expResult._Data[0] != 1))
+                if (resultLen > 1 || (resultLen == 1 && expResult._data[0] != 1))
                 {
                     //Console.WriteLine("a = " + a.ToString());
                     return false;
@@ -1730,7 +1730,7 @@ namespace NKnife.Maths
         public bool RabinMillerTest(int confidence)
         {
             BigInteger thisVal;
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative
                 thisVal = -this;
             else
                 thisVal = this;
@@ -1738,29 +1738,29 @@ namespace NKnife.Maths
             if (thisVal.DataLength == 1)
             {
                 // test small numbers
-                if (thisVal._Data[0] == 0 || thisVal._Data[0] == 1)
+                if (thisVal._data[0] == 0 || thisVal._data[0] == 1)
                     return false;
-                if (thisVal._Data[0] == 2 || thisVal._Data[0] == 3)
+                if (thisVal._data[0] == 2 || thisVal._data[0] == 3)
                     return true;
             }
 
-            if ((thisVal._Data[0] & 0x1) == 0) // even numbers
+            if ((thisVal._data[0] & 0x1) == 0) // even numbers
                 return false;
 
 
             // calculate values of s and t
-            BigInteger p_sub1 = thisVal - (new BigInteger(1));
+            BigInteger pSub1 = thisVal - (new BigInteger(1));
             int s = 0;
 
-            for (int index = 0; index < p_sub1.DataLength; index++)
+            for (int index = 0; index < pSub1.DataLength; index++)
             {
                 uint mask = 0x01;
 
                 for (int i = 0; i < 32; i++)
                 {
-                    if ((p_sub1._Data[index] & mask) != 0)
+                    if ((pSub1._data[index] & mask) != 0)
                     {
-                        index = p_sub1.DataLength; // to break the outer loop
+                        index = pSub1.DataLength; // to break the outer loop
                         break;
                     }
                     mask <<= 1;
@@ -1768,7 +1768,7 @@ namespace NKnife.Maths
                 }
             }
 
-            BigInteger t = p_sub1 >> s;
+            BigInteger t = pSub1 >> s;
 
             int bits = thisVal.BitCount();
             var a = new BigInteger();
@@ -1791,16 +1791,16 @@ namespace NKnife.Maths
                     int byteLen = a.DataLength;
 
                     // make sure "a" is not 0
-                    if (byteLen > 1 || (byteLen == 1 && a._Data[0] != 1))
+                    if (byteLen > 1 || (byteLen == 1 && a._data[0] != 1))
                         done = true;
                 }
 
                 // check whether a factor exists (fix for version 1.03)
-                BigInteger gcdTest = a.gcd(thisVal);
-                if (gcdTest.DataLength == 1 && gcdTest._Data[0] != 1)
+                BigInteger gcdTest = a.Gcd(thisVal);
+                if (gcdTest.DataLength == 1 && gcdTest._data[0] != 1)
                     return false;
 
-                BigInteger b = a.modPow(t, thisVal);
+                BigInteger b = a.ModPow(t, thisVal);
 
                 /*
                 Console.WriteLine("a = " + a.ToString(10));
@@ -1811,12 +1811,12 @@ namespace NKnife.Maths
 
                 bool result = false;
 
-                if (b.DataLength == 1 && b._Data[0] == 1) // a^t mod p = 1
+                if (b.DataLength == 1 && b._data[0] == 1) // a^t mod p = 1
                     result = true;
 
                 for (int j = 0; result == false && j < s; j++)
                 {
-                    if (b == p_sub1) // a^((2^j)*t) mod p = p-1 for some 0 <= j <= s-1
+                    if (b == pSub1) // a^((2^j)*t) mod p = p-1 for some 0 <= j <= s-1
                     {
                         result = true;
                         break;
@@ -1854,7 +1854,7 @@ namespace NKnife.Maths
         public bool SolovayStrassenTest(int confidence)
         {
             BigInteger thisVal;
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative
                 thisVal = -this;
             else
                 thisVal = this;
@@ -1862,20 +1862,20 @@ namespace NKnife.Maths
             if (thisVal.DataLength == 1)
             {
                 // test small numbers
-                if (thisVal._Data[0] == 0 || thisVal._Data[0] == 1)
+                if (thisVal._data[0] == 0 || thisVal._data[0] == 1)
                     return false;
-                if (thisVal._Data[0] == 2 || thisVal._Data[0] == 3)
+                if (thisVal._data[0] == 2 || thisVal._data[0] == 3)
                     return true;
             }
 
-            if ((thisVal._Data[0] & 0x1) == 0) // even numbers
+            if ((thisVal._data[0] & 0x1) == 0) // even numbers
                 return false;
 
 
             int bits = thisVal.BitCount();
             var a = new BigInteger();
-            BigInteger p_sub1 = thisVal - 1;
-            BigInteger p_sub1_shift = p_sub1 >> 1;
+            BigInteger pSub1 = thisVal - 1;
+            BigInteger pSub1Shift = pSub1 >> 1;
 
             var rand = new Random();
 
@@ -1896,19 +1896,19 @@ namespace NKnife.Maths
                     int byteLen = a.DataLength;
 
                     // make sure "a" is not 0
-                    if (byteLen > 1 || (byteLen == 1 && a._Data[0] != 1))
+                    if (byteLen > 1 || (byteLen == 1 && a._data[0] != 1))
                         done = true;
                 }
 
                 // check whether a factor exists (fix for version 1.03)
-                BigInteger gcdTest = a.gcd(thisVal);
-                if (gcdTest.DataLength == 1 && gcdTest._Data[0] != 1)
+                BigInteger gcdTest = a.Gcd(thisVal);
+                if (gcdTest.DataLength == 1 && gcdTest._data[0] != 1)
                     return false;
 
                 // calculate a^((p-1)/2) mod p
 
-                BigInteger expResult = a.modPow(p_sub1_shift, thisVal);
-                if (expResult == p_sub1)
+                BigInteger expResult = a.ModPow(pSub1Shift, thisVal);
+                if (expResult == pSub1)
                     expResult = -1;
 
                 // calculate Jacobi symbol
@@ -1942,7 +1942,7 @@ namespace NKnife.Maths
         public bool LucasStrongTest()
         {
             BigInteger thisVal;
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative
                 thisVal = -this;
             else
                 thisVal = this;
@@ -1950,13 +1950,13 @@ namespace NKnife.Maths
             if (thisVal.DataLength == 1)
             {
                 // test small numbers
-                if (thisVal._Data[0] == 0 || thisVal._Data[0] == 1)
+                if (thisVal._data[0] == 0 || thisVal._data[0] == 1)
                     return false;
-                if (thisVal._Data[0] == 2 || thisVal._Data[0] == 3)
+                if (thisVal._data[0] == 2 || thisVal._data[0] == 3)
                     return true;
             }
 
-            if ((thisVal._Data[0] & 0x1) == 0) // even numbers
+            if ((thisVal._data[0] & 0x1) == 0) // even numbers
                 return false;
 
             return LucasStrongTestHelper(thisVal);
@@ -1969,36 +1969,36 @@ namespace NKnife.Maths
             // 5, -7, 9, -11, 13, ... for which J(D,n) = -1
             // Let P = 1, Q = (1-D) / 4
 
-            long D = 5, sign = -1, dCount = 0;
+            long d = 5, sign = -1, dCount = 0;
             bool done = false;
 
             while (!done)
             {
-                int Jresult = Jacobi(D, thisVal);
+                int jresult = Jacobi(d, thisVal);
 
-                if (Jresult == -1)
+                if (jresult == -1)
                     done = true; // J(D, this) = 1
                 else
                 {
-                    if (Jresult == 0 && System.Math.Abs(D) < thisVal) // divisor found
+                    if (jresult == 0 && System.Math.Abs(d) < thisVal) // divisor found
                         return false;
 
                     if (dCount == 20)
                     {
                         // check for square
-                        BigInteger root = thisVal.sqrt();
+                        BigInteger root = thisVal.Sqrt();
                         if (root*root == thisVal)
                             return false;
                     }
 
                     //Console.WriteLine(D);
-                    D = (System.Math.Abs(D) + 2)*sign;
+                    d = (System.Math.Abs(d) + 2)*sign;
                     sign = -sign;
                 }
                 dCount++;
             }
 
-            long Q = (1 - D) >> 2;
+            long q = (1 - d) >> 2;
 
             /*
             Console.WriteLine("D = " + D);
@@ -2008,18 +2008,18 @@ namespace NKnife.Maths
             Console.WriteLine("J(D|n) = " + BigInteger.Jacobi(D, thisVal));
             */
 
-            BigInteger p_add1 = thisVal + 1;
+            BigInteger pAdd1 = thisVal + 1;
             int s = 0;
 
-            for (int index = 0; index < p_add1.DataLength; index++)
+            for (int index = 0; index < pAdd1.DataLength; index++)
             {
                 uint mask = 0x01;
 
                 for (int i = 0; i < 32; i++)
                 {
-                    if ((p_add1._Data[index] & mask) != 0)
+                    if ((pAdd1._data[index] & mask) != 0)
                     {
-                        index = p_add1.DataLength; // to break the outer loop
+                        index = pAdd1.DataLength; // to break the outer loop
                         break;
                     }
                     mask <<= 1;
@@ -2027,23 +2027,23 @@ namespace NKnife.Maths
                 }
             }
 
-            BigInteger t = p_add1 >> s;
+            BigInteger t = pAdd1 >> s;
 
             // calculate constant = b^(2k) / m
             // for Barrett Reduction
             var constant = new BigInteger();
 
             int nLen = thisVal.DataLength << 1;
-            constant._Data[nLen] = 0x00000001;
+            constant._data[nLen] = 0x00000001;
             constant.DataLength = nLen + 1;
 
             constant = constant/thisVal;
 
-            BigInteger[] lucas = LucasSequenceHelper(1, Q, t, thisVal, constant, 0);
+            BigInteger[] lucas = LucasSequenceHelper(1, q, t, thisVal, constant, 0);
             bool isPrime = false;
 
-            if ((lucas[0].DataLength == 1 && lucas[0]._Data[0] == 0) ||
-                (lucas[1].DataLength == 1 && lucas[1]._Data[0] == 0))
+            if ((lucas[0].DataLength == 1 && lucas[0]._data[0] == 0) ||
+                (lucas[1].DataLength == 1 && lucas[1]._data[0] == 0))
             {
                 // u(t) = 0 or V(t) = 0
                 isPrime = true;
@@ -2059,7 +2059,7 @@ namespace NKnife.Maths
 
                     //lucas[1] = ((lucas[1] * lucas[1]) - (lucas[2] << 1)) % thisVal;
 
-                    if ((lucas[1].DataLength == 1 && lucas[1]._Data[0] == 0))
+                    if ((lucas[1].DataLength == 1 && lucas[1]._data[0] == 0))
                         isPrime = true;
                 }
 
@@ -2072,14 +2072,14 @@ namespace NKnife.Maths
                 // If n is prime and gcd(n, Q) == 1, then
                 // Q^((n+1)/2) = Q * Q^((n-1)/2) is congruent to (Q * J(Q, n)) mod n
 
-                BigInteger g = thisVal.gcd(Q);
-                if (g.DataLength == 1 && g._Data[0] == 1) // gcd(this, Q) == 1
+                BigInteger g = thisVal.Gcd(q);
+                if (g.DataLength == 1 && g._data[0] == 1) // gcd(this, Q) == 1
                 {
-                    if ((lucas[2]._Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+                    if ((lucas[2]._data[MaxLength - 1] & 0x80000000) != 0)
                         lucas[2] += thisVal;
 
-                    BigInteger temp = (Q*Jacobi(Q, thisVal))%thisVal;
-                    if ((temp._Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+                    BigInteger temp = (q*Jacobi(q, thisVal))%thisVal;
+                    if ((temp._data[MaxLength - 1] & 0x80000000) != 0)
                         temp += thisVal;
 
                     if (lucas[2] != temp)
@@ -2098,10 +2098,10 @@ namespace NKnife.Maths
         // Returns true if number is probably prime.
         //***********************************************************************
 
-        public bool isProbablePrime(int confidence)
+        public bool IsProbablePrime(int confidence)
         {
             BigInteger thisVal;
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative
                 thisVal = -this;
             else
                 thisVal = this;
@@ -2154,10 +2154,10 @@ namespace NKnife.Maths
         //
         //***********************************************************************
 
-        public bool isProbablePrime()
+        public bool IsProbablePrime()
         {
             BigInteger thisVal;
-            if ((_Data[MAX_LENGTH - 1] & 0x80000000) != 0) // negative
+            if ((_data[MaxLength - 1] & 0x80000000) != 0) // negative
                 thisVal = -this;
             else
                 thisVal = this;
@@ -2165,13 +2165,13 @@ namespace NKnife.Maths
             if (thisVal.DataLength == 1)
             {
                 // test small numbers
-                if (thisVal._Data[0] == 0 || thisVal._Data[0] == 1)
+                if (thisVal._data[0] == 0 || thisVal._data[0] == 1)
                     return false;
-                if (thisVal._Data[0] == 2 || thisVal._Data[0] == 3)
+                if (thisVal._data[0] == 2 || thisVal._data[0] == 3)
                     return true;
             }
 
-            if ((thisVal._Data[0] & 0x1) == 0) // even numbers
+            if ((thisVal._data[0] & 0x1) == 0) // even numbers
                 return false;
 
 
@@ -2196,18 +2196,18 @@ namespace NKnife.Maths
             // Perform BASE 2 Rabin-Miller Test
 
             // calculate values of s and t
-            BigInteger p_sub1 = thisVal - (new BigInteger(1));
+            BigInteger pSub1 = thisVal - (new BigInteger(1));
             int s = 0;
 
-            for (int index = 0; index < p_sub1.DataLength; index++)
+            for (int index = 0; index < pSub1.DataLength; index++)
             {
                 uint mask = 0x01;
 
                 for (int i = 0; i < 32; i++)
                 {
-                    if ((p_sub1._Data[index] & mask) != 0)
+                    if ((pSub1._data[index] & mask) != 0)
                     {
-                        index = p_sub1.DataLength; // to break the outer loop
+                        index = pSub1.DataLength; // to break the outer loop
                         break;
                     }
                     mask <<= 1;
@@ -2215,21 +2215,21 @@ namespace NKnife.Maths
                 }
             }
 
-            BigInteger t = p_sub1 >> s;
+            BigInteger t = pSub1 >> s;
 
             int bits = thisVal.BitCount();
             BigInteger a = 2;
 
             // b = a^t mod p
-            BigInteger b = a.modPow(t, thisVal);
+            BigInteger b = a.ModPow(t, thisVal);
             bool result = false;
 
-            if (b.DataLength == 1 && b._Data[0] == 1) // a^t mod p = 1
+            if (b.DataLength == 1 && b._data[0] == 1) // a^t mod p = 1
                 result = true;
 
             for (int j = 0; result == false && j < s; j++)
             {
-                if (b == p_sub1) // a^((2^j)*t) mod p = p-1 for some 0 <= j <= s-1
+                if (b == pSub1) // a^((2^j)*t) mod p = p-1 for some 0 <= j <= s-1
                 {
                     result = true;
                     break;
@@ -2251,7 +2251,7 @@ namespace NKnife.Maths
 
         public int IntValue()
         {
-            return (int) _Data[0];
+            return (int) _data[0];
         }
 
         //***********************************************************************
@@ -2262,16 +2262,16 @@ namespace NKnife.Maths
         {
             long val = 0;
 
-            val = _Data[0];
+            val = _data[0];
             try
             {
                 // exception if maxLength = 1
-                val |= (long) _Data[1] << 32;
+                val |= (long) _data[1] << 32;
             }
             catch (Exception)
             {
-                if ((_Data[0] & 0x80000000) != 0) // negative
-                    val = (int) _Data[0];
+                if ((_data[0] & 0x80000000) != 0) // negative
+                    val = (int) _data[0];
             }
 
             return val;
@@ -2285,16 +2285,16 @@ namespace NKnife.Maths
         public static int Jacobi(BigInteger a, BigInteger b)
         {
             // Jacobi defined only for odd integers
-            if ((b._Data[0] & 0x1) == 0)
+            if ((b._data[0] & 0x1) == 0)
                 throw (new ArgumentException("Jacobi defined only for odd integers."));
 
             if (a >= b) a %= b;
-            if (a.DataLength == 1 && a._Data[0] == 0) return 0; // a == 0
-            if (a.DataLength == 1 && a._Data[0] == 1) return 1; // a == 1
+            if (a.DataLength == 1 && a._data[0] == 0) return 0; // a == 0
+            if (a.DataLength == 1 && a._data[0] == 1) return 1; // a == 1
 
             if (a < 0)
             {
-                if ((((b - 1)._Data[0]) & 0x2) == 0) //if( (((b-1) >> 1).data[0] & 0x1) == 0)
+                if ((((b - 1)._data[0]) & 0x2) == 0) //if( (((b-1) >> 1).data[0] & 0x1) == 0)
                     return Jacobi(-a, b);
                 return -Jacobi(-a, b);
             }
@@ -2306,7 +2306,7 @@ namespace NKnife.Maths
 
                 for (int i = 0; i < 32; i++)
                 {
-                    if ((a._Data[index] & mask) != 0)
+                    if ((a._data[index] & mask) != 0)
                     {
                         index = a.DataLength; // to break the outer loop
                         break;
@@ -2319,13 +2319,13 @@ namespace NKnife.Maths
             BigInteger a1 = a >> e;
 
             int s = 1;
-            if ((e & 0x1) != 0 && ((b._Data[0] & 0x7) == 3 || (b._Data[0] & 0x7) == 5))
+            if ((e & 0x1) != 0 && ((b._data[0] & 0x7) == 3 || (b._data[0] & 0x7) == 5))
                 s = -1;
 
-            if ((b._Data[0] & 0x3) == 3 && (a1._Data[0] & 0x3) == 3)
+            if ((b._data[0] & 0x3) == 3 && (a1._data[0] & 0x3) == 3)
                 s = -s;
 
-            if (a1.DataLength == 1 && a1._Data[0] == 1)
+            if (a1.DataLength == 1 && a1._data[0] == 1)
                 return s;
             return (s*Jacobi(b%a1, a1));
         }
@@ -2334,7 +2334,7 @@ namespace NKnife.Maths
         // Generates a positive BigInteger that is probably prime.
         //***********************************************************************
 
-        public static BigInteger genPseudoPrime(int bits, int confidence, Random rand)
+        public static BigInteger GenPseudoPrime(int bits, int confidence, Random rand)
         {
             var result = new BigInteger();
             bool done = false;
@@ -2342,10 +2342,10 @@ namespace NKnife.Maths
             while (!done)
             {
                 result.RandomBitsGenerator(bits, rand);
-                result._Data[0] |= 0x01; // make it odd
+                result._data[0] |= 0x01; // make it odd
 
                 // prime test
-                done = result.isProbablePrime(confidence);
+                done = result.IsProbablePrime(confidence);
             }
             return result;
         }
@@ -2356,7 +2356,7 @@ namespace NKnife.Maths
         // that gcd(number, this) = 1
         //***********************************************************************
 
-        public BigInteger genCoPrime(int bits, Random rand)
+        public BigInteger GenCoPrime(int bits, Random rand)
         {
             bool done = false;
             var result = new BigInteger();
@@ -2367,8 +2367,8 @@ namespace NKnife.Maths
                 //Console.WriteLine(result.ToString(16));
 
                 // gcd test
-                BigInteger g = result.gcd(this);
-                if (g.DataLength == 1 && g._Data[0] == 1)
+                BigInteger g = result.Gcd(this);
+                if (g.DataLength == 1 && g._data[0] == 1)
                     done = true;
             }
 
@@ -2381,7 +2381,7 @@ namespace NKnife.Maths
         // the inverse does not exist.  (i.e. gcd(this, modulus) != 1)
         //***********************************************************************
 
-        public BigInteger modInverse(BigInteger modulus)
+        public BigInteger ModInverse(BigInteger modulus)
         {
             BigInteger[] p = {0, 1};
             var q = new BigInteger[2]; // quotients
@@ -2392,7 +2392,7 @@ namespace NKnife.Maths
             BigInteger a = modulus;
             BigInteger b = this;
 
-            while (b.DataLength > 1 || (b.DataLength == 1 && b._Data[0] != 0))
+            while (b.DataLength > 1 || (b.DataLength == 1 && b._data[0] != 0))
             {
                 var quotient = new BigInteger();
                 var remainder = new BigInteger();
@@ -2427,12 +2427,12 @@ namespace NKnife.Maths
                 step++;
             }
 
-            if (r[0].DataLength > 1 || (r[0].DataLength == 1 && r[0]._Data[0] != 1))
+            if (r[0].DataLength > 1 || (r[0].DataLength == 1 && r[0]._data[0] != 1))
                 throw (new ArithmeticException("No inverse!"));
 
             BigInteger result = ((p[0] - (p[1]*q[0]))%modulus);
 
-            if ((result._Data[MAX_LENGTH - 1] & 0x80000000) != 0)
+            if ((result._data[MaxLength - 1] & 0x80000000) != 0)
                 result += modulus; // get the least positive modulus
 
             return result;
@@ -2444,7 +2444,7 @@ namespace NKnife.Maths
         // index contains the MSB.
         //***********************************************************************
 
-        public byte[] getBytes()
+        public byte[] GetBytes()
         {
             int numBits = BitCount();
 
@@ -2457,7 +2457,7 @@ namespace NKnife.Maths
             //Console.WriteLine(result.Length);
 
             int pos = 0;
-            uint tempVal, val = _Data[DataLength - 1];
+            uint tempVal, val = _data[DataLength - 1];
 
             if ((tempVal = (val >> 24 & 0xFF)) != 0)
                 result[pos++] = (byte) tempVal;
@@ -2470,7 +2470,7 @@ namespace NKnife.Maths
 
             for (int i = DataLength - 2; i >= 0; i--, pos += 4)
             {
-                val = _Data[i];
+                val = _data[i];
                 result[pos + 3] = (byte) (val & 0xFF);
                 val >>= 8;
                 result[pos + 2] = (byte) (val & 0xFF);
@@ -2489,13 +2489,13 @@ namespace NKnife.Maths
         // The Least Significant Bit position is 0.
         //***********************************************************************
 
-        public void setBit(uint bitNum)
+        public void SetBit(uint bitNum)
         {
             uint bytePos = bitNum >> 5; // divide by 32
             var bitPos = (byte) (bitNum & 0x1F); // get the lowest 5 bits
 
             uint mask = (uint) 1 << bitPos;
-            _Data[bytePos] |= mask;
+            _data[bytePos] |= mask;
 
             if (bytePos >= DataLength)
                 DataLength = (int) bytePos + 1;
@@ -2507,7 +2507,7 @@ namespace NKnife.Maths
         // The Least Significant Bit position is 0.
         //***********************************************************************
 
-        public void unsetBit(uint bitNum)
+        public void UnsetBit(uint bitNum)
         {
             uint bytePos = bitNum >> 5;
 
@@ -2518,9 +2518,9 @@ namespace NKnife.Maths
                 uint mask = (uint) 1 << bitPos;
                 uint mask2 = 0xFFFFFFFF ^ mask;
 
-                _Data[bytePos] &= mask2;
+                _data[bytePos] &= mask2;
 
-                if (DataLength > 1 && _Data[DataLength - 1] == 0)
+                if (DataLength > 1 && _data[DataLength - 1] == 0)
                     DataLength--;
             }
         }
@@ -2535,7 +2535,7 @@ namespace NKnife.Maths
         //
         //***********************************************************************
 
-        public BigInteger sqrt()
+        public BigInteger Sqrt()
         {
             var numBits = (uint) BitCount();
 
@@ -2564,11 +2564,11 @@ namespace NKnife.Maths
                 while (mask != 0)
                 {
                     // guess
-                    result._Data[i] ^= mask;
+                    result._data[i] ^= mask;
 
                     // undo the guess if its square is larger than this
                     if ((result*result) > this)
-                        result._Data[i] ^= mask;
+                        result._data[i] ^= mask;
 
                     mask >>= 1;
                 }
@@ -2609,10 +2609,10 @@ namespace NKnife.Maths
         //       V(0) = 2 % n, V(1) = P % n
         //***********************************************************************
 
-        public static BigInteger[] LucasSequence(BigInteger P, BigInteger Q,
+        public static BigInteger[] LucasSequence(BigInteger p, BigInteger q,
             BigInteger k, BigInteger n)
         {
-            if (k.DataLength == 1 && k._Data[0] == 0)
+            if (k.DataLength == 1 && k._data[0] == 0)
             {
                 var result = new BigInteger[3];
 
@@ -2627,7 +2627,7 @@ namespace NKnife.Maths
             var constant = new BigInteger();
 
             int nLen = n.DataLength << 1;
-            constant._Data[nLen] = 0x00000001;
+            constant._data[nLen] = 0x00000001;
             constant.DataLength = nLen + 1;
 
             constant = constant/n;
@@ -2641,7 +2641,7 @@ namespace NKnife.Maths
 
                 for (int i = 0; i < 32; i++)
                 {
-                    if ((k._Data[index] & mask) != 0)
+                    if ((k._data[index] & mask) != 0)
                     {
                         index = k.DataLength; // to break the outer loop
                         break;
@@ -2654,7 +2654,7 @@ namespace NKnife.Maths
             BigInteger t = k >> s;
 
             //Console.WriteLine("s = " + s + " t = " + t);
-            return LucasSequenceHelper(P, Q, t, n, constant, s);
+            return LucasSequenceHelper(p, q, t, n, constant, s);
         }
 
         //***********************************************************************
@@ -2664,13 +2664,13 @@ namespace NKnife.Maths
         // k must be odd.  i.e LSB == 1
         //***********************************************************************
 
-        private static BigInteger[] LucasSequenceHelper(BigInteger P, BigInteger Q,
+        private static BigInteger[] LucasSequenceHelper(BigInteger p, BigInteger q,
             BigInteger k, BigInteger n,
             BigInteger constant, int s)
         {
             var result = new BigInteger[3];
 
-            if ((k._Data[0] & 0x00000001) == 0)
+            if ((k._data[0] & 0x00000001) == 0)
                 throw (new ArgumentException("Argument k must be odd."));
 
             int numbits = k.BitCount();
@@ -2679,9 +2679,9 @@ namespace NKnife.Maths
             // v = v0, v1 = v1, u1 = u1, Q_k = Q^0
 
             BigInteger v = 2%n,
-                Q_k = 1%n,
-                v1 = P%n,
-                u1 = Q_k;
+                qK = 1%n,
+                v1 = p%n,
+                u1 = qK;
             bool flag = true;
 
             for (int i = k.DataLength - 1; i >= 0; i--) // iterate on the binary expansion of k
@@ -2692,39 +2692,39 @@ namespace NKnife.Maths
                     if (i == 0 && mask == 0x00000001) // last bit
                         break;
 
-                    if ((k._Data[i] & mask) != 0) // bit is set
+                    if ((k._data[i] & mask) != 0) // bit is set
                     {
                         // index doubling with addition
 
                         u1 = (u1*v1)%n;
 
-                        v = ((v*v1) - (P*Q_k))%n;
+                        v = ((v*v1) - (p*qK))%n;
                         v1 = n.BarrettReduction(v1*v1, n, constant);
-                        v1 = (v1 - ((Q_k*Q) << 1))%n;
+                        v1 = (v1 - ((qK*q) << 1))%n;
 
                         if (flag)
                             flag = false;
                         else
-                            Q_k = n.BarrettReduction(Q_k*Q_k, n, constant);
+                            qK = n.BarrettReduction(qK*qK, n, constant);
 
-                        Q_k = (Q_k*Q)%n;
+                        qK = (qK*q)%n;
                     }
                     else
                     {
                         // index doubling
-                        u1 = ((u1*v) - Q_k)%n;
+                        u1 = ((u1*v) - qK)%n;
 
-                        v1 = ((v*v1) - (P*Q_k))%n;
+                        v1 = ((v*v1) - (p*qK))%n;
                         v = n.BarrettReduction(v*v, n, constant);
-                        v = (v - (Q_k << 1))%n;
+                        v = (v - (qK << 1))%n;
 
                         if (flag)
                         {
-                            Q_k = Q%n;
+                            qK = q%n;
                             flag = false;
                         }
                         else
-                            Q_k = n.BarrettReduction(Q_k*Q_k, n, constant);
+                            qK = n.BarrettReduction(qK*qK, n, constant);
                     }
 
                     mask >>= 1;
@@ -2735,34 +2735,34 @@ namespace NKnife.Maths
             // at this point u1 = u(n+1) and v = v(n)
             // since the last bit always 1, we need to transform u1 to u(2n+1) and v to v(2n+1)
 
-            u1 = ((u1*v) - Q_k)%n;
-            v = ((v*v1) - (P*Q_k))%n;
+            u1 = ((u1*v) - qK)%n;
+            v = ((v*v1) - (p*qK))%n;
             if (flag)
                 flag = false;
             else
-                Q_k = n.BarrettReduction(Q_k*Q_k, n, constant);
+                qK = n.BarrettReduction(qK*qK, n, constant);
 
-            Q_k = (Q_k*Q)%n;
+            qK = (qK*q)%n;
 
 
             for (int i = 0; i < s; i++)
             {
                 // index doubling
                 u1 = (u1*v)%n;
-                v = ((v*v) - (Q_k << 1))%n;
+                v = ((v*v) - (qK << 1))%n;
 
                 if (flag)
                 {
-                    Q_k = Q%n;
+                    qK = q%n;
                     flag = false;
                 }
                 else
-                    Q_k = n.BarrettReduction(Q_k*Q_k, n, constant);
+                    qK = n.BarrettReduction(qK*qK, n, constant);
             }
 
             result[0] = u1;
             result[1] = v;
-            result[2] = Q_k;
+            result[2] = qK;
 
             return result;
         }
@@ -2857,28 +2857,28 @@ namespace NKnife.Maths
         // decryption keys).
         //***********************************************************************
 
-        public static void RSATest(int rounds)
+        public static void RsaTest(int rounds)
         {
             var rand = new Random(1);
             var val = new byte[64];
 
             // private and public key
-            var bi_e =
+            var biE =
                 new BigInteger(
                     "a932b948feed4fb2b692609bd22164fc9edb59fae7880cc1eaff7b3c9626b7e5b241c27a974833b2622ebe09beb451917663d47232488f23a117fc97720f1e7",
                     16);
-            var bi_d =
+            var biD =
                 new BigInteger(
                     "4adf2f7a89da93248509347d2ae506d683dd3a16357e859a980c4f77a4e2f7a01fae289f13a851df6e9db5adaa60bfd2b162bbbe31f7c8f828261a6839311929d2cef4f864dde65e556ce43c89bbbf9f1ac5511315847ce9cc8dc92470a747b8792d6a83b0092d2e5ebaf852c85cacf34278efa99160f2f8aa7ee7214de07b7",
                     16);
-            var bi_n =
+            var biN =
                 new BigInteger(
                     "e8e77781f36a7b3188d711c2190b560f205a52391b3479cdb99fa010745cbeba5f2adc08e1de6bf38398a0487c4a73610d94ec36f17f3f46ad75e17bc1adfec99839589f45f95ccc94cb2a5c500b477eb3323d8cfab0c8458c96f0147a45d27e45a4d11d54d77684f65d48f15fafcc1ba208e71e921b9bd9017c16a5231af7f",
                     16);
 
-            Console.WriteLine("e =\n" + bi_e.ToString(10));
-            Console.WriteLine("\nd =\n" + bi_d.ToString(10));
-            Console.WriteLine("\nn =\n" + bi_n.ToString(10) + "\n");
+            Console.WriteLine("e =\n" + biE.ToString(10));
+            Console.WriteLine("\nd =\n" + biD.ToString(10));
+            Console.WriteLine("\nn =\n" + biN.ToString(10) + "\n");
 
             for (int count = 0; count < rounds; count++)
             {
@@ -2908,15 +2908,15 @@ namespace NKnife.Maths
                 Console.Write("Round = " + count);
 
                 // encrypt and decrypt data
-                var bi_data = new BigInteger(val, t1);
-                BigInteger bi_encrypted = bi_data.modPow(bi_e, bi_n);
-                BigInteger bi_decrypted = bi_encrypted.modPow(bi_d, bi_n);
+                var biData = new BigInteger(val, t1);
+                BigInteger biEncrypted = biData.ModPow(biE, biN);
+                BigInteger biDecrypted = biEncrypted.ModPow(biD, biN);
 
                 // compare
-                if (bi_decrypted != bi_data)
+                if (biDecrypted != biData)
                 {
                     Console.WriteLine("\nError at round " + count);
-                    Console.WriteLine(bi_data + "\n");
+                    Console.WriteLine(biData + "\n");
                     return;
                 }
                 Console.WriteLine(" <PASSED>.");
@@ -2930,7 +2930,7 @@ namespace NKnife.Maths
         // for each round of testing.
         //***********************************************************************
 
-        public static void RSATest2(int rounds)
+        public static void RsaTest2(int rounds)
         {
             var rand = new Random();
             var val = new byte[64];
@@ -2966,20 +2966,20 @@ namespace NKnife.Maths
             };
 
 
-            var bi_p = new BigInteger(pseudoPrime1);
-            var bi_q = new BigInteger(pseudoPrime2);
-            BigInteger bi_pq = (bi_p - 1)*(bi_q - 1);
-            BigInteger bi_n = bi_p*bi_q;
+            var biP = new BigInteger(pseudoPrime1);
+            var biQ = new BigInteger(pseudoPrime2);
+            BigInteger biPq = (biP - 1)*(biQ - 1);
+            BigInteger biN = biP*biQ;
 
             for (int count = 0; count < rounds; count++)
             {
                 // generate private and public key
-                BigInteger bi_e = bi_pq.genCoPrime(512, rand);
-                BigInteger bi_d = bi_e.modInverse(bi_pq);
+                BigInteger biE = biPq.GenCoPrime(512, rand);
+                BigInteger biD = biE.ModInverse(biPq);
 
-                Console.WriteLine("\ne =\n" + bi_e.ToString(10));
-                Console.WriteLine("\nd =\n" + bi_d.ToString(10));
-                Console.WriteLine("\nn =\n" + bi_n.ToString(10) + "\n");
+                Console.WriteLine("\ne =\n" + biE.ToString(10));
+                Console.WriteLine("\nd =\n" + biD.ToString(10));
+                Console.WriteLine("\nn =\n" + biN.ToString(10) + "\n");
 
                 // generate data of random length
                 int t1 = 0;
@@ -3007,15 +3007,15 @@ namespace NKnife.Maths
                 Console.Write("Round = " + count);
 
                 // encrypt and decrypt data
-                var bi_data = new BigInteger(val, t1);
-                BigInteger bi_encrypted = bi_data.modPow(bi_e, bi_n);
-                BigInteger bi_decrypted = bi_encrypted.modPow(bi_d, bi_n);
+                var biData = new BigInteger(val, t1);
+                BigInteger biEncrypted = biData.ModPow(biE, biN);
+                BigInteger biDecrypted = biEncrypted.ModPow(biD, biN);
 
                 // compare
-                if (bi_decrypted != bi_data)
+                if (biDecrypted != biData)
                 {
                     Console.WriteLine("\nError at round " + count);
-                    Console.WriteLine(bi_data + "\n");
+                    Console.WriteLine(biData + "\n");
                     return;
                 }
                 Console.WriteLine(" <PASSED>.");
@@ -3041,7 +3041,7 @@ namespace NKnife.Maths
                 var a = new BigInteger();
                 a.RandomBitsGenerator(t1, rand);
 
-                BigInteger b = a.sqrt();
+                BigInteger b = a.Sqrt();
                 BigInteger c = (b + 1)*(b + 1);
 
                 // check that b is the largest integer such that b*b <= a

@@ -8,7 +8,7 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
 {
     public class Demo1ClientHandler : BaseProtocolHandler<string>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<Demo1ClientHandler>();
+        private static readonly ILog _Logger = LogManager.GetLogger<Demo1ClientHandler>();
 
         public override List<string> Commands { get; set; }
 
@@ -17,7 +17,7 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
             string command = protocol.Command;
             string message = _Family.Generate(protocol);
             string time = DateTime.Now.ToString("HH:mm:ss.fff");
-            _logger.Info(string.Format("<== {0},{1},{2}", time, command, message));
+            _Logger.Info(string.Format("<== {0},{1},{2}", time, command, message));
         }
     }
 }

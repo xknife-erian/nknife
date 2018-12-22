@@ -12,7 +12,7 @@ namespace NKnife.Extensions.DateTimes
     public struct FluentTimeSpan : IEquatable<FluentTimeSpan>, IComparable<TimeSpan>, IComparable<FluentTimeSpan>
 	{
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		public const int DAYS_PER_YEAR = 365;
+		public const int DaysPerYear = 365;
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public int Months { get; set; }
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -187,7 +187,7 @@ namespace NKnife.Extensions.DateTimes
         /// <returns>The result of the conversion.</returns>
 		public static implicit operator TimeSpan(FluentTimeSpan fluentTimeSpan)
         {
-        	var daysFromYears = DAYS_PER_YEAR*fluentTimeSpan.Years;
+        	var daysFromYears = DaysPerYear*fluentTimeSpan.Years;
         	var daysFromMonths = 30*fluentTimeSpan.Months;
         	var days = daysFromMonths + daysFromYears;
         	return new TimeSpan(days, 0, 0, 0) + fluentTimeSpan.TimeSpan;

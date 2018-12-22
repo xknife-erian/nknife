@@ -5,11 +5,11 @@ namespace NKnife.Tunnel.Generic
 {
     public class StringCodec : ITunnelCodec<string>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<StringCodec>();
-        private bool _HasSetDecoder;
-        private bool _HasSetEncoder;
-        private StringDatagramDecoder _StringDecoder;
-        private StringDatagramEncoder _StringEncoder;
+        private static readonly ILog _Logger = LogManager.GetLogger<StringCodec>();
+        private bool _hasSetDecoder;
+        private bool _hasSetEncoder;
+        private StringDatagramDecoder _stringDecoder;
+        private StringDatagramEncoder _stringEncoder;
 
         public StringCodec()
         {
@@ -26,18 +26,18 @@ namespace NKnife.Tunnel.Generic
         {
             get
             {
-                if (!_HasSetDecoder)
+                if (!_hasSetDecoder)
                 {
-                    _StringDecoder = string.IsNullOrEmpty(CodecName) ? DI.Get<StringDatagramDecoder>() : DI.Get<StringDatagramDecoder>(CodecName);
-                    _HasSetDecoder = true;
-                    return _StringDecoder;
+                    _stringDecoder = string.IsNullOrEmpty(CodecName) ? Di.Get<StringDatagramDecoder>() : Di.Get<StringDatagramDecoder>(CodecName);
+                    _hasSetDecoder = true;
+                    return _stringDecoder;
                 }
-                return _StringDecoder;
+                return _stringDecoder;
             }
             set
             {
-                _StringDecoder = value;
-                _HasSetDecoder = true;
+                _stringDecoder = value;
+                _hasSetDecoder = true;
             }
         }
 
@@ -45,18 +45,18 @@ namespace NKnife.Tunnel.Generic
         {
             get
             {
-                if (!_HasSetEncoder)
+                if (!_hasSetEncoder)
                 {
-                    _StringEncoder = string.IsNullOrEmpty(CodecName) ? DI.Get<StringDatagramEncoder>() : DI.Get<StringDatagramEncoder>(CodecName);
-                    _HasSetEncoder = true;
-                    return _StringEncoder;
+                    _stringEncoder = string.IsNullOrEmpty(CodecName) ? Di.Get<StringDatagramEncoder>() : Di.Get<StringDatagramEncoder>(CodecName);
+                    _hasSetEncoder = true;
+                    return _stringEncoder;
                 }
-                return _StringEncoder;
+                return _stringEncoder;
             }
             set
             {
-                _StringEncoder = value;
-                _HasSetEncoder = true;
+                _stringEncoder = value;
+                _hasSetEncoder = true;
             }
         }
 
@@ -66,7 +66,7 @@ namespace NKnife.Tunnel.Generic
             set
             {
                 StringDecoder = (StringDatagramDecoder) value;
-                _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
+                _Logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
             }
         }
 
@@ -76,7 +76,7 @@ namespace NKnife.Tunnel.Generic
             set
             {
                 StringEncoder = (StringDatagramEncoder) value;
-                _logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
+                _Logger.Info(string.Format("{0}绑定成功。", value.GetType().Name));
             }
         }
     }

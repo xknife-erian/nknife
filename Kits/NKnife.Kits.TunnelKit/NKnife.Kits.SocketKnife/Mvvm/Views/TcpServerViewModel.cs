@@ -19,23 +19,23 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
     public class TcpServerViewModel : ViewModelBase
     {
-        private StringProtocol _Protocol;
-        private bool _IsOnlyOnce = true;
-        private bool _IsFixTime = false;
-        private bool _IsRandomTime = false;
-        private uint _FixTime = 200;
-        private uint _RandomMinTime = 50;
-        private uint _RandomMaxTime = 500;
-        private bool _OnRandomTimeReplay = true;
+        private StringProtocol _protocol;
+        private bool _isOnlyOnce = true;
+        private bool _isFixTime = false;
+        private bool _isRandomTime = false;
+        private uint _fixTime = 200;
+        private uint _randomMinTime = 50;
+        private uint _randomMaxTime = 500;
+        private bool _onRandomTimeReplay = true;
 
-        private IPEndPoint _CurrentServerPoint;
-        private DemoServerHandler _Handler;
+        private IPEndPoint _currentServerPoint;
+        private DemoServerHandler _handler;
 
-        private readonly ServerMap _ServerMap = DI.Get<ServerMap>();
-        private readonly DemoServer _Server = new DemoServer();
-        private readonly ProtocolViewModel _ProtocolViewModel = DI.Get<ProtocolViewModel>();
-        private readonly Timer _Timer = new Timer();
-        private readonly UtilityRandom _Random = new UtilityRandom();
+        private readonly ServerMap _serverMap = Di.Get<ServerMap>();
+        private readonly DemoServer _server = new DemoServer();
+        private readonly ProtocolViewModel _protocolViewModel = Di.Get<ProtocolViewModel>();
+        private readonly Timer _timer = new Timer();
+        private readonly UtilityRandom _random = new UtilityRandom();
 
         public ObservableCollection<SocketMessage> SocketMessages { get; set; }
 
@@ -43,80 +43,80 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         public StringProtocol CurrentProtocol
         {
-            get { return _Protocol; }
+            get { return _protocol; }
             set
             {
-                _Protocol = value;
+                _protocol = value;
                 RaisePropertyChanged(() => CurrentProtocol);
             }
         }
 
         public bool IsOnlyOnce
         {
-            get { return _IsOnlyOnce; }
+            get { return _isOnlyOnce; }
             set
             {
-                _IsOnlyOnce = value;
+                _isOnlyOnce = value;
                 RaisePropertyChanged(() => IsOnlyOnce);
             }
         }
 
         public bool IsFixTime
         {
-            get { return _IsFixTime; }
+            get { return _isFixTime; }
             set
             {
-                _IsFixTime = value;
+                _isFixTime = value;
                 RaisePropertyChanged(() => IsFixTime);
             }
         }
 
         public bool IsRandomTime
         {
-            get { return _IsRandomTime; }
+            get { return _isRandomTime; }
             set
             {
-                _IsRandomTime = value;
+                _isRandomTime = value;
                 RaisePropertyChanged(() => IsRandomTime);
             }
         }
 
         public uint FixTime
         {
-            get { return _FixTime; }
+            get { return _fixTime; }
             set
             {
-                _FixTime = value;
+                _fixTime = value;
                 RaisePropertyChanged(() => FixTime);
             }
         }
 
         public uint RandomMinTime
         {
-            get { return _RandomMinTime; }
+            get { return _randomMinTime; }
             set
             {
-                _RandomMinTime = value;
+                _randomMinTime = value;
                 RaisePropertyChanged(() => RandomMinTime);
             }
         }
 
         public uint RandomMaxTime
         {
-            get { return _RandomMaxTime; }
+            get { return _randomMaxTime; }
             set
             {
-                _RandomMaxTime = value;
+                _randomMaxTime = value;
                 RaisePropertyChanged(() => RandomMaxTime);
             }
         }
 
         public bool OnRandomTimeReplay
         {
-            get { return _OnRandomTimeReplay; }
+            get { return _onRandomTimeReplay; }
             set
             {
-                _OnRandomTimeReplay = value;
+                _onRandomTimeReplay = value;
                 RaisePropertyChanged(() => OnRandomTimeReplay);
             }
         }
@@ -125,10 +125,10 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             SocketMessages = new ObservableCollection<SocketMessage>();
             Sessions = new SessionList();
-            _ProtocolViewModel.PropertyChanged += (sender, args) =>
+            _protocolViewModel.PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName == "SelectedProtocol")
-                    CurrentProtocol = _ProtocolViewModel.SelectedProtocol;
+                    CurrentProtocol = _protocolViewModel.SelectedProtocol;
             };
         }
 
@@ -151,17 +151,17 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         internal void StartServer(SocketConfig config, SocketCustomSetting customSetting)
         {
-            _Handler = new DemoServerHandler(_Server.GetFamily(),SocketMessages);
-            _CurrentServerPoint = new IPEndPoint(customSetting.IpAddress, customSetting.Port);
-            if (DI.Get<ServerMap>().ContainsKey(_CurrentServerPoint))
+            _handler = new DemoServerHandler(_server.GetFamily(),SocketMessages);
+            _currentServerPoint = new IPEndPoint(customSetting.IpAddress, customSetting.Port);
+            if (Di.Get<ServerMap>().ContainsKey(_currentServerPoint))
             {
                 MessageBox.Show("已启动相同端口号的Server端，请关闭后，重新选择后启动。");
                 return;
             }
-            _ServerMap.Add(_CurrentServerPoint, _Server.GetSocketServer());
-            _Server.Initialize(config, customSetting, _Handler);
+            _serverMap.Add(_currentServerPoint, _server.GetSocketServer());
+            _server.Initialize(config, customSetting, _handler);
 
-            var dataConnector = _Server.GetSocket();
+            var dataConnector = _server.GetSocket();
             dataConnector.SessionBuilt += (sender, args) =>
             {
                 try
@@ -204,40 +204,40 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
                 }
             };
 
-            _Server.StartServer();
+            _server.StartServer();
             //_ProtocolViewModel.AddFamily(_Server.GetFamily());
         }
 
         public void StopServer()
         {
-            if (_Timer != null)
-                _Timer.Stop();
-            if (_CurrentServerPoint != null)
-                _ServerMap.Remove(_CurrentServerPoint);
-            _Server.StopServer();
+            if (_timer != null)
+                _timer.Stop();
+            if (_currentServerPoint != null)
+                _serverMap.Remove(_currentServerPoint);
+            _server.StopServer();
         }
 
         public void Replay()
         {
-            _OnRandomTimeReplay = true;
+            _onRandomTimeReplay = true;
             if (IsOnlyOnce)
             {
                 WriteCurrentProtocol();
             }
             else if (IsFixTime)
             {
-                _Timer.Interval = _FixTime;
-                _Timer.Elapsed += (s, e) => WriteCurrentProtocol();
-                _Timer.Start();
+                _timer.Interval = _fixTime;
+                _timer.Elapsed += (s, e) => WriteCurrentProtocol();
+                _timer.Start();
             }
             else if (IsRandomTime)
             {
                 var thread = new Thread(() =>
                 {
-                    while (_OnRandomTimeReplay)
+                    while (_onRandomTimeReplay)
                     {
                         WriteCurrentProtocol();
-                        Thread.Sleep(_Random.Next((int) _RandomMinTime, (int) _RandomMaxTime));
+                        Thread.Sleep(_random.Next((int) _randomMinTime, (int) _randomMaxTime));
                     }
                 });
                 thread.Name = "RandomReplayThread";
@@ -248,9 +248,9 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         public void StopReplay()
         {
-            if (_Timer != null)
-                _Timer.Stop();
-            _OnRandomTimeReplay = false;
+            if (_timer != null)
+                _timer.Stop();
+            _onRandomTimeReplay = false;
         }
 
         private void WriteCurrentProtocol()
@@ -269,9 +269,9 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         public class SessionByView : ObservableObject
         {
-            private bool _EnableAutoReplay;
-            private IPEndPoint _EndPoint;
-            private bool _IsSelected;
+            private bool _enableAutoReplay;
+            private IPEndPoint _endPoint;
+            private bool _isSelected;
 
             public SessionByView()
             {
@@ -281,30 +281,30 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
             public bool IsSelected
             {
-                get { return _IsSelected; }
+                get { return _isSelected; }
                 set
                 {
-                    _IsSelected = value;
+                    _isSelected = value;
                     RaisePropertyChanged(() => IsSelected);
                 }
             }
 
             public IPEndPoint EndPoint
             {
-                get { return _EndPoint; }
+                get { return _endPoint; }
                 set
                 {
-                    _EndPoint = value;
+                    _endPoint = value;
                     RaisePropertyChanged(() => EndPoint);
                 }
             }
 
             public bool EnableAutoReplay
             {
-                get { return _EnableAutoReplay; }
+                get { return _enableAutoReplay; }
                 set
                 {
-                    _EnableAutoReplay = value;
+                    _enableAutoReplay = value;
                     RaisePropertyChanged(() => EnableAutoReplay);
                 }
             }

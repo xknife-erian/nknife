@@ -16,7 +16,7 @@ namespace NKnife.Utility
         /// <summary>
         /// 每次搜索Type是比较耗时的，在这里采用一个字典进行缓存
         /// </summary>
-        private static readonly Dictionary<string, Dictionary<string, Type>> _appTypes = new Dictionary<string, Dictionary<string, Type>>();
+        private static readonly Dictionary<string, Dictionary<string, Type>> _AppTypes = new Dictionary<string, Dictionary<string, Type>>();
 
         /// <summary>
         /// 从程序集中获取程序集实例中具有指定名称的 System.Type 对象。
@@ -128,14 +128,14 @@ namespace NKnife.Utility
         {
             object createdObject = null;
             bool isSueess = false;
-            const string ME_LOWER = "Me";
-            const string ME = "ME";
-            const string INSTANCE = "Instance";
-            PropertyInfo propertyMe = type.GetProperty(ME);
-            PropertyInfo propertyMeLower = type.GetProperty(ME_LOWER);
-            PropertyInfo propertyInstance = type.GetProperty(INSTANCE);
-            MethodInfo methodMe = type.GetMethod(ME);
-            MethodInfo methodInstance = type.GetMethod(INSTANCE);
+            const string meLower = "Me";
+            const string me = "ME";
+            const string instance = "Instance";
+            PropertyInfo propertyMe = type.GetProperty(me);
+            PropertyInfo propertyMeLower = type.GetProperty(meLower);
+            PropertyInfo propertyInstance = type.GetProperty(instance);
+            MethodInfo methodMe = type.GetMethod(me);
+            MethodInfo methodInstance = type.GetMethod(instance);
             if (propertyMe != null)
             {
                 createdObject = propertyMe.GetValue(null, null);
@@ -175,8 +175,8 @@ namespace NKnife.Utility
         {
             try
             {
-                const BindingFlags BINDING_FLAGS = BindingFlags.CreateInstance | (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
-                return Activator.CreateInstance(type, BINDING_FLAGS, null, parameterValues, null);
+                const BindingFlags bindingFlags = BindingFlags.CreateInstance | (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
+                return Activator.CreateInstance(type, bindingFlags, null, parameterValues, null);
             }
             catch (Exception e)
             {
@@ -262,14 +262,14 @@ namespace NKnife.Utility
                 throw new DirectoryNotFoundException(path + "不存在");
             }
             Dictionary<string, Type> typeMap = null;
-            if (!_appTypes.ContainsKey(path))
+            if (!_AppTypes.ContainsKey(path))
             {
                 typeMap = FindTypeMap(path);
-                _appTypes.Add(path, typeMap);
+                _AppTypes.Add(path, typeMap);
             }
             else
             {
-                typeMap = _appTypes[path];
+                typeMap = _AppTypes[path];
             }
             if (typeMap != null && typeMap.ContainsKey(typeName))
             {
@@ -293,9 +293,9 @@ namespace NKnife.Utility
         /// <returns></returns>
         public static Dictionary<string, Type> FindTypeMap(string path)
         {
-            if (_appTypes.ContainsKey(path))
+            if (_AppTypes.ContainsKey(path))
             {
-                return _appTypes[path];
+                return _AppTypes[path];
             }
             if (!Directory.Exists(path))
             {
@@ -334,11 +334,11 @@ namespace NKnife.Utility
         /// <returns></returns>
         public static IEnumerable<Type> FindTypesByDirectory(string path, Type targetType, bool isGenericTypeInterface = false, bool containAbstract = false)
         {
-            if (!_appTypes.ContainsKey(path))
+            if (!_AppTypes.ContainsKey(path))
             {
-                _appTypes.Add(path, FindTypeMap(path));
+                _AppTypes.Add(path, FindTypeMap(path));
             }
-            var typemap = _appTypes[path];
+            var typemap = _AppTypes[path];
             var list = new List<Type>();
             foreach (var type in typemap.Values)
             {

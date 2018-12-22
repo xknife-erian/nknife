@@ -15,7 +15,7 @@ namespace NKnife.Kits.StarterKit
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DI.Initialize();
+            Di.Initialize();
 
             Application.Run(new LibraryDemoWorkbench());
         }

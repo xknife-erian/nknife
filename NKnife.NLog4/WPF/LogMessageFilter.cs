@@ -6,21 +6,21 @@ namespace NKnife.NLog.WPF
 {
     public class LogMessageFilter : IList<LogLevel>
     {
-        private readonly List<LogLevel> _Levels = new List<LogLevel>(6);
+        private readonly List<LogLevel> _levels = new List<LogLevel>(6);
 
         public LogMessageFilter()
         {
-            _Levels.Add(LogLevel.Trace);
-            _Levels.Add(LogLevel.Debug);
-            _Levels.Add(LogLevel.Info);
-            _Levels.Add(LogLevel.Warn);
-            _Levels.Add(LogLevel.Error);
-            _Levels.Add(LogLevel.Fatal);
+            _levels.Add(LogLevel.Trace);
+            _levels.Add(LogLevel.Debug);
+            _levels.Add(LogLevel.Info);
+            _levels.Add(LogLevel.Warn);
+            _levels.Add(LogLevel.Error);
+            _levels.Add(LogLevel.Fatal);
         }
 
         public IEnumerator<LogLevel> GetEnumerator()
         {
-            return _Levels.GetEnumerator();
+            return _levels.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -30,59 +30,59 @@ namespace NKnife.NLog.WPF
 
         public void Add(LogLevel item)
         {
-            if (!_Levels.Contains(item))
-                _Levels.Add(item);
+            if (!_levels.Contains(item))
+                _levels.Add(item);
         }
 
         public void Clear()
         {
-            _Levels.Clear();
+            _levels.Clear();
         }
 
         public bool Contains(LogLevel item)
         {
-            return _Levels.Contains(item);
+            return _levels.Contains(item);
         }
 
         public void CopyTo(LogLevel[] array, int arrayIndex)
         {
-            _Levels.CopyTo(array, arrayIndex);
+            _levels.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(LogLevel item)
         {
-            return _Levels.Remove(item);
+            return _levels.Remove(item);
         }
 
         public int Count
         {
-            get { return _Levels.Count; }
+            get { return _levels.Count; }
         }
 
         bool ICollection<LogLevel>.IsReadOnly
         {
-            get { return ((ICollection<LogLevel>) _Levels).IsReadOnly; }
+            get { return ((ICollection<LogLevel>) _levels).IsReadOnly; }
         }
 
         public int IndexOf(LogLevel item)
         {
-            return _Levels.IndexOf(item);
+            return _levels.IndexOf(item);
         }
 
         public void Insert(int index, LogLevel item)
         {
-            _Levels.Insert(index, item);
+            _levels.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            _Levels.RemoveAt(index);
+            _levels.RemoveAt(index);
         }
 
         public LogLevel this[int index]
         {
-            get { return _Levels[index]; }
-            set { _Levels[index] = value; }
+            get { return _levels[index]; }
+            set { _levels[index] = value; }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NKnife.Channels.EventParams;
 using NKnife.Channels.Interfaces;
 using NKnife.Interface;
+using NKnife.Timers;
 
 namespace NKnife.Channels.Base
 {
@@ -10,20 +11,17 @@ namespace NKnife.Channels.Base
     {
         #region Implementation of IChannel
 
-        private bool _IsSynchronous = false;
+        private bool _isSynchronous;
 
-        /// <summary>
-        ///     描述该数据采集通道的模式是否是同步获取。即发送指令后是否等待对应该指令的回复。
-        /// </summary>
-        /// <returns>当true时，是同步的，反之为异步</returns>
+        /// <inheritdoc />
         public bool IsSynchronous
         {
-            get { return _IsSynchronous; }
+            get => _isSynchronous;
             set
             {
-                if (_IsSynchronous != value)
+                if (_isSynchronous != value)
                 {
-                    _IsSynchronous = value;
+                    _isSynchronous = value;
                     OnChannelModeChanged(new ChannelModeChangedEventArgs(value));
                 }
             }
@@ -31,54 +29,52 @@ namespace NKnife.Channels.Base
 
         public bool IsOpen { get; protected set; } = false;
 
-        /// <summary>
-        ///     当前数据采集通道的所面向的实际采集源。
-        /// </summary>
-        public List<IId> Targets { get; } = new List<IId>(1);
+        /// <inheritdoc />
+        public List<IId> Targets { get; } = new List<IId>(0);
 
-        /// <summary>
-        ///     打开采集通道
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public abstract bool Open();
 
+        /// <inheritdoc />
         public event EventHandler Opening;
+
+        /// <inheritdoc />
         public event EventHandler Opened;
 
-        /// <summary>
-        ///     关闭采集通道
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public abstract bool Close();
 
-        public event EventHandler Closeing;
+        /// <inheritdoc />
+        public event EventHandler Closing;
+
+        /// <inheritdoc />
         public event EventHandler Closed;
 
-        /// <summary>
-        ///     更新即将发送的数据
-        /// </summary>
-        /// <param name="questionPool">即将发送的数据</param>
-        public abstract void UpdateQuestionPool(IJobPool questionPool);
+        /// <inheritdoc />
+        public JobManager JobManager { get; set; }
 
-        /// <summary>
-        ///     发送数据并同步等待数据返回
-        /// </summary>
-        /// <param name="sendAction">当发送完成时</param>
-        /// <param name="receivedFunc">当采集到数据(返回的数据)的处理方法,当返回true时，表示接收数据是完整的，返回flase时，表示接收数据不完整，还需要继续接收</param>
-        public abstract void SendReceiver(Action<IQuestion<T>> sendAction, Func<IAnswer<T>, bool> receivedFunc);
+        /// <inheritdoc />
+        public Func<ChannelJobBase<T>, bool> Received { get; set; }
 
-        /// <summary>
-        ///     自动发送数据
-        /// </summary>
-        public abstract void AutoSend(Action<IQuestion<T>> sendAction);
+        /// <inheritdoc />
+        public Action<ChannelJobBase<T>> Sent { get; set; }
 
-        /// <summary>
-        ///     当自动发送模式时，中断正在不断进行的自动模式
-        /// </summary>
+        /// <inheritdoc />
         public abstract void Break();
 
+        /// <inheritdoc />
+        public abstract void SyncListen();
+
+        /// <inheritdoc />
+        public abstract void AsyncListen();
+
+        /// <inheritdoc />
         public event EventHandler<ChannelModeChangedEventArgs> ChannelModeChanged;
+
+        /// <inheritdoc />
         public event EventHandler<ChannelAnswerDataEventArgs<T>> DataArrived;
+
+        #endregion
 
         protected virtual void OnChannelModeChanged(ChannelModeChangedEventArgs e)
         {
@@ -89,8 +85,6 @@ namespace NKnife.Channels.Base
         {
             DataArrived?.Invoke(this, e);
         }
-
-        #endregion
 
         protected virtual void OnOpening()
         {
@@ -107,9 +101,9 @@ namespace NKnife.Channels.Base
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnCloseing()
+        protected virtual void OnClosing()
         {
-            Closeing?.Invoke(this, EventArgs.Empty);
+            Closing?.Invoke(this, EventArgs.Empty);
         }
     }
 }

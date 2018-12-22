@@ -14,7 +14,7 @@ namespace NKnife.DataLite.UnitTest
     [NUnit.Framework.TestFixture]
     public class PageTest
     {
-        private static readonly Expression<Func<Meter, bool>> _expression = (meter => string.IsNullOrEmpty(meter.Id));
+        private static readonly Expression<Func<Meter, bool>> _Expression = (meter => string.IsNullOrEmpty(meter.Id));
 
         [Test]
         public void ConstructorTest()
@@ -23,7 +23,7 @@ namespace NKnife.DataLite.UnitTest
             var list = new List<Meter>();
 
             // 一般情况
-            var pageable = new Pageable<Meter>(0, 15, comparerMock.Object, _expression);
+            var pageable = new Pageable<Meter>(0, 15, comparerMock.Object, _Expression);
             var page = new Page<Meter>(pageable, list, 15);
             page.Should().NotBeNull();
             page.TotalPages.Should().Be(1);
@@ -33,21 +33,21 @@ namespace NKnife.DataLite.UnitTest
             Action action = () => new Page<Meter>(null, list, 15);
             action.Should().Throw<ArgumentNullException>().Where(e => e.Message.Contains("页请求不能为空"));
 
-            pageable = new Pageable<Meter>(0, 15, comparerMock.Object, _expression);
+            pageable = new Pageable<Meter>(0, 15, comparerMock.Object, _Expression);
             action = () => new Page<Meter>(pageable, null, 15);
             action.Should().Throw<ArgumentNullException>().Where(e => e.Message.Contains("页项目集合不能为空"));
 
             // 对构造函数进行测试。尤其是Total计算进行测试。
 
             // 当分页请求，页码100，每页30时：
-            pageable = new Pageable<Meter>(100, 30, comparerMock.Object, _expression);
+            pageable = new Pageable<Meter>(100, 30, comparerMock.Object, _Expression);
             page = new Page<Meter>(pageable, list);//未给总数量时
             page.Should().NotBeNull();
             page.TotalPages.Should().Be(100);
             page.TotalElements.Should().Be(3000);
 
             // 当分页请求，页码100，每页30时，共有1000条记录时：
-            pageable = new Pageable<Meter>(5, 20, comparerMock.Object, _expression);
+            pageable = new Pageable<Meter>(5, 20, comparerMock.Object, _Expression);
             page = new Page<Meter>(pageable, list, 1000);
             page.Should().NotBeNull();
             page.TotalPages.Should().Be(50);

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NKnife.Encrypt
 {
-    public class TripleDESHelper
+    public class TripleDesHelper
     {
         /// <summary>
         /// º”√‹

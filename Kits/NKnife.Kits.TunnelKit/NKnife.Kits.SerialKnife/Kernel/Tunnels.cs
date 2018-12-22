@@ -16,46 +16,46 @@ namespace NKnife.Kits.SerialKnife.Kernel
 {
     public class Tunnels
     {
-        private const string FAMILY_NAME = "p-an485";
-        private static readonly ILog _logger = LogManager.GetLogger<Tunnels>();
-        private readonly ISerialConnector _DataConnector;
-        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
+        private const string FamilyName = "p-an485";
+        private static readonly ILog _Logger = LogManager.GetLogger<Tunnels>();
+        private readonly ISerialConnector _dataConnector;
+        private readonly ITunnel _tunnel = Di.Get<ITunnel>();
 
         public Tunnels()
         {
-            var logFilter = DI.Get<SerialLogFilter>();
-            var queryFilter = DI.Get<QueryBusFilter>();
-            var protocolFilter = DI.Get<SerialProtocolSimpleFilter>();
-            var codec = DI.Get<BytesCodec>();
-            var family = DI.Get<BytesProtocolFamily>();
-            family.FamilyName = FAMILY_NAME;
+            var logFilter = Di.Get<SerialLogFilter>();
+            var queryFilter = Di.Get<QueryBusFilter>();
+            var protocolFilter = Di.Get<SerialProtocolSimpleFilter>();
+            var codec = Di.Get<BytesCodec>();
+            var family = Di.Get<BytesProtocolFamily>();
+            family.FamilyName = FamilyName;
             queryFilter.Bind(codec, family);
             protocolFilter.Bind(codec, family);
             protocolFilter.ProtocolsReceived += protocolFilter_ProtocolsReceived;
 
-            _Tunnel.AddFilters(logFilter);
-            _Tunnel.AddFilters(queryFilter);
-            _Tunnel.AddFilters(protocolFilter);
+            _tunnel.AddFilters(logFilter);
+            _tunnel.AddFilters(queryFilter);
+            _tunnel.AddFilters(protocolFilter);
 
-            _DataConnector = DI.Get<ISerialConnector>(Settings.Default.EnableMock ? "Mock" : "Serial");
-            _DataConnector.PortNumber = Settings.Default.PortNumber; //串口1
+            _dataConnector = Di.Get<ISerialConnector>(Settings.Default.EnableMock ? "Mock" : "Serial");
+            _dataConnector.PortNumber = Settings.Default.PortNumber; //串口1
 
-            _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力
+            _tunnel.BindDataConnector(_dataConnector); //dataConnector是数据流动的动力
         }
 
         public event EventHandler<EventArgs<IEnumerable<IProtocol<byte[]>>>> ProtocolsReceived;
 
         public bool Start()
         {
-            _DataConnector.Start();
-            _logger.Info("Tunnel服务启动成功");
+            _dataConnector.Start();
+            _Logger.Info("Tunnel服务启动成功");
             return true;
         }
 
         public bool Stop()
         {
-            _DataConnector.Stop();
-            _logger.Info("Tunnel服务停止成功");
+            _dataConnector.Stop();
+            _Logger.Info("Tunnel服务停止成功");
             return true;
         }
 

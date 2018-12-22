@@ -17,10 +17,10 @@ namespace NKnife.NLog.IoC
         public enum AppStyle
         {
             WinForm,
-            WPF
+            Wpf
         }
 
-        private const string CONFIG_FILE_NAME = "nlog.config";
+        private const string ConfigFileName = "nlog.config";
 
         static NLogModules()
         {
@@ -32,13 +32,13 @@ namespace NKnife.NLog.IoC
         public override void Load()
         {
             //当发现程序目录中无NLog的配置文件时，根据程序的模式（WinForm或者WPF）自动释放不同NLog的配置文件
-            string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIG_FILE_NAME);
+            string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigFileName);
             if (!File.Exists(file))
             {
                 string configContent;
                 switch (Style)
                 {
-                    case AppStyle.WPF:
+                    case AppStyle.Wpf:
                         configContent = OwnResources.nlog_wpf_config;
                         break;
                     default:
@@ -56,14 +56,14 @@ namespace NKnife.NLog.IoC
             //配置Common.Logging适配器
             var properties = new NameValueCollection();
             properties["configType"] = "FILE";
-            properties["configFile"] = $"~/{CONFIG_FILE_NAME}";
+            properties["configFile"] = $"~/{ConfigFileName}";
             LogManager.Adapter = new NLogLoggerFactoryAdapter(properties);
 
 
             /****日志组件相关的IoC实例****/
             switch (Style)
             {
-                case AppStyle.WPF:
+                case AppStyle.Wpf:
                 {
                     Bind<LoggerInfoDetailForm>().To<LoggerInfoDetailForm>().InSingletonScope();
                     Bind<LogMessageFilter>().ToSelf().InSingletonScope();

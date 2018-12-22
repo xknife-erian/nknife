@@ -15,17 +15,17 @@ namespace SerialKnife.Pan
     /// </summary>
     internal class SerialClient : ISerialClient
     {
-        private static readonly ILog _logger = LogManager.GetLogger<SerialClient>();
-        private readonly bool _EnableDetialLogger;
-        private readonly ManualResetEventSlim _QSendWaitEvent = new ManualResetEventSlim(false);
-        private readonly ISerialPortWrapper _SerialComm;
-        private ISerialDataPool _DataPool;
-        private string _PortName;
+        private static readonly ILog _Logger = LogManager.GetLogger<SerialClient>();
+        private readonly bool _enableDetialLogger;
+        private readonly ManualResetEventSlim _qSendWaitEvent = new ManualResetEventSlim(false);
+        private readonly ISerialPortWrapper _serialComm;
+        private ISerialDataPool _dataPool;
+        private string _portName;
 
         public SerialClient(SerialType serialType = SerialType.WinApi, bool enableDetialLog = false)
         {
-            _EnableDetialLogger = enableDetialLog;
-            _SerialComm = DI.Get<ISerialPortWrapper>(serialType.ToString());
+            _enableDetialLogger = enableDetialLog;
+            _serialComm = Di.Get<ISerialPortWrapper>(serialType.ToString());
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace SerialKnife.Pan
             {
                 PackageBase package;
                 int packageType; //packageType 1=单向，2=双向,3=轮询
-                if (!_DataPool.TryGetPackage(out package, out packageType))
+                if (!_dataPool.TryGetPackage(out package, out packageType))
                 {
                     return;
                 }
@@ -63,7 +63,7 @@ namespace SerialKnife.Pan
                     : package.SendInterval.ReadTimeoutInterval);
 
                 byte[] received;
-                var recvCount = _SerialComm.SendReceived(package.DataToSend, out received);
+                var recvCount = _serialComm.SendReceived(package.DataToSend, out received);
 
                 SendLogger(package);
 
@@ -73,7 +73,7 @@ namespace SerialKnife.Pan
             }
             catch (Exception e)
             {
-                _logger.Warn("SendProcess异常", e);
+                _Logger.Warn("SendProcess异常", e);
             }
         }
 
@@ -83,13 +83,13 @@ namespace SerialKnife.Pan
         /// <param name="package"></param>
         private void SendLogger(PackageBase package)
         {
-            if (_EnableDetialLogger)
+            if (_enableDetialLogger)
             {
-                _logger.Trace(string.Format("串发:{0}", package.DataToSend.ToHexString()));
+                _Logger.Trace(string.Format("串发:{0}", package.DataToSend.ToHexString()));
             }
             else if (package.GetType() == typeof (OneWayPackage))
             {
-                _logger.Debug(string.Format("串发:{0}, {1},{2}",
+                _Logger.Debug(string.Format("串发:{0}, {1},{2}",
                     package.DataToSend.ToHexString(),
                     package.GetType().Name,
                     package.SendInterval));
@@ -97,7 +97,7 @@ namespace SerialKnife.Pan
             else if (package.GetType() == typeof (TwoWayPackage))
             {
                 var twowayPackage = (TwoWayPackage) package;
-                _logger.Debug(string.Format("串发:{0}, {1},{2},{3}",
+                _Logger.Debug(string.Format("串发:{0}, {1},{2},{3}",
                     package.DataToSend.ToHexString(),
                     package.GetType().Name,
                     package.SendInterval,
@@ -115,9 +115,9 @@ namespace SerialKnife.Pan
 
             if (duration > 0)
             {
-                _QSendWaitEvent.Reset();
+                _qSendWaitEvent.Reset();
                 //阻塞等待消息
-                _QSendWaitEvent.Wait(duration);
+                _qSendWaitEvent.Wait(duration);
             }
         }
 
@@ -127,16 +127,16 @@ namespace SerialKnife.Pan
 
             if (duration > 0)
             {
-                _QSendWaitEvent.Reset();
+                _qSendWaitEvent.Reset();
                 //阻塞等待消息
-                _QSendWaitEvent.Wait(duration);
+                _qSendWaitEvent.Wait(duration);
             }
         }
 
         private void SetReadTimeOutAccordingToDevice(TimeSpan afterSendInterval)
         {
             var duration = (int) afterSendInterval.TotalMilliseconds;
-            _SerialComm.SetTimeOut(duration);
+            _serialComm.SetTimeOut(duration);
         }
 
         private static PackageSentEventArgs PackageSentEventArgs(byte[] received, PackageBase package, int recvCount)
@@ -161,12 +161,12 @@ namespace SerialKnife.Pan
         /// <returns></returns>
         public bool OpenPort(ushort port)
         {
-            _PortName = string.Format("COM{0}", port);
-            if (_SerialComm.Initialize(_PortName, new SerialConfig()))
+            _portName = string.Format("COM{0}", port);
+            if (_serialComm.Initialize(_portName, new SerialConfig()))
             {
                 Active = true;
-                _DataPool = new SerialDataPool();
-                _logger.Info(string.Format("通讯串口{0}打开成功", _PortName));
+                _dataPool = new SerialDataPool();
+                _Logger.Info(string.Format("通讯串口{0}打开成功", _portName));
 
                 //一个端口一个线程，专门处理该端口的数据收发
                 var queryThread = new Thread(QuerySendLoop) {IsBackground = true};
@@ -174,7 +174,7 @@ namespace SerialKnife.Pan
                 return true;
             }
             Active = false;
-            _logger.Info("通讯串口" + _PortName + "打开失败");
+            _Logger.Info("通讯串口" + _portName + "打开失败");
             return false;
         }
 
@@ -186,8 +186,8 @@ namespace SerialKnife.Pan
         {
             try
             {
-                if (_SerialComm.IsOpen)
-                    _SerialComm.Close();
+                if (_serialComm.IsOpen)
+                    _serialComm.Close();
                 Active = false;
                 return true;
             }
@@ -210,7 +210,7 @@ namespace SerialKnife.Pan
         /// </summary>
         public ISerialDataPool DataPool
         {
-            get { return _DataPool ?? (_DataPool = new SerialDataPool()); }
+            get { return _dataPool ?? (_dataPool = new SerialDataPool()); }
         }
 
         #endregion

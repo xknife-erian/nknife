@@ -17,9 +17,9 @@ namespace NKnife.Collections
     {
         #region 常量
 
-        private const string ITEM_NODE_NAME = "Item";
-        private const string KEY_NODE_NAME = "Key";
-        private const string VALUE_NODE_NAME = "Value";
+        private const string ItemNodeName = "Item";
+        private const string KeyNodeName = "Key";
+        private const string ValueNodeName = "Value";
 
         #endregion
 
@@ -101,11 +101,11 @@ namespace NKnife.Collections
         {
             foreach (var pair in this)
             {
-                writer.WriteStartElement(ITEM_NODE_NAME);
-                writer.WriteStartElement(KEY_NODE_NAME);
+                writer.WriteStartElement(ItemNodeName);
+                writer.WriteStartElement(KeyNodeName);
                 KeySerializer.Serialize(writer, pair.Key);
                 writer.WriteEndElement();
-                writer.WriteStartElement(VALUE_NODE_NAME);
+                writer.WriteStartElement(ValueNodeName);
                 ValueSerializer.Serialize(writer, pair.Value);
                 writer.WriteEndElement();
                 writer.WriteEndElement();
@@ -122,11 +122,11 @@ namespace NKnife.Collections
 
             while (reader.NodeType != XmlNodeType.EndElement && reader.NodeType != XmlNodeType.None)
             {
-                reader.ReadStartElement(ITEM_NODE_NAME);
-                reader.ReadStartElement(KEY_NODE_NAME);
+                reader.ReadStartElement(ItemNodeName);
+                reader.ReadStartElement(KeyNodeName);
                 var key = (TK) KeySerializer.Deserialize(reader);
                 reader.ReadEndElement();
-                reader.ReadStartElement(VALUE_NODE_NAME);
+                reader.ReadStartElement(ValueNodeName);
                 var value = (TV) ValueSerializer.Deserialize(reader);
                 reader.ReadEndElement();
                 reader.ReadEndElement();

@@ -13,10 +13,10 @@ namespace SerialKnife.Pan.Common
     /// </summary>
     internal class SerialDataPool : ISerialDataPool
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
-        private readonly ConcurrentQueue<PackageBase> _OneWayPool = new ConcurrentQueue<PackageBase>();
-        private readonly ConcurrentQueue<PackageBase> _QueryPool = new ConcurrentQueue<PackageBase>();
-        private readonly ConcurrentQueue<PackageBase> _TwoWayPool = new ConcurrentQueue<PackageBase>();
+        private static readonly ILog _Logger = LogManager.GetCurrentClassLogger();
+        private readonly ConcurrentQueue<PackageBase> _oneWayPool = new ConcurrentQueue<PackageBase>();
+        private readonly ConcurrentQueue<PackageBase> _queryPool = new ConcurrentQueue<PackageBase>();
+        private readonly ConcurrentQueue<PackageBase> _twoWayPool = new ConcurrentQueue<PackageBase>();
 
         /// <summary>添加数据包
         /// </summary>
@@ -26,15 +26,15 @@ namespace SerialKnife.Pan.Common
         {
             if (package is TwoWayPackage)
             {
-                _TwoWayPool.Enqueue(package);
+                _twoWayPool.Enqueue(package);
             }
             else if (package is OneWayPackage)
             {
-                _OneWayPool.Enqueue(package);
+                _oneWayPool.Enqueue(package);
             }
             else if (package is QueryPackage)
             {
-                _QueryPool.Enqueue(package);
+                _queryPool.Enqueue(package);
             }
         }
 
@@ -45,7 +45,7 @@ namespace SerialKnife.Pan.Common
         /// <returns>有数据包则返回true，无则返回false</returns>
         public bool TryGetPackage(out PackageBase package,out int packageType)
         {
-            if (!_TwoWayPool.IsEmpty)
+            if (!_twoWayPool.IsEmpty)
             {
                 if (GetTwoWayPackage(out package))
                 {
@@ -53,17 +53,17 @@ namespace SerialKnife.Pan.Common
                     return true;
                 }
             }
-            if (!_OneWayPool.IsEmpty)
+            if (!_oneWayPool.IsEmpty)
             {
-                if (_OneWayPool.TryDequeue(out package))
+                if (_oneWayPool.TryDequeue(out package))
                 {
                     packageType = 1;
                     return true;
                 }
             }
-            if (!_QueryPool.IsEmpty)
+            if (!_queryPool.IsEmpty)
             {
-                if (_QueryPool.TryDequeue(out package))
+                if (_queryPool.TryDequeue(out package))
                 {
                     packageType = 3;
                     return true;
@@ -81,7 +81,7 @@ namespace SerialKnife.Pan.Common
         private bool GetTwoWayPackage(out PackageBase outTwoWayPackage)
         {
             PackageBase package;
-            if (_TwoWayPool.TryPeek(out package))
+            if (_twoWayPool.TryPeek(out package))
             {
                 var two = (TwoWayPackage) package;
                 if (two.AlreadySentTimes == 0)
@@ -91,19 +91,19 @@ namespace SerialKnife.Pan.Common
                         (s, e) =>
                             {
                                 if (e.Replied)
-                                    _TwoWayPool.TryDequeue(out package);
+                                    _twoWayPool.TryDequeue(out package);
                             };
                 }
                 if (two.AlreadySentTimes < two.SendTimes)
                 {
                     if (two.AlreadySentTimes > 0)
-                        _logger.Trace(string.Format("[{0}/{1}]重发:,{2}", two.AlreadySentTimes + 1, two.SendTimes, two.DataToSend.ToHexString()));
+                        _Logger.Trace(string.Format("[{0}/{1}]重发:,{2}", two.AlreadySentTimes + 1, two.SendTimes, two.DataToSend.ToHexString()));
                     two.AlreadySentTimes++;
                     outTwoWayPackage = package;
                     return true;
                 }
                 two.OnNoResponse();
-                _TwoWayPool.TryDequeue(out package);
+                _twoWayPool.TryDequeue(out package);
             }
             outTwoWayPackage = package;
             return false;

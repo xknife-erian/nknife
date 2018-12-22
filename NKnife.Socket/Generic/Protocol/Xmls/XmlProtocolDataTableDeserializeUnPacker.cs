@@ -13,7 +13,7 @@ namespace SocketKnife.Generic.Protocol.Xmls
     /// </summary>
     public class XmlProtocolDataTableDeserializeUnPacker : XmlProtocolUnPacker
     {
-        private static readonly ILog _logger = LogManager.GetLogger<XmlProtocolDataTableDeserializeUnPacker>();
+        private static readonly ILog _Logger = LogManager.GetLogger<XmlProtocolDataTableDeserializeUnPacker>();
 
         protected override void ParseTags(StringProtocol content, XmlElement tagsElement)
         {
@@ -34,7 +34,7 @@ namespace SocketKnife.Generic.Protocol.Xmls
                 }
                 catch (Exception ex)
                 {
-                    _logger.Warn(string.Format("协议Tag解析异常。{0}", ex.Message), ex);
+                    _Logger.Warn(string.Format("协议Tag解析异常。{0}", ex.Message), ex);
                 }
                 content.Tags.Add(dt);
             }

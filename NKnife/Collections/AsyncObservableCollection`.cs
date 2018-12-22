@@ -12,7 +12,7 @@ namespace NKnife.Collections
 {
     public class AsyncObservableCollection<T> : ObservableCollection<T>
     {
-        private readonly SynchronizationContext _SynchronizationContext = SynchronizationContext.Current;
+        private readonly SynchronizationContext _synchronizationContext = SynchronizationContext.Current;
 
         public AsyncObservableCollection()
         {
@@ -25,7 +25,7 @@ namespace NKnife.Collections
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (SynchronizationContext.Current == _SynchronizationContext)
+            if (SynchronizationContext.Current == _synchronizationContext)
             {
                 // Execute the CollectionChanged event on the current thread
                 RaiseCollectionChanged(e);
@@ -33,7 +33,7 @@ namespace NKnife.Collections
             else
             {
                 // Raises the CollectionChanged event on the creator thread
-                _SynchronizationContext.Send(RaiseCollectionChanged, e);
+                _synchronizationContext.Send(RaiseCollectionChanged, e);
             }
         }
 
@@ -52,7 +52,7 @@ namespace NKnife.Collections
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (SynchronizationContext.Current == _SynchronizationContext)
+            if (SynchronizationContext.Current == _synchronizationContext)
             {
                 // Execute the PropertyChanged event on the current thread
                 RaisePropertyChanged(e);
@@ -60,7 +60,7 @@ namespace NKnife.Collections
             else
             {
                 // Raises the PropertyChanged event on the creator thread
-                _SynchronizationContext.Send(RaisePropertyChanged, e);
+                _synchronizationContext.Send(RaisePropertyChanged, e);
             }
         }
 

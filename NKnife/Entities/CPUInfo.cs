@@ -1,8 +1,8 @@
 ﻿namespace NKnife.Entities
 {
-    public class CPUInfo
+    public class CpuInfo
     {
-        public CPUInfo()
+        public CpuInfo()
         {
             CurrBaseBoard = new BaseBoard();
         }

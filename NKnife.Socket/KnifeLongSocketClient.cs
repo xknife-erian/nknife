@@ -13,11 +13,11 @@ namespace SocketKnife
 {
     public class KnifeLongSocketClient : ISocketClient, IDisposable
     {
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeLongSocketClient>();
+        private static readonly ILog _Logger = LogManager.GetLogger<KnifeLongSocketClient>();
         public KnifeLongSocketClient(bool reconnectFlag, bool isConnecting)
         {
-            _ReconnectFlag = reconnectFlag;
-            _IsConnecting = isConnecting;
+            _reconnectFlag = reconnectFlag;
+            _isConnecting = isConnecting;
         }
 
         /// <summary>
@@ -42,13 +42,13 @@ namespace SocketKnife
         {
             try
             {
-                _logger.Debug("KnifeSocketClient执行主动断开");
+                _Logger.Debug("KnifeSocketClient执行主动断开");
                 _SocketSession.AcceptSocket.Shutdown(SocketShutdown.Both);
                 _SocketSession.AcceptSocket.Close();
             }
             catch (Exception e)
             {
-                _logger.Error("Socket客户端Shutdown异常。", e);
+                _Logger.Error("Socket客户端Shutdown异常。", e);
             }
             _IsConnected = false;
 
@@ -65,7 +65,7 @@ namespace SocketKnife
 
         private void Close()
         {
-            lock (_lockObj)
+            lock (_LockObj)
             {
                 _SocketSession.ResetBuffer();
 
@@ -81,9 +81,9 @@ namespace SocketKnife
                 }
                 catch (Exception e)
                 {
-                    _logger.Warn("Socket客户端关闭时有异常", e);
+                    _Logger.Warn("Socket客户端关闭时有异常", e);
                 }
-                _logger.Debug("Socket客户端关闭");
+                _Logger.Debug("Socket客户端关闭");
             }
         }
 
@@ -95,28 +95,28 @@ namespace SocketKnife
         /// <summary>
         ///     异步连接的控制，连接事件完成后释放信号，通过IsConnected判断是否连接成功
         /// </summary>
-        private readonly ManualResetEvent _SynConnectWaitEventReset = new ManualResetEvent(false);
+        private readonly ManualResetEvent _synConnectWaitEventReset = new ManualResetEvent(false);
 
         /// <summary>
         ///     重连线程中的阻塞超时控制
         /// </summary>
-        private readonly ManualResetEvent _ReconnectResetEvent = new ManualResetEvent(false);
+        private readonly ManualResetEvent _reconnectResetEvent = new ManualResetEvent(false);
 
-        protected SocketClientConfig _Config = DI.Get<SocketClientConfig>();
+        protected SocketClientConfig _Config = Di.Get<SocketClientConfig>();
         protected EndPoint _EndPoint;
 
-        private bool _IsConnecting; //true 正在进行连接, false表示连接动作完成
+        private bool _isConnecting; //true 正在进行连接, false表示连接动作完成
         protected bool _IsConnected; //连接状态，true表示已经连接上了
-        private bool _ReconnectFlag = true;
-        private bool _NeedReconnected; //是否重连
-        private Thread _ReconnectedThread;
+        private bool _reconnectFlag = true;
+        private bool _needReconnected; //是否重连
+        private Thread _reconnectedThread;
 
         /// <summary>
         ///     SOCKET对象
         /// </summary>
         protected SocketSession _SocketSession;
 
-        private static readonly object _lockObj = new object();
+        private static readonly object _LockObj = new object();
 
         public KnifeLongSocketClient()
         {
@@ -152,7 +152,7 @@ namespace SocketKnife
         {
             Initialize();
             AsyncConnect(_IpAddress, _Port);
-            _ReconnectedThread.Start();
+            _reconnectedThread.Start();
             return true;
         }
 
@@ -160,8 +160,8 @@ namespace SocketKnife
         {
             StopReconnect();
 
-            _ReconnectFlag = false;
-            _ReconnectResetEvent.Set();
+            _reconnectFlag = false;
+            _reconnectResetEvent.Set();
 
             var handler = SessionBroken;
             if (handler != null)
@@ -178,7 +178,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _logger.Debug("Socket客户端Shutdown异常。", e);
+                _Logger.Debug("Socket客户端Shutdown异常。", e);
                 return false;
             }
         }
@@ -208,60 +208,60 @@ namespace SocketKnife
 
         protected void Initialize()
         {
-            if (_IsDisposed)
+            if (_isDisposed)
             {
                 throw new ObjectDisposedException(GetType().FullName + " is Disposed");
             }
 
             var ipPoint = new IPEndPoint(_IpAddress, _Port);
-            _SocketSession = DI.Get<SocketSession>();
+            _SocketSession = Di.Get<SocketSession>();
 
-            _ReconnectFlag = true;
-            _ReconnectedThread = new Thread(ReconnectedLoop);
+            _reconnectFlag = true;
+            _reconnectedThread = new Thread(ReconnectedLoop);
         }
 
         private void ReconnectedLoop()
         {
-            while (_ReconnectFlag)
+            while (_reconnectFlag)
             {
                 if (!_IsConnected) //重连检查，仅启用了自动重连的时候做
                 {
-                    _NeedReconnected = true;
+                    _needReconnected = true;
                 }
 
-                if (_NeedReconnected) //需要重连
+                if (_needReconnected) //需要重连
                 {
-                    if (!_IsConnected && !_IsConnecting) //未连接
+                    if (!_IsConnected && !_isConnecting) //未连接
                     {
-                        _logger.Debug("Client发起重连尝试");
+                        _Logger.Debug("Client发起重连尝试");
                         AsyncConnect(_IpAddress, _Port);
-                        _ReconnectResetEvent.Reset(); //阻塞
-                        _ReconnectResetEvent.WaitOne(_Config.ReconnectInterval);
+                        _reconnectResetEvent.Reset(); //阻塞
+                        _reconnectResetEvent.WaitOne(_Config.ReconnectInterval);
                     }
                     else //已连接，则不需要重连了
                     {
-                        _NeedReconnected = false;
+                        _needReconnected = false;
                     }
                 }
                 else
                 {
                     //阻塞
-                    _ReconnectResetEvent.Reset();
-                    _ReconnectResetEvent.WaitOne(_Config.ReconnectInterval);
+                    _reconnectResetEvent.Reset();
+                    _reconnectResetEvent.WaitOne(_Config.ReconnectInterval);
                 }
             }
-            _logger.Debug("SocketClient退出重连循环");
+            _Logger.Debug("SocketClient退出重连循环");
         }
 
         protected virtual void StartReconnect()
         {
-            _logger.Info(string.Format("Client启用自动重连。"));
-            _NeedReconnected = true;
+            _Logger.Info(string.Format("Client启用自动重连。"));
+            _needReconnected = true;
         }
 
         protected virtual void StopReconnect()
         {
-            _NeedReconnected = false;
+            _needReconnected = false;
         }
 
         #endregion
@@ -271,7 +271,7 @@ namespace SocketKnife
         /// <summary>
         ///     用来确定是否以释放
         /// </summary>
-        private bool _IsDisposed;
+        private bool _isDisposed;
 
         public void Dispose()
         {
@@ -286,10 +286,10 @@ namespace SocketKnife
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_IsDisposed || disposing)
+            if (!_isDisposed || disposing)
             {
                 Stop();
-                _IsDisposed = true;
+                _isDisposed = true;
             }
         }
 
@@ -319,27 +319,27 @@ namespace SocketKnife
                     };
                 }
 
-                _IsConnecting = true;
+                _isConnecting = true;
 
-                _SynConnectWaitEventReset.Reset();
+                _synConnectWaitEventReset.Reset();
                 _SocketSession.AcceptSocket.BeginConnect(ipAddress, port, EndAsyncConnect, this);
 
-                _SynConnectWaitEventReset.WaitOne();
+                _synConnectWaitEventReset.WaitOne();
             }
             catch (Exception e)
             {
-                _IsConnecting = false;
-                _logger.Error(string.Format("客户端异步连接远端时异常.{0}", e));
+                _isConnecting = false;
+                _Logger.Error(string.Format("客户端异步连接远端时异常.{0}", e));
             }
         }
 
         private void EndAsyncConnect(IAsyncResult ar)
         {
-            _IsConnecting = false;
+            _isConnecting = false;
             _IsConnected = true;
             //如果有自动重连，则通知timer停止重连
             StopReconnect();
-            _SynConnectWaitEventReset.Set(); //释放连接等待的阻塞信号
+            _synConnectWaitEventReset.Set(); //释放连接等待的阻塞信号
 
             var handler = SessionBuilt;
             if (handler != null)
@@ -436,7 +436,7 @@ namespace SocketKnife
             }
             catch (SocketException e)
             {
-                _logger.Info(string.Format("Client发送时发现连接中断。{0}", e.Data), e);
+                _Logger.Info(string.Format("Client发送时发现连接中断。{0}", e.Data), e);
                 _IsConnected = false;
 
                 var handler = SessionBroken;
@@ -468,7 +468,7 @@ namespace SocketKnife
             }
             catch (Exception e)
             {
-                _logger.WarnFormat("结束挂起的异步发送异常.{0}", e.Message);
+                _Logger.WarnFormat("结束挂起的异步发送异常.{0}", e.Message);
             }
         }
 

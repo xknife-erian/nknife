@@ -74,15 +74,15 @@ namespace NKnife.Wrapper
         /// </summary>
         private static void FillTimeFLag()
         {
-            const int TIME_LENGTH = 366 * 24 * 60;
+            const int timeLength = 366 * 24 * 60;
             var src = "ABCDEFGHJKLMNPQRSTWXY23456789".ToCharArray(); //减除不易识读的：I,O,U,V,Z,0,1
-            _TimeFlag = new List<string>(TIME_LENGTH);
+            _TimeFlag = new List<string>(timeLength);
             var permut = new Permutations<char>(src, 4);
             var i = 0;
             foreach (var list in permut)
             {
                 var charArray = (char[]) list;
-                if (i >= TIME_LENGTH)
+                if (i >= timeLength)
                     return;
                 var sb = new StringBuilder();
                 foreach (var c in charArray)

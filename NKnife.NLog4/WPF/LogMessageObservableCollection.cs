@@ -13,10 +13,10 @@ namespace NKnife.NLog.WPF
         /// <value>The instance.</value>
         public static LogMessageObservableCollection Instance
         {
-            get { return _instance.Value; }
+            get { return _MyInstance.Value; }
         }
 
-        private static readonly Lazy<LogMessageObservableCollection> _instance = new Lazy<LogMessageObservableCollection>(() => new LogMessageObservableCollection());
+        private static readonly Lazy<LogMessageObservableCollection> _MyInstance = new Lazy<LogMessageObservableCollection>(() => new LogMessageObservableCollection());
 
         #endregion
 

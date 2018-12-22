@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NKnife.Encrypt
 {
-    public class FileMD5
+    public class FileMd5
     {
         #region MD5签名验证
 
@@ -15,9 +15,9 @@ namespace NKnife.Encrypt
         /// </summary>
         /// <param name="path">要加密的文件的路径</param>
         /// <returns>标签的值</returns>
-        public static bool AddMD5(string path)
+        public static bool AddMd5(string path)
         {
-            bool isNeed = !CheckMD5(path);
+            bool isNeed = !CheckMd5(path);
 
             try
             {
@@ -28,7 +28,7 @@ namespace NKnife.Encrypt
 
                 if (isNeed)
                 {
-                    string result = MD5Buffer(md5File, 0, md5File.Length); // 对Buffer中的字节内容算MD5
+                    string result = Md5Buffer(md5File, 0, md5File.Length); // 对Buffer中的字节内容算MD5
                     byte[] md5 = Encoding.ASCII.GetBytes(result); // 将字符串转换成字节数组以便写人到文件中
                     var fsWrite = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
                     fsWrite.Write(md5File, 0, md5File.Length); // 将文件，MD5值 重新写入到文件中。
@@ -55,7 +55,7 @@ namespace NKnife.Encrypt
         /// </summary>
         /// <param name="path"></param>
         /// <returns>是否加了标签或是否标签值与内容值一致</returns>
-        public static bool CheckMD5(string path)
+        public static bool CheckMd5(string path)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace NKnife.Encrypt
                 fileStream.Read(md5File, 0, (int) fileStream.Length);
                 fileStream.Close();
 
-                string result = MD5Buffer(md5File, 0, md5File.Length - 32); // 对文件除最后32位以外的字节计算MD5，这个32是因为标签位为32位。
+                string result = Md5Buffer(md5File, 0, md5File.Length - 32); // 对文件除最后32位以外的字节计算MD5，这个32是因为标签位为32位。
                 string md5 = Encoding.ASCII.GetString(md5File, md5File.Length - 32, 32); //读取文件最后32位，其中保存的就是MD5值
                 return result == md5;
             }
@@ -82,7 +82,7 @@ namespace NKnife.Encrypt
         /// <param name="index">计算起始位置</param>
         /// <param name="count">计算终止位置</param>
         /// <returns>计算结果</returns>
-        private static string MD5Buffer(byte[] md5File, int index, int count)
+        private static string Md5Buffer(byte[] md5File, int index, int count)
         {
             var md5 = new MD5CryptoServiceProvider();
             byte[] hashByte = md5.ComputeHash(md5File, index, count);

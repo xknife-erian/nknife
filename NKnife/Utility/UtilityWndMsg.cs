@@ -22,12 +22,12 @@ namespace NKnife.Utility
         {
             if (string.IsNullOrEmpty(msg)) return;
 
-            API.API.User32.CopyDataStruct cds;
-            cds.dwData = (IntPtr) 100; //这里可以传入一些自定义的数据，但只能是4字节整数     
-            cds.lpData = msg; //消息字符串
-            cds.cbData = Encoding.Default.GetBytes(msg).Length + 1; //注意，这里的长度是按字节来算的
+            API.Api.User32.CopyDataStruct cds;
+            cds._DwData = (IntPtr) 100; //这里可以传入一些自定义的数据，但只能是4字节整数     
+            cds._LpData = msg; //消息字符串
+            cds._CbData = Encoding.Default.GetBytes(msg).Length + 1; //注意，这里的长度是按字节来算的
 
-            API.API.User32.SendMessage(toWndHandler, (int)API.API.User32.WMsg.WM_COPYDATA, fromWndHandler, ref cds);
+            API.Api.User32.SendMessage(toWndHandler, (int)API.Api.User32.WMsg.WmCopydata, fromWndHandler, ref cds);
         }
 
         public static void SendMessage(int toWndHandler, string msg)
@@ -49,8 +49,8 @@ namespace NKnife.Utility
         /// 接收到的消息字符串
         public static string ReceiveMessage(ref Message m)
         {
-            var cds = (API.API.User32.CopyDataStruct) m.GetLParam(typeof (API.API.User32.CopyDataStruct));
-            return cds.lpData;
+            var cds = (API.Api.User32.CopyDataStruct) m.GetLParam(typeof (API.Api.User32.CopyDataStruct));
+            return cds._LpData;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace NKnife.Utility
         /// <returns></returns>
         public static int GetWndHandleByWindowName(string name)
         {
-            return API.API.User32.FindWindow(null, name);
+            return API.Api.User32.FindWindow(null, name);
         }
 
         /// <summary>

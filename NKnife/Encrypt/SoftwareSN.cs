@@ -2,14 +2,14 @@
 
 namespace NKnife.Encrypt
 {
-    public class SoftwareSN
+    public class SoftwareSn
     {
         /// <summary>
         /// 一个非常简单的通过取余计算注册码的方法
         /// </summary>
         /// <param name="str">The STR.</param>
         /// <returns></returns>
-        public static string GetSN(string str)
+        public static string GetSn(string str)
         {
             string strResult = "";//作为返回的字符串
             var sbTemp = new StringBuilder();

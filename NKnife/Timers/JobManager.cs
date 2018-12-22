@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -8,28 +8,28 @@ using NKnife.Interface;
 namespace NKnife.Timers
 {
     /// <summary>
-    /// 描述一个Job的顺序工作流，其中包括仅执行一次的Job，和需要循环执行的Job。
+    /// 描述针对JobPool的工作流的操作封装，其中包括仅执行一次的Job，和需要循环执行的Job。
     /// </summary>
-    public class JobFlow
+    public class JobManager
     {
-        private readonly AutoResetEvent _Flow = new AutoResetEvent(false);
+        private readonly AutoResetEvent _flowAutoResetEvent = new AutoResetEvent(false);
 
         /// <summary>
         /// 中断工作流的标记。
         /// </summary>
-        private bool _BreakFlag = false;
+        private bool _breakFlag = false;
 
         /// <summary>
         /// 暂停工作流的标记
         /// </summary>
-        private bool _PauseFlag = false;
+        private bool _pauseFlag = false;
 
         /// <summary>
         /// 构造函数。描述一个Job的顺序工作流，其中包括仅执行一次的Job,和需要循环执行的Job。
         /// </summary>
-        public JobFlow()
+        public JobManager()
         {
-            _Flow.Set();
+            _flowAutoResetEvent.Set();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace NKnife.Timers
         /// </summary>
         public virtual void Run()
         {
-            _BreakFlag = false;
+            _breakFlag = false;
             RunMethod(Pool);
         }
 
@@ -51,7 +51,7 @@ namespace NKnife.Timers
         /// </summary>
         public virtual void Break()
         {
-            _BreakFlag = true;
+            _breakFlag = true;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace NKnife.Timers
         /// </summary>
         public virtual void Pause()
         {
-            _PauseFlag = true;
+            _pauseFlag = true;
         }
 
         /// <summary>
@@ -67,14 +67,14 @@ namespace NKnife.Timers
         /// </summary>
         public virtual void Resume()
         {
-            _PauseFlag = false;
-            _Flow.Set();
+            _pauseFlag = false;
+            _flowAutoResetEvent.Set();
         }
 
         /// <summary>
         /// 当前Job的执行次数
         /// </summary>
-        private int _LoopNumber = 0;
+        private int _loopNumber = 0;
 
         /// <summary>
         /// 递归完成内部所有的Job
@@ -83,7 +83,7 @@ namespace NKnife.Timers
         {
             foreach (var jobItem in list)
             {
-                if (_BreakFlag)//当检测到中断信号时，不再运行Job
+                if (_breakFlag)//当检测到中断信号时，不再运行Job
                 {
                     break;
                 }
@@ -91,7 +91,7 @@ namespace NKnife.Timers
                 {
                     if (jobItem is IJob job)
                     {
-                        _LoopNumber = 0;
+                        _loopNumber = 0;
                         RunJob(job); //执行单个Job的运行
                     }
                 }
@@ -101,7 +101,7 @@ namespace NKnife.Timers
                         RunMethod(pool); //递归
                 }
             }
-            if (!_BreakFlag)//如是有中断信号，那么不算是所有工作完成
+            if (!_breakFlag)//如是有中断信号，那么不算是所有工作完成
                 OnAllWorkDone();
         }
 
@@ -111,20 +111,20 @@ namespace NKnife.Timers
         /// <param name="job">单个Job</param>
         protected virtual void RunJob(IJob job)
         {
-            if (_BreakFlag)//当检测到中断信号时，不再运行Job
+            if (_breakFlag)//当检测到中断信号时，不再运行Job
                 return;
             OnRunning(new EventArgs<IJob>(job));
             var success = job.Func.Invoke(job);
             OnRan(new EventArgs<IJob>(job));
             //当运行异常时，静置至超时时长，否则静默至间隔时长即结束
-            _Flow.WaitOne(success ? job.Interval : job.Timeout);
-            if (_PauseFlag)//检测暂停标记
-                _Flow.Reset();
-            _LoopNumber++;
+            _flowAutoResetEvent.WaitOne(success ? job.Interval : job.Timeout);
+            if (_pauseFlag)//检测暂停标记
+                _flowAutoResetEvent.Reset();
+            _loopNumber++;
             //当该Job需要循环
             //当没有设置循环次数，即无限循环
             //当已设置循环次数，但是已循环次数小于设置值
-            if (job.IsLoop && ((job.LoopNumber <= 0) || (job.LoopNumber > 0) && (_LoopNumber < job.LoopNumber)))
+            if (job.IsLoop && ((job.LoopNumber <= 0) || (job.LoopNumber > 0) && (_loopNumber < job.LoopNumber)))
             {
                 //递归循环执行本职工作 ;-)
                 RunJob(job);
@@ -159,6 +159,11 @@ namespace NKnife.Timers
         protected virtual void OnAllWorkDone()
         {
             AllWorkDone?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Update(IJobPool pool)
+        {
+            throw new NotImplementedException();
         }
     }
 }

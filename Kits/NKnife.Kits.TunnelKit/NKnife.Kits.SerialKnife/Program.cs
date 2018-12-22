@@ -16,7 +16,7 @@ namespace NKnife.Kits.SerialKnife
             Application.SetCompatibleTextRenderingDefault(false);
 
             Global.Culture = "zh-CN";
-            DI.Initialize();
+            Di.Initialize();
 
             Application.Run(new WorkBenchForm());
         }

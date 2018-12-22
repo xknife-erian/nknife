@@ -14,9 +14,9 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod0()//普通单条短数据
         {
             var decoder = new LengthHeadDecoder();
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
 
-            var content = Encoding.Default.GetBytes(ABCDE);
+            var content = Encoding.Default.GetBytes(abcde);
             var lenghtHead = BitConverter.GetBytes(content.Length);
 
             var data = lenghtHead.Concat(content).ToArray();
@@ -27,9 +27,9 @@ namespace NKnife.Socket.UnitTest
             Assert.AreEqual(data.Length, finishedIndex);
             Assert.AreEqual(content.Length, result[0].Length);
 
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[0][i]);
+                Assert.AreEqual(abcde[i], result[0][i]);
             }
         }
 
@@ -37,12 +37,12 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod1()//单条大数据
         {
             var decoder = new LengthHeadDecoder();
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
 
             var sb = new StringBuilder();
             for (int i = 0; i < 100000; i++)
             {
-                sb.Append(ABCDE);
+                sb.Append(abcde);
             }
 
             var content = Encoding.Default.GetBytes(sb.ToString());
@@ -66,9 +66,9 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod3()//普通多条短数据
         {
             var decoder = new LengthHeadDecoder();
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
 
-            var content = Encoding.Default.GetBytes(ABCDE);
+            var content = Encoding.Default.GetBytes(abcde);
             var lenghtHead = BitConverter.GetBytes(content.Length);
 
             var data = lenghtHead.Concat(content)
@@ -85,25 +85,25 @@ namespace NKnife.Socket.UnitTest
             Assert.AreEqual(5, result.Length);
             Assert.AreEqual(content.Length, result[0].Length);
 
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[0][i]);
+                Assert.AreEqual(abcde[i], result[0][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[1][i]);
+                Assert.AreEqual(abcde[i], result[1][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[2][i]);
+                Assert.AreEqual(abcde[i], result[2][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[3][i]);
+                Assert.AreEqual(abcde[i], result[3][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[4][i]);
+                Assert.AreEqual(abcde[i], result[4][i]);
             }
         }
 
@@ -111,9 +111,9 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod4() //普通多条短数据，最后有未完成数据
         {
             var decoder = new LengthHeadDecoder();
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
 
-            var content = Encoding.Default.GetBytes(ABCDE);
+            var content = Encoding.Default.GetBytes(abcde);
             var lenghtHead = BitConverter.GetBytes(content.Length);
 
             var data = lenghtHead.Concat(content)
@@ -131,25 +131,25 @@ namespace NKnife.Socket.UnitTest
             Assert.AreEqual(5, result.Length);
             Assert.AreEqual(content.Length, result[0].Length);
 
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[0][i]);
+                Assert.AreEqual(abcde[i], result[0][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[1][i]);
+                Assert.AreEqual(abcde[i], result[1][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[2][i]);
+                Assert.AreEqual(abcde[i], result[2][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[3][i]);
+                Assert.AreEqual(abcde[i], result[3][i]);
             }
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[4][i]);
+                Assert.AreEqual(abcde[i], result[4][i]);
             }
         }
 
@@ -157,12 +157,12 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod5()//单条大数据
         {
             var decoder = new LengthHeadDecoder(){EnabelCompress = true};
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
 
             var sb = new StringBuilder();
             for (int i = 0; i < 100000; i++)
             {
-                sb.Append(ABCDE);
+                sb.Append(abcde);
             }
 
             var content = CompressHelper.Compress(Encoding.Default.GetBytes(sb.ToString()));

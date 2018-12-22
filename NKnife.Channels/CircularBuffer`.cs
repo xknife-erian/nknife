@@ -35,42 +35,42 @@ namespace NKnife.Channels
         /// <summary>
         ///     默认大小.
         /// </summary>
-        private const int DEFAULT_SIZE = 8 * 1024;
+        private const int DefaultSize = 8 * 1024;
 
         /// <summary>
         ///     缓冲区所使用的数组.
         /// </summary>
-        private T[] _DataBuffer;
+        private T[] _dataBuffer;
 
         /// <summary>
         ///     下一次读取接收缓冲区的指针.
         /// </summary>
-        private int _ReadPointer;
+        private int _readPointer;
 
         /// <summary>
         ///     下一次要将数据写入缓冲区的指针.
         /// </summary>
-        private int _WritePointer;
+        private int _writePointer;
 
         /// <summary>
         ///     如果当前缓冲区中有数据可读, 它将会被设置.
         /// </summary>
-        private readonly Semaphore _ReadSemaphore = new Semaphore(0, 1);
+        private readonly Semaphore _readSemaphore = new Semaphore(0, 1);
 
-        private readonly Semaphore _WriteSemaphore = new Semaphore(1, 1);
+        private readonly Semaphore _writeSemaphore = new Semaphore(1, 1);
 
         /// <summary>
         ///     缓冲区的容量。注意：_Capacity 和 buffer.Length 可以不相同, 前者小于或者等于后者.
         /// </summary>
-        private int _Capacity;
+        private int _capacity;
 
-        private readonly object _BufferLock = new object();
+        private readonly object _bufferLock = new object();
 
         /// <summary>
         ///     创建一个具体默认容量的缓冲区.
         /// </summary>
         public CircularBuffer()
-            : this(DEFAULT_SIZE)
+            : this(DefaultSize)
         {
         }
 
@@ -91,12 +91,12 @@ namespace NKnife.Channels
         /// <param name="size">数据的字节数.</param>
         public CircularBuffer(T[] buffer, int offset = 0, int size = 0)
         {
-            _DataBuffer = buffer;
-            _Capacity = buffer.Length;
+            _dataBuffer = buffer;
+            _capacity = buffer.Length;
             Available = size;
-            Space = _Capacity - Available;
-            _ReadPointer = offset;
-            _WritePointer = offset + size;
+            Space = _capacity - Available;
+            _readPointer = offset;
+            _writePointer = offset + size;
         }
 
         /// <summary>
@@ -115,24 +115,24 @@ namespace NKnife.Channels
         /// </summary>
         public int Capacity
         {
-            get => _Capacity;
+            get => _capacity;
             set
             {
-                lock (_BufferLock)
+                lock (_bufferLock)
                 {
                     if (value < Available || value == 0)
                     {
                         return;
                         //throw new ApplicationException("Capacity must be larger than Available.");
                     }
-                    if (value == _Capacity)
+                    if (value == _capacity)
                     {
                         return;
                     }
-                    if (value > _Capacity && Space == 0)
+                    if (value > _capacity && Space == 0)
                     {
                         // 可写空间变为非空, 释放可写信号.
-                        _WriteSemaphore.Release();
+                        _writeSemaphore.Release();
                     }
 
                     var buf = new T[value];
@@ -140,12 +140,12 @@ namespace NKnife.Channels
                     {
                         Available = CopyTo(buf, 0, buf.Length);
                     }
-                    _DataBuffer = buf;
-                    _Capacity = value;
-                    Space = _Capacity - Available;
-                    _ReadPointer = 0;
+                    _dataBuffer = buf;
+                    _capacity = value;
+                    Space = _capacity - Available;
+                    _readPointer = 0;
                     // 当容量缩小时, 可能导致变化后可写空间为0, 这时wr_nxt=0.
-                    _WritePointer = (Space == 0) ? 0 : Available;
+                    _writePointer = (Space == 0) ? 0 : Available;
                 }
             }
         }
@@ -165,12 +165,12 @@ namespace NKnife.Channels
         /// </summary>
         public void Clear()
         {
-            lock (_BufferLock)
+            lock (_bufferLock)
             {
                 Available = 0;
-                Space = _Capacity;
-                _ReadPointer = 0;
-                _WritePointer = 0;
+                Space = _capacity;
+                _readPointer = 0;
+                _writePointer = 0;
             }
         }
 
@@ -206,23 +206,23 @@ namespace NKnife.Channels
         /// <returns>已经读取的字节数. 一定是 size 和 Available 的较小者.</returns>
         public int Read(T[] buffer, int offset, int size)
         {
-            if (!_ReadSemaphore.WaitOne(ReadTimeout, false))
+            if (!_readSemaphore.WaitOne(ReadTimeout, false))
                 throw new ApplicationException("Read timeout.");
 
-            lock (_BufferLock)
+            lock (_bufferLock)
             {
                 var copyTo = CopyTo(buffer, offset, size);
                 if (Space == 0)
                 {
                     // 释放可写信号.
-                    _WriteSemaphore.Release();
+                    _writeSemaphore.Release();
                 }
                 Space += copyTo;
                 Available -= copyTo;
                 if (Available > 0)
                 {
                     // 释放一个信号, 以便下一次再读.
-                    _ReadSemaphore.Release();
+                    _readSemaphore.Release();
                 }
                 return copyTo;
             }
@@ -235,18 +235,18 @@ namespace NKnife.Channels
         {
             var countFormCopy = (Available >= size) ? size : Available;
             // 当 _ReadPointer 在 _WritePointer 的左边时, 缓冲的右边包含的数量.
-            var rdata = _Capacity - _ReadPointer;
-            if (_ReadPointer < _WritePointer || rdata >= countFormCopy /*隐含_ReadNext >= _WritePointer*/)
+            var rdata = _capacity - _readPointer;
+            if (_readPointer < _writePointer || rdata >= countFormCopy /*隐含_ReadNext >= _WritePointer*/)
             {
-                Array.Copy(_DataBuffer, _ReadPointer, buffer, offset, countFormCopy);
-                _ReadPointer += countFormCopy;
+                Array.Copy(_dataBuffer, _readPointer, buffer, offset, countFormCopy);
+                _readPointer += countFormCopy;
             }
             else
             {
                 // 两次拷贝.
-                Array.Copy(_DataBuffer, _ReadPointer, buffer, offset, rdata);
-                _ReadPointer = countFormCopy - rdata;
-                Array.Copy(_DataBuffer, 0, buffer, offset + rdata, _ReadPointer);
+                Array.Copy(_dataBuffer, _readPointer, buffer, offset, rdata);
+                _readPointer = countFormCopy - rdata;
+                Array.Copy(_dataBuffer, 0, buffer, offset + rdata, _readPointer);
             }
             return countFormCopy;
         }
@@ -274,42 +274,42 @@ namespace NKnife.Channels
             while (nLeft > 0)
             {
                 // 这样的超时控制并不准确!
-                if (!_WriteSemaphore.WaitOne(WriteTimeout, false))
+                if (!_writeSemaphore.WaitOne(WriteTimeout, false))
                 {
                     throw new ApplicationException("Write timeout.");
                 }
 
-                lock (_BufferLock)
+                lock (_bufferLock)
                 {
                     var nWrite = (Space >= nLeft) ? nLeft : Space;
                     // 当 _ReadPointer 在 _WritePointer 的左边时, 缓冲的右边可以放置的缓冲数据数量.
-                    var rSpace = _Capacity - _WritePointer;
-                    if (_WritePointer < _ReadPointer || rSpace >= nWrite /*隐含_WriteNext >= _ReadPointer*/)
+                    var rSpace = _capacity - _writePointer;
+                    if (_writePointer < _readPointer || rSpace >= nWrite /*隐含_WriteNext >= _ReadPointer*/)
                     {
-                        Array.Copy(buffer, nOffset, _DataBuffer, _WritePointer, nWrite);
-                        _WritePointer += nWrite;
-                        if (_WritePointer == _Capacity)
+                        Array.Copy(buffer, nOffset, _dataBuffer, _writePointer, nWrite);
+                        _writePointer += nWrite;
+                        if (_writePointer == _capacity)
                         {
-                            _WritePointer = 0;
+                            _writePointer = 0;
                         }
                     }
                     else
                     {
                         // 两次拷贝.
-                        Array.Copy(buffer, nOffset, _DataBuffer, _WritePointer, rSpace);
-                        _WritePointer = nWrite - rSpace; // 是调用下一句之后的_WriteNext值.
-                        Array.Copy(buffer, nOffset + rSpace, _DataBuffer, 0, _WritePointer);
+                        Array.Copy(buffer, nOffset, _dataBuffer, _writePointer, rSpace);
+                        _writePointer = nWrite - rSpace; // 是调用下一句之后的_WriteNext值.
+                        Array.Copy(buffer, nOffset + rSpace, _dataBuffer, 0, _writePointer);
                     }
                     if (Available == 0)
                     {
-                        _ReadSemaphore.Release();
+                        _readSemaphore.Release();
                     }
                     Space -= nWrite;
                     Available += nWrite;
                     if (Space > 0)
                     {
                         // 释放可写信号.
-                        _WriteSemaphore.Release();
+                        _writeSemaphore.Release();
                     }
 
                     nOffset += nWrite;

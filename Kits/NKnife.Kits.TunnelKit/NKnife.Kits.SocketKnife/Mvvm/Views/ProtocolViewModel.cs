@@ -11,7 +11,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
     public class ProtocolViewModel : ViewModelBase
     {
-        private StringProtocol _SelectedProtocol;
+        private StringProtocol _selectedProtocol;
 
         public ProtocolViewModel()
         {
@@ -22,35 +22,35 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         public StringProtocol SelectedProtocol
         {
-            get { return _SelectedProtocol; }
+            get { return _selectedProtocol; }
             set
             {
-                _SelectedProtocol = value;
+                _selectedProtocol = value;
                 RaisePropertyChanged(() => SelectedProtocol);
             }
         }
 
         public class SimpleProtocol : ObservableObject
         {
-            private string _Command;
-            private string _CommandParam;
+            private string _command;
+            private string _commandParam;
 
             public string Command
             {
-                get { return _Command; }
+                get { return _command; }
                 set
                 {
-                    _Command = value;
+                    _command = value;
                     RaisePropertyChanged(() => Command);
                 }
             }
 
             public string CommandParam
             {
-                get { return _CommandParam; }
+                get { return _commandParam; }
                 set
                 {
-                    _CommandParam = value;
+                    _commandParam = value;
                     RaisePropertyChanged(() => CommandParam);
                 }
             }

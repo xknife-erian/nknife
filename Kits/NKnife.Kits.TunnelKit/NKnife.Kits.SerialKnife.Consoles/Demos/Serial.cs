@@ -23,25 +23,25 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         ///     得到串口状态
         /// </summary>
         /// <param name="hFile">通信设备句柄</param>
-        /// <param name="lpDCB">设备控制块DCB</param>
+        /// <param name="lpDcb">设备控制块DCB</param>
         [DllImport("kernel32.dll")]
-        private static extern bool GetCommState(int hFile, ref DCB lpDCB);
+        private static extern bool GetCommState(int hFile, ref Dcb lpDcb);
 
         /// <summary>
         ///     建立串口设备控制块
         /// </summary>
         /// <param name="lpDef">设备控制字符串</param>
-        /// <param name="lpDCB">设备控制块</param>
+        /// <param name="lpDcb">设备控制块</param>
         [DllImport("kernel32.dll")]
-        private static extern bool BuildCommDCB(string lpDef, ref DCB lpDCB);
+        private static extern bool BuildCommDCB(string lpDef, ref Dcb lpDcb);
 
         /// <summary>
         ///     设置串口状态
         /// </summary>
         /// <param name="hFile">通信设备句柄</param>
-        /// <param name="lpDCB">设备控制块</param>
+        /// <param name="lpDcb">设备控制块</param>
         [DllImport("kernel32.dll")]
-        private static extern bool SetCommState(int hFile, ref DCB lpDCB);
+        private static extern bool SetCommState(int hFile, ref Dcb lpDcb);
 
         /// <summary>
         ///     读取串口超时时间
@@ -49,7 +49,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <param name="hFile">通信设备句柄</param>
         /// <param name="lpCommTimeouts">超时时间</param>
         [DllImport("kernel32.dll")]
-        private static extern bool GetCommTimeouts(int hFile, ref COMMTIMEOUTS lpCommTimeouts);
+        private static extern bool GetCommTimeouts(int hFile, ref Commtimeouts lpCommTimeouts);
 
         /// <summary>
         ///     设置串口超时时间
@@ -57,7 +57,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <param name="hFile">通信设备句柄</param>
         /// <param name="lpCommTimeouts">超时时间</param>
         [DllImport("kernel32.dll")]
-        private static extern bool SetCommTimeouts(int hFile, ref COMMTIMEOUTS lpCommTimeouts);
+        private static extern bool SetCommTimeouts(int hFile, ref Commtimeouts lpCommTimeouts);
 
         /// <summary>
         ///     读取串口数据
@@ -69,7 +69,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <param name="lpOverlapped">溢出缓冲区</param>
         [DllImport("kernel32.dll")]
         private static extern bool ReadFile(int hFile, byte[] lpBuffer,
-            int nNumberOfBytesToRead, ref int lpNumberOfBytesRead, ref OVERLAPPED lpOverlapped);
+            int nNumberOfBytesToRead, ref int lpNumberOfBytesRead, ref Overlapped lpOverlapped);
 
         /// <summary>
         ///     写串口数据
@@ -81,7 +81,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <param name="lpOverlapped">溢出缓冲区</param>
         [DllImport("kernel32.dll")]
         private static extern bool WriteFile(int hFile, byte[] lpBuffer,
-            int nNumberOfBytesToWrite, ref int lpNumberOfBytesWritten, ref OVERLAPPED lpOverlapped);
+            int nNumberOfBytesToWrite, ref int lpNumberOfBytesWritten, ref Overlapped lpOverlapped);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool FlushFileBuffers(int hFile);
@@ -107,45 +107,45 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// </summary>
         public bool Open()
         {
-            var dcbCommPort = new DCB();
-            var ctoCommPort = new COMMTIMEOUTS();
+            var dcbCommPort = new Dcb();
+            var ctoCommPort = new Commtimeouts();
 
             // 打开串口
-            hComm = CreateFile(PortNum, GENERIC_READ | GENERIC_WRITE,
-                0, 0, OPEN_EXISTING, 0, 0);
+            _hComm = CreateFile(_PortNum, GenericRead | GenericWrite,
+                0, 0, OpenExisting, 0, 0);
 
-            if (hComm == INVALID_HANDLE_VALUE)
+            if (_hComm == InvalidHandleValue)
             {
                 return false;
             }
 
             // 设置通信超时时间
-            GetCommTimeouts(hComm, ref ctoCommPort);
-            ctoCommPort.ReadTotalTimeoutConstant = ReadTimeout;
+            GetCommTimeouts(_hComm, ref ctoCommPort);
+            ctoCommPort.ReadTotalTimeoutConstant = _ReadTimeout;
             ctoCommPort.ReadTotalTimeoutMultiplier = 0;
             ctoCommPort.WriteTotalTimeoutMultiplier = 0;
             ctoCommPort.WriteTotalTimeoutConstant = 0;
-            SetCommTimeouts(hComm, ref ctoCommPort);
+            SetCommTimeouts(_hComm, ref ctoCommPort);
 
             // 设置串口
-            GetCommState(hComm, ref dcbCommPort);
+            GetCommState(_hComm, ref dcbCommPort);
             dcbCommPort.fOutxCtsFlow = 524800;
-            dcbCommPort.BaudRate = BaudRate;
+            dcbCommPort.BaudRate = _BaudRate;
             dcbCommPort.flags = 0;
             dcbCommPort.flags |= 1;
-            if (Parity > 0)
+            if (_Parity > 0)
             {
                 dcbCommPort.flags |= 2;
             }
-            dcbCommPort.Parity = Parity;
-            dcbCommPort.ByteSize = ByteSize;
-            dcbCommPort.StopBits = StopBits;
+            dcbCommPort.Parity = _Parity;
+            dcbCommPort.ByteSize = _ByteSize;
+            dcbCommPort.StopBits = _StopBits;
             dcbCommPort.fOutxCtsFlow = 524800;
-            if (!SetCommState(hComm, ref dcbCommPort))
+            if (!SetCommState(_hComm, ref dcbCommPort))
             {
                 return false;
             }
-            Opened = true;
+            _Opened = true;
             return true;
         }
 
@@ -154,10 +154,10 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// </summary>
         public bool Close()
         {
-            if (hComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                CloseHandle(hComm);
-                Opened = false;
+                CloseHandle(_hComm);
+                _Opened = false;
                 return true;
             }
             return false;
@@ -166,21 +166,21 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <summary>
         ///     读取串口返回的数据
         /// </summary>
-        /// <param name="NumBytes">数据长度</param>
-        public byte[] Read(int NumBytes)
+        /// <param name="numBytes">数据长度</param>
+        public byte[] Read(int numBytes)
         {
-            byte[] BufBytes;
-            byte[] OutBytes;
-            BufBytes = new byte[NumBytes];
-            if (hComm != INVALID_HANDLE_VALUE)
+            byte[] bufBytes;
+            byte[] outBytes;
+            bufBytes = new byte[numBytes];
+            if (_hComm != InvalidHandleValue)
             {
-                var ovlCommPort = new OVERLAPPED();
-                var BytesRead = 0;
+                var ovlCommPort = new Overlapped();
+                var bytesRead = 0;
 
-                ReadFile(hComm, BufBytes, NumBytes, ref BytesRead, ref ovlCommPort);
-                OutBytes = new byte[BytesRead];
-                Array.Copy(BufBytes, OutBytes, BytesRead);
-                return OutBytes;
+                ReadFile(_hComm, bufBytes, numBytes, ref bytesRead, ref ovlCommPort);
+                outBytes = new byte[bytesRead];
+                Array.Copy(bufBytes, outBytes, bytesRead);
+                return outBytes;
             }
             return new byte[0];
         }
@@ -191,9 +191,9 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <returns></returns>
         public bool ClearPortData()
         {
-            if (hComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                return PurgeComm(hComm, 0);
+                return PurgeComm(_hComm, 0);
             }
             return false;
         }
@@ -201,17 +201,17 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <summary>
         ///     向串口写数据
         /// </summary>
-        /// <param name="WriteBytes">数据数组</param>
-        public int Write(byte[] WriteBytes)
+        /// <param name="writeBytes">数据数组</param>
+        public int Write(byte[] writeBytes)
         {
             bool result;
-            if (hComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                var ovlCommPort = new OVERLAPPED();
-                var BytesWritten = 0;
-                WriteFile(hComm, WriteBytes, WriteBytes.Length,
-                    ref BytesWritten, ref ovlCommPort);
-                return BytesWritten;
+                var ovlCommPort = new Overlapped();
+                var bytesWritten = 0;
+                WriteFile(_hComm, writeBytes, writeBytes.Length,
+                    ref bytesWritten, ref ovlCommPort);
+                return bytesWritten;
             }
             return 0;
         }
@@ -220,7 +220,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         ///     设备控制块结构体类型
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct DCB
+        public struct Dcb
         {
             /// <summary>
             ///     DCB长度
@@ -382,7 +382,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         ///     串口超时时间结构体类型
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        private struct COMMTIMEOUTS
+        private struct Commtimeouts
         {
             public readonly int ReadIntervalTimeout;
             public int ReadTotalTimeoutMultiplier;
@@ -395,7 +395,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         ///     湓出缓冲区结构体类型
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        private struct OVERLAPPED
+        private struct Overlapped
         {
             public readonly int Internal;
             public readonly int InternalHigh;
@@ -409,22 +409,22 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <summary>
         ///     写标志
         /// </summary>
-        private const uint GENERIC_READ = 0x80000000;
+        private const uint GenericRead = 0x80000000;
 
         /// <summary>
         ///     读标志
         /// </summary>
-        private const uint GENERIC_WRITE = 0x40000000;
+        private const uint GenericWrite = 0x40000000;
 
         /// <summary>
         ///     打开已存在
         /// </summary>
-        private const int OPEN_EXISTING = 3;
+        private const int OpenExisting = 3;
 
         /// <summary>
         ///     无效句柄
         /// </summary>
-        private const int INVALID_HANDLE_VALUE = -1;
+        private const int InvalidHandleValue = -1;
 
         #endregion
 
@@ -433,42 +433,42 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         /// <summary>
         ///     端口名称(COM1,COM2...COM4...)
         /// </summary>
-        public string PortNum;
+        public string _PortNum;
 
         /// <summary>
         ///     波特率9600
         /// </summary>
-        public int BaudRate;
+        public int _BaudRate;
 
         /// <summary>
         ///     数据位4-8
         /// </summary>
-        public byte ByteSize;
+        public byte _ByteSize;
 
         /// <summary>
         ///     奇偶校验0-4=no,odd,even,mark,space
         /// </summary>
-        public byte Parity;
+        public byte _Parity;
 
         /// <summary>
         ///     停止位
         /// </summary>
-        public byte StopBits; // 0,1,2 = 1, 1.5, 2
+        public byte _StopBits; // 0,1,2 = 1, 1.5, 2
 
         /// <summary>
         ///     超时长
         /// </summary>
-        public int ReadTimeout;
+        public int _ReadTimeout;
 
         /// <summary>
         ///     COM口句柄
         /// </summary>
-        private int hComm = INVALID_HANDLE_VALUE;
+        private int _hComm = InvalidHandleValue;
 
         /// <summary>
         ///     串口是否已经打开
         /// </summary>
-        public bool Opened;
+        public bool _Opened;
 
         #endregion
     }

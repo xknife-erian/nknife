@@ -16,7 +16,7 @@ namespace NKnife.Protocol.Generic.Xml
     /// </summary>
     public class XmlProtocolPacker : StringProtocolPacker
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _Logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// 是否快速封包,当快速封包时,Tags中的对象默认为String对象,而不考虑序列化
@@ -49,7 +49,7 @@ namespace NKnife.Protocol.Generic.Xml
                     }
                     catch (Exception e)
                     {
-                        _logger.Warn("协议生成字符流时异常", e);
+                        _Logger.Warn("协议生成字符流时异常", e);
                     }
                     writer.WriteEndElement();//关闭ROOT节点
                     writer.Flush();

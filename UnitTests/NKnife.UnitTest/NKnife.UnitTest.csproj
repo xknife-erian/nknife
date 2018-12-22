@@ -80,7 +80,7 @@
     <Compile Include="Extensions\StringTest_ToBytes.cs" />
     <Compile Include="Extensions\StringTest_TrimZero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Timers\JobFlowTest.cs" />
+    <Compile Include="Timers\JobManagerTest.cs" />
     <Compile Include="Timers\JobTests.cs" />
   </ItemGroup>
   <ItemGroup>

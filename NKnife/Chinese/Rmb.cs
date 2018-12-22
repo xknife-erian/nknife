@@ -9,10 +9,10 @@ namespace NKnife.Chinese
     /// </summary>
     public struct Rmb
     {
-        private readonly int _Digit;
-        private readonly int _Number;
-        private readonly char _NumberChar;
-        private readonly char _UnitChar;
+        private readonly int _digit;
+        private readonly int _number;
+        private readonly char _numberChar;
+        private readonly char _unitChar;
 
         public Rmb(int digit, char number)
             : this(digit, int.Parse(number.ToString()))
@@ -26,10 +26,10 @@ namespace NKnife.Chinese
 
         public Rmb(int digit, int number)
         {
-            _Number = number;
-            _Digit = digit;
-            _NumberChar = GetNumberChar(number);
-            _UnitChar = GetUnitChar(digit);
+            _number = number;
+            _digit = digit;
+            _numberChar = GetNumberChar(number);
+            _unitChar = GetUnitChar(digit);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace NKnife.Chinese
         /// <value>The number.</value>
         public int Number
         {
-            get { return _Number; }
+            get { return _number; }
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace NKnife.Chinese
         /// <value>The digit.</value>
         public int Digit
         {
-            get { return _Digit; }
+            get { return _digit; }
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace NKnife.Chinese
         /// <value>The number char.</value>
         public char NumberChar
         {
-            get { return _NumberChar; }
+            get { return _numberChar; }
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace NKnife.Chinese
         /// <value>The unit char.</value>
         public char UnitChar
         {
-            get { return _UnitChar; }
+            get { return _unitChar; }
         }
 
         /// <summary>
@@ -97,14 +97,14 @@ namespace NKnife.Chinese
         public override bool Equals(object obj)
         {
             var r = (Rmb) (obj);
-            if (!_Number.Equals(r._Number)) return false;
-            if (!_Digit.Equals(r._Digit)) return false;
+            if (!_number.Equals(r._number)) return false;
+            if (!_digit.Equals(r._digit)) return false;
             return true;
         }
 
         public override int GetHashCode()
         {
-            return 27 ^ _Digit ^ _Number;
+            return 27 ^ _digit ^ _number;
         }
 
         /// <summary>
@@ -132,11 +132,11 @@ namespace NKnife.Chinese
             {
                 case "D":
                 {
-                    if (_Number == 0)
+                    if (_number == 0)
                         return "零元整";
                     var sb = new StringBuilder();
-                    sb.Append(_NumberChar).Append(_UnitChar);
-                    switch (_Digit)
+                    sb.Append(_numberChar).Append(_unitChar);
+                    switch (_digit)
                     {
                         case 1: //分整
                         case 2: //角整
@@ -168,10 +168,10 @@ namespace NKnife.Chinese
                 }
                 default:
                 {
-                    if (_Number == 0)
+                    if (_number == 0)
                         return "零";
                     var sb = new StringBuilder(2);
-                    sb.Append(_NumberChar).Append(_UnitChar);
+                    sb.Append(_numberChar).Append(_unitChar);
                     return sb.ToString();
                 }
             }

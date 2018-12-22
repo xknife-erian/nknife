@@ -11,7 +11,7 @@ namespace NKnife.Protocol.Generic.Xml
 {
     public class XmlProtocolUnPacker : StringProtocolUnPacker
     {
-        private static readonly ILog _logger = LogManager.GetLogger<XmlProtocolUnPacker>();
+        private static readonly ILog _Logger = LogManager.GetLogger<XmlProtocolUnPacker>();
 
         #region IProtocolParser Members
 
@@ -28,7 +28,7 @@ namespace NKnife.Protocol.Generic.Xml
             }
             catch (Exception e)
             {
-                _logger.Warn("非XML协议数据:" + data, e);
+                _Logger.Warn("非XML协议数据:" + data, e);
             }
             try
             {
@@ -45,7 +45,7 @@ namespace NKnife.Protocol.Generic.Xml
             }
             catch (Exception e)
             {
-                _logger.Warn("解析协议数据异常。", e);
+                _Logger.Warn("解析协议数据异常。", e);
             }
         }
 
@@ -90,9 +90,9 @@ namespace NKnife.Protocol.Generic.Xml
                 {
                     if (node.FirstChild.NodeType == XmlNodeType.Element)
                     {
-                        const BindingFlags BF = BindingFlags.CreateInstance |
+                        const BindingFlags bf = BindingFlags.CreateInstance |
                                                 (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
-                        object obj = Activator.CreateInstance(type, BF, null, null, null);
+                        object obj = Activator.CreateInstance(type, bf, null, null, null);
                         var xml = obj as IXml;
                         if (xml != null)
                         {

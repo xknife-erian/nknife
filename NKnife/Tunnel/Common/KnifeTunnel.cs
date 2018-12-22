@@ -5,10 +5,10 @@ namespace NKnife.Tunnel.Common
 {
     public class KnifeTunnel : ITunnel
     {
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeTunnel>();
+        private static readonly ILog _Logger = LogManager.GetLogger<KnifeTunnel>();
         protected IDataConnector _DataConnector;
         protected ITunnelFilterChain _FilterChain;
-        private bool _IsDataConnectedBound;
+        private bool _isDataConnectedBound;
         public ITunnelConfig Config { get; set; }
 
         public virtual void AddFilters(params ITunnelFilter[] filters)
@@ -31,7 +31,7 @@ namespace NKnife.Tunnel.Common
 
         public void BindDataConnector(IDataConnector dataConnector)
         {
-            if (!_IsDataConnectedBound)
+            if (!_isDataConnectedBound)
             {
                 _DataConnector = dataConnector;
                 _DataConnector.SessionBuilt += OnSessionBuilt;
@@ -43,12 +43,12 @@ namespace NKnife.Tunnel.Common
                     filter.SendToAll += OnFilterSendToAll;
                     filter.KillSession += OnFilterKillSession;
                 }
-                _logger.Debug(string.Format("DataConnector[{0}]绑定成功", dataConnector.GetType()));
-                _IsDataConnectedBound = true;
+                _Logger.Debug(string.Format("DataConnector[{0}]绑定成功", dataConnector.GetType()));
+                _isDataConnectedBound = true;
             }
             else
             {
-                _logger.Debug(string.Format("DataConnector[{0}]已经绑定，不需重复绑定", dataConnector.GetType()));
+                _Logger.Debug(string.Format("DataConnector[{0}]已经绑定，不需重复绑定", dataConnector.GetType()));
             }
         }
 

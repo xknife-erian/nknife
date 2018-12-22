@@ -12,8 +12,8 @@ namespace NKnife.Kits.SocketKnife
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            NLogModules.Style = NLogModules.AppStyle.WPF;
-            DI.Initialize();
+            NLogModules.Style = NLogModules.AppStyle.Wpf;
+            Di.Initialize();
         }
     }
 }

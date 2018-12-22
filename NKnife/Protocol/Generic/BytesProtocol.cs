@@ -39,7 +39,7 @@ namespace NKnife.Protocol.Generic
 
         public virtual BytesProtocol NewInstance()
         {
-            var protocol = DI.Get<BytesProtocol>();
+            var protocol = Di.Get<BytesProtocol>();
             protocol.Family = Family;
             protocol.Command = Command;
             return protocol;

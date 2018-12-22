@@ -11,11 +11,11 @@ namespace NKnife.Wrapper.Mp3
         #region 定义API函数使用的字符串变量 
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] 
-        private string _Name = "";
+        private string _name = "";
         [MarshalAs(UnmanagedType.LPTStr, SizeConst = 128)] 
-        private string _TemStr = "";
+        private string _temStr = "";
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] 
-        private string _DurLength = "";
+        private string _durLength = "";
 
         #endregion
 
@@ -29,29 +29,29 @@ namespace NKnife.Wrapper.Mp3
             Stop = 3
         };
 
-        protected StructMCI _Mci = new StructMCI();
+        protected StructMci _Mci = new StructMci();
 
         /// <summary>
         ///     MP3文件
         /// </summary>
         public string FileName
         {
-            get { return _Mci.iName; }
+            get { return _Mci._IName; }
             set
             {
                 try
                 {
-                    _TemStr = "";
-                    _TemStr = _TemStr.PadLeft(127, Convert.ToChar(" "));
-                    _Name = _Name.PadLeft(260, Convert.ToChar(" "));
-                    _Mci.iName = value;
-                    APIClass.GetShortPathName(_Mci.iName, _Name, _Name.Length);
-                    _Name = GetCurrPath(_Name);
-                    _Name = "open " + Convert.ToChar(34) + _Name + Convert.ToChar(34) + " alias media";
-                    APIClass.mciSendString("close all", _TemStr, _TemStr.Length, 0);
-                    APIClass.mciSendString(_Name, _TemStr, _TemStr.Length, 0);
-                    APIClass.mciSendString("set media time format milliseconds", _TemStr, _TemStr.Length, 0);
-                    _Mci.state = State.Stop;
+                    _temStr = "";
+                    _temStr = _temStr.PadLeft(127, Convert.ToChar(" "));
+                    _name = _name.PadLeft(260, Convert.ToChar(" "));
+                    _Mci._IName = value;
+                    ApiClass.GetShortPathName(_Mci._IName, _name, _name.Length);
+                    _name = GetCurrPath(_name);
+                    _name = "open " + Convert.ToChar(34) + _name + Convert.ToChar(34) + " alias media";
+                    ApiClass.mciSendString("close all", _temStr, _temStr.Length, 0);
+                    ApiClass.mciSendString(_name, _temStr, _temStr.Length, 0);
+                    ApiClass.mciSendString("set media time format milliseconds", _temStr, _temStr.Length, 0);
+                    _Mci._State = State.Stop;
                 }
                 catch
                 {
@@ -66,12 +66,12 @@ namespace NKnife.Wrapper.Mp3
         {
             get
             {
-                _DurLength = "";
-                _DurLength = _DurLength.PadLeft(128, Convert.ToChar(" "));
-                APIClass.mciSendString("status media length", _DurLength, _DurLength.Length, 0);
-                _DurLength = _DurLength.Trim();
-                if (_DurLength == "") return 0;
-                return (int) (Convert.ToDouble(_DurLength)/1000f);
+                _durLength = "";
+                _durLength = _durLength.PadLeft(128, Convert.ToChar(" "));
+                ApiClass.mciSendString("status media length", _durLength, _durLength.Length, 0);
+                _durLength = _durLength.Trim();
+                if (_durLength == "") return 0;
+                return (int) (Convert.ToDouble(_durLength)/1000f);
             }
         }
 
@@ -82,11 +82,11 @@ namespace NKnife.Wrapper.Mp3
         {
             get
             {
-                _DurLength = "";
-                _DurLength = _DurLength.PadLeft(128, Convert.ToChar(" "));
-                APIClass.mciSendString("status media position", _DurLength, _DurLength.Length, 0);
-                _Mci.iPos = (int) (Convert.ToDouble(_DurLength)/1000f);
-                return _Mci.iPos;
+                _durLength = "";
+                _durLength = _durLength.PadLeft(128, Convert.ToChar(" "));
+                ApiClass.mciSendString("status media position", _durLength, _durLength.Length, 0);
+                _Mci._IPos = (int) (Convert.ToDouble(_durLength)/1000f);
+                return _Mci._IPos;
             }
         }
 
@@ -95,10 +95,10 @@ namespace NKnife.Wrapper.Mp3
         /// </summary>
         public void Play()
         {
-            _TemStr = "";
-            _TemStr = _TemStr.PadLeft(127, Convert.ToChar(" "));
-            APIClass.mciSendString("play media", _TemStr, _TemStr.Length, 0);
-            _Mci.state = State.Playing;
+            _temStr = "";
+            _temStr = _temStr.PadLeft(127, Convert.ToChar(" "));
+            ApiClass.mciSendString("play media", _temStr, _temStr.Length, 0);
+            _Mci._State = State.Playing;
         }
 
         /// <summary>
@@ -106,19 +106,19 @@ namespace NKnife.Wrapper.Mp3
         /// </summary>
         public void Stop()
         {
-            _TemStr = "";
-            _TemStr = _TemStr.PadLeft(128, Convert.ToChar(" "));
-            APIClass.mciSendString("close media", _TemStr, 128, 0);
-            APIClass.mciSendString("close all", _TemStr, 128, 0);
-            _Mci.state = State.Stop;
+            _temStr = "";
+            _temStr = _temStr.PadLeft(128, Convert.ToChar(" "));
+            ApiClass.mciSendString("close media", _temStr, 128, 0);
+            ApiClass.mciSendString("close all", _temStr, 128, 0);
+            _Mci._State = State.Stop;
         }
 
         public void Puase()
         {
-            _TemStr = "";
-            _TemStr = _TemStr.PadLeft(128, Convert.ToChar(" "));
-            APIClass.mciSendString("pause media", _TemStr, _TemStr.Length, 0);
-            _Mci.state = State.Puase;
+            _temStr = "";
+            _temStr = _temStr.PadLeft(128, Convert.ToChar(" "));
+            ApiClass.mciSendString("pause media", _temStr, _temStr.Length, 0);
+            _Mci._State = State.Puase;
         }
 
         private string GetCurrPath(string name)
@@ -129,7 +129,7 @@ namespace NKnife.Wrapper.Mp3
             return name;
         }
 
-        private class APIClass
+        private class ApiClass
         {
             [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
             public static extern int GetShortPathName(
@@ -150,15 +150,15 @@ namespace NKnife.Wrapper.Mp3
         /// <summary>
         ///     结构变量
         /// </summary>
-        public struct StructMCI
+        public struct StructMci
         {
-            public bool bMut;
-            public int iBal;
-            public int iDur;
-            public string iName;
-            public int iPos;
-            public int iVol;
-            public State state;
+            public bool _BMut;
+            public int _IBal;
+            public int _IDur;
+            public string _IName;
+            public int _IPos;
+            public int _IVol;
+            public State _State;
         };
     }
 }

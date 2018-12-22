@@ -10,13 +10,13 @@ namespace NKnife.Wrapper
     /// </summary>
     public class TaskAlarm : IDisposable
     {
-        readonly ManualResetEvent _ClockAliveEvent = new ManualResetEvent(false);
+        readonly ManualResetEvent _clockAliveEvent = new ManualResetEvent(false);
         
-        private readonly bool _IsRunnig = false;
-        private bool _IsTiming = false;
-        private long _StartTime, _StopTime;
-        private readonly long _Freq;
-        private double _MilSecondCount = 0;
+        private readonly bool _isRunnig = false;
+        private bool _isTiming = false;
+        private long _startTime, _stopTime;
+        private readonly long _freq;
+        private double _milSecondCount = 0;
 
         /// <summary>
         /// Gets 任务持续时间
@@ -24,17 +24,17 @@ namespace NKnife.Wrapper
         /// <value>The duration.</value>
         public double Duration
         {
-            get { return _Duration; }
+            get { return _duration; }
         }
-        private double _Duration = 0;
+        private double _duration = 0;
 
         public TaskAlarm()
         {
-            if (AlarmEventMethods.QueryPerformanceFrequency(out _Freq) == false)
+            if (AlarmEventMethods.QueryPerformanceFrequency(out _freq) == false)
             {
                 throw new Win32Exception();
             }
-            _IsRunnig = true;
+            _isRunnig = true;
             var timingThread = new Thread(new ThreadStart(this.WaitAWaken));
             timingThread.IsBackground = true;
             timingThread.Start();
@@ -58,8 +58,8 @@ namespace NKnife.Wrapper
             ResetAlarm();
             Start();
             //设置参数
-            _MilSecondCount = milSecondCount;
-            _IsTiming = true;
+            _milSecondCount = milSecondCount;
+            _isTiming = true;
             //唤醒线程
             AWake();
         }
@@ -69,14 +69,14 @@ namespace NKnife.Wrapper
         /// </summary>
         public void ResetAlarm()
         {
-            _IsTiming = false;
-            _MilSecondCount = 0;
-            _Duration = 0;
+            _isTiming = false;
+            _milSecondCount = 0;
+            _duration = 0;
         }
 
         private void WaitAWaken()
         {
-            while (_IsRunnig)
+            while (_isRunnig)
             {
                 //阻塞线程
                 Block();
@@ -87,12 +87,12 @@ namespace NKnife.Wrapper
 
         private void AWake()
         {
-            _ClockAliveEvent.Set();
+            _clockAliveEvent.Set();
         }
 
         private void Block()
         {
-            _ClockAliveEvent.Reset();
+            _clockAliveEvent.Reset();
         }
 
         /// <summary>
@@ -102,18 +102,18 @@ namespace NKnife.Wrapper
         {
             try
             {
-                _ClockAliveEvent.WaitOne();
-                while (_Duration < _MilSecondCount)
+                _clockAliveEvent.WaitOne();
+                while (_duration < _milSecondCount)
                 {
                     Thread.Sleep(10);
                     Stop();
                 }
-                if (_IsTiming)
+                if (_isTiming)
                     OnTimeoutAlarm(EventArgs.Empty);
             }
             catch
             {
-                _IsTiming = false;
+                _isTiming = false;
             }
         }
 
@@ -137,7 +137,7 @@ namespace NKnife.Wrapper
         private bool Start()
         {
             Thread.Sleep(0);
-            AlarmEventMethods.QueryPerformanceCounter(out _StartTime);
+            AlarmEventMethods.QueryPerformanceCounter(out _startTime);
             return true;
         }
         /// <summary>
@@ -145,8 +145,8 @@ namespace NKnife.Wrapper
         /// </summary>
         private bool Stop()
         {
-            AlarmEventMethods.QueryPerformanceCounter(out _StopTime);
-            this._Duration = (double)(_StopTime - _StartTime) / (double)_Freq * 1000;
+            AlarmEventMethods.QueryPerformanceCounter(out _stopTime);
+            this._duration = (double)(_stopTime - _startTime) / (double)_freq * 1000;
             return true;
         }
 

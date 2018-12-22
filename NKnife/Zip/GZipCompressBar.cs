@@ -10,17 +10,17 @@ namespace NKnife.Zip
 {
     public class GZipCompressBar : ProgressBar
     {
-        private const string FILE_EXTENSION_NAME = ".gcf"; // gzip compress file
-        private const int MAX_FILE_TOTAL_LENGTH = 1024*1024*1024; // 1G
-        private const int READ_BUFFER_SIZE = 8*1024; // 8K
+        private const string FileExtensionName = ".gcf"; // gzip compress file
+        private const int MaxFileTotalLength = 1024*1024*1024; // 1G
+        private const int ReadBufferSize = 8*1024; // 8K
 
-        private List<GZipFileEntry> _FileEntryList = new List<GZipFileEntry>();
-        private string _FolderDecompressTo = string.Empty;
-        private string _GZipFileName = string.Empty;
-        private int _NowMaxBarValue;
-        private List<GZipFileEntry> _PacketEntryList = new List<GZipFileEntry>();
+        private List<GZipFileEntry> _fileEntryList = new List<GZipFileEntry>();
+        private string _folderDecompressTo = string.Empty;
+        private string _gZipFileName = string.Empty;
+        private int _nowMaxBarValue;
+        private List<GZipFileEntry> _packetEntryList = new List<GZipFileEntry>();
 
-        private byte[] _ReadBuffer = new byte[READ_BUFFER_SIZE];
+        private byte[] _readBuffer = new byte[ReadBufferSize];
 
         public GZipCompressBar()
         {
@@ -42,13 +42,13 @@ namespace NKnife.Zip
         [Description("Set/Get GZip filename with extension .gcf")]
         public string GZipFileName
         {
-            get { return _GZipFileName; }
+            get { return _gZipFileName; }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    _GZipFileName = value;
-                    _PacketEntryList.Clear();
+                    _gZipFileName = value;
+                    _packetEntryList.Clear();
                 }
                 else
                 {
@@ -56,14 +56,14 @@ namespace NKnife.Zip
                     {
                         MessageBox.Show("GZip filename or it's path contains invalid char.");
                     }
-                    else if (Path.GetExtension(value).ToUpper() != FILE_EXTENSION_NAME.ToUpper())
+                    else if (Path.GetExtension(value).ToUpper() != FileExtensionName.ToUpper())
                     {
-                        MessageBox.Show("GZip filename must has extension " + FILE_EXTENSION_NAME + ".");
+                        MessageBox.Show("GZip filename must has extension " + FileExtensionName + ".");
                     }
                     else
                     {
-                        _PacketEntryList.Clear();
-                        _GZipFileName = value;
+                        _packetEntryList.Clear();
+                        _gZipFileName = value;
                     }
                 }
             }
@@ -72,12 +72,12 @@ namespace NKnife.Zip
         [Description("Set/Get folder to decompress files")]
         public string FolderDecompressTo
         {
-            get { return _FolderDecompressTo; }
+            get { return _folderDecompressTo; }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    _FolderDecompressTo = value;
+                    _folderDecompressTo = value;
                 }
                 else
                 {
@@ -89,11 +89,11 @@ namespace NKnife.Zip
                     {
                         if (value.EndsWith(@"\"))
                         {
-                            _FolderDecompressTo = value;
+                            _folderDecompressTo = value;
                         }
                         else
                         {
-                            _FolderDecompressTo = value + @"\";
+                            _folderDecompressTo = value + @"\";
                         }
                     }
                 }
@@ -103,7 +103,7 @@ namespace NKnife.Zip
         [Description("Get the default gzip file extension name.")]
         public string DefaultFileExtentionName
         {
-            get { return FILE_EXTENSION_NAME; }
+            get { return FileExtensionName; }
         }
 
         /// <summary>
@@ -115,13 +115,13 @@ namespace NKnife.Zip
             {
                 if (disposing)
                 {
-                    _ReadBuffer = null;
+                    _readBuffer = null;
 
 
-                    _FileEntryList.Clear();
-                    _FileEntryList = null;
-                    _PacketEntryList.Clear();
-                    _PacketEntryList = null;
+                    _fileEntryList.Clear();
+                    _fileEntryList = null;
+                    _packetEntryList.Clear();
+                    _packetEntryList = null;
                 }
             }
             finally
@@ -146,7 +146,7 @@ namespace NKnife.Zip
             long totalLength = addFileInfo.OriginalLength;
 
 
-            foreach (GZipFileEntry fileEntry in _FileEntryList)
+            foreach (GZipFileEntry fileEntry in _fileEntryList)
             {
                 if (fileEntry.FileName.ToUpper() == addFileInfo.FileName.ToUpper())
                 {
@@ -157,14 +157,14 @@ namespace NKnife.Zip
             }
 
 
-            if (totalLength > MAX_FILE_TOTAL_LENGTH)
+            if (totalLength > MaxFileTotalLength)
             {
-                MessageBox.Show("Total files length is over " + (MAX_FILE_TOTAL_LENGTH/(1024*1024)) + "M.");
+                MessageBox.Show("Total files length is over " + (MaxFileTotalLength/(1024*1024)) + "M.");
                 return false;
             }
 
 
-            _FileEntryList.Add(addFileInfo);
+            _fileEntryList.Add(addFileInfo);
             return true;
         }
 
@@ -173,8 +173,8 @@ namespace NKnife.Zip
         /// </summary>
         public void ClearFiles()
         {
-            _FileEntryList.Clear();
-            _PacketEntryList.Clear();
+            _fileEntryList.Clear();
+            _packetEntryList.Clear();
             SetStartPosition();
         }
 
@@ -206,7 +206,7 @@ namespace NKnife.Zip
 
 
             string realFileName = Path.GetFileName(fileName.Trim());
-            foreach (GZipFileEntry fileEntry in _PacketEntryList)
+            foreach (GZipFileEntry fileEntry in _packetEntryList)
             {
                 if (fileEntry.FileName.ToUpper() == realFileName.ToUpper())
                 {
@@ -228,7 +228,7 @@ namespace NKnife.Zip
 
 
             string realFileName = Path.GetFileName(fileName.Trim());
-            foreach (GZipFileEntry fileEntry in _PacketEntryList)
+            foreach (GZipFileEntry fileEntry in _packetEntryList)
             {
                 if (fileEntry.FileName.ToUpper() == fileName.ToUpper())
                 {
@@ -252,7 +252,7 @@ namespace NKnife.Zip
             var fileInfoList = new List<string>();
 
 
-            foreach (GZipFileEntry fileEntry in _PacketEntryList)
+            foreach (GZipFileEntry fileEntry in _packetEntryList)
             {
                 fileInfoList.Add(fileEntry.FormattedStr);
             }
@@ -264,14 +264,14 @@ namespace NKnife.Zip
             bool opSuccess = false;
 
 
-            if (_FileEntryList.Count == 0)
+            if (_fileEntryList.Count == 0)
             {
                 MessageBox.Show("There has no compress file.");
                 return opSuccess;
             }
 
 
-            if (string.IsNullOrEmpty(_GZipFileName))
+            if (string.IsNullOrEmpty(_gZipFileName))
             {
                 MessageBox.Show("GZipFileName is empty or not set.");
                 return opSuccess;
@@ -283,15 +283,15 @@ namespace NKnife.Zip
 
             try
             {
-                using (var outStream = new FileStream(_GZipFileName, FileMode.Create, FileAccess.Write, FileShare.None))
+                using (var outStream = new FileStream(_gZipFileName, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
-                    _PacketEntryList.Clear();
+                    _packetEntryList.Clear();
                     WriteHeaderEmptyInfo(outStream); // 写文件长度字节, 压缩结束后再填实际数据
                     SetProgressBarMaxValue(false);
                     ShowBeginStep();
 
 
-                    foreach (GZipFileEntry fileEntry in _FileEntryList)
+                    foreach (GZipFileEntry fileEntry in _fileEntryList)
                     {
                         SetProgressBarNowMaxValue(fileEntry, false);
 
@@ -299,7 +299,7 @@ namespace NKnife.Zip
                         fileEntry.WriteEntryInfo(outStream);
                         ShowProgressStep();
                         CompressFile(fileEntry, outStream);
-                        _PacketEntryList.Add(fileEntry);
+                        _packetEntryList.Add(fileEntry);
                     }
 
 
@@ -324,14 +324,14 @@ namespace NKnife.Zip
             bool opSuccess = false;
 
 
-            if (string.IsNullOrEmpty(_FolderDecompressTo))
+            if (string.IsNullOrEmpty(_folderDecompressTo))
             {
                 MessageBox.Show("Decompress folder is empty.");
                 return opSuccess;
             }
 
 
-            if (string.IsNullOrEmpty(_GZipFileName))
+            if (string.IsNullOrEmpty(_gZipFileName))
             {
                 MessageBox.Show("GZipFileName is empty or does not exist.");
                 return opSuccess;
@@ -343,15 +343,15 @@ namespace NKnife.Zip
 
             try
             {
-                using (var srcStream = new FileStream(_GZipFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var srcStream = new FileStream(_gZipFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-                    _PacketEntryList.Clear();
+                    _packetEntryList.Clear();
                     ReadHeaderLengthInfo(srcStream); // 获得各块的长度信息, 缺少文件项中的文件名、日期等信息
                     SetProgressBarMaxValue(true);
                     ShowBeginStep();
 
 
-                    foreach (GZipFileEntry fileEntry in _PacketEntryList)
+                    foreach (GZipFileEntry fileEntry in _packetEntryList)
                     {
                         SetProgressBarNowMaxValue(fileEntry, true);
 
@@ -359,7 +359,7 @@ namespace NKnife.Zip
                         fileEntry.ReadEntryInfo(srcStream); // 读当前项的日期、文件名信息
                         ShowProgressStep();
                         DecompressFile(srcStream, fileEntry);
-                        fileEntry.ResetFileDateTime(_FolderDecompressTo);
+                        fileEntry.ResetFileDateTime(_folderDecompressTo);
                     }
                 }
                 opSuccess = true;
@@ -392,11 +392,11 @@ namespace NKnife.Zip
                 ShowProgressStep();
 
 
-                int readCount = READ_BUFFER_SIZE;
-                while (readCount == READ_BUFFER_SIZE)
+                int readCount = ReadBufferSize;
+                while (readCount == ReadBufferSize)
                 {
-                    readCount = srcStream.Read(_ReadBuffer, 0, READ_BUFFER_SIZE);
-                    zipStream.Write(_ReadBuffer, 0, readCount);
+                    readCount = srcStream.Read(_readBuffer, 0, ReadBufferSize);
+                    zipStream.Write(_readBuffer, 0, readCount);
 
 
                     ShowProgressStep();
@@ -412,7 +412,7 @@ namespace NKnife.Zip
         /// </summary>
         private void DecompressFile(Stream srcStream, GZipFileEntry fileEntry)
         {
-            using (var outStream = new FileStream(_FolderDecompressTo + fileEntry.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
+            using (var outStream = new FileStream(_folderDecompressTo + fileEntry.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
             using (var memStream = new MemoryStream())
             using (var zipStream = new GZipStream(memStream, CompressionMode.Decompress, true))
             {
@@ -420,10 +420,10 @@ namespace NKnife.Zip
                 int readCount;
                 while (gzipFileLength > 0)
                 {
-                    int maxCount = Math.Min(gzipFileLength, READ_BUFFER_SIZE);
+                    int maxCount = Math.Min(gzipFileLength, ReadBufferSize);
 
-                    readCount = srcStream.Read(_ReadBuffer, 0, maxCount);
-                    memStream.Write(_ReadBuffer, 0, readCount);
+                    readCount = srcStream.Read(_readBuffer, 0, maxCount);
+                    memStream.Write(_readBuffer, 0, readCount);
 
 
                     gzipFileLength -= readCount;
@@ -434,11 +434,11 @@ namespace NKnife.Zip
 
 
                 memStream.Position = 0;
-                readCount = READ_BUFFER_SIZE;
-                while (readCount == READ_BUFFER_SIZE)
+                readCount = ReadBufferSize;
+                while (readCount == ReadBufferSize)
                 {
-                    readCount = zipStream.Read(_ReadBuffer, 0, READ_BUFFER_SIZE);
-                    outStream.Write(_ReadBuffer, 0, readCount);
+                    readCount = zipStream.Read(_readBuffer, 0, ReadBufferSize);
+                    outStream.Write(_readBuffer, 0, readCount);
 
 
                     ShowProgressStep();
@@ -452,7 +452,7 @@ namespace NKnife.Zip
         /// </summary>
         private void WriteHeaderEmptyInfo(Stream outStream)
         {
-            int headerSize = 1 + _FileEntryList.Count*3; // 前4个字节是文件数, 每个文件3部分, 分别是: 原文件长、压缩后长、文件项长
+            int headerSize = 1 + _fileEntryList.Count*3; // 前4个字节是文件数, 每个文件3部分, 分别是: 原文件长、压缩后长、文件项长
             var headerBytes = new byte[4*headerSize];
             outStream.Write(headerBytes, 0, headerBytes.Length);
         }
@@ -462,7 +462,7 @@ namespace NKnife.Zip
         /// </summary>
         private void WriteHeaderLengthInfo(Stream outStream)
         {
-            byte[] fileCountBytes = BitConverter.GetBytes(_PacketEntryList.Count);
+            byte[] fileCountBytes = BitConverter.GetBytes(_packetEntryList.Count);
             SimpleCipher.EncryptBytes(fileCountBytes);
 
 
@@ -470,7 +470,7 @@ namespace NKnife.Zip
             outStream.Write(fileCountBytes, 0, fileCountBytes.Length);
 
 
-            foreach (GZipFileEntry entry in _PacketEntryList)
+            foreach (GZipFileEntry entry in _packetEntryList)
             {
                 entry.WriteLengthInfo(outStream);
             }
@@ -490,19 +490,19 @@ namespace NKnife.Zip
             {
                 var entry = new GZipFileEntry();
                 entry.ReadLengthInfo(srcStream);
-                _PacketEntryList.Add(entry);
+                _packetEntryList.Add(entry);
             }
         }
 
         private bool GetPacketEntryList()
         {
-            if (_PacketEntryList.Count > 0)
+            if (_packetEntryList.Count > 0)
             {
                 return true;
             }
 
 
-            if (string.IsNullOrEmpty(_GZipFileName) || !File.Exists(_GZipFileName))
+            if (string.IsNullOrEmpty(_gZipFileName) || !File.Exists(_gZipFileName))
             {
                 MessageBox.Show("GZipFileName is empty or does not exist.");
                 return false;
@@ -515,10 +515,10 @@ namespace NKnife.Zip
 
             try
             {
-                using (var srcStream = new FileStream(_GZipFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var srcStream = new FileStream(_gZipFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     ReadHeaderLengthInfo(srcStream);
-                    foreach (GZipFileEntry fileEntry in _PacketEntryList)
+                    foreach (GZipFileEntry fileEntry in _packetEntryList)
                     {
                         fileEntry.ReadEntryInfo(srcStream);
                         srcStream.Position += fileEntry.GZipFileLength;
@@ -546,14 +546,14 @@ namespace NKnife.Zip
             if (decompress)
             {
                 stepValue++; // 取文件项
-                stepValue += 2*(maxLength/READ_BUFFER_SIZE); // 产生压缩流
+                stepValue += 2*(maxLength/ReadBufferSize); // 产生压缩流
                 stepValue++; // 关闭文件
             }
             else
             {
                 stepValue++; // 打开源文件
                 stepValue++; // 写文件信息项
-                stepValue += maxLength/READ_BUFFER_SIZE; // 压缩
+                stepValue += maxLength/ReadBufferSize; // 压缩
             }
 
 
@@ -563,20 +563,20 @@ namespace NKnife.Zip
         private void SetProgressBarMaxValue(bool decompress)
         {
             SetStartPosition();
-            _NowMaxBarValue = 0;
+            _nowMaxBarValue = 0;
 
 
             int maxBarValue = 1; // 打开/建立文件
             if (decompress)
             {
-                foreach (GZipFileEntry fileEntry in _PacketEntryList)
+                foreach (GZipFileEntry fileEntry in _packetEntryList)
                 {
                     maxBarValue += GetFileMaxStepLength(fileEntry, decompress); // 加每个文件的步长
                 }
             }
             else
             {
-                foreach (GZipFileEntry fileEntry in _FileEntryList)
+                foreach (GZipFileEntry fileEntry in _fileEntryList)
                 {
                     maxBarValue += GetFileMaxStepLength(fileEntry, decompress); // 加每个文件的步长
                 }
@@ -587,7 +587,7 @@ namespace NKnife.Zip
 
         private void SetProgressBarNowMaxValue(GZipFileEntry fileEntry, bool decompress)
         {
-            _NowMaxBarValue += GetFileMaxStepLength(fileEntry, decompress);
+            _nowMaxBarValue += GetFileMaxStepLength(fileEntry, decompress);
         }
 
         /// <summary>
@@ -618,7 +618,7 @@ namespace NKnife.Zip
 
         private void ShowProgressStep()
         {
-            if (Value + 1 < _NowMaxBarValue)
+            if (Value + 1 < _nowMaxBarValue)
             {
                 Value += 1;
             }

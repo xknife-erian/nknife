@@ -7,14 +7,14 @@ namespace NKnife.Domains
 {
     public class AppDomainProxy : MarshalByRefObject
     {
-        private Assembly _Assembly;
+        private Assembly _assembly;
 
         public void InvokeMethod(string assemblyFullName, string className, string methodName, string[] args)
         {
-            _Assembly = null;
+            _assembly = null;
             try
             {
-                _Assembly = Assembly.LoadFrom(assemblyFullName);
+                _assembly = Assembly.LoadFrom(assemblyFullName);
                 Type type = GetTypeByClassName(className);
 
                 object mainPoint = Activator.CreateInstance(type);
@@ -30,7 +30,7 @@ namespace NKnife.Domains
 
         private Type GetTypeByClassName(string className)
         {
-            return _Assembly != null ? _Assembly.GetType(className, true, true) : Type.GetType(className, true, true);
+            return _assembly != null ? _assembly.GetType(className, true, true) : Type.GetType(className, true, true);
         }
     }
 }

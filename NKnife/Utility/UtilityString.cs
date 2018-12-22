@@ -15,7 +15,7 @@ namespace NKnife.Utility
     /// </summary>
     public static class UtilityString
     {
-        public static string TidyUTF8(byte[] data)
+        public static string TidyUtf8(byte[] data)
         {
             string receive;
             if (data[0] == 239 && data[1] == 187 && data[2] == 191)
@@ -29,7 +29,7 @@ namespace NKnife.Utility
             return receive;
         }
 
-        public static string TidyUTF8(string data)
+        public static string TidyUtf8(string data)
         {
             byte[] reB = Encoding.UTF8.GetBytes(data);
             if (reB[0] == 239 && reB[1] == 187 && reB[2] == 191)
@@ -72,7 +72,7 @@ namespace NKnife.Utility
         /// <summary>
         /// 针对【M1#个人业务&M5#VIP业务&M2#对公业务】格式的数据进行转换
         /// </summary>
-        public static Dictionary<string, string> SplitXX(string msg)
+        public static Dictionary<string, string> SplitXx(string msg)
         {
             var typeMap = new Dictionary<string, string>();
             string[] kv = msg.Split('&');
@@ -160,11 +160,11 @@ namespace NKnife.Utility
         /// <summary>
         /// 将全角数字转换为数字
         /// </summary>
-        /// <param name="SBCCase">全角数字</param>
+        /// <param name="sbcCase">全角数字</param>
         /// <returns></returns>
-        public static string SBCCaseToNumberic(string SBCCase)
+        public static string SbcCaseToNumberic(string sbcCase)
         {
-            char[] c = SBCCase.ToCharArray();
+            char[] c = sbcCase.ToCharArray();
             for (int i = 0; i < c.Length; i++)
             {
                 byte[] b = Encoding.Unicode.GetBytes(c, i, 1);

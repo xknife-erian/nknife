@@ -9,10 +9,10 @@ namespace SerialKnife.Wrappers
     {
         /// <summary>通过windows api实现的串口操作类
         /// </summary>
-        private SerialPortWin32 _SerialPort;
+        private SerialPortWin32 _serialPort;
 
-        private string _PortName;
-        private SerialConfig _SerialConfig;
+        private string _portName;
+        private SerialConfig _serialConfig;
 
         #region ISerialPortWrapper Members
 
@@ -27,9 +27,9 @@ namespace SerialKnife.Wrappers
         /// <returns></returns>
         public bool Initialize(string portName, SerialConfig config)
         {
-            _PortName = portName;
-            _SerialConfig = config;
-            _SerialPort = new SerialPortWin32
+            _portName = portName;
+            _serialConfig = config;
+            _serialPort = new SerialPortWin32
             {
                 Port = portName,
                 BaudRate = config.BaudRate,
@@ -39,14 +39,14 @@ namespace SerialKnife.Wrappers
 
             try
             {
-                if (_SerialPort.Opened)
+                if (_serialPort._Opened)
                 {
-                    _SerialPort.Close();
-                    _SerialPort.Open();
+                    _serialPort.Close();
+                    _serialPort.Open();
                 }
                 else
                 {
-                    if (_SerialPort.Open() < 0)
+                    if (_serialPort.Open() < 0)
                     {
                         IsOpen = false;
                         return false;
@@ -69,9 +69,9 @@ namespace SerialKnife.Wrappers
         {
             try
             {
-                if (_SerialPort.Opened)
+                if (_serialPort._Opened)
                 {
-                    _SerialPort.Close();
+                    _serialPort.Close();
                 }
                 return true;
             }
@@ -89,7 +89,7 @@ namespace SerialKnife.Wrappers
         {
             if (IsOpen)
             {
-                _SerialPort.SetTimeOut(timeout);
+                _serialPort.SetTimeOut(timeout);
             }
         }
 
@@ -104,10 +104,10 @@ namespace SerialKnife.Wrappers
         {
             try
             {
-                _SerialPort.Write(cmd, cmd.Length);
+                _serialPort.Write(cmd, cmd.Length);
                 Thread.Sleep(3);//TODO:发送后的读取延时有待考究
-                var buffer = new byte[_SerialConfig.ReadBufferSize];
-                int readcount = _SerialPort.Read(ref buffer, buffer.Length);
+                var buffer = new byte[_serialConfig.ReadBufferSize];
+                int readcount = _serialPort.Read(ref buffer, buffer.Length);
                 if (readcount > 0)
                 {
                     recv = new byte[readcount];

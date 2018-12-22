@@ -17,7 +17,7 @@ namespace NKnife.Domains
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DI.Initialize();
+            Di.Initialize();
 
             var logger = LogManager.GetCurrentClassLogger();
             logger.Info("IoC框架的初始化完成。");

@@ -53,10 +53,9 @@
     <Compile Include="..\NKnife\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Base\AnswerBase`.cs" />
     <Compile Include="Base\ChannelBase`.cs" />
+    <Compile Include="Base\ChannelJobBase`.cs" />
     <Compile Include="Base\MultiChannelBase.cs" />
-    <Compile Include="Base\QuestionBase`.cs" />
     <Compile Include="Bytes.cs" />
     <Compile Include="ChannelPort.cs" />
     <Compile Include="CircularBuffer`.cs" />
@@ -64,6 +63,7 @@
     <Compile Include="EventParams\ChannelAnswerDataEventArgs.cs" />
     <Compile Include="EventParams\ChannelModeChangedEventArgs.cs" />
     <Compile Include="EventParams\SerialChannelAnswerDataEventArgs.cs" />
+    <Compile Include="Interfaces\IChannelJob.cs" />
     <Compile Include="Serials\SerialAnswer.cs" />
     <Compile Include="Serials\SerialChannel.cs" />
     <Compile Include="Serials\SerialChannelMap.cs" />
@@ -72,12 +72,9 @@
     <Compile Include="Serials\SerialQuestionPool.cs" />
     <Compile Include="Serials\SerialUtils.cs" />
     <Compile Include="Interfaces\IAlgorithm.cs" />
-    <Compile Include="Interfaces\IAnswer.cs" />
-    <Compile Include="Interfaces\IChannel.cs" />
+    <Compile Include="Interfaces\IChannel`.cs" />
     <Compile Include="Interfaces\IChannelConfig.cs" />
     <Compile Include="Interfaces\IMultiChannel.cs" />
-    <Compile Include="Interfaces\IQuestion.cs" />
-    <Compile Include="Interfaces\ISwap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

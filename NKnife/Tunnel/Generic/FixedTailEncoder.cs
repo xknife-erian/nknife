@@ -5,12 +5,12 @@ namespace NKnife.Tunnel.Generic
 {
     public class FixedTailEncoder : StringDatagramEncoder
     {
-        private byte[] _Tail = Encoding.Default.GetBytes("\r\n");
+        private byte[] _tail = Encoding.Default.GetBytes("\r\n");
 
         public virtual byte[] Tail
         {
-            get { return _Tail; }
-            set { _Tail = value; }
+            get { return _tail; }
+            set { _tail = value; }
         }
 
         protected virtual byte[] GetBytes(string replay)
@@ -21,9 +21,9 @@ namespace NKnife.Tunnel.Generic
         public override byte[] Execute(string replay)
         {
             if (string.IsNullOrEmpty(replay))
-                return _Tail;
+                return _tail;
             var r = GetBytes(replay);
-            return r.Concat(_Tail).ToArray();
+            return r.Concat(_tail).ToArray();
         }
     }
 }

@@ -65,7 +65,7 @@ namespace NKnife.Utility
         /// <summary>
         /// 大小写字母与数字(以英文逗号相隔)
         /// </summary>
-        private const string CHAR_TO_SPLIT = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+        private const string CharToSplit = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
 
         /// <summary>构造函数
         /// </summary>
@@ -158,7 +158,7 @@ namespace NKnife.Utility
         /// <returns></returns>
         public string GetString(int num, RandomCharType type)
         {
-            string[] chars = CHAR_TO_SPLIT.Split(',');
+            string[] chars = CharToSplit.Split(',');
             int begin = 0;
             int end = chars.Length;
             switch (type)

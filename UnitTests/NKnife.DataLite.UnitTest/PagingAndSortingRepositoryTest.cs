@@ -45,7 +45,7 @@ namespace NKnife.DataLite.UnitTest
             #endregion
         }
 
-        private readonly Expression<Func<Company, bool>> _Expression = (company => company.Id.StartsWith("xxx")); 
+        private readonly Expression<Func<Company, bool>> _expression = (company => company.Id.StartsWith("xxx")); 
 
         [Test]
         public void Find01()
@@ -62,7 +62,7 @@ namespace NKnife.DataLite.UnitTest
             }
 
             //页码为0，每页12条记录
-            var pageable = new Pageable<Company>(0, 12, new CompanyComparer(), _Expression);
+            var pageable = new Pageable<Company>(0, 12, new CompanyComparer(), _expression);
             var page = cr.FindMulti(pageable);
 
             page.Number.Should().Be(0);//页码为0

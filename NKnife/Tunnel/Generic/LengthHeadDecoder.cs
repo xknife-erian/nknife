@@ -12,7 +12,7 @@ namespace NKnife.Tunnel.Generic
     /// </summary>
     public class LengthHeadDecoder : StringDatagramDecoder
     {
-        private static readonly ILog _logger = LogManager.GetLogger<LengthHeadDecoder>();
+        private static readonly ILog _Logger = LogManager.GetLogger<LengthHeadDecoder>();
 
         public LengthHeadDecoder()
         {
@@ -49,7 +49,7 @@ namespace NKnife.Tunnel.Generic
                 while (inComplete)
                 {
                     if (results.Count > 1)
-                        _logger.Trace(string.Format("粘包处理,总长度:{0},已解析:{1},得到结果:{2}", data.Length, finishedIndex, results.Count));
+                        _Logger.Trace(string.Format("粘包处理,总长度:{0},已解析:{1},得到结果:{2}", data.Length, finishedIndex, results.Count));
                     int start = finishedIndex; //finishedIndex不等于0时，代表有粘包
                     inComplete = ExecuteSubMethod(data, start, ref results, ref finishedIndex);
                 }
@@ -57,7 +57,7 @@ namespace NKnife.Tunnel.Generic
             }
             catch (Exception e)
             {
-                _logger.Warn("解码转换异常", e);
+                _Logger.Warn("解码转换异常", e);
                 return new string[0];
             }
         }
@@ -76,7 +76,7 @@ namespace NKnife.Tunnel.Generic
                 int protocolLength = GetLengthHead(lengthHead);
                 if (start + 4 + protocolLength > data.Length) //这时又出现了半包现象
                 {
-                    _logger.Trace(string.Format("处理粘包时出现半包:起点:{0},计算得到的长度:{1},源数据长度:{2}", start, protocolLength, data.Length));
+                    _Logger.Trace(string.Format("处理粘包时出现半包:起点:{0},计算得到的长度:{1},源数据长度:{2}", start, protocolLength, data.Length));
                     return false;
                 }
 
@@ -85,7 +85,7 @@ namespace NKnife.Tunnel.Generic
             }
             catch (Exception e)
             {
-                _logger.Error("解码异常", e);
+                _Logger.Error("解码异常", e);
             }
 
             if (!UtilityCollection.IsNullOrEmpty(protocol))

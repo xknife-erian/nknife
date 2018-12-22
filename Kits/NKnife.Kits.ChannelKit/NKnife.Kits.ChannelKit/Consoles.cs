@@ -2,6 +2,7 @@
 using NKnife.Channels.EventParams;
 using NKnife.Channels.Interfaces;
 using NKnife.Channels.Serials;
+using NKnife.Timers;
 
 namespace NKnife.Kits.ChannelKit
 {
@@ -79,7 +80,7 @@ namespace NKnife.Kits.ChannelKit
             var question = new SerialQuestion(null, false, 100, line.ToBytes());
             var group = new SerialQuestionPool();
             group.Add(question);
-            _serialChannel.UpdateQuestionPool(group);
+            _serialChannel.JobManager = new JobManager {Pool = group};
             if (_serialChannel.IsSynchronous)
                 _serialChannel.SendReceiver(Serial_DataSend, Serial_DataSyncArrived);
             else
@@ -91,9 +92,11 @@ namespace NKnife.Kits.ChannelKit
             Console.WriteLine("-- 请输入一条需要循环发送的内容:");
             var line = Console.ReadLine();
             var question = new SerialQuestion(null, true, 3000, line.ToBytes());
-            var group = new SerialQuestionPool();
-            group.Add(question);
-            _serialChannel.UpdateQuestionPool(group);
+            var pool = new SerialQuestionPool();
+            pool.Add(question);
+            var flow = new JobManager { Pool = pool };
+            flow.Run();
+            _serialChannel.JobManager = flow;
             if (_serialChannel.IsSynchronous)
                 _serialChannel.SendReceiver(Serial_DataSend, Serial_DataSyncArrived);
             else

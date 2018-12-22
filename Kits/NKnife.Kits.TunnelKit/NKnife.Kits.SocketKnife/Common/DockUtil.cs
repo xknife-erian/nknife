@@ -8,17 +8,17 @@ namespace NKnife.Kits.SocketKnife.Common
 {
     class DockUtil
     {
-        private DockingManager _DockingManager;
-        private LayoutAnchorGroup _Buttom;
-        private LayoutAnchorGroup _Top;
-        private LayoutAnchorGroup _Left;
-        private LayoutAnchorGroup _Right;
+        private DockingManager _dockingManager;
+        private LayoutAnchorGroup _buttom;
+        private LayoutAnchorGroup _top;
+        private LayoutAnchorGroup _left;
+        private LayoutAnchorGroup _right;
 
         public void Init(DockingManager dockingManager)
         {
-            _DockingManager = dockingManager;
+            _dockingManager = dockingManager;
 
-            DocumentPane = _DockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            DocumentPane = _dockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
             if (DocumentPane != null)
                 Documents = DocumentPane.Children;
             else
@@ -33,64 +33,64 @@ namespace NKnife.Kits.SocketKnife.Common
         {
             get
             {
-                if (_Buttom == null)
+                if (_buttom == null)
                 {
-                    _Buttom = _DockingManager.Layout.BottomSide.Children.FirstOrDefault();
-                    if (_Buttom == null)
+                    _buttom = _dockingManager.Layout.BottomSide.Children.FirstOrDefault();
+                    if (_buttom == null)
                     {
-                        _Buttom = new LayoutAnchorGroup();
-                        _DockingManager.Layout.BottomSide.Children.Add(_Buttom);
+                        _buttom = new LayoutAnchorGroup();
+                        _dockingManager.Layout.BottomSide.Children.Add(_buttom);
                     }
                 }
-                return _Buttom;
+                return _buttom;
             }
         }
         public LayoutAnchorGroup Top
         {
             get
             {
-                if (_Top == null)
+                if (_top == null)
                 {
-                    _Top = _DockingManager.Layout.TopSide.Children.FirstOrDefault();
-                    if (_Top == null)
+                    _top = _dockingManager.Layout.TopSide.Children.FirstOrDefault();
+                    if (_top == null)
                     {
-                        _Top = new LayoutAnchorGroup();
-                        _DockingManager.Layout.BottomSide.Children.Add(_Top);
+                        _top = new LayoutAnchorGroup();
+                        _dockingManager.Layout.BottomSide.Children.Add(_top);
                     }
                 }
-                return _Top;
+                return _top;
             }
         }
         public LayoutAnchorGroup Left
         {
             get
             {
-                if (_Left == null)
+                if (_left == null)
                 {
-                    _Left = _DockingManager.Layout.LeftSide.Children.FirstOrDefault();
-                    if (_Buttom == null)
+                    _left = _dockingManager.Layout.LeftSide.Children.FirstOrDefault();
+                    if (_buttom == null)
                     {
-                        _Left = new LayoutAnchorGroup();
-                        _DockingManager.Layout.BottomSide.Children.Add(_Left);
+                        _left = new LayoutAnchorGroup();
+                        _dockingManager.Layout.BottomSide.Children.Add(_left);
                     }
                 }
-                return _Left;
+                return _left;
             }
         }
         public LayoutAnchorGroup Right
         {
             get
             {
-                if (_Right == null)
+                if (_right == null)
                 {
-                    _Right = _DockingManager.Layout.RightSide.Children.FirstOrDefault();
-                    if (_Right == null)
+                    _right = _dockingManager.Layout.RightSide.Children.FirstOrDefault();
+                    if (_right == null)
                     {
-                        _Right = new LayoutAnchorGroup();
-                        _DockingManager.Layout.RightSide.Children.Add(_Right);
+                        _right = new LayoutAnchorGroup();
+                        _dockingManager.Layout.RightSide.Children.Add(_right);
                     }
                 }
-                return _Right;
+                return _right;
             }
         }
     }

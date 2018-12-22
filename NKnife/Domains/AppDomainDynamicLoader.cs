@@ -9,10 +9,10 @@ namespace NKnife.Domains
 {
     public abstract class AppDomainDynamicLoader<T>
     {
-        private readonly AppDomainProxy _RemoteLoader;
+        private readonly AppDomainProxy _remoteLoader;
 
-        private AppDomain _AppDomain;
-        protected static readonly TcpClient _tcpClient = new TcpClient();
+        private AppDomain _appDomain;
+        protected static readonly TcpClient TcpClient = new TcpClient();
 
         public abstract AppDomainCommunicationMessages Messages { get; set; }
 
@@ -32,10 +32,10 @@ namespace NKnife.Domains
                             };
             try
             {
-                _AppDomain = AppDomain.CreateDomain(Messages.DomainName, null, setup);
+                _appDomain = AppDomain.CreateDomain(Messages.DomainName, null, setup);
 
                 //关键，通过 CreateInstanceAndUnwrap 方法启动新的 Domain 中的类似Main函数的类型及方法
-                _RemoteLoader = (AppDomainProxy)_AppDomain.CreateInstanceAndUnwrap(assemblyName, proxyTypename);
+                _remoteLoader = (AppDomainProxy)_appDomain.CreateInstanceAndUnwrap(assemblyName, proxyTypename);
             }
             catch (Exception e)
             {
@@ -46,15 +46,15 @@ namespace NKnife.Domains
 
         public virtual void InvokeMethod(string assemblyFullName, string className, string methodName, string[] args)
         {
-            _RemoteLoader.InvokeMethod(assemblyFullName, className, methodName, args);
+            _remoteLoader.InvokeMethod(assemblyFullName, className, methodName, args);
         }
 
         public virtual void Unload()
         {
             try
             {
-                AppDomain.Unload(_AppDomain);
-                _AppDomain = null;
+                AppDomain.Unload(_appDomain);
+                _appDomain = null;
             }
             catch (CannotUnloadAppDomainException ex)
             {
@@ -67,11 +67,11 @@ namespace NKnife.Domains
         {
             try
             {
-                _tcpClient.Connect("127.0.0.1", 12340);
+                TcpClient.Connect("127.0.0.1", 12340);
                 Byte[] data = Encoding.Default.GetBytes(message);
-                NetworkStream stream = _tcpClient.GetStream();
+                NetworkStream stream = TcpClient.GetStream();
                 stream.Write(data, 0, data.Length);
-                _tcpClient.Close();
+                TcpClient.Close();
             }
             catch (Exception e)
             {

@@ -12,11 +12,11 @@ namespace NKnife.Socket.UnitTest
         [TestMethod]
         public void ExecuteTestMethod1()
         {
-            const string REPLAY = "ABCDE";
+            const string replay = "ABCDE";
 
             var encoder = new FixedTailEncoder();
-            var actual = encoder.Execute(REPLAY);
-            var expected = Encoding.UTF8.GetBytes(REPLAY).Concat(encoder.Tail).ToArray();
+            var actual = encoder.Execute(replay);
+            var expected = Encoding.UTF8.GetBytes(replay).Concat(encoder.Tail).ToArray();
 
             Assert.AreEqual(expected.Length, actual.Length);
             for (int i = 0; i < expected.Length; i++)

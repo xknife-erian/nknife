@@ -15,31 +15,31 @@ namespace SocketKnife
 {
     public class KnifeSocketServer : ISocketServer, IDisposable
     {
-        private const int ACCEPT_LISTEN_TIME_INTERVAL = 25; // 侦听论询时间间隔(ms)
-        private const int CHECK_SESSION_TABLE_TIME_INTERVAL = 100; // 清理Timer的时间间隔(ms)
+        private const int AcceptListenTimeInterval = 25; // 侦听论询时间间隔(ms)
+        private const int CheckSessionTableTimeInterval = 100; // 清理Timer的时间间隔(ms)
         //private const int MAX_SESSION_TIMEOUT = 60; // 1 minutes，不是心跳间隔，但针对长连接也需要有个时间限制，太长时间无动作也要清除，如果为0表示不超时清除
 
-        private static readonly ILog _logger = LogManager.GetLogger<KnifeSocketServer>();
+        private static readonly ILog _Logger = LogManager.GetLogger<KnifeSocketServer>();
 
-        private readonly ManualResetEvent _CheckAcceptListenResetEvent;
-        private readonly ManualResetEvent _CheckSessionTableResetEvent;
-        private IPAddress _IpAddress;
-        private bool _IsDisposed;
-        private bool _IsServerClosed = true;
-        private bool _IsServerListenPaused;
-        private Socket _ListenSocket;
-        private int _Port;
-        private int _SessionCount;
+        private readonly ManualResetEvent _checkAcceptListenResetEvent;
+        private readonly ManualResetEvent _checkSessionTableResetEvent;
+        private IPAddress _ipAddress;
+        private bool _isDisposed;
+        private bool _isServerClosed = true;
+        private bool _isServerListenPaused;
+        private Socket _listenSocket;
+        private int _port;
+        private int _sessionCount;
 
-        private readonly SocketSessionMap _SessionMap = new SocketSessionMap();
-        private SocketServerConfig _Config = DI.Get<SocketServerConfig>();
+        private readonly SocketSessionMap _sessionMap = new SocketSessionMap();
+        private SocketServerConfig _config = Di.Get<SocketServerConfig>();
 
         #region 构造
 
         public KnifeSocketServer()
         {
-            _CheckAcceptListenResetEvent = new ManualResetEvent(true);
-            _CheckSessionTableResetEvent = new ManualResetEvent(true);
+            _checkAcceptListenResetEvent = new ManualResetEvent(true);
+            _checkSessionTableResetEvent = new ManualResetEvent(true);
         }
 
         ~KnifeSocketServer()
@@ -49,9 +49,9 @@ namespace SocketKnife
 
         public void Dispose()
         {
-            if (!_IsDisposed)
+            if (!_isDisposed)
             {
-                _IsDisposed = true;
+                _isDisposed = true;
                 Close();
                 Dispose(true);
                 GC.SuppressFinalize(this); // Finalize 不会第二次执行
@@ -62,20 +62,20 @@ namespace SocketKnife
         {
             if (disposing) // 对象正在被显示释放, 不是执行 Finalize()
             {
-                lock (_SessionMap)
+                lock (_sessionMap)
                 {
-                    _SessionMap.Clear(); // 释放托管资源
+                    _sessionMap.Clear(); // 释放托管资源
                 }
             }
 
-            if (_CheckAcceptListenResetEvent != null)
+            if (_checkAcceptListenResetEvent != null)
             {
-                _CheckAcceptListenResetEvent.Close(); // 释放非托管资源
+                _checkAcceptListenResetEvent.Close(); // 释放非托管资源
             }
 
-            if (_CheckSessionTableResetEvent != null)
+            if (_checkSessionTableResetEvent != null)
             {
-                _CheckSessionTableResetEvent.Close();
+                _checkSessionTableResetEvent.Close();
             }
         }
 
@@ -95,14 +95,14 @@ namespace SocketKnife
 
         public SocketConfig Config
         {
-            get { return _Config; }
-            set { _Config = (SocketServerConfig) value; }
+            get { return _config; }
+            set { _config = (SocketServerConfig) value; }
         }
 
         public virtual void Configure(IPAddress ipAddress, int port)
         {
-            _IpAddress = ipAddress;
-            _Port = port;
+            _ipAddress = ipAddress;
+            _port = port;
         }
 
         public bool Stop()
@@ -113,8 +113,8 @@ namespace SocketKnife
 
         public bool Start()
         {
-            _IsServerClosed = true; // 在其它方法中要判断该字段
-            _IsServerListenPaused = true;
+            _isServerClosed = true; // 在其它方法中要判断该字段
+            _isServerListenPaused = true;
 
             Close();
 
@@ -122,30 +122,30 @@ namespace SocketKnife
             {
                 if (!CreateServerSocket())
                     return false;
-                _IsServerClosed = false;
+                _isServerClosed = false;
 
                 var checkSessionThread = new Thread(CheckSessionTable) {IsBackground = true};
                 checkSessionThread.Start();
 
                 var serverListenThread = new Thread(StartServerListen) {IsBackground = true};
                 serverListenThread.Start();
-                _IsServerListenPaused = false;
+                _isServerListenPaused = false;
 
-                _logger.Info("socket server启动");
+                _Logger.Info("socket server启动");
             }
             catch (Exception err)
             {
-                _logger.Info(string.Format("socket server启动异常"), err);
+                _Logger.Info(string.Format("socket server启动异常"), err);
             }
-            return !_IsServerClosed;
+            return !_isServerClosed;
         }
 
         public void Send(long id, byte[] data)
         {
             SocketSession session = null;
-            if (_SessionMap.ContainsKey(id))
+            if (_sessionMap.ContainsKey(id))
             {
-                session = _SessionMap[id];
+                session = _sessionMap[id];
             }
             if (session != null)
             {
@@ -155,7 +155,7 @@ namespace SocketKnife
 
         public void SendAll(byte[] data)
         {
-            foreach (var session in _SessionMap.Values())
+            foreach (var session in _sessionMap.Values())
             {
                 SendDatagram(session, data);
             }
@@ -164,9 +164,9 @@ namespace SocketKnife
         public void KillSession(long id)
         {
             SocketSession session = null;
-            if (_SessionMap.ContainsKey(id))
+            if (_sessionMap.ContainsKey(id))
             {
-                session = _SessionMap[id];
+                session = _sessionMap[id];
             }
 
             if (session != null)
@@ -184,49 +184,49 @@ namespace SocketKnife
         {
             try
             {
-                var ipEndPoint = new IPEndPoint(_IpAddress, _Port);
-                _ListenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                _ListenSocket.Bind(ipEndPoint);
-                _ListenSocket.ReceiveBufferSize = Config.ReceiveBufferSize;
-                _ListenSocket.SendBufferSize = Config.SendBufferSize;
-                _ListenSocket.SendTimeout = Config.SendTimeout;
-                _ListenSocket.ReceiveTimeout = Config.ReceiveTimeout;
-                _ListenSocket.NoDelay = true;
-                _ListenSocket.Listen(16);
+                var ipEndPoint = new IPEndPoint(_ipAddress, _port);
+                _listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _listenSocket.Bind(ipEndPoint);
+                _listenSocket.ReceiveBufferSize = Config.ReceiveBufferSize;
+                _listenSocket.SendBufferSize = Config.SendBufferSize;
+                _listenSocket.SendTimeout = Config.SendTimeout;
+                _listenSocket.ReceiveTimeout = Config.ReceiveTimeout;
+                _listenSocket.NoDelay = true;
+                _listenSocket.Listen(16);
                 return true;
             }
             catch (Exception err)
             {
-                _logger.Warn(string.Format("CreateServerSocket异常:{0}", err), err);
+                _Logger.Warn(string.Format("CreateServerSocket异常:{0}", err), err);
                 return false;
             }
         }
 
         private void CloseServerSocket()
         {
-            if (_ListenSocket == null)
+            if (_listenSocket == null)
             {
                 return;
             }
 
             try
             {
-                if (_SessionMap != null && _SessionMap.Count > 0)
+                if (_sessionMap != null && _sessionMap.Count > 0)
                 {
                     //lock (_SessionMap)
                     {
-                        _SessionMap.Clear();
+                        _sessionMap.Clear();
                     }
                 }
-                _ListenSocket.Close();
+                _listenSocket.Close();
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("CloseServerSocket异常:{0}", ex));
+                _Logger.Warn(string.Format("CloseServerSocket异常:{0}", ex));
             }
             finally
             {
-                _ListenSocket = null;
+                _listenSocket = null;
             }
         }
 
@@ -235,19 +235,19 @@ namespace SocketKnife
         /// </summary>
         private void StartServerListen()
         {
-            _CheckAcceptListenResetEvent.Reset();
+            _checkAcceptListenResetEvent.Reset();
             Socket clientSocket = null;
 
-            while (!_IsServerClosed)
+            while (!_isServerClosed)
             {
-                if (_IsServerListenPaused) // pause server
+                if (_isServerListenPaused) // pause server
                 {
                     CloseServerSocket();
-                    Thread.Sleep(ACCEPT_LISTEN_TIME_INTERVAL);
+                    Thread.Sleep(AcceptListenTimeInterval);
                     continue;
                 }
 
-                if (_ListenSocket == null)
+                if (_listenSocket == null)
                 {
                     CreateServerSocket();
                     continue;
@@ -255,14 +255,14 @@ namespace SocketKnife
 
                 try
                 {
-                    if (_ListenSocket.Poll(ACCEPT_LISTEN_TIME_INTERVAL, SelectMode.SelectRead))
+                    if (_listenSocket.Poll(AcceptListenTimeInterval, SelectMode.SelectRead))
                     {
                         // 频繁关闭、启动时，这里容易产生错误（提示套接字只能有一个）
-                        clientSocket = _ListenSocket.Accept();
+                        clientSocket = _listenSocket.Accept();
 
                         if (clientSocket.Connected)
                         {
-                            if (_SessionCount >= Config.MaxConnectCount) // 连接数超过上限
+                            if (_sessionCount >= Config.MaxConnectCount) // 连接数超过上限
                             {
                                 OnSessionRejected(); // 拒绝登录请求
                                 CloseClientSocket(clientSocket);
@@ -284,7 +284,7 @@ namespace SocketKnife
                 }
             }
 
-            _CheckAcceptListenResetEvent.Set();
+            _checkAcceptListenResetEvent.Set();
         }
 
         /// <summary>
@@ -292,20 +292,20 @@ namespace SocketKnife
         /// </summary>
         private void CheckSessionTable()
         {
-            _CheckSessionTableResetEvent.Reset();
+            _checkSessionTableResetEvent.Reset();
 
-            while (!_IsServerClosed)
+            while (!_isServerClosed)
             {
                 var sessionIdList = new List<long>();
 
 //                var dataArray = new SocketSession[_SessionMap.Values().Count];
 //                _SessionMap.Values().CopyTo(dataArray, 0);
 
-                var dataArray = _SessionMap.Values().ToArray();
+                var dataArray = _sessionMap.Values().ToArray();
 
                 foreach (var session in dataArray)
                 {
-                    if (_IsServerClosed)
+                    if (_isServerClosed)
                     {
                         break;
                     }
@@ -329,36 +329,36 @@ namespace SocketKnife
                     }
                     foreach (var id in sessionIdList) // 统一清除
                     {
-                        _SessionMap.Remove(id);
+                        _sessionMap.Remove(id);
                     }
 
                     sessionIdList.Clear();
                 }
 
-                Thread.Sleep(CHECK_SESSION_TABLE_TIME_INTERVAL);
+                Thread.Sleep(CheckSessionTableTimeInterval);
             }
 
-            _CheckSessionTableResetEvent.Set();
+            _checkSessionTableResetEvent.Set();
         }
 
         private void Close()
         {
-            if (_IsServerClosed)
+            if (_isServerClosed)
             {
                 return;
             }
 
-            _IsServerClosed = true;
-            _IsServerListenPaused = true;
+            _isServerClosed = true;
+            _isServerListenPaused = true;
 
-            _CheckAcceptListenResetEvent.WaitOne(); // 等待3个线程
-            _CheckSessionTableResetEvent.WaitOne();
+            _checkAcceptListenResetEvent.WaitOne(); // 等待3个线程
+            _checkSessionTableResetEvent.WaitOne();
 
-            if (_SessionMap != null)
+            if (_sessionMap != null)
             {
-                lock (_SessionMap)
+                lock (_sessionMap)
                 {
-                    foreach (var session in _SessionMap.Values())
+                    foreach (var session in _sessionMap.Values())
                     {
                         CloseSession(session);
                     }
@@ -367,15 +367,15 @@ namespace SocketKnife
 
             CloseServerSocket();
 
-            if (_SessionMap != null) // 清空会话列表
+            if (_sessionMap != null) // 清空会话列表
             {
-                lock (_SessionMap)
+                lock (_sessionMap)
                 {
-                    _SessionMap.Clear();
+                    _sessionMap.Clear();
                 }
             }
 
-            _logger.Info("socket server closed");
+            _Logger.Info("socket server closed");
         }
 
         /// <summary>
@@ -407,11 +407,11 @@ namespace SocketKnife
         private void AddSession(Socket clientSocket)
         {
             var remoteEndPoint = clientSocket.RemoteEndPoint;
-            var session = DI.Get<SocketSession>();
+            var session = Di.Get<SocketSession>();
             session.AcceptSocket = clientSocket;
             session.LastSessionTime = DateTime.Now;
-            _SessionMap.Add(session);
-            _logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", remoteEndPoint, _SessionMap.Count);
+            _sessionMap.Add(session);
+            _Logger.InfoFormat("Server: IP地址:{0}的连接已放入客户端池中。池中:{1}", remoteEndPoint, _sessionMap.Count);
 
             ReceiveDatagram(session);
 
@@ -420,17 +420,17 @@ namespace SocketKnife
 
         public void CheckSessionTimeout(SocketSession session)
         {
-            if (_Config.MaxSessionTimeout == 0) //该参数为0则不检查
+            if (_config.MaxSessionTimeout == 0) //该参数为0则不检查
                 return;
             var ts = DateTime.Now.Subtract(session.LastSessionTime);
             var elapsedSecond = Math.Abs((int) ts.TotalSeconds);
 
-            if (elapsedSecond > _Config.MaxSessionTimeout) // 超时，则准备断开连接
+            if (elapsedSecond > _config.MaxSessionTimeout) // 超时，则准备断开连接
             {
                 session.DisconnectType = DisconnectType.Timeout;
                 SetSessionInactive(session); // 标记为将关闭、准备断开
 
-                _logger.Info(string.Format("Session{0}长期没有通讯，状态设置为InActive", session.Id));
+                _Logger.Info(string.Format("Session{0}长期没有通讯，状态设置为InActive", session.Id));
             }
         }
 
@@ -631,7 +631,7 @@ namespace SocketKnife
             var handler = DataReceived;
             if (handler != null)
             {
-                if (_SessionMap.ContainsKey(endPoint))
+                if (_sessionMap.ContainsKey(endPoint))
                 {
 
                     handler.Invoke(this, new SessionEventArgs(new TunnelSession
@@ -642,7 +642,7 @@ namespace SocketKnife
                 }
                 else
                 {
-                    _logger.Warn(string.Format("SessionMap中未包含指定Key的Session:{0}", endPoint));
+                    _Logger.Warn(string.Format("SessionMap中未包含指定Key的Session:{0}", endPoint));
                 }
             }
         }
@@ -653,12 +653,12 @@ namespace SocketKnife
 
         protected virtual void OnSessionRejected()
         {
-            _logger.Debug("OnSessionRejected");
+            _Logger.Debug("OnSessionRejected");
         }
 
         protected virtual void OnSessionConnected(SocketSession session)
         {
-            Interlocked.Increment(ref _SessionCount);
+            Interlocked.Increment(ref _sessionCount);
 
             var handler = SessionBuilt;
             if (handler != null)
@@ -669,7 +669,7 @@ namespace SocketKnife
 
         protected virtual void OnSessionDisconnected(SocketSession session)
         {
-            Interlocked.Decrement(ref _SessionCount);
+            Interlocked.Decrement(ref _sessionCount);
 
             var handler = SessionBroken;
             if (handler != null)
@@ -680,7 +680,7 @@ namespace SocketKnife
 
         protected virtual void OnSessionTimeout(SocketSession session)
         {
-            Interlocked.Decrement(ref _SessionCount);
+            Interlocked.Decrement(ref _sessionCount);
 
             var handler = SessionBroken;
             if (handler != null)
@@ -691,14 +691,14 @@ namespace SocketKnife
 
         protected virtual void OnSessionReceiveException(Exception err)
         {
-            Interlocked.Decrement(ref _SessionCount);
-            _logger.Warn(string.Format("OnSessionReceiveException:{0}", err));
+            Interlocked.Decrement(ref _sessionCount);
+            _Logger.Warn(string.Format("OnSessionReceiveException:{0}", err));
         }
 
         protected virtual void OnSessionSendException(Exception err)
         {
-            Interlocked.Decrement(ref _SessionCount);
-            _logger.Warn(string.Format("OnSessionSendException:{0}", err));
+            Interlocked.Decrement(ref _sessionCount);
+            _Logger.Warn(string.Format("OnSessionSendException:{0}", err));
         }
 
         #endregion

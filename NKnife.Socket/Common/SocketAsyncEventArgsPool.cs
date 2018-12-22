@@ -15,7 +15,7 @@ namespace SocketKnife.Common
         /// <summary>
         ///     SocketAsyncEventArgs栈
         /// </summary>
-        private readonly Stack<SocketAsyncEventArgs> _Pool;
+        private readonly Stack<SocketAsyncEventArgs> _pool;
 
         /// <summary>
         ///     初始化SocketAsyncEventArgs池
@@ -23,7 +23,7 @@ namespace SocketKnife.Common
         /// <param name="capacity">最大可能使用的SocketAsyncEventArgs对象.</param>
         internal SocketAsyncEventArgsPool(Int32 capacity)
         {
-            _Pool = new Stack<SocketAsyncEventArgs>(capacity);
+            _pool = new Stack<SocketAsyncEventArgs>(capacity);
         }
 
         /// <summary>
@@ -31,24 +31,24 @@ namespace SocketKnife.Common
         /// </summary>
         internal int Count
         {
-            get { return _Pool.Count; }
+            get { return _pool.Count; }
         }
 
         public IEnumerator<SocketAsyncEventArgs> GetEnumerator()
         {
-            return _Pool.GetEnumerator();
+            return _pool.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _Pool.GetEnumerator();
+            return _pool.GetEnumerator();
         }
 
         internal void Clear()
         {
-            lock (_Pool)
+            lock (_pool)
             {
-                _Pool.Clear();
+                _pool.Clear();
             }
         }
 
@@ -58,9 +58,9 @@ namespace SocketKnife.Common
         /// <returns>SocketAsyncEventArgs removed from the pool.</returns>
         internal SocketAsyncEventArgs Pop()
         {
-            lock (_Pool)
+            lock (_pool)
             {
-                return _Pool.Pop();
+                return _pool.Pop();
             }
         }
 
@@ -74,9 +74,9 @@ namespace SocketKnife.Common
             {
                 throw new ArgumentNullException(@"Items added to a SocketAsyncEventArgsPool cannot be null");
             }
-            lock (_Pool)
+            lock (_pool)
             {
-                _Pool.Push(item);
+                _pool.Push(item);
             }
         }
     }

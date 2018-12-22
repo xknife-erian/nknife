@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NKnife.API
 {
-   public sealed partial class API
+   public sealed partial class Api
     {
        /// <summary>
         /// 面向C#使用API的封装:对Kernel32.dll的封装
@@ -15,7 +15,7 @@ namespace NKnife.API
        {
            #region WINUSER.H
 
-           public static int WM_USER = 0x0400;
+           public static int _WmUser = 0x0400;
 
            #endregion
 

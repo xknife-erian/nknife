@@ -109,7 +109,7 @@ namespace System
         /// </summary>
         /// <param name="str">要清除的字符串</param>
         /// <returns>清除后返回的字符串</returns>
-        public static string TrimBR(this string str)
+        public static string TrimBr(this string str)
         {
             Match m = null;
             for (m = UtilityRegex.Br.Match(str); m.Success; m = m.NextMatch())
@@ -138,8 +138,8 @@ namespace System
         /// </summary>
         public static bool IslLatinLetter(this char c)
         {
-            const string PATTEN = "^[A-Za-z]+$";
-            var r = new Regex(PATTEN);
+            const string patten = "^[A-Za-z]+$";
+            var r = new Regex(patten);
             var m = r.Match(c.ToString());
             return m.Success;
         }
@@ -282,7 +282,7 @@ namespace System
         {
             var words = srcStr.ToCharArray();
             foreach (var word in words)
-                if (IsGBCode(word.ToString()) || IsGBKCode(word.ToString())) // it is a GB2312 or GBK chinese word
+                if (IsGbCode(word.ToString()) || IsGbkCode(word.ToString())) // it is a GB2312 or GBK chinese word
                     continue;
                 else
                     return false;
@@ -292,7 +292,7 @@ namespace System
         /// <summary>
         ///     判断一个word是否为GB2312编码的汉字
         /// </summary>
-        public static bool IsGBCode(this string word)
+        public static bool IsGbCode(this string word)
         {
             var bytes = Encoding.GetEncoding("GB2312").GetBytes(word);
             if (bytes.Length <= 1) // if there is only one byte, it is ASCII code or other code
@@ -310,7 +310,7 @@ namespace System
         /// <param></param>
         /// <param name="word"></param>
         /// <returns></returns>
-        public static bool IsGBKCode(this string word)
+        public static bool IsGbkCode(this string word)
         {
             var bytes = Encoding.GetEncoding("GBK").GetBytes(word);
             if (bytes.Length <= 1) // if there is only one byte, it is ASCII code

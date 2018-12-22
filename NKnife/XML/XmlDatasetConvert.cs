@@ -12,18 +12,18 @@ namespace NKnife.XML
         /// </summary>
         /// <param name="xmlData"></param>
         /// <returns></returns>
-        public static DataSet ConvertXMLToDataSet(string xmlData)
+        public static DataSet ConvertXmlToDataSet(string xmlData)
         {
             StringReader stream = null;
             XmlTextReader reader = null;
             try
             {
-                DataSet xmlDS = new DataSet();
+                DataSet xmlDs = new DataSet();
                 stream = new StringReader(xmlData);
                 //从stream装载到XmlTextReader
                 reader = new XmlTextReader(stream);
-                xmlDS.ReadXml(reader);
-                return xmlDS;
+                xmlDs.ReadXml(reader);
+                return xmlDs;
             }
             catch (System.Exception ex)
             {
@@ -41,7 +41,7 @@ namespace NKnife.XML
         /// </summary>
         /// <param name="xmlFile"></param>
         /// <returns></returns>
-        public static DataSet ConvertXMLFileToDataSet(string xmlFile)
+        public static DataSet ConvertXmlFileToDataSet(string xmlFile)
         {
             StringReader stream = null;
             XmlTextReader reader = null;
@@ -50,13 +50,13 @@ namespace NKnife.XML
                 XmlDocument xmld = new XmlDocument();
                 xmld.Load(xmlFile);
 
-                DataSet xmlDS = new DataSet();
+                DataSet xmlDs = new DataSet();
                 stream = new StringReader(xmld.InnerXml);
                 //从stream装载到XmlTextReader
                 reader = new XmlTextReader(stream);
-                xmlDS.ReadXml(reader);
+                xmlDs.ReadXml(reader);
                 //xmlDS.ReadXml(xmlFile);
-                return xmlDS;
+                return xmlDs;
             }
             catch (System.Exception ex)
             {
@@ -72,9 +72,9 @@ namespace NKnife.XML
         /// <summary>
         /// 将DataSet转换为xml对象字符串
         /// </summary>
-        /// <param name="xmlDS"></param>
+        /// <param name="xmlDs"></param>
         /// <returns></returns>
-        public static string ConvertDataSetToXML(DataSet xmlDS)
+        public static string ConvertDataSetToXml(DataSet xmlDs)
         {
             MemoryStream stream = null;
             XmlTextWriter writer = null;
@@ -86,7 +86,7 @@ namespace NKnife.XML
                 writer = new XmlTextWriter(stream, Encoding.Unicode);
 
                 //用WriteXml方法写入文件.
-                xmlDS.WriteXml(writer);
+                xmlDs.WriteXml(writer);
                 int count = (int)stream.Length;
                 byte[] arr = new byte[count];
                 stream.Seek(0, SeekOrigin.Begin);
@@ -109,9 +109,9 @@ namespace NKnife.XML
         /// <summary>
         /// 将DataSet转换为xml文件
         /// </summary>
-        /// <param name="xmlDS"></param>
+        /// <param name="xmlDs"></param>
         /// <param name="xmlFile"></param>
-        public static void ConvertDataSetToXMLFile(DataSet xmlDS, string xmlFile)
+        public static void ConvertDataSetToXmlFile(DataSet xmlDs, string xmlFile)
         {
             MemoryStream stream = null;
             XmlTextWriter writer = null;
@@ -123,7 +123,7 @@ namespace NKnife.XML
                 writer = new XmlTextWriter(stream, Encoding.Unicode);
 
                 //用WriteXml方法写入文件.
-                xmlDS.WriteXml(writer);
+                xmlDs.WriteXml(writer);
                 int count = (int)stream.Length;
                 byte[] arr = new byte[count];
                 stream.Seek(0, SeekOrigin.Begin);

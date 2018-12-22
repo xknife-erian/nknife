@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NKnife.API
 {
-    public sealed partial class API
+    public sealed partial class Api
     {
         /// <summary>
         /// API播放Wav声音文件
@@ -21,20 +21,20 @@ namespace NKnife.API
                 /// <summary>
                 /// 同步播放声音
                 /// </summary>
-                SND_SYNC = 0x0000,    /* play synchronously (default) */ //同步
+                SndSync = 0x0000,    /* play synchronously (default) */ //同步
                 /// <summary>
                 /// 异步播放声音
                 /// </summary>
-                SND_ASYNC = 0x0001,    /* play asynchronously */ //异步
-                SND_NODEFAULT = 0x0002,    /* silence (!default) if sound not found */
-                SND_MEMORY = 0x0004,    /* pszSound points to a memory file */
-                SND_LOOP = 0x0008,    /* loop the sound until next sndPlaySound */
-                SND_NOSTOP = 0x0010,    /* don't stop any currently playing sound */
-                SND_NOWAIT = 0x00002000, /* don't wait if the driver is busy */
-                SND_ALIAS = 0x00010000, /* name is a registry alias */
-                SND_ALIAS_ID = 0x00110000, /* alias is a predefined ID */
-                SND_FILENAME = 0x00020000, /* name is file name */
-                SND_RESOURCE = 0x00040004    /* name is resource name or atom */
+                SndAsync = 0x0001,    /* play asynchronously */ //异步
+                SndNodefault = 0x0002,    /* silence (!default) if sound not found */
+                SndMemory = 0x0004,    /* pszSound points to a memory file */
+                SndLoop = 0x0008,    /* loop the sound until next sndPlaySound */
+                SndNostop = 0x0010,    /* don't stop any currently playing sound */
+                SndNowait = 0x00002000, /* don't wait if the driver is busy */
+                SndAlias = 0x00010000, /* name is a registry alias */
+                SndAliasId = 0x00110000, /* alias is a predefined ID */
+                SndFilename = 0x00020000, /* name is file name */
+                SndResource = 0x00040004    /* name is resource name or atom */
             }
 
             /// <summary>
@@ -43,7 +43,7 @@ namespace NKnife.API
             /// <param name="wavFilename"></param>
             public static void SyncWavPlay(string wavFilename)
             {
-                PlaySound(wavFilename, IntPtr.Zero, PlaySoundFlags.SND_SYNC);
+                PlaySound(wavFilename, IntPtr.Zero, PlaySoundFlags.SndSync);
             }
 
             /// <summary>
@@ -51,7 +51,7 @@ namespace NKnife.API
             /// </summary>
             public static void SyncWavStop()
             {
-                PlaySound(null, IntPtr.Zero, PlaySoundFlags.SND_SYNC);
+                PlaySound(null, IntPtr.Zero, PlaySoundFlags.SndSync);
             }
 
             /// <summary>
@@ -60,7 +60,7 @@ namespace NKnife.API
             /// <param name="wavFilename"></param>
             public static void AsyncWavPlay(string wavFilename)
             {
-                PlaySound(wavFilename, IntPtr.Zero, PlaySoundFlags.SND_ASYNC);
+                PlaySound(wavFilename, IntPtr.Zero, PlaySoundFlags.SndAsync);
             }
 
             /// <summary>
@@ -68,7 +68,7 @@ namespace NKnife.API
             /// </summary>
             public void AsyncWavStop()
             {
-                PlaySound(null, IntPtr.Zero, PlaySoundFlags.SND_ASYNC);
+                PlaySound(null, IntPtr.Zero, PlaySoundFlags.SndAsync);
             }
         }
     }

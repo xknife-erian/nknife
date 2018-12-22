@@ -16,11 +16,11 @@ namespace NKnife.Datas.DbHelper
     /// </summary>
     public sealed class SqlDbHelper
     {
-        private readonly string _ConnectionString;
+        private readonly string _connectionString;
 
         public SqlDbHelper(string connectionString)
         {
-            _ConnectionString = string.IsNullOrWhiteSpace(connectionString)
+            _connectionString = string.IsNullOrWhiteSpace(connectionString)
                 ? ConfigurationManager.ConnectionStrings["conn"].ConnectionString
                 : connectionString;
         }
@@ -48,7 +48,7 @@ namespace NKnife.Datas.DbHelper
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
             int count;
-            using (var connection = new SqlConnection(_ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -83,7 +83,7 @@ namespace NKnife.Datas.DbHelper
         public DataSet ExecuteDataSet(string sql, CommandType commandType = CommandType.Text, params SqlParameter[] parameters)
         {
             var ds = new DataSet();
-            using (var connection = new SqlConnection(_ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -119,7 +119,7 @@ namespace NKnife.Datas.DbHelper
         public DataTable ExecuteDataTable(string sql, CommandType commandType = CommandType.Text, params SqlParameter[] parameters)
         {
             var data = new DataTable();
-            using (var connection = new SqlConnection(_ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -154,7 +154,7 @@ namespace NKnife.Datas.DbHelper
         /// <returns> </returns>
         public SqlDataReader ExecuteReader(string sql, CommandType commandType = CommandType.Text, params SqlParameter[] parameters)
         {
-            var connection = new SqlConnection(_ConnectionString);
+            var connection = new SqlConnection(_connectionString);
             var command = new SqlCommand(sql, connection) {CommandType = commandType};
             if (parameters != null)
                 foreach (var parameter in parameters)
@@ -184,7 +184,7 @@ namespace NKnife.Datas.DbHelper
         public object ExecuteScalar(string sql, CommandType commandType = CommandType.Text, params SqlParameter[] parameters)
         {
             object result;
-            using (var connection = new SqlConnection(_ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -206,7 +206,7 @@ namespace NKnife.Datas.DbHelper
         public DataTable GetTables()
         {
             DataTable data;
-            using (var connection = new SqlConnection(_ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 data = connection.GetSchema("Tables");

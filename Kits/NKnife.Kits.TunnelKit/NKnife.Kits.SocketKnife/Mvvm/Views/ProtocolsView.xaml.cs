@@ -19,13 +19,13 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class ProtocolsView
     {
-        private readonly ProtocolViewModel _ViewModel = DI.Get<ProtocolViewModel>();
+        private readonly ProtocolViewModel _viewModel = Di.Get<ProtocolViewModel>();
 
         public ProtocolsView()
         {
             InitializeComponent();
-            _MainGrid.DataContext = _ViewModel;
-            _ProtocolsGrid.ItemsSource = _ViewModel.Protocols;
+            _MainGrid.DataContext = _viewModel;
+            _ProtocolsGrid.ItemsSource = _viewModel.Protocols;
         }
 
         private void ProtocolsGrid_OnSelected(object sender, RoutedEventArgs e)
@@ -33,7 +33,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             var protocol = _ProtocolsGrid.SelectedItem as ProtocolViewModel.SimpleProtocol;
             if (protocol != null)
             {
-                _ViewModel.SelectedProtocol = protocol.Protocol;
+                _viewModel.SelectedProtocol = protocol.Protocol;
             }
         }
     }

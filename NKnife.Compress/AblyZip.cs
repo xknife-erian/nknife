@@ -10,33 +10,33 @@ namespace NKnife.Compress
     /// </summary>
     public class AblyZip : IDisposable, IEnumerable
     {
-        private readonly bool _Disposed;
-        private ZipFile _SharpZipFile;
+        private readonly bool _disposed;
+        private ZipFile _sharpZipFile;
 
         public AblyZip(ZipFile zipFile)
         {
-            _Disposed = false;
-            _SharpZipFile = zipFile;
+            _disposed = false;
+            _sharpZipFile = zipFile;
         }
 
         public AblyZip(string fileName)
         {
-            _Disposed = false;
-            _SharpZipFile = File.Exists(fileName) ? new ZipFile(fileName) : ZipFile.Create(fileName);
+            _disposed = false;
+            _sharpZipFile = File.Exists(fileName) ? new ZipFile(fileName) : ZipFile.Create(fileName);
         }
 
         public string Comment
         {
             get
             {
-                if (!_Disposed)
-                    return _SharpZipFile.ZipFileComment;
+                if (!_disposed)
+                    return _sharpZipFile.ZipFileComment;
                 return null;
             }
             set
             {
-                if (!_Disposed)
-                    _SharpZipFile.SetComment(value);
+                if (!_disposed)
+                    _sharpZipFile.SetComment(value);
             }
         }
 
@@ -44,8 +44,8 @@ namespace NKnife.Compress
         {
             get
             {
-                if (!_Disposed)
-                    return (int) _SharpZipFile.Count;
+                if (!_disposed)
+                    return (int) _sharpZipFile.Count;
                 return 0;
             }
         }
@@ -54,12 +54,12 @@ namespace NKnife.Compress
         {
             get
             {
-                if (_Disposed || !_SharpZipFile.GetEntry(filename).IsFile)
+                if (_disposed || !_sharpZipFile.GetEntry(filename).IsFile)
                     return null;
-                var buffer = new byte[((int) _SharpZipFile.GetEntry(filename).Size) + 1];
-                var zipEntry = _SharpZipFile.GetEntry(filename);
-                var size = (int) _SharpZipFile.GetEntry(filename).Size;
-                var stream = _SharpZipFile.GetInputStream(zipEntry);
+                var buffer = new byte[((int) _sharpZipFile.GetEntry(filename).Size) + 1];
+                var zipEntry = _sharpZipFile.GetEntry(filename);
+                var size = (int) _sharpZipFile.GetEntry(filename).Size;
+                var stream = _sharpZipFile.GetInputStream(zipEntry);
                 stream.Read(buffer, 0, size);
                 return buffer;
             }
@@ -69,13 +69,13 @@ namespace NKnife.Compress
         {
             set
             {
-                if (!_Disposed)
+                if (!_disposed)
                 {
-                    _SharpZipFile.BeginUpdate();
+                    _sharpZipFile.BeginUpdate();
                     var ms = new MemoryStream(value);
                     var sds = new StaticDataSource(ms);
-                    _SharpZipFile.Add(sds, name, compressionMethod);
-                    _SharpZipFile.CommitUpdate();
+                    _sharpZipFile.Add(sds, name, compressionMethod);
+                    _sharpZipFile.CommitUpdate();
                 }
             }
         }
@@ -84,8 +84,8 @@ namespace NKnife.Compress
         {
             get
             {
-                if (!_Disposed)
-                    return _SharpZipFile;
+                if (!_disposed)
+                    return _sharpZipFile;
                 return null;
             }
         }
@@ -94,8 +94,8 @@ namespace NKnife.Compress
 
         public void Dispose()
         {
-            _SharpZipFile.Close();
-            _SharpZipFile = null;
+            _sharpZipFile.Close();
+            _sharpZipFile = null;
         }
 
         #endregion
@@ -107,37 +107,37 @@ namespace NKnife.Compress
 
         public void Add(string directoryName)
         {
-            if (!_Disposed && Directory.Exists(directoryName))
+            if (!_disposed && Directory.Exists(directoryName))
             {
-                _SharpZipFile.BeginUpdate();
-                _SharpZipFile.AddDirectory(directoryName);
-                _SharpZipFile.CommitUpdate();
+                _sharpZipFile.BeginUpdate();
+                _sharpZipFile.AddDirectory(directoryName);
+                _sharpZipFile.CommitUpdate();
             }
         }
 
         public void Add(string fileName, string name)
         {
-            if (!_Disposed && File.Exists(fileName))
+            if (!_disposed && File.Exists(fileName))
             {
-                _SharpZipFile.BeginUpdate();
-                _SharpZipFile.Add(fileName);
-                _SharpZipFile.CommitUpdate();
+                _sharpZipFile.BeginUpdate();
+                _sharpZipFile.Add(fileName);
+                _sharpZipFile.CommitUpdate();
             }
         }
 
         public void Delete(string fileName)
         {
-            if (!_Disposed)
+            if (!_disposed)
             {
-                _SharpZipFile.BeginUpdate();
-                _SharpZipFile.Delete(_SharpZipFile.GetEntry(fileName));
-                _SharpZipFile.CommitUpdate();
+                _sharpZipFile.BeginUpdate();
+                _sharpZipFile.Delete(_sharpZipFile.GetEntry(fileName));
+                _sharpZipFile.CommitUpdate();
             }
         }
 
         public void Extract(string directory, string filename)
         {
-            if (!_Disposed & _SharpZipFile.GetEntry(filename).IsFile)
+            if (!_disposed & _sharpZipFile.GetEntry(filename).IsFile)
             {
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
@@ -153,37 +153,37 @@ namespace NKnife.Compress
 
         public void ExtractAll(string directory)
         {
-            if (!_Disposed)
+            if (!_disposed)
             {
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
                 var zip = new FastZip();
-                zip.ExtractZip(_SharpZipFile.Name, directory, "");
+                zip.ExtractZip(_sharpZipFile.Name, directory, "");
             }
         }
 
         public bool Contain(string fileName)
         {
-            return ((!_Disposed & (_SharpZipFile.GetEntry(fileName) != null)) &&
-                    _SharpZipFile.GetEntry(fileName).IsFile);
+            return ((!_disposed & (_sharpZipFile.GetEntry(fileName) != null)) &&
+                    _sharpZipFile.GetEntry(fileName).IsFile);
         }
 
         #region Nested type: StaticDataSource
 
         private class StaticDataSource : IStaticDataSource
         {
-            private readonly Stream _Stream;
+            private readonly Stream _stream;
 
             public StaticDataSource(Stream stream)
             {
-                _Stream = stream;
+                _stream = stream;
             }
 
             #region IStaticDataSource Members
 
             public Stream GetSource()
             {
-                return _Stream;
+                return _stream;
             }
 
             #endregion

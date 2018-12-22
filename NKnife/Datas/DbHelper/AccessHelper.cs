@@ -58,10 +58,10 @@ namespace NKnife.Datas.DbHelper
 
         #region "ExecuteSQLDR"
 
-        public static OleDbDataReader ExecuteSQLDataReader(string strSQL)
+        public static OleDbDataReader ExecuteSqlDataReader(string strSql)
         {
             var conn = new OleDbConnection(_ConnString);
-            var cmd = new OleDbCommand(strSQL, conn);
+            var cmd = new OleDbCommand(strSql, conn);
             try
             {
                 conn.Open();
@@ -86,10 +86,10 @@ namespace NKnife.Datas.DbHelper
 
         #region "ExecuteSQLValue"
 
-        public static string ExecuteSQLValue(string strSQL)
+        public static string ExecuteSqlValue(string strSql)
         {
             var conn = new OleDbConnection(_ConnString);
-            var cmd = new OleDbCommand(strSQL, conn);
+            var cmd = new OleDbCommand(strSql, conn);
             try
             {
                 conn.Open();
@@ -115,10 +115,10 @@ namespace NKnife.Datas.DbHelper
             }
         }
 
-        public static int ExecuteSQLIntValue(string strSQL)
+        public static int ExecuteSqlIntValue(string strSql)
         {
             var conn = new OleDbConnection(_ConnString);
-            var cmd = new OleDbCommand(strSQL, conn);
+            var cmd = new OleDbCommand(strSql, conn);
             try
             {
                 conn.Open();

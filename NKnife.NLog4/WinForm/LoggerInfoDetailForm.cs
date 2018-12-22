@@ -17,7 +17,7 @@ namespace NKnife.NLog.WinForm
     {
         public static void Show(LogEventInfo info)
         {
-            var form = DI.Get<LoggerInfoDetailForm>();
+            var form = Di.Get<LoggerInfoDetailForm>();
             form.Size = new Size(600, 480);
             form.FillLogInfo(info);
             form.ShowDialog();
@@ -39,7 +39,7 @@ namespace NKnife.NLog.WinForm
             ControlBox = false;
             ResumeLayout(false);
             InitializeComponent();
-            _CloseButton.Click += CloseButtonClick;
+            _closeButton.Click += CloseButtonClick;
         }
 
         private void CloseButtonClick(object sender, EventArgs e)
@@ -49,26 +49,26 @@ namespace NKnife.NLog.WinForm
 
         private void FillLogInfo(LogEventInfo info)
         {
-            _LevelTextBox.Text = info.Level.Name;
-            _TimeTextBox.Text = info.TimeStamp.ToString(CultureInfo.InvariantCulture);
-            _LogInfoTextBox.Text = info.FormattedMessage;
-            _SourceTextBox.Text = info.LoggerName;
+            _levelTextBox.Text = info.Level.Name;
+            _timeTextBox.Text = info.TimeStamp.ToString(CultureInfo.InvariantCulture);
+            _logInfoTextBox.Text = info.FormattedMessage;
+            _sourceTextBox.Text = info.LoggerName;
             switch (info.Level.Name)
             {
                 case "Trace":
                 case "Debug":
                 case "Info":
-                    _ExInfoPage.Text = UtilityResource.GetString(StringResource.ResourceManager, "Exception_TabName_Simple");
+                    _exInfoPage.Text = UtilityResource.GetString(StringResource.ResourceManager, "Exception_TabName_Simple");
                     break;
                 case "Warn":
                 case "Error":
                 case "Fatal":
                 default:
-                    _ExInfoPage.Text = UtilityResource.GetString(StringResource.ResourceManager, "Exception_TabName_Error");
+                    _exInfoPage.Text = UtilityResource.GetString(StringResource.ResourceManager, "Exception_TabName_Error");
                     break;
             }
-            _LogStackTracePropertyGrid.SelectedObject = info;
-            _MainTabControl.SelectedIndex = 0;
+            _logStackTracePropertyGrid.SelectedObject = info;
+            _mainTabControl.SelectedIndex = 0;
         }
 
         #region Windows 窗体设计器生成的代码
@@ -78,19 +78,19 @@ namespace NKnife.NLog.WinForm
         /// </summary>
         private readonly IContainer components;
 
-        private Button _CloseButton;
-        private PropertyGrid _LogStackTracePropertyGrid;
-        private TextBox _LevelTextBox;
-        private TextBox _LogInfoTextBox;
-        private TextBox _SourceTextBox;
-        private TextBox _TimeTextBox;
-        private Label _Label1;
-        private Label _Label2;
-        private Label _Label3;
-        private Label _Label4;
-        private TabControl _MainTabControl;
-        private TabPage _MainPage;
-        private TabPage _ExInfoPage;
+        private Button _closeButton;
+        private PropertyGrid _logStackTracePropertyGrid;
+        private TextBox _levelTextBox;
+        private TextBox _logInfoTextBox;
+        private TextBox _sourceTextBox;
+        private TextBox _timeTextBox;
+        private Label _label1;
+        private Label _label2;
+        private Label _label3;
+        private Label _label4;
+        private TabControl _mainTabControl;
+        private TabPage _mainPage;
+        private TabPage _exInfoPage;
 
         /// <summary>
         /// 清理所有正在使用的资源。
@@ -113,123 +113,123 @@ namespace NKnife.NLog.WinForm
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoggerInfoDetailForm));
-            this._Label1 = new System.Windows.Forms.Label();
-            this._Label2 = new System.Windows.Forms.Label();
-            this._Label3 = new System.Windows.Forms.Label();
-            this._Label4 = new System.Windows.Forms.Label();
-            this._LevelTextBox = new System.Windows.Forms.TextBox();
-            this._TimeTextBox = new System.Windows.Forms.TextBox();
-            this._SourceTextBox = new System.Windows.Forms.TextBox();
-            this._LogInfoTextBox = new System.Windows.Forms.TextBox();
-            this._LogStackTracePropertyGrid = new System.Windows.Forms.PropertyGrid();
-            this._CloseButton = new System.Windows.Forms.Button();
-            this._MainTabControl = new System.Windows.Forms.TabControl();
-            this._MainPage = new System.Windows.Forms.TabPage();
-            this._ExInfoPage = new System.Windows.Forms.TabPage();
-            this._MainTabControl.SuspendLayout();
-            this._MainPage.SuspendLayout();
-            this._ExInfoPage.SuspendLayout();
+            this._label1 = new System.Windows.Forms.Label();
+            this._label2 = new System.Windows.Forms.Label();
+            this._label3 = new System.Windows.Forms.Label();
+            this._label4 = new System.Windows.Forms.Label();
+            this._levelTextBox = new System.Windows.Forms.TextBox();
+            this._timeTextBox = new System.Windows.Forms.TextBox();
+            this._sourceTextBox = new System.Windows.Forms.TextBox();
+            this._logInfoTextBox = new System.Windows.Forms.TextBox();
+            this._logStackTracePropertyGrid = new System.Windows.Forms.PropertyGrid();
+            this._closeButton = new System.Windows.Forms.Button();
+            this._mainTabControl = new System.Windows.Forms.TabControl();
+            this._mainPage = new System.Windows.Forms.TabPage();
+            this._exInfoPage = new System.Windows.Forms.TabPage();
+            this._mainTabControl.SuspendLayout();
+            this._mainPage.SuspendLayout();
+            this._exInfoPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // _Label1
             // 
-            resources.ApplyResources(this._Label1, "_Label1");
-            this._Label1.Name = "_Label1";
+            resources.ApplyResources(this._label1, "_label1");
+            this._label1.Name = "_label1";
             // 
             // _Label2
             // 
-            resources.ApplyResources(this._Label2, "_Label2");
-            this._Label2.Name = "_Label2";
+            resources.ApplyResources(this._label2, "_label2");
+            this._label2.Name = "_label2";
             // 
             // _Label3
             // 
-            resources.ApplyResources(this._Label3, "_Label3");
-            this._Label3.Name = "_Label3";
+            resources.ApplyResources(this._label3, "_label3");
+            this._label3.Name = "_label3";
             // 
             // _Label4
             // 
-            resources.ApplyResources(this._Label4, "_Label4");
-            this._Label4.Name = "_Label4";
+            resources.ApplyResources(this._label4, "_label4");
+            this._label4.Name = "_label4";
             // 
             // _LevelTextBox
             // 
-            resources.ApplyResources(this._LevelTextBox, "_LevelTextBox");
-            this._LevelTextBox.Name = "_LevelTextBox";
-            this._LevelTextBox.ReadOnly = true;
+            resources.ApplyResources(this._levelTextBox, "_levelTextBox");
+            this._levelTextBox.Name = "_levelTextBox";
+            this._levelTextBox.ReadOnly = true;
             // 
             // _TimeTextBox
             // 
-            resources.ApplyResources(this._TimeTextBox, "_TimeTextBox");
-            this._TimeTextBox.Name = "_TimeTextBox";
-            this._TimeTextBox.ReadOnly = true;
+            resources.ApplyResources(this._timeTextBox, "_timeTextBox");
+            this._timeTextBox.Name = "_timeTextBox";
+            this._timeTextBox.ReadOnly = true;
             // 
             // _SourceTextBox
             // 
-            resources.ApplyResources(this._SourceTextBox, "_SourceTextBox");
-            this._SourceTextBox.Name = "_SourceTextBox";
-            this._SourceTextBox.ReadOnly = true;
+            resources.ApplyResources(this._sourceTextBox, "_sourceTextBox");
+            this._sourceTextBox.Name = "_sourceTextBox";
+            this._sourceTextBox.ReadOnly = true;
             // 
             // _LogInfoTextBox
             // 
-            resources.ApplyResources(this._LogInfoTextBox, "_LogInfoTextBox");
-            this._LogInfoTextBox.Name = "_LogInfoTextBox";
-            this._LogInfoTextBox.ReadOnly = true;
+            resources.ApplyResources(this._logInfoTextBox, "_logInfoTextBox");
+            this._logInfoTextBox.Name = "_logInfoTextBox";
+            this._logInfoTextBox.ReadOnly = true;
             // 
             // _LogStackTracePropertyGrid
             // 
-            resources.ApplyResources(this._LogStackTracePropertyGrid, "_LogStackTracePropertyGrid");
-            this._LogStackTracePropertyGrid.Name = "_LogStackTracePropertyGrid";
+            resources.ApplyResources(this._logStackTracePropertyGrid, "_logStackTracePropertyGrid");
+            this._logStackTracePropertyGrid.Name = "_logStackTracePropertyGrid";
             // 
             // _CloseButton
             // 
-            resources.ApplyResources(this._CloseButton, "_CloseButton");
-            this._CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._CloseButton.Name = "_CloseButton";
-            this._CloseButton.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this._closeButton, "_closeButton");
+            this._closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this._closeButton.Name = "_closeButton";
+            this._closeButton.UseVisualStyleBackColor = true;
             // 
             // _MainTabControl
             // 
-            resources.ApplyResources(this._MainTabControl, "_MainTabControl");
-            this._MainTabControl.Controls.Add(this._MainPage);
-            this._MainTabControl.Controls.Add(this._ExInfoPage);
-            this._MainTabControl.Name = "_MainTabControl";
-            this._MainTabControl.SelectedIndex = 0;
+            resources.ApplyResources(this._mainTabControl, "_mainTabControl");
+            this._mainTabControl.Controls.Add(this._mainPage);
+            this._mainTabControl.Controls.Add(this._exInfoPage);
+            this._mainTabControl.Name = "_mainTabControl";
+            this._mainTabControl.SelectedIndex = 0;
             // 
             // _MainPage
             // 
-            this._MainPage.Controls.Add(this._Label4);
-            this._MainPage.Controls.Add(this._Label1);
-            this._MainPage.Controls.Add(this._Label2);
-            this._MainPage.Controls.Add(this._LogInfoTextBox);
-            this._MainPage.Controls.Add(this._Label3);
-            this._MainPage.Controls.Add(this._SourceTextBox);
-            this._MainPage.Controls.Add(this._LevelTextBox);
-            this._MainPage.Controls.Add(this._TimeTextBox);
-            resources.ApplyResources(this._MainPage, "_MainPage");
-            this._MainPage.Name = "_MainPage";
-            this._MainPage.UseVisualStyleBackColor = true;
+            this._mainPage.Controls.Add(this._label4);
+            this._mainPage.Controls.Add(this._label1);
+            this._mainPage.Controls.Add(this._label2);
+            this._mainPage.Controls.Add(this._logInfoTextBox);
+            this._mainPage.Controls.Add(this._label3);
+            this._mainPage.Controls.Add(this._sourceTextBox);
+            this._mainPage.Controls.Add(this._levelTextBox);
+            this._mainPage.Controls.Add(this._timeTextBox);
+            resources.ApplyResources(this._mainPage, "_mainPage");
+            this._mainPage.Name = "_mainPage";
+            this._mainPage.UseVisualStyleBackColor = true;
             // 
             // _ExInfoPage
             // 
-            this._ExInfoPage.Controls.Add(this._LogStackTracePropertyGrid);
-            resources.ApplyResources(this._ExInfoPage, "_ExInfoPage");
-            this._ExInfoPage.Name = "_ExInfoPage";
-            this._ExInfoPage.UseVisualStyleBackColor = true;
+            this._exInfoPage.Controls.Add(this._logStackTracePropertyGrid);
+            resources.ApplyResources(this._exInfoPage, "_exInfoPage");
+            this._exInfoPage.Name = "_exInfoPage";
+            this._exInfoPage.UseVisualStyleBackColor = true;
             // 
             // NLogDetailForm
             // 
-            this.AcceptButton = this._CloseButton;
-            this.CancelButton = this._CloseButton;
+            this.AcceptButton = this._closeButton;
+            this.CancelButton = this._closeButton;
             resources.ApplyResources(this, "$this");
-            this.Controls.Add(this._MainTabControl);
-            this.Controls.Add(this._CloseButton);
+            this.Controls.Add(this._mainTabControl);
+            this.Controls.Add(this._closeButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NLogDetailForm";
-            this._MainTabControl.ResumeLayout(false);
-            this._MainPage.ResumeLayout(false);
-            this._MainPage.PerformLayout();
-            this._ExInfoPage.ResumeLayout(false);
+            this._mainTabControl.ResumeLayout(false);
+            this._mainPage.ResumeLayout(false);
+            this._mainPage.PerformLayout();
+            this._exInfoPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

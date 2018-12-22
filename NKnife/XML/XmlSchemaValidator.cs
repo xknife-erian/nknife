@@ -18,7 +18,7 @@ namespace NKnife.XML
         /// <param name="schemaFile">Schema文件路径</param>
         /// <param name="xmlFile">需校验的XmlDocument的路径</param>
         /// <returns></returns>
-        public static bool CheckArchXMLContent(string schemaFile, string xmlFile, out string strErrorMsg)
+        public static bool CheckArchXmlContent(string schemaFile, string xmlFile, out string strErrorMsg)
         {
 
             bool isResult = true;

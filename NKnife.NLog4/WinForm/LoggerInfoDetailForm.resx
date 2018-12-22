@@ -118,348 +118,348 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="_Label1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="_label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="_Label1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 18</value>
   </data>
-  <data name="_Label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
   </data>
-  <data name="_Label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="_label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="_Label1.Text" xml:space="preserve">
+  <data name="_label1.Text" xml:space="preserve">
     <value>日志级别:</value>
   </data>
-  <data name="&gt;&gt;_Label1.Name" xml:space="preserve">
-    <value>_Label1</value>
+  <data name="&gt;&gt;_label1.Name" xml:space="preserve">
+    <value>_label1</value>
   </data>
-  <data name="&gt;&gt;_Label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;_label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_Label1.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_label1.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_Label1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_label1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="_Label2.AutoSize" type="System.Boolean, mscorlib">
+  <data name="_label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="_Label2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 43</value>
   </data>
-  <data name="_Label2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
   </data>
-  <data name="_Label2.TabIndex" type="System.Int32, mscorlib">
+  <data name="_label2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="_Label2.Text" xml:space="preserve">
+  <data name="_label2.Text" xml:space="preserve">
     <value>发生时间:</value>
   </data>
-  <data name="&gt;&gt;_Label2.Name" xml:space="preserve">
-    <value>_Label2</value>
+  <data name="&gt;&gt;_label2.Name" xml:space="preserve">
+    <value>_label2</value>
   </data>
-  <data name="&gt;&gt;_Label2.Type" xml:space="preserve">
+  <data name="&gt;&gt;_label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_Label2.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_label2.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_Label2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_label2.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="_Label3.AutoSize" type="System.Boolean, mscorlib">
+  <data name="_label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="_Label3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 66</value>
   </data>
-  <data name="_Label3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
   </data>
-  <data name="_Label3.TabIndex" type="System.Int32, mscorlib">
+  <data name="_label3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="_Label3.Text" xml:space="preserve">
+  <data name="_label3.Text" xml:space="preserve">
     <value>日志源:</value>
   </data>
-  <data name="&gt;&gt;_Label3.Name" xml:space="preserve">
-    <value>_Label3</value>
+  <data name="&gt;&gt;_label3.Name" xml:space="preserve">
+    <value>_label3</value>
   </data>
-  <data name="&gt;&gt;_Label3.Type" xml:space="preserve">
+  <data name="&gt;&gt;_label3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_Label3.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_label3.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_Label3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_label3.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="_Label4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="_label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="_Label4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_label4.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 91</value>
   </data>
-  <data name="_Label4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
   </data>
-  <data name="_Label4.TabIndex" type="System.Int32, mscorlib">
+  <data name="_label4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="_Label4.Text" xml:space="preserve">
+  <data name="_label4.Text" xml:space="preserve">
     <value>日志信息:</value>
   </data>
-  <data name="&gt;&gt;_Label4.Name" xml:space="preserve">
-    <value>_Label4</value>
+  <data name="&gt;&gt;_label4.Name" xml:space="preserve">
+    <value>_label4</value>
   </data>
-  <data name="&gt;&gt;_Label4.Type" xml:space="preserve">
+  <data name="&gt;&gt;_label4.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_Label4.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_label4.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_Label4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_label4.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="_LevelTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="_levelTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="_LevelTextBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_levelTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 13</value>
   </data>
-  <data name="_LevelTextBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_levelTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>364, 21</value>
   </data>
-  <data name="_LevelTextBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="_levelTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;_LevelTextBox.Name" xml:space="preserve">
-    <value>_LevelTextBox</value>
+  <data name="&gt;&gt;_levelTextBox.Name" xml:space="preserve">
+    <value>_levelTextBox</value>
   </data>
-  <data name="&gt;&gt;_LevelTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;_levelTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_LevelTextBox.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_levelTextBox.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_LevelTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_levelTextBox.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="_TimeTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="_timeTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="_TimeTextBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_timeTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 38</value>
   </data>
-  <data name="_TimeTextBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_timeTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>364, 21</value>
   </data>
-  <data name="_TimeTextBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="_timeTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;_TimeTextBox.Name" xml:space="preserve">
-    <value>_TimeTextBox</value>
+  <data name="&gt;&gt;_timeTextBox.Name" xml:space="preserve">
+    <value>_timeTextBox</value>
   </data>
-  <data name="&gt;&gt;_TimeTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;_timeTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_TimeTextBox.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_timeTextBox.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_TimeTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_timeTextBox.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="_SourceTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="_sourceTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="_SourceTextBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_sourceTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 63</value>
   </data>
-  <data name="_SourceTextBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_sourceTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>364, 21</value>
   </data>
-  <data name="_SourceTextBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="_sourceTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;_SourceTextBox.Name" xml:space="preserve">
-    <value>_SourceTextBox</value>
+  <data name="&gt;&gt;_sourceTextBox.Name" xml:space="preserve">
+    <value>_sourceTextBox</value>
   </data>
-  <data name="&gt;&gt;_SourceTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;_sourceTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_SourceTextBox.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_sourceTextBox.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_SourceTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_sourceTextBox.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="_LogInfoTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="_logInfoTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="_LogInfoTextBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_logInfoTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 88</value>
   </data>
-  <data name="_LogInfoTextBox.Multiline" type="System.Boolean, mscorlib">
+  <data name="_logInfoTextBox.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="_LogInfoTextBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+  <data name="_logInfoTextBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
     <value>Vertical</value>
   </data>
-  <data name="_LogInfoTextBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_logInfoTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>364, 101</value>
   </data>
-  <data name="_LogInfoTextBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="_logInfoTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="&gt;&gt;_LogInfoTextBox.Name" xml:space="preserve">
-    <value>_LogInfoTextBox</value>
+  <data name="&gt;&gt;_logInfoTextBox.Name" xml:space="preserve">
+    <value>_logInfoTextBox</value>
   </data>
-  <data name="&gt;&gt;_LogInfoTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;_logInfoTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_LogInfoTextBox.Parent" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_logInfoTextBox.Parent" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_LogInfoTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_logInfoTextBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="_LogStackTracePropertyGrid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="_logStackTracePropertyGrid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="_LogStackTracePropertyGrid.HelpVisible" type="System.Boolean, mscorlib">
+  <data name="_logStackTracePropertyGrid.HelpVisible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="_LogStackTracePropertyGrid.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_logStackTracePropertyGrid.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="_LogStackTracePropertyGrid.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_logStackTracePropertyGrid.Size" type="System.Drawing.Size, System.Drawing">
     <value>465, 205</value>
   </data>
-  <data name="_LogStackTracePropertyGrid.TabIndex" type="System.Int32, mscorlib">
+  <data name="_logStackTracePropertyGrid.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;_LogStackTracePropertyGrid.Name" xml:space="preserve">
-    <value>_LogStackTracePropertyGrid</value>
+  <data name="&gt;&gt;_logStackTracePropertyGrid.Name" xml:space="preserve">
+    <value>_logStackTracePropertyGrid</value>
   </data>
-  <data name="&gt;&gt;_LogStackTracePropertyGrid.Type" xml:space="preserve">
+  <data name="&gt;&gt;_logStackTracePropertyGrid.Type" xml:space="preserve">
     <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_LogStackTracePropertyGrid.Parent" xml:space="preserve">
-    <value>_ExInfoPage</value>
+  <data name="&gt;&gt;_logStackTracePropertyGrid.Parent" xml:space="preserve">
+    <value>_exInfoPage</value>
   </data>
-  <data name="&gt;&gt;_LogStackTracePropertyGrid.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_logStackTracePropertyGrid.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="_CloseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="_closeButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="_CloseButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_closeButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>359, 251</value>
   </data>
-  <data name="_CloseButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_closeButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>132, 27</value>
   </data>
-  <data name="_CloseButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="_closeButton.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="_CloseButton.Text" xml:space="preserve">
+  <data name="_closeButton.Text" xml:space="preserve">
     <value>关闭(&amp;X)</value>
   </data>
-  <data name="&gt;&gt;_CloseButton.Name" xml:space="preserve">
-    <value>_CloseButton</value>
+  <data name="&gt;&gt;_closeButton.Name" xml:space="preserve">
+    <value>_closeButton</value>
   </data>
-  <data name="&gt;&gt;_CloseButton.Type" xml:space="preserve">
+  <data name="&gt;&gt;_closeButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_CloseButton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;_closeButton.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;_CloseButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_closeButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="_MainTabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="_mainTabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="_MainPage.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_mainPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
-  <data name="_MainPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="_mainPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="_MainPage.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_mainPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>471, 211</value>
   </data>
-  <data name="_MainPage.TabIndex" type="System.Int32, mscorlib">
+  <data name="_mainPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="_MainPage.Text" xml:space="preserve">
+  <data name="_mainPage.Text" xml:space="preserve">
     <value>信息</value>
   </data>
-  <data name="&gt;&gt;_MainPage.Name" xml:space="preserve">
-    <value>_MainPage</value>
+  <data name="&gt;&gt;_mainPage.Name" xml:space="preserve">
+    <value>_mainPage</value>
   </data>
-  <data name="&gt;&gt;_MainPage.Type" xml:space="preserve">
+  <data name="&gt;&gt;_mainPage.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_MainPage.Parent" xml:space="preserve">
-    <value>_MainTabControl</value>
+  <data name="&gt;&gt;_mainPage.Parent" xml:space="preserve">
+    <value>_mainTabControl</value>
   </data>
-  <data name="&gt;&gt;_MainPage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_mainPage.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="_ExInfoPage.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_exInfoPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
-  <data name="_ExInfoPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="_exInfoPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="_ExInfoPage.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_exInfoPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>471, 211</value>
   </data>
-  <data name="_ExInfoPage.TabIndex" type="System.Int32, mscorlib">
+  <data name="_exInfoPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="_ExInfoPage.Text" xml:space="preserve">
+  <data name="_exInfoPage.Text" xml:space="preserve">
     <value>异常</value>
   </data>
-  <data name="&gt;&gt;_ExInfoPage.Name" xml:space="preserve">
-    <value>_ExInfoPage</value>
+  <data name="&gt;&gt;_exInfoPage.Name" xml:space="preserve">
+    <value>_exInfoPage</value>
   </data>
-  <data name="&gt;&gt;_ExInfoPage.Type" xml:space="preserve">
+  <data name="&gt;&gt;_exInfoPage.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_ExInfoPage.Parent" xml:space="preserve">
-    <value>_MainTabControl</value>
+  <data name="&gt;&gt;_exInfoPage.Parent" xml:space="preserve">
+    <value>_mainTabControl</value>
   </data>
-  <data name="&gt;&gt;_ExInfoPage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_exInfoPage.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="_MainTabControl.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_mainTabControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>
   </data>
-  <data name="_MainTabControl.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_mainTabControl.Size" type="System.Drawing.Size, System.Drawing">
     <value>479, 237</value>
   </data>
-  <data name="_MainTabControl.TabIndex" type="System.Int32, mscorlib">
+  <data name="_mainTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
-  <data name="&gt;&gt;_MainTabControl.Name" xml:space="preserve">
-    <value>_MainTabControl</value>
+  <data name="&gt;&gt;_mainTabControl.Name" xml:space="preserve">
+    <value>_mainTabControl</value>
   </data>
-  <data name="&gt;&gt;_MainTabControl.Type" xml:space="preserve">
+  <data name="&gt;&gt;_mainTabControl.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_MainTabControl.Parent" xml:space="preserve">
+  <data name="&gt;&gt;_mainTabControl.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;_MainTabControl.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_mainTabControl.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

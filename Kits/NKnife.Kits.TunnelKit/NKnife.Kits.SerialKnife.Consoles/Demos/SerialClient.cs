@@ -16,55 +16,55 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
 {
     public class SerialClient
     {
-        private const string FAMILY_NAME = "care-usb";
-        private static readonly ILog _logger = LogManager.GetLogger<SerialClient>();
-        private readonly ISerialConnector _DataConnector;
-        private readonly ITunnel _Tunnel = DI.Get<ITunnel>("Server");
+        private const string FamilyName = "care-usb";
+        private static readonly ILog _Logger = LogManager.GetLogger<SerialClient>();
+        private readonly ISerialConnector _dataConnector;
+        private readonly ITunnel _tunnel = Di.Get<ITunnel>("Server");
 
         public SerialClient(int port)
         {
-            var codec = DI.Get<BytesCodec>();
+            var codec = Di.Get<BytesCodec>();
             codec.CodecName = "careone";
-            var family = DI.Get<BytesProtocolFamily>();
-            family.FamilyName = FAMILY_NAME;
+            var family = Di.Get<BytesProtocolFamily>();
+            family.FamilyName = FamilyName;
 
             var handler = new SerialProtocolHandler();
             var protocolFilter = new SerialProtocolFilter();
             protocolFilter.Bind(codec, family);
             protocolFilter.AddHandlers(handler);
 
-            _Tunnel.AddFilters(protocolFilter);
+            _tunnel.AddFilters(protocolFilter);
 
-            _DataConnector = DI.Get<ISerialConnector>();
-            _DataConnector.SerialType = SerialType.DotNet;
-            _DataConnector.SerialConfig = new SerialConfig()
+            _dataConnector = Di.Get<ISerialConnector>();
+            _dataConnector.SerialType = SerialType.DotNet;
+            _dataConnector.SerialConfig = new SerialConfig()
             {
                 BaudRate = 115200,
                 ReadBufferSize = 258,
                 ReadTimeout = 100
             };
-            _DataConnector.PortNumber = port; //串口
+            _dataConnector.PortNumber = port; //串口
 
-            _Tunnel.BindDataConnector(_DataConnector); //dataConnector是数据流动的动力
+            _tunnel.BindDataConnector(_dataConnector); //dataConnector是数据流动的动力
         }
 
         public bool Start()
         {
-            _DataConnector.Start();
-            _logger.Info("Tunnel服务启动成功");
+            _dataConnector.Start();
+            _Logger.Info("Tunnel服务启动成功");
             return true;
         }
 
         public bool Stop()
         {
-            _DataConnector.Stop();
-            _logger.Info("Tunnel服务停止成功");
+            _dataConnector.Stop();
+            _Logger.Info("Tunnel服务停止成功");
             return true;
         }
 
         public void Send(byte[] data)
         {
-            _DataConnector.SendAll(data);
+            _dataConnector.SendAll(data);
         }
 
     }

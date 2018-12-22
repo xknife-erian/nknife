@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace NKnife.UnitTest.Timers
 {
     [TestFixture]
-    public class JobFlowTest
+    public class JobManagerTest
     {
         private class Job : IJob
         {
@@ -29,11 +29,11 @@ namespace NKnife.UnitTest.Timers
             public bool IsPool { get; } = true;
         }
 
-        private int _Number = 0;
+        private int _number = 0;
 
         private bool CountFunc(IJob job)
         {
-            _Number++;
+            _number++;
             return true;
         }
 
@@ -43,8 +43,8 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest001()
         {
-            _Number = 0;
-            var flow = new JobFlow();
+            _number = 0;
+            var flow = new JobManager();
             flow.Pool = new JobPool();
             var job = new Job
             {
@@ -56,7 +56,7 @@ namespace NKnife.UnitTest.Timers
             };
             flow.Pool.Add(job);
             flow.Run();
-            _Number.Should().Be(job.LoopNumber);
+            _number.Should().Be(job.LoopNumber);
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest002()
         {
-            _Number = 0;
-            var flow = new JobFlow();
+            _number = 0;
+            var flow = new JobManager();
             flow.Pool = new JobPool();
             var job1 = new Job
             {
@@ -86,7 +86,7 @@ namespace NKnife.UnitTest.Timers
             };
             flow.Pool.AddRange(new IJobPoolItem[] {job1, job2});
             flow.Run();
-            _Number.Should().Be(job1.LoopNumber + job2.LoopNumber);
+            _number.Should().Be(job1.LoopNumber + job2.LoopNumber);
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest003()
         {
-            _Number = 0;
-            var flow = new JobFlow();
+            _number = 0;
+            var flow = new JobManager();
             flow.Pool = new JobPool();
 
             for (int i = 0; i < 300; i++)
@@ -111,7 +111,7 @@ namespace NKnife.UnitTest.Timers
                 flow.Pool.Add(job);
             }
             flow.Run();
-            _Number.Should().Be(300);
+            _number.Should().Be(300);
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest004()
         {
-            _Number = 0;
-            var flow = new JobFlow();
+            _number = 0;
+            var flow = new JobManager();
             flow.Pool = new JobPool();
             var job1 = new Job
             {
@@ -147,18 +147,18 @@ namespace NKnife.UnitTest.Timers
             };
             flow.Pool.AddRange(new []{job1,job2,job3});
             flow.Run();
-            _Number.Should().Be(102);
+            _number.Should().Be(102);
         }
 
         #region 005：测试中止功能
 
-        private readonly JobFlow _RunTest005Flow = new JobFlow();
+        private readonly JobManager _runTest005Manager = new JobManager();
         
         private bool OnBreakCountFunc(IJob job)
         {
-            _Number++;
-            if (_Number >= 100)
-                _RunTest005Flow.Break();
+            _number++;
+            if (_number >= 100)
+                _runTest005Manager.Break();
             return true;
         }
 
@@ -168,7 +168,7 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest005()
         {
-            _Number = 0;
+            _number = 0;
             var job2 = new Job
             {
                 IsLoop = true,
@@ -177,28 +177,28 @@ namespace NKnife.UnitTest.Timers
                 Timeout = 15,
                 Func = OnBreakCountFunc
             };
-            _RunTest005Flow.Pool = new JobPool();
-            _RunTest005Flow.Pool.Add(job2);
-            _RunTest005Flow.Run();
-            _Number.Should().Be(100);
+            _runTest005Manager.Pool = new JobPool();
+            _runTest005Manager.Pool.Add(job2);
+            _runTest005Manager.Run();
+            _number.Should().Be(100);
         }
 
         #endregion
 
         #region 006：测试暂停与继续功能
 
-        private readonly JobFlow _RunTest006Flow = new JobFlow();
-        private int _Count006 = 0;
-        private int _Number006 = 0;
+        private readonly JobManager _runTest006Manager = new JobManager();
+        private int _count006 = 0;
+        private int _number006 = 0;
 
         private bool OnPauseCountFunc(IJob job)
         {
-            _Number006++;
-            if (_Number006 % 10 == 0)
+            _number006++;
+            if (_number006 % 10 == 0)
             {
-                _RunTest006Flow.Pause();
-                _RunTest006Flow.Resume();
-                _Count006++;
+                _runTest006Manager.Pause();
+                _runTest006Manager.Resume();
+                _count006++;
             }
             return true;
         }
@@ -209,8 +209,8 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest006()
         {
-            _Count006 = 0;
-            _Number006 = 0;
+            _count006 = 0;
+            _number006 = 0;
             var job = new Job
             {
                 IsLoop = true,
@@ -219,11 +219,11 @@ namespace NKnife.UnitTest.Timers
                 Timeout = 15,
                 Func = OnPauseCountFunc
             };
-            _RunTest006Flow.Pool = new JobPool();
-            _RunTest006Flow.Pool.Add(job);
-            _RunTest006Flow.Run();
-            _Count006.Should().Be(10);
-            _Number006.Should().Be(100);
+            _runTest006Manager.Pool = new JobPool();
+            _runTest006Manager.Pool.Add(job);
+            _runTest006Manager.Run();
+            _count006.Should().Be(10);
+            _number006.Should().Be(100);
         }
 
         #endregion
@@ -234,8 +234,8 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest007()
         {
-            _Number = 0;
-            var flow = new JobFlow();
+            _number = 0;
+            var flow = new JobManager();
             flow.Pool = new JobPool();
 
             // 先创建一个简单工作，加入
@@ -284,7 +284,7 @@ namespace NKnife.UnitTest.Timers
             flow.Pool.Add(group2);
 
             flow.Run();
-            _Number.Should().Be(31);
+            _number.Should().Be(31);
         }
 
         /// <summary>
@@ -293,11 +293,11 @@ namespace NKnife.UnitTest.Timers
         [Test]
         public void RunTest008()
         {
-            _Number = 0;
+            _number = 0;
             var allWorkDone = false;
             var runEvent = 0;
             var runCount = 0;
-            var flow = new JobFlow();
+            var flow = new JobManager();
             flow.Pool = new JobPool();
             flow.AllWorkDone += (s, e) => { allWorkDone = true; };
 
@@ -335,7 +335,7 @@ namespace NKnife.UnitTest.Timers
             };
             flow.Pool.AddRange(new[] {job1, job2, job3});
             flow.Run();
-            _Number.Should().Be(3);
+            _number.Should().Be(3);
             runEvent.Should().Be(0);
             runCount.Should().Be(3);
             allWorkDone.Should().BeTrue();
@@ -343,13 +343,13 @@ namespace NKnife.UnitTest.Timers
 
         #region 009：测试中止功能的事件
 
-        private readonly JobFlow _RunTest009Flow = new JobFlow();
+        private readonly JobManager _runTest009Manager = new JobManager();
 
         private bool On009BreakCountFunc(IJob job)
         {
-            _Number++;
-            if (_Number >= 100)
-                _RunTest009Flow.Break();
+            _number++;
+            if (_number >= 100)
+                _runTest009Manager.Break();
             return true;
         }
 
@@ -360,12 +360,12 @@ namespace NKnife.UnitTest.Timers
         public void RunTest009()
         {
             var allWorkDone = false;
-            _RunTest009Flow.Pool = new JobPool();
-            _RunTest009Flow.AllWorkDone += (s, e) =>
+            _runTest009Manager.Pool = new JobPool();
+            _runTest009Manager.AllWorkDone += (s, e) =>
             {
                 allWorkDone = true;//应该无法进入该事件
             };
-            _Number = 0;
+            _number = 0;
             var job2 = new Job
             {
                 IsLoop = true,
@@ -374,9 +374,9 @@ namespace NKnife.UnitTest.Timers
                 Timeout = 15,
                 Func = On009BreakCountFunc
             };
-            _RunTest009Flow.Pool.Add(job2);
-            _RunTest009Flow.Run();
-            _Number.Should().Be(100);
+            _runTest009Manager.Pool.Add(job2);
+            _runTest009Manager.Run();
+            _number.Should().Be(100);
             allWorkDone.Should().BeFalse();
         }
 

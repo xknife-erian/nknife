@@ -6,26 +6,26 @@ namespace SerialKnife.Pan.Common
     /// </summary>
     public class SendRecvEventArgs : EventArgs
     {
-        private readonly byte[] _RecvData;
-        private readonly int _SenderId;
+        private readonly byte[] _recvData;
+        private readonly int _senderId;
 
         public SendRecvEventArgs(int senderId, byte[] recv, int count)
         {
-            _SenderId = senderId;
-            _RecvData = new byte[count];
-            Array.Copy(recv, _RecvData, count);
+            _senderId = senderId;
+            _recvData = new byte[count];
+            Array.Copy(recv, _recvData, count);
         }
 
         public int SenderId
         {
-            get { return _SenderId; }
+            get { return _senderId; }
         }
 
         /// <summary>接收到的数据
         /// </summary>
         public byte[] RecvData
         {
-            get { return _RecvData; }
+            get { return _recvData; }
         }
     }
 }

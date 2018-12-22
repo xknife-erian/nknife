@@ -17,7 +17,7 @@ namespace NKnife.Kits.NLog.NLog4Kit
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DI.Initialize();
+            Di.Initialize();
             Application.Run(new Form1());
         }
     }

@@ -15,21 +15,21 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
 {
     class DemoClient
     {
-        private bool _IsInitialized = false;
-        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
-        private readonly ISocketClient _Client = DI.Get<KnifeLongSocketClient>();
-        private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
+        private bool _isInitialized = false;
+        private readonly ITunnel _tunnel = Di.Get<ITunnel>();
+        private readonly ISocketClient _client = Di.Get<KnifeLongSocketClient>();
+        private readonly StringProtocolFamily _family = Di.Get<StringProtocolFamily>();
 
         public StringProtocolFamily GetFamily()
         {
-            return _Family;
+            return _family;
         }
 
         public void Initialize(SocketConfig config, SocketCustomSetting customSetting, BaseProtocolHandler<string> handler)
         {
-            if (_IsInitialized) return;
+            if (_isInitialized) return;
 
-            var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
+            var heartbeatServerFilter = Di.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Client","Server");
             heartbeatServerFilter.Heartbeat.Name = "Client";
 
@@ -37,52 +37,52 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
             heartbeatServerFilter.EnableStrictMode = true; //严格模式
             heartbeatServerFilter.HeartBeatMode = HeartBeatMode.Active; 
 
-            var codec = DI.Get<StringCodec>();
+            var codec = Di.Get<StringCodec>();
             if (codec.StringDecoder.GetType() != customSetting.Decoder)
-                codec.StringDecoder = (StringDatagramDecoder)DI.Get(customSetting.Decoder);
+                codec.StringDecoder = (StringDatagramDecoder)Di.Get(customSetting.Decoder);
             if (codec.StringEncoder.GetType() != customSetting.Encoder)
-                codec.StringEncoder = (StringDatagramEncoder)DI.Get(customSetting.Encoder);
+                codec.StringEncoder = (StringDatagramEncoder)Di.Get(customSetting.Encoder);
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
             if (protocolFamily.CommandParser.GetType() != customSetting.CommandParser)
-                protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(customSetting.CommandParser);
+                protocolFamily.CommandParser = (StringProtocolCommandParser) Di.Get(customSetting.CommandParser);
 
-            var protocolFilter = DI.Get<SocketProtocolFilter>();
+            var protocolFilter = Di.Get<SocketProtocolFilter>();
             protocolFilter.Bind(codec, protocolFamily);
             protocolFilter.AddHandlers(handler);
 
-            _Tunnel.AddFilters(DI.Get<LogFilter>());
+            _tunnel.AddFilters(Di.Get<LogFilter>());
             if (customSetting.NeedHeartBeat)
-                _Tunnel.AddFilters(heartbeatServerFilter);
-            _Tunnel.AddFilters(protocolFilter);
+                _tunnel.AddFilters(heartbeatServerFilter);
+            _tunnel.AddFilters(protocolFilter);
 
-            _Client.Config = config;
-            _Client.Configure(customSetting.IpAddress, customSetting.Port);
-            _Tunnel.BindDataConnector(_Client);
-            _IsInitialized = true;
+            _client.Config = config;
+            _client.Configure(customSetting.IpAddress, customSetting.Port);
+            _tunnel.BindDataConnector(_client);
+            _isInitialized = true;
         }
 
         private StringProtocolFamily GetProtocolFamily()
         {
-            _Family.FamilyName = "socket-kit";
+            _family.FamilyName = "socket-kit";
 
-            var custom = DI.Get<StringProtocol>("TestCustom");
-            custom.Family = _Family.FamilyName;
+            var custom = Di.Get<StringProtocol>("TestCustom");
+            custom.Family = _family.FamilyName;
             custom.Command = "custom";
 
-            return _Family;
+            return _family;
         }
 
         public void Start()
         {
-            if (_Client != null)
-                _Client.Start();
+            if (_client != null)
+                _client.Start();
         }
 
         public void Stop()
         {
-            if (_Client != null)
-                _Client.Stop();
+            if (_client != null)
+                _client.Stop();
         }
 
     }

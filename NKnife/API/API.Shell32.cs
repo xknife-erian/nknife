@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NKnife.API
 {
-    public sealed partial class API
+    public sealed partial class Api
     {
         /// <summary>
         /// Wraps necessary Shell32.dll structures and functions required to retrieve Icon Handles using SHGetFileInfo. Code
@@ -12,50 +12,50 @@ namespace NKnife.API
         /// </summary>
         public class Shell32
         {
-            public const int MAX_PATH = 256;
+            public const int MaxPath = 256;
 
             // Browsing for directory.
-            public const uint BIF_RETURNONLYFSDIRS = 0x0001;
-            public const uint BIF_DONTGOBELOWDOMAIN = 0x0002;
-            public const uint BIF_STATUSTEXT = 0x0004;
-            public const uint BIF_RETURNFSANCESTORS = 0x0008;
-            public const uint BIF_EDITBOX = 0x0010;
-            public const uint BIF_VALIDATE = 0x0020;
-            public const uint BIF_NEWDIALOGSTYLE = 0x0040;
-            public const uint BIF_USENEWUI = (BIF_NEWDIALOGSTYLE | BIF_EDITBOX);
-            public const uint BIF_BROWSEINCLUDEURLS = 0x0080;
-            public const uint BIF_BROWSEFORCOMPUTER = 0x1000;
-            public const uint BIF_BROWSEFORPRINTER = 0x2000;
-            public const uint BIF_BROWSEINCLUDEFILES = 0x4000;
-            public const uint BIF_SHAREABLE = 0x8000;
+            public const uint BifReturnonlyfsdirs = 0x0001;
+            public const uint BifDontgobelowdomain = 0x0002;
+            public const uint BifStatustext = 0x0004;
+            public const uint BifReturnfsancestors = 0x0008;
+            public const uint BifEditbox = 0x0010;
+            public const uint BifValidate = 0x0020;
+            public const uint BifNewdialogstyle = 0x0040;
+            public const uint BifUsenewui = (BifNewdialogstyle | BifEditbox);
+            public const uint BifBrowseincludeurls = 0x0080;
+            public const uint BifBrowseforcomputer = 0x1000;
+            public const uint BifBrowseforprinter = 0x2000;
+            public const uint BifBrowseincludefiles = 0x4000;
+            public const uint BifShareable = 0x8000;
 
-            public const uint SHGFI_ICON = 0x000000100; // get icon
-            public const uint SHGFI_DISPLAYNAME = 0x000000200; // get display name
-            public const uint SHGFI_TYPENAME = 0x000000400; // get type name
-            public const uint SHGFI_ATTRIBUTES = 0x000000800; // get attributes
-            public const uint SHGFI_ICONLOCATION = 0x000001000; // get icon location
-            public const uint SHGFI_EXETYPE = 0x000002000; // return exe type
-            public const uint SHGFI_SYSICONINDEX = 0x000004000; // get system icon index
-            public const uint SHGFI_LINKOVERLAY = 0x000008000; // put a link overlay on icon
-            public const uint SHGFI_SELECTED = 0x000010000; // show icon in selected state
-            public const uint SHGFI_ATTR_SPECIFIED = 0x000020000; // get only specified attributes
-            public const uint SHGFI_LARGEICON = 0x000000000; // get large icon
-            public const uint SHGFI_SMALLICON = 0x000000001; // get small icon
-            public const uint SHGFI_OPENICON = 0x000000002; // get open icon
-            public const uint SHGFI_SHELLICONSIZE = 0x000000004; // get shell size icon
-            public const uint SHGFI_PIDL = 0x000000008; // pszPath is a pidl
-            public const uint SHGFI_USEFILEATTRIBUTES = 0x000000010; // use passed dwFileAttribute
-            public const uint SHGFI_ADDOVERLAYS = 0x000000020; // apply the appropriate overlays
-            public const uint SHGFI_OVERLAYINDEX = 0x000000040; // Get the index of the overlay
+            public const uint ShgfiIcon = 0x000000100; // get icon
+            public const uint ShgfiDisplayname = 0x000000200; // get display name
+            public const uint ShgfiTypename = 0x000000400; // get type name
+            public const uint ShgfiAttributes = 0x000000800; // get attributes
+            public const uint ShgfiIconlocation = 0x000001000; // get icon location
+            public const uint ShgfiExetype = 0x000002000; // return exe type
+            public const uint ShgfiSysiconindex = 0x000004000; // get system icon index
+            public const uint ShgfiLinkoverlay = 0x000008000; // put a link overlay on icon
+            public const uint ShgfiSelected = 0x000010000; // show icon in selected state
+            public const uint ShgfiAttrSpecified = 0x000020000; // get only specified attributes
+            public const uint ShgfiLargeicon = 0x000000000; // get large icon
+            public const uint ShgfiSmallicon = 0x000000001; // get small icon
+            public const uint ShgfiOpenicon = 0x000000002; // get open icon
+            public const uint ShgfiShelliconsize = 0x000000004; // get shell size icon
+            public const uint ShgfiPidl = 0x000000008; // pszPath is a pidl
+            public const uint ShgfiUsefileattributes = 0x000000010; // use passed dwFileAttribute
+            public const uint ShgfiAddoverlays = 0x000000020; // apply the appropriate overlays
+            public const uint ShgfiOverlayindex = 0x000000040; // Get the index of the overlay
 
-            public const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
-            public const uint FILE_ATTRIBUTE_NORMAL = 0x00000080;
+            public const uint FileAttributeDirectory = 0x00000010;
+            public const uint FileAttributeNormal = 0x00000080;
 
             [DllImport("Shell32.dll")]
             public static extern IntPtr SHGetFileInfo(
                 string pszPath,
                 uint dwFileAttributes,
-                ref SHFILEINFO psfi,
+                ref Shfileinfo psfi,
                 uint cbFileInfo,
                 uint uFlags
                 );
@@ -63,7 +63,7 @@ namespace NKnife.API
             #region Nested type: BROWSEINFO
 
             [StructLayout(LayoutKind.Sequential)]
-            public struct BROWSEINFO
+            public struct Browseinfo
             {
                 public IntPtr hwndOwner;
                 public IntPtr pidlRoot;
@@ -80,9 +80,9 @@ namespace NKnife.API
             #region Nested type: ITEMIDLIST
 
             [StructLayout(LayoutKind.Sequential)]
-            public struct ITEMIDLIST
+            public struct Itemidlist
             {
-                public SHITEMID mkid;
+                public Shitemid mkid;
             }
 
             #endregion
@@ -90,14 +90,14 @@ namespace NKnife.API
             #region Nested type: SHFILEINFO
 
             [StructLayout(LayoutKind.Sequential)]
-            public struct SHFILEINFO
+            public struct Shfileinfo
             {
-                public const int NAMESIZE = 80;
+                public const int Namesize = 80;
                 public IntPtr hIcon;
                 public int iIcon;
                 public uint dwAttributes;
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_PATH)] public string szDisplayName;
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NAMESIZE)] public string szTypeName;
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] public string szDisplayName;
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = Namesize)] public string szTypeName;
             };
 
             #endregion
@@ -105,7 +105,7 @@ namespace NKnife.API
             #region Nested type: SHITEMID
 
             [StructLayout(LayoutKind.Sequential)]
-            public struct SHITEMID
+            public struct Shitemid
             {
                 public ushort cb;
                 [MarshalAs(UnmanagedType.LPArray)] public byte[] abID;

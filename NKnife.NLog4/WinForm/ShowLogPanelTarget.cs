@@ -16,35 +16,35 @@ namespace NKnife.NLog.WinForm
     [Target("LoggerListView")]
     public class ShowLogPanelTarget : TargetWithLayout
     {
-        private readonly LoggerListView _LoggerListView;
+        private readonly LoggerListView _loggerListView;
 
-        private readonly SyncQueue<LogEventInfo> _LogQueue = new SyncQueue<LogEventInfo>();
-        private bool _WriteEnable = true;
+        private readonly SyncQueue<LogEventInfo> _logQueue = new SyncQueue<LogEventInfo>();
+        private bool _writeEnable = true;
 
         public ShowLogPanelTarget()
         {
-            _LoggerListView = LoggerListView.Instance;
+            _loggerListView = LoggerListView.Instance;
             var thread = new Thread(() =>
             {
-                while (_WriteEnable)
+                while (_writeEnable)
                 {
-                    if (_LogQueue.Count <= 0)
-                        _LogQueue.AddEvent.WaitOne();
+                    if (_logQueue.Count <= 0)
+                        _logQueue.AddEvent.WaitOne();
                     LogEventInfo logEvent;
-                    bool has = _LogQueue.TryDequeue(out logEvent);
+                    bool has = _logQueue.TryDequeue(out logEvent);
                     if (!has)
                         continue;
-                    _LoggerListView.ThreadSafeInvoke(() =>
+                    _loggerListView.ThreadSafeInvoke(() =>
                     {
                         if (logEvent != null)
-                            _LoggerListView.ViewModel.AddLogInfo(logEvent);
+                            _loggerListView.ViewModel.AddLogInfo(logEvent);
                     });
                 }
             }) {Name = "NKnife-NLog4ListView-Thread", IsBackground = true};
             Application.ApplicationExit += (s, e) =>
             {
-                _WriteEnable = false;
-                _LogQueue.AddEvent.Set();
+                _writeEnable = false;
+                _logQueue.AddEvent.Set();
                 Thread.Sleep(10);
                 thread.Abort();
             };
@@ -55,9 +55,9 @@ namespace NKnife.NLog.WinForm
         {
             try
             {
-                if (null != _LoggerListView && !_LoggerListView.IsDisposed)
+                if (null != _loggerListView && !_loggerListView.IsDisposed)
                 {
-                    _LogQueue.Enqueue(logEvent);
+                    _logQueue.Enqueue(logEvent);
                 }
             }
             catch (Exception e)

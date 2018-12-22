@@ -10,22 +10,22 @@ namespace NKnife.Tunnel.Base
 {
     public abstract class BaseProtocolHandler<TData> : ITunnelProtocolHandler<TData>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolHandler<TData>>();
+        private static readonly ILog _Logger = LogManager.GetLogger<BaseProtocolHandler<TData>>();
 
         #region Codec
 
-        private ITunnelCodec<TData> _CodecBase;
+        private ITunnelCodec<TData> _codecBase;
 
         public ITunnelCodec<TData> Codec
         {
-            get { return _CodecBase; }
-            set { _CodecBase = value; }
+            get { return _codecBase; }
+            set { _codecBase = value; }
         }
 
         ITunnelCodec<TData> ITunnelProtocolHandler<TData>.Codec
         {
-            get { return _CodecBase; }
-            set { _CodecBase = value; }
+            get { return _codecBase; }
+            set { _codecBase = value; }
         }
 
         #endregion
@@ -38,7 +38,7 @@ namespace NKnife.Tunnel.Base
 
         public virtual void Bind(ITunnelCodec<TData> codec, IProtocolFamily<TData> protocolFamily)
         {
-            _CodecBase = codec;
+            _codecBase = codec;
             _Family = protocolFamily;
         }
 
@@ -52,7 +52,7 @@ namespace NKnife.Tunnel.Base
             try
             {
                 TData original = _Family.Generate(protocol);
-                byte[] data = _CodecBase.Encoder.Execute(original);
+                byte[] data = _codecBase.Encoder.Execute(original);
                 EventHandler<SessionEventArgs> handler = SendToSession;
                 if (handler != null)
                 {
@@ -63,7 +63,7 @@ namespace NKnife.Tunnel.Base
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("发送protocol异常,{0}", ex));
+                _Logger.Warn(string.Format("发送protocol异常,{0}", ex));
             }
         }
 
@@ -86,7 +86,7 @@ namespace NKnife.Tunnel.Base
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("发送data异常,{0}", ex));
+                _Logger.Warn(string.Format("发送data异常,{0}", ex));
             }
         }
 
@@ -95,7 +95,7 @@ namespace NKnife.Tunnel.Base
             try
             {
                 TData str = _Family.Generate(protocol);
-                byte[] data = _CodecBase.Encoder.Execute(str);
+                byte[] data = _codecBase.Encoder.Execute(str);
                 EventHandler<SessionEventArgs> handler = SendToAll;
                 if (handler != null)
                 {
@@ -105,7 +105,7 @@ namespace NKnife.Tunnel.Base
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("发送protocol异常,{0}", ex));
+                _Logger.Warn(string.Format("发送protocol异常,{0}", ex));
             }
         }
 
@@ -122,7 +122,7 @@ namespace NKnife.Tunnel.Base
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("发送data异常,{0}", ex));
+                _Logger.Warn(string.Format("发送data异常,{0}", ex));
             }
         }
     }

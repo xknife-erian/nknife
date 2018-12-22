@@ -15,20 +15,20 @@ namespace NKnife.Wrapper
     [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUppercase")]
     public class Duration
     {
-        private readonly long _Freq;
+        private readonly long _freq;
 
         /// <summary>
         ///     高精度计时器是否启动的标记
         /// </summary>
-        private bool _RunFlag;
+        private bool _runFlag;
 
-        private double _DurationValue;
+        private double _durationValue;
 
-        private long _StartTime, _StopTime;
+        private long _startTime, _stopTime;
 
         public Duration()
         {
-            if (DurationMethods.QueryPerformanceFrequency(out _Freq) == false)
+            if (DurationMethods.QueryPerformanceFrequency(out _freq) == false)
             {
                 throw new Win32Exception();
             }
@@ -51,30 +51,30 @@ namespace NKnife.Wrapper
         {
             get
             {
-                if (_DurationValue <= 0)
+                if (_durationValue <= 0)
                 {
-                    _DurationValue = (End - Begin).TotalMilliseconds;
+                    _durationValue = (End - Begin).TotalMilliseconds;
                 }
-                return _DurationValue;
+                return _durationValue;
             }
-            set { _DurationValue = value; }
+            set => _durationValue = value;
         }
 
         public static Duration GetDuration(DateTime beginTime, DateTime endTime)
         {
-            var dura = new Duration();
-            dura.Begin = beginTime;
-            dura.End = endTime;
-            return dura;
+            var d = new Duration();
+            d.Begin = beginTime;
+            d.End = endTime;
+            return d;
         }
 
         public static Duration Stop(DateTime beginTime)
         {
-            var dur = new Duration();
-            dur.Begin = beginTime;
-            dur.End = DateTime.Now;
-            dur.DurationValue = (dur.End - dur.Begin).TotalMilliseconds;
-            return dur;
+            var d = new Duration();
+            d.Begin = beginTime;
+            d.End = DateTime.Now;
+            d.DurationValue = (d.End - d.Begin).TotalMilliseconds;
+            return d;
         }
 
         public static bool operator ==(Duration aTime, Duration bTime)
@@ -102,14 +102,14 @@ namespace NKnife.Wrapper
         /// </summary>
         public bool Start()
         {
-            if (_RunFlag)
+            if (_runFlag)
             {
                 return false;
             }
-            _RunFlag = true;
+            _runFlag = true;
             Thread.Sleep(0);
             Begin = DateTime.Now;
-            DurationMethods.QueryPerformanceCounter(out _StartTime);
+            DurationMethods.QueryPerformanceCounter(out _startTime);
             return true;
         }
 
@@ -118,14 +118,14 @@ namespace NKnife.Wrapper
         /// </summary>
         public bool Stop()
         {
-            if (!_RunFlag)
+            if (!_runFlag)
             {
                 return false;
             }
-            _RunFlag = false;
+            _runFlag = false;
             End = DateTime.Now;
-            DurationMethods.QueryPerformanceCounter(out _StopTime);
-            _DurationValue = (_StartTime - _StopTime)/(double) _Freq*1000;
+            DurationMethods.QueryPerformanceCounter(out _stopTime);
+            _durationValue = (_startTime - _stopTime)/(double) _freq*1000;
             return true;
         }
 
@@ -156,7 +156,7 @@ namespace NKnife.Wrapper
 
         public override int GetHashCode()
         {
-            return unchecked(27*Begin.GetHashCode() + End.GetHashCode() + DurationValue.GetHashCode());
+            return unchecked(27 * Begin.GetHashCode() + End.GetHashCode() + DurationValue.GetHashCode());
         }
 
         internal static class DurationMethods

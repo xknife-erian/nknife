@@ -12,11 +12,11 @@ namespace NKnife.Protocol.Generic
     [Serializable]
     public class StringProtocolFamily : IProtocolFamily<string>
     {
-        private StringProtocolCommandParser _CommandParser;
+        private StringProtocolCommandParser _commandParser;
         protected Func<string, StringProtocol> _DefaultProtocolBuilder;
         protected Func<string, StringProtocolPacker> _DefaultProtocolPackerGetter;
         protected Func<string, StringProtocolUnPacker> _DefaultProtocolUnPackerGetter;
-        private bool _HasSetCommandParser;
+        private bool _hasSetCommandParser;
         protected Dictionary<string, Func<string, StringProtocol>> _ProtocolBuilderMap = new Dictionary<string, Func<string, StringProtocol>>();
         protected Dictionary<string, Func<string, StringProtocolPacker>> _ProtocolPackerGetterMap = new Dictionary<string, Func<string, StringProtocolPacker>>();
         protected Dictionary<string, Func<string, StringProtocolUnPacker>> _ProtocolUnPackerGetterMap = new Dictionary<string, Func<string, StringProtocolUnPacker>>();
@@ -34,26 +34,26 @@ namespace NKnife.Protocol.Generic
         {
             get
             {
-                if (!_HasSetCommandParser)
+                if (!_hasSetCommandParser)
                 {
                     try
                     {
-                        _CommandParser = string.IsNullOrEmpty(FamilyName)
-                            ? DI.Get<StringProtocolCommandParser>()
-                            : DI.Get<StringProtocolCommandParser>(FamilyName);
+                        _commandParser = string.IsNullOrEmpty(FamilyName)
+                            ? Di.Get<StringProtocolCommandParser>()
+                            : Di.Get<StringProtocolCommandParser>(FamilyName);
                     }
                     catch (ActivationException ex)
                     {
-                        _CommandParser = DI.Get<StringProtocolCommandParser>();
+                        _commandParser = Di.Get<StringProtocolCommandParser>();
                     }
-                    _HasSetCommandParser = true;
+                    _hasSetCommandParser = true;
                 }
-                return _CommandParser;
+                return _commandParser;
             }
             set
             {
-                _CommandParser = value;
-                _HasSetCommandParser = true;
+                _commandParser = value;
+                _hasSetCommandParser = true;
             }
         }
 
@@ -72,7 +72,7 @@ namespace NKnife.Protocol.Generic
             }
             else
             {
-                result = _DefaultProtocolBuilder == null ? DI.Get<StringProtocol>() : _DefaultProtocolBuilder.Invoke(command);
+                result = _DefaultProtocolBuilder == null ? Di.Get<StringProtocol>() : _DefaultProtocolBuilder.Invoke(command);
             }
             result.Family = FamilyName;
             result.Command = command;
@@ -118,7 +118,7 @@ namespace NKnife.Protocol.Generic
                 {
                     if (_DefaultProtocolUnPackerGetter == null)
                     {
-                        DI.Get<StringProtocolUnPacker>().Execute(protocol, datagram, command);
+                        Di.Get<StringProtocolUnPacker>().Execute(protocol, datagram, command);
                     }
                     else
                     {
@@ -146,7 +146,7 @@ namespace NKnife.Protocol.Generic
                 return _ProtocolPackerGetterMap[command].Invoke(command).Combine(protocol);
             }
             return _DefaultProtocolPackerGetter == null
-                ? DI.Get<StringProtocolPacker>().Combine(protocol)
+                ? Di.Get<StringProtocolPacker>().Combine(protocol)
                 : _DefaultProtocolPackerGetter.Invoke(command).Combine(protocol);
         }
 
@@ -164,7 +164,7 @@ namespace NKnife.Protocol.Generic
                 return _ProtocolPackerGetterMap[command].Invoke(param).Combine(protocol);
             }
             return _DefaultProtocolPackerGetter == null
-                ? DI.Get<StringProtocolPacker>().Combine(protocol)
+                ? Di.Get<StringProtocolPacker>().Combine(protocol)
                 : _DefaultProtocolPackerGetter.Invoke(param).Combine(protocol);
         }
 

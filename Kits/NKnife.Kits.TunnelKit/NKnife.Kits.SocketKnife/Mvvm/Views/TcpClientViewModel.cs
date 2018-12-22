@@ -18,10 +18,10 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 {
     public class TcpClientViewModel : ViewModelBase
     {
-        private readonly DemoClient _Client = new DemoClient();
-        private StringProtocol _Protocol;
-        private DemoClientHandler _Handler;
-        private readonly ProtocolViewModel _ProtocolViewModel = DI.Get<ProtocolViewModel>();
+        private readonly DemoClient _client = new DemoClient();
+        private StringProtocol _protocol;
+        private DemoClientHandler _handler;
+        private readonly ProtocolViewModel _protocolViewModel = Di.Get<ProtocolViewModel>();
 
         public TcpClientViewModel()
         {
@@ -30,10 +30,10 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         public StringProtocol CurrentProtocol
         {
-            get { return _Protocol; }
+            get { return _protocol; }
             set
             {
-                _Protocol = value;
+                _protocol = value;
                 RaisePropertyChanged(() => CurrentProtocol);
             }
         }
@@ -42,15 +42,15 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
 
         internal void StartClient(SocketConfig config, SocketCustomSetting customSetting)
         {
-            _Handler = new DemoClientHandler(_Client.GetFamily(),SocketMessages);
-            _Client.Initialize(config, customSetting, _Handler);
-            _Client.Start();
+            _handler = new DemoClientHandler(_client.GetFamily(),SocketMessages);
+            _client.Initialize(config, customSetting, _handler);
+            _client.Start();
             //_ProtocolViewModel.AddFamily(_Client.GetFamily());
         }
 
         public void StopClient()
         {
-            _Client.Stop();
+            _client.Stop();
         }
 
     }

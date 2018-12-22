@@ -13,10 +13,10 @@ namespace NKnife.Kits.ChannelKit.Dialogs
 {
     public partial class QuestionsEditorDialog : Form
     {
-        private bool _CurrentIsHex;
+        private bool _currentIsHex;
 
-        private bool _IsSingleAsk;
-        private QuestionsEditorDialogViewModel _ViewData;
+        private bool _isSingleAsk;
+        private QuestionsEditorDialogViewModel _viewData;
 
         public QuestionsEditorDialog()
         {
@@ -27,17 +27,17 @@ namespace NKnife.Kits.ChannelKit.Dialogs
 
         public QuestionsEditorDialogViewModel ViewData
         {
-            get { return _ViewData; }
+            get { return _viewData; }
             set
             {
                 if (value == null)
                     return;
-                _ViewData = value;
-                _ViewData.PropertyChanged += (sender, args) =>
+                _viewData = value;
+                _viewData.PropertyChanged += (sender, args) =>
                 {
                     switch (args.PropertyName)
                     {
-                        case nameof(_ViewData.SerialEnable):
+                        case nameof(_viewData.SerialEnable):
                             {
                                 if (!_SingleQuestionTextbox.IsEmptyText())
                                     _SingleAskButton.Enabled = true;
@@ -54,13 +54,13 @@ namespace NKnife.Kits.ChannelKit.Dialogs
                 (sender, args) => { _SingleAskButton.Enabled = (!_SingleQuestionTextbox.IsEmptyText()) && ViewData.SerialEnable; };
             _IsHexDisplayCheckBox.CheckedChanged += (sender, args) =>
             {
-                _CurrentIsHex = _IsHexDisplayCheckBox.Checked;
+                _currentIsHex = _IsHexDisplayCheckBox.Checked;
                 var text = _SingleQuestionTextbox.Text;
                 if (!string.IsNullOrWhiteSpace(text))
                 {
                     try
                     {
-                        _SingleQuestionTextbox.Text = !_CurrentIsHex
+                        _SingleQuestionTextbox.Text = !_currentIsHex
                             ? Encoding.Default.GetString(text.ToBytes())
                             : Encoding.Default.GetBytes(text).ToHexString();
                     }
@@ -68,7 +68,7 @@ namespace NKnife.Kits.ChannelKit.Dialogs
                     {
                     }
                 }
-                _SingleQuestionTextbox.BackColor = !_CurrentIsHex ? Color.PapayaWhip : Color.LightCyan;
+                _SingleQuestionTextbox.BackColor = !_currentIsHex ? Color.PapayaWhip : Color.LightCyan;
             };
 
             #region Single
@@ -84,7 +84,7 @@ namespace NKnife.Kits.ChannelKit.Dialogs
                 if (!_SingleQuestionTextbox.IsEmptyText())
                 {
                     byte[] bs;
-                    if (_CurrentIsHex)
+                    if (_currentIsHex)
                     {
                         try
                         {
@@ -114,14 +114,14 @@ namespace NKnife.Kits.ChannelKit.Dialogs
                 }
                 else
                 {
-                    if (!_IsSingleAsk)
+                    if (!_isSingleAsk)
                     {
                         _MultitermPage.Enabled = false;
                         _UserPage.Enabled = false;
                         _IsSingleLoopCheckBox.Enabled = false;
                         _LoopTimeNumericUpDown.Enabled = false;
                         _SingleAskButton.Text = "停止";
-                        _IsSingleAsk = true;
+                        _isSingleAsk = true;
                         OnAsked(new AskEventArgs(ViewData));
                     }
                     else
@@ -131,7 +131,7 @@ namespace NKnife.Kits.ChannelKit.Dialogs
                         _IsSingleLoopCheckBox.Enabled = true;
                         _LoopTimeNumericUpDown.Enabled = true;
                         _SingleAskButton.Text = "发送";
-                        _IsSingleAsk = false;
+                        _isSingleAsk = false;
                         OnEndAsked();
                     }
                 }

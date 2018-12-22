@@ -10,17 +10,17 @@ namespace NKnife.Zip
     /// </summary>
     public class GZipFileEntry
     {
-        private DateTime _CreationTime;
-        private int _FileEntryLength;
+        private DateTime _creationTime;
+        private int _fileEntryLength;
 
 
-        private string _FileFullName;
-        private int _GZipFileLength;
+        private string _fileFullName;
+        private int _gZipFileLength;
 
 
-        private DateTime _LastAccessTime;
-        private DateTime _LastWriteTime;
-        private int _OriginalLength;
+        private DateTime _lastAccessTime;
+        private DateTime _lastWriteTime;
+        private int _originalLength;
 
 
         public GZipFileEntry()
@@ -33,32 +33,32 @@ namespace NKnife.Zip
             var fileInfo = new FileInfo(fileName);
 
 
-            _OriginalLength = (int) fileInfo.Length;
-            _FileFullName = fileInfo.FullName;
-            _CreationTime = fileInfo.CreationTime;
-            _LastAccessTime = fileInfo.LastAccessTime;
-            _LastWriteTime = fileInfo.LastWriteTime;
+            _originalLength = (int) fileInfo.Length;
+            _fileFullName = fileInfo.FullName;
+            _creationTime = fileInfo.CreationTime;
+            _lastAccessTime = fileInfo.LastAccessTime;
+            _lastWriteTime = fileInfo.LastWriteTime;
         }
 
 
         public int OriginalLength
         {
-            get { return _OriginalLength; }
-            set { _OriginalLength = value; }
+            get { return _originalLength; }
+            set { _originalLength = value; }
         }
 
 
         public int GZipFileLength
         {
-            get { return _GZipFileLength; }
-            set { _GZipFileLength = value; }
+            get { return _gZipFileLength; }
+            set { _gZipFileLength = value; }
         }
 
 
         public int FileEntryLength
         {
-            get { return _FileEntryLength; }
-            set { _FileEntryLength = value; }
+            get { return _fileEntryLength; }
+            set { _fileEntryLength = value; }
         }
 
         public string FormattedStr
@@ -68,13 +68,13 @@ namespace NKnife.Zip
                 var sb = new StringBuilder();
 
 
-                sb.Append(Path.GetFileName(_FileFullName));
-                sb.Append("|" + _OriginalLength);
-                sb.Append("|" + _GZipFileLength);
-                sb.Append("|" + _LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss"));
-                sb.Append("|" + _LastAccessTime.ToString("yyyy-MM-dd hh:mm:ss"));
-                sb.Append("|" + _CreationTime.ToString("yyyy-MM-dd hh:mm:ss"));
-                sb.Append("|" + _FileFullName);
+                sb.Append(Path.GetFileName(_fileFullName));
+                sb.Append("|" + _originalLength);
+                sb.Append("|" + _gZipFileLength);
+                sb.Append("|" + _lastWriteTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                sb.Append("|" + _lastAccessTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                sb.Append("|" + _creationTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                sb.Append("|" + _fileFullName);
 
 
                 return sb.ToString();
@@ -84,21 +84,21 @@ namespace NKnife.Zip
 
         public string FileName
         {
-            get { return Path.GetFileName(_FileFullName); }
+            get { return Path.GetFileName(_fileFullName); }
         }
 
 
         public string FileFullName
         {
-            get { return _FileFullName; }
+            get { return _fileFullName; }
         }
 
 
         public void WriteLengthInfo(Stream outStream)
         {
-            byte[] bytes1 = BitConverter.GetBytes(_OriginalLength);
-            byte[] bytes2 = BitConverter.GetBytes(_GZipFileLength);
-            byte[] bytes3 = BitConverter.GetBytes(_FileEntryLength);
+            byte[] bytes1 = BitConverter.GetBytes(_originalLength);
+            byte[] bytes2 = BitConverter.GetBytes(_gZipFileLength);
+            byte[] bytes3 = BitConverter.GetBytes(_fileEntryLength);
 
 
             SimpleCipher.EncryptBytes(bytes1);
@@ -129,9 +129,9 @@ namespace NKnife.Zip
             SimpleCipher.EncryptBytes(bytes3);
 
 
-            _OriginalLength = BitConverter.ToInt32(bytes1, 0);
-            _GZipFileLength = BitConverter.ToInt32(bytes2, 0);
-            _FileEntryLength = BitConverter.ToInt32(bytes3, 0);
+            _originalLength = BitConverter.ToInt32(bytes1, 0);
+            _gZipFileLength = BitConverter.ToInt32(bytes2, 0);
+            _fileEntryLength = BitConverter.ToInt32(bytes3, 0);
         }
 
 
@@ -142,13 +142,13 @@ namespace NKnife.Zip
             outStream.Write(entryBytes, 0, entryBytes.Length); // 文件项内容
 
 
-            _FileEntryLength = entryBytes.Length;
+            _fileEntryLength = entryBytes.Length;
         }
 
 
         public void ReadEntryInfo(Stream srcStream)
         {
-            var entryBytes = new byte[_FileEntryLength];
+            var entryBytes = new byte[_fileEntryLength];
             srcStream.Read(entryBytes, 0, entryBytes.Length); // FileEntry 字节
             SimpleCipher.EncryptBytes(entryBytes);
 
@@ -162,23 +162,23 @@ namespace NKnife.Zip
             long lastCreateTimeticks = long.Parse(strArray[5]);
 
 
-            _LastWriteTime = new DateTime(lastWriteTimeticks);
-            _LastAccessTime = new DateTime(lastAccessTimeticks);
-            _CreationTime = new DateTime(lastCreateTimeticks);
+            _lastWriteTime = new DateTime(lastWriteTimeticks);
+            _lastAccessTime = new DateTime(lastAccessTimeticks);
+            _creationTime = new DateTime(lastCreateTimeticks);
 
 
-            _FileFullName = strArray[6];
+            _fileFullName = strArray[6];
         }
 
 
         public void ResetFileDateTime(string folderCompressTo)
         {
-            string fileName = folderCompressTo + Path.GetFileName(_FileFullName);
+            string fileName = folderCompressTo + Path.GetFileName(_fileFullName);
 
 
-            File.SetLastAccessTime(fileName, _LastAccessTime);
-            File.SetCreationTime(fileName, _CreationTime);
-            File.SetLastWriteTime(fileName, _LastWriteTime);
+            File.SetLastAccessTime(fileName, _lastAccessTime);
+            File.SetCreationTime(fileName, _creationTime);
+            File.SetLastWriteTime(fileName, _lastWriteTime);
         }
 
 
@@ -187,13 +187,13 @@ namespace NKnife.Zip
             var sb = new StringBuilder();
 
 
-            sb.Append(Path.GetFileName(_FileFullName));
-            sb.Append("|" + _OriginalLength);
-            sb.Append("|" + _GZipFileLength);
-            sb.Append("|" + _LastWriteTime.Ticks);
-            sb.Append("|" + _LastAccessTime.Ticks);
-            sb.Append("|" + _CreationTime.Ticks);
-            sb.Append("|" + _FileFullName);
+            sb.Append(Path.GetFileName(_fileFullName));
+            sb.Append("|" + _originalLength);
+            sb.Append("|" + _gZipFileLength);
+            sb.Append("|" + _lastWriteTime.Ticks);
+            sb.Append("|" + _lastAccessTime.Ticks);
+            sb.Append("|" + _creationTime.Ticks);
+            sb.Append("|" + _fileFullName);
 
 
             string str = sb.ToString();

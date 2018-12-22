@@ -22,22 +22,22 @@ namespace NKnife.Kits.SocketKnife.Mvvm
     /// </summary>
     public partial class Workbench : Window
     {
-        private readonly ILog _Logger = LogManager.GetLogger<Workbench>();
+        private readonly ILog _logger = LogManager.GetLogger<Workbench>();
 
         public Workbench()
         {
             InitializeComponent();
 
-            DI.Get<DockUtil>().Init(_DockingManager);
-            DI.Get<DockUtil>().Buttom.Children.Add(new LoggerView());
+            Di.Get<DockUtil>().Init(_DockingManager);
+            Di.Get<DockUtil>().Buttom.Children.Add(new LoggerView());
             _RightPane.Children.Add(new ProtocolsView());
 
-            _Logger.Info("主窗体构造完成");
+            _logger.Info("主窗体构造完成");
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            var docs = DI.Get<DockUtil>().Documents;
+            var docs = Di.Get<DockUtil>().Documents;
             while (docs.Count > 0)
             {
                 docs[0].Close();
@@ -58,7 +58,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm
         private void ServerCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var win = new NewTunnelCreatorDialog();
-            win.Config = DI.Get<SocketConfig>("Server");
+            win.Config = Di.Get<SocketConfig>("Server");
             win.Title = "新建Socket服务器";
             win.IpAddressLabel = "本地IpAddress:";
             win.IsServer = true;
@@ -69,15 +69,15 @@ namespace NKnife.Kits.SocketKnife.Mvvm
                 view.Config = win.Config;
                 view.CustomSetting = win.CustomSetting;
                 view.Title = string.Format("Server: {0}", win.CustomSetting.Port);
-                _Logger.Info(string.Format("用户交互创建Server:{0},{1}", win.CustomSetting.IpAddress, win.CustomSetting.Port));
-                DI.Get<DockUtil>().Documents.Add(view);
+                _logger.Info(string.Format("用户交互创建Server:{0},{1}", win.CustomSetting.IpAddress, win.CustomSetting.Port));
+                Di.Get<DockUtil>().Documents.Add(view);
             }
         }
 
         private void ClientCreatorMenuItem_Click(object sender, ExecutedRoutedEventArgs e)
         {
             var win = new NewTunnelCreatorDialog();
-            win.Config = DI.Get<SocketConfig>("Client");
+            win.Config = Di.Get<SocketConfig>("Client");
             win.Title = "新建Socket客户端";
             win.IpAddressLabel = "远程IpAddress:";
             win.IsServer = false;
@@ -88,8 +88,8 @@ namespace NKnife.Kits.SocketKnife.Mvvm
                 view.Config = win.Config;
                 view.CustomSetting = win.CustomSetting;
                 view.Title = string.Format("Client: {0}", new IPEndPoint(win.CustomSetting.IpAddress, win.CustomSetting.Port));
-                _Logger.Info(string.Format("用户交互创建Client:{0},{1}", win.CustomSetting.IpAddress, win.CustomSetting.Port));
-                DI.Get<DockUtil>().Documents.Add(view);
+                _logger.Info(string.Format("用户交互创建Client:{0},{1}", win.CustomSetting.IpAddress, win.CustomSetting.Port));
+                Di.Get<DockUtil>().Documents.Add(view);
             }
         }
 

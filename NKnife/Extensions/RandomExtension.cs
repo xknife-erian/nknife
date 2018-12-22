@@ -7,11 +7,11 @@ namespace System
 {
     public static class RandomExtension
     {
-        private static readonly Random _random;
+        private static readonly Random _Random;
 
         static RandomExtension()
         {
-            _random = new Random(unchecked((int) DateTime.Now.Ticks));
+            _Random = new Random(unchecked((int) DateTime.Now.Ticks));
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace System
         /// <returns></returns>
         public static int GetRandomItem(this int maxValue)
         {
-            return _random.Next(maxValue) + 1;
+            return _Random.Next(maxValue) + 1;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace System
             int count = list.Count;
             if (count == 0)
                 return default(T);
-            int index = _random.Next(count);
+            int index = _Random.Next(count);
             if (removeSelected)
             {
                 T result = list[index];
@@ -54,7 +54,7 @@ namespace System
             int count = array.Length;
             if (count == 0) 
                 return default(T);
-            int index = _random.Next(count);
+            int index = _Random.Next(count);
             return array[index];
         }
 
@@ -63,7 +63,7 @@ namespace System
             int count = dictionary.Count;
             if (count == 0) 
                 return default(TKey);
-            int index = _random.Next(count);
+            int index = _Random.Next(count);
             return dictionary.Keys.ToArray()[index];
         }
 
@@ -72,7 +72,7 @@ namespace System
             int count = dictionary.Count;
             if (count == 0) 
                 return default(TKey);
-            int index = _random.Next(count);
+            int index = _Random.Next(count);
             return dictionary.Keys.ToArray()[index];
         }
 
@@ -81,7 +81,7 @@ namespace System
             int count = dictionary.Count;
             if (count == 0) 
                 return default(TValue);
-            int index = _random.Next(count);
+            int index = _Random.Next(count);
             return dictionary.Values.ToArray()[index];
         }
 
@@ -90,7 +90,7 @@ namespace System
             int count = dictionary.Count;
             if (count == 0) 
                 return default(TValue);
-            int index = _random.Next(count);
+            int index = _Random.Next(count);
             return dictionary.Values.ToArray()[index];
         }
     }

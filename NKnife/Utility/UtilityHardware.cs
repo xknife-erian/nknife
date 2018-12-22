@@ -9,7 +9,7 @@ namespace NKnife.Utility
 {
     public class UtilityHardware
     {
-        private static CPUInfo[] _infos;
+        private static CpuInfo[] _infos;
         private static string[] _macAddressArray;
 
         /// <summary>
@@ -25,18 +25,18 @@ namespace NKnife.Utility
         /// <summary>
         ///     获取指定编号的CPU信息
         /// </summary>
-        public static CPUInfo GetCPUInfo(int n = 0)
+        public static CpuInfo GetCpuInfo(int n = 0)
         {
             if (_infos == null)
             {
                 var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
                 var collection = searcher.Get();
-                _infos = new CPUInfo[collection.Count];
+                _infos = new CpuInfo[collection.Count];
                 var i = 0;
                 foreach (var o in collection)
                 {
                     var mo = (ManagementObject) o;
-                    _infos[i] = new CPUInfo();
+                    _infos[i] = new CpuInfo();
                     try
                     {
                         object propertyValue;
@@ -224,15 +224,15 @@ namespace NKnife.Utility
             }
             if (_infos != null && n < _infos.Length)
                 return _infos[n];
-            return new CPUInfo();
+            return new CpuInfo();
         }
 
         /// <summary>
         ///     获取CPU编号
         /// </summary>
-        public static string GetCPUId(int n = 0)
+        public static string GetCpuId(int n = 0)
         {
-            var cpuId = GetCPUInfo(n).ProcessorId;
+            var cpuId = GetCpuInfo(n).ProcessorId;
             return !string.IsNullOrWhiteSpace(cpuId) ? cpuId : "CPU0";
         }
 

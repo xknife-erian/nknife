@@ -18,15 +18,15 @@ namespace NKnife.Kits.SocketKnife.Demo
 {
     public class DemoClientHandler : BaseProtocolHandler<string>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<DemoClientHandler>();
+        private static readonly ILog _Logger = LogManager.GetLogger<DemoClientHandler>();
 
-        private StringProtocolFamily _Family;
-        private readonly ObservableCollection<SocketMessage> _SocketMessages;
+        private StringProtocolFamily _family;
+        private readonly ObservableCollection<SocketMessage> _socketMessages;
 
         public DemoClientHandler(StringProtocolFamily family, ObservableCollection<SocketMessage> socketMessages)
         {
-            _Family = family;
-            _SocketMessages = socketMessages;
+            _family = family;
+            _socketMessages = socketMessages;
         }
 
         public override List<string> Commands { get; set; }
@@ -36,9 +36,9 @@ namespace NKnife.Kits.SocketKnife.Demo
             var msg = new SocketMessage();
             msg.Command = protocol.Command;
             msg.SocketDirection = SocketDirection.Receive;
-            msg.Message = _Family.Generate((StringProtocol) protocol);
+            msg.Message = _family.Generate((StringProtocol) protocol);
             msg.Time = DateTime.Now.ToString("HH:mm:ss.fff");
-            _logger.Info("新消息解析完成" + msg.Message);
+            _Logger.Info("新消息解析完成" + msg.Message);
 
             try
             {
@@ -63,7 +63,7 @@ namespace NKnife.Kits.SocketKnife.Demo
 
         protected void AddSocketMessage(SocketMessage socketMessage)
         {
-            _SocketMessages.Insert(0, socketMessage);
+            _socketMessages.Insert(0, socketMessage);
         }
 
         private delegate void SocketMessageInserter(SocketMessage socketMessage);

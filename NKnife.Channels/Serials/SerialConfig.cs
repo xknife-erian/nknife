@@ -37,7 +37,7 @@ namespace NKnife.Channels.Serials
         public StopBits StopBit { get; set; } = StopBits.One;
 
         /// <summary>
-        /// 当 ReceivedBytesThreshold 引发 DataReceived 事件后，等待 ReadWait 的时间，待串口数据接收到阶段性时再进行读取
+        /// 当 ReceivedBytesThreshold 引发 DataReceived 事件后，等待 ReadWait 的时间，待串口数据接收到阶段性时再进行读取。默认值0。
         /// </summary>
         public int ReadWait { get; set; } = 0;
 

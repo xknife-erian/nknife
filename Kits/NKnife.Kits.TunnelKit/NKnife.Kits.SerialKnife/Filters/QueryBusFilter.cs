@@ -12,14 +12,14 @@ namespace NKnife.Kits.SerialKnife.Filters
 {
     public class QueryBusFilter : BaseProtocolFilter<byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<QueryBusFilter>();
-        private readonly Dictionary<long, QueryThreadWrapper> _QueryThreadMap = new Dictionary<long, QueryThreadWrapper>();
+        private static readonly ILog _Logger = LogManager.GetLogger<QueryBusFilter>();
+        private readonly Dictionary<long, QueryThreadWrapper> _queryThreadMap = new Dictionary<long, QueryThreadWrapper>();
 
         public override void ProcessSessionBuilt(long id)
         {
             //连接建立后就开始轮询
             var queryThread = new Thread(QuerySendLoop) {IsBackground = true};
-            _QueryThreadMap.Add(id, new QueryThreadWrapper
+            _queryThreadMap.Add(id, new QueryThreadWrapper
             {
                 QueryThread = queryThread,
                 RunFlag = true
@@ -33,7 +33,7 @@ namespace NKnife.Kits.SerialKnife.Filters
         private void QuerySendLoop(object state)
         {
             var id = (long) state;
-            while (_QueryThreadMap[id].RunFlag)
+            while (_queryThreadMap[id].RunFlag)
             {
                 SendProcess(id);
                 Thread.Sleep(500);
@@ -57,7 +57,7 @@ namespace NKnife.Kits.SerialKnife.Filters
             }
             catch (Exception e)
             {
-                _logger.Warn("SendProcess异常", e);
+                _Logger.Warn("SendProcess异常", e);
             }
         }
 

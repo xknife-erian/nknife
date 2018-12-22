@@ -9,7 +9,7 @@ namespace NKnife.Kits.StarterKit.Forms
 {
     public partial class ThreadTimerTestForm : DockContent
     {
-        private System.Threading.Timer _Timer;
+        private System.Threading.Timer _timer;
 
         public ThreadTimerTestForm()
         {
@@ -22,45 +22,45 @@ namespace NKnife.Kits.StarterKit.Forms
 
         private void _StopBbutton_Click(object sender, EventArgs e)
         {
-            _Timer.Dispose();
+            _timer.Dispose();
             _StartButton.Enabled = true;
             _ChangeButton.Enabled = false;
             _StopBbutton.Enabled = false;
             _CheckBox.Enabled = true;
-            _Count = 0;
+            _count = 0;
         }
 
         private void _ChangeButton_Click(object sender, EventArgs e)
         {
             var durTime = (int) _DuTimeNumericUpDown.Value;
             var period = (int) _PeriodNumericUpDown.Value;
-            _Timer.Change(durTime, period);
+            _timer.Change(durTime, period);
         }
 
         private void _StartButton_Click(object sender, EventArgs e)
         {
             var time = (int) _BaseNumericUpDown.Value;
-            _Timer = new System.Threading.Timer(CallBack, null, 0, time);
+            _timer = new System.Threading.Timer(CallBack, null, 0, time);
             _StartButton.Enabled = false;
             _ChangeButton.Enabled = true;
             _StopBbutton.Enabled = true;
             _CheckBox.Enabled = false;
         }
 
-        private int _Count = 0;
-        private bool _IsSmall = true;
+        private int _count = 0;
+        private bool _isSmall = true;
 
         private void CallBack(object state)
         {
-            _Count++;
-            Write($"######-{_Count}");
-            if (_CheckBox.Checked && _Count % 5 == 0)
+            _count++;
+            Write($"######-{_count}");
+            if (_CheckBox.Checked && _count % 5 == 0)
             {
                 var time = (int) _BaseNumericUpDown.Value;
-                if (_IsSmall)
+                if (_isSmall)
                     time = time / 4;
-                _IsSmall = !_IsSmall;
-                _Timer.Change(0, time);
+                _isSmall = !_isSmall;
+                _timer.Change(0, time);
             }
             for (int i = 0; i < 5; i++)//测试当Change时，是否还会继续执行以下的代码
             {
@@ -80,7 +80,7 @@ namespace NKnife.Kits.StarterKit.Forms
         /// <param name="e">一个包含事件数据的 <see cref="T:System.ComponentModel.CancelEventArgs" />。</param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            _Timer?.Dispose();
+            _timer?.Dispose();
             base.OnClosing(e);
         }
 

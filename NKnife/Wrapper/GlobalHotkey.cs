@@ -18,12 +18,12 @@ namespace NKnife.Wrapper
         /// <param name="fsModifiers">组合键</param> 
         /// <param name="vk">快捷键的虚拟键码</param> 
         /// <param name="callBack">回调函数</param> 
-        public static void Regist(IntPtr hWnd, NKnife.API.API.User32.GlobalHotkeyModifiers fsModifiers, Keys vk, HotKeyCallBackHanlder callBack)
+        public static void Regist(IntPtr hWnd, NKnife.API.Api.User32.GlobalHotkeyModifiers fsModifiers, Keys vk, HotKeyCallBackHanlder callBack)
         {
-            int id = keyid++;
-            if (!NKnife.API.API.User32.RegisterHotKey(hWnd, id, fsModifiers, vk))
+            int id = _keyid++;
+            if (!NKnife.API.Api.User32.RegisterHotKey(hWnd, id, fsModifiers, vk))
                 throw new Exception("regist hotkey fail.");
-            keymap[id] = callBack;
+            _keymap[id] = callBack;
         }
 
         /// <summary> 
@@ -33,10 +33,10 @@ namespace NKnife.Wrapper
         /// <param name="callBack">回调函数</param> 
         public static void UnRegist(IntPtr hWnd, HotKeyCallBackHanlder callBack)
         {
-            foreach (KeyValuePair<int, HotKeyCallBackHanlder> var in keymap)
+            foreach (KeyValuePair<int, HotKeyCallBackHanlder> var in _keymap)
             {
                 if (var.Value == callBack)
-                    NKnife.API.API.User32.UnregisterHotKey(hWnd, var.Key);
+                    NKnife.API.Api.User32.UnregisterHotKey(hWnd, var.Key);
             }
         }
 
@@ -45,20 +45,20 @@ namespace NKnife.Wrapper
         /// </summary> 
         public static void ProcessHotKey(System.Windows.Forms.Message m)
         {
-            if (m.Msg == WM_HOTKEY)
+            if (m.Msg == WmHotkey)
             {
                 int id = m.WParam.ToInt32();
                 HotKeyCallBackHanlder callback;
-                if (keymap.TryGetValue(id, out callback))
+                if (_keymap.TryGetValue(id, out callback))
                 {
                     callback();
                 }
             }
         }
 
-        const int WM_HOTKEY = 0x312;
-        static int keyid = 10;
-        static Dictionary<int, HotKeyCallBackHanlder> keymap = new Dictionary<int, HotKeyCallBackHanlder>();
+        const int WmHotkey = 0x312;
+        static int _keyid = 10;
+        static Dictionary<int, HotKeyCallBackHanlder> _keymap = new Dictionary<int, HotKeyCallBackHanlder>();
 
         /// <summary>
         /// 热键回调函数

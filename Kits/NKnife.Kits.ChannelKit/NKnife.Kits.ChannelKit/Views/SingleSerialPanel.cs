@@ -10,7 +10,7 @@ namespace NKnife.Kits.ChannelKit.Views
 {
     public partial class SingleSerialPanel : UserControl
     {
-        private readonly SingleSerialViewmodel _Viewmodel = DI.Get<SingleSerialViewmodel>();
+        private readonly SingleSerialViewmodel _viewmodel = Di.Get<SingleSerialViewmodel>();
 
         public SingleSerialPanel()
         {
@@ -22,15 +22,15 @@ namespace NKnife.Kits.ChannelKit.Views
         private void RefreshControlEnable()
         {
             SuspendLayout();
-            _ChoosePortButton.Enabled = _Viewmodel.Port == 0;
-            _ConfigurePortButton.Enabled = _Viewmodel.Port != 0;
-            _QuestionsEditorButton.Enabled = _Viewmodel.Port != 0;
-            _OpenPortButton.Enabled = _Viewmodel.Port != 0 && !_Viewmodel.IsOpen;
-            _ClosePortButton.Enabled = _Viewmodel.IsOpen;
+            _ChoosePortButton.Enabled = _viewmodel.Port == 0;
+            _ConfigurePortButton.Enabled = _viewmodel.Port != 0;
+            _QuestionsEditorButton.Enabled = _viewmodel.Port != 0;
+            _OpenPortButton.Enabled = _viewmodel.Port != 0 && !_viewmodel.IsOpen;
+            _ClosePortButton.Enabled = _viewmodel.IsOpen;
 
-            _StartButton.Enabled = _Viewmodel.IsOpen;
-            _PauseButton.Enabled = _Viewmodel.IsOpen;
-            _StopButton.Enabled = _Viewmodel.IsOpen;
+            _StartButton.Enabled = _viewmodel.IsOpen;
+            _PauseButton.Enabled = _viewmodel.IsOpen;
+            _StopButton.Enabled = _viewmodel.IsOpen;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -44,7 +44,7 @@ namespace NKnife.Kits.ChannelKit.Views
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 var port = dialog.SerialPort;
-                _Viewmodel.Port = port;
+                _viewmodel.Port = port;
                 _PortLabel.Text = $"COM{port}";
                 RefreshControlEnable();
             }
@@ -55,10 +55,10 @@ namespace NKnife.Kits.ChannelKit.Views
         /// </summary>
         private void _ConfigurePortButton_Click(object sender, EventArgs e)
         {
-            var dialog = new SerialConfigDialog {SelfModels = _Viewmodel.FromConfig()};
+            var dialog = new SerialConfigDialog {SelfModels = _viewmodel.FromConfig()};
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _Viewmodel.UpdateConfig(dialog.SelfModels);
+                _viewmodel.UpdateConfig(dialog.SelfModels);
             }
         }
 
@@ -67,10 +67,10 @@ namespace NKnife.Kits.ChannelKit.Views
         /// </summary>
         private void _OpenPortButton_Click(object sender, EventArgs e)
         {
-            if (_Viewmodel.OpenPort())
-                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口打开成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (_viewmodel.OpenPort())
+                MessageBox.Show(this, $"串口(COM{_viewmodel.Port})端口打开成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show(this, $"串口(COM{_Viewmodel.Port})端口打开失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, $"串口(COM{_viewmodel.Port})端口打开失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             RefreshControlEnable();
         }
 
@@ -79,8 +79,8 @@ namespace NKnife.Kits.ChannelKit.Views
         /// </summary>
         private void _ClosePortButton_Click(object sender, EventArgs e)
         {
-            var port = _Viewmodel.Port;
-            if (_Viewmodel.ClosePort())
+            var port = _viewmodel.Port;
+            if (_viewmodel.ClosePort())
                 MessageBox.Show(this, $"串口(COM{port})端口关闭成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
                 MessageBox.Show(this, $"串口(COM{port})端口关闭失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -89,7 +89,7 @@ namespace NKnife.Kits.ChannelKit.Views
 
         private void _StartButton_Click(object sender, EventArgs e)
         {
-            _Viewmodel.Start();
+            _viewmodel.Start();
         }
 
         private void _PauseButton_Click(object sender, EventArgs e)

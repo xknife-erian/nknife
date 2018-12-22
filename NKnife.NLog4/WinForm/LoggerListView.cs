@@ -14,12 +14,12 @@ namespace NKnife.NLog.WinForm
     /// </summary>
     public partial class LoggerListView : UserControl
     {
-        private Pair<Color, Color> _TrackColor = Pair<Color, Color>.Build(Color.CornflowerBlue, Color.White);
-        private Pair<Color, Color> _DebugColor = Pair<Color, Color>.Build(Color.DarkSlateBlue, Color.White);
-        private Pair<Color, Color> _InfoColor = Pair<Color, Color>.Build(Color.Black, Color.White);
-        private Pair<Color, Color> _WarnColor = Pair<Color, Color>.Build(Color.Black, Color.Khaki);
-        private Pair<Color, Color> _ErrorColor = Pair<Color, Color>.Build(Color.Black, Color.Orange);
-        private Pair<Color, Color> _FatalColor = Pair<Color, Color>.Build(Color.White, Color.OrangeRed);
+        private Pair<Color, Color> _trackColor = Pair<Color, Color>.Build(Color.CornflowerBlue, Color.White);
+        private Pair<Color, Color> _debugColor = Pair<Color, Color>.Build(Color.DarkSlateBlue, Color.White);
+        private Pair<Color, Color> _infoColor = Pair<Color, Color>.Build(Color.Black, Color.White);
+        private Pair<Color, Color> _warnColor = Pair<Color, Color>.Build(Color.Black, Color.Khaki);
+        private Pair<Color, Color> _errorColor = Pair<Color, Color>.Build(Color.Black, Color.Orange);
+        private Pair<Color, Color> _fatalColor = Pair<Color, Color>.Build(Color.White, Color.OrangeRed);
 
         private LoggerListView()
         {
@@ -80,12 +80,12 @@ namespace NKnife.NLog.WinForm
         public void SetColors(Pair<Color, Color> trace, Pair<Color, Color> debug, Pair<Color, Color> info, Pair<Color, Color> warn, Pair<Color, Color> error,
             Pair<Color, Color> fatal)
         {
-            _TrackColor = trace;
-            _DebugColor = debug;
-            _InfoColor = info;
-            _WarnColor = warn;
-            _ErrorColor = error;
-            _FatalColor = fatal;
+            _trackColor = trace;
+            _debugColor = debug;
+            _infoColor = info;
+            _warnColor = warn;
+            _errorColor = error;
+            _fatalColor = fatal;
         }
 
         private void LogInfos_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -104,28 +104,28 @@ namespace NKnife.NLog.WinForm
                     switch (info.LogLevel.Name)
                     {
                         case "Trace":
-                            viewItem.ForeColor = _TrackColor.First;
-                            viewItem.BackColor = _TrackColor.Second;
+                            viewItem.ForeColor = _trackColor.First;
+                            viewItem.BackColor = _trackColor.Second;
                             break;
                         case "Debug":
-                            viewItem.ForeColor = _DebugColor.First;
-                            viewItem.BackColor = _DebugColor.Second;
+                            viewItem.ForeColor = _debugColor.First;
+                            viewItem.BackColor = _debugColor.Second;
                             break;
                         case "Info":
-                            viewItem.ForeColor = _InfoColor.First;
-                            viewItem.BackColor = _InfoColor.Second;
+                            viewItem.ForeColor = _infoColor.First;
+                            viewItem.BackColor = _infoColor.Second;
                             break;
                         case "Warn":
-                            viewItem.ForeColor = _WarnColor.First;
-                            viewItem.BackColor = _WarnColor.Second;
+                            viewItem.ForeColor = _warnColor.First;
+                            viewItem.BackColor = _warnColor.Second;
                             break;
                         case "Error":
-                            viewItem.ForeColor = _ErrorColor.First;
-                            viewItem.BackColor = _ErrorColor.Second;
+                            viewItem.ForeColor = _errorColor.First;
+                            viewItem.BackColor = _errorColor.Second;
                             break;
                         case "Fatal":
-                            viewItem.ForeColor = _FatalColor.First;
-                            viewItem.BackColor = _FatalColor.Second;
+                            viewItem.ForeColor = _fatalColor.First;
+                            viewItem.BackColor = _fatalColor.Second;
                             break;
                     }
                     _ListView.Items.Insert(0, viewItem);
@@ -251,9 +251,9 @@ namespace NKnife.NLog.WinForm
         ///     获得一个本类型的单件实例.
         /// </summary>
         /// <value>The instance.</value>
-        public static LoggerListView Instance => _instance.Value;
+        public static LoggerListView Instance => _MyInstance.Value;
 
-        private static readonly Lazy<LoggerListView> _instance = new Lazy<LoggerListView>(() => new LoggerListView());
+        private static readonly Lazy<LoggerListView> _MyInstance = new Lazy<LoggerListView>(() => new LoggerListView());
 
         #endregion
     }

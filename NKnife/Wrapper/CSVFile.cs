@@ -8,13 +8,13 @@ using System.Text.RegularExpressions;
 
 namespace NKnife.Wrapper
 {
-    public class CSVFile
+    public class CsvFile
     {
         /// <summary>把DataTable的数据导出到CSV文件中
         /// </summary>
         /// <param name="dataTable">导出CSV的数据</param>
         /// <param name="savePath">导出的路径</param>
-        public static bool DatatableToCSVFile(DataTable dataTable, string savePath)
+        public static bool DatatableToCsvFile(DataTable dataTable, string savePath)
         {
             if (dataTable == null)
                 throw new ArgumentNullException("dataTable");
@@ -111,16 +111,16 @@ namespace NKnife.Wrapper
     /// </summary>
     public class CsvStreamReader
     {
-        private readonly ArrayList _Rows; //行链表,CSV文件的每一行就是一个链
+        private readonly ArrayList _rows; //行链表,CSV文件的每一行就是一个链
 
-        private Encoding _Encoding; //编码
-        private string _FileFullName; //文件名
+        private Encoding _encoding; //编码
+        private string _fileFullName; //文件名
 
         public CsvStreamReader()
         {
-            _Rows = new ArrayList();
-            _FileFullName = "";
-            _Encoding = Encoding.Default;
+            _rows = new ArrayList();
+            _fileFullName = "";
+            _encoding = Encoding.Default;
         }
 
         /// <summary>
@@ -129,9 +129,9 @@ namespace NKnife.Wrapper
         /// <param name="fileName">文件名,包括文件路径</param>
         public CsvStreamReader(string fileName)
         {
-            _Rows = new ArrayList();
-            _FileFullName = fileName;
-            _Encoding = Encoding.Default;
+            _rows = new ArrayList();
+            _fileFullName = fileName;
+            _encoding = Encoding.Default;
             LoadCsvFile();
         }
 
@@ -142,9 +142,9 @@ namespace NKnife.Wrapper
         /// <param name="encoding">文件编码</param>
         public CsvStreamReader(string fileName, Encoding encoding)
         {
-            _Rows = new ArrayList();
-            _FileFullName = fileName;
-            _Encoding = encoding;
+            _rows = new ArrayList();
+            _fileFullName = fileName;
+            _encoding = encoding;
             LoadCsvFile();
         }
 
@@ -155,7 +155,7 @@ namespace NKnife.Wrapper
         {
             set
             {
-                _FileFullName = value;
+                _fileFullName = value;
                 LoadCsvFile();
             }
         }
@@ -165,7 +165,7 @@ namespace NKnife.Wrapper
         /// </summary>
         public Encoding FileEncoding
         {
-            set { _Encoding = value; }
+            set { _encoding = value; }
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace NKnife.Wrapper
         /// </summary>
         public int RowCount
         {
-            get { return _Rows.Count; }
+            get { return _rows.Count; }
         }
 
         /// <summary>
@@ -186,11 +186,11 @@ namespace NKnife.Wrapper
                 int maxCol;
 
                 maxCol = 0;
-                for (int i = 0; i < _Rows.Count; i++)
+                for (int i = 0; i < _rows.Count; i++)
                 {
-                    var colAL = (ArrayList) _Rows[i];
+                    var colAl = (ArrayList) _rows[i];
 
-                    maxCol = (maxCol > colAL.Count) ? maxCol : colAL.Count;
+                    maxCol = (maxCol > colAl.Count) ? maxCol : colAl.Count;
                 }
 
                 return maxCol;
@@ -210,16 +210,16 @@ namespace NKnife.Wrapper
 
                 CheckRowValid(row);
                 CheckColValid(col);
-                var colAL = (ArrayList) _Rows[row - 1];
+                var colAl = (ArrayList) _rows[row - 1];
 
                 //如果请求列数据大于当前行的列时,返回空值
 
-                if (colAL.Count < col)
+                if (colAl.Count < col)
                 {
                     return "";
                 }
 
-                return colAL[col - 1].ToString();
+                return colAl[col - 1].ToString();
             }
         }
 
@@ -256,7 +256,7 @@ namespace NKnife.Wrapper
                 {
                     throw new Exception("最大列数不能小于最小列数");
                 }
-                var csvDT = new DataTable();
+                var csvDt = new DataTable();
                 int i;
                 int col;
                 int row;
@@ -265,22 +265,22 @@ namespace NKnife.Wrapper
 
                 for (i = minCol; i <= maxCol; i++)
                 {
-                    csvDT.Columns.Add(i.ToString());
+                    csvDt.Columns.Add(i.ToString());
                 }
                 for (row = minRow; row <= maxRow; row++)
                 {
-                    DataRow csvDR = csvDT.NewRow();
+                    DataRow csvDr = csvDt.NewRow();
 
                     i = 0;
                     for (col = minCol; col <= maxCol; col++)
                     {
-                        csvDR[i] = this[row, col];
+                        csvDr[i] = this[row, col];
                         i++;
                     }
-                    csvDT.Rows.Add(csvDR);
+                    csvDt.Rows.Add(csvDr);
                 }
 
-                return csvDT;
+                return csvDt;
             }
         }
 
@@ -355,14 +355,14 @@ namespace NKnife.Wrapper
         {
             //对数据的有效性进行验证
 
-            if (_FileFullName == null)
+            if (_fileFullName == null)
                 throw new Exception("请指定要载入的CSV文件名");
-            if (!File.Exists(_FileFullName))
+            if (!File.Exists(_fileFullName))
                 throw new Exception("指定的CSV文件不存在");
-            if (_Encoding == null)
-                _Encoding = Encoding.Default;
+            if (_encoding == null)
+                _encoding = Encoding.Default;
 
-            var sr = new StreamReader(_FileFullName, _Encoding);
+            var sr = new StreamReader(_fileFullName, _encoding);
 
             string csvDataLine = "";
             while (true)
@@ -507,7 +507,7 @@ namespace NKnife.Wrapper
 
             //return;
 
-            var colAL = new ArrayList();
+            var colAl = new ArrayList();
             string[] dataArray = newDataLine.Split(',');
             bool oddStartQuota; //是否以奇数个引号开始
 
@@ -524,7 +524,7 @@ namespace NKnife.Wrapper
                     //是否以奇数个引号结尾
                     if (IfOddEndQuota(dataArray[i]))
                     {
-                        colAL.Add(GetHandleData(cellData));
+                        colAl.Add(GetHandleData(cellData));
                         oddStartQuota = false;
                         continue;
                     }
@@ -539,7 +539,7 @@ namespace NKnife.Wrapper
 
                         if (IfOddEndQuota(dataArray[i]) && dataArray[i].Length > 2 && !IfOddQuota(dataArray[i]))
                         {
-                            colAL.Add(GetHandleData(dataArray[i]));
+                            colAl.Add(GetHandleData(dataArray[i]));
                             oddStartQuota = false;
                             continue;
                         }
@@ -552,7 +552,7 @@ namespace NKnife.Wrapper
                     }
                     else
                     {
-                        colAL.Add(GetHandleData(dataArray[i]));
+                        colAl.Add(GetHandleData(dataArray[i]));
                     }
                 }
             }
@@ -560,7 +560,7 @@ namespace NKnife.Wrapper
             {
                 throw new Exception("数据格式有问题");
             }
-            _Rows.Add(colAL);
+            _rows.Add(colAl);
         }
 
         /// <summary>

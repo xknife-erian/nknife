@@ -10,10 +10,10 @@ namespace NKnife.Wrapper
     public class SystemDateTime
     {
         [DllImport("Kernel32.dll")]
-        private static extern Boolean SetLocalTime(ref API.API.SysDateTime st);
+        private static extern Boolean SetLocalTime(ref API.Api.SysDateTime st);
 
         [DllImport("kernel32.dll")]
-        public static extern void GetLocalTime(ref API.API.SysDateTime lpSystemTime);
+        public static extern void GetLocalTime(ref API.Api.SysDateTime lpSystemTime);
 
         /// <summary>
         /// 设置系统时间
@@ -22,7 +22,7 @@ namespace NKnife.Wrapper
         /// <returns></returns>
         public static bool SetLocalTime(DateTime newDateTime)
         {
-            var st = new API.API.SysDateTime
+            var st = new API.Api.SysDateTime
                          {
                              Year = Convert.ToUInt16(newDateTime.Year),
                              Month = Convert.ToUInt16(newDateTime.Month),

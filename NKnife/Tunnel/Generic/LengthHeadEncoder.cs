@@ -11,7 +11,7 @@ namespace NKnife.Tunnel.Generic
     /// </summary>
     public class LengthHeadEncoder : StringDatagramEncoder
     {
-        private static readonly ILog _logger = LogManager.GetLogger<LengthHeadEncoder>();
+        private static readonly ILog _Logger = LogManager.GetLogger<LengthHeadEncoder>();
 
         public LengthHeadEncoder()
         {
@@ -47,7 +47,7 @@ namespace NKnife.Tunnel.Generic
             {
                 byte[] src = Encoding.GetBytes(replay);
                 reBytes = CompressHelper.Compress(src);
-                _logger.Trace(string.Format("发送字符串压缩:原始:{0},压缩后:{1}", src.Length, reBytes.Length));
+                _Logger.Trace(string.Format("发送字符串压缩:原始:{0},压缩后:{1}", src.Length, reBytes.Length));
             }
             else
             {

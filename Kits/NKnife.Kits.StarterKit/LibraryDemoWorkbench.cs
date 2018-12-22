@@ -11,42 +11,42 @@ namespace NKnife.Kits.StarterKit
 {
     public sealed partial class LibraryDemoWorkbench : Form
     {
-        private static readonly ILog _logger = LogManager.GetLogger<LibraryDemoWorkbench>();
-        private DockPanel _DockPanel;
+        private static readonly ILog _Logger = LogManager.GetLogger<LibraryDemoWorkbench>();
+        private DockPanel _dockPanel;
 
         public LibraryDemoWorkbench()
         {
             InitializeComponent();
             DockPanelManager();
             MenuItemClickEventManager();
-            Text = $"{Text} - {DI.Get<IAbout>().AssemblyVersion}";
-            _logger.Info($"{Name}-{GetType().Name}");
+            Text = $"{Text} - {Di.Get<IAbout>().AssemblyVersion}";
+            _Logger.Info($"{Name}-{GetType().Name}");
         }
 
         private void DockPanelManager()
         {
-            _DockPanel = new DockPanel
+            _dockPanel = new DockPanel
             {
                 Dock = DockStyle.Fill,
                 Theme = new VS2015DarkTheme()
             };
-            Controls.Add(_DockPanel);
-            _DockPanel.BringToFront();
-            var loggerView = DI.Get<LoggingDockView>();
-            loggerView.Show(_DockPanel, DockState.DockBottom);
+            Controls.Add(_dockPanel);
+            _dockPanel.BringToFront();
+            var loggerView = Di.Get<LoggingDockView>();
+            loggerView.Show(_dockPanel, DockState.DockBottom);
         }
 
         private void MenuItemClickEventManager()
         {
             _ChineseCharUseFrequencyMenuItem.Click += (s, e) =>
             {
-                var form = DI.Get<ChineseCharUseFrequencyDockView>();
-                form.Show(_DockPanel, DockState.Document);
+                var form = Di.Get<ChineseCharUseFrequencyDockView>();
+                form.Show(_dockPanel, DockState.Document);
             };
             _ThreadTimerToolStripMenuItem.Click += (sender, args) =>
             {
                 var form = new ThreadTimerTestForm();
-                form.Show(_DockPanel, DockState.Document);
+                form.Show(_dockPanel, DockState.Document);
             };
         }
 

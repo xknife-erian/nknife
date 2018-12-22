@@ -17,24 +17,24 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
 {
     public class DemoServer
     {
-        private static readonly ILog _logger = LogManager.GetLogger<DemoServer>();
+        private static readonly ILog _Logger = LogManager.GetLogger<DemoServer>();
 
-        private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
-        private readonly SocketProtocolFilter _ProtocolFilter = DI.Get<SocketProtocolFilter>();
-        private readonly KnifeSocketServer _Server = DI.Get<KnifeSocketServer>();
-        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
-        private bool _IsInitialized;
+        private readonly StringProtocolFamily _family = Di.Get<StringProtocolFamily>();
+        private readonly SocketProtocolFilter _protocolFilter = Di.Get<SocketProtocolFilter>();
+        private readonly KnifeSocketServer _server = Di.Get<KnifeSocketServer>();
+        private readonly ITunnel _tunnel = Di.Get<ITunnel>();
+        private bool _isInitialized;
 
-        private IPAddress[] _IpAddresses;
+        private IPAddress[] _ipAddresses;
 
         internal void Initialize(SocketConfig config, BaseProtocolHandler<string> handler)
         {
-            _IpAddresses = UtilityNet.GetLocalIpv4();
+            _ipAddresses = UtilityNet.GetLocalIpv4();
 
-            if (_IsInitialized)
+            if (_isInitialized)
                 return;
 
-            var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
+            var heartbeatServerFilter = Di.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Server", "Client");
             heartbeatServerFilter.Heartbeat.Name = "Server";
             heartbeatServerFilter.Interval = 1000*2;
@@ -43,45 +43,45 @@ namespace NKnife.Kits.SocketKnife.Consoles.Demos
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 
-            var codec = DI.Get<StringCodec>();
+            var codec = Di.Get<StringCodec>();
 
-            _ProtocolFilter.Bind(codec, protocolFamily);
-            _ProtocolFilter.AddHandlers(handler);
+            _protocolFilter.Bind(codec, protocolFamily);
+            _protocolFilter.AddHandlers(handler);
 
-            _Tunnel.AddFilters(DI.Get<LogFilter>());
-            _Tunnel.AddFilters(heartbeatServerFilter);
-            _Tunnel.AddFilters(_ProtocolFilter);
+            _tunnel.AddFilters(Di.Get<LogFilter>());
+            _tunnel.AddFilters(heartbeatServerFilter);
+            _tunnel.AddFilters(_protocolFilter);
 
-            _Server.Config = config;
-            _Server.Configure(_IpAddresses[0], 22011);
-            _logger.Info(string.Format("Server: {0}:{1}", _IpAddresses[0], 22011));
+            _server.Config = config;
+            _server.Configure(_ipAddresses[0], 22011);
+            _Logger.Info(string.Format("Server: {0}:{1}", _ipAddresses[0], 22011));
 
-            _Tunnel.BindDataConnector(_Server);
+            _tunnel.BindDataConnector(_server);
 
-            _IsInitialized = true;
+            _isInitialized = true;
         }
 
         public ISocketServer GetSocket()
         {
-            return _Server;
+            return _server;
         }
 
         private StringProtocolFamily GetProtocolFamily()
         {
-            _Family.FamilyName = "socket-kit";
-            return _Family;
+            _family.FamilyName = "socket-kit";
+            return _family;
         }
 
         public void StartServer()
         {
-            if (_Server != null)
-                _Server.Start();
+            if (_server != null)
+                _server.Start();
         }
 
         public void StopServer()
         {
-            if (_Server != null)
-                _Server.Stop();
+            if (_server != null)
+                _server.Stop();
         }
     }
 }

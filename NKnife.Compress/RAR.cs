@@ -3,7 +3,7 @@ using System.IO;
 
 namespace NKnife.Compress
 {
-    public class RAR
+    public class Rar
     {
         public static string RarExecutableFile { get; private set; }
 

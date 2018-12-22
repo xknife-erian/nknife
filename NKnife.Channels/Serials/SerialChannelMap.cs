@@ -7,7 +7,7 @@ namespace NKnife.Channels.Serials
 {
     public class SerialChannelMap : IDictionary<ushort, Pair<SerialConfig, SerialChannel>>
     {
-        private readonly Dictionary<ushort, Pair<SerialConfig, SerialChannel>> _Map = 
+        private readonly Dictionary<ushort, Pair<SerialConfig, SerialChannel>> _map = 
             new Dictionary<ushort, Pair<SerialConfig, SerialChannel>>(SerialUtils.LocalSerialPorts.Count);
 
         public event EventHandler ChannelCountChanged;
@@ -25,7 +25,7 @@ namespace NKnife.Channels.Serials
                 Remove(config.Port);
             };
             serialChannel.IsSynchronous = false;
-            _Map.Add(config.Port, Pair<SerialConfig, SerialChannel>.Build(config, serialChannel));
+            _map.Add(config.Port, Pair<SerialConfig, SerialChannel>.Build(config, serialChannel));
             OnChannelCountChanged();
             return serialChannel;
         }
@@ -39,7 +39,7 @@ namespace NKnife.Channels.Serials
         /// <param name="key">要在 <see cref="T:System.Collections.Generic.IDictionary`2"/> 中定位的键。</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> 为 null。</exception>
         public bool ContainsKey(ushort key)
         {
-            return _Map.ContainsKey(key);
+            return _map.ContainsKey(key);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace NKnife.Channels.Serials
         /// <param name="key">要移除的元素的键。</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> 为 null。</exception><exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.IDictionary`2"/> 为只读。</exception>
         public bool Remove(ushort key)
         {
-            if (_Map.Remove(key))
+            if (_map.Remove(key))
             {
                 OnChannelCountChanged();
                 return true;
@@ -65,7 +65,7 @@ namespace NKnife.Channels.Serials
         /// <returns>
         /// 一个 <see cref="T:System.Collections.Generic.ICollection`1"/>，它包含实现 <see cref="T:System.Collections.Generic.IDictionary`2"/> 的对象的键。
         /// </returns>
-        public ICollection<ushort> Keys => _Map.Keys;
+        public ICollection<ushort> Keys => _map.Keys;
 
         /// <summary>
         /// 从 <see cref="T:System.Collections.Generic.ICollection`1"/> 中移除所有项。
@@ -73,7 +73,7 @@ namespace NKnife.Channels.Serials
         /// <exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.ICollection`1"/> 是只读的。</exception>
         public void Clear()
         {
-            _Map.Clear();
+            _map.Clear();
             OnChannelCountChanged();
         }
 
@@ -83,7 +83,7 @@ namespace NKnife.Channels.Serials
         /// <returns>
         /// <see cref="T:System.Collections.Generic.ICollection`1"/> 中包含的元素数。
         /// </returns>
-        public int Count => _Map.Count;
+        public int Count => _map.Count;
 
         #region Implementation
 
@@ -93,7 +93,7 @@ namespace NKnife.Channels.Serials
         /// <param name="key">用作要添加的元素的键的对象。</param><param name="value">用作要添加的元素的值的对象。</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> 为 null。</exception><exception cref="T:System.ArgumentException"><see cref="T:System.Collections.Generic.IDictionary`2"/> 中已存在具有相同键的元素。</exception><exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.IDictionary`2"/> 为只读。</exception>
         void IDictionary<ushort, Pair<SerialConfig, SerialChannel>>.Add(ushort key, Pair<SerialConfig, SerialChannel> value)
         {
-            _Map.Add(key,value);
+            _map.Add(key,value);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace NKnife.Channels.Serials
         /// <param name="key">要获取其值的键。</param><param name="value">当此方法返回时，如果找到指定键，则返回与该键相关联的值；否则，将返回 <paramref name="value"/> 参数的类型的默认值。该参数未经初始化即被传递。</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> 为 null。</exception>
         bool IDictionary<ushort, Pair<SerialConfig, SerialChannel>>.TryGetValue(ushort key, out Pair<SerialConfig, SerialChannel> value)
         {
-            return _Map.TryGetValue(key, out value);
+            return _map.TryGetValue(key, out value);
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace NKnife.Channels.Serials
         /// <param name="key">要获取或设置的元素的键。</param><exception cref="T:System.ArgumentNullException"><paramref name="key"/> 为 null。</exception><exception cref="T:System.Collections.Generic.KeyNotFoundException">检索了属性但没有找到 <paramref name="key"/>。</exception><exception cref="T:System.NotSupportedException">设置该属性，而且 <see cref="T:System.Collections.Generic.IDictionary`2"/> 为只读。</exception>
         Pair<SerialConfig, SerialChannel> IDictionary<ushort, Pair<SerialConfig, SerialChannel>>.this[ushort key]
         {
-            get { return _Map[key]; }
-            set { _Map[key] = value; }
+            get { return _map[key]; }
+            set { _map[key] = value; }
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace NKnife.Channels.Serials
         /// <returns>
         /// 一个 <see cref="T:System.Collections.Generic.ICollection`1"/>，它包含实现 <see cref="T:System.Collections.Generic.IDictionary`2"/> 的对象中的值。
         /// </returns>
-        ICollection<Pair<SerialConfig, SerialChannel>> IDictionary<ushort, Pair<SerialConfig, SerialChannel>>.Values => _Map.Values;
+        ICollection<Pair<SerialConfig, SerialChannel>> IDictionary<ushort, Pair<SerialConfig, SerialChannel>>.Values => _map.Values;
 
         #region Implementation of IEnumerable
 
@@ -139,7 +139,7 @@ namespace NKnife.Channels.Serials
         /// </returns>
         public IEnumerator<KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>>> GetEnumerator()
         {
-            return _Map.GetEnumerator();
+            return _map.GetEnumerator();
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace NKnife.Channels.Serials
         /// <param name="item">要添加到 <see cref="T:System.Collections.Generic.ICollection`1"/> 的对象。</param><exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.ICollection`1"/> 是只读的。</exception>
         void ICollection<KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>>>.Add(KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>> item)
         {
-            _Map.Add(item);
+            _map.Add(item);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace NKnife.Channels.Serials
         /// <param name="item">要在 <see cref="T:System.Collections.Generic.ICollection`1"/> 中定位的对象。</param>
         bool ICollection<KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>>>.Contains(KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>> item)
         {
-            var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>) _Map;
+            var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>) _map;
             return map.Contains(item);
         }
 
@@ -185,7 +185,7 @@ namespace NKnife.Channels.Serials
         /// <param name="array">作为从 <see cref="T:System.Collections.Generic.ICollection`1"/> 复制的元素的目标位置的一维 <see cref="T:System.Array"/>。<see cref="T:System.Array"/> 必须具有从零开始的索引。</param><param name="arrayIndex"><paramref name="array"/> 中从零开始的索引，将在此处开始复制。</param><exception cref="T:System.ArgumentNullException"><paramref name="array"/> 为 null。</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex"/> 小于 0。</exception><exception cref="T:System.ArgumentException"><paramref name="array"/> 是多维数组。- 或 -源 <see cref="T:System.Collections.Generic.ICollection`1"/> 中的元素数大于从 <paramref name="arrayIndex"/> 到目标 <paramref name="array"/> 结尾处之间的可用空间。- 或 -无法自动将类型 <paramref name="T"/> 强制转换为目标 <paramref name="array"/> 的类型。</exception>
         void ICollection<KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>>>.CopyTo(KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>>[] array, int arrayIndex)
         {
-            var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>)_Map;
+            var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>)_map;
             map.CopyTo(array, arrayIndex);
         }
 
@@ -198,7 +198,7 @@ namespace NKnife.Channels.Serials
         /// <param name="item">要从 <see cref="T:System.Collections.Generic.ICollection`1"/> 中移除的对象。</param><exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.ICollection`1"/> 是只读的。</exception>
         bool ICollection<KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>>>.Remove(KeyValuePair<ushort, Pair<SerialConfig, SerialChannel>> item)
         {
-            var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>)_Map;
+            var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>)_map;
             if (map.Remove(item))
             {
                 OnChannelCountChanged();
@@ -217,7 +217,7 @@ namespace NKnife.Channels.Serials
         {
             get
             {
-                var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>) _Map;
+                var map = (IDictionary<ushort, Pair<SerialConfig, SerialChannel>>) _map;
                 return map.IsReadOnly;
             }
         }

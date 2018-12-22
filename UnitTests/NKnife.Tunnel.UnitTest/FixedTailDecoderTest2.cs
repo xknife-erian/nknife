@@ -16,16 +16,16 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod0()//一条完整的数据
         {
             var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
-            const int COUNT = 1;
+            const int count = 1;
             var src = new List<byte>();
-            for (int i = 0; i < COUNT; i++)
+            for (int i = 0; i < count; i++)
             {
                 src.AddRange(GetAnyBytes());
                 src.AddRange(decoder.Tail);
             }
             int index;
             var protocols = decoder.Execute(src.ToArray(), out index);
-            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(count, protocols.Length);
             Assert.AreEqual(src.Count, index);
             var bs = Encoding.Default.GetString(GetAnyBytes());
             foreach (var protocol in protocols)
@@ -38,16 +38,16 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod1()//多条完整的数据
         {
             var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
-            const int COUNT = 5;
+            const int count = 5;
             var src = new List<byte>();
-            for (int i = 0; i < COUNT; i++)
+            for (int i = 0; i < count; i++)
             {
                 src.AddRange(GetAnyBytes());
                 src.AddRange(decoder.Tail);
             }
             int index;
             var protocols = decoder.Execute(src.ToArray(), out index);
-            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(count, protocols.Length);
             Assert.AreEqual(src.Count, index);
             var bs = Encoding.Default.GetString(GetAnyBytes());
             foreach (var protocol in protocols)
@@ -60,9 +60,9 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod2()//高数据量数据
         {
             var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
-            const int COUNT = 1000;
+            const int count = 1000;
             var src = new List<byte>();
-            for (int i = 0; i < COUNT; i++)
+            for (int i = 0; i < count; i++)
             {
                 src.AddRange(GetAnyBytes());
                 src.AddRange(decoder.Tail);
@@ -76,7 +76,7 @@ namespace NKnife.Socket.UnitTest
             var ms = watch.ElapsedMilliseconds;
             Assert.IsTrue(ms < 2);//解析速度小于5毫秒
 
-            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(count, protocols.Length);
             Assert.AreEqual(src.Count, index);
             var bs = Encoding.Default.GetString(GetAnyBytes());
             foreach (var protocol in protocols)
@@ -100,9 +100,9 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod4() //多条完整的数据，但同时最后有不完整的数据
         {
             var decoder = new FixedTailDecoder { Tail = new byte[] { 0xFF } };
-            const int COUNT = 10;
+            const int count = 10;
             var src = new List<byte>();
-            for (int i = 0; i < COUNT; i++)
+            for (int i = 0; i < count; i++)
             {
                 src.AddRange(GetAnyBytes());
                 src.AddRange(decoder.Tail);
@@ -110,7 +110,7 @@ namespace NKnife.Socket.UnitTest
             src.Add(0xAB);
             int index;
             var protocols = decoder.Execute(src.ToArray(), out index);
-            Assert.AreEqual(COUNT, protocols.Length);
+            Assert.AreEqual(count, protocols.Length);
             Assert.AreEqual(src.Count - 1, index);
             var bs = Encoding.Default.GetString(GetAnyBytes());
             foreach (var protocol in protocols)

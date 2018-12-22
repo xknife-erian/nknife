@@ -250,11 +250,11 @@ namespace NKnife.Utility
         /// <returns></returns>
         public static byte[] GenerateKeepAliveCommand()
         {
-            const uint DUMMY = 0;
-            var inOptionValues = new byte[Marshal.SizeOf(DUMMY) * 3];
+            const uint dummy = 0;
+            var inOptionValues = new byte[Marshal.SizeOf(dummy) * 3];
             BitConverter.GetBytes((uint)1).CopyTo(inOptionValues, 0);
-            BitConverter.GetBytes((uint)15000).CopyTo(inOptionValues, Marshal.SizeOf(DUMMY));
-            BitConverter.GetBytes((uint)15000).CopyTo(inOptionValues, Marshal.SizeOf(DUMMY) * 2);
+            BitConverter.GetBytes((uint)15000).CopyTo(inOptionValues, Marshal.SizeOf(dummy));
+            BitConverter.GetBytes((uint)15000).CopyTo(inOptionValues, Marshal.SizeOf(dummy) * 2);
             return inOptionValues;
         }
 

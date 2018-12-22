@@ -18,11 +18,11 @@ namespace SerialKnife.Wrappers
 
         ///<summary>COM口句柄
         ///</summary>
-        private int _HComm = -1;
+        private int _hComm = -1;
 
         ///<summary>串口是否已经打开
         ///</summary>
-        public bool Opened;
+        public bool _Opened;
 
         public SerialPortWin32()
         {
@@ -51,7 +51,7 @@ namespace SerialKnife.Wrappers
         ///<param name="whichFlag"></param>
         ///<param name="setting"></param>
         ///<param name="dcb"></param>
-        private void SetDcbFlag(int whichFlag, int setting, DCB dcb)
+        private void SetDcbFlag(int whichFlag, int setting, Dcb dcb)
         {
             uint num;
             setting = setting << whichFlag;
@@ -75,28 +75,28 @@ namespace SerialKnife.Wrappers
         ///</summary>
         public int Open()
         {
-            var dcb = new DCB();
-            var ctoCommPort = new COMMTIMEOUTS();
+            var dcb = new Dcb();
+            var ctoCommPort = new Commtimeouts();
 
             // 打开串口 
             //
-            _HComm = CreateFile(Port, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
+            _hComm = CreateFile(Port, GenericRead | GenericWrite, 0, 0, OpenExisting, 0, 0);
             //FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED, //重叠方式
             //hComm = CreateFile(Port, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED, 0);
 
-            if (_HComm == INVALID_HANDLE_VALUE)
+            if (_hComm == InvalidHandleValue)
             {
                 return -1;
             }
             // 设置通信超时时间
-            GetCommTimeouts(_HComm, ref ctoCommPort);
+            GetCommTimeouts(_hComm, ref ctoCommPort);
             ctoCommPort.ReadTotalTimeoutConstant = ReadTimeout;
             ctoCommPort.WriteTotalTimeoutMultiplier = 0;
             ctoCommPort.WriteTotalTimeoutConstant = 0;
-            SetCommTimeouts(_HComm, ref ctoCommPort);
+            SetCommTimeouts(_hComm, ref ctoCommPort);
 
             //设置串口参数
-            GetCommState(_HComm, ref dcb);
+            GetCommState(_hComm, ref dcb);
             dcb.DCBlength = Marshal.SizeOf(dcb);
             dcb.BaudRate = BaudRate;
             dcb.flags = 0;
@@ -128,11 +128,11 @@ namespace SerialKnife.Wrappers
             dcb.EvtChar = 0; //事件字符，接收到此字符时，会产生一个事件        
             dcb.wReserved1 = 0; //没有使用 
 
-            if (!SetCommState(_HComm, ref dcb))
+            if (!SetCommState(_hComm, ref dcb))
             {
                 return -2;
             }
-            Opened = true;
+            _Opened = true;
             return 0;
         }
 
@@ -140,9 +140,9 @@ namespace SerialKnife.Wrappers
         ///</summary>
         public void Close()
         {
-            if (_HComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                CloseHandle(_HComm);
+                CloseHandle(_hComm);
             }
         }
 
@@ -152,17 +152,17 @@ namespace SerialKnife.Wrappers
         public virtual void SetTimeOut(int timeout)
         {
             ReadTimeout = timeout;
-            if (_HComm < 0)
+            if (_hComm < 0)
                 return;
-            var ctoCommPort = new COMMTIMEOUTS();
+            var ctoCommPort = new Commtimeouts();
 
             // 设置通信超时时间
-            GetCommTimeouts(_HComm, ref ctoCommPort);
+            GetCommTimeouts(_hComm, ref ctoCommPort);
             ctoCommPort.ReadTotalTimeoutConstant = timeout;
             ctoCommPort.ReadTotalTimeoutMultiplier = 0;
             ctoCommPort.WriteTotalTimeoutMultiplier = 0;
             ctoCommPort.WriteTotalTimeoutConstant = 0;
-            SetCommTimeouts(_HComm, ref ctoCommPort);
+            SetCommTimeouts(_hComm, ref ctoCommPort);
         }
 
         ///<summary>读取串口返回的数据
@@ -171,19 +171,19 @@ namespace SerialKnife.Wrappers
         ///<param name="numBytes">数据长度</param>
         public int Read(ref byte[] bytData, int numBytes)
         {
-            if (_HComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                COMSTAT stats;
+                Comstat stats;
                 uint flags;
-                ClearCommError(_HComm, out flags, out stats);
+                ClearCommError(_hComm, out flags, out stats);
 
-                var ovlCommPort = new OVERLAPPED();
+                var ovlCommPort = new Overlapped();
                 //ovlCommPort.hEvent = CreateEvent(IntPtr.Zero, false, true, "ReadEvent");
 
                 int bytesRead = 0;
                 try
                 {
-                    ReadFile(_HComm, bytData, numBytes, ref bytesRead, ref ovlCommPort);
+                    ReadFile(_hComm, bytData, numBytes, ref bytesRead, ref ovlCommPort);
                 }
                 catch (Exception e)
                 {
@@ -218,13 +218,13 @@ namespace SerialKnife.Wrappers
         {
             ClearReceiveBuf();
             ClearSendBuf();
-            if (_HComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                var ovlCommPort = new OVERLAPPED();
+                var ovlCommPort = new Overlapped();
                 int bytesWritten = 0;
 
                 //ovlCommPort.hEvent = CreateEvent(IntPtr.Zero, false, true, "WriteEvent");
-                WriteFile(_HComm, writeBytes, intSize, ref bytesWritten, ref ovlCommPort);
+                WriteFile(_hComm, writeBytes, intSize, ref bytesWritten, ref ovlCommPort);
                 //if (!bWriteStat)
                 //{
                 //    if (GetLastError() == ERROR_IO_PENDING)
@@ -245,9 +245,9 @@ namespace SerialKnife.Wrappers
         ///<returns></returns>
         public void ClearReceiveBuf()
         {
-            if (_HComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                PurgeComm(_HComm, PURGE_RXABORT | PURGE_RXCLEAR);
+                PurgeComm(_hComm, PurgeRxabort | PurgeRxclear);
             }
         }
 
@@ -256,45 +256,45 @@ namespace SerialKnife.Wrappers
         ///</summary>
         public void ClearSendBuf()
         {
-            if (_HComm != INVALID_HANDLE_VALUE)
+            if (_hComm != InvalidHandleValue)
             {
-                PurgeComm(_HComm, PURGE_TXABORT | PURGE_TXCLEAR);
+                PurgeComm(_hComm, PurgeTxabort | PurgeTxclear);
             }
         }
 
         #region "API相关定义"
 
-        private const string DLLPATH = "kernel32.dll";
+        private const string Dllpath = "kernel32.dll";
 
         ///<summary>
         /// WINAPI常量,写标志
         ///</summary>
-        private const uint GENERIC_READ = 0x80000000;
+        private const uint GenericRead = 0x80000000;
 
         ///<summary>
         /// WINAPI常量,读标志
         ///</summary>
-        private const uint GENERIC_WRITE = 0x40000000;
+        private const uint GenericWrite = 0x40000000;
 
         ///<summary>
         /// WINAPI常量,打开已存在
         ///</summary>
-        private const int OPEN_EXISTING = 3;
+        private const int OpenExisting = 3;
 
-        private const uint FILE_FLAG_OVERLAPPED = 0x40000000;
-        private const uint FILE_ATTRIBUTE_NORMAL = 0x00000080;
+        private const uint FileFlagOverlapped = 0x40000000;
+        private const uint FileAttributeNormal = 0x00000080;
 
         ///<summary>
         /// WINAPI常量,无效句柄
         ///</summary>
-        private const int INVALID_HANDLE_VALUE = -1;
+        private const int InvalidHandleValue = -1;
 
-        private const int PURGE_RXABORT = 0x2;
-        private const int PURGE_RXCLEAR = 0x8;
-        private const int PURGE_TXABORT = 0x1;
-        private const int PURGE_TXCLEAR = 0x4;
+        private const int PurgeRxabort = 0x2;
+        private const int PurgeRxclear = 0x8;
+        private const int PurgeTxabort = 0x1;
+        private const int PurgeTxclear = 0x4;
 
-        private const uint ERROR_IO_PENDING = 997;
+        private const uint ErrorIoPending = 997;
 
         ///<summary>
         ///打开串口
@@ -306,48 +306,48 @@ namespace SerialKnife.Wrappers
         ///<param name="dwCreationDisposition">对于串口通信，创建方式只能为OPEN_EXISTING</param>
         ///<param name="dwFlagsAndAttributes">指定串口属性与标志，设置为FILE_FLAG_OVERLAPPED(重叠I/O操作)，指定串口以异步方式通信</param>
         ///<param name="hTemplateFile">对于串口通信必须设置为NULL</param>
-        [DllImport(DLLPATH)]
+        [DllImport(Dllpath)]
         private static extern int CreateFile(string lpFileName, uint dwDesiredAccess, int dwShareMode, int lpSecurityAttributes, int dwCreationDisposition, uint dwFlagsAndAttributes, int hTemplateFile);
 
         ///<summary>
         ///得到串口状态
         ///</summary>
         ///<param name="hFile">通信设备句柄</param>
-        ///<param name="lpDCB">设备控制块DCB</param>
-        [DllImport(DLLPATH)]
-        private static extern bool GetCommState(int hFile, ref DCB lpDCB);
+        ///<param name="lpDcb">设备控制块DCB</param>
+        [DllImport(Dllpath)]
+        private static extern bool GetCommState(int hFile, ref Dcb lpDcb);
 
         ///<summary>
         ///建立串口设备控制块(嵌入版没有)
         ///</summary>
         ///<param name="lpDef">设备控制字符串</param>
-        ///<param name="lpDCB">设备控制块</param>
-        [DllImport(DLLPATH)]
-        private static extern bool BuildCommDCB(string lpDef, ref DCB lpDCB);
+        ///<param name="lpDcb">设备控制块</param>
+        [DllImport(Dllpath)]
+        private static extern bool BuildCommDCB(string lpDef, ref Dcb lpDcb);
 
         ///<summary>
         ///设置串口状态
         ///</summary>
         ///<param name="hFile">通信设备句柄</param>
-        ///<param name="lpDCB">设备控制块</param>
-        [DllImport(DLLPATH)]
-        private static extern bool SetCommState(int hFile, ref DCB lpDCB);
+        ///<param name="lpDcb">设备控制块</param>
+        [DllImport(Dllpath)]
+        private static extern bool SetCommState(int hFile, ref Dcb lpDcb);
 
         ///<summary>
         ///读取串口超时时间
         ///</summary>
         ///<param name="hFile">通信设备句柄</param>
         ///<param name="lpCommTimeouts">超时时间</param>
-        [DllImport(DLLPATH)]
-        private static extern bool GetCommTimeouts(int hFile, ref COMMTIMEOUTS lpCommTimeouts);
+        [DllImport(Dllpath)]
+        private static extern bool GetCommTimeouts(int hFile, ref Commtimeouts lpCommTimeouts);
 
         ///<summary>
         ///设置串口超时时间
         ///</summary>
         ///<param name="hFile">通信设备句柄</param>
         ///<param name="lpCommTimeouts">超时时间</param>
-        [DllImport(DLLPATH)]
-        private static extern bool SetCommTimeouts(int hFile, ref COMMTIMEOUTS lpCommTimeouts);
+        [DllImport(Dllpath)]
+        private static extern bool SetCommTimeouts(int hFile, ref Commtimeouts lpCommTimeouts);
 
         ///<summary>
         ///读取串口数据
@@ -357,8 +357,8 @@ namespace SerialKnife.Wrappers
         ///<param name="nNumberOfBytesToRead">多少字节等待读取</param>
         ///<param name="lpNumberOfBytesRead">读取多少字节</param>
         ///<param name="lpOverlapped">溢出缓冲区</param>
-        [DllImport(DLLPATH)]
-        private static extern bool ReadFile(int hFile, byte[] lpBuffer, int nNumberOfBytesToRead, ref int lpNumberOfBytesRead, ref OVERLAPPED lpOverlapped);
+        [DllImport(Dllpath)]
+        private static extern bool ReadFile(int hFile, byte[] lpBuffer, int nNumberOfBytesToRead, ref int lpNumberOfBytesRead, ref Overlapped lpOverlapped);
 
         ///<summary>
         ///写串口数据
@@ -368,44 +368,44 @@ namespace SerialKnife.Wrappers
         ///<param name="nNumberOfBytesToWrite">多少字节等待写入</param>
         ///<param name="lpNumberOfBytesWritten">已经写入多少字节</param>
         ///<param name="lpOverlapped">溢出缓冲区</param>
-        [DllImport(DLLPATH)]
-        private static extern bool WriteFile(int hFile, byte[] lpBuffer, int nNumberOfBytesToWrite, ref int lpNumberOfBytesWritten, ref OVERLAPPED lpOverlapped);
+        [DllImport(Dllpath)]
+        private static extern bool WriteFile(int hFile, byte[] lpBuffer, int nNumberOfBytesToWrite, ref int lpNumberOfBytesWritten, ref Overlapped lpOverlapped);
 
-        [DllImport(DLLPATH, SetLastError = true)]
+        [DllImport(Dllpath, SetLastError = true)]
         private static extern bool FlushFileBuffers(int hFile);
 
-        [DllImport(DLLPATH, SetLastError = true)]
+        [DllImport(Dllpath, SetLastError = true)]
         private static extern bool PurgeComm(int hFile, uint dwFlags);
 
         ///<summary>
         ///关闭串口
         ///</summary>
         ///<param name="hObject">通信设备句柄</param>
-        [DllImport(DLLPATH)]
+        [DllImport(Dllpath)]
         private static extern bool CloseHandle(int hObject);
 
         ///<summary>
         ///得到串口最后一次返回的错误
         ///</summary>
-        [DllImport(DLLPATH)]
+        [DllImport(Dllpath)]
         private static extern uint GetLastError();
 
-        [DllImport(DLLPATH, SetLastError = true)]
+        [DllImport(Dllpath, SetLastError = true)]
         private static extern bool GetOverlappedResult(IntPtr hFile,
                                                        [In] ref NativeOverlapped lpOverlapped,
                                                        out uint lpNumberOfBytesTransferred, bool bWait);
 
-        [DllImport(DLLPATH, SetLastError = true)]
+        [DllImport(Dllpath, SetLastError = true)]
         private static extern Int32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);
 
-        [DllImport(DLLPATH, SetLastError = true, EntryPoint = "CreateEventA")]
+        [DllImport(Dllpath, SetLastError = true, EntryPoint = "CreateEventA")]
         private static extern IntPtr CreateEvent(IntPtr lpEventAttributes, bool bManualReset, bool bInitialState, string lpName);
 
         [DllImport("kernel32.dll")]
         private static extern bool ClearCommError(
             [In] int hFile,
             [Out, Optional] out uint lpErrors,
-            [Out, Optional] out COMSTAT lpStat
+            [Out, Optional] out Comstat lpStat
             );
 
         #region Nested type: COMMTIMEOUTS
@@ -414,7 +414,7 @@ namespace SerialKnife.Wrappers
         ///串口超时时间结构体类型
         ///</summary>
         [StructLayout(LayoutKind.Sequential)]
-        private struct COMMTIMEOUTS
+        private struct Commtimeouts
         {
             public readonly int ReadIntervalTimeout;
             public int ReadTotalTimeoutMultiplier;
@@ -428,15 +428,15 @@ namespace SerialKnife.Wrappers
         #region Nested type: COMSTAT
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct COMSTAT
+        private struct Comstat
         {
-            public const uint fCtsHold = 0x1;
-            public const uint fDsrHold = 0x2;
-            public const uint fRlsdHold = 0x4;
-            public const uint fXoffHold = 0x8;
-            public const uint fXoffSent = 0x10;
-            public const uint fEof = 0x20;
-            public const uint fTxim = 0x40;
+            public const uint FCtsHold = 0x1;
+            public const uint FDsrHold = 0x2;
+            public const uint FRlsdHold = 0x4;
+            public const uint FXoffHold = 0x8;
+            public const uint FXoffSent = 0x10;
+            public const uint FEof = 0x20;
+            public const uint FTxim = 0x40;
             public readonly UInt32 Flags;
             public readonly UInt32 cbInQue;
             public readonly UInt32 cbOutQue;
@@ -450,7 +450,7 @@ namespace SerialKnife.Wrappers
         ///设备控制块结构体类型
         ///</summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct DCB
+        public struct Dcb
         {
             ///<summary>
             /// DCB长度
@@ -536,7 +536,7 @@ namespace SerialKnife.Wrappers
         ///溢出缓冲区结构体类型
         ///</summary>
         [StructLayout(LayoutKind.Sequential)]
-        private struct OVERLAPPED
+        private struct Overlapped
         {
             //[FieldOffset(0)]
             public readonly int Internal;

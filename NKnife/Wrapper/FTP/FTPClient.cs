@@ -38,32 +38,32 @@ namespace NKnife.Wrapper.FTP
         /// <summary>
         /// 当前工作目录
         /// </summary>
-        private string _DirectoryPath;
+        private string _directoryPath;
 
         /// <summary>
         /// 是否需要删除临时文件
         /// </summary>
-        private bool _IsDeleteTempFile;
+        private bool _isDeleteTempFile;
 
         /// <summary>
         /// FTP请求对象
         /// </summary>
-        private FtpWebRequest _Request;
+        private FtpWebRequest _request;
 
         /// <summary>
         /// FTP响应对象
         /// </summary>
-        private FtpWebResponse _Response;
+        private FtpWebResponse _response;
 
         /// <summary>
         /// 异步上传所临时生成的文件
         /// </summary>
-        private string _UploadTempFile = "";
+        private string _uploadTempFile = "";
 
         /// <summary>
         /// FTP服务器地址
         /// </summary>
-        private Uri _Uri;
+        private Uri _uri;
 
         /// <summary>
         /// FTP服务器地址
@@ -72,11 +72,11 @@ namespace NKnife.Wrapper.FTP
         {
             get
             {
-                if (_DirectoryPath == "/")
+                if (_directoryPath == "/")
                 {
-                    return _Uri;
+                    return _uri;
                 }
-                string strUri = _Uri.ToString();
+                string strUri = _uri.ToString();
                 if (strUri.EndsWith("/"))
                 {
                     strUri = strUri.Substring(0, strUri.Length - 1);
@@ -89,11 +89,11 @@ namespace NKnife.Wrapper.FTP
                 {
                     throw new FtpException("Ftp 地址格式错误!");
                 }
-                _Uri = new Uri(value.GetLeftPart(UriPartial.Authority));
-                _DirectoryPath = value.AbsolutePath;
-                if (!_DirectoryPath.EndsWith("/"))
+                _uri = new Uri(value.GetLeftPart(UriPartial.Authority));
+                _directoryPath = value.AbsolutePath;
+                if (!_directoryPath.EndsWith("/"))
                 {
-                    _DirectoryPath += "/";
+                    _directoryPath += "/";
                 }
             }
         }
@@ -103,8 +103,8 @@ namespace NKnife.Wrapper.FTP
         /// </summary>
         public string DirectoryPath
         {
-            get { return _DirectoryPath; }
-            set { _DirectoryPath = value; }
+            get { return _directoryPath; }
+            set { _directoryPath = value; }
         }
 
         /// <summary>
@@ -165,11 +165,11 @@ namespace NKnife.Wrapper.FTP
         public FtpClient(Uri ftpUri, string strUserName, string strPassword, WebProxy objProxy = null)
         {
             var leftPart = ftpUri.GetLeftPart(UriPartial.Authority);
-            _Uri = new Uri(leftPart);
-            _DirectoryPath = ftpUri.AbsolutePath;
-            if (!_DirectoryPath.EndsWith("/"))
+            _uri = new Uri(leftPart);
+            _directoryPath = ftpUri.AbsolutePath;
+            if (!_directoryPath.EndsWith("/"))
             {
-                _DirectoryPath += "/";
+                _directoryPath += "/";
             }
             UserName = strUserName;
             Password = strPassword;
@@ -183,7 +183,7 @@ namespace NKnife.Wrapper.FTP
         {
             UserName = "anonymous"; //匿名用户
             Password = "@anonymous";
-            _Uri = null;
+            _uri = null;
             Proxy = null;
         }
 
@@ -192,15 +192,15 @@ namespace NKnife.Wrapper.FTP
         /// </summary>
         ~FtpClient()
         {
-            if (_Response != null)
+            if (_response != null)
             {
-                _Response.Close();
-                _Response = null;
+                _response.Close();
+                _response = null;
             }
-            if (_Request != null)
+            if (_request != null)
             {
-                _Request.Abort();
-                _Request = null;
+                _request.Abort();
+                _request = null;
             }
         }
 
@@ -217,15 +217,15 @@ namespace NKnife.Wrapper.FTP
         {
             try
             {
-                _Request = (FtpWebRequest) WebRequest.Create(uri);
-                _Request.Method = ftpMathod;
-                _Request.UseBinary = true;
-                _Request.Credentials = new NetworkCredential(UserName, Password);
+                _request = (FtpWebRequest) WebRequest.Create(uri);
+                _request.Method = ftpMathod;
+                _request.UseBinary = true;
+                _request.Credentials = new NetworkCredential(UserName, Password);
                 if (Proxy != null)
                 {
-                    _Request.Proxy = Proxy;
+                    _request.Proxy = Proxy;
                 }
-                return (FtpWebResponse) _Request.GetResponse();
+                return (FtpWebResponse) _request.GetResponse();
             }
             catch (Exception ep)
             {
@@ -243,15 +243,15 @@ namespace NKnife.Wrapper.FTP
         {
             try
             {
-                _Request = (FtpWebRequest) WebRequest.Create(uri);
-                _Request.Method = ftpMathod;
-                _Request.UseBinary = true;
-                _Request.Credentials = new NetworkCredential(UserName, Password);
+                _request = (FtpWebRequest) WebRequest.Create(uri);
+                _request.Method = ftpMathod;
+                _request.UseBinary = true;
+                _request.Credentials = new NetworkCredential(UserName, Password);
                 if (Proxy != null)
                 {
-                    _Request.Proxy = Proxy;
+                    _request.Proxy = Proxy;
                 }
-                return _Request;
+                return _request;
             }
             catch (Exception ep)
             {
@@ -328,8 +328,8 @@ namespace NKnife.Wrapper.FTP
                 {
                     throw new FtpException("非法文件名或目录名!");
                 }
-                _Response = Open(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.DownloadFile);
-                Stream reader = _Response.GetResponseStream();
+                _response = Open(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.DownloadFile);
+                Stream reader = _response.GetResponseStream();
 
                 var mem = new MemoryStream(1024*500);
                 var buffer = new byte[1024];
@@ -525,8 +525,8 @@ namespace NKnife.Wrapper.FTP
                 {
                     throw new FtpException("FTP服务上面已经存在同名文件！");
                 }
-                _Response = Open(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.UploadFile);
-                Stream requestStream = _Request.GetRequestStream();
+                _response = Open(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.UploadFile);
+                Stream requestStream = _request.GetRequestStream();
                 var mem = new MemoryStream(fileBytes);
 
                 var buffer = new byte[1024];
@@ -538,7 +538,7 @@ namespace NKnife.Wrapper.FTP
                     requestStream.Write(buffer, 0, bytesRead);
                 }
                 requestStream.Close();
-                _Response = (FtpWebResponse) _Request.GetResponse();
+                _response = (FtpWebResponse) _request.GetResponse();
                 mem.Close();
                 mem.Dispose();
                 return true;
@@ -653,8 +653,8 @@ namespace NKnife.Wrapper.FTP
                     stream.Close();
                     stream.Dispose();
                 }
-                _IsDeleteTempFile = true;
-                _UploadTempFile = tempFile;
+                _isDeleteTempFile = true;
+                _uploadTempFile = tempFile;
                 UploadFileAsync(tempFile, remoteFileName, overWriteRemoteFile);
             }
             catch (Exception ep)
@@ -671,14 +671,14 @@ namespace NKnife.Wrapper.FTP
         /// <param name="e">数据信息对象</param>
         private void ClientUploadFileCompleted(object sender, UploadFileCompletedEventArgs e)
         {
-            if (_IsDeleteTempFile)
+            if (_isDeleteTempFile)
             {
-                if (File.Exists(_UploadTempFile))
+                if (File.Exists(_uploadTempFile))
                 {
-                    File.SetAttributes(_UploadTempFile, FileAttributes.Normal);
-                    File.Delete(_UploadTempFile);
+                    File.SetAttributes(_uploadTempFile, FileAttributes.Normal);
+                    File.Delete(_uploadTempFile);
                 }
-                _IsDeleteTempFile = false;
+                _isDeleteTempFile = false;
             }
             if (UploadFileCompleted != null)
             {
@@ -708,8 +708,8 @@ namespace NKnife.Wrapper.FTP
         /// </summary>
         public FtpFileStruct[] ListFilesAndDirectories()
         {
-            _Response = Open(Uri, WebRequestMethods.Ftp.ListDirectoryDetails);
-            Stream rs = _Response.GetResponseStream();
+            _response = Open(Uri, WebRequestMethods.Ftp.ListDirectoryDetails);
+            Stream rs = _response.GetResponseStream();
             if (rs != null)
             {
                 var stream = new StreamReader(rs, Encoding.Default);
@@ -876,9 +876,9 @@ namespace NKnife.Wrapper.FTP
             long fileSize = 0;
             try
             {
-                _Response = Open(new Uri(Uri + filename), WebRequestMethods.Ftp.GetFileSize);
-                _Response.GetResponseStream();
-                fileSize = _Response.ContentLength;
+                _response = Open(new Uri(Uri + filename), WebRequestMethods.Ftp.GetFileSize);
+                _response.GetResponseStream();
+                fileSize = _response.ContentLength;
             }
             catch (Exception ex)
             {
@@ -951,7 +951,7 @@ namespace NKnife.Wrapper.FTP
                 {
                     throw new FtpException("文件名非法！");
                 }
-                _Response = Open(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.DeleteFile);
+                _response = Open(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.DeleteFile);
             }
             catch (Exception ep)
             {
@@ -979,9 +979,9 @@ namespace NKnife.Wrapper.FTP
                     return true;
                 if (FileExist(remoteFileName))
                 {
-                    _Request = OpenRequest(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.Rename);
-                    _Request.RenameTo = newFileName;
-                    _Response = (FtpWebResponse) _Request.GetResponse();
+                    _request = OpenRequest(new Uri(Uri + remoteFileName), WebRequestMethods.Ftp.Rename);
+                    _request.RenameTo = newFileName;
+                    _response = (FtpWebResponse) _request.GetResponse();
                 }
                 else
                     throw new FtpException("文件在服务器上不存在！");
@@ -1078,7 +1078,7 @@ namespace NKnife.Wrapper.FTP
                 {
                     throw new FtpException("服务器上面已经存在同名的文件名或目录名！");
                 }
-                _Response = Open(new Uri(Uri + directoryName), WebRequestMethods.Ftp.MakeDirectory);
+                _response = Open(new Uri(Uri + directoryName), WebRequestMethods.Ftp.MakeDirectory);
                 return true;
             }
             catch (Exception ep)
@@ -1104,7 +1104,7 @@ namespace NKnife.Wrapper.FTP
                 {
                     throw new FtpException("服务器上面不存在指定的文件名或目录名！");
                 }
-                _Response = Open(new Uri(Uri + directoryName), WebRequestMethods.Ftp.RemoveDirectory);
+                _response = Open(new Uri(Uri + directoryName), WebRequestMethods.Ftp.RemoveDirectory);
                 return true;
             }
             catch (Exception ep)
@@ -1209,7 +1209,7 @@ namespace NKnife.Wrapper.FTP
                     {
                         directoryName += "/";
                     }
-                    _DirectoryPath += directoryName;
+                    _directoryPath += directoryName;
                     return true;
                 }
                 return false;
@@ -1226,14 +1226,14 @@ namespace NKnife.Wrapper.FTP
         /// </summary>
         public bool ComeoutDirectory()
         {
-            if (_DirectoryPath == "/")
+            if (_directoryPath == "/")
             {
                 ErrorMsg = "当前目录已经是根目录！";
                 throw new FtpException("当前目录已经是根目录！");
             }
             var sp = new[] {'/'};
-            string[] strDir = _DirectoryPath.Split(sp, StringSplitOptions.RemoveEmptyEntries);
-            _DirectoryPath = strDir.Length == 1 ? "/" : String.Join("/", strDir, 0, strDir.Length - 1);
+            string[] strDir = _directoryPath.Split(sp, StringSplitOptions.RemoveEmptyEntries);
+            _directoryPath = strDir.Length == 1 ? "/" : String.Join("/", strDir, 0, strDir.Length - 1);
             return true;
         }
 

@@ -199,16 +199,16 @@ namespace NKnife.Maths
 
         /// <summary>[否决的，未完成的] 排列循环方法  
         /// </summary>  
-        /// <param name="N"></param>  
-        /// <param name="R"></param>  
+        /// <param name="n"></param>  
+        /// <param name="r"></param>  
         /// <returns></returns>  
-        public static long _test_P1(int N, int R)
+        public static long _test_P1(int n, int r)
         {
-            if (R > N || R <= 0 || N <= 0) throw new ArgumentException("params invalid!");
+            if (r > n || r <= 0 || n <= 0) throw new ArgumentException("params invalid!");
             long t = 1;
-            int i = N;
+            int i = n;
 
-            while (i != N - R)
+            while (i != n - r)
             {
                 try
                 {
@@ -228,17 +228,17 @@ namespace NKnife.Maths
 
         /// <summary>[否决的，未完成的] 排列堆栈方法  
         /// </summary>  
-        /// <param name="N"></param>  
-        /// <param name="R"></param>  
+        /// <param name="n"></param>  
+        /// <param name="r"></param>  
         /// <returns></returns>  
-        public static long _test_P2(int N, int R)
+        public static long _test_P2(int n, int r)
         {
-            if (R > N || R <= 0 || N <= 0) throw new ArgumentException("arguments invalid!");
+            if (r > n || r <= 0 || n <= 0) throw new ArgumentException("arguments invalid!");
             var s = new Stack<int>();
             long iRlt = 1;
             int t;
-            s.Push(N);
-            while ((t = s.Peek()) != N - R)
+            s.Push(n);
+            while ((t = s.Peek()) != n - r)
             {
                 try
                 {
@@ -259,12 +259,12 @@ namespace NKnife.Maths
 
         /// <summary>[否决的，未完成的] 组合  
         /// </summary>  
-        /// <param name="N"></param>  
-        /// <param name="R"></param>  
+        /// <param name="n"></param>  
+        /// <param name="r"></param>  
         /// <returns></returns>  
-        public static long _test_C(int N, int R)
+        public static long _test_C(int n, int r)
         {
-            return _test_P1(N, R)/_test_P1(R, R);
+            return _test_P1(n, r)/_test_P1(r, r);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace NKnife.Tunnel.Base
 {
     public abstract class BaseProtocolFilter<T> : BaseTunnelFilter, ITunnelProtocolFilter<T>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<BaseProtocolFilter<T>>();
+        private static readonly ILog _Logger = LogManager.GetLogger<BaseProtocolFilter<T>>();
         protected readonly ConcurrentDictionary<long, DataMonitor> _DataMonitors = new ConcurrentDictionary<long, DataMonitor>();
         protected ITunnelCodec<T> _Codec;
         protected IProtocolFamily<T> _Family;
@@ -25,10 +25,10 @@ namespace NKnife.Tunnel.Base
         public virtual void Bind(ITunnelCodec<T> codec, IProtocolFamily<T> family)
         {
             _Codec = codec;
-            _logger.Info(string.Format("{2}绑定Codec成功。{0},{1}", _Codec.Decoder.GetType().Name, _Codec.Encoder.GetType().Name, GetType().Name));
+            _Logger.Info(string.Format("{2}绑定Codec成功。{0},{1}", _Codec.Decoder.GetType().Name, _Codec.Encoder.GetType().Name, GetType().Name));
 
             _Family = family;
-            _logger.Info(string.Format("{1}绑定协议族[{0}]成功。", _Family.FamilyName, GetType().Name));
+            _Logger.Info(string.Format("{1}绑定协议族[{0}]成功。", _Family.FamilyName, GetType().Name));
         }
 
         public override void ProcessSessionBroken(long id)
@@ -93,7 +93,7 @@ namespace NKnife.Tunnel.Base
                     phandler.SendToAll += OnSendToAll;
                     phandler.Bind(_Codec, _Family);
                     _Handlers.Add(handler);
-                    _logger.Info($"{GetType().Name}增加{handler.GetType().Name}成功.");
+                    _Logger.Info($"{GetType().Name}增加{handler.GetType().Name}成功.");
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace NKnife.Tunnel.Base
             handler.SendToSession -= OnSendToSession;
             handler.SendToAll -= OnSendToAll;
             _Handlers.Remove(handler);
-            _logger.Info($"{GetType().Name}移除{handler.GetType().Name}成功.");
+            _Logger.Info($"{GetType().Name}移除{handler.GetType().Name}成功.");
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace NKnife.Tunnel.Base
                 // 当有半包数据时，进行接包操作
                 int srcLen = dataPacket.Length;
                 dataPacket = unFinished.Concat(dataPacket).ToArray();
-                _logger.Trace($"接包操作:半包:{unFinished.Length},原始包:{srcLen},接包后:{dataPacket.Length}");
+                _Logger.Trace($"接包操作:半包:{unFinished.Length},原始包:{srcLen},接包后:{dataPacket.Length}");
             }
 
             int done;
@@ -135,7 +135,7 @@ namespace NKnife.Tunnel.Base
             }
             else
             {
-                _logger.Trace(string.Format("{1}处理协议无内容。{0}", dataPacket.Length, GetType().Name));
+                _Logger.Trace(string.Format("{1}处理协议无内容。{0}", dataPacket.Length, GetType().Name));
             }
 
             if (dataPacket.Length <= done)
@@ -143,7 +143,7 @@ namespace NKnife.Tunnel.Base
             // 暂存半包数据，留待下条队列数据接包使用
             unFinished = new byte[dataPacket.Length - done];
             Buffer.BlockCopy(dataPacket, done, unFinished, 0, unFinished.Length);
-            _logger.Trace($"半包数据暂存,数据长度:{unFinished.Length}");
+            _Logger.Trace($"半包数据暂存,数据长度:{unFinished.Length}");
             return protocols;
         }
 
@@ -161,7 +161,7 @@ namespace NKnife.Tunnel.Base
                 }
                 catch (Exception e)
                 {
-                    _logger.Error($"命令字解析异常:{e.Message},Data:{dg}", e);
+                    _Logger.Error($"命令字解析异常:{e.Message},Data:{dg}", e);
                     continue;
                 }
 
@@ -174,12 +174,12 @@ namespace NKnife.Tunnel.Base
                 }
                 catch (ArgumentNullException ex)
                 {
-                    _logger.Warn($"协议分装异常。内容:{dg};命令字:{command}。{ex.Message}", ex);
+                    _Logger.Warn($"协议分装异常。内容:{dg};命令字:{command}。{ex.Message}", ex);
                     continue;
                 }
                 catch (Exception ex)
                 {
-                    _logger.Warn($"协议分装异常。{ex.Message}", ex);
+                    _Logger.Warn($"协议分装异常。{ex.Message}", ex);
                     continue;
                 }
 
@@ -209,7 +209,7 @@ namespace NKnife.Tunnel.Base
         {
             var id = (long) obj;
             DataMonitor dataMonitor;
-            _logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", id));
+            _Logger.Debug(string.Format("启动基于{0}的ReceiveQueue队列的监听。", id));
             var unFinished = new byte[] {};
 
             try
@@ -245,7 +245,7 @@ namespace NKnife.Tunnel.Base
             }
             catch (Exception ex)
             {
-                _logger.Warn($"监听循环异常结束：{ex}");
+                _Logger.Warn($"监听循环异常结束：{ex}");
             }
             finally
             {
@@ -253,7 +253,7 @@ namespace NKnife.Tunnel.Base
                 bool isRemoved = _DataMonitors.TryRemove(id, out dataMonitor);
                 if (isRemoved)
                 {
-                    _logger.Trace($"监听循环结束，从数据队列池中移除该客户端{id}成功，{_DataMonitors.Count}");
+                    _Logger.Trace($"监听循环结束，从数据队列池中移除该客户端{id}成功，{_DataMonitors.Count}");
                 }
             }
         }
@@ -289,7 +289,7 @@ namespace NKnife.Tunnel.Base
             }
             catch (Exception e)
             {
-                _logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
+                _Logger.Error(string.Format("handler调用异常:{0}", e.Message), e);
             }
         }
 

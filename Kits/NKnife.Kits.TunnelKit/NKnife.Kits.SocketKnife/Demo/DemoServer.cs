@@ -26,33 +26,33 @@ namespace NKnife.Kits.SocketKnife.Demo
 {
     public class DemoServer
     {
-        private bool _IsInitialized;
-        private readonly ITunnel _Tunnel = DI.Get<ITunnel>();
-        private KnifeSocketServer _Server = DI.Get<KnifeSocketServer>();
-        private SocketProtocolFilter _ProtocolFilter = DI.Get<SocketProtocolFilter>();
-        private readonly StringProtocolFamily _Family = DI.Get<StringProtocolFamily>();
+        private bool _isInitialized;
+        private readonly ITunnel _tunnel = Di.Get<ITunnel>();
+        private KnifeSocketServer _server = Di.Get<KnifeSocketServer>();
+        private SocketProtocolFilter _protocolFilter = Di.Get<SocketProtocolFilter>();
+        private readonly StringProtocolFamily _family = Di.Get<StringProtocolFamily>();
 
         public KnifeSocketServer GetSocketServer()
         {
-            return _Server;
+            return _server;
         }
 
         public ISocketServer GetSocket()
         {
-            return _Server;
+            return _server;
         }
 
         public StringProtocolFamily GetFamily()
         {
-            return _Family;
+            return _family;
         }
 
         internal void Initialize(SocketConfig config, SocketCustomSetting socketTools, BaseProtocolHandler<string> handler)
         {
-            if (_IsInitialized)
+            if (_isInitialized)
                 return;
 
-            var heartbeatServerFilter = DI.Get<HeartbeatFilter>();
+            var heartbeatServerFilter = Di.Get<HeartbeatFilter>();
             heartbeatServerFilter.Heartbeat = new Heartbeat("Server", "Client");
             heartbeatServerFilter.Heartbeat.Name = "Server";
             heartbeatServerFilter.Interval = 1000*2;
@@ -61,60 +61,60 @@ namespace NKnife.Kits.SocketKnife.Demo
 
             StringProtocolFamily protocolFamily = GetProtocolFamily();
 
-            var codec = DI.Get<StringCodec>();
+            var codec = Di.Get<StringCodec>();
             if (codec.StringDecoder.GetType()!=socketTools.Decoder)
             {
-                var decoder = DI.Get(socketTools.Decoder) as FixedTailDecoder;
+                var decoder = Di.Get(socketTools.Decoder) as FixedTailDecoder;
                 codec.StringDecoder = decoder;
             }
             if (codec.StringEncoder.GetType()!=socketTools.Encoder)
             {
-                var encoder = (FixedTailEncoder)DI.Get(socketTools.Encoder);
+                var encoder = (FixedTailEncoder)Di.Get(socketTools.Encoder);
                 codec.StringEncoder = encoder;
             }
             if (protocolFamily.CommandParser == null || protocolFamily.CommandParser.GetType() != socketTools.CommandParser)
-                protocolFamily.CommandParser = (StringProtocolCommandParser) DI.Get(socketTools.CommandParser);
+                protocolFamily.CommandParser = (StringProtocolCommandParser) Di.Get(socketTools.CommandParser);
 
-            _ProtocolFilter.Bind(codec, protocolFamily);
-            _ProtocolFilter.AddHandlers(handler);
+            _protocolFilter.Bind(codec, protocolFamily);
+            _protocolFilter.AddHandlers(handler);
 
-            _Tunnel.AddFilters(DI.Get<LogFilter>());
+            _tunnel.AddFilters(Di.Get<LogFilter>());
             if (socketTools.NeedHeartBeat)
-                _Tunnel.AddFilters(heartbeatServerFilter);
-            _Tunnel.AddFilters(_ProtocolFilter);
+                _tunnel.AddFilters(heartbeatServerFilter);
+            _tunnel.AddFilters(_protocolFilter);
 
-            _Server.Config = config;
-            _Server.Configure(socketTools.IpAddress, socketTools.Port);
-            _Tunnel.BindDataConnector(_Server);
+            _server.Config = config;
+            _server.Configure(socketTools.IpAddress, socketTools.Port);
+            _tunnel.BindDataConnector(_server);
 
-            _IsInitialized = true;
+            _isInitialized = true;
         }
 
         private StringProtocolFamily GetProtocolFamily()
         {
-            var register = DI.Get<Register>();
+            var register = Di.Get<Register>();
 
-            _Family.FamilyName = "socket-kit";
+            _family.FamilyName = "socket-kit";
 
-            var custom = DI.Get<StringProtocol>("TestCustom");
-            custom.Family = _Family.FamilyName;
+            var custom = Di.Get<StringProtocol>("TestCustom");
+            custom.Family = _family.FamilyName;
             custom.Command = "custom";
 
-            _Family.Build("command");
+            _family.Build("command");
            
-            return _Family;
+            return _family;
         }
 
         public void StartServer()
         {
-            if (_Server != null)
-                _Server.Start();
+            if (_server != null)
+                _server.Start();
         }
 
         public void StopServer()
         {
-            if (_Server != null)
-                _Server.Stop();
+            if (_server != null)
+                _server.Stop();
         }
     }
 }

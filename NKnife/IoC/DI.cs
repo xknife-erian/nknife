@@ -8,7 +8,7 @@ using NKnife.Utility;
 
 namespace NKnife.IoC
 {
-    public static class DI
+    public static class Di
     {
         private static bool _initialized;
         private static CoreKernel _coreKernel;

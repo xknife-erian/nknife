@@ -152,6 +152,7 @@
     <Compile Include="Interface\Datas\NoSql\IPagingAndSortingRepository.cs" />
     <Compile Include="Interface\Datas\NoSql\IRepository.cs" />
     <Compile Include="Interface\IParser.cs" />
+    <Compile Include="Events\JobRunEventArgs.cs" />
     <Compile Include="Maths\BigInteger.cs" />
     <Compile Include="Maths\Combinations.cs" />
     <Compile Include="Maths\Permutations.cs" />
@@ -231,7 +232,7 @@
     <Compile Include="Chinese\SpellRandom.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="Extensions\WindowExtension.cs" />
-    <Compile Include="Timers\JobFlow.cs" />
+    <Compile Include="Timers\JobManager.cs" />
     <Compile Include="Wrapper\Bit.cs" />
     <Compile Include="Wrapper\FTP\FtpFileListStyle.cs" />
     <Compile Include="Wrapper\FTP\FtpFileStruct.cs" />
@@ -258,7 +259,7 @@
     <Compile Include="Interface\Patterns\ICommandPattern.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Wrapper\HabitedDatas.cs" />
+    <Compile Include="Wrapper\HabitData.cs" />
     <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Interface\IFileCompress.cs" />
@@ -329,7 +330,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Wrapper\ByteClass.cs" />
     <Compile Include="Datas\DbHelper\AccessHelper.cs" />
     <Compile Include="Datas\DbHelper\MsSqlServerHelper.cs" />
     <Compile Include="Utility\UtilityByte.cs" />
@@ -360,8 +360,6 @@
     <Compile Include="Wrapper\CSVFile.cs" />
     <Compile Include="Wrapper\Duration.cs" />
     <Compile Include="Wrapper\FTP\FtpClient.cs" />
-    <Compile Include="Wrapper\Files\FileEnums.cs" />
-    <Compile Include="Wrapper\Files\FileSearching.cs" />
     <Compile Include="Wrapper\Files\TextFileEncoding.cs" />
     <Compile Include="Utility\UtilityFile.cs" />
     <Compile Include="Wrapper\GlobalHotkey.cs" />

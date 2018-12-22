@@ -12,7 +12,7 @@ namespace NKnife.Utility
     public class UtilityAssembly
     {
         private static IList<string> _assemblyFiles;
-        private static readonly Dictionary<string, Assembly[]> _assembliesMap 
+        private static readonly Dictionary<string, Assembly[]> _AssembliesMap 
             = new Dictionary<string, Assembly[]>(1); 
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace NKnife.Utility
         public static Assembly[] SearchAssemblyByDirectory(string directory)
         {
             Assembly[] assemblies;
-            if (!_assembliesMap.TryGetValue(directory, out assemblies))
+            if (!_AssembliesMap.TryGetValue(directory, out assemblies))
             {
                 var result = new ConcurrentBag<Assembly>();
                 IList<string> dllList = UtilityFile.SearchDirectory(directory, "*.dll", true, true);
@@ -127,7 +127,7 @@ namespace NKnife.Utility
                 if (result.Count > 0)
                 {
                     assemblies = result.ToArray();
-                    _assembliesMap.Add(directory, assemblies);
+                    _AssembliesMap.Add(directory, assemblies);
                 }
             }
             return assemblies;
@@ -139,7 +139,7 @@ namespace NKnife.Utility
                 return SearchAssemblyByDirectory(directory);
 
             Assembly[] assemblies;
-            if (!_assembliesMap.TryGetValue(directory, out assemblies))
+            if (!_AssembliesMap.TryGetValue(directory, out assemblies))
             {
                 var result = new ConcurrentBag<Assembly>();
                 IList<string> dllList = UtilityFile.SearchDirectory(directory, "*.dll", true, true);
@@ -193,7 +193,7 @@ namespace NKnife.Utility
                 if (result.Count > 0)
                 {
                     assemblies = result.ToArray();
-                    _assembliesMap.Add(directory, assemblies);
+                    _AssembliesMap.Add(directory, assemblies);
                 }
             }
             return assemblies;

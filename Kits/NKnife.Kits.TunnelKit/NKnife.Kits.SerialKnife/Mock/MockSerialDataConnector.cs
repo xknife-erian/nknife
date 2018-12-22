@@ -9,7 +9,7 @@ namespace NKnife.Kits.SerialKnife.Mock
 {
     public class MockSerialDataConnector : ISerialConnector
     {
-        private static readonly ILog _logger = LogManager.GetLogger<MockSerialDataConnector>();
+        private static readonly ILog _Logger = LogManager.GetLogger<MockSerialDataConnector>();
 
         #region IKnifeSerialConnector
 
@@ -41,7 +41,7 @@ namespace NKnife.Kits.SerialKnife.Mock
 
         public bool Stop()
         {
-            _logger.Info(string.Format("串口{0}关闭成功", PortNumber));
+            _Logger.Info(string.Format("串口{0}关闭成功", PortNumber));
             EventHandler<SessionEventArgs> handler = SessionBroken;
             if (handler != null)
             {
@@ -55,7 +55,7 @@ namespace NKnife.Kits.SerialKnife.Mock
 
         public bool Start()
         {
-            _logger.Info(string.Format("串口{0}连接成功", PortNumber));
+            _Logger.Info(string.Format("串口{0}连接成功", PortNumber));
             EventHandler<SessionEventArgs> handler = SessionBuilt;
             if (handler != null)
             {

@@ -12,10 +12,10 @@ namespace NKnife.Kits.ChannelKit.ViewModels
 {
     public class SingleSerialViewmodel : ViewModelBase
     {
-        private readonly ChannelService _ChannelService = DI.Get<ChannelService>();
+        private readonly ChannelService _channelService = Di.Get<ChannelService>();
 
-        private bool _HexShowEnable;
-        private bool _DisplayFormatTextEnable;
+        private bool _hexShowEnable;
+        private bool _displayFormatTextEnable;
 
         public bool IsOpen { get; private set; } = false;
         public ushort Port { get; set; } = 0;
@@ -26,7 +26,7 @@ namespace NKnife.Kits.ChannelKit.ViewModels
         /// <returns>返回操作的动作成功状态</returns>
         public bool OpenPort()
         {
-            var channel = _ChannelService.GetChannel(Port);
+            var channel = _channelService.GetChannel(Port);
             //会根据实际对串口的操作状态来描述串口的当前状态
             channel.Open();
             return IsOpen = true;
@@ -38,7 +38,7 @@ namespace NKnife.Kits.ChannelKit.ViewModels
         /// <returns>返回操作的动作成功状态</returns>
         public bool ClosePort()
         {
-            _ChannelService.RemoveChannel(Port);
+            _channelService.RemoveChannel(Port);
             Port = 0;
             //会根据实际对串口的操作状态来描述串口的当前状态
             IsOpen = false;
@@ -47,12 +47,18 @@ namespace NKnife.Kits.ChannelKit.ViewModels
 
         public void Start()
         {
-            var channel = _ChannelService.GetChannel(Port);
-            var sqg = new SerialQuestionPool();
-            sqg.Add(new SerialQuestion(null, true, 500, new byte[] { 0x11, 0x22 }));
-            sqg.Add(new SerialQuestion(null, true, 100, new byte[] { 0xAA, 0xBB, 0xCC, 0xDD }));
-            channel.UpdateQuestionPool(sqg);
-            channel.AutoSend(SendAction);
+            var channel = _channelService.GetChannel(Port);
+            var pool = new SerialQuestionPool();
+            pool.Add(new SerialQuestion(true, new byte[] {0x01, 0x02}, 500, null));
+            pool.Add(new SerialQuestion(true, new byte[] {0xAA, 0xBB, 0xCC}, 500, null));
+            channel.JobManager.Update(pool);
+            channel.SyncListen();
+            channel.AsyncListen();
+            channel.DataArrived += (s, e) =>
+            {
+                var answer = e.Answer as SerialAnswer;
+                
+            };
         }
 
         private void SendAction(IQuestion<byte[]> question)
@@ -70,7 +76,7 @@ namespace NKnife.Kits.ChannelKit.ViewModels
 
         public SerialConfigDialog.SelfModel FromConfig()
         {
-            var config = _ChannelService.GetConfig(Port);
+            var config = _channelService.GetConfig(Port);
             var model = new SerialConfigDialog.SelfModel();
             model.Commons.BaudRate = config.BaudRate;
             model.Commons.DataBit = config.DataBit;
@@ -85,14 +91,14 @@ namespace NKnife.Kits.ChannelKit.ViewModels
             model.Professions.ReceivedBytesThreshold = config.ReceivedBytesThreshold;
             model.Professions.WriteTotalTimeoutConstant = config.WriteTotalTimeoutConstant;
 
-            model.AppSettings.DisplayFormatTextEnable = _DisplayFormatTextEnable;
-            model.AppSettings.HexShowEnable = _HexShowEnable;
+            model.AppSettings.DisplayFormatTextEnable = _displayFormatTextEnable;
+            model.AppSettings.HexShowEnable = _hexShowEnable;
             return model;
         }
 
         public void UpdateConfig(SerialConfigDialog.SelfModel model)
         {
-            var config = _ChannelService.GetConfig(Port);
+            var config = _channelService.GetConfig(Port);
 
             config.BaudRate = model.Commons.BaudRate;
             config.DataBit = model.Commons.DataBit;
@@ -107,8 +113,8 @@ namespace NKnife.Kits.ChannelKit.ViewModels
             config.ReceivedBytesThreshold = model.Professions.ReceivedBytesThreshold;
             config.WriteTotalTimeoutConstant = model.Professions.WriteTotalTimeoutConstant;
 
-            _DisplayFormatTextEnable = model.AppSettings.DisplayFormatTextEnable;
-            _HexShowEnable = model.AppSettings.HexShowEnable;
+            _displayFormatTextEnable = model.AppSettings.DisplayFormatTextEnable;
+            _hexShowEnable = model.AppSettings.HexShowEnable;
         }
     }
 }

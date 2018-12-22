@@ -6,12 +6,12 @@ namespace NKnife.Kits.ChannelKit.Dialogs
 {
     public class QuestionsEditorDialogViewModel : ViewModelBase
     {
-        private bool _SerialEnable;
+        private bool _serialEnable;
 
         public bool SerialEnable
         {
-            get { return _SerialEnable; }
-            set { Set(() => SerialEnable, ref _SerialEnable, value); }
+            get { return _serialEnable; }
+            set { Set(() => SerialEnable, ref _serialEnable, value); }
         }
 
         public AskMode Mode { get; set; }

@@ -30,12 +30,12 @@ namespace NKnife.XML
             if (!File.Exists(FilePath))
             {
                 //如果文件不存在，建立这个文件
-                BaseXmlNode = XmlHelper.CreatNewDoucmnet(FilePath, RootNodeLocalName);
+                _BaseXmlNode = XmlHelper.CreatNewDoucmnet(FilePath, RootNodeLocalName);
             }
             else
             {
-                BaseXmlNode = new XmlDocument();
-                (BaseXmlNode as XmlDocument).Load(FilePath);
+                _BaseXmlNode = new XmlDocument();
+                (_BaseXmlNode as XmlDocument).Load(FilePath);
             }
         }
 
@@ -48,7 +48,7 @@ namespace NKnife.XML
         /// </summary>
         public XmlElement DocumentElement
         {
-            get { return ((XmlDocument) BaseXmlNode).DocumentElement; }
+            get { return ((XmlDocument) _BaseXmlNode).DocumentElement; }
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace NKnife.XML
         /// </summary>
         public XmlNodeList ChildNodes
         {
-            get { return BaseXmlNode.ChildNodes; }
+            get { return _BaseXmlNode.ChildNodes; }
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace NKnife.XML
 
         public XmlElement NewElement(string localName)
         {
-            return ((XmlDocument) BaseXmlNode).CreateElement(localName);
+            return ((XmlDocument) _BaseXmlNode).CreateElement(localName);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace NKnife.XML
                 fileAtts = File.GetAttributes(FilePath); //先获取此文件的属性
                 File.SetAttributes(FilePath, FileAttributes.Normal); //将文件属性设置为普通（即没有只读和隐藏等）
             }
-            ((XmlDocument) BaseXmlNode).Save(FilePath); //在文件属性为普通的情况下保存。（不然有可能会“访问被拒绝”）
+            ((XmlDocument) _BaseXmlNode).Save(FilePath); //在文件属性为普通的情况下保存。（不然有可能会“访问被拒绝”）
             File.SetAttributes(FilePath, fileAtts); //恢复文件属性
         }
 

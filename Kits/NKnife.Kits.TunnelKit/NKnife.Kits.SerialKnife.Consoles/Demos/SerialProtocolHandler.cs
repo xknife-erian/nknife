@@ -11,7 +11,7 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
 {
     public class SerialProtocolHandler : BaseProtocolHandler<byte[]>
     {
-        private static readonly ILog _logger = LogManager.GetLogger<SerialProtocolHandler>();
+        private static readonly ILog _Logger = LogManager.GetLogger<SerialProtocolHandler>();
         public override List<byte[]> Commands { get; set; }
 
         private static string _hex;
@@ -19,19 +19,19 @@ namespace NKnife.Kits.SerialKnife.Consoles.Demos
         public override void Recevied(long sessionId, IProtocol<byte[]> protocol)
         {
             if (!(protocol is CareSaying))
-                _logger.Warn("Protocol类型有误");
+                _Logger.Warn("Protocol类型有误");
             var saying = (CareSaying) protocol;
             var hex = protocol.Command.ToHexString();
             if (_hex == hex)
             {
                 _hex = hex;
-                _logger.Fatal(string.Format("{0},Recevied:{1}", hex, saying.Content));
+                _Logger.Fatal(string.Format("{0},Recevied:{1}", hex, saying.Content));
             }
             else
             {
                 _hex = hex;
                 //Console.Write(">");
-                _logger.Info(string.Format("{0},Recevied:{1}", hex, saying.Content));
+                _Logger.Info(string.Format("{0},Recevied:{1}", hex, saying.Content));
             }
         }
     }

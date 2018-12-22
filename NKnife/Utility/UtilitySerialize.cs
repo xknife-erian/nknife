@@ -8,7 +8,7 @@ namespace NKnife.Utility
 {
     public static class UtilitySerialize
     {
-        private static readonly ConcurrentDictionary<string, XmlSerializer> _serializerMap = new ConcurrentDictionary<string, XmlSerializer>();
+        private static readonly ConcurrentDictionary<string, XmlSerializer> _SerializerMap = new ConcurrentDictionary<string, XmlSerializer>();
 
         /// <summary>XmlSerializer的实例的生成效率不高，故保存已生成的实例，以提高效率。
         /// </summary>
@@ -17,10 +17,10 @@ namespace NKnife.Utility
         internal static XmlSerializer GetSerializer(Type type)
         {
             XmlSerializer serializer = null;
-            if (type.FullName != null && !_serializerMap.TryGetValue(type.FullName, out serializer))
+            if (type.FullName != null && !_SerializerMap.TryGetValue(type.FullName, out serializer))
             {
                 serializer = new XmlSerializer(type);
-                _serializerMap.TryAdd(type.FullName, serializer);
+                _SerializerMap.TryAdd(type.FullName, serializer);
             }
             return serializer;
         }

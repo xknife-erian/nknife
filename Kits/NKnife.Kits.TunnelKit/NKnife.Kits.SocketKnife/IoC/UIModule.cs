@@ -6,7 +6,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NKnife.Kits.SocketKnife.IoC
 {
-    public class UIModule : NinjectModule
+    public class UiModule : NinjectModule
     {
         public override void Load()
         {

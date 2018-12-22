@@ -12,13 +12,13 @@ namespace SocketKnife.Common
     /// </summary>
     public class AsynListener : IDisposable
     {
-        private static readonly ILog _logger = LogManager.GetLogger<AsynListener>();
-        private readonly ManualResetEvent _AllDone = new ManualResetEvent(false);
-        private readonly ManualResetEvent _SendDone = new ManualResetEvent(false);
-        private int _BufferSize = 128;
-        private bool _IsWhileListen = true;
-        private string _TcpIpServerIp = "";
-        private int _TcpIpServerPort = 22033;
+        private static readonly ILog _Logger = LogManager.GetLogger<AsynListener>();
+        private readonly ManualResetEvent _allDone = new ManualResetEvent(false);
+        private readonly ManualResetEvent _sendDone = new ManualResetEvent(false);
+        private int _bufferSize = 128;
+        private bool _isWhileListen = true;
+        private string _tcpIpServerIp = "";
+        private int _tcpIpServerPort = 22033;
 
         #region 属性
 
@@ -27,8 +27,8 @@ namespace SocketKnife.Common
         /// </summary>
         public string IpAddress
         {
-            get { return _TcpIpServerIp; }
-            set { _TcpIpServerIp = value; }
+            get { return _tcpIpServerIp; }
+            set { _tcpIpServerIp = value; }
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace SocketKnife.Common
         /// </summary>
         public int Port
         {
-            get { return _TcpIpServerPort; }
-            set { _TcpIpServerPort = value; }
+            get { return _tcpIpServerPort; }
+            set { _tcpIpServerPort = value; }
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace SocketKnife.Common
         /// </summary>
         public int BufferSize
         {
-            get { return _BufferSize; }
-            set { _BufferSize = value; }
+            get { return _bufferSize; }
+            set { _bufferSize = value; }
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace SocketKnife.Common
         /// </summary>
         public bool Active
         {
-            get { return _Listener.Connected; }
+            get { return _listener.Connected; }
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace SocketKnife.Common
 
         #region 开始、关闭监听
 
-        private Socket _Listener;
-        private Thread _Thread;
+        private Socket _listener;
+        private Thread _thread;
 
         /// <summary>
         ///     开启新线程监听访问
@@ -75,8 +75,8 @@ namespace SocketKnife.Common
         public void BeginListening()
         {
             var id = Guid.NewGuid().ToString("N").Substring(0, 6);
-            _Thread = new Thread(BeginListeningThreadStart) {IsBackground = true, Name = string.Format("AsynListener-Listening-{0}", id)};
-            _Thread.Start();
+            _thread = new Thread(BeginListeningThreadStart) {IsBackground = true, Name = string.Format("AsynListener-Listening-{0}", id)};
+            _thread.Start();
         }
 
         /// <summary>
@@ -86,24 +86,24 @@ namespace SocketKnife.Common
         {
             try
             {
-                _Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                var ipAddress = _TcpIpServerIp.Trim() == "" ? IPAddress.Any : IPAddress.Parse(_TcpIpServerIp);
-                var localEndPoint = new IPEndPoint(ipAddress, _TcpIpServerPort);
+                var ipAddress = _tcpIpServerIp.Trim() == "" ? IPAddress.Any : IPAddress.Parse(_tcpIpServerIp);
+                var localEndPoint = new IPEndPoint(ipAddress, _tcpIpServerPort);
 
-                _Listener.Bind(localEndPoint);
-                _Listener.Listen(16);
+                _listener.Bind(localEndPoint);
+                _listener.Listen(16);
 
-                while (_IsWhileListen)
+                while (_isWhileListen)
                 {
-                    _AllDone.Reset();
-                    _Listener.BeginAccept(AcceptCallback, _Listener);
-                    _AllDone.WaitOne();
+                    _allDone.Reset();
+                    _listener.BeginAccept(AcceptCallback, _listener);
+                    _allDone.WaitOne();
                 }
             }
             catch (Exception e)
             {
-                OnHasListenerException(new ListenerExceptionEventArgs(e, _Listener));
+                OnHasListenerException(new ListenerExceptionEventArgs(e, _listener));
             }
         }
 
@@ -111,15 +111,15 @@ namespace SocketKnife.Common
         {
             try
             {
-                _AllDone.Close();
-                _SendDone.Close();
-                _Listener.Close(1);
-                _IsWhileListen = false;
-                _Thread.Abort();
+                _allDone.Close();
+                _sendDone.Close();
+                _listener.Close(1);
+                _isWhileListen = false;
+                _thread.Abort();
             }
             catch (Exception e)
             {
-                _logger.Warn(string.Format("Listen关闭时有导常"), e);
+                _Logger.Warn(string.Format("Listen关闭时有导常"), e);
             }
         }
 
@@ -138,9 +138,9 @@ namespace SocketKnife.Common
             {
                 var listener = (Socket) ar.AsyncState;
                 client = listener.EndAccept(ar);
-                _logger.Trace(string.Format("监听到客户端连接：{0}", client.RemoteEndPoint));
-                var state = new StateObject(_BufferSize, client) {Client = client};
-                client.BeginReceive(state.Buffer, 0, _BufferSize, 0, ReadCallback, state);
+                _Logger.Trace(string.Format("监听到客户端连接：{0}", client.RemoteEndPoint));
+                var state = new StateObject(_bufferSize, client) {Client = client};
+                client.BeginReceive(state.Buffer, 0, _bufferSize, 0, ReadCallback, state);
             }
             catch (Exception e)
             {
@@ -148,8 +148,8 @@ namespace SocketKnife.Common
             }
             finally
             {
-                if (_IsWhileListen)
-                    _AllDone.Set();
+                if (_isWhileListen)
+                    _allDone.Set();
             }
         }
 
@@ -222,7 +222,7 @@ namespace SocketKnife.Common
         /// <param name="data">数据</param>
         public virtual void Send(Socket client, string data)
         {
-            _logger.Trace(string.Format("Send:{0}", data));
+            _Logger.Trace(string.Format("Send:{0}", data));
             var byteData = Encoding.Default.GetBytes(data);
             client.BeginSend(byteData, 0, byteData.Length, 0, SendCallback, client);
         }
@@ -243,7 +243,7 @@ namespace SocketKnife.Common
             try
             {
                 var bytesSent = client.EndSend(ar);
-                _logger.Debug(string.Format("Sent {0} bytes to client.", bytesSent));
+                _Logger.Debug(string.Format("Sent {0} bytes to client.", bytesSent));
             }
             catch (Exception e)
             {
@@ -251,7 +251,7 @@ namespace SocketKnife.Common
             }
             finally
             {
-                _SendDone.Set();
+                _sendDone.Set();
             }
         }
 
@@ -308,45 +308,45 @@ namespace SocketKnife.Common
 
         public class ListenerExceptionEventArgs : EventArgs
         {
-            private readonly Exception _Exception;
-            private readonly Socket _ServerSocket;
+            private readonly Exception _exception;
+            private readonly Socket _serverSocket;
 
             public ListenerExceptionEventArgs(Exception exception, Socket serverSocket)
             {
-                _Exception = exception;
-                _ServerSocket = serverSocket;
+                _exception = exception;
+                _serverSocket = serverSocket;
             }
 
             public Exception Exception
             {
-                get { return _Exception; }
+                get { return _exception; }
             }
 
             public Socket ServerSocket
             {
-                get { return _ServerSocket; }
+                get { return _serverSocket; }
             }
         }
 
         public class ReceivedDataEventArgs : EventArgs
         {
-            private readonly Socket _Client;
-            private readonly string _Data;
+            private readonly Socket _client;
+            private readonly string _data;
 
             public ReceivedDataEventArgs(string data, Socket client)
             {
-                _Data = data;
-                _Client = client;
+                _data = data;
+                _client = client;
             }
 
             public Socket Client
             {
-                get { return _Client; }
+                get { return _client; }
             }
 
             public string Data
             {
-                get { return _Data; }
+                get { return _data; }
             }
         }
 

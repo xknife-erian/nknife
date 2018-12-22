@@ -10,22 +10,22 @@ namespace NKnife.NLog.WPF
     /// </summary>
     public partial class NLogWpfGrid : UserControl
     {
-        private static readonly LogMessageObservableCollection _logMessages = LogMessageObservableCollection.Instance;
+        private static readonly LogMessageObservableCollection _LogMessages = LogMessageObservableCollection.Instance;
 
         public NLogWpfGrid()
         {
             InitializeComponent();
-            _LoggerGrid.ItemsSource = _logMessages;
+            _LoggerGrid.ItemsSource = _LogMessages;
         }
 
         private void ClearMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            _logMessages.Clear();
+            _LogMessages.Clear();
         }
 
         private void LevelMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var filter = DI.Get<LogMessageFilter>();
+            var filter = Di.Get<LogMessageFilter>();
             var menuItem = (MenuItem) sender;
             var isChecked = menuItem.IsChecked;
             menuItem.IsChecked = !isChecked;

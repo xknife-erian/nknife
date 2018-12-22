@@ -8,10 +8,10 @@ namespace NKnife.Maths
     /// <typeparam name="T"></typeparam>
     public class Combinations<T> : IEnumerable<IList<T>>
     {
-        private readonly List<IList<T>> _Combinations;
-        private readonly IList<T> _Items;
-        private readonly int _Length;
-        private readonly int[] _EndIndices;
+        private readonly List<IList<T>> _combinations;
+        private readonly IList<T> _items;
+        private readonly int _length;
+        private readonly int[] _endIndices;
 
         public Combinations(IList<T> itemList)
             : this(itemList, itemList.Count)
@@ -20,14 +20,14 @@ namespace NKnife.Maths
 
         public Combinations(IList<T> itemList, int length)
         {
-            _Items = itemList;
-            _Length = length;
-            _Combinations = new List<IList<T>>();
-            _EndIndices = new int[length];
+            _items = itemList;
+            _length = length;
+            _combinations = new List<IList<T>>();
+            _endIndices = new int[length];
             int j = length - 1;
-            for (int i = _Items.Count - 1; i > _Items.Count - 1 - length; i--)
+            for (int i = _items.Count - 1; i > _items.Count - 1 - length; i--)
             {
-                _EndIndices[j] = i;
+                _endIndices[j] = i;
                 j--;
             }
             ComputeCombination();
@@ -35,20 +35,20 @@ namespace NKnife.Maths
 
         private void ComputeCombination()
         {
-            int[] indices = new int[_Length];
-            for (int i = 0; i < _Length; i++)
+            int[] indices = new int[_length];
+            for (int i = 0; i < _length; i++)
             {
                 indices[i] = i;
             }
 
             do
             {
-                T[] oneCom = new T[_Length];
-                for (int k = 0; k < _Length; k++)
+                T[] oneCom = new T[_length];
+                for (int k = 0; k < _length; k++)
                 {
-                    oneCom[k] = _Items[indices[k]];
+                    oneCom[k] = _items[indices[k]];
                 }
-                _Combinations.Add(oneCom);
+                _combinations.Add(oneCom);
             }
             while (GetNext(indices));
         }
@@ -57,12 +57,12 @@ namespace NKnife.Maths
         {
             bool hasMore = true;
 
-            for (int j = _EndIndices.Length - 1; j > -1; j--)
+            for (int j = _endIndices.Length - 1; j > -1; j--)
             {
-                if (indices[j] < _EndIndices[j])
+                if (indices[j] < _endIndices[j])
                 {
                     indices[j]++;
-                    for (int k = 1; j + k < _EndIndices.Length; k++)
+                    for (int k = 1; j + k < _endIndices.Length; k++)
                     {
                         indices[j + k] = indices[j] + k;
                     }
@@ -78,12 +78,12 @@ namespace NKnife.Maths
 
         public int Count
         {
-            get { return _Combinations.Count; }
+            get { return _combinations.Count; }
         }
 
         public IEnumerator<IList<T>> GetEnumerator()
         {
-            return _Combinations.GetEnumerator();
+            return _combinations.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

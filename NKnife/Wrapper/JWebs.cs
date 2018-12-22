@@ -15,18 +15,18 @@ namespace NKnife.Wrapper
     /// </summary>
     public class JWebs
     {
-        private const string BOUNDARY = "~~~##^##~~~";
-        private const string CONTENT_TYPE = "multipart/form-data; boundary=" + BOUNDARY;
+        private const string Boundary = "~~~##^##~~~";
+        private const string ContentType = "multipart/form-data; boundary=" + Boundary;
 
-        private const string FILE_PART_HEADER = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n" +
+        private const string FilePartHeader = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n" +
                                                 "Content-Type: application/octet-stream\r\n\r\n";
 
-        private const string BEGIN_BOUNDARY = "--" + BOUNDARY + "\r\n";
-        private const string END_BOUNDARY = "\r\n--" + BOUNDARY + "--\r\n";
+        private const string BeginBoundary = "--" + Boundary + "\r\n";
+        private const string EndBoundary = "\r\n--" + Boundary + "--\r\n";
 
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _Logger = LogManager.GetCurrentClassLogger();
 
-        private JWebClient _WebClient;
+        private JWebClient _webClient;
 
         /// <summary>
         ///     上传文件
@@ -41,13 +41,13 @@ namespace NKnife.Wrapper
             var rootRequest = (HttpWebRequest) WebRequest.Create(servlet);
             rootRequest.Method = "POST";
             rootRequest.Timeout = timeout;
-            rootRequest.ContentType = CONTENT_TYPE;
+            rootRequest.ContentType = ContentType;
 
-            byte[] beginBoundary = Encoding.ASCII.GetBytes(BEGIN_BOUNDARY);
-            byte[] endBoundary = Encoding.ASCII.GetBytes(END_BOUNDARY);
+            byte[] beginBoundary = Encoding.ASCII.GetBytes(BeginBoundary);
+            byte[] endBoundary = Encoding.ASCII.GetBytes(EndBoundary);
 
             string fileSimpleName = file.Name.Substring(0, file.Name.LastIndexOf('.'));
-            string header = string.Format(FILE_PART_HEADER, fileSimpleName, file.Name);
+            string header = string.Format(FilePartHeader, fileSimpleName, file.Name);
 
             using (var memStream = new MemoryStream())
             {
@@ -106,7 +106,7 @@ namespace NKnife.Wrapper
             }
             catch (Exception e)
             {
-                _logger.Warn("获取回复异常", e);
+                _Logger.Warn("获取回复异常", e);
             }
 
             rootRequest.Abort();
@@ -136,13 +136,13 @@ namespace NKnife.Wrapper
         /// <returns></returns>
         public string WebPost(string url, Encoding encoding, int timeout, NameValueCollection postVars)
         {
-            _WebClient = new JWebClient();
-            _WebClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            _webClient = new JWebClient();
+            _webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
 
-            _WebClient.Timeout = timeout;
+            _webClient.Timeout = timeout;
 
             byte[] data = Encoding.UTF8.GetBytes(ConvertNameValueToString(postVars));
-            byte[] replay = _WebClient.UploadData(url, "POST", data);
+            byte[] replay = _webClient.UploadData(url, "POST", data);
 
 
             return encoding.GetString(replay);

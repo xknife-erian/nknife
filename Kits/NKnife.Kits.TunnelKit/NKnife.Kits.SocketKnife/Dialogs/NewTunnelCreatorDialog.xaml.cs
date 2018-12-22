@@ -22,8 +22,8 @@ namespace NKnife.Kits.SocketKnife.Dialogs
     /// </summary>
     public partial class NewTunnelCreatorDialog : Window
     {
-        private static readonly ILog _logger = LogManager.GetLogger<NewTunnelCreatorDialog>();
-        private bool _IsServer;
+        private static readonly ILog _Logger = LogManager.GetLogger<NewTunnelCreatorDialog>();
+        private bool _isServer;
 
         public NewTunnelCreatorDialog()
         {
@@ -82,10 +82,10 @@ namespace NKnife.Kits.SocketKnife.Dialogs
 
         public bool IsServer
         {
-            get { return _IsServer; }
+            get { return _isServer; }
             set
             {
-                _IsServer = value;
+                _isServer = value;
                 if (!value)
                 {
                     _RemoteIpBox.Visibility = Visibility.Visible;
@@ -118,7 +118,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             //仅服务端需要判断
             if (IsServer)
             {
-                if (DI.Get<ServerMap>().ContainsKey(new IPEndPoint(localIpAddress, port)))
+                if (Di.Get<ServerMap>().ContainsKey(new IPEndPoint(localIpAddress, port)))
                 {
                     MessageBox.Show("已启动相同端口号的服务端，请重新选择。");
                     return;
@@ -148,7 +148,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
                     CustomSetting.IpAddress = IPAddress.Parse(_RemoteIpBox.Text);
                 }
                 CustomSetting.Port = port;
-                _logger.Info(string.Format("用户设置:{0},{1} <<< {2}", CustomSetting.IpAddress, CustomSetting.Port, _PortTextBox.Text));
+                _Logger.Info(string.Format("用户设置:{0},{1} <<< {2}", CustomSetting.IpAddress, CustomSetting.Port, _PortTextBox.Text));
 
                 CustomSetting.CommandParser = (Type) _CommandParserComboBox.SelectedItem;
                 CustomSetting.Decoder = (Type) _DecoderComboBox.SelectedItem;
@@ -158,7 +158,7 @@ namespace NKnife.Kits.SocketKnife.Dialogs
             }
             catch (Exception ex)
             {
-                _logger.ErrorFormat("创建Socket异常", ex.Message);
+                _Logger.ErrorFormat("创建Socket异常", ex.Message);
             }
 
             if (_IsHeartBeat.IsChecked != null) 

@@ -12,16 +12,16 @@ namespace SerialKnife.Pan
     /// </summary>
     public sealed class SerialClients : ISerialClientManager, IDisposable
     {
-        private static readonly ILog _logger = LogManager.GetLogger<SerialClients>();
+        private static readonly ILog _Logger = LogManager.GetLogger<SerialClients>();
 
         /// <summary>
         ///     串口管理器字典，以串口号作为键值
         /// </summary>
-        private readonly ConcurrentDictionary<ushort, ISerialClient> _SerialMap;
+        private readonly ConcurrentDictionary<ushort, ISerialClient> _serialMap;
 
         public SerialClients()
         {
-            _SerialMap = new ConcurrentDictionary<ushort, ISerialClient>();
+            _serialMap = new ConcurrentDictionary<ushort, ISerialClient>();
         }
 
         #region Implementation of IDisposable
@@ -47,13 +47,13 @@ namespace SerialKnife.Pan
         /// <returns></returns>
         public bool AddPort(ushort port, SerialType serialType = SerialType.WinApi, bool enableDetialLog = false)
         {
-            if (_SerialMap.ContainsKey(port))
+            if (_serialMap.ContainsKey(port))
             {
-                return _SerialMap[port].Active;
+                return _serialMap[port].Active;
             }
             ISerialClient serial = new SerialClient(serialType, enableDetialLog);
             serial.OpenPort(port);
-            _SerialMap.TryAdd(port, serial);
+            _serialMap.TryAdd(port, serial);
             return true;
         }
 
@@ -65,7 +65,7 @@ namespace SerialKnife.Pan
         public bool RemovePort(ushort port)
         {
             ISerialClient serial;
-            if (_SerialMap.TryRemove(port, out serial))
+            if (_serialMap.TryRemove(port, out serial))
             {
                 serial.ClosePort();
             }
@@ -80,16 +80,16 @@ namespace SerialKnife.Pan
         {
             try
             {
-                foreach (SerialClient serialuti in _SerialMap.Values)
+                foreach (SerialClient serialuti in _serialMap.Values)
                 {
                     serialuti.ClosePort();
                 }
-                _SerialMap.Clear();
+                _serialMap.Clear();
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.Warn("SerialCommunicationManager类UnInitialize异常", ex);
+                _Logger.Warn("SerialCommunicationManager类UnInitialize异常", ex);
                 return false;
             }
         }
@@ -102,7 +102,7 @@ namespace SerialKnife.Pan
         public bool AddPackage(ushort port, PackageBase package)
         {
             ISerialClient serialClient;
-            if (!_SerialMap.TryGetValue(port, out serialClient)) return false;
+            if (!_serialMap.TryGetValue(port, out serialClient)) return false;
             if (!serialClient.Active) return false;
             serialClient.DataPool.AddPackage(package);
             return true;

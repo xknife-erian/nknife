@@ -12,7 +12,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
     /// </summary>
     public partial class TcpClientView
     {
-        private readonly TcpClientViewModel _ViewModel;
+        private readonly TcpClientViewModel _viewModel;
 
         public SocketConfig Config { get; set; }
         internal SocketCustomSetting CustomSetting { get; set; }
@@ -21,21 +21,21 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
         {
             InitializeComponent();
             Title = "SocketKnife客户端";
-            _ViewModel = new TcpClientViewModel();
-            _View.DataContext = _ViewModel;
+            _viewModel = new TcpClientViewModel();
+            _View.DataContext = _viewModel;
         }
 
         protected override void OnClosed()
         {
             base.OnClosed();
-            _ViewModel.StopClient();
+            _viewModel.StopClient();
         }
 
         private void Start(object sender, RoutedEventArgs e)
         {
             _StartButton.IsEnabled = false;
             _StopButton.IsEnabled = true;
-            _ViewModel.StartClient(Config, CustomSetting);
+            _viewModel.StartClient(Config, CustomSetting);
             _StartReplayButton.IsEnabled = true;
         }
 
@@ -44,7 +44,7 @@ namespace NKnife.Kits.SocketKnife.Mvvm.Views
             _StartButton.IsEnabled = true;
             _StopButton.IsEnabled = false;
 
-            _ViewModel.StopClient();
+            _viewModel.StopClient();
         }
 
         private void _BuildProtocolButton_OnClick(object sender, RoutedEventArgs e)

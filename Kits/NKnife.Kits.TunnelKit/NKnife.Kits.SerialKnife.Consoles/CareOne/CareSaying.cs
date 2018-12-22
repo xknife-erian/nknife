@@ -13,8 +13,8 @@ namespace MonitorKnife.Tunnels.Common
     /// </summary>
     public class CareSaying : BytesProtocol
     {
-        private string _Scpi = string.Empty;
-        private byte[] _ScpiBytes = null;
+        private string _scpi = string.Empty;
+        private byte[] _scpiBytes = null;
 
         public CareSaying()
         {
@@ -56,7 +56,7 @@ namespace MonitorKnife.Tunnels.Common
         /// </summary>
         public short Length
         {
-            get { return (short) _ScpiBytes.Length; }
+            get { return (short) _scpiBytes.Length; }
         }
 
         /// <summary>
@@ -66,14 +66,14 @@ namespace MonitorKnife.Tunnels.Common
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(_Scpi) && _ScpiBytes != null && _ScpiBytes.Length > 0)
-                    _Scpi = Encoding.ASCII.GetString(_ScpiBytes);
-                return _Scpi;
+                if (string.IsNullOrWhiteSpace(_scpi) && _scpiBytes != null && _scpiBytes.Length > 0)
+                    _scpi = Encoding.ASCII.GetString(_scpiBytes);
+                return _scpi;
             }
             set
             {
-                _ScpiBytes = Encoding.ASCII.GetBytes(value);
-                _Scpi = value;
+                _scpiBytes = Encoding.ASCII.GetBytes(value);
+                _scpi = value;
             }
         }
 

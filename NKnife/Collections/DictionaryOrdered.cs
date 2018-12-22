@@ -9,8 +9,8 @@ namespace NKnife.Collections
     {
         #region Private Data members
 
-        private readonly IList<TKey> _List;
-        private readonly IDictionary<TKey, TValue> _Map;
+        private readonly IList<TKey> _list;
+        private readonly IDictionary<TKey, TValue> _map;
 
         #endregion
 
@@ -18,8 +18,8 @@ namespace NKnife.Collections
 
         public DictionaryOrdered()
         {
-            _List = new List<TKey>();
-            _Map = new Dictionary<TKey, TValue>();
+            _list = new List<TKey>();
+            _map = new Dictionary<TKey, TValue>();
         }
 
         #endregion
@@ -34,8 +34,8 @@ namespace NKnife.Collections
         public void Add(TKey key, TValue value)
         {
             // Add to map and list.
-            _Map.Add(key, value);
-            _List.Add(key);
+            _map.Add(key, value);
+            _list.Add(key);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace NKnife.Collections
         /// <returns></returns>
         public bool ContainsKey(TKey key)
         {
-            return _Map.ContainsKey(key);
+            return _map.ContainsKey(key);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace NKnife.Collections
         /// </summary>
         public ICollection<TKey> Keys
         {
-            get { return _Map.Keys; }
+            get { return _map.Keys; }
         }
 
         /// <summary>
@@ -64,11 +64,11 @@ namespace NKnife.Collections
         public bool Remove(TKey key)
         {
             // Check.
-            if (!_Map.ContainsKey(key)) return false;
+            if (!_map.ContainsKey(key)) return false;
 
             int ndxKey = IndexOfKey(key);
-            _Map.Remove(key);
-            _List.RemoveAt(ndxKey);
+            _map.Remove(key);
+            _list.RemoveAt(ndxKey);
             return true;
         }
 
@@ -80,7 +80,7 @@ namespace NKnife.Collections
         /// <returns></returns>
         public bool TryGetValue(TKey key, out TValue value)
         {
-            return _Map.TryGetValue(key, out value);
+            return _map.TryGetValue(key, out value);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace NKnife.Collections
         /// </summary>
         public ICollection<TValue> Values
         {
-            get { return _Map.Values; }
+            get { return _map.Values; }
         }
 
         /// <summary>
@@ -98,8 +98,8 @@ namespace NKnife.Collections
         /// <returns></returns>
         public TValue this[TKey key]
         {
-            get { return _Map[key]; }
-            set { _Map[key] = value; }
+            get { return _map[key]; }
+            set { _map[key] = value; }
         }
 
         /// <summary>
@@ -116,8 +116,8 @@ namespace NKnife.Collections
         /// </summary>
         public void Clear()
         {
-            _Map.Clear();
-            _List.Clear();
+            _map.Clear();
+            _list.Clear();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace NKnife.Collections
         /// <returns></returns>
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            return _Map.Contains(item);
+            return _map.Contains(item);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace NKnife.Collections
         /// <param name="arrayIndex"></param>
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            _Map.CopyTo(array, arrayIndex);
+            _map.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace NKnife.Collections
         /// </summary>
         public int Count
         {
-            get { return _Map.Count; }
+            get { return _map.Count; }
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace NKnife.Collections
         /// </summary>
         public bool IsReadOnly
         {
-            get { return _Map.IsReadOnly; }
+            get { return _map.IsReadOnly; }
         }
 
         /// <summary>
@@ -165,11 +165,11 @@ namespace NKnife.Collections
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
             // Check.
-            if (!_Map.ContainsKey(item.Key)) return false;
+            if (!_map.ContainsKey(item.Key)) return false;
 
             int ndxOfKey = IndexOfKey(item.Key);
-            _List.RemoveAt(ndxOfKey);
-            return _Map.Remove(item);
+            _list.RemoveAt(ndxOfKey);
+            return _map.Remove(item);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace NKnife.Collections
         /// <returns></returns>
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            return _Map.GetEnumerator();
+            return _map.GetEnumerator();
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace NKnife.Collections
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _Map.GetEnumerator();
+            return _map.GetEnumerator();
         }
 
         #endregion
@@ -203,13 +203,13 @@ namespace NKnife.Collections
         {
             get
             {
-                TKey key = _List[index];
-                return _Map[key];
+                TKey key = _list[index];
+                return _map[key];
             }
             set
             {
-                TKey key = _List[index];
-                _Map[key] = value;
+                TKey key = _list[index];
+                _map[key] = value;
             }
         }
 
@@ -222,8 +222,8 @@ namespace NKnife.Collections
         public void Insert(int index, TKey key, TValue value)
         {
             // Add to map and list.
-            _Map.Add(key, value);
-            _List.Insert(index, key);
+            _map.Add(key, value);
+            _list.Insert(index, key);
         }
 
 
@@ -234,11 +234,11 @@ namespace NKnife.Collections
         /// <returns></returns>
         public int IndexOfKey(TKey key)
         {
-            if (!_Map.ContainsKey(key)) return -1;
+            if (!_map.ContainsKey(key)) return -1;
 
-            for (int ndx = 0; ndx < _List.Count; ndx++)
+            for (int ndx = 0; ndx < _list.Count; ndx++)
             {
-                TKey keyInList = _List[ndx];
+                TKey keyInList = _list[ndx];
                 if (keyInList.Equals(key))
                     return ndx;
             }
@@ -252,9 +252,9 @@ namespace NKnife.Collections
         /// <param name="index"></param>
         public void RemoveAt(int index)
         {
-            TKey key = _List[index];
-            _Map.Remove(key);
-            _List.RemoveAt(index);
+            TKey key = _list[index];
+            _map.Remove(key);
+            _list.RemoveAt(index);
         }
 
         #endregion

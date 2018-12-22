@@ -35,7 +35,7 @@ namespace NKnife.Wrapper
 
         /// <summary>系统启动相关，关机，重启等
         /// </summary>
-        public class POWER
+        public class Power
         {
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             internal struct TokPriv1Luid
@@ -61,34 +61,34 @@ namespace NKnife.Wrapper
             [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
             internal static extern bool ExitWindowsEx(int doFlag, int rea);
 
-            internal const int SE_PRIVILEGE_ENABLED = 0x00000002;
-            internal const int TOKEN_QUERY = 0x00000008;
-            internal const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;
-            internal const string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
+            internal const int SePrivilegeEnabled = 0x00000002;
+            internal const int TokenQuery = 0x00000008;
+            internal const int TokenAdjustPrivileges = 0x00000020;
+            internal const string SeShutdownName = "SeShutdownPrivilege";
 
             /// <summary>注销
             /// </summary>
-            internal const int EWX_LOGOFF = 0x00000000;
+            internal const int EwxLogoff = 0x00000000;
 
             /// <summary>先保存再关机
             /// </summary>
-            internal const int EWX_SHUTDOWN = 0x00000001;
+            internal const int EwxShutdown = 0x00000001;
 
             /// <summary>重启
             /// </summary>
-            internal const int EWX_REBOOT = 0x00000002;
+            internal const int EwxReboot = 0x00000002;
 
             /// <summary>不保存
             /// </summary>
-            internal const int EWX_FORCE = 0x00000004;
+            internal const int EwxForce = 0x00000004;
 
             /// <summary>强制关机
             /// </summary>
-            internal const int EWX_POWEROFF = 0x00000008;
+            internal const int EwxPoweroff = 0x00000008;
 
             /// <summary>不保存就关机(WIN2K以上版本)
             /// </summary>
-            internal const int EWX_FORCEIFHUNG = 0x00000010;
+            internal const int EwxForceifhung = 0x00000010;
 
             private static void DoExitWin(int doFlag)
             {
@@ -96,34 +96,34 @@ namespace NKnife.Wrapper
                 TokPriv1Luid tp;
                 IntPtr hproc = GetCurrentProcess();
                 IntPtr htok = IntPtr.Zero;
-                ok = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);
+                ok = OpenProcessToken(hproc, TokenAdjustPrivileges | TokenQuery, ref htok);
                 tp.Count = 1;
                 tp.Luid = 0;
-                tp.Attr = SE_PRIVILEGE_ENABLED;
-                ok = LookupPrivilegeValue(null, SE_SHUTDOWN_NAME, ref tp.Luid);
+                tp.Attr = SePrivilegeEnabled;
+                ok = LookupPrivilegeValue(null, SeShutdownName, ref tp.Luid);
                 ok = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
                 ok = ExitWindowsEx(doFlag, 0);
             }
 
             /// <summary>重启计算机
             /// </summary>
-            public static void REBOOT()
+            public static void Reboot()
             {
-                DoExitWin(EWX_FORCE | EWX_REBOOT);
+                DoExitWin(EwxForce | EwxReboot);
             }
 
             /// <summary>关闭计算机
             /// </summary>
-            public static void POWEROFF()
+            public static void Poweroff()
             {
-                DoExitWin(EWX_FORCE | EWX_POWEROFF);
+                DoExitWin(EwxForce | EwxPoweroff);
             }
 
             /// <summary>注销计算机
             /// </summary>
-            public static void LOGOFF()
+            public static void Logoff()
             {
-                DoExitWin(EWX_FORCE | EWX_LOGOFF);
+                DoExitWin(EwxForce | EwxLogoff);
             }
         }
 
@@ -137,22 +137,23 @@ namespace NKnife.Wrapper
             /// <returns></returns>
             private static bool IsValueExist(string keyValue)
             {
-                RegistryKey hklm = Registry.LocalMachine;
-                RegistryKey run = hklm.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+                RegistryKey localMachine = Registry.LocalMachine;
+                RegistryKey run = localMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
 
-                string ValueStr1 = null;
+                string valueStr1 = null;
 
                 try
                 {
-                    ValueStr1 = (string) run.GetValue(keyValue);
-                    hklm.Close();
+                    if (run != null)
+                        valueStr1 = (string) run.GetValue(keyValue);
+                    localMachine.Close();
                 }
-                catch (Exception Er1)
+                catch (Exception er1)
                 {
-                    MessageBox.Show(Er1.Message.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(er1.Message.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (ValueStr1 == null)
+                if (valueStr1 == null)
                     return false;
                 else
                     return true;
@@ -218,15 +219,15 @@ namespace NKnife.Wrapper
         public class DisplaySettings
         {
             [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-            private struct DEVMODE
+            private struct Devmode
             {
-                public const int DM_DISPLAYFREQUENCY = 0x400000;
-                public const int DM_PELSWIDTH = 0x80000;
-                public const int DM_PELSHEIGHT = 0x100000;
-                private const int CCHDEVICENAME = 32;
-                private const int CCHFORMNAME = 32;
+                public const int DmDisplayfrequency = 0x400000;
+                public const int DmPelswidth = 0x80000;
+                public const int DmPelsheight = 0x100000;
+                private const int Cchdevicename = 32;
+                private const int Cchformname = 32;
 
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)] 
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = Cchdevicename)] 
                 public string dmDeviceName;
                 public short dmSpecVersion;
                 public short dmDriverVersion;
@@ -236,7 +237,7 @@ namespace NKnife.Wrapper
 
                 public int dmPositionX;
                 public int dmPositionY;
-                public DMDO dmDisplayOrientation;
+                public Dmdo dmDisplayOrientation;
                 public int dmDisplayFixedOutput;
 
                 public short dmColor;
@@ -244,7 +245,7 @@ namespace NKnife.Wrapper
                 public short dmYResolution;
                 public short dmTTOption;
                 public short dmCollate;
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHFORMNAME)] 
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = Cchformname)] 
                 public string dmFormName;
                 public short dmLogPixels;
                 public int dmBitsPerPel;
@@ -262,16 +263,16 @@ namespace NKnife.Wrapper
                 public int dmPanningHeight;
             }
 
-            private enum DMDO
+            private enum Dmdo
             {
-                DEFAULT = 0,
+                Default = 0,
                 D90 = 1,
                 D180 = 2,
                 D270 = 3
             }
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
-            private static extern int ChangeDisplaySettings([In] ref DEVMODE lpDevMode, int dwFlags);
+            private static extern int ChangeDisplaySettings([In] ref Devmode lpDevMode, int dwFlags);
 
             /// <summary>设置屏幕分辩率相关
             /// </summary>
@@ -280,12 +281,12 @@ namespace NKnife.Wrapper
             /// <param name="frequency">屏幕刷新率，默认85.</param>
             public static void SetDisplaySettings(int width = 1024, int height = 768, int frequency = 85)
             {
-                DEVMODE dm = new DEVMODE();
-                dm.dmSize = (short) Marshal.SizeOf(typeof (DEVMODE));
+                Devmode dm = new Devmode();
+                dm.dmSize = (short) Marshal.SizeOf(typeof (Devmode));
                 dm.dmPelsWidth = width;
                 dm.dmPelsHeight = height;
                 dm.dmDisplayFrequency = frequency;
-                dm.dmFields = DEVMODE.DM_PELSWIDTH | DEVMODE.DM_PELSHEIGHT | DEVMODE.DM_DISPLAYFREQUENCY;
+                dm.dmFields = Devmode.DmPelswidth | Devmode.DmPelsheight | Devmode.DmDisplayfrequency;
                 ChangeDisplaySettings(ref dm, 0);
             }
         }

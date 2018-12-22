@@ -14,12 +14,12 @@ namespace NKnife.Kits.ChannelKit
     {
         #region 单件实例
 
-        private static readonly object _lock = new object();
+        private static readonly object _Lock = new object();
         private static AppEnvironment _instance;
 
         public static AppEnvironment Instance(string[] args)
         {
-            lock (_lock)
+            lock (_Lock)
             {
                 if (_instance == null)
                     _instance = new AppEnvironment(args);
@@ -105,8 +105,8 @@ namespace NKnife.Kits.ChannelKit
 
         private void LoadServices()
         {
-            DI.Initialize();
-            DI.Get<ChannelService>().Initialize();
+            Di.Initialize();
+            Di.Get<ChannelService>().Initialize();
 #if Release
             Thread.Sleep(800);
 #endif
@@ -114,7 +114,7 @@ namespace NKnife.Kits.ChannelKit
 
         private void UnloadServices()
         {
-            DI.Get<ChannelService>().Dispose();
+            Di.Get<ChannelService>().Dispose();
         }
 
         private void CurrentDomainUnload(object sender, EventArgs e)

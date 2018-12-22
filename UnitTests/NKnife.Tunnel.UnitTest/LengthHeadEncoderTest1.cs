@@ -14,20 +14,20 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod1()//单条短数据
         {
             var decoder = new LengthHeadDecoder();
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
 
             var encoder = new LengthHeadEncoder();
 
-            var data = encoder.Execute(ABCDE);
+            var data = encoder.Execute(abcde);
 
             int finishedIndex;
             var result = decoder.Execute(data, out finishedIndex);
 
             Assert.AreEqual(data.Length, finishedIndex);
 
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[0][i]);
+                Assert.AreEqual(abcde[i], result[0][i]);
             }
         }
 
@@ -35,11 +35,11 @@ namespace NKnife.Socket.UnitTest
         public void ExecuteTestMethod2()//单条长数据
         {
             var decoder = new LengthHeadDecoder();
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
             var sb = new StringBuilder();
             for (int i = 0; i < 100000; i++)
             {
-                sb.Append(ABCDE);
+                sb.Append(abcde);
             }
             var encoder = new LengthHeadEncoder();
 
@@ -50,9 +50,9 @@ namespace NKnife.Socket.UnitTest
 
             Assert.AreEqual(data.Length, finishedIndex);
 
-            for (int i = 0; i < ABCDE.Length; i++)
+            for (int i = 0; i < abcde.Length; i++)
             {
-                Assert.AreEqual(ABCDE[i], result[0][i]);
+                Assert.AreEqual(abcde[i], result[0][i]);
             }
         }
 
@@ -62,11 +62,11 @@ namespace NKnife.Socket.UnitTest
             var decoder = new LengthHeadDecoder();
             decoder.EnabelCompress = true;
 
-            const string ABCDE = "ABCDE";
+            const string abcde = "ABCDE";
             var sb = new StringBuilder();
             for (int i = 0; i < 100000; i++)
             {
-                sb.Append(ABCDE);
+                sb.Append(abcde);
             }
             var encoder = new LengthHeadEncoder();
             encoder.EnabelCompress = true;

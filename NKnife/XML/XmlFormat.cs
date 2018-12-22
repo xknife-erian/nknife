@@ -9,8 +9,8 @@ namespace NKnife.XML
     public class XmlFormat
     {
         private Queue<string> _allChars = new Queue<string>(1000);
-        private const int _front = 0x3C;
-        private const int _end = 0x3E;
+        private const int Front = 0x3C;
+        private const int End = 0x3E;
         private bool _isAdd = true;
         private int _pos = 0;
 
@@ -30,8 +30,8 @@ namespace NKnife.XML
 
                 switch ((int)cs[i])
                 {
-                    case _end:
-                        result += (char)_end; int k = _pos;
+                    case End:
+                        result += (char)End; int k = _pos;
                         if (_isAdd)
                             _pos++;
                         _allChars.Enqueue(AppendTab(k) + result);
@@ -39,7 +39,7 @@ namespace NKnife.XML
                         _isAdd = true;
                         continue;
 
-                    case _front:
+                    case Front:
                         {
                             if (cs[i + 1] == 0x2F)
                             {
@@ -51,7 +51,7 @@ namespace NKnife.XML
                                 }
                                 _pos--;
                             }
-                            result += (char)_front;
+                            result += (char)Front;
                             continue;
                         }
 

@@ -12,7 +12,7 @@ namespace NKnife.DataLite
     /// </summary>
     public abstract class RepositoryBase<T> : IRepository<T>
     {
-        private LiteCollection<T> _Collection;
+        private LiteCollection<T> _collection;
         protected LiteDatabase _Database;
         protected bool _NeedDispose;
 
@@ -68,7 +68,7 @@ namespace NKnife.DataLite
         /// <summary>
         ///     数据集合
         /// </summary>
-        protected virtual LiteCollection<T> Collection => _Collection ?? (_Collection = Database.GetCollection<T>(BuildCollectionName()));
+        protected virtual LiteCollection<T> Collection => _collection ?? (_collection = Database.GetCollection<T>(BuildCollectionName()));
 
         /// <summary>
         ///     数据库主文件的实际路径

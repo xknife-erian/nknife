@@ -10,12 +10,12 @@ namespace NKnife.Kits.SerialKnife
 {
     public partial class WorkBenchForm : Form
     {
-        private static readonly ILog _logger = LogManager.GetLogger<WorkBenchForm>();
-        private readonly DockContent _ControlPanelView = DI.Get<ControlPanelView>();
-        private readonly DockPanel _DockPanel = new DockPanel();
-        private readonly string _DockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
-        private readonly DockContent _LogView = DI.Get<LogView>();
-        private readonly DockContent _MockDataConnectorView = DI.Get<MockSerialDataConnectorView>();
+        private static readonly ILog _Logger = LogManager.GetLogger<WorkBenchForm>();
+        private readonly DockContent _controlPanelView = Di.Get<ControlPanelView>();
+        private readonly DockPanel _dockPanel = new DockPanel();
+        private readonly string _dockPath = Path.Combine(Application.StartupPath, "dockpanel.config");
+        private readonly DockContent _logView = Di.Get<LogView>();
+        private readonly DockContent _mockDataConnectorView = Di.Get<MockSerialDataConnectorView>();
 
         #region 初始化
 
@@ -33,7 +33,7 @@ namespace NKnife.Kits.SerialKnife
         {
             try
             {
-                _DockPanel.SaveAsXml(_DockPath);
+                _dockPanel.SaveAsXml(_dockPath);
             }
             catch (Exception ex)
             {
@@ -41,49 +41,49 @@ namespace NKnife.Kits.SerialKnife
                 return;
             }
 
-            _ControlPanelView.Close();
+            _controlPanelView.Close();
             base.OnFormClosing(e);
         }
 
         private void InitializeDockPanel()
         {
-            MainPanel.Controls.Add(_DockPanel);
-            _DockPanel.DocumentStyle = DocumentStyle.DockingWindow;
-            _DockPanel.Dock = DockStyle.Fill;
-            _DockPanel.BringToFront();
+            MainPanel.Controls.Add(_dockPanel);
+            _dockPanel.DocumentStyle = DocumentStyle.DockingWindow;
+            _dockPanel.Dock = DockStyle.Fill;
+            _dockPanel.BringToFront();
 
             try
             {
                 var deserialize = new DeserializeDockContent(GetContentForm);
-                _DockPanel.LoadFromXml(_DockPath, deserialize);
+                _dockPanel.LoadFromXml(_dockPath, deserialize);
             }
             catch (Exception)
             {
                 // 配置文件不存在或配置文件有问题时 按系统默认规则加载子窗体
                 InitializeDefaultViews();
             }
-            _logger.Info("DockPanel初始化完成");
+            _Logger.Info("DockPanel初始化完成");
         }
 
         private IDockContent GetContentForm(string xml)
         {
             if (xml == typeof (ControlPanelView).ToString())
-                return _ControlPanelView;
+                return _controlPanelView;
             if (xml == typeof (LogView).ToString())
-                return _LogView;
+                return _logView;
             if (xml == typeof (MockSerialDataConnectorView).ToString())
-                return _MockDataConnectorView;
+                return _mockDataConnectorView;
             return null;
         }
 
         private void InitializeDefaultViews()
         {
-            _LogView.HideOnClose = true;
-            _LogView.Show(_DockPanel, DockState.DockBottom);
-            _MockDataConnectorView.HideOnClose = true;
-            _MockDataConnectorView.Show(_DockPanel, DockState.DockRight);
-            _ControlPanelView.HideOnClose = true;
-            _ControlPanelView.Show(_DockPanel, DockState.Document);
+            _logView.HideOnClose = true;
+            _logView.Show(_dockPanel, DockState.DockBottom);
+            _mockDataConnectorView.HideOnClose = true;
+            _mockDataConnectorView.Show(_dockPanel, DockState.DockRight);
+            _controlPanelView.HideOnClose = true;
+            _controlPanelView.Show(_dockPanel, DockState.Document);
         }
 
         #endregion
@@ -103,20 +103,20 @@ namespace NKnife.Kits.SerialKnife
 
         private void 操作面板ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_ControlPanelView != null)
-                _ControlPanelView.Show();
+            if (_controlPanelView != null)
+                _controlPanelView.Show();
         }
 
         private void 日志面板ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_LogView != null)
-                _LogView.Show();
+            if (_logView != null)
+                _logView.Show();
         }
 
         private void 模拟串口连接器面板ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_MockDataConnectorView != null)
-                _MockDataConnectorView.Show();
+            if (_mockDataConnectorView != null)
+                _mockDataConnectorView.Show();
         }
 
         #endregion

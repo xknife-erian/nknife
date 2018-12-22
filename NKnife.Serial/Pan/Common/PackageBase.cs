@@ -8,7 +8,7 @@ namespace SerialKnife.Pan.Common
     /// </summary>
     public abstract class PackageBase
     {
-        private static readonly ILog _logger = LogManager.GetLogger<PackageBase>();
+        private static readonly ILog _Logger = LogManager.GetLogger<PackageBase>();
 
         protected PackageBase(ushort port, byte[] dataToSend, SendInterval sendInterval)
         {
@@ -50,7 +50,7 @@ namespace SerialKnife.Pan.Common
             }
             catch (Exception ex)
             {
-                _logger.Warn("OnPackageSent:", ex);
+                _Logger.Warn("OnPackageSent:", ex);
             }
         }
     }

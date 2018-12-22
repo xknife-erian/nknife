@@ -11,15 +11,15 @@ namespace NKnife.Kits.ChannelKit.Services
             SerialUtils.RefreshSerialPorts();
         }
 
-        private readonly Dictionary<ushort, SerialConfig> _ConfigMap = new Dictionary<ushort, SerialConfig>();
-        private readonly Dictionary<SerialConfig, SerialChannel> _ChannelMap = new Dictionary<SerialConfig, SerialChannel>();
+        private readonly Dictionary<ushort, SerialConfig> _configMap = new Dictionary<ushort, SerialConfig>();
+        private readonly Dictionary<SerialConfig, SerialChannel> _channelMap = new Dictionary<SerialConfig, SerialChannel>();
 
         public SerialChannel GetChannel(SerialConfig config)
         {
-            if (!_ChannelMap.TryGetValue(config, out var channel))
+            if (!_channelMap.TryGetValue(config, out var channel))
             {
                 channel = new SerialChannel(config);
-                _ChannelMap.Add(config, channel);
+                _channelMap.Add(config, channel);
             }
             return channel;
         }
@@ -32,12 +32,12 @@ namespace NKnife.Kits.ChannelKit.Services
 
         public void RemoveChannel(SerialConfig config)
         {
-            if (_ChannelMap.TryGetValue(config, out var channel))
+            if (_channelMap.TryGetValue(config, out var channel))
             {
                 if (channel.IsOpen)
                     channel.Close();
-                _ConfigMap.Remove(config.Port);
-                _ChannelMap.Remove(config);
+                _configMap.Remove(config.Port);
+                _channelMap.Remove(config);
             }
         }
 
@@ -48,10 +48,10 @@ namespace NKnife.Kits.ChannelKit.Services
 
         public SerialConfig GetConfig(ushort port)
         {
-            if (!_ConfigMap.TryGetValue(port, out var config))
+            if (!_configMap.TryGetValue(port, out var config))
             {
                 config = new SerialConfig(port);
-                _ConfigMap.Add(port, config);
+                _configMap.Add(port, config);
             }
             return config;
         }
@@ -61,13 +61,13 @@ namespace NKnife.Kits.ChannelKit.Services
         /// <summary>执行与释放或重置非托管资源关联的应用程序定义的任务。</summary>
         public void Dispose()
         {
-            foreach (var channel in _ChannelMap.Values)
+            foreach (var channel in _channelMap.Values)
             {
                 if (channel.IsOpen)
                     channel.Close();
             }
-            _ChannelMap.Clear();
-            _ConfigMap.Clear();
+            _channelMap.Clear();
+            _configMap.Clear();
         }
 
         #endregion

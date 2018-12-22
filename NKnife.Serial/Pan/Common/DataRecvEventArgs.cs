@@ -6,21 +6,21 @@ namespace SerialKnife.Pan.Common
     /// </summary>
     public class DataRecvEventArgs : EventArgs
     {
-        private readonly string _CommId;
-        private readonly byte[] _RecvData;
+        private readonly string _commId;
+        private readonly byte[] _recvData;
 
         public DataRecvEventArgs(byte[] recv, int count, string commId)
         {
-            _CommId = commId;
-            _RecvData = new byte[count];
-            Array.Copy(recv, _RecvData, count);
+            _commId = commId;
+            _recvData = new byte[count];
+            Array.Copy(recv, _recvData, count);
         }
 
         /// <summary>数据
         /// </summary>
         public byte[] RecvData
         {
-            get { return _RecvData; }
+            get { return _recvData; }
         }
 
         /// <summary>消息Id（这个参数原本设计作为数据包唯一标识符，
@@ -28,7 +28,7 @@ namespace SerialKnife.Pan.Common
         /// </summary>
         public string CommId
         {
-            get { return _CommId; }
+            get { return _commId; }
         }
     }
 }

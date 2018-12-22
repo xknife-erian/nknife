@@ -6,19 +6,19 @@ namespace SerialKnife.Pan.Common
     /// </summary>
     public class NoResponseEventArgs : EventArgs
     {
-        private readonly int _SenderId;
+        private readonly int _senderId;
 
         /// <summary>消息Id
         /// </summary>
         /// <param name="senderId"></param>
         public NoResponseEventArgs(int senderId)
         {
-            _SenderId = senderId;
+            _senderId = senderId;
         }
 
         public int SenderId
         {
-            get { return _SenderId; }
+            get { return _senderId; }
         }
     }
 }

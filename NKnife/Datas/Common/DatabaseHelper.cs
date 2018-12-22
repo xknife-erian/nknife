@@ -10,7 +10,7 @@ namespace NKnife.Datas.Common
 {
     public abstract class DatabaseHelper : IDataBaseHelper
     {
-        private static readonly ILog _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog _Logger = LogManager.GetCurrentClassLogger();
 
         #region IDataBaseHelper Members
 
@@ -39,7 +39,7 @@ namespace NKnife.Datas.Common
             }
             catch (Exception ex)
             {
-                _logger.Error("关闭数据库连接异常：" + ex.Message);
+                _Logger.Error("关闭数据库连接异常：" + ex.Message);
             }
         }
 
@@ -92,7 +92,7 @@ namespace NKnife.Datas.Common
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return -1;
             }
         }
@@ -137,7 +137,7 @@ namespace NKnife.Datas.Common
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return null;
             }
         }
@@ -163,7 +163,7 @@ namespace NKnife.Datas.Common
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }
@@ -195,7 +195,7 @@ namespace NKnife.Datas.Common
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }
@@ -224,7 +224,7 @@ namespace NKnife.Datas.Common
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }
@@ -259,7 +259,7 @@ namespace NKnife.Datas.Common
             }
             catch (Exception ex)
             {
-                _logger.Warn(string.Format("查询异常：{0}", sql), ex);
+                _Logger.Warn(string.Format("查询异常：{0}", sql), ex);
                 return default(T);
             }
         }

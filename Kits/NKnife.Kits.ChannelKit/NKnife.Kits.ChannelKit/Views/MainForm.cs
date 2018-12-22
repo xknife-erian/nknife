@@ -6,7 +6,7 @@ namespace NKnife.Kits.ChannelKit.Views
 {
     public partial class MainForm : Form
     {
-        private MainViewmodel _Viewmodel = DI.Get<MainViewmodel>();
+        private MainViewmodel _viewmodel = Di.Get<MainViewmodel>();
 
         public MainForm()
         {

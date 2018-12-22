@@ -12,15 +12,15 @@ namespace SocketKnife.Generic
 {
     public class SocketSessionMap : ISocketSessionMap
     {
-        private readonly ConcurrentDictionary<long, SocketSession> _Map = new ConcurrentDictionary<long, SocketSession>();
+        private readonly ConcurrentDictionary<long, SocketSession> _map = new ConcurrentDictionary<long, SocketSession>();
 
         public SocketSession this[long key]
         {
-            get { return _Map.ContainsKey(key) ? _Map[key] : null; }
+            get { return _map.ContainsKey(key) ? _map[key] : null; }
             set
             {
-                var old = _Map[key];
-                _Map[key] = value;
+                var old = _map[key];
+                _map[key] = value;
                 if (!old.Equals(value))
                 {
                     OnRemoved(new EventArgs<long>(key));
@@ -49,7 +49,7 @@ namespace SocketKnife.Generic
 
         public ICollection<long> Keys
         {
-            get { return _Map.Keys; }
+            get { return _map.Keys; }
         }
 
         ICollection<ITunnelSession> IDictionary<long, ITunnelSession>.Values
@@ -69,9 +69,9 @@ namespace SocketKnife.Generic
 
         public void Clear()
         {
-            var list = new List<long>(_Map.Count);
-            list.AddRange(_Map.Keys.ToArray());
-            _Map.Clear();
+            var list = new List<long>(_map.Count);
+            list.AddRange(_map.Keys.ToArray());
+            _map.Clear();
             foreach (var endPoint in list)
             {
                 OnRemoved(new EventArgs<long>(endPoint));
@@ -90,24 +90,24 @@ namespace SocketKnife.Generic
 
         public ICollection<SocketSession> Values()
         {
-            return _Map.Values;
+            return _map.Values;
         }
 
         [Obsolete("不推荐使用。Knife.")]
         void ICollection<KeyValuePair<long, ITunnelSession>>.CopyTo(KeyValuePair<long, ITunnelSession>[] array, int arrayIndex)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
-            ((IDictionary<long, ITunnelSession>) _Map).CopyTo(array, arrayIndex);
+            ((IDictionary<long, ITunnelSession>) _map).CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return ((IDictionary<long, SocketSession>) _Map).Count; }
+            get { return ((IDictionary<long, SocketSession>) _map).Count; }
         }
 
         public bool IsReadOnly
         {
-            get { return ((IDictionary<long, SocketSession>) _Map).IsReadOnly; }
+            get { return ((IDictionary<long, SocketSession>) _map).IsReadOnly; }
         }
 
         IEnumerator<KeyValuePair<long, ITunnelSession>> IEnumerable<KeyValuePair<long, ITunnelSession>>.GetEnumerator()
@@ -117,12 +117,12 @@ namespace SocketKnife.Generic
 
         public IEnumerator GetEnumerator()
         {
-            return ((IDictionary<long, SocketSession>) _Map).GetEnumerator();
+            return ((IDictionary<long, SocketSession>) _map).GetEnumerator();
         }
 
         bool ICollection<KeyValuePair<long, ITunnelSession>>.Remove(KeyValuePair<long, ITunnelSession> item)
         {
-            if (_Map.ContainsKey(item.Key))
+            if (_map.ContainsKey(item.Key))
             {
                 return Remove(item.Key);
             }
@@ -141,7 +141,7 @@ namespace SocketKnife.Generic
         public bool TryGetValue(long key, out SocketSession value)
         {
             SocketSession session;
-            if (_Map.TryGetValue(key, out session))
+            if (_map.TryGetValue(key, out session))
             {
                 value = session;
                 return true;
@@ -152,7 +152,7 @@ namespace SocketKnife.Generic
 
         public void Add(long key, SocketSession value)
         {
-            _Map.TryAdd(key, value);
+            _map.TryAdd(key, value);
             OnAdded(new EventArgs<SocketSession>(value));
         }
 
@@ -167,13 +167,13 @@ namespace SocketKnife.Generic
 
         public bool Contains(long key)
         {
-            return _Map.ContainsKey(key);
+            return _map.ContainsKey(key);
         }
 
         public virtual bool Remove(long key)
         {
             SocketSession session;
-            var isRemoved = _Map.TryRemove(key, out session);
+            var isRemoved = _map.TryRemove(key, out session);
             if (isRemoved)
                 OnRemoved(new EventArgs<long>(key));
             return isRemoved;
