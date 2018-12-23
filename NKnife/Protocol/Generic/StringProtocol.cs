@@ -20,7 +20,7 @@ namespace NKnife.Protocol.Generic
 
         protected StringProtocol(string family, string command)
         {
-            Infomations = new Dictionary<string, string>(0);
+            Information = new Dictionary<string, string>(0);
             Tags = new List<object>(0);
             Family = family;
             Command = command;
@@ -36,7 +36,7 @@ namespace NKnife.Protocol.Generic
         public string Command { get; set; }
 
         public string CommandParam { get; set; }
-        public Dictionary<string, string> Infomations { get; private set; }
+        public Dictionary<string, string> Information { get; private set; }
         public List<object> Tags { get; set; }
 
         public StringProtocol NewInstance()
@@ -66,7 +66,7 @@ namespace NKnife.Protocol.Generic
                    Equals(Command, other.Command) &&
                    Equals(CommandParam, other.CommandParam) &&
                    Equals(Tags, other.Tags) &&
-                   Equals(Infomations, other.Infomations);
+                   Equals(Information, other.Information);
         }
 
         public override int GetHashCode()

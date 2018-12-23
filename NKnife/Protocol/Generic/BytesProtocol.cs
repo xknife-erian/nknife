@@ -15,7 +15,7 @@ namespace NKnife.Protocol.Generic
 
         protected BytesProtocol(string family, byte[] command)
         {
-            Infomations = new Dictionary<string, byte[]>(0);
+            Information = new Dictionary<string, byte[]>(0);
             Tags = new List<object>(0);
             Family = family;
             Command = command;
@@ -33,7 +33,7 @@ namespace NKnife.Protocol.Generic
 
         public byte[] CommandParam { get; set; }
 
-        public Dictionary<string, byte[]> Infomations { get; private set; }
+        public Dictionary<string, byte[]> Information { get; private set; }
 
         public List<object> Tags { get; set; }
 
@@ -64,7 +64,7 @@ namespace NKnife.Protocol.Generic
                    Equals(Command, other.Command) &&
                    Equals(CommandParam, other.CommandParam) &&
                    Equals(Tags, other.Tags) &&
-                   Equals(Infomations, other.Infomations);
+                   Equals(Information, other.Information);
         }
         public override int GetHashCode()
         {

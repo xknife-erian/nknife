@@ -65,10 +65,10 @@ namespace NKnife.Protocol.Generic.Xml
 
         protected virtual void WriteInformation(StringProtocol content, XmlWriter writer)
         {
-            if (content.Infomations.Count > 0)
+            if (content.Information.Count > 0)
             {
                 writer.WriteStartElement(XmlProtocolNames.Infos);
-                foreach (var item in content.Infomations)
+                foreach (var item in content.Information)
                 {
                     writer.WriteElementString(item.Key, item.Value);
                 }

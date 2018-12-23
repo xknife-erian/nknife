@@ -19,7 +19,7 @@
             {
                 byteArray[i] ^= XorVector[k];
                 k++;
-                k = k%XorVector.Length;
+                k = k % XorVector.Length;
             }
         }
     }

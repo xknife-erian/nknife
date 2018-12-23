@@ -22,16 +22,16 @@ namespace NKnife.Protocol
 
         /// <summary>
         ///     获取协议的固定数据
-        ///     Infomations,Tags均属于协议的内容
-        ///     Infomations:固定数据，按协议规定的必须每次携带的数据
+        ///     Information,Tags均属于协议的内容
+        ///     Information:固定数据，按协议规定的必须每次携带的数据
         ///     Tags:内容较大的数据,一般为可序列化的对象
         /// </summary>
-        Dictionary<string, TData> Infomations { get; }
+        Dictionary<string, TData> Information { get; }
 
         /// <summary>
         ///     获取协议的大数据
-        ///     Infomations,Tags均属于协议的内容
-        ///     Infomations:固定数据，按协议规定的必须每次携带的数据
+        ///     Information,Tags均属于协议的内容
+        ///     Information:固定数据，按协议规定的必须每次携带的数据
         ///     Tags:内容较大的数据,一般为可序列化的对象
         /// </summary>
         List<object> Tags { get; set; }

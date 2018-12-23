@@ -203,6 +203,16 @@ namespace NKnife.Channels.Serials
 
         #endregion
 
+        protected override void SetJobAsynchronousFunc(JobManager jobManager)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetJobSynchronousFunc(JobManager jobManager)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         ///     中断正在进行的发送接线过程，无论是异步与同步。
         /// </summary>

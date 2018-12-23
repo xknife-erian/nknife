@@ -8,18 +8,18 @@ namespace NKnife.Protocol.Generic.TextPlain
     class TextPlainProtocolFlags
     {
         public static char _SplitFlag = '|';
-        public static string _InfomationSplitFlag = "<~>";
+        public static string _InformationSplitFlag = "<~>";
 
         public static char SplitFlag
         {
-            get { return _SplitFlag; }
-            set { _SplitFlag = value; }
+            get => _SplitFlag;
+            set => _SplitFlag = value;
         }
 
-        public static string InfomationSplitFlag
+        public static string InformationSplitFlag
         {
-            get { return _InfomationSplitFlag; }
-            set { _InfomationSplitFlag = value; }
+            get => _InformationSplitFlag;
+            set => _InformationSplitFlag = value;
         }
     }
 }

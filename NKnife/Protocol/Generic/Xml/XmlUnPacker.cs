@@ -59,7 +59,7 @@ namespace NKnife.Protocol.Generic.Xml
                 {
                     var ele = node as XmlElement;
                     if (ele != null)
-                        content.Infomations.Add(ele.LocalName, ele.InnerText);
+                        content.Information.Add(ele.LocalName, ele.InnerText);
                 }
             }
         }

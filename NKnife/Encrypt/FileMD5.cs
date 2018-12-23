@@ -44,7 +44,7 @@ namespace NKnife.Encrypt
             }
             catch(Exception e)
             {
-                Debug.Fail(string.Format("AddMD5时异常.{0}", e.Message));
+                Debug.Fail($"AddMD5时异常.{e.Message}");
                 return false;
             }
             return true;
@@ -70,7 +70,7 @@ namespace NKnife.Encrypt
             }
             catch(Exception e)
             {
-                Debug.Fail(string.Format("CheckMD5时异常.{0}", e.Message));
+                Debug.Fail($"CheckMD5时异常.{e.Message}");
                 return false;
             }
         }

@@ -116,17 +116,16 @@ namespace NKnife.Chinese
             if (string.IsNullOrEmpty(separator)) separator = "";
 
             // 例外词组
-            chs = SpecialPhrase.Aggregate(chs,
-                (current, item) => current.Replace(item.Key.ToString(), string.Format(" {0} ", item.Value.ToString().Replace(" ", separator))));
+            chs = SpecialPhrase.Aggregate(chs, (current, item) => current.Replace(item.Key.ToString(), $" {item.Value.ToString().Replace(" ", separator)} "));
 
-            string returnstr = "";
+            string returnString = "";
             bool b = false;
-            char[] nowchar = chs.ToCharArray();
+            char[] currentCharArray = chs.ToCharArray();
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             TextInfo ti = ci.TextInfo;
 
-            foreach (char t in nowchar)
+            foreach (char t in currentCharArray)
             {
                 byte[] array = Encoding.Default.GetBytes(t.ToString());
                 string s = t.ToString();
@@ -135,19 +134,19 @@ namespace NKnife.Chinese
                 if (array.Length == 1)
                 {
                     b = true;
-                    returnstr += s;
+                    returnString += s;
                 }
                 else
                 {
                     if (s == "？")
                     {
-                        if (returnstr == "" || b)
+                        if (returnString == "" || b)
                         {
-                            returnstr += s;
+                            returnString += s;
                         }
                         else
                         {
-                            returnstr += separator + s;
+                            returnString += separator + s;
                         }
                         continue;
                     }
@@ -163,13 +162,13 @@ namespace NKnife.Chinese
                         {
                             s = _Pinyin[i];
                             if (initialCap) s = ti.ToTitleCase(s);
-                            if (returnstr == "" || b)
+                            if (returnString == "" || b)
                             {
-                                returnstr += s;
+                                returnString += s;
                             }
                             else
                             {
-                                returnstr += separator + s;
+                                returnString += separator + s;
                             }
                             break;
                         } //IF
@@ -178,8 +177,8 @@ namespace NKnife.Chinese
                 } //if (array.Length == 1)
             }
 
-            returnstr = returnstr.Replace(" ", separator);
-            return returnstr;
+            returnString = returnString.Replace(" ", separator);
+            return returnString;
         }
 
         /// <summary>

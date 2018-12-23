@@ -20,7 +20,7 @@ namespace NKnife.Encrypt
         /// <summary>
         ///     默认密钥向量
         /// </summary>
-        private static readonly byte[] _Keys = {0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF};
+        private static readonly byte[] Keys = {0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF};
 
         /// <summary>
         ///     自动生成一个密钥。
@@ -132,7 +132,7 @@ namespace NKnife.Encrypt
             encryptKey = UtilityString.GetSubString(encryptKey, 0, 8, "");
             encryptKey = encryptKey.PadRight(8, ' ');
             byte[] rgbKey = Encoding.UTF8.GetBytes(encryptKey.Substring(0, 8));
-            byte[] rgbIv = _Keys;
+            byte[] rgbIv = Keys;
             byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
             var dCsp = new DESCryptoServiceProvider();
             var mStream = new MemoryStream();
@@ -155,7 +155,7 @@ namespace NKnife.Encrypt
                 decryptKey = UtilityString.GetSubString(decryptKey, 0, 8, "");
                 decryptKey = decryptKey.PadRight(8, ' ');
                 byte[] rgbKey = Encoding.UTF8.GetBytes(decryptKey);
-                byte[] rgbIv = _Keys;
+                byte[] rgbIv = Keys;
                 byte[] inputByteArray = Convert.FromBase64String(decryptString);
                 var dcsp = new DESCryptoServiceProvider();
 

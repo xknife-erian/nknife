@@ -71,7 +71,6 @@
     <Compile Include="Serials\SerialQuestion.cs" />
     <Compile Include="Serials\SerialQuestionPool.cs" />
     <Compile Include="Serials\SerialUtils.cs" />
-    <Compile Include="Interfaces\IAlgorithm.cs" />
     <Compile Include="Interfaces\IChannel`.cs" />
     <Compile Include="Interfaces\IChannelConfig.cs" />
     <Compile Include="Interfaces\IMultiChannel.cs" />

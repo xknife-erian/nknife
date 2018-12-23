@@ -12,10 +12,10 @@ namespace NKnife.Protocol.Generic.TextPlain
             {
                 sb.Append(tag).Append(TextPlainProtocolFlags.SplitFlag);
             }
-            foreach (var info in protocol.Infomations)
+            foreach (var info in protocol.Information)
             {
                 sb.Append(info.Key)
-                    .Append(TextPlainProtocolFlags.InfomationSplitFlag)
+                    .Append(TextPlainProtocolFlags.InformationSplitFlag)
                     .Append(info.Value)
                     .Append(TextPlainProtocolFlags.SplitFlag);
             }

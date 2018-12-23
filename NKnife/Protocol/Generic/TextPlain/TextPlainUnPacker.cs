@@ -19,13 +19,13 @@ namespace NKnife.Protocol.Generic.TextPlain
                 for (int i = 2; i < array.Length; i++)
                 {
                     var node = array[i];
-                    if (!node.Contains(TextPlainProtocolFlags.InfomationSplitFlag))
+                    if (!node.Contains(TextPlainProtocolFlags.InformationSplitFlag))
                     {
                         content.AddTag(node);
                     }
                     else
                     {
-                        var vam = node.Split(new[] { TextPlainProtocolFlags.InfomationSplitFlag }, StringSplitOptions.RemoveEmptyEntries);
+                        var vam = node.Split(new[] { TextPlainProtocolFlags.InformationSplitFlag }, StringSplitOptions.RemoveEmptyEntries);
                         if (vam.Length >= 2)
                         {
                             content.AddInfo(vam[0], vam[1]);

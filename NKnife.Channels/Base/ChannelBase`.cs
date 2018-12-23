@@ -12,6 +12,7 @@ namespace NKnife.Channels.Base
         #region Implementation of IChannel
 
         private bool _isSynchronous;
+        private JobManager _jobManager;
 
         /// <inheritdoc />
         public bool IsSynchronous
@@ -22,6 +23,10 @@ namespace NKnife.Channels.Base
                 if (_isSynchronous != value)
                 {
                     _isSynchronous = value;
+                    if (_isSynchronous)
+                        SetJobSynchronousFunc(_jobManager);
+                    else
+                        SetJobAsynchronousFunc(_jobManager);
                     OnChannelModeChanged(new ChannelModeChangedEventArgs(value));
                 }
             }
@@ -51,7 +56,22 @@ namespace NKnife.Channels.Base
         public event EventHandler Closed;
 
         /// <inheritdoc />
-        public JobManager JobManager { get; set; }
+        public JobManager JobManager
+        {
+            get => _jobManager;
+            set
+            {
+                _jobManager = value;
+                if(_isSynchronous)
+                    SetJobSynchronousFunc(_jobManager);
+                else
+                    SetJobAsynchronousFunc(_jobManager);
+            }
+        }
+
+        protected abstract void SetJobAsynchronousFunc(JobManager jobManager);
+
+        protected abstract void SetJobSynchronousFunc(JobManager jobManager);
 
         /// <inheritdoc />
         public Func<ChannelJobBase<T>, bool> Received { get; set; }

@@ -20,22 +20,21 @@ namespace NKnife.Encrypt
 
             if (useHashing)
             {
-                var hashmd5 = new MD5CryptoServiceProvider();
-                keyArray = hashmd5.ComputeHash(Encoding.UTF8.GetBytes(key));
+                var hashMd5 = new MD5CryptoServiceProvider();
+                keyArray = hashMd5.ComputeHash(Encoding.UTF8.GetBytes(key));
             }
             else
                 keyArray = Encoding.UTF8.GetBytes(key);
 
-            var tdes = new TripleDESCryptoServiceProvider
+            var provider = new TripleDESCryptoServiceProvider
                            {
                                Key = keyArray, 
                                Mode = CipherMode.ECB, 
                                Padding = PaddingMode.PKCS7
                            };
 
-            var cTransform = tdes.CreateEncryptor();
+            var cTransform = provider.CreateEncryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-
             return Convert.ToBase64String(resultArray, 0, resultArray.Length);
         }
 
@@ -53,20 +52,22 @@ namespace NKnife.Encrypt
 
             if (useHashing)
             {
-                var hashmd5 = new MD5CryptoServiceProvider();
-                keyArray = hashmd5.ComputeHash(Encoding.UTF8.GetBytes(key));
+                var hashMd5 = new MD5CryptoServiceProvider();
+                keyArray = hashMd5.ComputeHash(Encoding.UTF8.GetBytes(key));
             }
             else
+            {
                 keyArray = Encoding.UTF8.GetBytes(key);
+            }
 
-            var tdes = new TripleDESCryptoServiceProvider
+            var provider = new TripleDESCryptoServiceProvider
                            {
                                Key = keyArray,
                                Mode = CipherMode.ECB,
                                Padding = PaddingMode.PKCS7
                            };
 
-            var cTransform = tdes.CreateDecryptor();
+            var cTransform = provider.CreateDecryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
 
             return Encoding.UTF8.GetString(resultArray);
