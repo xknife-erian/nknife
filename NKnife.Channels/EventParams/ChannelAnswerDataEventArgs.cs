@@ -8,11 +8,6 @@ namespace NKnife.Channels.EventParams
     /// </summary>
     public class ChannelAnswerDataEventArgs<T> : EventArgs
     {
-        public IAnswer<T> Answer { get; }
 
-        public ChannelAnswerDataEventArgs(IAnswer<T> answer)
-        {
-            Answer = answer;
-        }
     }
 }

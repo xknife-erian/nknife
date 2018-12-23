@@ -203,6 +203,26 @@ namespace NKnife.Channels.Serials
 
         #endregion
 
+        /// <summary>
+        ///     中断正在进行的发送接线过程，无论是异步与同步。
+        /// </summary>
+        public override void Break()
+        {
+            JobManager.Break();
+        }
+
+        /// <inheritdoc />
+        public override void SyncListen()
+        {
+            JobManager.Run();
+        }
+
+        /// <inheritdoc />
+        public override void AsyncListen()
+        {
+            JobManager.Run();
+        }
+
         private readonly AutoResetEvent _syncReceiveWaiter = new AutoResetEvent(false);
 
         private bool _onSyncSent = false;
@@ -305,24 +325,5 @@ namespace NKnife.Channels.Serials
             }
         }
 
-        /// <summary>
-        ///     中断正在进行的发送接线过程，无论是异步与同步。
-        /// </summary>
-        public override void Break()
-        {
-            JobManager.Break();
-        }
-
-        /// <inheritdoc />
-        public override void SyncListen()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public override void AsyncListen()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
