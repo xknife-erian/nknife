@@ -18,7 +18,7 @@ namespace NKnife.UnitTest.Jobs
             public int Interval { get; set; }
             public int LoopNumber { get; set; }
             public Func<IJob, bool> Run { get; set; }
-            public Func<byte[], bool> Verify { get; set; }
+            public Func<IJob, bool> Verify { get; set; }
         }
 
         private class JobPool : List<IJobPoolItem>, IJobPool

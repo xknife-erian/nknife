@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
 using System.Threading;
 using Common.Logging;
 using NKnife.Channels.Base;
@@ -11,7 +12,7 @@ using NKnife.Interface;
 
 namespace NKnife.Channels.Serials
 {
-    public class SerialChannel : ChannelBase<byte[]>
+    public class SerialChannel : ChannelBase<IEnumerable<byte>>
     {
         private static readonly ILog _Logger = LogManager.GetLogger<SerialChannel>();
         private readonly SerialConfig _serialConfig;
@@ -262,7 +263,8 @@ namespace NKnife.Channels.Serials
             if (q == null)
                 return false;
             _onSyncSent = true; //即将发出前置标记，以保证可读取数据
-            _serialPort.Write(q.Data, 0, q.Data.Length);
+            var data = q.Data.ToArray();
+            _serialPort.Write(data, 0, data.Length);
 
             var complete = false;
             while (!complete)
@@ -275,12 +277,14 @@ namespace NKnife.Channels.Serials
                     if (_talkBuffer.Length > 0)
                     {
                         buffer.AddRange(_talkBuffer);//复制一份，防止冲突
+                        q.Answer = buffer;
                         //当Question设置了数据校验，如果数据未满足要求，将循环继续等待
-                        if (q.Verify == null || (q.Verify != null && q.Verify(buffer.ToArray())))
+                        if (q.Verify == null || (q.Verify != null && q.Verify(q)))
                         {
-                            ThreadPool.QueueUserWorkItem(e => q.Answer(buffer.ToArray()), null);
                             _talkBuffer = new byte[0];
                             complete = true;
+                            //当对话完成时，激发Question的应答就绪事件
+                            q.OnAnswered(new EventArgs<IEnumerable<byte>>(buffer));
                         }
                     }
                 }
@@ -354,7 +358,7 @@ namespace NKnife.Channels.Serials
             }
             if (buffer != null && buffer.Length > 0)
             {
-                OnDataArrived(new EventArgs<byte[]>(buffer));
+                OnDataArrived(new EventArgs<IEnumerable<byte>>(buffer));
             }
         }
 

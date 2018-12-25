@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NKnife.Events;
 
 namespace NKnife.Interface
@@ -34,6 +35,6 @@ namespace NKnife.Interface
         /// <summary>
         /// 验证本工作的结果是否正确。
         /// </summary>
-        Func<byte[], bool> Verify { get; set; }
+        Func<IJob, bool> Verify { get; set; }
     }
 }

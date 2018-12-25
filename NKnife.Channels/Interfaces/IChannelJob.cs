@@ -16,8 +16,13 @@ namespace NKnife.Channels.Interfaces
         T Data { get; set; }
 
         /// <summary>
-        /// 当远端数据到达时，通常这是同步的回复数据
+        /// 当远端应答后，通常这是同步的应答数据已收到
         /// </summary>
-        event EventHandler<EventArgs<byte[]>> Answered;
+        event EventHandler<EventArgs<T>> Answered;
+
+        /// <summary>
+        /// 应答数据
+        /// </summary>
+        T Answer { get; set; }
     }
 }

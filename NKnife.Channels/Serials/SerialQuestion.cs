@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NKnife.Channels.Base;
 using NKnife.Interface;
 
@@ -7,14 +8,14 @@ namespace NKnife.Channels.Serials
     /// <summary>
     /// 描述设备向PC串口返回的交换数据
     /// </summary>
-    public class SerialQuestion : ChannelJobBase<byte[]>
+    public class SerialQuestion : ChannelJobBase<IEnumerable<byte>>
     {
         private readonly Guid _id;
 
         /// <summary>
         /// 描述设备向PC串口返回的交换数据
         /// </summary>
-        public SerialQuestion(byte[] data)
+        public SerialQuestion(IEnumerable<byte> data)
             : this(data, false, -1)
         {
         }
@@ -22,11 +23,14 @@ namespace NKnife.Channels.Serials
         /// <summary>
         /// 描述设备向PC串口返回的交换数据
         /// </summary>
-        public SerialQuestion(byte[] data, bool isLoop, int loopInterval)
+        public SerialQuestion(IEnumerable<byte> data, bool isLoop, int loopInterval)
             : base(data, isLoop, loopInterval)
         {
             _id = Guid.NewGuid();
         }
+
+        /// <inheritdoc />
+        public override IEnumerable<byte> Answer { get; set; }
 
         #region Overrides of Object
 
@@ -57,5 +61,6 @@ namespace NKnife.Channels.Serials
         #endregion
 
         #endregion
+
     }
 }

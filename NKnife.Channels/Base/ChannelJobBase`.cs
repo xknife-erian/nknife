@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NKnife.Channels.Interfaces;
 using NKnife.Events;
 using NKnife.Interface;
@@ -43,7 +44,8 @@ namespace NKnife.Channels.Base
         /// <inheritdoc />
         public Func<IJob, bool> Run { get; set; }
 
-        public Func<byte[], bool> Verify { get; set; }
+        /// <inheritdoc />
+        public Func<IJob, bool> Verify { get; set; }
 
         #endregion
 
@@ -53,16 +55,14 @@ namespace NKnife.Channels.Base
         public T Data { get; set; }
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs<byte[]>> Answered;
+        public abstract T Answer { get; set; }
+
+        /// <inheritdoc />
+        public event EventHandler<EventArgs<T>> Answered;
 
         #endregion
 
-        public void Answer(byte[] data)
-        {
-            OnAnswered(new EventArgs<byte[]>(data));
-        }
-
-        protected virtual void OnAnswered(EventArgs<byte[]> e)
+        protected internal virtual void OnAnswered(EventArgs<T> e)
         {
             Answered?.Invoke(this, e);
         }
