@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.StarterKit", "K
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.ChannelKit", "Kits\NKnife.Kits.ChannelKit\NKnife.Kits.ChannelKit.csproj", "{683D9BA1-334D-424D-BE3E-C9159A07A4C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.ChannelKit.ConsoleApp", "NKnife.Kits.ChannelKit.ConsoleApp\NKnife.Kits.ChannelKit.ConsoleApp.csproj", "{313E7406-BA04-4157-AB37-8EABBE097A4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Kits.ChannelKit.ConsoleApp", "Kits\NKnife.Kits.ChannelKit.ConsoleApp\NKnife.Kits.ChannelKit.ConsoleApp.csproj", "{313E7406-BA04-4157-AB37-8EABBE097A4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
