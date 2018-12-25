@@ -9,22 +9,24 @@ using NKnife.Channels.EventParams;
 using NKnife.Channels.Interfaces;
 using NKnife.Events;
 using NKnife.Interface;
+using NKnife.Jobs;
 
 namespace NKnife.Channels.Serials
 {
     public class SerialChannel : ChannelBase<IEnumerable<byte>>
     {
         private static readonly ILog _Logger = LogManager.GetLogger<SerialChannel>();
-        private readonly SerialConfig _serialConfig;
+        private readonly SerialConfig _config;
         private SerialPort _serialPort; //串口操作类（通过.net 类库）
+        private bool _isUpdateJobFunc = false;
 
-        public SerialChannel(SerialConfig serialConfig)
+        public SerialChannel(SerialConfig config)
         {
-            if (serialConfig == null)
-                throw new ArgumentNullException(nameof(serialConfig), $"{nameof(serialConfig)}不能为空");
-            if (serialConfig.Port <= 0)
-                throw new ArgumentNullException(nameof(serialConfig), $"串口号必须设置。");
-            _serialConfig = serialConfig;
+            if (config == null)
+                throw new ArgumentNullException(nameof(config), $"{nameof(config)}不能为空");
+            if (config.Port <= 0)
+                throw new ArgumentNullException(nameof(config), $"串口号必须设置。");
+            _config = config;
         }
 
         #region Overrides of ChannelBase
@@ -34,6 +36,12 @@ namespace NKnife.Channels.Serials
         /// </summary>
         public int OpenTimeout { get; set; } = 1000;
 
+        public override void UpdateJobFunc()
+        {
+            SetJobFunc(JobManager.Pool);
+            _isUpdateJobFunc = true;
+        }
+
         protected override void OnChannelModeChanged(ChannelModeChangedEventArgs e)
         {
             if (_serialPort == null)
@@ -41,7 +49,6 @@ namespace NKnife.Channels.Serials
                 base.OnChannelModeChanged(e);
                 return;
             }
-
             if (e.IsSynchronous)
             {
                 _serialPort.DataReceived += SyncDataReceived;
@@ -52,7 +59,6 @@ namespace NKnife.Channels.Serials
                 _serialPort.DataReceived += AsyncDataReceived;
                 _serialPort.DataReceived -= SyncDataReceived;
             }
-
             base.OnChannelModeChanged(e);
         }
 
@@ -64,17 +70,17 @@ namespace NKnife.Channels.Serials
         {
             _serialPort = new SerialPort
             {
-                PortName = $"COM{_serialConfig.Port}",
-                StopBits = _serialConfig.StopBit,
-                BaudRate = _serialConfig.BaudRate,
-                DataBits = _serialConfig.DataBit, //8,
-                WriteTimeout = _serialConfig.WriteTotalTimeoutConstant, //1000
-                ReadTimeout = _serialConfig.ReadTotalTimeoutConstant, //1000,
-                ReceivedBytesThreshold = _serialConfig.ReceivedBytesThreshold, //1,
-                ReadBufferSize = _serialConfig.ReadBufferSize, //64,
-                DtrEnable = _serialConfig.DtrEnable,
-                Parity = _serialConfig.Parity,
-                RtsEnable = _serialConfig.RtsEnable
+                PortName = $"COM{_config.Port}",
+                StopBits = _config.StopBit,
+                BaudRate = _config.BaudRate,
+                DataBits = _config.DataBit, //8,
+                WriteTimeout = _config.WriteTotalTimeoutConstant, //1000
+                ReadTimeout = _config.ReadTotalTimeoutConstant, //1000,
+                ReceivedBytesThreshold = _config.ReceivedBytesThreshold, //1,
+                ReadBufferSize = _config.ReadBufferSize, //64,
+                DtrEnable = _config.DtrEnable,
+                Parity = _config.Parity,
+                RtsEnable = _config.RtsEnable
             };
 
             if (IsSynchronous)
@@ -128,13 +134,13 @@ namespace NKnife.Channels.Serials
                 }
                 else
                 {
-                    _Logger.Warn($"无法打开串口:COM{_serialConfig.Port}");
+                    _Logger.Warn($"无法打开串口:COM{_config.Port}");
                     thread.Abort();
                 }
             }
             catch (Exception e)
             {
-                _Logger.Error($"无法打开串口:COM{_serialConfig.Port}, {e.Message}", e);
+                _Logger.Error($"无法打开串口:COM{_config.Port}, {e.Message}", e);
                 IsOpen = false;
             }
 
@@ -200,9 +206,9 @@ namespace NKnife.Channels.Serials
         /// <param name="readTotalTimeoutConstant">读超时</param>
         public void UpdateSerialPortTimeout(int writeTotalTimeoutConstant, int readTotalTimeoutConstant)
         {
-            _serialConfig.ReadTotalTimeoutConstant = readTotalTimeoutConstant;
+            _config.ReadTotalTimeoutConstant = readTotalTimeoutConstant;
             _serialPort.ReadTimeout = readTotalTimeoutConstant;
-            _serialConfig.WriteTotalTimeoutConstant = writeTotalTimeoutConstant;
+            _config.WriteTotalTimeoutConstant = writeTotalTimeoutConstant;
             _serialPort.WriteTimeout = writeTotalTimeoutConstant;
         }
 
@@ -236,12 +242,16 @@ namespace NKnife.Channels.Serials
         /// <inheritdoc />
         public override void SyncListen()
         {
+            if(!_isUpdateJobFunc)
+                UpdateJobFunc();
             JobManager.Run();
         }
 
         /// <inheritdoc />
         public override void AsyncListen()
         {
+            if (!_isUpdateJobFunc)
+                UpdateJobFunc();
             JobManager.Run();
         }
 
@@ -337,8 +347,8 @@ namespace NKnife.Channels.Serials
             byte[] buffer = null;
             try
             {
-                if (_serialConfig.ReadWait > 0)
-                    Thread.Sleep(_serialConfig.ReadWait); //当进入事件后，等待串口数据更加完整一些再进行读取
+                if (_config.ReadWait > 0)
+                    Thread.Sleep(_config.ReadWait); //当进入事件后，等待串口数据更加完整一些再进行读取
                 /**
                  * 由于 ReadBufferSize 属性只表示 Windows 创建的缓冲区，
                  * 而 BytesToRead 属性除了表示 Windows 创建的缓冲区外还表示 SerialPort 缓冲区，

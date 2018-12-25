@@ -68,6 +68,11 @@ namespace NKnife.Channels.Base
 
         #endregion
 
+        /// <summary>
+        /// 更新Job的执行动作
+        /// </summary>
+        public abstract void UpdateJobFunc();
+
         protected virtual void OnChannelModeChanged(ChannelModeChangedEventArgs e)
         {
             ChannelModeChanged?.Invoke(this, e);
