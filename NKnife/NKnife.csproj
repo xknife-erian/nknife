@@ -152,7 +152,6 @@
     <Compile Include="Interface\Datas\NoSql\IPagingAndSortingRepository.cs" />
     <Compile Include="Interface\Datas\NoSql\IRepository.cs" />
     <Compile Include="Interface\IParser.cs" />
-    <Compile Include="Events\JobRunEventArgs.cs" />
     <Compile Include="Maths\BigInteger.cs" />
     <Compile Include="Maths\Combinations.cs" />
     <Compile Include="Maths\Permutations.cs" />
@@ -196,7 +195,7 @@
     <Compile Include="Chinese\SpellRandom.cs" />
     <Compile Include="Chinese\SimplifyChineseChar.cs" />
     <Compile Include="Extensions\WindowExtension.cs" />
-    <Compile Include="Timers\JobManager.cs" />
+    <Compile Include="Jobs\JobManager.cs" />
     <Compile Include="Wrapper\Bit.cs" />
     <Compile Include="Wrapper\FTP\FtpFileListStyle.cs" />
     <Compile Include="Wrapper\FTP\FtpFileStruct.cs" />
@@ -393,6 +392,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Jobs\README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\nknife-main.ico" />

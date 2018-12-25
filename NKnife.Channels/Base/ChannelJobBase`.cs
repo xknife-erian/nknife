@@ -12,23 +12,12 @@ namespace NKnife.Channels.Base
             IsPool = isPool;
         }
 
-        protected ChannelJobBase(bool isLoop, T data, int interval, IId target)
+        protected ChannelJobBase(T data, bool isLoop, int interval)
         {
             IsLoop = isLoop;
             Interval = interval;
             Data = data;
-            Target = target;
         }
-
-        /// <summary>
-        ///     本次交换的数据
-        /// </summary>
-        public T Data { get; set; }
-
-        /// <summary>
-        ///     工作指定的对象
-        /// </summary>
-        public IId Target { get; set; }
 
         #region Implementation of IJobPoolItem
 
@@ -54,22 +43,26 @@ namespace NKnife.Channels.Base
         /// <inheritdoc />
         public Func<IJob, bool> Func { get; set; }
 
-        /// <inheritdoc />
-        public event EventHandler<JobRunEventArgs> Running;
+        #endregion
+
+        #region Implementation of IChannelJob
 
         /// <inheritdoc />
-        public event EventHandler<JobRunEventArgs> Ran;
+        public T Data { get; set; }
+
+        /// <inheritdoc />
+        public event EventHandler<EventArgs<byte[]>> Answered;
 
         #endregion
 
-        protected virtual void OnRunning(JobRunEventArgs e)
+        public void Answer(byte[] data)
         {
-            Running?.Invoke(this, e);
+            OnAnswered(new EventArgs<byte[]>(data));
         }
 
-        protected virtual void OnRan(JobRunEventArgs e)
+        protected virtual void OnAnswered(EventArgs<byte[]> e)
         {
-            Ran?.Invoke(this, e);
+            Answered?.Invoke(this, e);
         }
     }
 }

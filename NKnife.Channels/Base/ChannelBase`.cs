@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using NKnife.Channels.EventParams;
 using NKnife.Channels.Interfaces;
+using NKnife.Events;
 using NKnife.Interface;
-using NKnife.Timers;
+using NKnife.Jobs;
 
 namespace NKnife.Channels.Base
 {
@@ -12,7 +13,6 @@ namespace NKnife.Channels.Base
         #region Implementation of IChannel
 
         private bool _isSynchronous;
-        private JobManager _jobManager;
 
         /// <inheritdoc />
         public bool IsSynchronous
@@ -23,19 +23,12 @@ namespace NKnife.Channels.Base
                 if (_isSynchronous != value)
                 {
                     _isSynchronous = value;
-                    if (_isSynchronous)
-                        SetJobSynchronousFunc(_jobManager);
-                    else
-                        SetJobAsynchronousFunc(_jobManager);
                     OnChannelModeChanged(new ChannelModeChangedEventArgs(value));
                 }
             }
         }
 
         public bool IsOpen { get; protected set; } = false;
-
-        /// <inheritdoc />
-        public List<IId> Targets { get; } = new List<IId>(0);
 
         /// <inheritdoc />
         public abstract bool Open();
@@ -56,28 +49,7 @@ namespace NKnife.Channels.Base
         public event EventHandler Closed;
 
         /// <inheritdoc />
-        public JobManager JobManager
-        {
-            get => _jobManager;
-            set
-            {
-                _jobManager = value;
-                if(_isSynchronous)
-                    SetJobSynchronousFunc(_jobManager);
-                else
-                    SetJobAsynchronousFunc(_jobManager);
-            }
-        }
-
-        protected abstract void SetJobAsynchronousFunc(JobManager jobManager);
-
-        protected abstract void SetJobSynchronousFunc(JobManager jobManager);
-
-        /// <inheritdoc />
-        public Func<ChannelJobBase<T>, bool> Received { get; set; }
-
-        /// <inheritdoc />
-        public Action<ChannelJobBase<T>> Sent { get; set; }
+        public JobManager JobManager { get; set; }
 
         /// <inheritdoc />
         public abstract void Break();
@@ -92,7 +64,7 @@ namespace NKnife.Channels.Base
         public event EventHandler<ChannelModeChangedEventArgs> ChannelModeChanged;
 
         /// <inheritdoc />
-        public event EventHandler<ChannelAnswerDataEventArgs<T>> DataArrived;
+        public event EventHandler<EventArgs<T>> DataArrived;
 
         #endregion
 
@@ -101,7 +73,7 @@ namespace NKnife.Channels.Base
             ChannelModeChanged?.Invoke(this, e);
         }
 
-        protected virtual void OnDataArrived(ChannelAnswerDataEventArgs<T> e)
+        protected virtual void OnDataArrived(EventArgs<T> e)
         {
             DataArrived?.Invoke(this, e);
         }

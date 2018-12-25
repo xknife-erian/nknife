@@ -5,8 +5,8 @@ using Common.Logging;
 using NKnife.Channels.Base;
 using NKnife.Channels.EventParams;
 using NKnife.Channels.Interfaces;
+using NKnife.Events;
 using NKnife.Interface;
-using NKnife.Timers;
 
 namespace NKnife.Channels.Serials
 {
@@ -42,13 +42,13 @@ namespace NKnife.Channels.Serials
 
             if (e.IsSynchronous)
             {
-                _serialPort.DataReceived += SyncSerialPortDataReceived;
+                _serialPort.DataReceived += SyncDataReceived;
                 _serialPort.DataReceived -= AsyncDataReceived;
             }
             else
             {
                 _serialPort.DataReceived += AsyncDataReceived;
-                _serialPort.DataReceived -= SyncSerialPortDataReceived;
+                _serialPort.DataReceived -= SyncDataReceived;
             }
 
             base.OnChannelModeChanged(e);
@@ -77,7 +77,7 @@ namespace NKnife.Channels.Serials
 
             if (IsSynchronous)
             {
-                _serialPort.DataReceived += SyncSerialPortDataReceived;
+                _serialPort.DataReceived += SyncDataReceived;
             }
             else
             {
@@ -156,7 +156,7 @@ namespace NKnife.Channels.Serials
                 try
                 {
                     if (IsSynchronous)
-                        _serialPort.DataReceived -= SyncSerialPortDataReceived;
+                        _serialPort.DataReceived -= SyncDataReceived;
                     else
                         _serialPort.DataReceived -= AsyncDataReceived;
                     _serialPort.Close();
@@ -203,14 +203,21 @@ namespace NKnife.Channels.Serials
 
         #endregion
 
-        protected override void SetJobAsynchronousFunc(JobManager jobManager)
+        private void SetJobFunc(IJobPoolItem job)
         {
-            throw new NotImplementedException();
-        }
-
-        protected override void SetJobSynchronousFunc(JobManager jobManager)
-        {
-            throw new NotImplementedException();
+            if (!job.IsPool && job is IJob)
+            {
+                if (job is SerialQuestion question)
+                    question.Func = Talk;
+            }
+            else
+            {
+                if (job is IJobPool pool)
+                {
+                    foreach (var poolItem in pool)
+                        SetJobFunc(poolItem);
+                }
+            }
         }
 
         /// <summary>
@@ -242,8 +249,11 @@ namespace NKnife.Channels.Serials
         /// </summary>
         private byte[] _talkBuffer = new byte[0];
 
-        protected void Talk(SerialQuestion question)
+        protected bool Talk(IJob job)
         {
+            var question = job as SerialQuestion;
+            if (question == null)
+                return false;
             var complate = false; //是否读取到了完整的数据，即这次对话是否完成
             _onSyncSent = true; //即将发出前置标记，以保证可读取数据
             _serialPort.Write(question.Data, 0, question.Data.Length);
@@ -265,12 +275,13 @@ namespace NKnife.Channels.Serials
                     }
                 }
             }
+            return true;
         }
 
         /// <summary>
         ///     同步接收到数据
         /// </summary>
-        protected virtual void SyncSerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
+        protected virtual void SyncDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (!_onSyncSent)
             {
@@ -328,10 +339,9 @@ namespace NKnife.Channels.Serials
             {
                 _Logger.Warn($"串口读取异常：{ex.Message}", ex);
             }
-
             if (buffer != null && buffer.Length > 0)
             {
-                OnDataArrived(new SerialChannelAnswerDataEventArgs(q.Instrument, buffer));
+                OnDataArrived(new EventArgs<byte[]>(buffer));
             }
         }
 

@@ -18,5 +18,12 @@ namespace NKnife.Channels.Serials
         {
             return GetEnumerator();
         }
+
+        public event EventHandler Answered;
+
+        protected virtual void OnAnswered()
+        {
+            Answered?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

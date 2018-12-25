@@ -60,9 +60,7 @@
     <Compile Include="ChannelPort.cs" />
     <Compile Include="CircularBuffer`.cs" />
     <Compile Include="Enums\ChannelType.cs" />
-    <Compile Include="EventParams\ChannelAnswerDataEventArgs.cs" />
     <Compile Include="EventParams\ChannelModeChangedEventArgs.cs" />
-    <Compile Include="EventParams\SerialChannelAnswerDataEventArgs.cs" />
     <Compile Include="Interfaces\IChannelJob.cs" />
     <Compile Include="Serials\SerialAnswer.cs" />
     <Compile Include="Serials\SerialChannel.cs" />

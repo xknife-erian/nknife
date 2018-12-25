@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using NKnife.Channels.Base;
 using NKnife.Channels.EventParams;
+using NKnife.Events;
 using NKnife.Interface;
-using NKnife.Timers;
+using NKnife.Jobs;
 
 namespace NKnife.Channels.Interfaces
 {
@@ -19,13 +20,6 @@ namespace NKnife.Channels.Interfaces
         bool IsSynchronous { get; set; }
 
         /// <summary>
-        ///     当前数据通道的所面向的实际目标，当数据通道的目标只有一个时，本属性可以忽略。
-        ///     在很多情况下，虽然数据是通过一个数据通道出去，但是类似485，CAN的总结架构时，可能总线上有很多的设备（多达数百个），在这种情况下，这里是设备列表。
-        ///     再比如，在GPIB总线下，同样一个总线下可能挂着多达几十台的仪器。
-        /// </summary>
-        List<IId> Targets { get; }
-
-        /// <summary>
         ///     数据通道是否打开
         /// </summary>
         bool IsOpen { get; }
@@ -34,16 +28,6 @@ namespace NKnife.Channels.Interfaces
         ///     工作管理器
         /// </summary>
         JobManager JobManager { get; set; }
-
-        /// <summary>
-        ///     当发送完成时将要被执行的方法
-        /// </summary>
-        Action<ChannelJobBase<T>> Sent { get; set; }
-
-        /// <summary>
-        ///     当采集到数据(返回的数据)的处理方法。当返回true时，表示接收数据是完整的，返回false时，表示接收数据不完整，还需要继续接收
-        /// </summary>
-        Func<ChannelJobBase<T>, bool> Received { get; set; }
 
         /// <summary>
         ///     打开数据通道
@@ -71,7 +55,7 @@ namespace NKnife.Channels.Interfaces
         /// <summary>
         ///     当有数据到达时。
         /// </summary>
-        event EventHandler<ChannelAnswerDataEventArgs<T>> DataArrived;
+        event EventHandler<EventArgs<T>> DataArrived;
 
         /// <summary>
         ///     中断正在进行的工作流的执行方法，无论是异步与同步。
