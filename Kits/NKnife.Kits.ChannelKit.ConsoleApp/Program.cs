@@ -36,22 +36,22 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             var pool = new SerialQuestionPool();
             pool.AddRange(new[]
             {
-                BuildSerialQuestion(0x00),
-                BuildSerialQuestion(0x01),
-                BuildSerialQuestion(0x02),
-                BuildSerialQuestion(0x03),
-                BuildSerialQuestion(0x04),
-                BuildSerialQuestion(0x05)
+                BuildSerialAsk(0x00),
+                BuildSerialAsk(0x01),
+                BuildSerialAsk(0x02),
+                BuildSerialAsk(0x03),
+                BuildSerialAsk(0x04),
+                BuildSerialAsk(0x05)
             });
             return pool;
         }
 
-        private static SerialQuestion BuildSerialQuestion(byte command)
+        private static SerialQuestion BuildSerialAsk(byte command)
         {
             var q1 = new SerialQuestion(new byte[] { command }, true, 100);
             q1.Answered += (s, e) =>
             {
-                //当同步时，每次对话所产生应答数据可通过Question得到
+                //当同步时，每次对话所产生应答数据可通过Ask得到
                 Console.WriteLine($"Answered: {e.Item.ToHexString()}");
             };
             return q1;

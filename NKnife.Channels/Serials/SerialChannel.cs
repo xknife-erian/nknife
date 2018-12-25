@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using System.Threading;
 using Common.Logging;
@@ -112,8 +113,11 @@ namespace NKnife.Channels.Serials
                     {
                         openReset.Set();
                     }
-                }) {Name = $"{_serialPort.PortName}-Thread"};
-                thread.IsBackground = true;
+                })
+                {
+                    Name = $"{_serialPort.PortName}-Thread",
+                    IsBackground = true
+                };
                 thread.Start();
                 openReset.WaitOne(OpenTimeout); //打开串口等待1.5秒
                 if (IsOpen)
@@ -208,7 +212,7 @@ namespace NKnife.Channels.Serials
             if (!job.IsPool && job is IJob)
             {
                 if (job is SerialQuestion question)
-                    question.Func = Talk;
+                    question.Run = Talk;
             }
             else
             {
@@ -242,6 +246,9 @@ namespace NKnife.Channels.Serials
 
         private readonly AutoResetEvent _syncReceiveWaiter = new AutoResetEvent(false);
 
+        /// <summary>
+        /// 标记是否正在某个question的发送过程中
+        /// </summary>
         private bool _onSyncSent = false;
 
         /// <summary>
@@ -251,30 +258,34 @@ namespace NKnife.Channels.Serials
 
         protected bool Talk(IJob job)
         {
-            var question = job as SerialQuestion;
-            if (question == null)
+            var q = job as SerialQuestion;
+            if (q == null)
                 return false;
-            var complate = false; //是否读取到了完整的数据，即这次对话是否完成
             _onSyncSent = true; //即将发出前置标记，以保证可读取数据
-            _serialPort.Write(question.Data, 0, question.Data.Length);
+            _serialPort.Write(q.Data, 0, q.Data.Length);
 
-            while (!complate)
+            var complete = false;
+            while (!complete)
             {
-                // 发出后等待
-                _onSyncSent = true; //标记
-                // 这个等待是同步时每次对话的时间
-                if (_syncReceiveWaiter.WaitOne(question.Timeout)) //监听从事件收到返回的数据
+                _onSyncSent = true;
+                var buffer = new List<byte>();
+                // 这个等待是同步时每次对话的超时时长，即timeout
+                if (_syncReceiveWaiter.WaitOne(q.Timeout)) //监听从事件收到返回的数据
                 {
                     if (_talkBuffer.Length > 0)
                     {
-                        var currBuffer = new byte[_talkBuffer.Length];
-                        Buffer.BlockCopy(_talkBuffer, 0, currBuffer, 0, _talkBuffer.Length);
-                        _talkBuffer = new byte[0];
-                        //将读取到的数据抛出进行解析，如果认为已完成本次询问进入下一次对话。
-                        //如果未完成本次询问再次进入等待回答(读取)状态。
+                        buffer.AddRange(_talkBuffer);//复制一份，防止冲突
+                        //当Question设置了数据校验，如果数据未满足要求，将循环继续等待
+                        if (q.Verify == null || (q.Verify != null && q.Verify(buffer.ToArray())))
+                        {
+                            ThreadPool.QueueUserWorkItem(e => q.Answer(buffer.ToArray()), null);
+                            _talkBuffer = new byte[0];
+                            complete = true;
+                        }
                     }
                 }
             }
+
             return true;
         }
 
@@ -292,10 +303,12 @@ namespace NKnife.Channels.Serials
 
             try
             {
+                var oldBufferLength = _talkBuffer.Length;
+                var readLength = _serialPort.BytesToRead;
                 //_talkBuffer是交换数据的缓冲区
                 //触发读取后，读取，读取本次以后进入下一次询问对话
-                _talkBuffer = new byte[_serialPort.BytesToRead];
-                _serialPort.Read(_talkBuffer, 0, _talkBuffer.Length);
+                _talkBuffer = new byte[oldBufferLength + readLength];
+                _serialPort.Read(_talkBuffer, oldBufferLength, readLength);
             }
             catch (TimeoutException ex)
             {

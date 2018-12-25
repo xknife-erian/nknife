@@ -62,7 +62,6 @@
     <Compile Include="Enums\ChannelType.cs" />
     <Compile Include="EventParams\ChannelModeChangedEventArgs.cs" />
     <Compile Include="Interfaces\IChannelJob.cs" />
-    <Compile Include="Serials\SerialAnswer.cs" />
     <Compile Include="Serials\SerialChannel.cs" />
     <Compile Include="Serials\SerialChannelMap.cs" />
     <Compile Include="Serials\SerialConfig.cs" />

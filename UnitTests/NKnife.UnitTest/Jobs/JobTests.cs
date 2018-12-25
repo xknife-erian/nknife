@@ -12,6 +12,10 @@ namespace NKnife.UnitTest.Jobs
         {
             return true;
         }
+        private bool CotrTestFunc2(byte[] data)
+        {
+            return true;
+        }
 
         [Test]
         public void CtorTest()
@@ -22,7 +26,8 @@ namespace NKnife.UnitTest.Jobs
                 IsLoop = true,
                 Timeout = 1200,
                 LoopNumber = 1234,
-                Func = CotrTestFunc1
+                Run = CotrTestFunc1,
+                Verify = CotrTestFunc2
             };
             job.Should().NotBeNull();
             job.IsPool.Should().BeFalse();
@@ -35,7 +40,8 @@ namespace NKnife.UnitTest.Jobs
             public bool IsLoop { get; set; }
             public int Interval { get; set; }
             public int LoopNumber { get; set; }
-            public Func<IJob, bool> Func { get; set; }
+            public Func<IJob, bool> Run { get; set; }
+            public Func<byte[], bool> Verify { get; set; }
         }
 
     }

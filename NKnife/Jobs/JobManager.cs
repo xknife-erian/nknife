@@ -113,9 +113,9 @@ namespace NKnife.Jobs
             if (_breakFlag)//当检测到中断信号时，不再运行Job
                 return;
             OnRunning(new EventArgs<IJob>(job));
-            var success = job.Func.Invoke(job);
+            var success = job.Run.Invoke(job);
             OnRan(new EventArgs<IJob>(job));
-            //当运行异常时，静置至超时时长，否则静默至间隔时长即结束
+            //**当运行异常时，静置至超时时长，否则静默至间隔时长即结束**
             _flowAutoResetEvent.WaitOne(success ? job.Interval : job.Timeout);
             if (_pauseFlag)//检测暂停标记
                 _flowAutoResetEvent.Reset();
@@ -158,11 +158,6 @@ namespace NKnife.Jobs
         protected virtual void OnAllWorkDone()
         {
             AllWorkDone?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Update(IJobPool pool)
-        {
-            throw new NotImplementedException();
         }
     }
 }

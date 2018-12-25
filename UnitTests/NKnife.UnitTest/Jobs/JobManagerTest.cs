@@ -17,7 +17,8 @@ namespace NKnife.UnitTest.Jobs
             public bool IsLoop { get; set; }
             public int Interval { get; set; }
             public int LoopNumber { get; set; }
-            public Func<IJob, bool> Func { get; set; }
+            public Func<IJob, bool> Run { get; set; }
+            public Func<byte[], bool> Verify { get; set; }
         }
 
         private class JobPool : List<IJobPoolItem>, IJobPool
@@ -48,7 +49,7 @@ namespace NKnife.UnitTest.Jobs
                 LoopNumber = 50,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc
+                Run = CountFunc
             };
             flow.Pool.Add(job);
             flow.Run();
@@ -70,7 +71,7 @@ namespace NKnife.UnitTest.Jobs
                 LoopNumber = 1,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc
+                Run = CountFunc
             };
             var job2 = new Job
             {
@@ -78,7 +79,7 @@ namespace NKnife.UnitTest.Jobs
                 LoopNumber = 500,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc
+                Run = CountFunc
             };
             flow.Pool.AddRange(new IJobPoolItem[] {job1, job2});
             flow.Run();
@@ -102,7 +103,7 @@ namespace NKnife.UnitTest.Jobs
                     IsLoop = false,
                     Interval = 2,
                     Timeout = 15,
-                    Func = CountFunc
+                    Run = CountFunc
                 };
                 flow.Pool.Add(job);
             }
@@ -124,7 +125,7 @@ namespace NKnife.UnitTest.Jobs
                 IsLoop = false,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc
+                Run = CountFunc
             };
             var job2 = new Job
             {
@@ -132,14 +133,14 @@ namespace NKnife.UnitTest.Jobs
                 LoopNumber = 100,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc
+                Run = CountFunc
             };
             var job3 = new Job
             {
                 IsLoop = false,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc
+                Run = CountFunc
             };
             flow.Pool.AddRange(new []{job1,job2,job3});
             flow.Run();
@@ -171,7 +172,7 @@ namespace NKnife.UnitTest.Jobs
                 LoopNumber = 0,
                 Interval = 2,
                 Timeout = 15,
-                Func = OnBreakCountFunc
+                Run = OnBreakCountFunc
             };
             _runTest005Manager.Pool = new JobPool();
             _runTest005Manager.Pool.Add(job2);
@@ -213,7 +214,7 @@ namespace NKnife.UnitTest.Jobs
                 LoopNumber = 100,
                 Interval = 2,
                 Timeout = 15,
-                Func = OnPauseCountFunc
+                Run = OnPauseCountFunc
             };
             _runTest006Manager.Pool = new JobPool();
             _runTest006Manager.Pool.Add(job);
@@ -240,7 +241,7 @@ namespace NKnife.UnitTest.Jobs
                 IsLoop = false,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc
+                Run = CountFunc
             };
             flow.Pool.Add(job1);
 
@@ -253,7 +254,7 @@ namespace NKnife.UnitTest.Jobs
                     IsLoop = false,
                     Interval = 2,
                     Timeout = 15,
-                    Func = CountFunc
+                    Run = CountFunc
                 };
                 group1.Add(job2);
             }
@@ -271,7 +272,7 @@ namespace NKnife.UnitTest.Jobs
                         IsLoop = false,
                         Interval = 2,
                         Timeout = 15,
-                        Func = CountFunc
+                        Run = CountFunc
                     };
                     subGroup2.Add(job2);
                 }
@@ -302,21 +303,21 @@ namespace NKnife.UnitTest.Jobs
                 IsLoop = false,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc,
+                Run = CountFunc,
             };
             var job2 = new Job
             {
                 IsLoop = false,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc,
+                Run = CountFunc,
             };
             var job3 = new Job
             {
                 IsLoop = false,
                 Interval = 2,
                 Timeout = 15,
-                Func = CountFunc,
+                Run = CountFunc,
             };
             flow.Running += (s, e) =>
             {
@@ -368,7 +369,7 @@ namespace NKnife.UnitTest.Jobs
                 LoopNumber = 0,
                 Interval = 2,
                 Timeout = 15,
-                Func = On009BreakCountFunc
+                Run = On009BreakCountFunc
             };
             _runTest009Manager.Pool.Add(job2);
             _runTest009Manager.Run();

@@ -41,7 +41,9 @@ namespace NKnife.Channels.Base
         public int LoopNumber { get; set; }
 
         /// <inheritdoc />
-        public Func<IJob, bool> Func { get; set; }
+        public Func<IJob, bool> Run { get; set; }
+
+        public Func<byte[], bool> Verify { get; set; }
 
         #endregion
 
