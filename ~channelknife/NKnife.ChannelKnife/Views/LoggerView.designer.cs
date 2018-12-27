@@ -1,4 +1,4 @@
-﻿namespace NKnife.ChannelKnife.View
+﻿namespace NKnife.ChannelKnife.Views
 {
     partial class LoggerView
     {

@@ -1,6 +1,6 @@
 ﻿using Ninject.Modules;
 using NKnife.ChannelKnife.View;
-using NKnife.ChannelKnife.ViewModels;
+using NKnife.ChannelKnife.ViewModel;
 using NKnife.Interface;
 
 namespace NKnife.ChannelKnife.IoC

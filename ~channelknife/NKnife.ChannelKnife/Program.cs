@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Common.Logging;
-using NKnife.ChannelKnife.View;
+using NKnife.ChannelKnife.Views;
 using NKnife.IoC;
 using NKnife.Wrapper;
 

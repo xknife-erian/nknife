@@ -47,11 +47,11 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ReactiveUI, Version=9.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ReactiveUI.9.4.1\lib\net461\ReactiveUI.dll</HintPath>
+    <Reference Include="ReactiveUI, Version=9.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ReactiveUI.9.5.1\lib\net461\ReactiveUI.dll</HintPath>
     </Reference>
-    <Reference Include="ReactiveUI.Winforms, Version=9.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ReactiveUI.WinForms.9.4.1\lib\net461\ReactiveUI.Winforms.dll</HintPath>
+    <Reference Include="ReactiveUI.Winforms, Version=9.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ReactiveUI.WinForms.9.5.1\lib\net461\ReactiveUI.Winforms.dll</HintPath>
     </Reference>
     <Reference Include="Splat, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Splat.5.1.4\lib\net461\Splat.dll</HintPath>
@@ -120,12 +120,50 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IoC\Modules.cs" />
-    <Compile Include="ViewModels\WorkbenchViewModel.cs" />
-    <Compile Include="View\LoggerView.cs">
+    <Compile Include="Controls\NotFlickerListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SerialPortSelectorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\LoggerView.designer.cs">
+    <Compile Include="Dialogs\SerialPortSelectorDialog.Designer.cs">
+      <DependentUpon>SerialPortSelectorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IoC\Modules.cs" />
+    <Compile Include="Views\Controls\ChannelDataListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\ChannelDataListView.Designer.cs">
+      <DependentUpon>ChannelDataListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\ConfigPanel.Designer.cs">
+      <DependentUpon>ConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\QuestionsEditorPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\QuestionsEditorPanel.Designer.cs">
+      <DependentUpon>QuestionsEditorPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SerialPortView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SerialPortView.Designer.cs">
+      <DependentUpon>SerialPortView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Workbench.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Workbench.Designer.cs">
+      <DependentUpon>Workbench.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoggerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LoggerView.designer.cs">
       <DependentUpon>LoggerView.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Workbench.cs">
@@ -136,6 +174,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\SerialPortSelectorDialog.resx">
+      <DependentUpon>SerialPortSelectorDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -146,7 +187,22 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="View\LoggerView.resx">
+    <EmbeddedResource Include="Views\Controls\ChannelDataListView.resx">
+      <DependentUpon>ChannelDataListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\ConfigPanel.resx">
+      <DependentUpon>ConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\QuestionsEditorPanel.resx">
+      <DependentUpon>QuestionsEditorPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SerialPortView.resx">
+      <DependentUpon>SerialPortView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Workbench.resx">
+      <DependentUpon>Workbench.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoggerView.resx">
       <DependentUpon>LoggerView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Workbench.resx">
@@ -174,6 +230,10 @@
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NKnife.ChannelKnife.Controller\NKnife.ChannelKnife.Controller.csproj">
+      <Project>{033950C5-4821-4555-BA3F-BEA437169821}</Project>
+      <Name>NKnife.ChannelKnife.Controller</Name>
     </ProjectReference>
     <ProjectReference Include="..\NKnife.ChannelKnife.ViewModel\NKnife.ChannelKnife.ViewModel.csproj">
       <Project>{b4a0dfa6-1aec-428b-9788-d86d66920988}</Project>

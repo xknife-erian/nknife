@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using Ninject;
-using NKnife.ChannelKnife.ViewModels;
+using NKnife.ChannelKnife.ViewModel;
+using NKnife.ChannelKnife.Views;
 using ReactiveUI;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -18,8 +19,8 @@ namespace NKnife.ChannelKnife.View
             InitializeDockPanel();
             this.WhenActivated(b =>
             {
-                b(this.OneWayBind(ViewModel, vm => vm.ApplicationTitle, v => v.Text));
-                b(this.OneWayBind(ViewModel, vm => vm.SoftwareVersion, v => v._VersionLabel.Text));
+                //b(this.OneWayBind(ViewModel, vm => vm.ApplicationTitle, v => v.Text));
+                //b(this.OneWayBind(ViewModel, vm => vm.SoftwareVersion, v => v._VersionLabel.Text));
             });
 #if !DEBUG
             WindowState = FormWindowState.Maximized;
