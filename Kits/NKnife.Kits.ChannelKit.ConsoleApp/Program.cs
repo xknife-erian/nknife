@@ -34,6 +34,13 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             Console.ReadLine();
         }
 
+        #region Select
+
+        public enum Mode 
+        {
+            Sync,Async
+        }
+
         private static Mode SelectMode()
         {
             Console.WriteLine("请输入工作模式(A:异步；S:同步):");
@@ -54,10 +61,6 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             }
         }
 
-        public enum Mode 
-        {
-            Sync,Async
-        }
 
         private static ushort SelectPort()
         {
@@ -72,19 +75,41 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             return port;
         }
 
+        #endregion
+
         private static void StartSync(ushort port)
         {
             var config = new SerialConfig(port);
             var channel = new SerialChannel(config);
             channel.IsSynchronous = true;
             channel.JobManager = new JobManager();
-            channel.JobManager.Pool = GetSyncJobPool();
+            channel.JobManager.Pool = BuildJobPool();
             if (channel.Open())
                 channel.SyncListen();
             channel.Close();
         }
 
-        private static IJobPool GetSyncJobPool()
+        private static void StartAsync(ushort port)
+        {
+            var config = new SerialConfig(port);
+            var channel = new SerialChannel(config);
+            channel.DataArrived += (s, e) =>
+            {
+                //当同步时，应答数据可通过Channel得到
+                Console.WriteLine($"{DateTime.Now:HH:mm:ss,fff}:DataArrived: {e.Item.ToHexString()}");
+            };
+            channel.IsSynchronous = false;
+            channel.JobManager = new JobManager();
+            channel.JobManager.Pool = BuildJobPool();
+            if (channel.Open())
+                channel.AsyncListen();
+
+            channel.Close();
+        }
+
+        #region BuildPool
+
+        private static IJobPool BuildJobPool()
         {
             var pool = new SerialQuestionPool();
             pool.AddRange(new[]
@@ -142,30 +167,7 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             }
         }
 
-        private static void StartAsync(ushort port)
-        {
-            var config = new SerialConfig(port);
-            var channel = new SerialChannel(config);
-            channel.DataArrived += (s, e) =>
-            {
-                //当同步时，应答数据可通过Channel得到
-                Console.WriteLine($"{DateTime.Now:HH:mm:ss,fff}:DataArrived: {e.Item.ToHexString()}");
-            };
-            channel.IsSynchronous = false;
-            channel.JobManager = new JobManager();
-            channel.JobManager.Pool = new SerialQuestionPool();
-            channel.JobManager.Pool.AddRange(new[]
-            {
-                BuildSerialAsk(0x00),
-                BuildSerialAsk(0x01),
-                BuildSerialAsk(0x02),
-                new FF(),
-                BuildSerialAsk(0x03),
-            });
-            if (channel.Open())
-                channel.AsyncListen();
+        #endregion
 
-            channel.Close();
-        }
     }
 }
