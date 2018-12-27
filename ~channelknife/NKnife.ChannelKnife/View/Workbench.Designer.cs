@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace NKnife.Kits.ChannelKit.View
+namespace NKnife.ChannelKnife.View
 {
     partial class Workbench
     {

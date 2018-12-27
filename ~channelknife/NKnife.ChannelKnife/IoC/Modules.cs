@@ -1,9 +1,9 @@
 ﻿using Ninject.Modules;
+using NKnife.ChannelKnife.View;
+using NKnife.ChannelKnife.ViewModels;
 using NKnife.Interface;
-using NKnife.Kits.ChannelKit.View;
-using NKnife.Kits.ChannelKit.ViewModels;
 
-namespace NKnife.Kits.ChannelKit.IoC
+namespace NKnife.ChannelKnife.IoC
 {
     public class Modules : NinjectModule
     {

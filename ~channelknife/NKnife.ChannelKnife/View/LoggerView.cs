@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using NKnife.NLog.WinForm;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace NKnife.Kits.ChannelKit.View
+namespace NKnife.ChannelKnife.View
 {
     public partial class LoggerView : DockContent
     {

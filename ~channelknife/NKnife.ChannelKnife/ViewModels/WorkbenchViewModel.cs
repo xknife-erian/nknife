@@ -1,9 +1,8 @@
 ﻿using Ninject;
 using NKnife.Interface;
-using NKnife.IoC;
 using ReactiveUI;
 
-namespace NKnife.Kits.ChannelKit.ViewModels
+namespace NKnife.ChannelKnife.ViewModels
 {
     public class WorkbenchViewModel : ReactiveObject
     {

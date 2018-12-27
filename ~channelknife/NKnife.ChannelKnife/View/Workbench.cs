@@ -1,11 +1,10 @@
 ﻿using System.Windows.Forms;
-using Common.Logging.Factory;
 using Ninject;
-using NKnife.Kits.ChannelKit.ViewModels;
+using NKnife.ChannelKnife.ViewModels;
 using ReactiveUI;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace NKnife.Kits.ChannelKit.View
+namespace NKnife.ChannelKnife.View
 {
     public sealed partial class Workbench : Form, IViewFor<WorkbenchViewModel>
     {

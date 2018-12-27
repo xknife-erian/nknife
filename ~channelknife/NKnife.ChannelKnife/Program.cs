@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common.Logging;
-using NKnife.Channels.Serials;
+using NKnife.ChannelKnife.View;
 using NKnife.IoC;
-using NKnife.Kits.ChannelKit.View;
 using NKnife.Wrapper;
 
-namespace NKnife.Kits.ChannelKit
+namespace NKnife.ChannelKnife
 {
     static class Program
     {
