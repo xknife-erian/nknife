@@ -25,7 +25,7 @@ namespace NKnife.NLog.WPF
 
         private void LevelMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var filter = Di.Get<LogMessageFilter>();
+            var filter = DI.Get<LogMessageFilter>();
             var menuItem = (MenuItem) sender;
             var isChecked = menuItem.IsChecked;
             menuItem.IsChecked = !isChecked;

@@ -8,7 +8,8 @@ using NKnife.Utility;
 
 namespace NKnife.IoC
 {
-    public static class Di
+    // ReSharper disable once InconsistentNaming
+    public static class DI
     {
         private static bool _initialized;
         private static CoreKernel _coreKernel;

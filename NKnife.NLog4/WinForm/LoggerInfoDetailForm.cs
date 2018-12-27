@@ -17,7 +17,7 @@ namespace NKnife.NLog.WinForm
     {
         public static void Show(LogEventInfo info)
         {
-            var form = Di.Get<LoggerInfoDetailForm>();
+            var form = DI.Get<LoggerInfoDetailForm>();
             form.Size = new Size(600, 480);
             form.FillLogInfo(info);
             form.ShowDialog();
@@ -131,63 +131,63 @@ namespace NKnife.NLog.WinForm
             this._exInfoPage.SuspendLayout();
             this.SuspendLayout();
             // 
-            // _Label1
+            // _label1
             // 
             resources.ApplyResources(this._label1, "_label1");
             this._label1.Name = "_label1";
             // 
-            // _Label2
+            // _label2
             // 
             resources.ApplyResources(this._label2, "_label2");
             this._label2.Name = "_label2";
             // 
-            // _Label3
+            // _label3
             // 
             resources.ApplyResources(this._label3, "_label3");
             this._label3.Name = "_label3";
             // 
-            // _Label4
+            // _label4
             // 
             resources.ApplyResources(this._label4, "_label4");
             this._label4.Name = "_label4";
             // 
-            // _LevelTextBox
+            // _levelTextBox
             // 
             resources.ApplyResources(this._levelTextBox, "_levelTextBox");
             this._levelTextBox.Name = "_levelTextBox";
             this._levelTextBox.ReadOnly = true;
             // 
-            // _TimeTextBox
+            // _timeTextBox
             // 
             resources.ApplyResources(this._timeTextBox, "_timeTextBox");
             this._timeTextBox.Name = "_timeTextBox";
             this._timeTextBox.ReadOnly = true;
             // 
-            // _SourceTextBox
+            // _sourceTextBox
             // 
             resources.ApplyResources(this._sourceTextBox, "_sourceTextBox");
             this._sourceTextBox.Name = "_sourceTextBox";
             this._sourceTextBox.ReadOnly = true;
             // 
-            // _LogInfoTextBox
+            // _logInfoTextBox
             // 
             resources.ApplyResources(this._logInfoTextBox, "_logInfoTextBox");
             this._logInfoTextBox.Name = "_logInfoTextBox";
             this._logInfoTextBox.ReadOnly = true;
             // 
-            // _LogStackTracePropertyGrid
+            // _logStackTracePropertyGrid
             // 
             resources.ApplyResources(this._logStackTracePropertyGrid, "_logStackTracePropertyGrid");
             this._logStackTracePropertyGrid.Name = "_logStackTracePropertyGrid";
             // 
-            // _CloseButton
+            // _closeButton
             // 
             resources.ApplyResources(this._closeButton, "_closeButton");
             this._closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._closeButton.Name = "_closeButton";
             this._closeButton.UseVisualStyleBackColor = true;
             // 
-            // _MainTabControl
+            // _mainTabControl
             // 
             resources.ApplyResources(this._mainTabControl, "_mainTabControl");
             this._mainTabControl.Controls.Add(this._mainPage);
@@ -195,7 +195,7 @@ namespace NKnife.NLog.WinForm
             this._mainTabControl.Name = "_mainTabControl";
             this._mainTabControl.SelectedIndex = 0;
             // 
-            // _MainPage
+            // _mainPage
             // 
             this._mainPage.Controls.Add(this._label4);
             this._mainPage.Controls.Add(this._label1);
@@ -209,14 +209,14 @@ namespace NKnife.NLog.WinForm
             this._mainPage.Name = "_mainPage";
             this._mainPage.UseVisualStyleBackColor = true;
             // 
-            // _ExInfoPage
+            // _exInfoPage
             // 
             this._exInfoPage.Controls.Add(this._logStackTracePropertyGrid);
             resources.ApplyResources(this._exInfoPage, "_exInfoPage");
             this._exInfoPage.Name = "_exInfoPage";
             this._exInfoPage.UseVisualStyleBackColor = true;
             // 
-            // NLogDetailForm
+            // LoggerInfoDetailForm
             // 
             this.AcceptButton = this._closeButton;
             this.CancelButton = this._closeButton;
@@ -225,7 +225,7 @@ namespace NKnife.NLog.WinForm
             this.Controls.Add(this._closeButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "NLogDetailForm";
+            this.Name = "LoggerInfoDetailForm";
             this._mainTabControl.ResumeLayout(false);
             this._mainPage.ResumeLayout(false);
             this._mainPage.PerformLayout();

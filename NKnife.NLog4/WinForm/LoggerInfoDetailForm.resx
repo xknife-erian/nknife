@@ -126,7 +126,7 @@
     <value>24, 18</value>
   </data>
   <data name="_label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
+    <value>59, 17</value>
   </data>
   <data name="_label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -153,7 +153,7 @@
     <value>24, 43</value>
   </data>
   <data name="_label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
+    <value>59, 17</value>
   </data>
   <data name="_label2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -180,7 +180,7 @@
     <value>24, 66</value>
   </data>
   <data name="_label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 12</value>
+    <value>47, 17</value>
   </data>
   <data name="_label3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -207,7 +207,7 @@
     <value>24, 91</value>
   </data>
   <data name="_label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
+    <value>59, 17</value>
   </data>
   <data name="_label4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -235,7 +235,7 @@
     <value>89, 13</value>
   </data>
   <data name="_levelTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 21</value>
+    <value>364, 23</value>
   </data>
   <data name="_levelTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -259,7 +259,7 @@
     <value>89, 38</value>
   </data>
   <data name="_timeTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 21</value>
+    <value>364, 23</value>
   </data>
   <data name="_timeTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -283,7 +283,7 @@
     <value>89, 63</value>
   </data>
   <data name="_sourceTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 21</value>
+    <value>364, 23</value>
   </data>
   <data name="_sourceTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -313,7 +313,7 @@
     <value>Vertical</value>
   </data>
   <data name="_logInfoTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 101</value>
+    <value>364, 97</value>
   </data>
   <data name="_logInfoTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -388,13 +388,13 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="_mainPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 26</value>
   </data>
   <data name="_mainPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="_mainPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>471, 211</value>
+    <value>471, 207</value>
   </data>
   <data name="_mainPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -468,8 +468,11 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>503, 290</value>
   </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 9pt</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>NLogDetailForm</value>
+    <value>LoggerInfoDetailForm</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

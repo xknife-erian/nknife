@@ -56,7 +56,6 @@
     <Compile Include="Base\ChannelBase`.cs" />
     <Compile Include="Base\ChannelJobBase`.cs" />
     <Compile Include="Base\MultiChannelBase.cs" />
-    <Compile Include="Bytes.cs" />
     <Compile Include="ChannelPort.cs" />
     <Compile Include="CircularBuffer`.cs" />
     <Compile Include="Enums\ChannelType.cs" />

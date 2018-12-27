@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Common.Logging;
+using NKnife.Channels.Serials;
 using NKnife.IoC;
+using NKnife.Kits.ChannelKit.View;
+using NKnife.Wrapper;
 
-namespace NKnife.Kits.NLog.NLog4Kit
+namespace NKnife.Kits.ChannelKit
 {
     static class Program
     {
@@ -16,9 +21,13 @@ namespace NKnife.Kits.NLog.NLog4Kit
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
             DI.Initialize();
-            Application.Run(new Form1());
+            LogManager.GetLogger<Workbench>().Info("DI.Initialize complete.");
+            Application.Run(DI.Get<Workbench>());
         }
+    }
+
+    public class AboutMe : About
+    {
     }
 }

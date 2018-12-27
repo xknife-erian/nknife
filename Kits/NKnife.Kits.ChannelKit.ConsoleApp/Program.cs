@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using NKnife.Channels.Serials;
 using NKnife.Interface;
 using NKnife.Jobs;
@@ -56,19 +57,30 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
                 BuildSerialAsk(0x00),
                 BuildSerialAsk(0x01),
                 BuildSerialAsk(0x02),
+                new FF(),
                 BuildSerialAsk(0x03),
-                BuildSerialAsk(0x04),
-                BuildSerialAsk(0x05),
-                new FF()
             });
             return pool;
         }
 
         private static SerialQuestion BuildSerialAsk(byte command)
         {
-            var q1 = new SerialQuestion(new[] {command}, true, 100)
+            var q1 = new SerialQuestion(new[] {command}, false, 200)
             {
-                Verify = Verify
+                Verify = job =>
+                {
+                    if (job is SerialQuestion q)
+                    {
+                        var data = q.Data.ToArray();
+                        var answer = q.Answer.ToArray();
+                        for (int i = 0; i < data.Length; i++)
+                        {
+                            if (data[i] != answer[i])
+                                return false;
+                        }
+                    }
+                    return true;
+                }
             };
             q1.Answered += (s, e) =>
             {
@@ -78,28 +90,20 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             return q1;
         }
 
-        private static bool Verify(IJob job)
-        {
-            if (job is SerialQuestion q)
-            {
-                var data = q.Data.ToArray();
-                var answer = q.Answer.ToArray();
-                for (int i = 0; i < data.Length; i++)
-                {
-                    if (data[i] != answer[i])
-                        return false;
-                }
-            }
-            return true;
-        }
-
         // ReSharper disable once InconsistentNaming
         public class FF : SerialQuestion
         {
             public FF() 
-                : base(new byte[] {0xFF}, true, 50)
+                : base(new byte[] {0xFF}, true, 500)
             {
-                Verify = job => Answer.Equals(Data);
+                Verify = (v) => true;
+                LoopNumber = 5;//循环5次
+                Answered += (s, e) =>
+                {
+                    //当同步时，每次对话所产生应答数据可通过Ask得到
+                    Console.WriteLine($"{DateTime.Now:HH:mm:ss,fff}:Answered: {e.Item.ToHexString()}");
+                };
+
             }
         }
 
@@ -117,11 +121,11 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             channel.JobManager.Pool = new SerialQuestionPool();
             channel.JobManager.Pool.AddRange(new[]
             {
-                new SerialQuestion(new byte[] {0x00}, true, 100),
-                new SerialQuestion(new byte[] {0x01}, true, 100),
-                new SerialQuestion(new byte[] {0x02}, true, 100),
-                new SerialQuestion(new byte[] {0x03}, true, 100),
-                new SerialQuestion(new byte[] {0x04}, true, 100)
+                new SerialQuestion(new byte[] {0x00}, false, 100),
+                new SerialQuestion(new byte[] {0x01}, false, 100),
+                new SerialQuestion(new byte[] {0x02}, false, 100),
+                new SerialQuestion(new byte[] {0x03}, false, 100),
+                new SerialQuestion(new byte[] {0x04}, false, 100)
             });
             if (channel.Open())
                 channel.AsyncListen();

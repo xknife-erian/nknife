@@ -121,6 +121,9 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="_ToolStrip.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 9pt</value>
+  </data>
   <data name="_TraceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 22</value>
   </data>
@@ -173,7 +176,7 @@
     <value>0, 0</value>
   </data>
   <data name="_ToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 25</value>
+    <value>712, 25</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="_ToolStrip.TabIndex" type="System.Int32, mscorlib">
@@ -195,11 +198,17 @@
   <data name="_ListView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="_ListView.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 9pt</value>
+  </data>
   <data name="_ListView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 25</value>
   </data>
+  <data name="_ListView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="_ListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 398</value>
+    <value>712, 574</value>
   </data>
   <data name="_ListView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -208,7 +217,7 @@
     <value>_ListView</value>
   </data>
   <data name="&gt;&gt;_ListView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>NKnife.NLog.NotFlickerListView, NKnife.NLog4, Version=19.0.0.1, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;_ListView.Parent" xml:space="preserve">
     <value>$this</value>
@@ -220,10 +229,16 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
+    <value>7, 17</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft YaHei UI, 9pt</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 423</value>
+    <value>712, 599</value>
   </data>
   <data name="&gt;&gt;_LevelToolButton.Name" xml:space="preserve">
     <value>_LevelToolButton</value>

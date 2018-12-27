@@ -19,7 +19,7 @@ namespace NKnife.Kits.StarterKit
             InitializeComponent();
             DockPanelManager();
             MenuItemClickEventManager();
-            Text = $"{Text} - {Di.Get<IAbout>().AssemblyVersion}";
+            Text = $"{Text} - {DI.Get<IAbout>().AssemblyVersion}";
             _Logger.Info($"{Name}-{GetType().Name}");
         }
 
@@ -32,7 +32,7 @@ namespace NKnife.Kits.StarterKit
             };
             Controls.Add(_dockPanel);
             _dockPanel.BringToFront();
-            var loggerView = Di.Get<LoggingDockView>();
+            var loggerView = DI.Get<LoggingDockView>();
             loggerView.Show(_dockPanel, DockState.DockBottom);
         }
 
@@ -40,7 +40,7 @@ namespace NKnife.Kits.StarterKit
         {
             _ChineseCharUseFrequencyMenuItem.Click += (s, e) =>
             {
-                var form = Di.Get<ChineseCharUseFrequencyDockView>();
+                var form = DI.Get<ChineseCharUseFrequencyDockView>();
                 form.Show(_dockPanel, DockState.Document);
             };
             _ThreadTimerToolStripMenuItem.Click += (sender, args) =>

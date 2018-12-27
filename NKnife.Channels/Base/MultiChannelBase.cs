@@ -6,7 +6,7 @@ namespace NKnife.Channels.Base
 {
     public abstract class MultiChannelBase<T> : IMultiChannel<T>
     {
-        private readonly List<IChannel<T>> _chnanels = new List<IChannel<T>>();
+        private readonly List<IChannel<T>> _channels = new List<IChannel<T>>();
 
         #region Implementation of IEnumerable
 
@@ -18,7 +18,7 @@ namespace NKnife.Channels.Base
         /// </returns>
         public IEnumerator<IChannel<T>> GetEnumerator()
         {
-            return _chnanels.GetEnumerator();
+            return _channels.GetEnumerator();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace NKnife.Channels.Base
         /// <exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.ICollection`1" /> 是只读的。</exception>
         public void Add(IChannel<T> channel)
         {
-            _chnanels.Add(channel);
+            _channels.Add(channel);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace NKnife.Channels.Base
         /// <exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.ICollection`1" /> 是只读的。</exception>
         public void Clear()
         {
-            _chnanels.Clear();
+            _channels.Clear();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace NKnife.Channels.Base
         /// <param name="item">要在 <see cref="T:System.Collections.Generic.ICollection`1" /> 中定位的对象。</param>
         public bool Contains(IChannel<T> item)
         {
-            return _chnanels.Contains(item);
+            return _channels.Contains(item);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace NKnife.Channels.Base
         /// </exception>
         void ICollection<IChannel<T>>.CopyTo(IChannel<T>[] array, int arrayIndex)
         {
-            (_chnanels as ICollection<IChannel<T>>).CopyTo(array, arrayIndex);
+            (_channels as ICollection<IChannel<T>>).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace NKnife.Channels.Base
         /// <exception cref="T:System.NotSupportedException"><see cref="T:System.Collections.Generic.ICollection`1" /> 是只读的。</exception>
         public bool Remove(IChannel<T> item)
         {
-            return _chnanels.Remove(item);
+            return _channels.Remove(item);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace NKnife.Channels.Base
         /// <returns>
         ///     <see cref="T:System.Collections.Generic.ICollection`1" /> 中包含的元素数。
         /// </returns>
-        public int Count => _chnanels.Count;
+        public int Count => _channels.Count;
 
         /// <summary>
         ///     获取一个值，该值指示 <see cref="T:System.Collections.Generic.ICollection`1" /> 是否为只读。
@@ -116,7 +116,7 @@ namespace NKnife.Channels.Base
         /// <returns>
         ///     如果 <see cref="T:System.Collections.Generic.ICollection`1" /> 为只读，则为 true；否则为 false。
         /// </returns>
-        bool ICollection<IChannel<T>>.IsReadOnly => ((ICollection<IChannel<T>>) _chnanels).IsReadOnly;
+        bool ICollection<IChannel<T>>.IsReadOnly => ((ICollection<IChannel<T>>) _channels).IsReadOnly;
 
         #endregion
     }

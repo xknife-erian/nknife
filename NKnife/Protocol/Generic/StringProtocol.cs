@@ -41,7 +41,7 @@ namespace NKnife.Protocol.Generic
 
         public StringProtocol NewInstance()
         {
-            var protocol = Di.Get<StringProtocol>();
+            var protocol = DI.Get<StringProtocol>();
             protocol.Family = Family;
             protocol.Command = Command;
             return protocol;

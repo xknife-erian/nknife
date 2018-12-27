@@ -25,7 +25,7 @@ namespace NKnife.Channels
         {
             if (_serialPort[0] == -1)
             {
-                string port = _serialPortInfo[0].ToUpper().TrimStart(new[] {'C', 'O', 'M'});
+                string port = _serialPortInfo[0].ToUpper().TrimStart('C', 'O', 'M');
                 if (!int.TryParse(port, out _serialPort[0]))
                     _serialPort[0] = 0;
                 if (!int.TryParse(_serialPortInfo[1], out _serialPort[1]))
@@ -38,11 +38,9 @@ namespace NKnife.Channels
         {
             if (_ipEndPoint == null)
             {
-                IPAddress ip;
-                if (!IPAddress.TryParse(_serialPortInfo[0], out ip))
+                if (!IPAddress.TryParse(_serialPortInfo[0], out var ip))
                     ip = new IPAddress(new byte[] {0x00, 0x00, 0x00, 0x00});
-                int port = 0;
-                if (!int.TryParse(_serialPortInfo[1], out port))
+                if (!int.TryParse(_serialPortInfo[1], out var port))
                     port = 5025;
                 _ipEndPoint = new IPEndPoint(ip, port);
             }

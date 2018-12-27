@@ -235,8 +235,8 @@ namespace NKnife.Channels
         {
             var countFormCopy = (Available >= size) ? size : Available;
             // 当 _ReadPointer 在 _WritePointer 的左边时, 缓冲的右边包含的数量.
-            var rdata = _capacity - _readPointer;
-            if (_readPointer < _writePointer || rdata >= countFormCopy /*隐含_ReadNext >= _WritePointer*/)
+            var readData = _capacity - _readPointer;
+            if (_readPointer < _writePointer || readData >= countFormCopy /*隐含_ReadNext >= _WritePointer*/)
             {
                 Array.Copy(_dataBuffer, _readPointer, buffer, offset, countFormCopy);
                 _readPointer += countFormCopy;
@@ -244,9 +244,9 @@ namespace NKnife.Channels
             else
             {
                 // 两次拷贝.
-                Array.Copy(_dataBuffer, _readPointer, buffer, offset, rdata);
-                _readPointer = countFormCopy - rdata;
-                Array.Copy(_dataBuffer, 0, buffer, offset + rdata, _readPointer);
+                Array.Copy(_dataBuffer, _readPointer, buffer, offset, readData);
+                _readPointer = countFormCopy - readData;
+                Array.Copy(_dataBuffer, 0, buffer, offset + readData, _readPointer);
             }
             return countFormCopy;
         }
