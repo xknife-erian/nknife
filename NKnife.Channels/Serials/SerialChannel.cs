@@ -59,6 +59,7 @@ namespace NKnife.Channels.Serials
                 _serialPort.DataReceived += AsyncDataReceived;
                 _serialPort.DataReceived -= SyncDataReceived;
             }
+            SetJobFunc(JobManager.Pool);
             base.OnChannelModeChanged(e);
         }
 
@@ -219,7 +220,12 @@ namespace NKnife.Channels.Serials
             if (!job.IsPool && job is IJob)
             {
                 if (job is SerialQuestion question)
-                    question.Run = Talk;
+                {
+                    if (IsSynchronous)
+                        question.Run = Talk;
+                    else
+                        question.Run = Broadcast;
+                }
             }
             else
             {
@@ -300,6 +306,16 @@ namespace NKnife.Channels.Serials
                 }
             }
 
+            return true;
+        }
+
+        protected bool Broadcast(IJob job)
+        {
+            var q = job as SerialQuestion;
+            if (q == null)
+                return false;
+            var data = q.Data.ToArray();
+            _serialPort.Write(data, 0, data.Length);
             return true;
         }
 

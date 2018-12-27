@@ -14,7 +14,7 @@ namespace NKnife.Channels.Interfaces
     public interface IChannel<T>
     {
         /// <summary>
-        ///     描述该数据通道的模式是否是同步获取，也称对话模式。即发送采集指令后直接等待返回。
+        ///     描述该数据通道的模式是否是同步获取，也称对话(Talk)模式，反之异步获取，也称广播(Broadcast)模式。
         /// </summary>
         /// <returns>当true时，是同步的，反之为异步</returns>
         bool IsSynchronous { get; set; }

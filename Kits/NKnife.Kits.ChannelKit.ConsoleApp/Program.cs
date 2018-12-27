@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Runtime.Remoting.Messaging;
 using NKnife.Channels.Serials;
 using NKnife.Interface;
@@ -19,12 +20,46 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             Console.WriteLine("LocalSerialPorts:");
             foreach (var kv in map)
                 Console.WriteLine($"  + {kv.Key}\t:{kv.Value}");
-            var port = GetPort();
-            StartSync(port);
+            var port = SelectPort();
+            var mode = SelectMode();
+            switch (mode)
+            {
+                case Mode.Async:
+                    StartAsync(port);
+                    break;
+                case Mode.Sync:
+                    StartSync(port);
+                    break;
+            }
             Console.ReadLine();
         }
 
-        private static ushort GetPort()
+        private static Mode SelectMode()
+        {
+            Console.WriteLine("请输入工作模式(A:异步；S:同步):");
+            while (true)
+            {
+                var line = Console.ReadLine();
+                if (!string.IsNullOrEmpty(line))
+                {
+                    var first = line.ToUpper()[0].ToString();
+                    if (first == "A" || first == "S")
+                    {
+                        if (first == "A")
+                            return Mode.Async;
+                        return Mode.Sync;
+                    }
+                }
+                Console.WriteLine("请输入正确的工作模式(A:异步；S:同步):");
+            }
+        }
+
+        public enum Mode 
+        {
+            Sync,Async
+        }
+
+        private static ushort SelectPort()
         {
             Console.WriteLine("请输入端口号：");
             var line = Console.ReadLine();
@@ -121,11 +156,11 @@ namespace NKnife.Kits.ChannelKit.ConsoleApp
             channel.JobManager.Pool = new SerialQuestionPool();
             channel.JobManager.Pool.AddRange(new[]
             {
-                new SerialQuestion(new byte[] {0x00}, false, 100),
-                new SerialQuestion(new byte[] {0x01}, false, 100),
-                new SerialQuestion(new byte[] {0x02}, false, 100),
-                new SerialQuestion(new byte[] {0x03}, false, 100),
-                new SerialQuestion(new byte[] {0x04}, false, 100)
+                BuildSerialAsk(0x00),
+                BuildSerialAsk(0x01),
+                BuildSerialAsk(0x02),
+                new FF(),
+                BuildSerialAsk(0x03),
             });
             if (channel.Open())
                 channel.AsyncListen();
