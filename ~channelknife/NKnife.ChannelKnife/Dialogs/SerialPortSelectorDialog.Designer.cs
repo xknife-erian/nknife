@@ -31,50 +31,15 @@ namespace NKnife.ChannelKnife.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-            this._ListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this._AcceptButton = new System.Windows.Forms.Button();
             this._CancelButton = new System.Windows.Forms.Button();
+            this._ListView = new BrightIdeasSoftware.DataListView();
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            ((System.ComponentModel.ISupportInitialize)(this._ListView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // _ListView
-            // 
-            this._ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this._ListView.CheckBoxes = true;
-            this._ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this._ListView.FullRowSelect = true;
-            this._ListView.GridLines = true;
-            this._ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this._ListView.HideSelection = false;
-            this._ListView.Location = new System.Drawing.Point(13, 12);
-            this._ListView.MultiSelect = false;
-            this._ListView.Name = "_ListView";
-            this._ListView.ShowGroups = false;
-            this._ListView.Size = new System.Drawing.Size(471, 157);
-            this._ListView.TabIndex = 2;
-            this._ListView.UseCompatibleStateImageBehavior = false;
-            this._ListView.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "";
-            this.columnHeader1.Width = 20;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "串口";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "描述";
-            this.columnHeader3.Width = 340;
             // 
             // _AcceptButton
             // 
@@ -97,6 +62,41 @@ namespace NKnife.ChannelKnife.Dialogs
             this._CancelButton.Text = "取消(&C)";
             this._CancelButton.UseVisualStyleBackColor = true;
             // 
+            // _ListView
+            // 
+            this._ListView.AllColumns.Add(this.olvColumn1);
+            this._ListView.AllColumns.Add(this.olvColumn2);
+            this._ListView.AllColumns.Add(this.olvColumn3);
+            this._ListView.AllColumns.Add(this.olvColumn4);
+            this._ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn1,
+            this.olvColumn2,
+            this.olvColumn3,
+            this.olvColumn4});
+            this._ListView.DataSource = null;
+            this._ListView.Location = new System.Drawing.Point(13, 13);
+            this._ListView.Name = "_ListView";
+            this._ListView.Size = new System.Drawing.Size(471, 155);
+            this._ListView.TabIndex = 2;
+            this._ListView.UseCompatibleStateImageBehavior = false;
+            this._ListView.View = System.Windows.Forms.View.Details;
+            // 
+            // olvColumn1
+            // 
+            this.olvColumn1.CellPadding = null;
+            // 
+            // olvColumn2
+            // 
+            this.olvColumn2.CellPadding = null;
+            // 
+            // olvColumn3
+            // 
+            this.olvColumn3.CellPadding = null;
+            // 
+            // olvColumn4
+            // 
+            this.olvColumn4.CellPadding = null;
+            // 
             // SerialPortSelectorDialog
             // 
             this.AcceptButton = this._AcceptButton;
@@ -104,9 +104,9 @@ namespace NKnife.ChannelKnife.Dialogs
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CancelButton;
             this.ClientSize = new System.Drawing.Size(496, 212);
+            this.Controls.Add(this._ListView);
             this.Controls.Add(this._CancelButton);
             this.Controls.Add(this._AcceptButton);
-            this.Controls.Add(this._ListView);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SerialPortSelectorDialog";
@@ -115,17 +115,19 @@ namespace NKnife.ChannelKnife.Dialogs
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "选择串口";
+            ((System.ComponentModel.ISupportInitialize)(this._ListView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private ListView _ListView;
         private System.Windows.Forms.Button _AcceptButton;
         private System.Windows.Forms.Button _CancelButton;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private BrightIdeasSoftware.DataListView _ListView;
+        private BrightIdeasSoftware.OLVColumn olvColumn1;
+        private BrightIdeasSoftware.OLVColumn olvColumn2;
+        private BrightIdeasSoftware.OLVColumn olvColumn3;
+        private BrightIdeasSoftware.OLVColumn olvColumn4;
     }
 }

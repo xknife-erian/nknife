@@ -16,7 +16,7 @@ namespace NKnife.ChannelKnife.Dialogs
             InitializeComponent();
             this.WhenActivated(b =>
                 {
-                    //b(this.OneWayBind(ViewModel, vm => vm.LocalSerials, v => v._ListView.Items.,null, new ItemsConveter()));
+                    b(this.OneWayBind(ViewModel, vm => vm.LocalSerials, v => v._ListView.DataSource));
                 }
             );
 
