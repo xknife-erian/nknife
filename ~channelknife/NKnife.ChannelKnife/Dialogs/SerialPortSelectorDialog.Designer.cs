@@ -31,7 +31,7 @@ namespace NKnife.ChannelKnife.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-            this._ListView = new ListView();
+            this._ListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -53,11 +53,11 @@ namespace NKnife.ChannelKnife.Dialogs
             this._ListView.GridLines = true;
             this._ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this._ListView.HideSelection = false;
-            this._ListView.Location = new System.Drawing.Point(13, 13);
+            this._ListView.Location = new System.Drawing.Point(13, 12);
             this._ListView.MultiSelect = false;
             this._ListView.Name = "_ListView";
             this._ListView.ShowGroups = false;
-            this._ListView.Size = new System.Drawing.Size(471, 170);
+            this._ListView.Size = new System.Drawing.Size(471, 157);
             this._ListView.TabIndex = 2;
             this._ListView.UseCompatibleStateImageBehavior = false;
             this._ListView.View = System.Windows.Forms.View.Details;
@@ -79,9 +79,9 @@ namespace NKnife.ChannelKnife.Dialogs
             // _AcceptButton
             // 
             this._AcceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._AcceptButton.Location = new System.Drawing.Point(328, 189);
+            this._AcceptButton.Location = new System.Drawing.Point(328, 174);
             this._AcceptButton.Name = "_AcceptButton";
-            this._AcceptButton.Size = new System.Drawing.Size(75, 29);
+            this._AcceptButton.Size = new System.Drawing.Size(75, 27);
             this._AcceptButton.TabIndex = 0;
             this._AcceptButton.Text = "确定(&A)";
             this._AcceptButton.UseVisualStyleBackColor = true;
@@ -90,9 +90,9 @@ namespace NKnife.ChannelKnife.Dialogs
             // 
             this._CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._CancelButton.Location = new System.Drawing.Point(409, 189);
+            this._CancelButton.Location = new System.Drawing.Point(409, 174);
             this._CancelButton.Name = "_CancelButton";
-            this._CancelButton.Size = new System.Drawing.Size(75, 29);
+            this._CancelButton.Size = new System.Drawing.Size(75, 27);
             this._CancelButton.TabIndex = 1;
             this._CancelButton.Text = "取消(&C)";
             this._CancelButton.UseVisualStyleBackColor = true;
@@ -100,10 +100,10 @@ namespace NKnife.ChannelKnife.Dialogs
             // SerialPortSelectorDialog
             // 
             this.AcceptButton = this._AcceptButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CancelButton;
-            this.ClientSize = new System.Drawing.Size(496, 230);
+            this.ClientSize = new System.Drawing.Size(496, 212);
             this.Controls.Add(this._CancelButton);
             this.Controls.Add(this._AcceptButton);
             this.Controls.Add(this._ListView);
@@ -113,6 +113,7 @@ namespace NKnife.ChannelKnife.Dialogs
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "选择串口";
             this.ResumeLayout(false);
 

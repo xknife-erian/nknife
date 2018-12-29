@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using Common.Logging;
+using Ninject;
 using NKnife.ChannelKnife.Dialogs;
 using NKnife.ChannelKnife.View;
 using NKnife.ChannelKnife.ViewModel;
@@ -19,8 +20,13 @@ namespace NKnife.ChannelKnife.Views
         private readonly WorkbenchViewModel _ViewModel = DI.Get<WorkbenchViewModel>();
         private readonly DockPanel _DockPanel = new DockPanel();
 
-        public Workbench()
+        private SerialPortSelectorDialog _portSelectorDialog;
+
+        [Inject]
+        public Workbench(SerialPortSelectorDialog dialog)
         {
+            _portSelectorDialog = dialog;
+
             InitializeComponent();
             _VersionStatusLabel.Text = DI.Get<IAbout>().AssemblyVersion.ToString();
             _TotalStatusLabel.Text = string.Empty;
@@ -49,13 +55,12 @@ namespace NKnife.ChannelKnife.Views
 
         private void _NewPortToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog = new SerialPortSelectorDialog();
-            var ds = dialog.ShowDialog(this);
-            if (ds == DialogResult.OK && dialog.SerialPort > 0)
+            var ds = _portSelectorDialog.ShowDialog(this);
+            if (ds == DialogResult.OK && _portSelectorDialog.SerialPort > 0)
             {
                 var view = new SerialPortView();
-                view.Text = $"COM{dialog.SerialPort}";
-                view.ViewModel.Port = dialog.SerialPort;
+                view.Text = $"COM{_portSelectorDialog.SerialPort}";
+                view.ViewModel.Port = _portSelectorDialog.SerialPort;
                 view.Show(_DockPanel);
                 _CurrentPortStatusLabel.Text = view.Text;
             }

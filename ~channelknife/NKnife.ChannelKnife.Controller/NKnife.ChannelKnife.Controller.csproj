@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialChannelService.cs" />
+    <Compile Include="SerialInfoController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NKnife.Channels\NKnife.Channels.csproj">
