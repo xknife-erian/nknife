@@ -50,34 +50,6 @@ namespace NKnife.ChannelKnife.Dialogs
             };
         }
 
-        public class ItemsConveter : IBindingTypeConverter
-        {
-            #region Implementation of IBindingTypeConverter
-
-            /// <inheritdoc />
-            public int GetAffinityForObjects(Type fromType, Type toType)
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <inheritdoc />
-            public bool TryConvert(object @from, Type toType, object conversionHint, out object result)
-            {
-                var map = @from as Dictionary<string, string>;
-                //result = new ListView.ListViewItemCollection(_ListView);
-                result = new object();
-                return false;
-            }
-
-            #endregion
-        }
-
-        public ListView.ListViewItemCollection Get(Dictionary<string, string> a)
-        {
-
-            return null;
-        }
-
         public ushort SerialPort { get; private set; }
 
         #region Implementation of IViewFor
