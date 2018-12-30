@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using Common.Logging;
 using Ninject;
 using NKnife.ChannelKnife.Dialogs;
-using NKnife.ChannelKnife.View;
 using NKnife.ChannelKnife.ViewModel;
 using NKnife.Interface;
 using NKnife.IoC;
@@ -16,40 +15,34 @@ namespace NKnife.ChannelKnife.Views
     public partial class Workbench : Form
     {
         private const string DOCK_PANEL_CONFIG = "dockpanel3.config";
-        private static readonly ILog _logger = LogManager.GetLogger<Workbench>();
-        private readonly WorkbenchViewModel _ViewModel = DI.Get<WorkbenchViewModel>();
-        private readonly DockPanel _DockPanel = new DockPanel();
+        private static readonly ILog _Logger = LogManager.GetLogger<Workbench>();
+        private readonly WorkbenchViewModel _viewModel = DI.Get<WorkbenchViewModel>();
+        private readonly DockPanel _dockPanel = new DockPanel();
 
-        private SerialPortSelectorDialog _portSelectorDialog;
+        private readonly PortSelectorDialog _portSelectorDialog;
 
         [Inject]
-        public Workbench(SerialPortSelectorDialog dialog)
+        public Workbench(PortSelectorDialog dialog)
         {
             _portSelectorDialog = dialog;
 
             InitializeComponent();
             _VersionStatusLabel.Text = DI.Get<IAbout>().AssemblyVersion.ToString();
-            _TotalStatusLabel.Text = string.Empty;
-            _CurrentPortStatusLabel.Text = string.Empty;
 
-            _logger.Info("主窗体构建完成");
+            _Logger.Info("主窗体构建完成");
             InitializeDockPanel();
-            _logger.Info("添加Dock面板完成");
+            _Logger.Info("添加Dock面板完成");
 #if !DEBUG
             WindowState = FormWindowState.Maximized;
 #endif
             _LoggerMenuItem.Click += (sender, args) =>
             {
                 var loggerForm = DI.Get<LoggerView>();
-                loggerForm.Show(_DockPanel, DockState.DockBottom);
+                loggerForm.Show(_dockPanel, DockState.DockBottom);
             };
-            _ViewModel.SerialChannelService.ChannelCountChanged += (sender, args) =>
+            _dockPanel.ActiveDocumentChanged += (sender, args) =>
             {
-                this.ThreadSafeInvoke(() => { _TotalStatusLabel.Text = $"Total: {_ViewModel.SerialChannelService.Count}"; });
-            };
-            _DockPanel.ActiveDocumentChanged += (sender, args) =>
-            {
-                _CurrentPortStatusLabel.Text = _DockPanel.ActiveDocument != null ? ((Control) _DockPanel.ActiveDocument).Text : string.Empty;
+                //_CurrentPortStatusLabel.Text = _DockPanel.ActiveDocument != null ? ((Control) _DockPanel.ActiveDocument).Text : string.Empty;
             };
         }
 
@@ -61,8 +54,7 @@ namespace NKnife.ChannelKnife.Views
                 var view = new SerialPortView();
                 view.Text = $"COM{_portSelectorDialog.SerialPort}";
                 view.ViewModel.Port = _portSelectorDialog.SerialPort;
-                view.Show(_DockPanel);
-                _CurrentPortStatusLabel.Text = view.Text;
+                view.Show(_dockPanel);
             }
         }
 
@@ -76,15 +68,15 @@ namespace NKnife.ChannelKnife.Views
 
         private void InitializeDockPanel()
         {
-            _StripContainer.ContentPanel.Controls.Add(_DockPanel);
+            _StripContainer.ContentPanel.Controls.Add(_dockPanel);
 
-            _DockPanel.DocumentStyle = DocumentStyle.DockingWindow;
-            _DockPanel.Theme = new VS2015BlueTheme();
-            _DockPanel.Dock = DockStyle.Fill;
-            _DockPanel.BringToFront();
+            _dockPanel.DocumentStyle = DocumentStyle.DockingWindow;
+            _dockPanel.Theme = new VS2015BlueTheme();
+            _dockPanel.Dock = DockStyle.Fill;
+            _dockPanel.BringToFront();
 
             var loggerForm = DI.Get<LoggerView>();
-            loggerForm.Show(_DockPanel, DockState.DockBottomAutoHide);
+            loggerForm.Show(_dockPanel, DockState.DockBottomAutoHide);
 
             DockPanelLoadFromXml();
         }
@@ -94,7 +86,7 @@ namespace NKnife.ChannelKnife.Views
         /// </summary>
         private void DockPanelSaveAsXml()
         {
-            _DockPanel.SaveAsXml(GetLayoutConfigFile());
+            _dockPanel.SaveAsXml(GetLayoutConfigFile());
         }
 
         private void DockPanelLoadFromXml()
@@ -104,7 +96,7 @@ namespace NKnife.ChannelKnife.Views
             var configFile = GetLayoutConfigFile();
             if (File.Exists(configFile))
             {
-                _DockPanel.LoadFromXml(configFile, deserializeDockContent);
+                _dockPanel.LoadFromXml(configFile, deserializeDockContent);
             }
         }
 
@@ -138,7 +130,7 @@ namespace NKnife.ChannelKnife.Views
         private void _AboutMenuItem_Click(object sender, EventArgs e)
         {
             var version = Assembly.GetEntryAssembly().GetName().Version;
-            MessageBox.Show(this, $"SerialKnife 2017\r\nVersion:{version}\r\n\r\nEmail: lukan@xknife.net\r\nhttp://www.xknife.net", "关于",
+            MessageBox.Show(this, $"ChannelKnife 2019\r\nVersion:{version}\r\n\r\nEmail: lukan@xknife.net\r\nhttp://www.xknife.net", "关于",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

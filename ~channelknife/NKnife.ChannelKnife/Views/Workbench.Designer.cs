@@ -29,9 +29,6 @@ namespace NKnife.ChannelKnife.Views
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Workbench));
             this._StripContainer = new System.Windows.Forms.ToolStripContainer();
             this._StatusStrip = new System.Windows.Forms.StatusStrip();
-            this._TotalStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this._CurrentPortStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._SpringStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._VersionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._MenuStrip = new System.Windows.Forms.MenuStrip();
@@ -79,33 +76,12 @@ namespace NKnife.ChannelKnife.Views
             // 
             this._StatusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this._StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._TotalStatusLabel,
-            this.toolStripStatusLabel1,
-            this._CurrentPortStatusLabel,
             this._SpringStatusLabel,
             this._VersionStatusLabel});
             this._StatusStrip.Location = new System.Drawing.Point(0, 0);
             this._StatusStrip.Name = "_StatusStrip";
             this._StatusStrip.Size = new System.Drawing.Size(884, 22);
             this._StatusStrip.TabIndex = 0;
-            // 
-            // _TotalStatusLabel
-            // 
-            this._TotalStatusLabel.Name = "_TotalStatusLabel";
-            this._TotalStatusLabel.Size = new System.Drawing.Size(58, 17);
-            this._TotalStatusLabel.Text = "Watch: 0";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(4, 17);
-            // 
-            // _CurrentPortStatusLabel
-            // 
-            this._CurrentPortStatusLabel.Name = "_CurrentPortStatusLabel";
-            this._CurrentPortStatusLabel.Size = new System.Drawing.Size(45, 17);
-            this._CurrentPortStatusLabel.Text = "COM1";
             // 
             // _SpringStatusLabel
             // 
@@ -192,7 +168,7 @@ namespace NKnife.ChannelKnife.Views
             // _OptionMenuItem
             // 
             this._OptionMenuItem.Name = "_OptionMenuItem";
-            this._OptionMenuItem.Size = new System.Drawing.Size(152, 22);
+            this._OptionMenuItem.Size = new System.Drawing.Size(118, 22);
             this._OptionMenuItem.Text = "选项(&O)";
             // 
             // _HelpMenuItem
@@ -207,13 +183,13 @@ namespace NKnife.ChannelKnife.Views
             // _LoggerMenuItem
             // 
             this._LoggerMenuItem.Name = "_LoggerMenuItem";
-            this._LoggerMenuItem.Size = new System.Drawing.Size(152, 22);
+            this._LoggerMenuItem.Size = new System.Drawing.Size(138, 22);
             this._LoggerMenuItem.Text = "程序日志(&L)";
             // 
             // _AboutMenuItem
             // 
             this._AboutMenuItem.Name = "_AboutMenuItem";
-            this._AboutMenuItem.Size = new System.Drawing.Size(152, 22);
+            this._AboutMenuItem.Size = new System.Drawing.Size(138, 22);
             this._AboutMenuItem.Text = "关于(&A)...";
             this._AboutMenuItem.Click += new System.EventHandler(this._AboutMenuItem_Click);
             // 
@@ -221,13 +197,13 @@ namespace NKnife.ChannelKnife.Views
             // 
             this.ClientSize = new System.Drawing.Size(884, 662);
             this.Controls.Add(this._StripContainer);
-            this.Font = new System.Drawing.Font("Verdana", 8.5F);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(20, 20);
             this.MainMenuStrip = this._MenuStrip;
             this.Name = "Workbench";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SocketKnife";
+            this.Text = "ChannelKnife 2019";
             this._StripContainer.BottomToolStripPanel.ResumeLayout(false);
             this._StripContainer.BottomToolStripPanel.PerformLayout();
             this._StripContainer.TopToolStripPanel.ResumeLayout(false);
@@ -258,12 +234,8 @@ namespace NKnife.ChannelKnife.Views
 
 
         #endregion
-
-        private ToolStripStatusLabel _TotalStatusLabel;
-        private ToolStripStatusLabel _CurrentPortStatusLabel;
         private ToolStripStatusLabel _SpringStatusLabel;
         private ToolStripStatusLabel _VersionStatusLabel;
-        private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripMenuItem _LoggerMenuItem;
     }
 }

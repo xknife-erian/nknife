@@ -132,11 +132,11 @@
     <Compile Include="Controls\NotFlickerListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Dialogs\SerialPortSelectorDialog.cs">
+    <Compile Include="Dialogs\PortSelectorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\SerialPortSelectorDialog.Designer.cs">
-      <DependentUpon>SerialPortSelectorDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\PortSelectorDialog.Designer.cs">
+      <DependentUpon>PortSelectorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="IoC\Modules.cs" />
     <Compile Include="Views\Controls\ChannelDataListView.cs">
@@ -175,16 +175,10 @@
     <Compile Include="Views\LoggerView.designer.cs">
       <DependentUpon>LoggerView.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Workbench.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\Workbench.Designer.cs">
-      <DependentUpon>Workbench.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Dialogs\SerialPortSelectorDialog.resx">
-      <DependentUpon>SerialPortSelectorDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\PortSelectorDialog.resx">
+      <DependentUpon>PortSelectorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -213,9 +207,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LoggerView.resx">
       <DependentUpon>LoggerView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\Workbench.resx">
-      <DependentUpon>Workbench.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -14,7 +14,7 @@ namespace NKnife.ChannelKnife.ViewModel.IoC
         /// <inheritdoc />
         public override void Load()
         {
-            Bind<SerialPortSelectorDialogViewModel>().ToSelf().InSingletonScope();
+            Bind<PortSelectorDialogViewModel>().ToSelf().InSingletonScope();
         }
 
         #endregion
