@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.Reactive.Linq;
 using System.Windows.Forms;
-using DynamicData.Kernel;
 using Ninject;
 using NKnife.ChannelKnife.ViewModel;
 using ReactiveUI;
-using ReactiveUI.Winforms.Legacy;
 
 namespace NKnife.ChannelKnife.Dialogs
 {
@@ -18,7 +15,16 @@ namespace NKnife.ChannelKnife.Dialogs
             this.WhenActivated(b =>
             {
                 b(this.OneWayBind(ViewModel, vm => vm.LocalSerials, v => v._ListView.DataSource));
+                b(this.BindCommand(ViewModel, vm => vm.AcceptButtonEnableCommand, v => v._AcceptButton));
             });
+
+            var selectionChanged = Observable.FromEventPattern<EventHandler, EventArgs>(
+                handler => handler.Invoke,
+                add => _ListView.SelectionChanged += add,
+                remove => _ListView.SelectionChanged -= remove);
+
+            selectionChanged.Subscribe(c => ViewModel.SelectedSerialListIndex = _ListView.SelectedIndex);
+
             _AcceptButton.Click += (sender, args) =>
             {
                 /*if (_ListView.SelectedItems.Count > 0)
