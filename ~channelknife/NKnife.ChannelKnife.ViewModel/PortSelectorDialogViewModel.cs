@@ -2,7 +2,7 @@
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Forms;
-using NKnife.ChannelKnife.Controller;
+using NKnife.ChannelKnife.Model;
 using ReactiveUI;
 
 namespace NKnife.ChannelKnife.ViewModel
@@ -13,7 +13,7 @@ namespace NKnife.ChannelKnife.ViewModel
 
         public PortSelectorDialogViewModel()
         {
-            var controller = new SerialInfoController();
+            var controller = new SerialInfoService();
             var map = controller.LocalSerial;
             foreach (var kv in map)
                 LocalSerials.Add(new MySerial(kv.Key, kv.Value));
@@ -37,6 +37,12 @@ namespace NKnife.ChannelKnife.ViewModel
             MessageBox.Show($"{_selectedSerialListIndex}");
         }
 
+        public ushort PackagePort()
+        {
+            var serial = LocalSerials[_selectedSerialListIndex];
+            var p = serial.SerialPort.ToUpper().TrimStart('C', 'O', 'M');
+            return ushort.Parse(p);
+        }
 
         #region inner class
 

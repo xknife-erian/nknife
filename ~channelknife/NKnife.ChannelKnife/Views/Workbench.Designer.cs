@@ -86,14 +86,14 @@ namespace NKnife.ChannelKnife.Views
             // _SpringStatusLabel
             // 
             this._SpringStatusLabel.Name = "_SpringStatusLabel";
-            this._SpringStatusLabel.Size = new System.Drawing.Size(737, 17);
+            this._SpringStatusLabel.Size = new System.Drawing.Size(793, 17);
             this._SpringStatusLabel.Spring = true;
             // 
             // _VersionStatusLabel
             // 
             this._VersionStatusLabel.Name = "_VersionStatusLabel";
-            this._VersionStatusLabel.Size = new System.Drawing.Size(25, 17);
-            this._VersionStatusLabel.Text = "1.0";
+            this._VersionStatusLabel.Size = new System.Drawing.Size(45, 17);
+            this._VersionStatusLabel.Text = "0.0.0.0";
             this._VersionStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // _MenuStrip

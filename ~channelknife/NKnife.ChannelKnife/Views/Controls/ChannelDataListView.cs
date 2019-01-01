@@ -2,7 +2,6 @@ using System;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Windows.Forms;
-using NKnife.ChannelKnife.Controller;
 using NKnife.ChannelKnife.ViewModel;
 using NKnife.ChannelKnife.ViewModel.Common;
 
@@ -10,17 +9,17 @@ namespace NKnife.ChannelKnife.Views.Controls
 {
     public partial class ChannelDataListView : UserControl
     {
-        private ChannelDataViewModel _SerialDataListViewViewData;
+        private ChannelDataViewModel _serialDataListViewViewData;
 
         public ChannelDataViewModel SerialDataListViewViewData
         {
-            get { return _SerialDataListViewViewData; }
+            get { return _serialDataListViewViewData; }
             set
             {
-                _SerialDataListViewViewData = value;
-                if (_SerialDataListViewViewData != null)
+                _serialDataListViewViewData = value;
+                if (_serialDataListViewViewData != null)
                 {
-                    _SerialDataListViewViewData.Datas.CollectionChanged+= DatasOnCollectionChanged;
+                    _serialDataListViewViewData.Datas.CollectionChanged+= DatasOnCollectionChanged;
                 }
             }
         }
@@ -29,10 +28,10 @@ namespace NKnife.ChannelKnife.Views.Controls
         {
             foreach (ChannelData newItem in e.NewItems)
                 AddData(newItem);
-            _SerialDataListViewViewData.Datas.CollectionChanged -= DatasOnCollectionChanged;
+            _serialDataListViewViewData.Datas.CollectionChanged -= DatasOnCollectionChanged;
             foreach (ChannelData newItem in e.NewItems)
-                _SerialDataListViewViewData.Datas.Remove(newItem);
-            _SerialDataListViewViewData.Datas.CollectionChanged += DatasOnCollectionChanged;
+                _serialDataListViewViewData.Datas.Remove(newItem);
+            _serialDataListViewViewData.Datas.CollectionChanged += DatasOnCollectionChanged;
         }
 
         public ChannelDataListView()

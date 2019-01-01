@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO.Ports;
+using NKnife.ChannelKnife.Model;
 using ReactiveUI;
 
 namespace NKnife.ChannelKnife.ViewModel
@@ -11,12 +12,10 @@ namespace NKnife.ChannelKnife.ViewModel
 
         public ConfigPanelViewModel()
         {
-            /*
-            SelectBaudRate = SerialUtils.DefaultBaudRate;
-            SelectStopBit = SerialUtils.DefaultStopBit;
-            SelectDataBit = SerialUtils.DefaultDataBit;
-            SelectParity = SerialUtils.DefaultParity;
-            */
+            SelectBaudRate = SerialInfoService.DefaultBaudRate;
+            SelectStopBit = SerialInfoService.DefaultStopBit;
+            SelectDataBit = SerialInfoService.DefaultDataBit;
+            SelectParity = SerialInfoService.DefaultParity;
         }
 
         public ushort SelectBaudRate { get; set; }

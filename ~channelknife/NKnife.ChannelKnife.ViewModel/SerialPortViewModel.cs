@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using Common.Logging;
-using NKnife.ChannelKnife.Controller;
+using NKnife.ChannelKnife.Model;
 using NKnife.ChannelKnife.ViewModel.Common;
 using NKnife.IoC;
 using ReactiveUI;

@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.ChannelKnife", "~cha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.ChannelKnife.ViewModel", "~channelknife\NKnife.ChannelKnife.ViewModel\NKnife.ChannelKnife.ViewModel.csproj", "{B4A0DFA6-1AEC-428B-9788-D86D66920988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.ChannelKnife.Controller", "~channelknife\NKnife.ChannelKnife.Controller\NKnife.ChannelKnife.Controller.csproj", "{033950C5-4821-4555-BA3F-BEA437169821}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.ChannelKnife.Model", "~channelknife\NKnife.ChannelKnife.Model\NKnife.ChannelKnife.Model.csproj", "{033950C5-4821-4555-BA3F-BEA437169821}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

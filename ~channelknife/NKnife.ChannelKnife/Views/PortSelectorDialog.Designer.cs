@@ -1,7 +1,7 @@
 ﻿
 using System.Windows.Forms;
 
-namespace NKnife.ChannelKnife.Dialogs
+namespace NKnife.ChannelKnife.Views
 {
     partial class PortSelectorDialog
     {

@@ -4,37 +4,32 @@ using System.Reflection;
 using System.Windows.Forms;
 using Common.Logging;
 using Ninject;
-using NKnife.ChannelKnife.Dialogs;
 using NKnife.ChannelKnife.ViewModel;
 using NKnife.Interface;
 using NKnife.IoC;
+using ReactiveUI;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.ChannelKnife.Views
 {
-    public partial class Workbench : Form
+    public partial class Workbench : Form, IViewFor<WorkbenchViewModel>
     {
-        private const string DOCK_PANEL_CONFIG = "dockpanel3.config";
         private static readonly ILog _Logger = LogManager.GetLogger<Workbench>();
-        private readonly WorkbenchViewModel _viewModel = DI.Get<WorkbenchViewModel>();
-        private readonly DockPanel _dockPanel = new DockPanel();
-
-        private readonly PortSelectorDialog _portSelectorDialog;
 
         [Inject]
-        public Workbench(PortSelectorDialog dialog)
+        public Workbench()
         {
-            _portSelectorDialog = dialog;
-
             InitializeComponent();
-            _VersionStatusLabel.Text = DI.Get<IAbout>().AssemblyVersion.ToString();
-
-            _Logger.Info("主窗体构建完成");
             InitializeDockPanel();
-            _Logger.Info("添加Dock面板完成");
+
 #if !DEBUG
             WindowState = FormWindowState.Maximized;
 #endif
+            this.WhenActivated(b =>
+            {
+                b(this.OneWayBind(ViewModel, vm => vm.Version, v=>v._VersionStatusLabel.Text));
+
+            });
             _LoggerMenuItem.Click += (sender, args) =>
             {
                 var loggerForm = DI.Get<LoggerView>();
@@ -42,23 +37,29 @@ namespace NKnife.ChannelKnife.Views
             };
             _dockPanel.ActiveDocumentChanged += (sender, args) =>
             {
-                //_CurrentPortStatusLabel.Text = _DockPanel.ActiveDocument != null ? ((Control) _DockPanel.ActiveDocument).Text : string.Empty;
             };
         }
 
+        [Inject]
+        public Dialogs Dialogs { get; set; }
+
         private void _NewPortToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var ds = _portSelectorDialog.ShowDialog(this);
-            if (ds == DialogResult.OK && _portSelectorDialog.SerialPort > 0)
+            var dialog = Dialogs.PortSelectorDialog;
+            var ds = dialog.ShowDialog(this);
+            if (ds == DialogResult.OK && dialog.ViewModel.SelectedSerialListIndex > 0)
             {
                 var view = new SerialPortView();
-                view.Text = $"COM{_portSelectorDialog.SerialPort}";
-                view.ViewModel.Port = _portSelectorDialog.SerialPort;
+                view.Text = $"COM{dialog.ViewModel.PackagePort()}";
+                view.ViewModel.Port = dialog.ViewModel.PackagePort();
                 view.Show(_dockPanel);
             }
         }
 
         #region DockPanel
+
+        private const string DOCK_PANEL_CONFIG = "dockpanel3.config";
+        private readonly DockPanel _dockPanel = new DockPanel();
 
         private static string GetLayoutConfigFile()
         {
@@ -68,6 +69,7 @@ namespace NKnife.ChannelKnife.Views
 
         private void InitializeDockPanel()
         {
+            SuspendLayout();
             _StripContainer.ContentPanel.Controls.Add(_dockPanel);
 
             _dockPanel.DocumentStyle = DocumentStyle.DockingWindow;
@@ -79,6 +81,9 @@ namespace NKnife.ChannelKnife.Views
             loggerForm.Show(_dockPanel, DockState.DockBottomAutoHide);
 
             DockPanelLoadFromXml();
+
+            PerformLayout();
+            ResumeLayout(false);
         }
 
         /// <summary>
@@ -133,5 +138,18 @@ namespace NKnife.ChannelKnife.Views
             MessageBox.Show(this, $"ChannelKnife 2019\r\nVersion:{version}\r\n\r\nEmail: lukan@xknife.net\r\nhttp://www.xknife.net", "关于",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        #region IViewFor
+
+        object IViewFor.ViewModel
+        {
+            get => ViewModel;
+            set => ViewModel = value as WorkbenchViewModel;
+        }
+
+        [Inject]
+        public WorkbenchViewModel ViewModel { get; set; }
+
+        #endregion
     }
 }

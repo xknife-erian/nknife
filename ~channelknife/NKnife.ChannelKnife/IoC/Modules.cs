@@ -13,7 +13,11 @@ namespace NKnife.ChannelKnife.IoC
         public override void Load()
         {
             Bind<IAbout>().To<AboutMe>().InSingletonScope();
+
             Bind<Workbench>().ToSelf().InSingletonScope();
+            Bind<Dialogs>().ToSelf().InSingletonScope();
+
+            Bind<LoggerView>().ToSelf().InSingletonScope();
 
             Bind<WorkbenchViewModel>().ToSelf().InSingletonScope();
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NKnife.Base;
 using NKnife.Channels.Serials;
 
-namespace NKnife.ChannelKnife.Controller
+namespace NKnife.ChannelKnife.Model
 {
     public class SerialChannelService : IDictionary<ushort, Pair<SerialConfig, SerialChannel>>
     {

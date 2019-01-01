@@ -132,10 +132,11 @@
     <Compile Include="Controls\NotFlickerListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Dialogs\PortSelectorDialog.cs">
+    <Compile Include="Views\Dialogs.cs" />
+    <Compile Include="Views\PortSelectorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\PortSelectorDialog.Designer.cs">
+    <Compile Include="Views\PortSelectorDialog.Designer.cs">
       <DependentUpon>PortSelectorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="IoC\Modules.cs" />
@@ -177,7 +178,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Dialogs\PortSelectorDialog.resx">
+    <EmbeddedResource Include="Views\PortSelectorDialog.resx">
       <DependentUpon>PortSelectorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -230,10 +231,6 @@
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{266fcf12-d8f4-402c-bd7e-fc1df5f6a0bf}</Project>
       <Name>NKnife</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NKnife.ChannelKnife.Controller\NKnife.ChannelKnife.Controller.csproj">
-      <Project>{033950C5-4821-4555-BA3F-BEA437169821}</Project>
-      <Name>NKnife.ChannelKnife.Controller</Name>
     </ProjectReference>
     <ProjectReference Include="..\NKnife.ChannelKnife.ViewModel\NKnife.ChannelKnife.ViewModel.csproj">
       <Project>{b4a0dfa6-1aec-428b-9788-d86d66920988}</Project>

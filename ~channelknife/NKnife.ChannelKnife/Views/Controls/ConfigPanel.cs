@@ -11,10 +11,10 @@ namespace NKnife.ChannelKnife.Views.Controls
         {
             InitializeComponent();
 
-//            _BaudRatesComboBox.Items.AddRange(SerialUtils.BaudRates);
-//            _ParitysComboBox.Items.AddRange(SerialUtils.Paritys);
-//            _StopBitsesComboBox.Items.AddRange(SerialUtils.StopBits);
-//            _DatabitComboBox.Items.AddRange(SerialUtils.DataBits);
+//            _BaudRatesComboBox.Items.AddRange(SerialInfoService.BaudRates);
+//            _ParitysComboBox.Items.AddRange(SerialInfoService.Paritys);
+//            _StopBitsesComboBox.Items.AddRange(SerialInfoService.StopBits);
+//            _DatabitComboBox.Items.AddRange(SerialInfoService.DataBits);
 
             ControlEventManage();
         }

@@ -7,8 +7,8 @@
     <ProjectGuid>{033950C5-4821-4555-BA3F-BEA437169821}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NKnife.ChannelKnife.Controller</RootNamespace>
-    <AssemblyName>NKnife.ChannelKnife.Controller</AssemblyName>
+    <RootNamespace>NKnife.ChannelKnife.Model</RootNamespace>
+    <AssemblyName>NKnife.ChannelKnife.Model</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialChannelService.cs" />
-    <Compile Include="SerialInfoController.cs" />
+    <Compile Include="SerialInfoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NKnife.Channels\NKnife.Channels.csproj">
