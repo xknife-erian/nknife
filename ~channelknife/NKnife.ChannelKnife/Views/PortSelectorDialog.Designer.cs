@@ -46,6 +46,7 @@ namespace NKnife.ChannelKnife.Views
             // _AcceptButton
             // 
             this._AcceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._AcceptButton.Enabled = false;
             this._AcceptButton.Location = new System.Drawing.Point(272, 220);
             this._AcceptButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this._AcceptButton.Name = "_AcceptButton";

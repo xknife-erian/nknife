@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using Common.Logging;
 using Ninject;
 using NKnife.ChannelKnife.ViewModel;
-using NKnife.Interface;
 using NKnife.IoC;
 using ReactiveUI;
 using WeifenLuo.WinFormsUI.Docking;
@@ -21,39 +20,32 @@ namespace NKnife.ChannelKnife.Views
         {
             InitializeComponent();
             InitializeDockPanel();
-
 #if !DEBUG
             WindowState = FormWindowState.Maximized;
 #endif
-            this.WhenActivated(b =>
-            {
-                b(this.OneWayBind(ViewModel, vm => vm.Version, v=>v._VersionStatusLabel.Text));
-
-            });
+            this.WhenActivated(b => { b(this.OneWayBind(ViewModel, vm => vm.Version, v => v._VersionStatusLabel.Text)); });
             _LoggerMenuItem.Click += (sender, args) =>
             {
                 var loggerForm = DI.Get<LoggerView>();
                 loggerForm.Show(_dockPanel, DockState.DockBottom);
             };
-            _dockPanel.ActiveDocumentChanged += (sender, args) =>
-            {
-            };
+            _dockPanel.ActiveDocumentChanged += (sender, args) => { };
         }
 
-        [Inject]
-        public Dialogs Dialogs { get; set; }
+        [Inject] public Dialogs Dialogs { get; set; }
+
 
         private void _NewPortToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var dialog = Dialogs.PortSelectorDialog;
-            var ds = dialog.ShowDialog(this);
-            if (ds == DialogResult.OK && dialog.ViewModel.SelectedSerialListIndex > 0)
-            {
-                var view = new SerialPortView();
-                view.Text = $"COM{dialog.ViewModel.PackagePort()}";
-                view.ViewModel.Port = dialog.ViewModel.PackagePort();
-                view.Show(_dockPanel);
-            }
+            dialog.ShowDialog(this);
+        }
+
+        private void _AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            var version = Assembly.GetEntryAssembly().GetName().Version;
+            MessageBox.Show(this, $"ChannelKnife 2019\r\nVersion:{version}\r\n\r\nEmail: lukan@xknife.net\r\nhttp://www.xknife.net", "关于",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #region DockPanel
@@ -99,10 +91,7 @@ namespace NKnife.ChannelKnife.Views
             //加载布局
             var deserializeDockContent = new DeserializeDockContent(GetViewFromPersistString);
             var configFile = GetLayoutConfigFile();
-            if (File.Exists(configFile))
-            {
-                _dockPanel.LoadFromXml(configFile, deserializeDockContent);
-            }
+            if (File.Exists(configFile)) _dockPanel.LoadFromXml(configFile, deserializeDockContent);
         }
 
         private IDockContent GetViewFromPersistString(string persistString)
@@ -132,13 +121,6 @@ namespace NKnife.ChannelKnife.Views
 
         #endregion
 
-        private void _AboutMenuItem_Click(object sender, EventArgs e)
-        {
-            var version = Assembly.GetEntryAssembly().GetName().Version;
-            MessageBox.Show(this, $"ChannelKnife 2019\r\nVersion:{version}\r\n\r\nEmail: lukan@xknife.net\r\nhttp://www.xknife.net", "关于",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         #region IViewFor
 
         object IViewFor.ViewModel
@@ -147,8 +129,7 @@ namespace NKnife.ChannelKnife.Views
             set => ViewModel = value as WorkbenchViewModel;
         }
 
-        [Inject]
-        public WorkbenchViewModel ViewModel { get; set; }
+        [Inject] public WorkbenchViewModel ViewModel { get; set; }
 
         #endregion
     }

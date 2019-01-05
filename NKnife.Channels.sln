@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.ChannelKnife.ViewMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.ChannelKnife.Model", "~channelknife\NKnife.ChannelKnife.Model\NKnife.ChannelKnife.Model.csproj", "{033950C5-4821-4555-BA3F-BEA437169821}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.ChannelKnife.App", "~channelknife\NKnife.ChannelKnife.App\NKnife.ChannelKnife.App.csproj", "{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,18 @@ Global
 		{033950C5-4821-4555-BA3F-BEA437169821}.Release|x64.Build.0 = Release|Any CPU
 		{033950C5-4821-4555-BA3F-BEA437169821}.Release|x86.ActiveCfg = Release|Any CPU
 		{033950C5-4821-4555-BA3F-BEA437169821}.Release|x86.Build.0 = Release|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Debug|x64.Build.0 = Debug|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Debug|x86.Build.0 = Debug|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Release|x64.ActiveCfg = Release|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Release|x64.Build.0 = Release|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Release|x86.ActiveCfg = Release|Any CPU
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +167,7 @@ Global
 		{0F2645B2-43EB-4DA1-B9FA-D08F0F3E8D24} = {1511A14B-029E-48A1-A908-DD39812345B9}
 		{B4A0DFA6-1AEC-428B-9788-D86D66920988} = {1511A14B-029E-48A1-A908-DD39812345B9}
 		{033950C5-4821-4555-BA3F-BEA437169821} = {1511A14B-029E-48A1-A908-DD39812345B9}
+		{8C0B198E-A47E-47C3-B7B1-83CDD50C4BC2} = {1511A14B-029E-48A1-A908-DD39812345B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {06AB151E-0D9E-4339-96E1-D02CD5275D0A}

@@ -1,0 +1,133 @@
+﻿<f:RibbonWindow x:Class="NKnife.ChannelKnife.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xmlns:f="urn:fluent-ribbon"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <f:Ribbon Grid.Row="0">
+                <!--Add QuickAccess-->
+                <f:Ribbon.QuickAccessItems>
+                    <f:QuickAccessMenuItem Target="{Binding ElementName=ButtonGreen}"/>
+                    <f:QuickAccessMenuItem Target="{Binding ElementName=ButtonGray}"/>
+                </f:Ribbon.QuickAccessItems>
+                <!--Add Tabs-->
+                <f:RibbonTabItem Header="Home" ReduceOrder="(P),(P),(P),(P),(P)">
+                    <f:RibbonGroupBox Header="Add / Remove">
+                        <f:Button Header="Add" Command="{Binding AddFunctionCommand}"  Name="ButtonGreen" />
+                        <f:Button Header="Remove" Command="{Binding OpenCommand}" Name="ButtonGray" />
+                    </f:RibbonGroupBox>
+                    <f:RibbonGroupBox Header="Modify">
+                        <f:Button Header="Add" Command="{Binding AddFunctionCommand}" Name="ButtonGreen1" />
+                        <f:Button Header="Remove" Command="{Binding OpenCommand}" Name="ButtonGray1" />
+                    </f:RibbonGroupBox>
+                </f:RibbonTabItem>
+
+                <f:RibbonTabItem Header="用户管理" ReduceOrder="(P),(P),(P),(P),(P)">
+                    <f:RibbonGroupBox Header="User Management">
+                        <f:Button Header="New User"  Name="ButtonAddUser" />
+                        <f:Button Header="Modify User" Name="ButtonModiryUser" />
+                    </f:RibbonGroupBox>
+                </f:RibbonTabItem>
+                <!--Backstage Items-->
+                <f:Ribbon.Menu>
+                    <f:Backstage Background="Gray">
+                        <f:BackstageTabControl>
+                            <f:Button Header="退出系统" Command="{Binding ExitSystemCommand}" Icon="Images\close.png"/>
+                        </f:BackstageTabControl>
+                    </f:Backstage>
+                </f:Ribbon.Menu>
+
+            </f:Ribbon>
+            <xcad:DockingManager Grid.Row="1"
+                                 AllowMixedOrientation="True"
+                                 BorderBrush="Black"
+                                 BorderThickness="1"
+                                 Theme="{Binding ElementName=_themeCombo, Path=SelectedItem.Tag}">
+                <xcad:DockingManager.DocumentHeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding IconSource}" Margin="0,0,4,0" />
+                            <TextBlock Text="{Binding Title}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </xcad:DockingManager.DocumentHeaderTemplate>
+
+                <xcad:LayoutRoot x:Name="_layoutRoot">
+
+                    <xcad:LayoutPanel Orientation="Horizontal">
+                        <xcad:LayoutAnchorablePane DockWidth="200">
+                            <xcad:LayoutAnchorable ContentId="properties" Title="Properties" CanHide="False"
+                                                   CanClose="False"
+                                                   AutoHideWidth="240">
+                                <xctk:PropertyGrid NameColumnWidth="110"
+                                                   SelectedObject="{Binding ElementName=_layoutRoot, Path=LastFocusedDocument.Content}" />
+                            </xcad:LayoutAnchorable>
+                        </xcad:LayoutAnchorablePane>
+                        <xcad:LayoutDocumentPaneGroup>
+                            <xcad:LayoutDocumentPane>
+                                <xcad:LayoutDocument ContentId="document1" Title="Document 1">
+                                    <Button Content="Document 1 Content" HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                </xcad:LayoutDocument>
+                                <xcad:LayoutDocument ContentId="document2" Title="Document 2">
+                                    <TextBox Text="Document 2 Content" AcceptsReturn="True" />
+                                </xcad:LayoutDocument>
+                            </xcad:LayoutDocumentPane>
+                        </xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutAnchorablePaneGroup DockWidth="125">
+                            <xcad:LayoutAnchorablePane>
+                                <xcad:LayoutAnchorable ContentId="alarms" Title="Alarms">
+                                    <ListBox>
+                                        <s:String>Alarm 1</s:String>
+                                        <s:String>Alarm 2</s:String>
+                                        <s:String>Alarm 3</s:String>
+                                    </ListBox>
+                                </xcad:LayoutAnchorable>
+                                <xcad:LayoutAnchorable ContentId="journal" Title="Journal">
+                                    <RichTextBox>
+                                        <FlowDocument>
+                                            <Paragraph FontSize="14" FontFamily="Segoe">
+                                                This is the content of the Journal Pane.
+                                                <LineBreak />
+                                                A
+                                                <Bold>RichTextBox</Bold> has been added here
+                                            </Paragraph>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </xcad:LayoutAnchorable>
+                            </xcad:LayoutAnchorablePane>
+                        </xcad:LayoutAnchorablePaneGroup>
+                    </xcad:LayoutPanel>
+
+                    <xcad:LayoutRoot.LeftSide>
+                        <xcad:LayoutAnchorSide>
+                            <xcad:LayoutAnchorGroup>
+                                <xcad:LayoutAnchorable Title="Agenda" ContentId="agenda">
+                                    <TextBlock Text="Agenda Content" Margin="10" FontSize="18" FontWeight="Black"
+                                               TextWrapping="Wrap" />
+                                </xcad:LayoutAnchorable>
+                                <xcad:LayoutAnchorable Title="Contacts" ContentId="contacts">
+                                    <TextBlock Text="Contacts Content" Margin="10" FontSize="18" FontWeight="Black"
+                                               TextWrapping="Wrap" />
+                                </xcad:LayoutAnchorable>
+                            </xcad:LayoutAnchorGroup>
+                        </xcad:LayoutAnchorSide>
+                    </xcad:LayoutRoot.LeftSide>
+
+                </xcad:LayoutRoot>
+            </xcad:DockingManager>
+        </Grid>
+    </Grid>
+</f:RibbonWindow>

@@ -17,9 +17,7 @@ namespace NKnife.ChannelKnife.ViewModel
             var map = controller.LocalSerial;
             foreach (var kv in map)
                 LocalSerials.Add(new MySerial(kv.Key, kv.Value));
-
-            AcceptButtonEnableCommand = ReactiveCommand.Create(AcceptButtonEnable,
-                this.WhenAnyValue(vm => vm.SelectedSerialListIndex).Select(i => i >= 0));
+            
         }
 
         public List<MySerial> LocalSerials { get; } = new List<MySerial>();
@@ -28,13 +26,6 @@ namespace NKnife.ChannelKnife.ViewModel
         {
             get => _selectedSerialListIndex;
             set => this.RaiseAndSetIfChanged(ref _selectedSerialListIndex, value);
-        }
-
-        public ReactiveCommand<Unit, Unit> AcceptButtonEnableCommand { get; }
-
-        private void AcceptButtonEnable()
-        {
-            MessageBox.Show($"{_selectedSerialListIndex}");
         }
 
         public ushort PackagePort()

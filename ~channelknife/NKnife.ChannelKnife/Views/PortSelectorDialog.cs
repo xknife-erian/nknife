@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 using Ninject;
 using NKnife.ChannelKnife.ViewModel;
@@ -15,16 +16,14 @@ namespace NKnife.ChannelKnife.Views
             this.WhenActivated(b =>
             {
                 b(this.OneWayBind(ViewModel, vm => vm.LocalSerials, v => v._ListView.DataSource));
-                b(this.BindCommand(ViewModel, vm => vm.AcceptButtonEnableCommand, v => v._AcceptButton));
+                b(this.OneWayBind(ViewModel, vm => vm.SelectedSerialListIndex, v => v._ListView.SelectedIndex));
             });
 
-            var serialSelectionChanged = Observable.FromEventPattern<EventHandler, EventArgs>(
-                handler => handler.Invoke,
-                add => _ListView.SelectionChanged += add,
-                remove => _ListView.SelectionChanged -= remove);
 
-            serialSelectionChanged.Subscribe(c => ViewModel.SelectedSerialListIndex = _ListView.SelectedIndex);
-
+            _ListView.SelectionChanged += (sender, args) =>
+            {
+                _AcceptButton.Enabled = _ListView.SelectedIndex >= 0;
+            };
             _AcceptButton.Click += (sender, args) =>
             {
                 if (_ListView.SelectedItems.Count > 0)
