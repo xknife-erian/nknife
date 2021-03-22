@@ -25,6 +25,7 @@ namespace NKnife.Channels.SerialKnife
 
             var builder = new ContainerBuilder();
             builder.RegisterModule<Modules>();
+            builder.RegisterModule<ViewModelModules>();
 
             using (var container = builder.Build())
             {

@@ -17,6 +17,7 @@ namespace NKnife.Channels.SerialKnife.IoC
             builder.RegisterType<Global.About>().As<IAbout>().SingleInstance();
             builder.RegisterType<SerialChannelService>().AsSelf().SingleInstance();
             builder.RegisterType<LoggerView>().AsSelf().SingleInstance();
+            builder.RegisterType<SerialPortView>().AsSelf().SingleInstance();
         }
     }
 }

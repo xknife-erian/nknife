@@ -98,8 +98,7 @@ namespace NKnife.Win.Forms
         private void OnSelectedImage(EventArgs<string> e)
         {
             EventHandler<EventArgs<string>> handler = SelectedImage;
-            if (handler != null)
-                handler(this, e);
+            handler?.Invoke(this, e);
         }
 
         public void FillImages(params string[] images)
@@ -117,13 +116,20 @@ namespace NKnife.Win.Forms
                 return;
             foreach (string currImageFile in _CurrImages)
             {
+                Image image = null;
                 try
                 {
                     byte[] bs = File.ReadAllBytes(currImageFile);
                     var mem = new MemoryStream(bs);
                     mem.Position = 0;
-                    Image image = Image.FromStream(mem);
-
+                    image = Image.FromStream(mem);
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+                try
+                {
                     var imagebox = new ImageBox(ImageBoxColor, ImageBoxLabelColor, ImageBoxLabelFont);
                     var w = 80;
                     var h = 80/3*4;
@@ -177,7 +183,8 @@ namespace NKnife.Win.Forms
                 }
                 catch (Exception)
                 {
-                    Debug.Fail(string.Format("文件无法读取:{0}", currImageFile));
+                    Debug.Fail($"文件无法读取:{currImageFile}");
+                    continue;
                 }
             }
         }

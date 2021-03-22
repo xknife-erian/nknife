@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NKnife.Win.Forms.Kit</RootNamespace>
     <AssemblyName>NKnife.Win.Forms.Kit</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -129,6 +129,10 @@
     <ProjectReference Include="..\..\NKnife.Win.Forms\NKnife.Win.Forms.csproj">
       <Project>{48dcfea4-948a-45f8-8fa5-010a1e095c19}</Project>
       <Name>NKnife.Win.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NKnife.Win\NKnife.Win.csproj">
+      <Project>{d6de90b7-0abe-4640-8ab6-5b2818c52ad8}</Project>
+      <Name>NKnife.Win</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\NKnife\NKnife.csproj">
       <Project>{b33b0509-229b-4afe-b774-aeacf7e515c0}</Project>

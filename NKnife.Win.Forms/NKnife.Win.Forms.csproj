@@ -120,9 +120,6 @@
       <DependentUpon>VRuler.cs</DependentUpon>
     </Compile>
     <Compile Include="EventParams\RectangleSelectedEventArgs.cs" />
-    <Compile Include="BoundleMenuStripButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="CloudsControl\CloudCollection.cs" />
     <Compile Include="CloudsControl\CloudLabel.cs">
       <SubType>Component</SubType>
