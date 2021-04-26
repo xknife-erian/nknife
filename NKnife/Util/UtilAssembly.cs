@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace NKnife.Util
 {
-    public class UtilAssembly
+    /// <summary>
+    /// 面向程序集文件的工具库
+    /// </summary>
+    public static class UtilAssembly
     {
         private static IList<string> _assemblyFiles;
         private static readonly Dictionary<string, Assembly[]> _AssembliesMap 
@@ -35,7 +38,7 @@ namespace NKnife.Util
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(String.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
+                        Debug.Fail($"Assembly.LoadFile导常，{dll} cannot be found.\r\n{e.Message}");
                     }
                     catch (BadImageFormatException e)
                     {
@@ -55,7 +58,7 @@ namespace NKnife.Util
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(String.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
+                        Debug.Fail($"Assembly.LoadFile导常，{exe} cannot be found.\r\n{e.Message}");
                     }
                     catch (BadImageFormatException e)
                     {
@@ -74,11 +77,9 @@ namespace NKnife.Util
         ///     搜索指定目录下所有.Net的程序集("*.dll","*.exe")
         /// </summary>
         /// <param name="directory">指定目录.</param>
-        /// <returns></returns>
         public static Assembly[] SearchAssemblyByDirectory(string directory)
         {
-            Assembly[] assemblies;
-            if (!_AssembliesMap.TryGetValue(directory, out assemblies))
+            if (!_AssembliesMap.TryGetValue(directory, out var assemblies))
             {
                 var result = new ConcurrentBag<Assembly>();
                 IList<string> dllList = UtilFile.SearchDirectory(directory, "*.dll", true, true);
@@ -87,12 +88,12 @@ namespace NKnife.Util
                 {
                     try
                     {
-                        Assembly asse = Assembly.LoadFile(dll);
-                        result.Add(asse);
+                        Assembly assembly = Assembly.LoadFile(dll);
+                        result.Add(assembly);
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(String.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
+                        Debug.Fail($"Assembly.LoadFile导常，{dll} cannot be found.\r\n{e.Message}");
                     }
                     catch (BadImageFormatException e)
                     {
@@ -107,12 +108,12 @@ namespace NKnife.Util
                 {
                     try
                     {
-                        Assembly asse = Assembly.LoadFile(exe);
-                        result.Add(asse);
+                        Assembly assembly = Assembly.LoadFile(exe);
+                        result.Add(assembly);
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(String.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
+                        Debug.Fail($"Assembly.LoadFile导常，{exe} cannot be found.\r\n{e.Message}");
                     }
                     catch (BadImageFormatException e)
                     {
@@ -132,13 +133,17 @@ namespace NKnife.Util
             return assemblies;
         }
 
-        public static Assembly[] SearchAssemblyByDirectory(string directory, string[] nameFilters)
+        /// <summary>
+        ///     搜索指定目录下所有.Net的程序集("*.dll","*.exe")
+        /// </summary>
+        /// <param name="directory">指定目录.</param>
+        /// <param name="nameFilters">正则表达式：对程序集文件名进行过滤</param>
+        public static Assembly[] SearchAssemblyByDirectory(string directory, params string[] nameFilters)
         {
             if (nameFilters == null)
                 return SearchAssemblyByDirectory(directory);
 
-            Assembly[] assemblies;
-            if (!_AssembliesMap.TryGetValue(directory, out assemblies))
+            if (!_AssembliesMap.TryGetValue(directory, out var assemblies))
             {
                 var result = new ConcurrentBag<Assembly>();
                 IList<string> dllList = UtilFile.SearchDirectory(directory, "*.dll", true, true);
@@ -149,13 +154,13 @@ namespace NKnife.Util
                     {
                         if (!dll.MatchFilters(nameFilters))
                         {
-                            Assembly asse = Assembly.LoadFile(dll);
-                            result.Add(asse);
+                            Assembly assembly = Assembly.LoadFile(dll);
+                            result.Add(assembly);
                         }
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(String.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", dll, e.Message));
+                        Debug.Fail($"Assembly.LoadFile导常，{dll} cannot be found.\r\n{e.Message}");
                     }
                     catch (BadImageFormatException e)
                     {
@@ -172,13 +177,13 @@ namespace NKnife.Util
                     {
                         if (!exe.MatchFilters(nameFilters))
                         {
-                            Assembly asse = Assembly.LoadFile(exe);
-                            result.Add(asse);
+                            Assembly assembly = Assembly.LoadFile(exe);
+                            result.Add(assembly);
                         }
                     }
                     catch (FileNotFoundException e)
                     {
-                        Debug.Fail(String.Format("Assembly.LoadFile导常，{0} cannot be found.\r\n{1}", exe, e.Message));
+                        Debug.Fail($"Assembly.LoadFile导常，{exe} cannot be found.\r\n{e.Message}");
                     }
                     catch (BadImageFormatException e)
                     {

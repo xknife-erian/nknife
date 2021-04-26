@@ -6,6 +6,9 @@ using NKnife.Util;
 // ReSharper disable once CheckNamespace
 namespace System
 {
+    /// <summary>
+    /// 面向字符串操作的扩展方法类
+    /// </summary>
     public static class StringExtension
     {
         /// <summary>
@@ -15,7 +18,7 @@ namespace System
         /// <param name="stringArray">字符串数组</param>
         /// <param name="caseSensitive">是否不区分大小写, true为不区分, false为区分</param>
         /// <returns>字符串在指定字符串数组中的位置, 如不存在则返回-1</returns>
-        public static int GetInArrayIndex(this string srcString, string[] stringArray, bool caseSensitive)
+        public static int GetInArrayIndex(this string srcString, string[] stringArray, bool caseSensitive = true)
         {
             for (var i = 0; i < stringArray.Length; i++)
             {
@@ -35,37 +38,15 @@ namespace System
         }
 
         /// <summary>
-        ///     判断指定字符串在指定字符串数组中的位置
-        /// </summary>
-        /// <param name="srcString">字符串</param>
-        /// <param name="stringArray">字符串数组</param>
-        /// <returns>字符串在指定字符串数组中的位置, 如不存在则返回-1</returns>
-        public static int GetInArrayIndex(this string srcString, string[] stringArray)
-        {
-            return GetInArrayIndex(srcString, stringArray, true);
-        }
-
-        /// <summary>
         ///     判断指定字符串是否属于指定字符串数组中的一个元素
         /// </summary>
         /// <param name="srcString">字符串</param>
         /// <param name="stringArray">字符串数组</param>
         /// <param name="caseSensitive">是否不区分大小写, true为不区分, false为区分</param>
         /// <returns>判断结果</returns>
-        public static bool InArray(this string srcString, string[] stringArray, bool caseSensitive)
+        public static bool InArray(this string srcString, string[] stringArray, bool caseSensitive = false)
         {
             return GetInArrayIndex(srcString, stringArray, caseSensitive) >= 0;
-        }
-
-        /// <summary>
-        ///     判断指定字符串是否属于指定字符串数组中的一个元素
-        /// </summary>
-        /// <param name="srcString">字符串</param>
-        /// <param name="stringArray">字符串数组</param>
-        /// <returns>判断结果</returns>
-        public static bool InArray(this string srcString, string[] stringArray)
-        {
-            return InArray(srcString, stringArray, false);
         }
 
         /// <summary>
@@ -114,8 +95,7 @@ namespace System
         /// <returns>清除后返回的字符串</returns>
         public static string TrimBr(this string str)
         {
-            Match m;
-            for (m = UtilRegex.Br.Match(str); m.Success; m = m.NextMatch())
+            for (Match m = UtilRegex.Br.Match(str); m.Success; m = m.NextMatch())
                 str = str.Replace(m.Groups[0].ToString(), "");
             return str;
         }
@@ -244,30 +224,23 @@ namespace System
         }
 
         /// <summary>
-        ///     判断字符串是否能被(filters)过滤
-        ///     strictMatch=true时，是严格过滤模式，src必须完全等于filters中的某一项，才算Match，return true
-        ///     strictMatch=false时，是宽松过滤模式，src只要包含filters中的某一项，算Match，return true
+        ///     判断字符串是否能被(filters)全部匹配
         /// </summary>
-        /// <param name="src"></param>
-        /// <param name="filters"></param>
-        /// <param name="strictMatch"></param>
+        /// <param name="src">源字符串</param>
+        /// <param name="filters">过滤的正则表达式数组，必须全部匹配</param>
         /// <returns></returns>
-        public static bool MatchFilters(this string src, string[] filters, bool strictMatch = false)
+        public static bool MatchFilters(this string src, params string[] filters)
         {
             if (filters == null)
                 return false;
             foreach (var filter in filters)
-                if (strictMatch)
-                {
-                    if (src.Equals(filter))
-                        return true;
-                }
-                else
-                {
-                    if (src.IndexOf(filter, StringComparison.Ordinal) > -1)
-                        return true;
-                }
-            return false;
+            {
+                Regex reg = new Regex(filter);
+                Match m = reg.Match(src);
+                if(!m.Success)
+                    return false;
+            }
+            return true;
         }
 
         /// <summary>

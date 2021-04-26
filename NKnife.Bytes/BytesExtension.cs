@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
-using NKnife.Util;
 
 // ReSharper disable once CheckNamespace
 namespace System
@@ -225,7 +224,7 @@ namespace System
         /// <returns>索引值。为-1时，指无匹配项。</returns>
         public static int Find(this byte[] data, byte[] target, int position = 0)
         {
-            if (UtilCollection.IsNullOrEmpty(target))
+            if (target==null || target.Length <=0)
                 return -1;
             int i;
 

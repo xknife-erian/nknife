@@ -41,8 +41,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Autofac.6.1.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=6.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.6.2.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.2.0.6\lib\net47\CommonServiceLocator.dll</HintPath>
@@ -60,7 +60,7 @@
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NLog.4.7.8\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\..\packages\NLog.4.7.9\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -230,6 +230,10 @@
     <Content Include="Properties\serial-knife.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.Bytes\NKnife.Bytes.csproj">
+      <Project>{eab5fd7b-c547-43c7-a4fa-f6cda376d084}</Project>
+      <Name>NKnife.Bytes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NKnife.Channels.Serial\NKnife.Channels.Serial.csproj">
       <Project>{45e6686a-2c0d-4d3b-9984-40b16399bec5}</Project>
       <Name>NKnife.Channels.Serial</Name>

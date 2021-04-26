@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>20.7.0</AssemblyVersion>
-    <FileVersion>20.7.0</FileVersion>
-    <Version>20.7.0</Version>
+    <AssemblyVersion>21.1.0.426</AssemblyVersion>
+    <FileVersion>21.1.0.426</FileVersion>
+    <Version>21.1.0</Version>
     <Authors>lukan@xknife.net</Authors>
     <Company>xknife.net</Company>
     <Description>一个面向.Net的工作组性质的综合开发库。该开发库集成了nknife工作组在研发工作过程中的大量开发经验。但因有大量开发约定并未向外发布，本库暂时仅适用于nknife工作组成员内部使用。当然，如果爱好者参考或部份使用本库，再或能提出宝贵意见或交流，nknife工作组谨表示诚挚的欢迎。</Description>
@@ -14,7 +14,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>E:\xknife.csharper\github\nknife\NKnife\NKnife.xml</DocumentationFile>
     <OutputPath></OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -35,10 +35,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="ShareResources\CnCities.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
