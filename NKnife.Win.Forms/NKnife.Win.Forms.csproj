@@ -55,21 +55,13 @@
     </Compile>
     <Compile Include="API\API.IMM32.cs" />
     <Compile Include="API\API.User32.cs" />
-    <Compile Include="Colors\ColorPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Colors\ColorPickerDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Colors\ColorPanel.cs" />
+    <Compile Include="Colors\ColorPickerDialog.cs" />
     <Compile Include="Colors\ColorPickerDialog.designer.cs">
       <DependentUpon>ColorPickerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Colors\ColorShowBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Colors\ColorSlider.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Colors\ColorShowBox.cs" />
+    <Compile Include="Colors\ColorSlider.cs" />
     <Compile Include="Colors\ControlRenderer.cs" />
     <Compile Include="Common\Rectangles.cs" />
     <Compile Include="Common\RectangleOperation.cs" />
@@ -88,22 +80,16 @@
     <Compile Include="Frames\Base\RectangleList.cs" />
     <Compile Include="Common\Redraw.cs" />
     <Compile Include="Common\Drawing.cs" />
-    <Compile Include="Frames\PictureFrame.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Frames\PictureFrame.cs" />
     <Compile Include="Frames\PictureFrame.Designer.cs">
       <DependentUpon>PictureFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="HRuler.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="HRuler.cs" />
     <Compile Include="HRuler.Designer.cs">
       <DependentUpon>HRuler.cs</DependentUpon>
     </Compile>
     <Compile Include="EventParams\BoardDesignDragParamsEventArgs.cs" />
-    <Compile Include="Frames\DrawingBoard.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Frames\DrawingBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -113,147 +99,73 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OwnResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="VRuler.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="VRuler.cs" />
     <Compile Include="VRuler.Designer.cs">
       <DependentUpon>VRuler.cs</DependentUpon>
     </Compile>
     <Compile Include="EventParams\RectangleSelectedEventArgs.cs" />
     <Compile Include="CloudsControl\CloudCollection.cs" />
-    <Compile Include="CloudsControl\CloudLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CloudsControl\CloudsPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="CloudsControl\CloudLabel.cs" />
+    <Compile Include="CloudsControl\CloudsPanel.cs" />
     <Compile Include="Common\FileSelectControlStyle.cs" />
-    <Compile Include="ExceptionUI\ExceptionDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="ExceptionUI\ExceptionDialog.cs" />
     <Compile Include="ExceptionUI\ExceptionDialog.designer.cs">
       <DependentUpon>ExceptionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExceptionUI\InformationPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FileSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="ExceptionUI\InformationPanel.cs" />
+    <Compile Include="FileSelector.cs" />
     <Compile Include="Welcome\IWelcomeForm.cs" />
     <Compile Include="Welcome\WelcomerScreen.cs" />
-    <Compile Include="GifBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GroupboxPro\CheckGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="GifBox.cs" />
+    <Compile Include="GroupboxPro\CheckGroupBox.cs" />
     <Compile Include="GroupboxPro\CheckGroupBox.Designer.cs">
       <DependentUpon>CheckGroupBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="GroupboxPro\RadioButtonPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GroupboxPro\RadioGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="GroupboxPro\RadioButtonPanel.cs" />
+    <Compile Include="GroupboxPro\RadioGroupBox.cs" />
     <Compile Include="GroupboxPro\RadioGroupBox.Designer.cs">
       <DependentUpon>RadioGroupBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="HorizontalLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ImageButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ImagesPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="IPAddressControl\DotControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="HorizontalLine.cs" />
+    <Compile Include="ImageButton.cs" />
+    <Compile Include="ImagesPanel.cs" />
+    <Compile Include="IPAddressControl\DotControl.cs" />
     <Compile Include="IPAddressControl\FieldChangedEventArgs.cs" />
     <Compile Include="IPAddressControl\FieldControl.cs" />
-    <Compile Include="IPAddressControl\IPAddressControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="IPAddressControl\IPAddressControl.cs" />
     <Compile Include="IPAddressControl\IPAddressControlDesigner.cs" />
     <Compile Include="IPAddressControl\NativeMethods.cs" />
     <Compile Include="Welcome\ISplashForm.cs" />
-    <Compile Include="LxLedControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MarqueeControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MultipleImageToolStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="NumericLedBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="QuickTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RegexTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SelectGroup.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SexSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SimpleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SingleLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SingleRowCheckedListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SpinnerControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="LxLedControl.cs" />
+    <Compile Include="MarqueeControl.cs" />
+    <Compile Include="MultipleImageToolStrip.cs" />
+    <Compile Include="NumericLedBox.cs" />
+    <Compile Include="QuickTextBox.cs" />
+    <Compile Include="RegexTextBox.cs" />
+    <Compile Include="SelectGroup.cs" />
+    <Compile Include="SexSelector.cs" />
+    <Compile Include="SimpleForm.cs" />
+    <Compile Include="SingleLine.cs" />
+    <Compile Include="SingleRowCheckedListView.cs" />
+    <Compile Include="SpinnerControl.cs" />
     <Compile Include="Welcome\Splasher.cs" />
-    <Compile Include="TextArrayDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="TextArrayDialog.cs" />
     <Compile Include="TextArrayDialog.designer.cs">
       <DependentUpon>TextArrayDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToolStripCheckBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ToolStripDateTimePicker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ToolStripNetVelocityLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="ToolStripCheckBox.cs" />
+    <Compile Include="ToolStripDateTimePicker.cs" />
+    <Compile Include="ToolStripNetVelocityLabel.cs" />
     <Compile Include="ToolTipPro.cs" />
-    <Compile Include="TouchNumberBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TouchNumberBoxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VirticalLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WaitMessageDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="TouchNumberBox.cs" />
+    <Compile Include="TouchNumberBoxForm.cs" />
+    <Compile Include="VirticalLine.cs" />
+    <Compile Include="WaitMessageDialog.cs" />
     <Compile Include="WaitMessageDialog.Designer.cs">
       <DependentUpon>WaitMessageDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="WeekGroup.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="XmlTreeView.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="WeekGroup.cs" />
+    <Compile Include="XmlTreeView.cs" />
     <EmbeddedResource Include="Colors\ColorPickerDialog.resx">
       <DependentUpon>ColorPickerDialog.cs</DependentUpon>
     </EmbeddedResource>

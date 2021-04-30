@@ -101,22 +101,16 @@
     <Compile Include="..\..\NKnife.Win\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Forms\ImagesPanelControlTestDockView.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\ImagesPanelControlTestDockView.cs" />
     <Compile Include="Forms\ImagesPanelControlTestDockView.Designer.cs">
       <DependentUpon>ImagesPanelControlTestDockView.cs</DependentUpon>
     </Compile>
     <Compile Include="IoC\Modules.cs" />
-    <Compile Include="Forms\CustomStripControlTestDockView.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\CustomStripControlTestDockView.cs" />
     <Compile Include="Forms\CustomStripControlTestDockView.Designer.cs">
       <DependentUpon>CustomStripControlTestDockView.cs</DependentUpon>
     </Compile>
-    <Compile Include="LibraryDemoWorkbench.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="LibraryDemoWorkbench.cs" />
     <Compile Include="LibraryDemoWorkbench.Designer.cs">
       <DependentUpon>LibraryDemoWorkbench.cs</DependentUpon>
     </Compile>

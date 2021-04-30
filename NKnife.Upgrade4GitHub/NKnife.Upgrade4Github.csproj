@@ -62,9 +62,7 @@
     <Compile Include="Base\IUpdateService.cs" />
     <Compile Include="Base\UpdateStatus.cs" />
     <Compile Include="App\UpdateStatusChangedEventArgs.cs" />
-    <Compile Include="App\UpdaterWorkbench.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="App\UpdaterWorkbench.cs" />
     <Compile Include="App\UpdaterWorkbench.designer.cs">
       <DependentUpon>UpdaterWorkbench.cs</DependentUpon>
     </Compile>
