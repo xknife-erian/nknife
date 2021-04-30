@@ -14,9 +14,9 @@ namespace NKnife
 
                 // Convert the byte array to hexadecimal string
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
+                foreach (var hashByte in hashBytes)
                 {
-                    sb.Append(hashBytes[i].ToString("X2"));
+                    sb.Append($"{hashByte:X2}");
                 }
                 return sb.ToString();
             }

@@ -3,11 +3,24 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>19.0.1.1</AssemblyVersion>
-    <FileVersion>19.0.1.1</FileVersion>
-    <Version>19.2.0</Version>
+    <AssemblyVersion>21.1.0.430</AssemblyVersion>
+    <FileVersion>21.1.0.430</FileVersion>
+    <Version>21.1.0</Version>
     <Authors>lukan@xknife.net</Authors>
     <Company>xknife.net</Company>
+    <Description>一个面向.Net的综合开发库。</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\NKnife.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netstandard2.0\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\NKnife.xml</DocumentationFile>
+    <OutputPath>bin\Release\netstandard2.0\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

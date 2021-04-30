@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{48DCFEA4-948A-45F8-8FA5-010A1E095C19}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NKnife.Win.Forms</RootNamespace>
+    <AssemblyName>NKnife.Win.Forms</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\NKnife.Win.Forms.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\NKnife.Win.Forms.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\NKnife.Win\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="API\API.IMM32.cs" />
+    <Compile Include="API\API.User32.cs" />
+    <Compile Include="Colors\ColorPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Colors\ColorPickerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Colors\ColorPickerDialog.designer.cs">
+      <DependentUpon>ColorPickerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Colors\ColorShowBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Colors\ColorSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Colors\ControlRenderer.cs" />
+    <Compile Include="Common\Rectangles.cs" />
+    <Compile Include="Common\RectangleOperation.cs" />
+    <Compile Include="EventParams\BoardDraggingEventArgs.cs" />
+    <Compile Include="EventParams\BoardZoomEventArgs.cs" />
+    <Compile Include="EventParams\RectangleClickEventArgs.cs" />
+    <Compile Include="EventParams\ImageLoadEventArgs.cs" />
+    <Compile Include="EventParams\RectangleListChangedEventArgs.cs" />
+    <Compile Include="EventParams\RectangleSelectingEventArgs.cs" />
+    <Compile Include="Extensions\ControlExtension.cs" />
+    <Compile Include="Frames\Base\IPictureFrame.cs" />
+    <Compile Include="Common\GdiPlus.cs" />
+    <Compile Include="Common\Icons\IconHelper.cs" />
+    <Compile Include="Common\Icons\IconListManager.cs" />
+    <Compile Include="Frames\Base\DrawingBoardDesignMode.cs" />
+    <Compile Include="Frames\Base\RectangleList.cs" />
+    <Compile Include="Common\Redraw.cs" />
+    <Compile Include="Common\Drawing.cs" />
+    <Compile Include="Frames\PictureFrame.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Frames\PictureFrame.Designer.cs">
+      <DependentUpon>PictureFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HRuler.Designer.cs">
+      <DependentUpon>HRuler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventParams\BoardDesignDragParamsEventArgs.cs" />
+    <Compile Include="Frames\DrawingBoard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\RulerStyle.cs" />
+    <Compile Include="Properties\OwnResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OwnResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="VRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="VRuler.Designer.cs">
+      <DependentUpon>VRuler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventParams\RectangleSelectedEventArgs.cs" />
+    <Compile Include="CloudsControl\CloudCollection.cs" />
+    <Compile Include="CloudsControl\CloudLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CloudsControl\CloudsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\FileSelectControlStyle.cs" />
+    <Compile Include="ExceptionUI\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExceptionUI\ExceptionDialog.designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExceptionUI\InformationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Welcome\IWelcomeForm.cs" />
+    <Compile Include="Welcome\WelcomerScreen.cs" />
+    <Compile Include="GifBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GroupboxPro\CheckGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GroupboxPro\CheckGroupBox.Designer.cs">
+      <DependentUpon>CheckGroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupboxPro\RadioButtonPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GroupboxPro\RadioGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GroupboxPro\RadioGroupBox.Designer.cs">
+      <DependentUpon>RadioGroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HorizontalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ImageButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ImagesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IPAddressControl\DotControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IPAddressControl\FieldChangedEventArgs.cs" />
+    <Compile Include="IPAddressControl\FieldControl.cs" />
+    <Compile Include="IPAddressControl\IPAddressControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IPAddressControl\IPAddressControlDesigner.cs" />
+    <Compile Include="IPAddressControl\NativeMethods.cs" />
+    <Compile Include="Welcome\ISplashForm.cs" />
+    <Compile Include="LxLedControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MarqueeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MultipleImageToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NumericLedBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QuickTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RegexTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SelectGroup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SexSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SingleLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SingleRowCheckedListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SpinnerControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Welcome\Splasher.cs" />
+    <Compile Include="TextArrayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextArrayDialog.designer.cs">
+      <DependentUpon>TextArrayDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolStripCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolStripDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolStripNetVelocityLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolTipPro.cs" />
+    <Compile Include="TouchNumberBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TouchNumberBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VirticalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WaitMessageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitMessageDialog.Designer.cs">
+      <DependentUpon>WaitMessageDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WeekGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XmlTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Colors\ColorPickerDialog.resx">
+      <DependentUpon>ColorPickerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frames\PictureFrame.resx">
+      <DependentUpon>PictureFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\OwnResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>OwnResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="ExceptionUI\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExceptionUI\InformationPanel.resx">
+      <DependentUpon>InformationPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupboxPro\RadioGroupBox.resx">
+      <DependentUpon>RadioGroupBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MarqueeControl.resx">
+      <DependentUpon>MarqueeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SexSelector.resx">
+      <DependentUpon>SexSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm.resx">
+      <DependentUpon>SimpleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextArrayDialog.resx">
+      <DependentUpon>TextArrayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitMessageDialog.resx">
+      <DependentUpon>WaitMessageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WeekGroup.resx">
+      <DependentUpon>WeekGroup.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Properties\Resources\cursor_zoom_minus.png" />
+    <Resource Include="Properties\Resources\cursor_zoom_plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NKnife.Win\NKnife.Win.csproj">
+      <Project>{d6de90b7-0abe-4640-8ab6-5b2818c52ad8}</Project>
+      <Name>NKnife.Win</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NKnife\NKnife.csproj">
+      <Project>{b33b0509-229b-4afe-b774-aeacf7e515c0}</Project>
+      <Name>NKnife</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

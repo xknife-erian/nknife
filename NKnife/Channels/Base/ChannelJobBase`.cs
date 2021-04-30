@@ -39,7 +39,12 @@ namespace NKnife.Channels.Base
         public bool IsLoop { get; set; } = false;
 
         /// <inheritdoc />
-        public int LoopNumber { get; set; }
+        public int LoopCount { get; set; }
+
+        /// <summary>
+        /// 已完成的循环次数
+        /// </summary>
+        public int CountOfCompleted { get; set; }
 
         /// <inheritdoc />
         public Func<IJob, bool> Run { get; set; }

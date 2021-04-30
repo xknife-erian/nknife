@@ -13,6 +13,7 @@ namespace NKnife
     /// </summary>
     public class HabitData
     {
+        private const Environment.SpecialFolder FOLDER = Environment.SpecialFolder.ApplicationData;
         protected string _FileName;
         protected string _UserApplicationDataPath;
 
@@ -51,16 +52,16 @@ namespace NKnife
             {
                 if (string.IsNullOrEmpty(_UserApplicationDataPath))
                 {
-                    const Environment.SpecialFolder folder = Environment.SpecialFolder.ApplicationData;
-                    string path = Environment.GetFolderPath(folder);
-                    string namespaceStr = Assembly.GetEntryAssembly()?.GetName().Name;
+                    var path = Environment.GetFolderPath(FOLDER);
+                    var namespaceStr = Assembly.GetEntryAssembly()?.GetName().Name;
                     if (string.IsNullOrWhiteSpace(namespaceStr))
                         namespaceStr = "xknife";
-                    string subPath = namespaceStr.Replace('.', '\\').Insert(0, "\\");
+                    var subPath = namespaceStr.Replace('.', '\\').Insert(0, "\\");
                     _UserApplicationDataPath = path + subPath;
                     if (!Directory.Exists(_UserApplicationDataPath))
                         UtilFile.CreateDirectory(_UserApplicationDataPath);
                 }
+
                 return _UserApplicationDataPath;
             }
         }
@@ -74,9 +75,10 @@ namespace NKnife
         public bool TryGetValue(string localName, out object value)
         {
             value = null;
-            XmlElement ele = GetElement(localName);
-            if (ele == null) return false;
-            string innerText = ele.InnerText;
+            var ele = GetElement(localName);
+            if (ele == null) 
+                return false;
+            var innerText = ele.InnerText;
             if (!string.IsNullOrEmpty(innerText))
             {
                 value = innerText;
@@ -86,6 +88,7 @@ namespace NKnife
                 value = string.Empty;
                 return false;
             }
+
             return true;
         }
 
@@ -98,14 +101,15 @@ namespace NKnife
         /// <returns></returns>
         public string GetValue(string localName, object defaultValue)
         {
-            XmlElement ele = GetElement(localName);
-            string value = ele.InnerText;
+            var ele = GetElement(localName);
+            var value = ele.InnerText;
             if (string.IsNullOrEmpty(value))
             {
                 value = defaultValue.ToString();
                 ele.InnerText = value;
                 Save();
             }
+
             return value;
         }
 
@@ -116,7 +120,7 @@ namespace NKnife
         /// <param name="value">The value.</param>
         public void SetValue(string localName, object value)
         {
-            XmlElement ele = GetElement(localName);
+            var ele = GetElement(localName);
             ele.InnerText = value.ToString();
             Save();
         }
@@ -147,12 +151,14 @@ namespace NKnife
                 Debug.Fail("this.FilePath is Null!");
                 return;
             }
+
             var fileAtts = FileAttributes.Normal;
             if (File.Exists(FileName))
             {
                 fileAtts = File.GetAttributes(FileName); //先获取此文件的属性
                 File.SetAttributes(FileName, FileAttributes.Normal); //将文件属性设置为普通（即没有只读和隐藏等）
             }
+
             Document.Save(FileName); //在文件属性为普通的情况下保存。（不然有可能会“访问被拒绝”）
             File.SetAttributes(FileName, fileAtts); //恢复文件属性
         }
@@ -166,15 +172,17 @@ namespace NKnife
         {
             if (Document.DocumentElement != null)
             {
-                XmlNode node = Document.DocumentElement.SelectSingleNode(localName);
+                var node = Document.DocumentElement.SelectSingleNode(localName);
                 if (node == null)
                 {
                     node = Document.CreateElement(localName);
                     Document.DocumentElement?.AppendChild(node);
                     Save();
                 }
+
                 return (XmlElement) node;
             }
+
             return null;
         }
     }

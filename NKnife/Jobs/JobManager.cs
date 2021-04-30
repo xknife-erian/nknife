@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using NKnife.Events;
 using NKnife.Interface;
@@ -11,7 +12,7 @@ namespace NKnife.Jobs
     /// </summary>
     public class JobManager
     {
-        private readonly AutoResetEvent _flowAutoResetEvent = new AutoResetEvent(false);
+        private readonly AutoResetEvent _flowAutoResetEvent = new AutoResetEvent(true);
 
         /// <summary>
         /// 中断工作流的标记。
@@ -28,7 +29,7 @@ namespace NKnife.Jobs
         /// </summary>
         public JobManager()
         {
-            _flowAutoResetEvent.Set();
+            _flowAutoResetEvent.Reset();
         }
 
         /// <summary>
@@ -70,64 +71,101 @@ namespace NKnife.Jobs
             _flowAutoResetEvent.Set();
         }
 
-        /// <summary>
-        /// 当前Job的执行次数
-        /// </summary>
-        private int _loopNumber = 0;
+        // /// <summary>
+        // /// 当前Job的执行次数
+        // /// </summary>
+        // private int _loopNumber = 0;
 
         /// <summary>
         /// 递归完成内部所有的Job
         /// </summary>
-        protected virtual void RunMethod(ICollection<IJobPoolItem> list)
+        protected virtual void RunMethod(IJobPool jobPool)
         {
-            foreach (var jobItem in list)
-            {
-                if (_breakFlag)//当检测到中断信号时，不再运行Job
+            if (jobPool.IsOverall) //是否整组轮循
+            {   //整组轮循
+                //给出一个当前池子的所有项目的标记，都置为未完成
+                var all = new List<bool>();
+                for (int i = 0; i < jobPool.Count; i++)
+                    all.Add(false);
+                while (all.Contains(false))//当所有工作完成后，循环结束
                 {
-                    break;
-                }
-                if (!jobItem.IsPool)
-                {
-                    if (jobItem is IJob job)
+                    for (int i = 0; i < jobPool.Count; i++)
                     {
-                        _loopNumber = 0;
-                        RunJob(job); //执行单个Job的运行
+                        if (_breakFlag) break; //当检测到中断信号时，不再运行Job
+                        IJobPoolItem jobItem = jobPool.ElementAt(i);
+                        if (jobItem is IJob job)
+                        {
+                            if (job.LoopCount == 0 || job.CountOfCompleted < job.LoopCount)
+                            {
+                                RunJob(job, jobPool.IsOverall); //执行单个Job的运行
+                            }
+                            else
+                            {
+                                all[i] = true;//置为已完成标记
+                            }
+                        }
                     }
                 }
-                else
+            }
+            else
+            {   //执行工作流的每一项工作，将本职工作脚踏实地的完成，才进行下一项工作
+                foreach (IJobPoolItem jobItem in jobPool)
                 {
-                    if (jobItem is IJobPool pool)
-                        RunMethod(pool); //递归
+                    if (_breakFlag) break; //当检测到中断信号时，不再运行Job
+                    if (!jobItem.IsPool)
+                    {
+                        if (jobItem is IJob job)
+                            RunJob(job, jobPool.IsOverall); //执行单个Job的运行
+                    }
+                    else
+                    {
+                        if (jobItem is IJobPool subPool)
+                            RunMethod(subPool); //递归
+                    }
                 }
             }
-            if (!_breakFlag)//如是有中断信号，那么不算是所有工作完成
-                OnAllWorkDone();
-        }
 
+            OnAllWorkDone();
+        }
+        
         /// <summary>
         /// 运行单个Job
         /// </summary>
         /// <param name="job">单个Job</param>
-        protected virtual void RunJob(IJob job)
+        /// <param name="isOverall">工作池中的子工作轮循模式，当True时，会循环执行整个池中的所有子工作；当False时，对每项子工作都会执行完毕，才执行下一个工作。</param>
+        protected virtual void RunJob(IJob job, bool isOverall)
         {
-            if (_breakFlag)//当检测到中断信号时，不再运行Job
+            if (_breakFlag) //当检测到中断信号时，不再运行Job
+                return;
+            if (job.LoopCount > 0 && job.CountOfCompleted >= job.LoopCount) //已运行到指定次数的将不再运行
                 return;
             OnRunning(new EventArgs<IJob>(job));
             var success = job.Run.Invoke(job);
             OnRan(new EventArgs<IJob>(job));
             //**当运行异常时，静置至超时时长，否则静默至间隔时长即结束**
             _flowAutoResetEvent.WaitOne(success ? job.Interval : job.Timeout);
-            if (_pauseFlag)//检测暂停标记
-                _flowAutoResetEvent.Reset();
-            _loopNumber++;
-            //当该Job需要循环
-            //当没有设置循环次数，即无限循环
-            //当已设置循环次数，但是已循环次数小于设置值
-            if (job.IsLoop && ((job.LoopNumber <= 0) || (job.LoopNumber > 0) && (_loopNumber < job.LoopNumber)))
+            if (_pauseFlag) //检测暂停标记
+                _flowAutoResetEvent.WaitOne();
+            job.CountOfCompleted++;
+
+            if (ConditionsForJob(job, isOverall))
             {
                 //递归循环执行本职工作 ;-)
-                RunJob(job);
+                RunJob(job, false);
             }
+        }
+
+        /// <summary>
+        /// 当该Job需要循环
+        /// 当没有设置循环次数，即无限循环
+        /// 当已设置循环次数，但是已循环次数小于设置值
+        /// </summary>
+        /// <param name="job">单个Job</param>
+        /// <param name="isOverall">工作池中的子工作轮循模式，当True时，会循环执行整个池中的所有子工作；当False时，对每项子工作都会执行完毕，才执行下一个工作。</param>
+        /// <returns>指定的<see cref="job"/>需要循环处理</returns>
+        private static bool ConditionsForJob(IJob job, bool isOverall)
+        {
+            return !isOverall && job.IsLoop && ((job.LoopCount <= 0) || (job.LoopCount > 0) && (job.CountOfCompleted < job.LoopCount));
         }
 
         /// <summary>

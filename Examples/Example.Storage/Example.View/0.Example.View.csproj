@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Example.View</AssemblyName>
+    <RootNamespace>Example.View</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Example.Common\0.Example.Common.csproj" />
+  </ItemGroup>
+
+</Project>

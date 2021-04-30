@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Chess", "NKnife.App.Chess\NKnife.App.Chess.csproj", "{07B908E1-79FE-4418-9646-58D5D245415E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.App.Chess.Common", "NKnife.App.Chess.Common\NKnife.App.Chess.Common.csproj", "{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07B908E1-79FE-4418-9646-58D5D245415E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07B908E1-79FE-4418-9646-58D5D245415E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07B908E1-79FE-4418-9646-58D5D245415E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07B908E1-79FE-4418-9646-58D5D245415E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

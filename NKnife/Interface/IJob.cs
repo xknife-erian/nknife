@@ -23,9 +23,14 @@ namespace NKnife.Interface
         bool IsLoop { get; set; }
 
         /// <summary>
-        /// 循环执行的资数。当本值小于等于0时，如果需要循环，将无限循环下去。
+        /// 循环执行的次数。当本值小于等于0时，如果需要循环，将无限循环下去。
         /// </summary>
-        int LoopNumber { get; set; } 
+        int LoopCount { get; set; } 
+
+        /// <summary>
+        /// 已完成的循环次数
+        /// </summary>
+        int CountOfCompleted { get; set; }
 
         /// <summary>
         /// 注入本工作的执行方法。返回true表明执行完成；false反之，可能出现了执行异常，例如，发送对话请求后，未得到远端回应。

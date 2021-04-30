@@ -9,26 +9,15 @@ using System.Xml;
 
 namespace NKnife.Util
 {
+    /// <summary>
+    ///     面向C#定义的Type的工具方法集合
+    /// </summary>
     public static class UtilType
     {
         /// <summary>
         /// 每次搜索Type是比较耗时的，在这里采用一个字典进行缓存
         /// </summary>
-        private static readonly Dictionary<string, Dictionary<string, Type>> _AppTypes =
-            new Dictionary<string, Dictionary<string, Type>>();
-
-        /// <summary>
-        /// 从程序集中获取程序集实例中具有指定名称的 System.Type 对象。
-        /// 当输入assignableFromType时判断该Type是否是从assignableFromType继承。
-        /// assignableFromType可以为Null，为Null时不作判断。
-        /// </summary>
-        /// <param name="assembly">指定的程序集</param>
-        /// <param name="classname">类型的全名</param>
-        /// <returns>如找到返回该类型，未找到返Null</returns>
-        public static Type Load(Assembly assembly, string classname)
-        {
-            return Load(assembly, classname, null);
-        }
+        private static readonly Dictionary<string, Dictionary<string, Type>> _AppTypes = new Dictionary<string, Dictionary<string, Type>>();
 
         /// <summary>
         /// 从程序集中获取程序集实例中具有指定名称的 System.Type 对象。
@@ -39,14 +28,11 @@ namespace NKnife.Util
         /// <param name="classname">类型的全名</param>
         /// <param name="assignableFromType">被继承的类型</param>
         /// <returns>如找到返回该类型，未找到返Null</returns>
-        public static Type Load(Assembly assembly, string classname, Type assignableFromType)
+        public static Type Load(Assembly assembly, string classname, Type assignableFromType = null)
         {
             Type type = assembly.GetType(classname, true, false);
             if (assignableFromType == null)
-            {
                 return type;
-            }
-
             return assignableFromType.IsAssignableFrom(type) ? type : null;
         }
 
@@ -71,28 +57,22 @@ namespace NKnife.Util
         /// <param name="parameterTypes">创建实例所需参数的类型列表</param>
         /// <param name="parameterValues">创建实例所需的参数值列表</param>
         /// <returns>类型实例</returns>
-        public static object CreateObject(Type type, Type expectedType, bool throwOnError, Type[] parameterTypes,
-            object[] parameterValues)
+        public static object CreateObject(Type type, Type expectedType, bool throwOnError, Type[] parameterTypes, object[] parameterValues)
         {
             if (expectedType != null && !expectedType.IsAssignableFrom(type))
             {
                 if (throwOnError)
-                {
-                    throw new Exception(String.Format("将要创建的类型：{0}，不是期望的类型：{1}", type.FullName, expectedType.FullName));
-                }
-
+                    throw new Exception($"将要创建的类型：{type.FullName}，不是期望的类型：{expectedType.FullName}");
                 return null;
             }
 
             if (parameterTypes != null && parameterValues != null && parameterTypes.Length != parameterValues.Length)
             {
                 if (throwOnError)
-                {
                     throw new Exception("构造函数参数类型数量和参数数量不一致");
-                }
             }
 
-            object createdObject = null;
+            object createdObject;
             if (parameterTypes == null)
             {
                 parameterTypes = new Type[] { };
@@ -186,9 +166,7 @@ namespace NKnife.Util
         {
             try
             {
-                const BindingFlags bindingFlags = BindingFlags.CreateInstance |
-                                                  (BindingFlags.NonPublic |
-                                                   (BindingFlags.Public | BindingFlags.Instance));
+                const BindingFlags bindingFlags = BindingFlags.CreateInstance | (BindingFlags.NonPublic | (BindingFlags.Public | BindingFlags.Instance));
                 return Activator.CreateInstance(type, bindingFlags, null, parameterValues, null);
             }
             catch (Exception e)
@@ -220,13 +198,9 @@ namespace NKnife.Util
                 if (parameters[i] == null)
                 {
                     if (throwOnError)
-                    {
                         throw new Exception("不支持参数可为Null的构造函数，请使用本方法的另外重载版本");
-                    }
-
                     return null;
                 }
-
                 paramTypes[i] = parameters[i].GetType();
                 paramValues[i] = parameters[i];
             }
@@ -242,8 +216,7 @@ namespace NKnife.Util
         /// <param name="throwOnError">失败时是否抛出异常</param>
         /// <param name="parameters">创建实例所需的参数值列表</param>
         /// <returns>类型实例</returns>
-        public static object CreateObject(Assembly assembly, string typeName, Type expectedType, bool throwOnError,
-            params object[] parameters)
+        public static object CreateObject(Assembly assembly, string typeName, Type expectedType, bool throwOnError, params object[] parameters)
         {
             Type type = CreateType(assembly, typeName, throwOnError);
             return CreateObject(type, expectedType, throwOnError, parameters);
@@ -258,8 +231,7 @@ namespace NKnife.Util
         /// <param name="parameterTypes">创建实例所需参数的类型列表</param>
         /// <param name="parameterValues">创建实例所需的参数值列表</param>
         /// <returns>类型实例</returns>
-        public static object CreateObject(Assembly assembly, string typeName, Type expectedType, bool throwOnError,
-            Type[] parameterTypes, object[] parameterValues)
+        public static object CreateObject(Assembly assembly, string typeName, Type expectedType, bool throwOnError, Type[] parameterTypes, object[] parameterValues)
         {
             Type type = CreateType(assembly, typeName, throwOnError);
             return CreateObject(type, expectedType, throwOnError, parameterTypes, parameterValues);
@@ -272,17 +244,13 @@ namespace NKnife.Util
         /// <returns>找到则返回指定的类型，否则返回空</returns>
         public static Type FindType(string typeName, string path)
         {
-            if (String.IsNullOrWhiteSpace(typeName))
-            {
+            if (string.IsNullOrWhiteSpace(typeName))
                 throw new ArgumentNullException();
-            }
 
             if (!Directory.Exists(path))
-            {
                 throw new DirectoryNotFoundException(path + "不存在");
-            }
 
-            Dictionary<string, Type> typeMap = null;
+            Dictionary<string, Type> typeMap;
             if (!_AppTypes.ContainsKey(path))
             {
                 typeMap = FindTypeMap(path);
@@ -317,25 +285,21 @@ namespace NKnife.Util
         public static Dictionary<string, Type> FindTypeMap(string path)
         {
             if (_AppTypes.ContainsKey(path))
-            {
                 return _AppTypes[path];
-            }
 
             if (!Directory.Exists(path))
-            {
                 throw new DirectoryNotFoundException(path + "目录不存在。");
-            }
 
             var typeMap = new Dictionary<string, Type>();
-            var assemblys = UtilAssembly.SearchAssemblyByDirectory(path);
-            foreach (var assembly in assemblys)
+            var assemblies = UtilAssembly.SearchAssemblyByDirectory(path);
+            foreach (var assembly in assemblies)
             {
                 Type[] types;
                 try
                 {
                     types = assembly.GetTypes();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     continue;
                 }
@@ -359,17 +323,16 @@ namespace NKnife.Util
         /// <param name="isGenericTypeInterface">是否是泛型接口</param>
         /// <param name="containAbstract">是否包含虚类型</param>
         /// <returns></returns>
-        public static IEnumerable<Type> FindTypesByDirectory(string path, Type targetType,
-            bool isGenericTypeInterface = false, bool containAbstract = false)
+        public static IEnumerable<Type> FindTypesByDirectory(string path, Type targetType, bool isGenericTypeInterface = false, bool containAbstract = false)
         {
             if (!_AppTypes.ContainsKey(path))
             {
                 _AppTypes.Add(path, FindTypeMap(path));
             }
 
-            var typemap = _AppTypes[path];
+            var typeMap = _AppTypes[path];
             var list = new List<Type>();
-            foreach (var type in typemap.Values)
+            foreach (var type in typeMap.Values)
             {
                 if (!containAbstract && type.IsAbstract)
                 {
@@ -414,7 +377,7 @@ namespace NKnife.Util
                 }
                 catch (Exception e)
                 {
-                    Debug.Fail(string.Format("Assembly.GetTypes()异常:{0}", e.Message));
+                    Debug.Fail($"Assembly.GetTypes()异常:{e.Message}");
                 }
 
                 if (!UtilCollection.IsNullOrEmpty(types))
@@ -450,7 +413,7 @@ namespace NKnife.Util
                 }
                 catch (Exception e)
                 {
-                    Debug.Fail(string.Format("程序集获取Type失败。{0}", e.Message));
+                    Debug.Fail($"程序集获取Type失败。{e.Message}");
                 }
 
                 if (!UtilCollection.IsNullOrEmpty(types))
@@ -492,7 +455,7 @@ namespace NKnife.Util
                 }
                 catch (Exception e)
                 {
-                    Debug.Fail(string.Format("程序集获取Type失败。{0}", e.Message));
+                    Debug.Fail($"程序集获取Type失败。{e.Message}");
                 }
 
                 if (!UtilCollection.IsNullOrEmpty(types))
@@ -626,7 +589,7 @@ namespace NKnife.Util
         /// <summary>
         /// 根据类型的名称创建一个对象（无参的构造函数）, 考虑了从程序目录中所有的程序集进行创建
         /// </summary>
-        /// <param name="klass">The klass.</param>
+        /// <param name="klass">The Class.</param>
         /// <returns></returns>
         public static object CreateSimpleObject(string klass)
         {
@@ -637,7 +600,7 @@ namespace NKnife.Util
                 {
                     return Activator.CreateInstance(type);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return null;
                 }
@@ -655,7 +618,7 @@ namespace NKnife.Util
         /// <returns></returns>
         public static Tuple<string, T> InterfaceBuilder<T>(XmlNode node)
         {
-            if (node == null || node.Attributes == null || node.Attributes.Count <= 0)
+            if (node?.Attributes == null || node.Attributes.Count <= 0)
             {
                 throw new ArgumentNullException(nameof(node), @"参数不能为空");
             }

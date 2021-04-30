@@ -1,0 +1,291 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="NKnife.App.TouchInputKnife.Workbench.TouchInputWindow"
+    Title="MainWindow" Height="280" Width="780"
+    AllowsTransparency="True" Background="Transparent"
+    WindowStyle="None" ResizeMode="NoResize">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="LetterButtonBackgroundBrush" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFD3D7FF" Offset="0" />
+            <GradientStop Color="#FFEBEBEB" Offset="0.5" />
+            <GradientStop Color="#FFC5CAFD" Offset="0.5" />
+            <GradientStop Color="#FFA0A9FF" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid Loaded="Grid_Loaded" Margin="0">
+        <Grid.Background>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkDarkColorKey}}" Opacity="0.6" />
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600" />
+            <ColumnDefinition Width="180" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="220" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,5,-3" Orientation="Horizontal" >
+            <Button DockPanel.Dock="Left" Click="CallPinyinButton_Click"
+                    Width="50"
+                    Height="50" Content="拼音" Padding="10,0,10,0" />
+            <Button DockPanel.Dock="Left" Click="CallHandWriterButton_Click"
+                    Width="50"
+                    Height="50" Content="手写" Padding="10,0,10,0" />
+            <Grid Height="50" Margin="4,4,2,3" Width="664">
+                <!--拼音候选条-->
+                <Grid x:Name="_PinyinWordGrid" Margin="0" Height="50">
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FFA0F5AE" Offset="0.5" />
+                            <GradientStop Color="#FF86CF92" Offset="1" />
+                            <GradientStop Color="#FF86CF92" Offset="0.01" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--拼音候选条(拼音分割显示部份)-->
+                    <ListBox Name="_PinyinInputListBox" Margin="0" BorderThickness="0" Background="{x:Null}" FontSize="13">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="15,0,15,0" MouseDown="InputCharListBox_MouseDown"
+                                           MouseUp="InputCharListBox_MouseUp" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <!--拼音候选条(汉字候选显示部份)-->
+                    <VirtualizingStackPanel Grid.Column="0" Grid.Row="1" Name="_PinyinWordPanel" Orientation="Horizontal">
+                        <ListBox Name="_PinyinWordListBox" Margin="0" FontSize="17"
+                                 BorderThickness="0" Background="{x:Null}" Width="566">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Margin="0" Padding="15,0,15,0"
+                                               MouseDown="PyWordListBox_MouseDown"
+                                               MouseUp="PyWordListBox_MouseUp" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Button Name="_HasPreviousButton" Content="上页" Margin="2,2" Padding="8,0"
+                                IsEnabled="{Binding HasPrevious}" Click="HasPreviousButton_Click" />
+                        <Button Name="_HasLastButton" Content="下页" Margin="2,2" Padding="8,0"
+                                IsEnabled="{Binding HasLast}" Click="HasLastButton_Click" />
+                    </VirtualizingStackPanel>
+                </Grid>
+                <!--手写候选区-->
+                <Grid x:Name="_HwWordGrid" Margin="0" Height="50" Width="Auto" Visibility="Hidden">
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FFFDD3D3" Offset="0.5" />
+                            <GradientStop Color="#FFECB3B3" Offset="1" />
+                            <GradientStop Color="#FFECB3B3" Offset="0.01" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <ListBox Name="_HwWordListBox" Grid.Column="0" Grid.Row="0" Margin="0" FontSize="22"
+                             BorderThickness="0" Background="{x:Null}"
+                             Visibility="{Binding HasAlternates}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="0" Padding="15,0,15,0"
+                                           MouseDown="HwWordListBox_MouseDown" MouseUp="HwWordListBox_MouseUp" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </StackPanel>
+        
+        <!--模拟键盘区-->
+        <Grid x:Name="_KeyboardGrid" Grid.Row="1" Grid.Column="0" Margin="5,2,2,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button FontSize="20" Content="@" Grid.Row="0" Grid.Column="0" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="#" Grid.Row="0" Grid.Column="1" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="*" Grid.Row="0" Grid.Column="2" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="￥" Grid.Row="0" Grid.Column="3" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="$" Grid.Row="0" Grid.Column="4" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="-" Grid.Row="0" Grid.Column="5" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="+" Grid.Row="0" Grid.Column="6" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="=" Grid.Row="0" Grid.Column="7" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="，" Grid.Row="0" Grid.Column="8" Margin="2" Click="SymbolClick" />
+            <Button FontSize="20" Content="。" Grid.Row="0" Grid.Column="9" Margin="2" Click="SymbolClick" />
+            <Button FontSize="15" Content="删除" Grid.Row="0" Grid.Column="10" Margin="2" Grid.ColumnSpan="2"
+                    Click="BackFunctionButtonClick" />
+            <Button FontSize="15" Content="符号" Grid.Row="1" Grid.Column="0" Margin="2"
+                    Click="JumpToSymbolFunctionButtonClick" />
+            <Button FontSize="20" Tag="Q" Content="Q" Grid.Row="1" Grid.Column="1" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="W" Content="W" Grid.Row="1" Grid.Column="2" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="E" Content="E" Grid.Row="1" Grid.Column="3" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="R" Content="R" Grid.Row="1" Grid.Column="4" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="T" Content="T" Grid.Row="1" Grid.Column="5" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="Y" Content="Y" Grid.Row="1" Grid.Column="6" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="U" Content="U" Grid.Row="1" Grid.Column="7" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="I" Content="I" Grid.Row="1" Grid.Column="8" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="O" Content="O" Grid.Row="1" Grid.Column="9" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="P" Content="P" Grid.Row="1" Grid.Column="10" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="15" Content="换行" Grid.Row="1" Grid.Column="11" Grid.RowSpan="2" Margin="2"
+                    Click="EnterButtonClick" />
+            <Button Name="_UpperButton" FontSize="15" Content="大写" Grid.Row="2" Grid.Column="0" Margin="2"
+                    Grid.ColumnSpan="2" Click="UpperButtonClick" />
+            <Button FontSize="20" Tag="A" Content="A" Grid.Row="2" Grid.Column="2" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="S" Content="S" Grid.Row="2" Grid.Column="3" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="D" Content="D" Grid.Row="2" Grid.Column="4" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="F" Content="F" Grid.Row="2" Grid.Column="5" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="G" Content="G" Grid.Row="2" Grid.Column="6" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="H" Content="H" Grid.Row="2" Grid.Column="7" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="J" Content="J" Grid.Row="2" Grid.Column="8" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="K" Content="K" Grid.Row="2" Grid.Column="9" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="L" Content="L" Grid.Row="2" Grid.Column="10" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button Name="_ModeSwitchButton" Grid.Row="3" Grid.Column="0" Margin="2" Grid.ColumnSpan="2"
+                    Click="ChineseAndEnglishFunctionClick">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFF97171" Offset="1" />
+                        <GradientStop Color="#FFFBC8C8" />
+                        <GradientStop Color="#FFFB7575" Offset="0.503" />
+                    </LinearGradientBrush>
+                </Button.Background>
+                <Button.Content>
+                    <Grid Width="{Binding ActualWidth, ElementName=_ModeSwitchButton}"
+                          Height="{Binding ActualHeight, ElementName=_ModeSwitchButton}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Name="_SwitchMainLabel" FontSize="24" Grid.Row="0" Grid.Column="0" Margin="0,-7,0,0"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center">英</TextBlock>
+                        <TextBlock Name="_SwitchSubLabel" Padding="3,12,0,0" Grid.Row="0" Grid.Column="1"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center">拼音</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button FontSize="20" Tag="Z" Content="Z" Grid.Row="3" Grid.Column="2" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="X" Content="X" Grid.Row="3" Grid.Column="3" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="C" Content="C" Grid.Row="3" Grid.Column="4" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="V" Content="V" Grid.Row="3" Grid.Column="5" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="B" Content="B" Grid.Row="3" Grid.Column="6" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="N" Content="N" Grid.Row="3" Grid.Column="7" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="20" Tag="M" Content="M" Grid.Row="3" Grid.Column="8" Margin="2" Click="LetterClick"
+                    Background="{StaticResource LetterButtonBackgroundBrush}" />
+            <Button FontSize="15" Content="空格" Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="3" Margin="2"
+                    Click="SpaceButtonClick" />
+        </Grid>
+        <!--手写板-->
+        <Grid x:Name="_HandWriteGrid" Grid.Row="1" Grid.Column="0" Margin="5,3,0,5" Visibility="Hidden">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF800303" Offset="1" />
+                    <GradientStop Color="#FFE25D5D" />
+                    <GradientStop Color="#FF7E0F0F" Offset="0.517" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <Viewbox Stretch="Fill" Grid.Row="0" Grid.Column="0" Margin="0">
+                <InkCanvas x:Name="_InkCanvas" Margin="2" StrokeCollected="InkCanvas_StrokeCollected">
+                    <InkCanvas.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FFFDC2C2" Offset="1" />
+                            <GradientStop Color="#FFFDD9D9" />
+                        </RadialGradientBrush>
+                    </InkCanvas.Background>
+                </InkCanvas>
+            </Viewbox>
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="1,1,8,1" VerticalAlignment="Bottom">
+                <Button Content="删除" Padding="0,10,0,10" Margin="0,0,0,2" Click="BackFunctionButtonClick" />
+                <Button Content="重写" Padding="0,10,0,10" Margin="0" Click="HandWriterClearButton_Click" />
+            </StackPanel>
+        </Grid>
+        <!--数字键盘-->
+        <Grid x:Name="_NumberGrid" Grid.Row="1" Grid.Column="1" Margin="4,2,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button FontSize="20" Content="7" Margin="1" Grid.Row="0" Grid.Column="0" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="8" Margin="1" Grid.Row="0" Grid.Column="1" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="9" Margin="1" Grid.Row="0" Grid.Column="2" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="4" Margin="1" Grid.Row="1" Grid.Column="0" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="5" Margin="1" Grid.Row="1" Grid.Column="1" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="6" Margin="1" Grid.Row="1" Grid.Column="2" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="1" Margin="1" Grid.Row="2" Grid.Column="0" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="2" Margin="1" Grid.Row="2" Grid.Column="1" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="3" Margin="1" Grid.Row="2" Grid.Column="2" Click="NumberButton_Click" />
+            <Button FontSize="20" Content="0" Margin="1" Grid.Row="3" Grid.Column="0" Click="NumberButton_Click"
+                    Grid.ColumnSpan="2" />
+            <Button Margin="1" Grid.Row="3" Padding="-1,-34,0,0" Grid.Column="2" Click="NumberButton_Click">
+                <TextBlock Name="_PointButton" Text="." FontSize="50" />
+            </Button>
+        </Grid>
+        
+    </Grid>
+</Window>
