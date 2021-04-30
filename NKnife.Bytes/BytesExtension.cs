@@ -23,6 +23,15 @@ namespace System
         }
 
         /// <summary>
+        /// 指定的字节数组是否全部都是ASCII编码
+        /// </summary>
+        /// <param name="bytes">指定的字节数组</param>
+        public static bool IsASCII(this IEnumerable<byte> bytes)
+        {
+            return bytes.All(b => b > 0x01 && b <= 127);
+        }
+
+        /// <summary>
         ///     字节数组转换成字符串。在针对java程序socket发给C#客户端的处理时，有时候字节流头三个字节bytes[0] == 239 && bytes[1] == 187 && bytes[2] == 191无意义，将此三个字节抛弃不做转换。
         /// </summary>
         public static string ToString(this byte[] bytes, Encoding encoding, bool isJavaSpecial = false)
@@ -54,26 +63,13 @@ namespace System
             return sb.ToString().TrimEnd(separatingCharacter);
         }
 
+        /// <summary>
+        ///     转换为十六进制字符串
+        /// </summary>
         public static string ToHexString(this IEnumerable<byte> bytes, string separatingCharacter = "")
         {
             return ToHexString(bytes, separatingCharacter.ToCharArray());
         }
-//
-//        /// <summary>
-//        ///     转换为十六进制字符串
-//        /// </summary>
-//        public static string ToHexString(this IEnumerable<byte> bytes, string separatingCharacter = "x")
-//        {
-//            if (bytes == null)
-//                return string.Empty;
-//            var sb = new StringBuilder();
-//            foreach (var b in bytes)
-//                sb.Append(b.ToString("X2")).Append(separatingCharacter);
-//            if (separatingCharacter == "")
-//                return sb.ToString();
-//            else
-//                return sb.ToString(0, sb.Length - separatingCharacter.Length);
-//        }
 
         /// <summary>
         ///     转换为Base64字符串

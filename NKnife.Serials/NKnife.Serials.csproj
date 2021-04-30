@@ -5,24 +5,29 @@
     <AssemblyVersion>21.1.0.430</AssemblyVersion>
     <FileVersion>21.1.0.430</FileVersion>
     <Version>21.1.0</Version>
-    <Description>一个面向.Net的byte数组的综合开发库。</Description>
+    <Description>一个对System.IO.Port的串口进行易用与拓展的封装工具库。</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\netstandard2.0\NKnife.Serials.xml</DocumentationFile>
     <OutputPath>bin\Debug\netstandard2.0\</OutputPath>
-    <DocumentationFile>bin\Debug\netstandard2.0\NKnife.Bytes.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\netstandard2.0\NKnife.Serials.xml</DocumentationFile>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>bin\Release\netstandard2.0\NKnife.Bytes.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="NKnife" Version="21.1.0" />
+    <PackageReference Include="NKnife.Bytes" Version="21.1.0" />
+    <PackageReference Include="NLog" Version="4.7.9" />
+    <PackageReference Include="System.IO.Ports" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="——\" />
   </ItemGroup>
 
 </Project>
