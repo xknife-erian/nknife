@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace NKnife.UnitTests.Extensions
+namespace NKnife.Bytes.UnitTests
 {
     /// <summary>
     ///     BytesExtensionTest 的摘要说明

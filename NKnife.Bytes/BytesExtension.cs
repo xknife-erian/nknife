@@ -154,22 +154,14 @@ namespace System
         /// <summary>
         ///     使用指定算法Hash
         /// </summary>
-        public static byte[] Hash(this byte[] data, string hashName)
+        public static byte[] Hash(this byte[] data, string hashName = "")
         {
             var algorithm = string.IsNullOrEmpty(hashName) ? HashAlgorithm.Create() : HashAlgorithm.Create(hashName);
             return algorithm?.ComputeHash(data);
         }
 
         /// <summary>
-        ///     使用默认算法Hash
-        /// </summary>
-        public static byte[] Hash(this byte[] data)
-        {
-            return Hash(data, null);
-        }
-
-        /// <summary>
-        ///     位运算:获取取第index是否为1
+        ///     位运算:获取第index位是否为1
         /// </summary>
         public static bool GetBit(this byte b, int index)
         {

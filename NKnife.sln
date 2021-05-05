@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Serials", "NKnife.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Serials.UnitTests", "UnitTests\NKnife.Serials.UnitTests\NKnife.Serials.UnitTests.csproj", "{229C64D6-7CEA-4487-9A26-E82BE657249E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Bytes.UnitTests", "NKnife.Bytes.UnitTests\NKnife.Bytes.UnitTests.csproj", "{0E1A1D31-9FA3-4181-BEE3-B01523CBC6EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{229C64D6-7CEA-4487-9A26-E82BE657249E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{229C64D6-7CEA-4487-9A26-E82BE657249E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{229C64D6-7CEA-4487-9A26-E82BE657249E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E1A1D31-9FA3-4181-BEE3-B01523CBC6EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E1A1D31-9FA3-4181-BEE3-B01523CBC6EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E1A1D31-9FA3-4181-BEE3-B01523CBC6EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1A1D31-9FA3-4181-BEE3-B01523CBC6EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,7 @@ Global
 		{7330EFB8-329A-4AE5-898C-D11F5C052C31} = {3840FCBD-681A-4B6B-93C4-6645DB4F8F97}
 		{3D333325-56BE-4442-A337-9CF859AA8132} = {3840FCBD-681A-4B6B-93C4-6645DB4F8F97}
 		{229C64D6-7CEA-4487-9A26-E82BE657249E} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
+		{0E1A1D31-9FA3-4181-BEE3-B01523CBC6EF} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F14B5A9D-9DDE-46AE-95C6-FBD68CC49D5D}

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using FluentAssertions;
-using NKnife.Bytes;
-using NKnife.Util;
 using Xunit;
 
-namespace NKnife.UnitTests.Util
+namespace NKnife.Bytes.UnitTests
 {
     public class UtilByteTest
     {

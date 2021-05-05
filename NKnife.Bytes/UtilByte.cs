@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace NKnife.Bytes
 {
+    /// <summary>
+    /// 面向字节的一些帮助方法
+    /// </summary>
     public static class UtilByte
     {
         /// <summary>

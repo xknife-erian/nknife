@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace NKnife.UnitTests.Extensions
+namespace NKnife.Bytes.UnitTests
 {
     public class VectorCopyTests
     {
