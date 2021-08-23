@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Example.Common</AssemblyName>
+    <RootNamespace>Example.Common</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\NKnife.Storages\NKnife.Storages.csproj" />
+  </ItemGroup>
+
+</Project>

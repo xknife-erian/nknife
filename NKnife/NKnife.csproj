@@ -1,0 +1,106 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>21.1.0.430</AssemblyVersion>
+    <FileVersion>21.1.0.430</FileVersion>
+    <Version>21.1.0</Version>
+    <Authors>lukan@xknife.net</Authors>
+    <Company>xknife.net</Company>
+    <Description>一个面向.Net的综合开发库。</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\NKnife.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netstandard2.0\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\NKnife.xml</DocumentationFile>
+    <OutputPath>bin\Release\netstandard2.0\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Util\UtilAssembly.cs" />
+    <Compile Remove="Util\UtilReflection.cs" />
+    <Compile Remove="Util\UtilType.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Chinese\CnCities.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ShareResources\CnCities.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ShareResources\ArgumentValidationString.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArgumentValidationString.resx</DependentUpon>
+    </Compile>
+	<Compile Update="ShareResources\FilterString.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FilterString.resx</DependentUpon>
+    </Compile>
+	<Compile Update="ShareResources\GeneralString.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GeneralString.resx</DependentUpon>
+    </Compile>
+	<Compile Update="ShareResources\RegexString.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegexString.resx</DependentUpon>
+    </Compile>
+	<Compile Update="ShareResources\SmartDateString.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SmartDateString.resx</DependentUpon>
+    </Compile>
+	<Compile Update="ShareResources\StringResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StringResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+	<EmbeddedResource Update="ShareResources\ArgumentValidationString.resx">
+	  <Generator>PublicResXFileCodeGenerator</Generator>
+	  <LastGenOutput>ArgumentValidationString.Designer.cs</LastGenOutput>
+	</EmbeddedResource>
+	<EmbeddedResource Update="ShareResources\FilterString.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FilterString.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+	<EmbeddedResource Update="ShareResources\GeneralString.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralString.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+	<EmbeddedResource Update="ShareResources\RegexString.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+	<EmbeddedResource Update="ShareResources\SmartDateString.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+	<EmbeddedResource Update="ShareResources\StringResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

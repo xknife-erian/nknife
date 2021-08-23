@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{07B908E1-79FE-4418-9646-58D5D245415E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NKnife.App.Chess</RootNamespace>
+    <AssemblyName>ChessKnife</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NKnife, Version=19.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NKnife.20.3.0\lib\netstandard2.0\NKnife.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ControlDemoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ControlDemoForm.Designer.cs">
+      <DependentUpon>ControlDemoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseDemoMethod.cs" />
+    <Compile Include="BaseDemoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseDemoForm.Designer.cs">
+      <DependentUpon>BaseDemoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ControlDemoForm.resx">
+      <DependentUpon>ControlDemoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseDemoForm.resx">
+      <DependentUpon>BaseDemoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="DemoFile\8,game.pgn" />
+    <None Include="DemoFile\chs,game.pgn" />
+    <None Include="DemoFile\g340,game.pgn" />
+    <None Include="DemoFile\largeness,game.pgn" />
+    <None Include="DemoFile\PGN\8,game.pgn" />
+    <None Include="DemoFile\PGN\chs,game.pgn" />
+    <None Include="DemoFile\PGN\g340,game.pgn" />
+    <None Include="DemoFile\PGN\largeness,game.pgn" />
+    <None Include="DemoFile\PGN\test,1,game.pgn" />
+    <None Include="DemoFile\PGN\test,2,game.pgn" />
+    <None Include="DemoFile\PGN\test,3,Nag,game.pgn" />
+    <None Include="DemoFile\PGN\worldopen,game.pgn" />
+    <None Include="DemoFile\test,1,game.pgn" />
+    <None Include="DemoFile\test,2,game.pgn" />
+    <None Include="DemoFile\test,3,game.pgn" />
+    <None Include="DemoFile\worldopen,game.pgn" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DemoFile\2326,steps2.txt" />
+    <Content Include="DemoFile\4647,steps1.txt" />
+    <Content Include="DemoFile\606822,stepsAll.txt" />
+    <Content Include="DemoFile\chessboard.gif" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 001.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 002.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 003.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 004.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 005.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 001.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 002.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 003.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 004.jpg" />
+    <Content Include="DemoFile\Chessman\black_bishop.png" />
+    <Content Include="DemoFile\Chessman\black_king.png" />
+    <Content Include="DemoFile\Chessman\black_knight.png" />
+    <Content Include="DemoFile\Chessman\black_pawn.png" />
+    <Content Include="DemoFile\Chessman\black_queen.png" />
+    <Content Include="DemoFile\Chessman\black_rook.png" />
+    <Content Include="DemoFile\Chessman\white_bishop.png" />
+    <Content Include="DemoFile\Chessman\white_king.png" />
+    <Content Include="DemoFile\Chessman\white_knight.png" />
+    <Content Include="DemoFile\Chessman\white_pawn.png" />
+    <Content Include="DemoFile\Chessman\white_queen.png" />
+    <Content Include="DemoFile\Chessman\white_rook.png" />
+    <Content Include="DemoFile\PGN\2326,steps2.txt" />
+    <Content Include="DemoFile\PGN\4647,steps1.txt" />
+    <Content Include="DemoFile\PGN\606822,stepsAll.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NKnife.App.Chess.Common\NKnife.App.Chess.Common.csproj">
+      <Project>{4e3f8baa-ae96-40ab-bd28-848f1777b5c2}</Project>
+      <Name>NKnife.App.Chess.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>

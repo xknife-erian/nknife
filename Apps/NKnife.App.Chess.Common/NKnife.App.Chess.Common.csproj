@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4E3F8BAA-AE96-40AB-BD28-848F1777B5C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NKnife.Chesses</RootNamespace>
+    <AssemblyName>NKnife.Chesses</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NKnife, Version=19.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NKnife.20.3.0\lib\netstandard2.0\NKnife.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Base\Definition.cs" />
+    <Compile Include="Common\Base\Enums.cs" />
+    <Compile Include="Common\Base\Servicer.cs" />
+    <Compile Include="Common\Base\Utility.cs" />
+    <Compile Include="Common\Exceptions\ChessException.cs" />
+    <Compile Include="Common\Exceptions\GameException.cs" />
+    <Compile Include="Common\Exceptions\PieceException.cs" />
+    <Compile Include="Common\Exceptions\RecordException.cs" />
+    <Compile Include="Common\Exceptions\SituationFailedException.cs" />
+    <Compile Include="Common\ExString.Designer.cs" />
+    <Compile Include="Common\Game.cs" />
+    <Compile Include="Common\Interface\IEngineReader.cs" />
+    <Compile Include="Common\Interface\IFenNotation.cs" />
+    <Compile Include="Common\Interface\IGame.cs" />
+    <Compile Include="Common\Interface\IChessItem.cs" />
+    <Compile Include="Common\Interface\IPGNReader.cs" />
+    <Compile Include="Common\Interface\IPGNReaderEvents.cs" />
+    <Compile Include="Common\Interface\IPiece.cs" />
+    <Compile Include="Common\Interface\IPieceMove.cs" />
+    <Compile Include="Common\Interface\ISituation.cs" />
+    <Compile Include="Common\Interface\IStepTree.cs" />
+    <Compile Include="Common\Pieces\Piece.cs" />
+    <Compile Include="Common\Pieces\PieceBishop.cs" />
+    <Compile Include="Common\Pieces\PieceKing.cs" />
+    <Compile Include="Common\Pieces\PieceKnight.cs" />
+    <Compile Include="Common\Pieces\PiecePawn.cs" />
+    <Compile Include="Common\Pieces\PieceQueen.cs" />
+    <Compile Include="Common\Pieces\PieceRook.cs" />
+    <Compile Include="Common\Pieces\Pieces.cs" />
+    <Compile Include="Common\Position\Position.cs" />
+    <Compile Include="Common\Position\PositionPair.cs" />
+    <Compile Include="Common\Position\Positions.cs" />
+    <Compile Include="Common\Record\PGN\PGNReader.cs" />
+    <Compile Include="Common\Record\Record.cs" />
+    <Compile Include="Common\Record\Records.cs" />
+    <Compile Include="Common\Record\StepTree\Annotation.cs" />
+    <Compile Include="Common\Record\StepTree\GameResult.cs" />
+    <Compile Include="Common\Record\StepTree\Nag.cs" />
+    <Compile Include="Common\Record\StepTree\Steps.cs" />
+    <Compile Include="Common\Record\StepTree\Variation.cs" />
+    <Compile Include="Common\Record\Tags.cs" />
+    <Compile Include="Common\Situation.cs" />
+    <Compile Include="Common\Step.cs" />
+    <Compile Include="Controls\Base\Servicer.cs" />
+    <Compile Include="Controls\Board.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Interface\IActiveRecord.cs" />
+    <Compile Include="Controls\Interface\IChessBoard.cs" />
+    <Compile Include="Controls\Interface\IRecordPlay.cs" />
+    <Compile Include="Controls\RecordListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\RecordPlayToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Resource\ImgResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImgResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StepsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\ExString.resx" />
+    <EmbeddedResource Include="Controls\Resource\ImgResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImgResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Controls\Resource\ChessFont\ChessMAYAFONT.TTF" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_bishop.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_grid_01.jpg" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_grid_02.jpg" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_king.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_knight.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_pawn.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_queen.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\black_rook.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\board_1.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\board_2.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\board_3.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\board_4.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_bishop.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_grid_01.jpg" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_grid_02.jpg" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_king.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_knight.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_pawn.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_queen.png" />
+    <Content Include="Controls\Resource\ChessmanDefaultImage\white_rook.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>

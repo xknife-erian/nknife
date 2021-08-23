@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>21.2.0.726</AssemblyVersion>
+    <FileVersion>21.2.0.726</FileVersion>
+    <Version>21.2.0</Version>
+    <Description>一个对System.IO.Port的串口进行易用与拓展的封装工具库。</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>nknife.xknife.net</Company>
+    <Authors>Erian Lu</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\NKnife.Serials.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netstandard2.0\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\NKnife.Serials.xml</DocumentationFile>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.11" />
+    <PackageReference Include="System.IO.Ports" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="——\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NKnife.Bytes\NKnife.Bytes.csproj" />
+    <ProjectReference Include="..\NKnife\NKnife.csproj" />
+  </ItemGroup>
+
+</Project>

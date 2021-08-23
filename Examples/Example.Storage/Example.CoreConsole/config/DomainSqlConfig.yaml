@@ -1,0 +1,116 @@
+SqlMap:
+  Book:
+    TypeName: Book
+    Type: Example.Common.Book, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    CurrentDbType: SqLite
+    DatabaseName: 
+    Write: Data Source=Z:\FT-water-zone.sqlite;
+    Read: Data Source=Z:\FT-water-zone.sqlite;
+    CreateTable:
+      SqLite: >-
+        CREATE TABLE Book (
+        	Id TEXT PRIMARY KEY,
+        	Name TEXT,
+        	Publisher TEXT,
+        	ISBN TEXT,
+        	Price FLOAT
+        );
+    DefaultData: {}
+    Insert:
+      SqLite: >-
+        INSERT INTO Book(
+        	Id, Name, Publisher, ISBN, Price
+        ) Values(
+        	@Id, @Name, @Publisher, @ISBN, @Price
+        );
+    Update:
+      SqLite: UPDATE Book SET Id=@Id, Name=@Name, Publisher=@Publisher, ISBN=@ISBN, Price=@Price
+  BuyingRecord:
+    TypeName: BuyingRecord
+    Type: Example.Common.BuyingRecord, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    CurrentDbType: SqLite
+    DatabaseName: 
+    Write: Data Source=Z:\FT-water-zone.sqlite;
+    Read: Data Source=Z:\FT-water-zone.sqlite;
+    CreateTable:
+      SqLite: >-
+        CREATE TABLE BuyingRecord (
+        	Id TEXT PRIMARY KEY,
+        	OriginalOwner TEXT,
+        	CurrentOwner TEXT,
+        	TradingTime DATETIME,
+        	TradingPrice FLOAT,
+        	Book TEXT
+        );
+    DefaultData: {}
+    Insert:
+      SqLite: >-
+        INSERT INTO BuyingRecord(
+        	Id, OriginalOwner, CurrentOwner, TradingTime, TradingPrice, Book
+        ) Values(
+        	@Id, @OriginalOwner, @CurrentOwner, @TradingTime, @TradingPrice, @Book
+        );
+    Update:
+      SqLite: UPDATE BuyingRecord SET Id=@Id, OriginalOwner=@OriginalOwner, CurrentOwner=@CurrentOwner, TradingTime=@TradingTime, TradingPrice=@TradingPrice, Book=@Book
+  Person:
+    TypeName: Person
+    Type: Example.Common.Person, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    CurrentDbType: SqLite
+    DatabaseName: 
+    Write: Data Source=Z:\FT-water-zone.sqlite;
+    Read: Data Source=Z:\FT-water-zone.sqlite;
+    CreateTable:
+      SqLite: >-
+        CREATE TABLE Person (
+        	Id TEXT PRIMARY KEY,
+        	Name TEXT,
+        	Birthday DATETIME,
+        	IDCardNumber TEXT,
+        	ExaminationNumber TEXT,
+        	School TEXT,
+        	Class TEXT,
+        	StudentNumber TEXT,
+        	Address TEXT,
+        	Email TEXT,
+        	HasCollection TINYINT
+        );
+    DefaultData:
+      SqLite: >
+        INSERT INTO Person(Id, Name, Birthday, IDCardNumber, ExaminationNumber, School, Class, StudentNumber, Address, Email, HasCollection) Values('0b18eff9-9468-4636-83e0-ff56812fd06b', '李子微', '0001/1/1 0:00:00', '', '', '', '', '', '回龙观龙锦苑四区1号楼', 'abcd@gmail.com', 0);
+        INSERT INTO Person(Id, Name, Birthday, IDCardNumber, ExaminationNumber, School, Class, StudentNumber, Address, Email, HasCollection) Values('7957e02e-587f-467e-bc06-457a1ff99ff8', '赵晓燕', '0001/1/1 0:00:00', '', '', '', '', '', '天通苑东四区18号楼1单元', 'zhaoxiangyan@qq.com', 1);
+    Insert:
+      SqLite: >-
+        INSERT INTO Person(
+        	Id, Name, Birthday, IDCardNumber, ExaminationNumber, School, Class, StudentNumber, Address, Email, HasCollection
+        ) Values(
+        	@Id, @Name, @Birthday, @IDCardNumber, @ExaminationNumber, @School, @Class, @StudentNumber, @Address, @Email, @HasCollection
+        );
+    Update:
+      SqLite: UPDATE Person SET Id=@Id, Name=@Name, Birthday=@Birthday, IDCardNumber=@IDCardNumber, ExaminationNumber=@ExaminationNumber, School=@School, Class=@Class, StudentNumber=@StudentNumber, Address=@Address, Email=@Email, HasCollection=@HasCollection
+  Publisher:
+    TypeName: Publisher
+    Type: Example.Common.Publisher, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    CurrentDbType: SqLite
+    DatabaseName: 
+    Write: Data Source=Z:\FT-water-zone.sqlite;
+    Read: Data Source=Z:\FT-water-zone.sqlite;
+    CreateTable:
+      SqLite: >-
+        CREATE TABLE Publisher (
+        	Id TEXT PRIMARY KEY,
+        	Name TEXT,
+        	Year INT,
+        	Scale TINYINT
+        );
+    DefaultData:
+      SqLite: >
+        INSERT INTO Publisher(Id, Name, Year, Scale) Values('b272c0b1-a237-4cc6-af47-91ea47128c3b', '美国特别不靠谱出版社', 2020, -1);
+    Insert:
+      SqLite: >-
+        INSERT INTO Publisher(
+        	Id, Name, Year, Scale
+        ) Values(
+        	@Id, @Name, @Year, @Scale
+        );
+    Update:
+      SqLite: UPDATE Publisher SET Id=@Id, Name=@Name, Year=@Year, Scale=@Scale
