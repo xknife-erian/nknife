@@ -59,9 +59,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tvList.BackColor = System.Drawing.SystemColors.Info;
             this.tvList.HideSelection = false;
-            this.tvList.Location = new System.Drawing.Point(611, 1);
+            this.tvList.Location = new System.Drawing.Point(1003, 1);
             this.tvList.Name = "tvList";
-            this.tvList.Size = new System.Drawing.Size(180, 565);
+            this.tvList.Size = new System.Drawing.Size(180, 510);
             this.tvList.TabIndex = 0;
             this.tvList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvList_AfterSelect);
             // 
@@ -69,13 +69,13 @@
             // 
             this.tbWords.Location = new System.Drawing.Point(561, 12);
             this.tbWords.Name = "tbWords";
-            this.tbWords.Size = new System.Drawing.Size(150, 21);
+            this.tbWords.Size = new System.Drawing.Size(150, 23);
             this.tbWords.TabIndex = 1;
             this.tbWords.Text = "程序员小刀";
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(717, 9);
+            this.btnOK.Location = new System.Drawing.Point(717, 10);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 25);
             this.btnOK.TabIndex = 2;
@@ -102,7 +102,7 @@
             0,
             -2147483648});
             this.numX.Name = "numX";
-            this.numX.Size = new System.Drawing.Size(50, 21);
+            this.numX.Size = new System.Drawing.Size(50, 23);
             this.numX.TabIndex = 3;
             this.numX.Value = new decimal(new int[] {
             10,
@@ -129,7 +129,7 @@
             0,
             -2147483648});
             this.numY.Name = "numY";
-            this.numY.Size = new System.Drawing.Size(50, 21);
+            this.numY.Size = new System.Drawing.Size(50, 23);
             this.numY.TabIndex = 3;
             this.numY.Value = new decimal(new int[] {
             300,
@@ -156,7 +156,7 @@
             0,
             -2147483648});
             this.numSpacing.Name = "numSpacing";
-            this.numSpacing.Size = new System.Drawing.Size(50, 21);
+            this.numSpacing.Size = new System.Drawing.Size(50, 23);
             this.numSpacing.TabIndex = 3;
             this.numSpacing.Value = new decimal(new int[] {
             20,
@@ -167,36 +167,36 @@
             // lblX
             // 
             this.lblX.AutoSize = true;
-            this.lblX.Location = new System.Drawing.Point(9, 19);
+            this.lblX.Location = new System.Drawing.Point(10, 14);
             this.lblX.Name = "lblX";
-            this.lblX.Size = new System.Drawing.Size(25, 13);
+            this.lblX.Size = new System.Drawing.Size(28, 17);
             this.lblX.TabIndex = 4;
             this.lblX.Text = "X：";
             // 
             // lblY
             // 
             this.lblY.AutoSize = true;
-            this.lblY.Location = new System.Drawing.Point(83, 19);
+            this.lblY.Location = new System.Drawing.Point(85, 16);
             this.lblY.Name = "lblY";
-            this.lblY.Size = new System.Drawing.Size(25, 13);
+            this.lblY.Size = new System.Drawing.Size(27, 17);
             this.lblY.TabIndex = 4;
             this.lblY.Text = "Y：";
             // 
             // lblSp
             // 
             this.lblSp.AutoSize = true;
-            this.lblSp.Location = new System.Drawing.Point(158, 19);
+            this.lblSp.Location = new System.Drawing.Point(159, 15);
             this.lblSp.Name = "lblSp";
-            this.lblSp.Size = new System.Drawing.Size(43, 13);
+            this.lblSp.Size = new System.Drawing.Size(44, 17);
             this.lblSp.TabIndex = 4;
             this.lblSp.Text = "间隔：";
             // 
             // lblText
             // 
             this.lblText.AutoSize = true;
-            this.lblText.Location = new System.Drawing.Point(524, 19);
+            this.lblText.Location = new System.Drawing.Point(524, 15);
             this.lblText.Name = "lblText";
-            this.lblText.Size = new System.Drawing.Size(43, 13);
+            this.lblText.Size = new System.Drawing.Size(44, 17);
             this.lblText.TabIndex = 4;
             this.lblText.Text = "文本：";
             // 
@@ -209,20 +209,20 @@
             this.pnl.Controls.Add(this.numWidth);
             this.pnl.Controls.Add(this.tbFont);
             this.pnl.Controls.Add(this.numY);
-            this.pnl.Controls.Add(this.lblWidth);
-            this.pnl.Controls.Add(this.lblY);
             this.pnl.Controls.Add(this.numX);
             this.pnl.Controls.Add(this.numSpacing);
-            this.pnl.Controls.Add(this.lblFont);
-            this.pnl.Controls.Add(this.lblSp);
-            this.pnl.Controls.Add(this.lblX);
             this.pnl.Controls.Add(this.btnFont);
             this.pnl.Controls.Add(this.btnOK);
             this.pnl.Controls.Add(this.tbWords);
+            this.pnl.Controls.Add(this.lblWidth);
+            this.pnl.Controls.Add(this.lblY);
+            this.pnl.Controls.Add(this.lblFont);
+            this.pnl.Controls.Add(this.lblSp);
+            this.pnl.Controls.Add(this.lblX);
             this.pnl.Controls.Add(this.lblText);
-            this.pnl.Location = new System.Drawing.Point(-8, 568);
+            this.pnl.Location = new System.Drawing.Point(-8, 513);
             this.pnl.Name = "pnl";
-            this.pnl.Size = new System.Drawing.Size(811, 56);
+            this.pnl.Size = new System.Drawing.Size(1203, 56);
             this.pnl.TabIndex = 5;
             // 
             // numWidth
@@ -235,7 +235,7 @@
             0,
             65536});
             this.numWidth.Name = "numWidth";
-            this.numWidth.Size = new System.Drawing.Size(50, 21);
+            this.numWidth.Size = new System.Drawing.Size(50, 23);
             this.numWidth.TabIndex = 3;
             this.numWidth.Value = new decimal(new int[] {
             1,
@@ -249,25 +249,25 @@
             this.tbFont.Location = new System.Drawing.Point(288, 13);
             this.tbFont.Name = "tbFont";
             this.tbFont.ReadOnly = true;
-            this.tbFont.Size = new System.Drawing.Size(100, 21);
+            this.tbFont.Size = new System.Drawing.Size(100, 23);
             this.tbFont.TabIndex = 1;
             this.tbFont.DoubleClick += new System.EventHandler(this.tbFont_DoubleClick);
             // 
             // lblWidth
             // 
             this.lblWidth.AutoSize = true;
-            this.lblWidth.Location = new System.Drawing.Point(430, 19);
+            this.lblWidth.Location = new System.Drawing.Point(430, 15);
             this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(43, 13);
+            this.lblWidth.Size = new System.Drawing.Size(44, 17);
             this.lblWidth.TabIndex = 4;
             this.lblWidth.Text = "线宽：";
             // 
             // lblFont
             // 
             this.lblFont.AutoSize = true;
-            this.lblFont.Location = new System.Drawing.Point(250, 19);
+            this.lblFont.Location = new System.Drawing.Point(252, 15);
             this.lblFont.Name = "lblFont";
-            this.lblFont.Size = new System.Drawing.Size(43, 13);
+            this.lblFont.Size = new System.Drawing.Size(44, 17);
             this.lblFont.TabIndex = 4;
             this.lblFont.Text = "字体：";
             // 
@@ -283,13 +283,13 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(792, 616);
+            this.ClientSize = new System.Drawing.Size(1184, 561);
             this.Controls.Add(this.pnl);
             this.Controls.Add(this.tvList);
-            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
