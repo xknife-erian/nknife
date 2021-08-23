@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Common.Logging;
-using Microsoft.International.Converters.PinYinConverter;
 using NKnife.Chinese;
 
 namespace NKnife.App.TouchInputKnife.Commons.Pinyin
