@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
-namespace Aarhus.Front.Sudoku
+﻿namespace NKnife.App.Sudoku
 {
     public static class MainService
     {

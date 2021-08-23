@@ -1,5 +1,4 @@
 ﻿using NKnife.App.Sudoku.Controls;
-using NKnife.GUI.WinForm;
 
 namespace NKnife.App.Sudoku.Forms
 {
@@ -64,7 +63,7 @@ namespace NKnife.App.Sudoku.Forms
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this._RuntimeTabPage = new System.Windows.Forms.TabPage();
-            this.numericLedBox1 = new NumericLedBox();
+            this.numericLedBox1 = new NKnife.Win.Forms.NumericLedBox();
             this.menuStrip1.SuspendLayout();
             this._MainToolStrip.SuspendLayout();
             this._SplitContainer.Panel2.SuspendLayout();
@@ -406,7 +405,7 @@ namespace NKnife.App.Sudoku.Forms
         private System.Windows.Forms.ToolStripButton 打印PToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripButton 帮助LToolStripButton;
-        private NumericLedBox numericLedBox1;
+        private NKnife.Win.Forms.NumericLedBox numericLedBox1;
         private System.Windows.Forms.ToolStripMenuItem 文件FToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于AToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using Aarhus.Front.Sudoku;
 using NKnife.App.Sudoku.Forms;
 
-namespace NKnife.Tools.Sudoku
+namespace NKnife.App.Sudoku
 {
 	/// <summary>
 	/// Class with program entry point.

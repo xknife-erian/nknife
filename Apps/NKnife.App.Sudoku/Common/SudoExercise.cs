@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Xml;
+using NKnife.XML;
 
 namespace NKnife.App.Sudoku.Common
 {
@@ -59,17 +60,17 @@ namespace NKnife.App.Sudoku.Common
         internal static SudoExercise Parse(XmlElement element)
         {
             SudoExercise exercise = new SudoExercise();
-            exercise.ID             = XmlHelper.GetElementByName(element, "ID").InnerText;
-            exercise.CreaterEmail   = XmlHelper.GetElementByName(element, "CreaterEmail").InnerText;
-            exercise.PlayerEmail    = XmlHelper.GetElementByName(element, "PlayerEmail").InnerText;
-            exercise.SingleExercise = XmlHelper.GetElementByName(element, "Exercise").InnerText;
-            exercise.Solution       = XmlHelper.GetElementByName(element, "Solution").InnerText;
-            string durationString   = XmlHelper.GetElementByName(element, "SolveDuration").InnerText;
+            exercise.ID             = element.GetElementByName("ID").InnerText;
+            exercise.CreaterEmail   = element.GetElementByName("CreaterEmail").InnerText;
+            exercise.PlayerEmail    = element.GetElementByName("PlayerEmail").InnerText;
+            exercise.SingleExercise = element.GetElementByName("Exercise").InnerText;
+            exercise.Solution       = element.GetElementByName("Solution").InnerText;
+            string durationString   = element.GetElementByName("SolveDuration").InnerText;
             if (string.IsNullOrEmpty(durationString) || durationString == "0")
             {
                 exercise.SolveDuration = DateTime.Parse(durationString);
             }
-            exercise.SolveTime      = int.Parse(XmlHelper.GetElementByName(element, "SolveTime").InnerText);
+            exercise.SolveTime      = int.Parse(element.GetElementByName("SolveTime").InnerText);
             return exercise;
         }
 
