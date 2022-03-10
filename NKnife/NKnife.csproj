@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>21.1.0.430</AssemblyVersion>
-    <FileVersion>21.1.0.430</FileVersion>
-    <Version>21.1.0</Version>
+    <AssemblyVersion>22.0.0.310</AssemblyVersion>
+    <FileVersion>22.0.0.310</FileVersion>
+    <Version>22.0.0</Version>
     <Authors>lukan@xknife.net</Authors>
     <Company>xknife.net</Company>
     <Description>一个面向.Net的综合开发库。</Description>
