@@ -27,6 +27,7 @@ namespace NKnife.NLog.WinForm
         private Tuple<Color, Color> _warnColor = new Tuple<Color, Color>(Color.Black, Color.Khaki);
 
         private Level _selfLevel;
+        private Font _viewFont;
 
         public LoggerListView()
         {
@@ -35,7 +36,7 @@ namespace NKnife.NLog.WinForm
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             UpdateStyles();
             InitializeComponent();
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Dpi;
             Font = new Font(FONT_FAMILY_NAME, 8.25F);
 
             #region Menu Checked
@@ -82,6 +83,19 @@ namespace NKnife.NLog.WinForm
                 _WarnMenuItem.Checked = level.HasFlag(Level.Warn);
                 _ErrorMenuItem.Checked = level.HasFlag(Level.Error);
                 _FatalMenuItem.Checked = level.HasFlag(Level.Fatal);
+            }
+        }
+
+        /// <summary>
+        /// 日志主显示容器的字体
+        /// </summary>
+        public Font ViewFont
+        {
+            get => _viewFont;
+            set
+            {
+                _viewFont = value;
+                _ListView.Font = value;
             }
         }
 
