@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using NKnife.NLog.WinForm.Util;
@@ -16,7 +17,6 @@ namespace NKnife.NLog.WinForm
     public partial class LoggerListView : UserControl
     {
         private static readonly ILogger _Logger = LogManager.GetCurrentClassLogger();
-        private const string FONT_FAMILY_NAME = "Microsoft YaHei UI";
         private readonly LoggerListViewViewModel _viewModel;
 
         private Tuple<Color, Color> _debugColor = new Tuple<Color, Color>(Color.DarkSlateBlue, Color.White);
@@ -27,7 +27,7 @@ namespace NKnife.NLog.WinForm
         private Tuple<Color, Color> _warnColor = new Tuple<Color, Color>(Color.Black, Color.Khaki);
 
         private Level _selfLevel;
-        private Font _viewFont;
+        private Font _viewFont = new Font(new FontFamily("微软雅黑"), 9F);
 
         public LoggerListView()
         {
@@ -37,7 +37,6 @@ namespace NKnife.NLog.WinForm
             UpdateStyles();
             InitializeComponent();
             AutoScaleMode = AutoScaleMode.Dpi;
-            Font = new Font(FONT_FAMILY_NAME, 8.25F);
 
             #region Menu Checked
 
@@ -51,10 +50,10 @@ namespace NKnife.NLog.WinForm
             #endregion
 
             SizeChanged += (s, e) => { SetViewColumnSize(); };
+            SetListViewFont(_viewFont);
             _MaxViewCountTextBox.Text = MaxDisplayCount.ToString();
             _ListView.MouseDoubleClick += LoggerListViewDouble_Click;
             _MaxViewCountTextBox.TextChanged += MaxViewCountTextBox_TextChanged;
-            _ListView.Font = new Font(FONT_FAMILY_NAME, 9.5F);
             _viewModel.LogInfos.CollectionChanged += LogInfos_CollectionChanged;
             _viewModel.MaxViewCountChanged += (s, e) =>
             {
@@ -69,6 +68,11 @@ namespace NKnife.NLog.WinForm
                 }
             };
             _viewModel.CurrentLevelChanged += (s, e) => { SetLevelButtonState(); };
+        }
+
+        private void SetListViewFont(Font viewFont)
+        {
+            _ListView.Font = viewFont;
         }
 
         private void SetLevelButtonState()
@@ -96,6 +100,7 @@ namespace NKnife.NLog.WinForm
             {
                 _viewFont = value;
                 _ListView.Font = value;
+                SetListViewFont(value);
             }
         }
 
@@ -268,7 +273,6 @@ namespace NKnife.NLog.WinForm
         private ListViewItem BuildItem(CustomLogInfo info)
         {
             var viewItem = new ListViewItem();
-            viewItem.Font = new Font("Microsoft YaHei Mono", 10F);
             viewItem.Tag = info.LogInfo;
             viewItem.Text = info.DateTime.ToString("HH:mm:ss.fff");
             viewItem.SubItems.Add(new ListViewItem.ListViewSubItem(viewItem, info.LogInfo.FormattedMessage));

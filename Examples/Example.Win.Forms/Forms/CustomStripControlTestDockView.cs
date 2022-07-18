@@ -1,4 +1,5 @@
-﻿using WeifenLuo.WinFormsUI.Docking;
+﻿using System.Drawing;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace NKnife.Win.Forms.Kit.Forms
 {
@@ -9,6 +10,8 @@ namespace NKnife.Win.Forms.Kit.Forms
             InitializeComponent();
             _Checkbox.CheckBox.CheckedChanged += (s, e) => checkBox1.Checked = _Checkbox.CheckBox.Checked;
             _DateTimePicker.DateTimePicker.ValueChanged += (s, e) => textBox1.Text = _DateTimePicker.DateTimePicker.Value.ToString();
+
+            _FontListView.Font = new Font(new FontFamily("微软雅黑"), 10F);
         }
     }
 }
