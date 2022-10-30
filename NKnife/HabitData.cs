@@ -17,7 +17,10 @@ namespace NKnife
         protected string _FileName;
         protected string _UserApplicationDataPath;
 
-        protected HabitData()
+        /// <summary>
+        ///     实例化用户习惯数据操作类。
+        /// </summary>
+        public HabitData()
         {
             Load();
         }
@@ -55,7 +58,7 @@ namespace NKnife
                     var path = Environment.GetFolderPath(FOLDER);
                     var namespaceStr = Assembly.GetEntryAssembly()?.GetName().Name;
                     if (string.IsNullOrWhiteSpace(namespaceStr))
-                        namespaceStr = "xknife";
+                        namespaceStr = "nknife";
                     var subPath = namespaceStr.Replace('.', '\\').Insert(0, "\\");
                     _UserApplicationDataPath = path + subPath;
                     if (!Directory.Exists(_UserApplicationDataPath))
@@ -76,7 +79,7 @@ namespace NKnife
         {
             value = null;
             var ele = GetElement(localName);
-            if (ele == null) 
+            if (ele == null)
                 return false;
             var innerText = ele.InnerText;
             if (!string.IsNullOrEmpty(innerText))
@@ -91,7 +94,6 @@ namespace NKnife
 
             return true;
         }
-
 
         /// <summary>
         ///     按指定的名称获取选项值，如果该值无法获取，将保存指定的默认值

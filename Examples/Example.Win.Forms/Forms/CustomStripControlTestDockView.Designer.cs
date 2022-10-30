@@ -30,19 +30,33 @@ namespace NKnife.Win.Forms.Kit.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomStripControlTestDockView));
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "1",
+            "Window",
+            "View Sub Item",
+            "宝塔山是革命圣地延安的重要标志和象征"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "2",
+            "Framework ",
+            "For a full description",
+            "Unit of Work是用来解决领域模型存储和变更工作"}, -1);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this._Checkbox = new NKnife.Win.Forms.ToolStripCheckBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._DateTimePicker = new NKnife.Win.Forms.ToolStripDateTimePicker();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.multipleImageToolStrip1 = new NKnife.Win.Forms.MultipleImageToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.label2 = new System.Windows.Forms.Label();
+            this._FontListView = new System.Windows.Forms.ListView();
+            this.h1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.h2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.h3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.h4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -80,6 +94,11 @@ namespace NKnife.Win.Forms.Kit.Forms
             this._DateTimePicker.Size = new System.Drawing.Size(130, 23);
             this._DateTimePicker.Text = "2017年3月7日";
             this._DateTimePicker.ToolStripDateTimePickerEnabled = true;
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 26);
             // 
             // checkBox1
             // 
@@ -123,18 +142,12 @@ namespace NKnife.Win.Forms.Kit.Forms
             this.label1.TabIndex = 3;
             this.label1.Text = "与工具栏的日期互动:";
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 26);
-            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.multipleImageToolStrip1);
             this.groupBox2.Location = new System.Drawing.Point(32, 177);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(626, 152);
+            this.groupBox2.Size = new System.Drawing.Size(626, 85);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "MultipleImageToolStrip";
@@ -163,20 +176,50 @@ namespace NKnife.Win.Forms.Kit.Forms
             this.toolStripButton1.Size = new System.Drawing.Size(52, 52);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
-            // label2
+            // _FontListView
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 89);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
+            this._FontListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.h1,
+            this.h2,
+            this.h3,
+            this.h4});
+            this._FontListView.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this._FontListView.FullRowSelect = true;
+            this._FontListView.GridLines = true;
+            this._FontListView.HideSelection = false;
+            this._FontListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2});
+            this._FontListView.Location = new System.Drawing.Point(32, 268);
+            this._FontListView.Name = "_FontListView";
+            this._FontListView.Size = new System.Drawing.Size(626, 98);
+            this._FontListView.TabIndex = 5;
+            this._FontListView.UseCompatibleStateImageBehavior = false;
+            this._FontListView.View = System.Windows.Forms.View.Details;
+            // 
+            // h1
+            // 
+            this.h1.Text = "编号";
+            // 
+            // h2
+            // 
+            this.h2.Width = 100;
+            // 
+            // h3
+            // 
+            this.h3.Width = 120;
+            // 
+            // h4
+            // 
+            this.h4.Text = "汉字";
+            this.h4.Width = 300;
             // 
             // CustomStripControlTestDockView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(692, 456);
+            this.Controls.Add(this._FontListView);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -206,8 +249,12 @@ namespace NKnife.Win.Forms.Kit.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label2;
         private MultipleImageToolStrip multipleImageToolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ListView _FontListView;
+        private System.Windows.Forms.ColumnHeader h1;
+        private System.Windows.Forms.ColumnHeader h2;
+        private System.Windows.Forms.ColumnHeader h3;
+        private System.Windows.Forms.ColumnHeader h4;
     }
 }

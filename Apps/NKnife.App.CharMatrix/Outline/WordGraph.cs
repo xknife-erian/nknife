@@ -34,7 +34,7 @@ namespace NKnife.App.CharMatrix.Outline
                 IntPtr buffer = Marshal.AllocHGlobal(bufferSize);
                 try
                 {
-                    int ret = GdiNativeMethods.GetGlyphOutline(hdc, uChar, GGO_NATIVE, out lpGlyph, (uint)bufferSize, buffer, ref mat2);
+                    int ret = GdiNativeMethods.GetGlyphOutline(hdc, uChar, GGO_NATIVE, out lpGlyph, (uint) bufferSize, buffer, ref mat2);
                     if (ret > 0)
                     {
                         //构建轮廓
@@ -84,11 +84,11 @@ namespace NKnife.App.CharMatrix.Outline
 
             //轮廓的多边形列表
             IList<DPolygon> polygons = outline.Polygons;
-            
+
             while (offset < bufferSize)
             {
                 //多边形头信息
-                TTPOLYGONHEADER header = (TTPOLYGONHEADER)Marshal.PtrToStructure(new IntPtr(ptr + offset), typeof(TTPOLYGONHEADER));
+                TTPOLYGONHEADER header = (TTPOLYGONHEADER) Marshal.PtrToStructure(new IntPtr(ptr + offset), typeof(TTPOLYGONHEADER));
                 //构建多边形
                 DPolygon polygon = new DPolygon(header.dwType);
                 //起始点
@@ -101,7 +101,7 @@ namespace NKnife.App.CharMatrix.Outline
                 while (offset < endCurvesIndex)
                 {
                     //线段信息
-                    TTPOLYCURVEHEAD lineHeader = (TTPOLYCURVEHEAD)Marshal.PtrToStructure(new IntPtr(ptr + offset), typeof(TTPOLYCURVEHEAD));
+                    TTPOLYCURVEHEAD lineHeader = (TTPOLYCURVEHEAD) Marshal.PtrToStructure(new IntPtr(ptr + offset), typeof(TTPOLYCURVEHEAD));
                     //偏移到点序列首地址
                     offset += lineSize;
 
@@ -111,16 +111,18 @@ namespace NKnife.App.CharMatrix.Outline
                     //读取点序列，加入线段中
                     for (int i = 0; i < lineHeader.cpfx; i++)
                     {
-                        POINTFX point = (POINTFX)Marshal.PtrToStructure(new IntPtr(ptr + offset), typeof(POINTFX));
+                        POINTFX point = (POINTFX) Marshal.PtrToStructure(new IntPtr(ptr + offset), typeof(POINTFX));
                         //将点加入线段
                         line.Points.Add(point);
 
                         //偏移
                         offset += pointFxSize;
                     }
+
                     //将线加入多边形
                     polygon.Lines.Add(line);
                 }
+
                 //将多边形加入轮廓
                 polygons.Add(polygon);
             }
@@ -135,21 +137,14 @@ namespace NKnife.App.CharMatrix.Outline
         public static DOutline GetOutline(uint uChar, Font font)
         {
             //画板
-            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
-            IntPtr hdc = g.GetHdc();
+            using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
+            {
+                IntPtr hdc = g.GetHdc();
 
-            //将字体选入场景
-            IntPtr fontPtr = font.ToHfont();
-            GdiNativeMethods.SelectObject(hdc, fontPtr);
-            try
-            {
+                //将字体选入场景
+                IntPtr fontPtr = font.ToHfont();
+                GdiNativeMethods.SelectObject(hdc, fontPtr);
                 return GetOutline(hdc, uChar);
-            }
-            finally
-            {
-                //关闭字体句柄，释放场景
-                GdiNativeMethods.CloseHandle(fontPtr);
-                g.ReleaseHdc(hdc);
             }
         }
     }

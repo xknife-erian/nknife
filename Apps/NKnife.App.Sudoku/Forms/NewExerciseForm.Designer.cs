@@ -1,5 +1,4 @@
-﻿using NKnife.GUI.WinForm;
-
+﻿
 namespace NKnife.App.Sudoku.Forms
 {
     partial class NewExerciseForm
@@ -30,7 +29,7 @@ namespace NKnife.App.Sudoku.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this._ExerciseTextBox = new QuickTextBox();
+            this._ExerciseTextBox = new NKnife.Win.Forms.QuickTextBox();
             this._CancleButton = new System.Windows.Forms.Button();
             this._AcceptButton = new System.Windows.Forms.Button();
             this._ClearButton = new System.Windows.Forms.Button();
@@ -113,7 +112,7 @@ namespace NKnife.App.Sudoku.Forms
 
         #endregion
 
-        private QuickTextBox _ExerciseTextBox;
+        private NKnife.Win.Forms.QuickTextBox _ExerciseTextBox;
         private System.Windows.Forms.Button _CancleButton;
         private System.Windows.Forms.Button _AcceptButton;
         private System.Windows.Forms.Button _ClearButton;

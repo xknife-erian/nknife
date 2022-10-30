@@ -14,9 +14,6 @@ namespace NKnife.NLog.WinForm.Util
 
         /// <summary>非本线程安全访问控件
         /// </summary>
-        /// <param name="control">The control.</param>
-        /// <param name="handler">The handler.</param>
-        /// <param name="async"> </param>
         public static void ThreadSafeInvoke(this Control control, InvokeHandler handler, bool async)
         {
             if (control.InvokeRequired)

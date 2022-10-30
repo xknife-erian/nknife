@@ -14,7 +14,7 @@ namespace NKnife.App.Sudoku.Common
 
         public void CreatDoExerciseElement(SudoDifficulty difficulty, SudoExercise exercise)
         {
-            XmlDocument rootDoc = (XmlDocument)(this.BaseXmlNode);
+            XmlDocument rootDoc = (XmlDocument)(this._BaseXmlNode);
             XmlElement dataElement = rootDoc.CreateElement("data");
 
             XmlElement dataChildElement;
@@ -68,7 +68,7 @@ namespace NKnife.App.Sudoku.Common
 
         private XmlElement GetDifficultyElement(SudoDifficulty difficulty)
         {
-            return XmlHelper.GetElementByName(this.DocumentElement.SelectSingleNode("Do"), difficulty.ToString());
+            return this.DocumentElement.SelectSingleNode("Do").GetElementByName(difficulty.ToString());
         }
 
     }
