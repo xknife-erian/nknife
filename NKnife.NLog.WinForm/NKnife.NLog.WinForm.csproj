@@ -33,10 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-<<<<<<< HEAD
-=======
     <DocumentationFile>bin\Release\NKnife.NLog.WinForm.xml</DocumentationFile>
->>>>>>> develop
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
