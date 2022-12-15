@@ -88,6 +88,30 @@ namespace NKnife.UnitTests
             hd2.GetValue(ExcelIsMultiFile, null).Should().Be($"{ExcelIsMultiFile}---{ExcelIsMultiFile}");
             hd2.GetValue(TableSavePath, null).Should().Be($"{TableSavePath}---{TableSavePath}");
         }
+
+
+        [Fact]
+        public void Test05()
+        {
+            var folder = Environment.SpecialFolder.Desktop;
+            var path = Environment.GetFolderPath(folder);
+            var name = "Habit-UnitTest.xml";
+            var fi = new FileInfo($"{path}\\{name}");
+
+            var hd1 = new HabitData(fi);
+            hd1.SetValue("aa", "a-123456");
+            hd1.SetValue("bb", "b-987654");
+            hd1.GetValue("aa", null).Should().Be("a-123456");
+            hd1.GetValue("bb", null).Should().Be("b-987654");
+
+            var hd2 = new HabitData(fi);
+            hd2.GetValue("aa", null).Should().Be("a-123456");
+            hd2.GetValue("bb", null).Should().Be("b-987654");
+            hd2.SetValue("aa", "xyz-123");
+            hd2.SetValue("bb", "abc-789");
+            hd2.GetValue("aa", null).Should().Be("xyz-123");
+            hd2.GetValue("bb", null).Should().Be("abc-789");
+        }
     }
 
 }
