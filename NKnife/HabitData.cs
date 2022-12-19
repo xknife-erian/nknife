@@ -14,14 +14,42 @@ namespace NKnife
     public class HabitData
     {
         private const Environment.SpecialFolder FOLDER = Environment.SpecialFolder.ApplicationData;
-        protected string _FileName;
-        protected string _UserApplicationDataPath;
+
+        /// <summary>
+        ///     文件名
+        /// </summary>
+        protected string _fileName;
+
+        /// <summary>
+        ///     应用程序的数据路径
+        /// </summary>
+        protected string _userApplicationDataPath;
 
         /// <summary>
         ///     实例化用户习惯数据操作类。
         /// </summary>
         public HabitData()
         {
+            Load();
+        }
+
+        /// <summary>
+        ///     实例化用户习惯数据操作类。
+        /// </summary>
+        /// <param name="fileName">用户习惯数据文件名</param>
+        public HabitData(string fileName)
+        {
+            _fileName = BuildFilePath(fileName);
+            Load();
+        }
+
+        /// <summary>
+        ///     实例化用户习惯数据操作类。
+        /// </summary>
+        /// <param name="file">用户习惯数据文件名</param>
+        public HabitData(FileInfo file)
+        {
+            _fileName = file.FullName;
             Load();
         }
 
@@ -39,9 +67,9 @@ namespace NKnife
         {
             get
             {
-                if (string.IsNullOrEmpty(_FileName))
-                    _FileName = UserApplicationDataPath + "\\" + GetType().Name + ".habit";
-                return _FileName;
+                if (string.IsNullOrEmpty(_fileName))
+                    _fileName = BuildFilePath(GetType().Name);
+                return _fileName;
             }
         }
 
@@ -53,20 +81,30 @@ namespace NKnife
         {
             get
             {
-                if (string.IsNullOrEmpty(_UserApplicationDataPath))
+                if (string.IsNullOrEmpty(_userApplicationDataPath))
                 {
                     var path = Environment.GetFolderPath(FOLDER);
                     var namespaceStr = Assembly.GetEntryAssembly()?.GetName().Name;
                     if (string.IsNullOrWhiteSpace(namespaceStr))
                         namespaceStr = "nknife";
                     var subPath = namespaceStr.Replace('.', '\\').Insert(0, "\\");
-                    _UserApplicationDataPath = path + subPath;
-                    if (!Directory.Exists(_UserApplicationDataPath))
-                        UtilFile.CreateDirectory(_UserApplicationDataPath);
+                    _userApplicationDataPath = path + subPath;
+                    if (!Directory.Exists(_userApplicationDataPath))
+                        UtilFile.CreateDirectory(_userApplicationDataPath);
                 }
 
-                return _UserApplicationDataPath;
+                return _userApplicationDataPath;
             }
+        }
+
+        /// <summary>
+        /// 根据文件主名称构建文件路径
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected virtual string BuildFilePath(string name)
+        {
+            return $"{UserApplicationDataPath}\\{name}.habit";
         }
 
         /// <summary>
@@ -130,7 +168,7 @@ namespace NKnife
         /// <summary>
         ///     加载选项文件
         /// </summary>
-        public void Load()
+        public virtual void Load()
         {
             if (!File.Exists(FileName))
             {
@@ -146,7 +184,7 @@ namespace NKnife
         /// <summary>
         ///     持久化选项文件
         /// </summary>
-        public void Save()
+        public virtual void Save()
         {
             if (string.IsNullOrEmpty(FileName))
             {
@@ -182,7 +220,7 @@ namespace NKnife
                     Save();
                 }
 
-                return (XmlElement) node;
+                return (XmlElement)node;
             }
 
             return null;
