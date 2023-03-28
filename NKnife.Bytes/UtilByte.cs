@@ -48,10 +48,10 @@ namespace NKnife.Bytes
         /// <param name="index">32位数据的从右向左的偏移位索引(0~31)</param>
         /// <param name="bitValue">true设该位为1,false设为0</param>
         /// <returns>返回位设定后的值</returns>
-        public static int SetBitValue(int value, short index, bool bitValue)
+        public static int SetBitValue(int value, ushort index, bool bitValue)
         {
             if (index > 31) throw new ArgumentOutOfRangeException(nameof(index)); //索引出错
-            if (index <= 0) throw new ArgumentOutOfRangeException(nameof(index));
+            if (index < 0) throw new ArgumentOutOfRangeException(nameof(index));
             var val = 1 << index;
             return bitValue ? value | val : value & ~val;
         }

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NKnife.Bytes.UnitTests
 {
-    public class UtilByteTest
+    public class UtilByteToBytesTest
     {
         [Fact]
         public void ConvertToBytesTest1()
@@ -89,3 +89,5 @@ namespace NKnife.Bytes.UnitTests
         }
     }
 }
+
+
