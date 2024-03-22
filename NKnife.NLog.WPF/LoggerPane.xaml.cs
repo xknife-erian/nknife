@@ -35,7 +35,17 @@ namespace NKnife.NLog.WPF
             throw new NotImplementedException();
         }
 
-        public event EventHandler<EventArgs> ItemAdded;
+        public event EventHandler<LogEventInfoEventArgs> ItemAdded;
+    }
+
+    public class LogEventInfoEventArgs : EventArgs
+    {
+        public LogEventInfoEventArgs(LogEventInfo logEventInfo)
+        {
+            LogEventInfo = logEventInfo;
+        }
+
+        public LogEventInfo LogEventInfo { get; }
     }
 
     public class LogLevel2VisibilityConverter : IValueConverter

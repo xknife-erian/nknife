@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 using NLog;
 
 namespace NKnife.NLog.WPF;
 
 public sealed class LogStack
 {
-    private const int MAX_VIEW_COUNT = 5000;
-    public static Action<Action>? UIDispatcher { get; set; }
+    /// <summary>
+    /// 最大显示数量
+    /// </summary>
+    public static int MaxViewCount { get; set; } = 2000;
 
     /// <summary>
     /// 被界面绑定的集合
@@ -20,10 +23,10 @@ public sealed class LogStack
     /// </summary>
     public void AddLog(LogEventInfo logEventInfo)
     {
-        UIDispatcher?.Invoke(() =>
+        UiDispatcher?.Invoke(() =>
         {
             Logs.Insert(0, logEventInfo);
-            SizeCollection(Logs, MAX_VIEW_COUNT);
+            SizeCollection(Logs, MaxViewCount);
         });
     }
 
@@ -34,7 +37,7 @@ public sealed class LogStack
     /// <param name="size">指定大小</param>
     private static void SizeCollection<T>(IList<T> collection, int size)
     {
-        if (collection.Count >= size)
+        while (collection.Count >= size)
             for (var i = 0; i < collection.Count - size; i++)
                 collection.RemoveAt(collection.Count - 1);
     }
@@ -46,11 +49,26 @@ public sealed class LogStack
     /// </summary>
     /// <value>The instance.</value>
     public static LogStack Instance => s_myInstance.Value;
-    
-    private static readonly Lazy<LogStack> s_myInstance = new(() => new LogStack());
 
+    private static readonly Lazy<LogStack> s_myInstance = new(() => new LogStack());
+    private static Dispatcher _dispatcher;
+    private static Action<Action> UiDispatcher => CheckBeginInvokeOnUI;
+
+    /// <summary>
+    ///   对于UI线程上的其他操作
+    /// </summary>
+    private static void CheckBeginInvokeOnUI(Action action)
+    {
+        if (action == null)
+            return;
+        if (_dispatcher!.CheckAccess())
+            action();
+        else
+            _dispatcher.BeginInvoke(action);
+    }
     private LogStack()
     {
+        _dispatcher = Dispatcher.CurrentDispatcher;
     }
 
     #endregion

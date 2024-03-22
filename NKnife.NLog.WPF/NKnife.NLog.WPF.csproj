@@ -60,10 +60,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NLogViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="BasicNotifyPropertyObject.cs" />
     <Compile Include="LogEventViewModel.cs" />
     <Compile Include="LoggerDetailDialog.xaml.cs">
@@ -75,11 +71,6 @@
     </Compile>
     <Compile Include="LoggerPaneVm.cs" />
     <Compile Include="LogStack.cs" />
-    <Compile Include="NLogEvent.cs" />
-    <Compile Include="NLogViewer.xaml.cs">
-      <DependentUpon>NLogViewer.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NLogViewerTarget.cs" />

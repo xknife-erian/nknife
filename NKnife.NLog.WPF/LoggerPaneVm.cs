@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using NLog;
 
 namespace NKnife.NLog.WPF
@@ -23,7 +24,7 @@ namespace NKnife.NLog.WPF
 
         public LoggerPaneVm() : base()
         {
-            Logs  = LogStack.Instance.Logs;
+            Logs = LogStack.Instance.Logs;
         }
 
         public ObservableCollection<LogEventInfo> Logs { get; }
@@ -57,11 +58,14 @@ namespace NKnife.NLog.WPF
         public string CallerHeader { get; set; } = "Caller";
         public string LevelHeader { get; set; } = "Level";
         public string MessageHeader { get; set; } = "Message";
+
         public LogEventInfo CurrentLogger
         {
             get => _currentLogger;
             set => SetProperty(ref _currentLogger, value);
         }
+
+        public ICommand ClearAllLogCommand => new RelayCommand((_) => { Logs.Clear(); });
 
         // public ICommand LoggerItemClickCommand => new RelayCommand<LogEventInfo>(log =>
         // {
@@ -70,7 +74,6 @@ namespace NKnife.NLog.WPF
         // });
         //
         //
-        // public ICommand ClearAllLogCommand => new RelayCommand(() => { Logs.Clear(); });
         //
         // public ICommand ViewSizeChangedCommand => new RelayCommand<double>(AdjustColumnWidth);
         //
@@ -120,17 +123,19 @@ namespace NKnife.NLog.WPF
         }
 
         #region AutoWidth
+
         private double _viewWidth = -1;
 
         private void AdjustColumnWidth(double w)
         {
-            if(Math.Abs(_viewWidth - w) <= 0) return;
-            if(_viewWidth < 0)
+            if (Math.Abs(_viewWidth - w) <= 0) return;
+            if (_viewWidth < 0)
                 _viewWidth = w;
             var yw = (w - TimeWidth - LevelWidth) / 10;
             MessageWidth = yw * 7;
-            CallerWidth  = yw * 2.75;
+            CallerWidth = yw * 2.75;
         }
+
         #endregion
     }
 }

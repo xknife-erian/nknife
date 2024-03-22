@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
+using NKnife.NLog.WPF;
 
 namespace Sample.NF462
 {
@@ -11,5 +12,8 @@ namespace Sample.NF462
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+        }
     }
 }

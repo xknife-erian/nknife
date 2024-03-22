@@ -36,16 +36,11 @@ namespace Sample
             log.Log(level, tbLogText.Text);
         }
 
-        private void OnLogMessageItemAdded(object o, EventArgs args)
+        private void OnLogMessageItemAdded(object o, LogEventInfoEventArgs args)
         {
-            LogEventInfo logInfo = (NLogEvent)args;
+            LogEventInfo logInfo = args.LogEventInfo;
             if (logInfo.Level >= LogLevel.Error)
                 SystemSounds.Beep.Play();
-        }
-
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            _LogCtrl_.Clear();
         }
 
         private void TopScroll_Click(object sender, RoutedEventArgs e)

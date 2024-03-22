@@ -27,7 +27,6 @@
         <GroupBox Grid.Row="1" Header="Functions">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Height="32">
-                    <Button Margin="1,4,0,0" Padding="10,0" Content="Clear" Click="Clear_Click" />
                     <Button Margin="6,4,0,0" Padding="10,0" Content="Scroll Top" Click="TopScroll_Click" />
                     <Button Margin="6,4,0,0" Padding="10,0" Content="Scroll Bottom" Click="BottomScroll_Click" />
                     <CheckBox x:Name="_CbAutoScroll_" Margin="6,4,0,0" Padding="10,0" Content="Scroll To Last" HorizontalAlignment="Left"
