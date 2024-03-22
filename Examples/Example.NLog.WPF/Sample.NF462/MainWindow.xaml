@@ -44,13 +44,7 @@
         </GroupBox>
 
         <GroupBox Grid.Row="3" Header="NLog WPF Viewer">
-            <nlog:NLogViewer x:Name="_LogCtrl_" 
-                                TimeHeader="时间"
-                                TimeWidth="140" 
-                                LoggerNameWidth="50" 
-                                LevelWidth="56"
-                                ExceptionWidth="0" 
-                                MessageWidth="280" ExceptionHeader="异常" LevelHeader="等级" LoggerNameHeader="发生" MessageHeader="信息" />
+            <nlog:LoggerPane x:Name="_LogCtrl_"></nlog:LoggerPane>
         </GroupBox>
 
     </Grid>

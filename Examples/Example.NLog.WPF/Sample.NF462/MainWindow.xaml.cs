@@ -38,7 +38,6 @@ namespace Sample
 
         private void OnLogMessageItemAdded(object o, EventArgs args)
         {
-            // Do what you want :)
             LogEventInfo logInfo = (NLogEvent)args;
             if (logInfo.Level >= LogLevel.Error)
                 SystemSounds.Beep.Play();
