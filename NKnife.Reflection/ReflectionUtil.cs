@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace NKnife.Reflection
 {
-    public class UtilReflection
+    public class ReflectionUtil
     {
         /// <summary>
         ///     通过反射执行指定对象的指定方法

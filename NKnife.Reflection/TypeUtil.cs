@@ -12,12 +12,12 @@ namespace NKnife.Reflection
     /// <summary>
     ///     面向C#定义的Type的工具方法集合
     /// </summary>
-    public static class UtilType
+    public static class TypeUtil
     {
         /// <summary>
         /// 每次搜索Type是比较耗时的，在这里采用一个字典进行缓存
         /// </summary>
-        private static readonly Dictionary<string, Dictionary<string, Type>> _AppTypes = new Dictionary<string, Dictionary<string, Type>>();
+        private static readonly Dictionary<string, Dictionary<string, Type>> s_appTypes = new Dictionary<string, Dictionary<string, Type>>();
 
         /// <summary>在指定的目录中查找指定的类型
         /// </summary>
@@ -33,19 +33,19 @@ namespace NKnife.Reflection
                 throw new DirectoryNotFoundException(path + "不存在");
 
             Dictionary<string, Type> typeMap;
-            if (!_AppTypes.ContainsKey(path))
+            if (!s_appTypes.ContainsKey(path))
             {
                 typeMap = FindTypeMap(path);
-                _AppTypes.Add(path, typeMap);
+                s_appTypes.Add(path, typeMap);
             }
             else
             {
-                typeMap = _AppTypes[path];
+                typeMap = s_appTypes[path];
             }
 
-            if (typeMap != null && typeMap.ContainsKey(typeName))
+            if (typeMap != null && typeMap.TryGetValue(typeName, out var type))
             {
-                return typeMap[typeName];
+                return type;
             }
 
             return null;
@@ -66,14 +66,14 @@ namespace NKnife.Reflection
         /// <returns></returns>
         public static Dictionary<string, Type> FindTypeMap(string path)
         {
-            if (_AppTypes.ContainsKey(path))
-                return _AppTypes[path];
+            if (s_appTypes.TryGetValue(path, out var map))
+                return map;
 
             if (!Directory.Exists(path))
                 throw new DirectoryNotFoundException(path + "目录不存在。");
 
             var typeMap = new Dictionary<string, Type>();
-            var assemblies = UtilAssembly.SearchForAssembliesInDirectory(path);
+            var assemblies = AssemblyUtil.SearchForAssembliesInDirectory(path);
             foreach (var assembly in assemblies)
             {
                 Type[] types;
@@ -107,12 +107,12 @@ namespace NKnife.Reflection
         /// <returns></returns>
         public static IEnumerable<Type> FindTypesByDirectory(string path, Type targetType, bool isGenericTypeInterface = false, bool containAbstract = false)
         {
-            if (!_AppTypes.ContainsKey(path))
+            if (!s_appTypes.ContainsKey(path))
             {
-                _AppTypes.Add(path, FindTypeMap(path));
+                s_appTypes.Add(path, FindTypeMap(path));
             }
 
-            var typeMap = _AppTypes[path];
+            var typeMap = s_appTypes[path];
             var list = new List<Type>();
             foreach (var type in typeMap.Values)
             {
@@ -146,7 +146,7 @@ namespace NKnife.Reflection
         public static T[] FindAttributes<T>(string appStartPath) where T : Attribute
         {
             var typeList = new List<T>();
-            Assembly[] assArray = UtilAssembly.SearchForAssembliesInDirectory(appStartPath);
+            Assembly[] assArray = AssemblyUtil.SearchForAssembliesInDirectory(appStartPath);
             if (assArray == null || assArray.Length <= 0)
                 return typeList.ToArray();
 
@@ -182,7 +182,7 @@ namespace NKnife.Reflection
         public static List<Tuple<T, Type>> FindAttributeMap<T>(string appStartPath) where T : Attribute
         {
             var list = new List<Tuple<T, Type>>();
-            Assembly[] assArray = UtilAssembly.SearchForAssembliesInDirectory(appStartPath);
+            Assembly[] assArray = AssemblyUtil.SearchForAssembliesInDirectory(appStartPath);
             if (assArray == null || assArray.Length <= 0)
                 return list;
 
@@ -224,7 +224,7 @@ namespace NKnife.Reflection
         public static Type[] FindAttributesByDirectory(string appStartPath, Type targetAttribute)
         {
             var typeList = new List<Type>();
-            Assembly[] assArray = UtilAssembly.SearchForAssembliesInDirectory(appStartPath);
+            Assembly[] assArray = AssemblyUtil.SearchForAssembliesInDirectory(appStartPath);
             if (assArray == null || assArray.Length <= 0)
                 return typeList.ToArray();
 
@@ -261,7 +261,7 @@ namespace NKnife.Reflection
             var list = new List<T>();
             if (assemblies == null)
             {
-                assemblies = UtilAssembly.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory);
+                assemblies = AssemblyUtil.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory);
             }
 
             Parallel.ForEach(assemblies, assembly =>
@@ -289,8 +289,8 @@ namespace NKnife.Reflection
             {
                 StackFrame f = t.GetFrame(i);
                 var m = (MethodInfo) f.GetMethod();
-                var a = Attribute.GetCustomAttributes(m, typeof(T)) as T[];
-                if (a != null && a.Length > 0)
+
+                if (Attribute.GetCustomAttributes(m, typeof(T)) is T[] { Length: > 0 } a)
                 {
                     list.AddRange(a);
                     if (!includeAll)

@@ -30,14 +30,14 @@ namespace NKnife.Reflection.UnitTests
         [Fact]
         public void SearchForAssembliesInDirectoryTest1()
         {
-            var assemblies = UtilAssembly.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, "Abc*.dll");
+            var assemblies = AssemblyUtil.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, "Abc*.dll");
             assemblies.Length.Should().Be(4);
         }
 
         [Fact]
         public void SearchForAssembliesInDirectoryTest2()
         {
-            var assemblies = UtilAssembly.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, "Abc*.dll");
+            var assemblies = AssemblyUtil.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, "Abc*.dll");
 
             var exe = Assembly.GetExecutingAssembly();
             var names = exe.GetReferencedAssemblies();
@@ -109,14 +109,14 @@ namespace NKnife.Reflection.UnitTests
         [Fact]
         public void SearchForAssembliesInDirectoryTest3()
         {
-            var assemblies = UtilAssembly.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, "Abc.Nf*.dll");
+            var assemblies = AssemblyUtil.SearchForAssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, "Abc.Nf*.dll");
             assemblies.Length.Should().Be(1);
         }
 
         [Fact]
         public void FindAssemblyTest01()
         {
-            var ass = UtilAssembly.FindAssembly("");
+            var ass = AssemblyUtil.FindAssembly("");
         }
 
         [Fact]
@@ -125,43 +125,43 @@ namespace NKnife.Reflection.UnitTests
             var suffixNames = new[] {"abc", "xyz"};
 
             var fileName = "hello.exe";
-            var b = UtilAssembly.EndsWithSuffixNames(fileName);
+            var b = AssemblyUtil.EndsWithSuffixNames(fileName);
             b.Should().BeTrue();
 
             fileName = "hello.dll";
-            b = UtilAssembly.EndsWithSuffixNames(fileName);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName);
             b.Should().BeTrue();
 
             fileName = "hello.a";
-            b = UtilAssembly.EndsWithSuffixNames(fileName);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName);
             b.Should().BeFalse();      
             
             fileName = "hello.b";
-            b = UtilAssembly.EndsWithSuffixNames(fileName);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName);
             b.Should().BeFalse();   
             
             fileName = "hello.c";
-            b = UtilAssembly.EndsWithSuffixNames(fileName);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName);
             b.Should().BeFalse();   
 
             fileName = "hello.abc";
-            b = UtilAssembly.EndsWithSuffixNames(fileName);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName);
             b.Should().BeFalse();
 
             fileName = "hello.abc";
-            b = UtilAssembly.EndsWithSuffixNames(fileName, suffixNames);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName, suffixNames);
             b.Should().BeTrue();
 
             fileName = "hello.abcd";
-            b = UtilAssembly.EndsWithSuffixNames(fileName, suffixNames);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName, suffixNames);
             b.Should().BeFalse();
 
             fileName = "hello.xyz";
-            b = UtilAssembly.EndsWithSuffixNames(fileName, suffixNames);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName, suffixNames);
             b.Should().BeTrue();
 
             fileName = "hello.xyzz";
-            b = UtilAssembly.EndsWithSuffixNames(fileName, suffixNames);
+            b = AssemblyUtil.EndsWithSuffixNames(fileName, suffixNames);
             b.Should().BeFalse();
         }
     }

@@ -11,7 +11,7 @@ namespace NKnife.Reflection
     /// <summary>
     ///     面向程序集文件的工具库
     /// </summary>
-    public static class UtilAssembly
+    public static class AssemblyUtil
     {
         private static readonly IDictionary<string, Assembly> _AssMap = new Dictionary<string, Assembly>();
 

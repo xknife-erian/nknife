@@ -124,7 +124,7 @@ namespace NKnife.Reflection.UnitTests
         [Fact]
         public void FindTypeTest()
         {
-            var ass = UtilAssembly.FindAssembly(nameof(Abc.ClassLibrary3));
+            var ass = AssemblyUtil.FindAssembly(nameof(Abc.ClassLibrary3));
             var type = ass.FindType(typeof(HelloWorld).FullName);
             type.Should().Be<HelloWorld>();
         }
