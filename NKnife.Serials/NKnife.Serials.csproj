@@ -22,16 +22,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="——\SerialChannel.cs" />
+    <Compile Remove="——\SerialChannelMap.cs" />
+    <Compile Remove="——\SerialQuestion.cs" />
+    <Compile Remove="——\SerialQuestionPool.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="——\SerialChannel.cs" />
+    <None Include="——\SerialChannelMap.cs" />
+    <None Include="——\SerialQuestion.cs" />
+    <None Include="——\SerialQuestionPool.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NLog" Version="5.3.2" />
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="——\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NKnife.Bytes\NKnife.Bytes.csproj" />
+    <ProjectReference Include="..\NKnife.CRC\NKnife.CRC.csproj" />
     <ProjectReference Include="..\NKnife\NKnife.csproj" />
   </ItemGroup>
 

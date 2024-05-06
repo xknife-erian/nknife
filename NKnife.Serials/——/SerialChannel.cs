@@ -8,6 +8,7 @@ using NKnife.Channels.EventParams;
 using NKnife.Events;
 using NKnife.Interface;
 using NKnife.Jobs;
+using NKnife.Serials;
 
 namespace NKnife.Channels.Serial
 {

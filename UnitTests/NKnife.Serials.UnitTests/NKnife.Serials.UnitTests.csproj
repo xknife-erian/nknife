@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NKnife.CRC\NKnife.CRC.csproj" />
     <ProjectReference Include="..\..\NKnife.Serials\NKnife.Serials.csproj" />
   </ItemGroup>
 

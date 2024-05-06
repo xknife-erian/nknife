@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using NKnife.Channel.Interfaces;
 using NKnife.Interface;
 using Xunit;
 

@@ -85,6 +85,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.CRC", "NKnife.CRC\NKnife.CRC.csproj", "{C8B4E171-49EC-4A71-9868-DD3CFF82946F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Channel", "NKnife.Channel\NKnife.Channel.csproj", "{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -215,6 +219,14 @@ Global
 		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B4E171-49EC-4A71-9868-DD3CFF82946F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B4E171-49EC-4A71-9868-DD3CFF82946F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B4E171-49EC-4A71-9868-DD3CFF82946F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B4E171-49EC-4A71-9868-DD3CFF82946F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
