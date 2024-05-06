@@ -5,13 +5,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using static System.String;
 
 namespace NKnife.Util
 {
     /// <summary>
     /// 有关字符串String的扩展方法
     /// </summary>
-    public static class UtilString
+    public static class StringUtil
     {
         public static string TidyUtf8(byte[] data)
         {
@@ -60,7 +61,7 @@ namespace NKnife.Util
                 }
                 catch
                 {
-                    Debug.Fail(string.Format("属性“{0}”取值时异常", i.Name));
+                    Debug.Fail($"属性“{i.Name}”取值时异常");
                 }
                 sb.Append(Environment.NewLine);
             }
@@ -76,7 +77,7 @@ namespace NKnife.Util
             string[] kv = msg.Split('&');
             foreach (string item in kv)
             {
-                if (String.IsNullOrEmpty(item))
+                if (IsNullOrEmpty(item))
                 {
                     continue;
                 }
@@ -94,7 +95,7 @@ namespace NKnife.Util
                     var rab = new StringBuilder();
                     for (int i = 1; i < ab.Length; i++)
                     {
-                        if (String.IsNullOrEmpty(ab[i]))
+                        if (IsNullOrEmpty(ab[i]))
                             continue;
                         rab.Append(ab[i]).Append("#");
                     }

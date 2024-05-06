@@ -28,4 +28,8 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\NKnife.NLog.WPF\NKnife.NLog.WPF.csproj" />
+  </ItemGroup>
+
 </Project>

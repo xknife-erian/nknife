@@ -95,7 +95,7 @@ namespace System
         /// <returns>清除后返回的字符串</returns>
         public static string TrimBr(this string str)
         {
-            for (Match m = UtilRegex.Br.Match(str); m.Success; m = m.NextMatch())
+            for (Match m = RegexUtil.Br.Match(str); m.Success; m = m.NextMatch())
                 str = str.Replace(m.Groups[0].ToString(), "");
             return str;
         }

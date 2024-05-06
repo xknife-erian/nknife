@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NKnife.Util
 {
-    public static class UtilEquals
+    public static class EqualsUtil
     {
 
         static public bool PairEquals<T>(T a, T b) where T : class

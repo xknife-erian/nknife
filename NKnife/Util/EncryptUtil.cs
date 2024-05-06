@@ -2,15 +2,14 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using NKnife.Util;
 
-namespace NKnife.Encrypt
+namespace NKnife.Util
 {
     /// <summary>
     ///     针对加解密方法的扩展
     ///     2009-12-17 17:56:04
     /// </summary>
-    public class UtilityEncrypt
+    public class EncryptUtil
     {
         /// <summary>
         ///     本框架设定的缺省密钥字符串，只读状态。一般不建议使用。
@@ -20,7 +19,7 @@ namespace NKnife.Encrypt
         /// <summary>
         ///     默认密钥向量
         /// </summary>
-        private static readonly byte[] Keys = {0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF};
+        private static readonly byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
         /// <summary>
         ///     自动生成一个密钥。
@@ -29,7 +28,7 @@ namespace NKnife.Encrypt
         public static string GenerateKey()
         {
             // Create an instance of Symetric Algorithm. Key and IV is generated automatically.  
-            var desCrypto = (DESCryptoServiceProvider) DES.Create();
+            var desCrypto = (DESCryptoServiceProvider)DES.Create();
             // Use the Automatically generated key for Encryption.  
             return Encoding.ASCII.GetString(desCrypto.Key);
         }
@@ -42,7 +41,7 @@ namespace NKnife.Encrypt
         public static string Md5Encrypt(string strIn)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] tmpByte = md5.ComputeHash(StringToBytes(strIn));
+            var tmpByte = md5.ComputeHash(StringToBytes(strIn));
             md5.Clear();
 
             return BytesToString(tmpByte);
@@ -57,7 +56,7 @@ namespace NKnife.Encrypt
         {
             SHA1 sha1 = new SHA1CryptoServiceProvider();
 
-            byte[] tmpByte = sha1.ComputeHash(StringToBytes(strIn));
+            var tmpByte = sha1.ComputeHash(StringToBytes(strIn));
             sha1.Clear();
 
             return BytesToString(tmpByte);
@@ -73,7 +72,7 @@ namespace NKnife.Encrypt
             //string strIN = getstrIN(strIN);
             SHA256 sha256 = new SHA256Managed();
 
-            byte[] tmpByte = sha256.ComputeHash(StringToBytes(strIn));
+            var tmpByte = sha256.ComputeHash(StringToBytes(strIn));
             sha256.Clear();
 
             return BytesToString(tmpByte);
@@ -89,7 +88,7 @@ namespace NKnife.Encrypt
             //string strIN = getstrIN(strIN);
             SHA512 sha512 = new SHA512Managed();
 
-            byte[] tmpByte = sha512.ComputeHash(StringToBytes(strIn));
+            var tmpByte = sha512.ComputeHash(StringToBytes(strIn));
             sha512.Clear();
 
             return BytesToString(tmpByte);
@@ -103,7 +102,7 @@ namespace NKnife.Encrypt
         private static string BytesToString(byte[] byteValue)
         {
             var sb = new StringBuilder();
-            for (int i = 0; i < byteValue.Length; i++)
+            for (var i = 0; i < byteValue.Length; i++)
             {
                 sb.Append(byteValue[i].ToString("x2"));
             }
@@ -129,11 +128,11 @@ namespace NKnife.Encrypt
         /// <returns>加密成功返回加密后的字符串,失败返回源串</returns>
         public static string DesEncrypt(string encryptString, string encryptKey)
         {
-            encryptKey = UtilString.GetSubString(encryptKey, 0, 8, "");
+            encryptKey = StringUtil.GetSubString(encryptKey, 0, 8, "");
             encryptKey = encryptKey.PadRight(8, ' ');
-            byte[] rgbKey = Encoding.UTF8.GetBytes(encryptKey.Substring(0, 8));
-            byte[] rgbIv = Keys;
-            byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
+            var rgbKey = Encoding.UTF8.GetBytes(encryptKey.Substring(0, 8));
+            var rgbIv = Keys;
+            var inputByteArray = Encoding.UTF8.GetBytes(encryptString);
             var dCsp = new DESCryptoServiceProvider();
             var mStream = new MemoryStream();
             var cStream = new CryptoStream(mStream, dCsp.CreateEncryptor(rgbKey, rgbIv), CryptoStreamMode.Write);
@@ -152,11 +151,11 @@ namespace NKnife.Encrypt
         {
             try
             {
-                decryptKey = UtilString.GetSubString(decryptKey, 0, 8, "");
+                decryptKey = StringUtil.GetSubString(decryptKey, 0, 8, "");
                 decryptKey = decryptKey.PadRight(8, ' ');
-                byte[] rgbKey = Encoding.UTF8.GetBytes(decryptKey);
-                byte[] rgbIv = Keys;
-                byte[] inputByteArray = Convert.FromBase64String(decryptString);
+                var rgbKey = Encoding.UTF8.GetBytes(decryptKey);
+                var rgbIv = Keys;
+                var inputByteArray = Convert.FromBase64String(decryptString);
                 var dcsp = new DESCryptoServiceProvider();
 
                 var mStream = new MemoryStream();
@@ -174,39 +173,38 @@ namespace NKnife.Encrypt
         /// <summary>
         ///     加密文件
         /// </summary>
-        /// <param name="sInputFilename">要加密的文件</param>
-        /// <param name="sOutputFilename">加密后保存的文件</param>
-        /// <param name="sKey">密钥</param>
+        /// <param name="inputFilename">要加密的文件</param>
+        /// <param name="outputFilename">加密后保存的文件</param>
+        /// <param name="key">密钥</param>
         public static void EncryptFile(string inputFilename, string outputFilename, string key)
         {
-            using (var fsInput = new FileStream(inputFilename, FileMode.Open, FileAccess.Read))
-            {
-                var bytearrayinput = new byte[fsInput.Length];
-                fsInput.Read(bytearrayinput, 0, bytearrayinput.Length);
-                fsInput.Close();
+            using var fsInput = new FileStream(inputFilename, FileMode.Open, FileAccess.Read);
 
-                var fsEncrypted = new FileStream(outputFilename,
-                    FileMode.OpenOrCreate,
-                    FileAccess.Write);
-                var des = new DESCryptoServiceProvider();
+            var buffer = new byte[fsInput.Length];
+            var read   = fsInput.Read(buffer, 0, buffer.Length);
+            fsInput.Close();
 
-                des.Key = Encoding.ASCII.GetBytes(key);
-                des.IV = Encoding.ASCII.GetBytes(key);
+            var fsEncrypted = new FileStream(outputFilename,
+                                             FileMode.OpenOrCreate,
+                                             FileAccess.Write);
+            var des = new DESCryptoServiceProvider();
 
-                ICryptoTransform desencrypt = des.CreateEncryptor();
-                var cryptostream = new CryptoStream(fsEncrypted, desencrypt, CryptoStreamMode.Write);
-                cryptostream.Write(bytearrayinput, 0, bytearrayinput.Length);
-                cryptostream.Close();
-                fsEncrypted.Close();
-            }
+            des.Key = Encoding.ASCII.GetBytes(key);
+            des.IV  = Encoding.ASCII.GetBytes(key);
+
+            var desEncrypt   = des.CreateEncryptor();
+            var cryptoStream = new CryptoStream(fsEncrypted, desEncrypt, CryptoStreamMode.Write);
+            cryptoStream.Write(buffer, 0, buffer.Length);
+            cryptoStream.Close();
+            fsEncrypted.Close();
         }
 
         /// <summary>
         ///     解密文件
         /// </summary>
-        /// <param name="sInputFilename">要解密的文件</param>
-        /// <param name="sOutputFilename">解决后保存的文件</param>
-        /// <param name="sKey">密钥</param>
+        /// <param name="inputFilename">要加密的文件</param>
+        /// <param name="outputFilename">加密后保存的文件</param>
+        /// <param name="key">密钥</param>
         public static void DecryptFile(string inputFilename, string outputFilename, string key)
         {
             var des = new DESCryptoServiceProvider();
@@ -220,7 +218,7 @@ namespace NKnife.Encrypt
             using (var fsread = new FileStream(inputFilename, FileMode.Open, FileAccess.Read))
             {
                 //Create a DES decryptor from the DES instance.  
-                ICryptoTransform desdecrypt = des.CreateDecryptor();
+                var desdecrypt = des.CreateDecryptor();
                 //Create crypto stream set to read and do a  
                 //DES decryption transform on incoming bytes.  
                 var cryptostreamDecr = new CryptoStream(fsread, desdecrypt, CryptoStreamMode.Read);
@@ -235,8 +233,8 @@ namespace NKnife.Encrypt
         /// <summary>
         ///     解密文件
         /// </summary>
-        /// <param name="sInputFilename">要解密的文件路径</param>
-        /// <param name="sKey">密钥</param>
+        /// <param name="inputFilename">要加密的文件</param>
+        /// <param name="key">密钥</param>
         /// <returns>返回内容</returns>
         public static string DecryptFile(string inputFilename, string key)
         {
@@ -255,7 +253,7 @@ namespace NKnife.Encrypt
                 fsread.Flush();
                 fsread.Close();
                 //Create a DES decryptor from the DES instance.  
-                ICryptoTransform desdecrypt = des.CreateDecryptor();
+                var desdecrypt = des.CreateDecryptor();
                 var ms = new MemoryStream();
                 var cryptostreamDecr = new CryptoStream(ms, desdecrypt, CryptoStreamMode.Write);
                 cryptostreamDecr.Write(byt, 0, byt.Length);

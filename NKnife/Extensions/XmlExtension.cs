@@ -356,6 +356,28 @@ namespace System.Xml
         }
 
         /// <summary>
+        ///     清除所有<see cref="XmlNodeType"/>为<see cref="XmlCDataSection"/>的子节点
+        /// </summary>
+        /// <param name="node">所有子节点的父节点</param>
+        public static void RemoveAllCDataSection(this XmlNode node)
+        {
+            if (!(node is XmlElement)
+                || node.ChildNodes.Count <= 0)
+                return;
+            var nodesToRemoveSet = new List<XmlNode>();//要删除的节点集合
+            foreach (var childNode in node.ChildNodes)
+            {
+                if (childNode is XmlCDataSection xmlCDataSection)
+                    nodesToRemoveSet.Add(xmlCDataSection);//添加到要删除的节点集合
+            }
+
+            foreach (var xmlNode in nodesToRemoveSet)
+            {
+                node.RemoveChild(xmlNode);
+            }
+        }
+
+        /// <summary>
         ///     获得一个XmlNode的CData节点(当他有时，如无，将返回Null)
         /// </summary>
         /// <param name="childNode">The child node.</param>
@@ -403,7 +425,7 @@ namespace System.Xml
                 ele = element.OwnerDocument.CreateElement(localName);
                 if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
                     ele.InnerText = value.ToString();
-                if (!UtilCollection.IsNullOrEmpty(attributes))
+                if (!CollectionUtil.IsNullOrEmpty(attributes))
                 {
                     foreach (var attribute in attributes)
                     {

@@ -6,13 +6,13 @@ using Xunit;
 
 namespace NKnife.UnitTests.Util
 {
-    public class UtilRandomTest
+    public class RandomUtilTest
     {
         [Fact]
         public void RandomStringTest()
         {
             int length = 999;
-            var str = UtilRandom.GetRandomString(length);
+            var str = RandomUtil.GetRandomString(length);
             str.Length.Should().Be(length);
         }
 
@@ -21,7 +21,7 @@ namespace NKnife.UnitTests.Util
         {
             for (int i = 0; i < 10000; i++)
             {
-                var input = UtilRandom.GetString(100, UtilRandom.RandomCharType.Number);
+                var input = RandomUtil.GetString(100, RandomUtil.RandomCharType.Number);
                 Regex.IsMatch(input, @"^\d{100}$").Should().BeTrue(input);
             }
         }

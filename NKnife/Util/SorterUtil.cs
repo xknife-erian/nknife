@@ -7,7 +7,7 @@ namespace NKnife.Util
     /// <summary>  
     /// 排序帮助类（包括对string[],int[],datatable,T[]进行排序）  
     /// </summary>  
-    public class UtilSorter
+    public class SorterUtil
     {
         /// <summary>  
         /// 对int数组进行排序  

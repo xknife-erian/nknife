@@ -341,7 +341,7 @@ namespace NKnife.Zip
                                     // make sure the folder exists
                                     if (!Directory.Exists(lpFolder))
                                     {
-                                        UtilFile.CreateDirectory(lpFolder);
+                                        FileUtil.CreateDirectory(lpFolder);
                                     }
 
                                     // read from fsTemp and write out the file

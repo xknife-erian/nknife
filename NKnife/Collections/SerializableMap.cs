@@ -27,12 +27,12 @@ namespace NKnife.Collections
 
         protected XmlSerializer ValueSerializer
         {
-            get { return UtilSerialize.GetSerializer(typeof(TV)); }
+            get { return SerializeUtil.GetSerializer(typeof(TV)); }
         }
 
         private XmlSerializer KeySerializer
         {
-            get { return UtilSerialize.GetSerializer(typeof(TK)); }
+            get { return SerializeUtil.GetSerializer(typeof(TK)); }
         }
 
         #endregion

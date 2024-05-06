@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace NKnife.Util
 {
-    public static class UtilSerialize
+    public static class SerializeUtil
     {
         private static readonly ConcurrentDictionary<string, XmlSerializer> _SerializerMap = new ConcurrentDictionary<string, XmlSerializer>();
 

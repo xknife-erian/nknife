@@ -12,15 +12,15 @@ namespace NKnife.Util
     /// <summary>
     ///     文件与目录等System.IO下的类的扩展
     /// </summary>
-    public static class UtilFile
+    public static class FileUtil
     {
         /// <summary>
         ///     路径分割符
         /// </summary>
-        private const string PathSplitChar = "\\";
+        private const string PATH_SPLIT_CHAR = "\\";
+        private const int MAX_PATH_LENGTH = 260;
 
-        private static readonly char[] _Separators = {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar};
-        public static readonly int MaxPathLength = 260;
+        private static readonly char[] s_separators = [Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar, Path.VolumeSeparatorChar];
 
         /// <summary>
         ///     扩展Path.Combine方法，可以合并多个路径字符串.
@@ -35,7 +35,7 @@ namespace NKnife.Util
             }
             if (paths.Length >= 32)
             {
-                throw new ArgumentOutOfRangeException("paths", "路径字段太多，可能导致系统IO错误");
+                throw new ArgumentOutOfRangeException(nameof(paths), @"路径字段太多，可能导致系统IO错误");
             }
 
             string result = paths[0];
@@ -51,7 +51,7 @@ namespace NKnife.Util
         /// </summary>
         public static bool IsValidFileName(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName) || fileName.Length >= MaxPathLength)
+            if (string.IsNullOrEmpty(fileName) || fileName.Length >= MAX_PATH_LENGTH)
             {
                 return false;
             }
@@ -181,13 +181,13 @@ namespace NKnife.Util
             foreach (string fileName in Directory.GetFiles(targetDir))
             {
                 XmlElement childElement = doc.CreateElement("File");
-                childElement.InnerText = fileName.Substring(fileName.LastIndexOf(PathSplitChar) + 1);
+                childElement.InnerText = fileName.Substring(fileName.LastIndexOf(PATH_SPLIT_CHAR) + 1);
                 rootElement.AppendChild(childElement);
             }
             foreach (string directory in Directory.GetDirectories(targetDir))
             {
                 XmlElement childElement = doc.CreateElement("Directory");
-                childElement.SetAttribute("Name", directory.Substring(directory.LastIndexOf(PathSplitChar) + 1));
+                childElement.SetAttribute("Name", directory.Substring(directory.LastIndexOf(PATH_SPLIT_CHAR) + 1));
                 rootElement.AppendChild(childElement);
                 CreateBranch(directory, childElement, doc);
             }
@@ -205,13 +205,13 @@ namespace NKnife.Util
             foreach (string fileName in Directory.GetFiles(targetDir))
             {
                 XmlElement childElement = myDocument.CreateElement("File");
-                childElement.InnerText = fileName.Substring(fileName.LastIndexOf(PathSplitChar) + 1);
+                childElement.InnerText = fileName.Substring(fileName.LastIndexOf(PATH_SPLIT_CHAR) + 1);
                 xmlNode.AppendChild(childElement);
             }
             foreach (string directory in Directory.GetDirectories(targetDir))
             {
                 XmlElement childElement = myDocument.CreateElement("Directory");
-                childElement.SetAttribute("Name", directory.Substring(directory.LastIndexOf(PathSplitChar) + 1));
+                childElement.SetAttribute("Name", directory.Substring(directory.LastIndexOf(PATH_SPLIT_CHAR) + 1));
                 xmlNode.AppendChild(childElement);
                 CreateBranch(directory, childElement, myDocument);
             }
@@ -284,7 +284,7 @@ namespace NKnife.Util
             //复制当前目录文件
             foreach (string sourceFileName in Directory.GetFiles(sourceDir))
             {
-                string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PathSplitChar) + 1));
+                string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PATH_SPLIT_CHAR) + 1));
                 if (File.Exists(targetFileName))
                 {
                     if (overWrite)
@@ -304,7 +304,7 @@ namespace NKnife.Util
             {
                 foreach (string sourceSubDir in Directory.GetDirectories(sourceDir))
                 {
-                    string targetSubDir = Path.Combine(targetDir, sourceSubDir.Substring(sourceSubDir.LastIndexOf(PathSplitChar) + 1));
+                    string targetSubDir = Path.Combine(targetDir, sourceSubDir.Substring(sourceSubDir.LastIndexOf(PATH_SPLIT_CHAR) + 1));
                     if (!Directory.Exists(targetSubDir))
                         Directory.CreateDirectory(targetSubDir);
                     CopyFiles(sourceSubDir, targetSubDir, overWrite, true);
@@ -335,7 +335,7 @@ namespace NKnife.Util
             //移动当前目录文件
             foreach (string sourceFileName in Directory.GetFiles(sourceDir))
             {
-                string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PathSplitChar) + 1));
+                string targetFileName = Path.Combine(targetDir, sourceFileName.Substring(sourceFileName.LastIndexOf(PATH_SPLIT_CHAR) + 1));
                 if (File.Exists(targetFileName))
                 {
                     if (overWrite)
@@ -354,7 +354,7 @@ namespace NKnife.Util
             {
                 foreach (string sourceSubDir in Directory.GetDirectories(sourceDir))
                 {
-                    string targetSubDir = Path.Combine(targetDir, sourceSubDir.Substring(sourceSubDir.LastIndexOf(PathSplitChar) + 1));
+                    string targetSubDir = Path.Combine(targetDir, sourceSubDir.Substring(sourceSubDir.LastIndexOf(PATH_SPLIT_CHAR) + 1));
                     if (!Directory.Exists(targetSubDir))
                         Directory.CreateDirectory(targetSubDir);
                     MoveFiles(sourceSubDir, targetSubDir, overWrite, true);
@@ -425,7 +425,7 @@ namespace NKnife.Util
         /// <param name="subDirName">子目录名称</param>
         public static void CreateDirectory(string parentDir, string subDirName)
         {
-            CreateDirectory(parentDir + PathSplitChar + subDirName);
+            CreateDirectory(parentDir + PATH_SPLIT_CHAR + subDirName);
         }
 
         /// <summary>
@@ -508,8 +508,8 @@ namespace NKnife.Util
                 throw new ArgumentException("GetRelativePath error '" + baseDirectoryPath + "' -> '" + absPath + "'", ex);
             }
 
-            string[] bPath = baseDirectoryPath.Split(_Separators);
-            string[] aPath = absPath.Split(_Separators);
+            string[] bPath = baseDirectoryPath.Split(s_separators);
+            string[] aPath = absPath.Split(s_separators);
             int indx = 0;
             for (; indx < Math.Min(bPath.Length, aPath.Length); ++indx)
             {

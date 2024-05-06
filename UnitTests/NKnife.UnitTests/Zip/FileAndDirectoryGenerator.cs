@@ -19,7 +19,7 @@ namespace NKnife.UnitTests.Zip
         {
             var dir = new Dir(basePath);
             if (!Directory.Exists(basePath))
-                UtilFile.CreateDirectory(basePath);
+                FileUtil.CreateDirectory(basePath);
             if (txtFileCount == 0 && binaryFileCount == 0)
                 throw new ArgumentException();
             var path = basePath;

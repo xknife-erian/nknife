@@ -1,13 +1,11 @@
 ﻿using System.IO;
 using System.IO.Compression;
-using NKnife.Util;
 
-// ReSharper disable once CheckNamespace
-namespace System
+namespace NKnife.Util
 {
     /// <summary>对一些压缩方法的封装
     /// </summary>
-    public static class CompressHelper
+    public static class CompressUtil
     {
         /// <summary>判断指定的字节数组是否是被GZip压缩过的
         /// </summary>
@@ -17,9 +15,9 @@ namespace System
         /// </returns>
         public static bool IsCompressed(this byte[] bytes)
         {
-            if (UtilCollection.IsNullOrEmpty(bytes))
+            if (CollectionUtil.IsNullOrEmpty(bytes))
                 return false;
-            return (bytes[0] == 31) && (bytes[1] == 139);
+            return bytes[0] == 31 && bytes[1] == 139;
         }
 
         /// <summary>压缩指定的字节数组

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
-using NKnife.Maths;
 
 namespace NKnife.Util
 {
@@ -11,7 +10,7 @@ namespace NKnife.Util
     /// 针对.net的Random随机数生成器的扩展。
     /// 2008年9月9日16时46分
     /// </summary>
-    public class UtilRandom
+    public class RandomUtil
     {
         #region RandomCharType enum
 
@@ -70,7 +69,7 @@ namespace NKnife.Util
 
         /// <summary>构造函数
         /// </summary>
-        static UtilRandom()
+        static RandomUtil()
         {
             byte[] uintBuffer = new byte[1024];
             _RngCsp.GetBytes(uintBuffer);
@@ -228,7 +227,7 @@ namespace NKnife.Util
         {
             if (length < 1)
                 throw new ArgumentException("卡号长度不能小于1");
-            var prefixLength = UtilityMath.GetLength(prefix);
+            var prefixLength = MathUtil.GetLength(prefix);
             var sb = new StringBuilder(length);
             if (prefix > 0)
             {

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace NKnife.Util
 {
-    public static class UtilEnum
+    public static class EnumUtil
     {
         #region 通过字符串获取枚举成员实例
         /// <summary>
@@ -75,7 +75,7 @@ namespace NKnife.Util
         {
             //转成基础类型的成员值
             Type underlyingType = GetUnderlyingType(typeof(T));
-            object memberValue = UtilConvert.ConvertTo(member, underlyingType);
+            object memberValue = ConvertUtil.ConvertTo(member, underlyingType);
 
             //获取枚举成员的名称
             return Enum.GetName(typeof(T), memberValue);
@@ -109,7 +109,7 @@ namespace NKnife.Util
             T instance = GetInstance<T>(memberName);
 
             //获取枚举成员的值
-            return UtilConvert.ConvertTo(instance, underlyingType);
+            return ConvertUtil.ConvertTo(instance, underlyingType);
         }
         #endregion
 

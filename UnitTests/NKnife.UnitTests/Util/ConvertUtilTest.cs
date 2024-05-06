@@ -2,7 +2,7 @@
 
 namespace NKnife.UnitTests.Util
 {
-    public class UtilConvertTest
+    public class ConvertUtilTest
     {
         [Fact]
         public void HexToBytesTest()

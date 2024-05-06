@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace NKnife.Util
 {
-    public class UtilCollection
+    public class CollectionUtil
     {
         /// <summary>
         ///     Runs an action for all elements in the input.

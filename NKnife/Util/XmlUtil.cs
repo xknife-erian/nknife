@@ -6,14 +6,13 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 using NKnife.Base;
-using NKnife.Util;
 
-namespace NKnife.XML
+namespace NKnife.Util
 {
     /// <summary>
     ///     针对XmlDocument的一些帮助方法。静态类。
     /// </summary>
-    public static class XmlHelper
+    public static class XmlUtil
     {
         /// <summary>
         ///     创建一个新的Xml文件，如文件存在，将覆盖。
@@ -25,15 +24,24 @@ namespace NKnife.XML
         public static XmlDocument CreateNewDocument(string file, string rootNodeName, string encoding)
         {
             var doc = new XmlDocument();
-            XmlDeclaration declaration = doc.CreateXmlDeclaration("1.0", encoding, null);
-            XmlElement root = doc.CreateElement(rootNodeName);
+            var declaration = doc.CreateXmlDeclaration("1.0", encoding, null);
+            var root = doc.CreateElement(rootNodeName);
             doc.AppendChild(declaration);
             doc.AppendChild(root);
+
             if (!File.Exists(file))
             {
-                UtilFile.CreateDirectory(file.Substring(0, file.LastIndexOf(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal)));
+                var spe = Path.DirectorySeparatorChar.ToString();
+                var index = file.LastIndexOf(spe, StringComparison.Ordinal);
+
+                if (index >= 0)
+                {
+                    var dir = file.Substring(0, index);
+                    FileUtil.CreateDirectory(dir);
+                }
             }
             doc.Save(file);
+
             return doc;
         }
 

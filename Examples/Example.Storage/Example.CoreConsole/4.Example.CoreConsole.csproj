@@ -13,8 +13,8 @@
     <PackageReference Include="Autofac" Version="8.0.0" />
     <PackageReference Include="Autofac.YamlOption" Version="2.0.1" />
     <PackageReference Include="ConsoleMenuLib" Version="3.3.0" />
-    <PackageReference Include="NLog" Version="5.2.8" />
-    <PackageReference Include="NPOI" Version="2.6.2" />
+    <PackageReference Include="NLog" Version="5.3.2" />
+    <PackageReference Include="NPOI" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>

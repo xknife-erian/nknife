@@ -10,7 +10,7 @@ namespace NKnife.Util
     /// <summary>
     /// 转换抽象类
     /// </summary>
-    public static class UtilConvert
+    public static class ConvertUtil
     {
         #region ConvertMode enum
 
@@ -328,7 +328,7 @@ namespace NKnife.Util
                 if (data is T) return (T)data;
 
                 //如果目标类型是枚举
-                if (typeof(T).BaseType == typeof(Enum)) return UtilEnum.GetInstance<T>(data);
+                if (typeof(T).BaseType == typeof(Enum)) return EnumUtil.GetInstance<T>(data);
 
                 //如果数据实现了IConvertible接口，则转换类型
                 if (data is IConvertible) return (T)Convert.ChangeType(data, typeof(T));

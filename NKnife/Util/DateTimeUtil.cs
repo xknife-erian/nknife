@@ -7,7 +7,7 @@ namespace NKnife.Util
     /// <summary>
     /// 有关DateTime的扩展方法
     /// </summary>
-    public static class UtilDateTime
+    public static class DateTimeUtil
     {
         /// <summary>月份名称的字符串数组(英语)
         /// </summary>	
@@ -156,7 +156,7 @@ namespace NKnife.Util
         /// <returns>判断结果</returns>
         public static bool IsDateString(string dateValue)
         {
-            return UtilRegex.Date.IsMatch(dateValue);
+            return RegexUtil.Date.IsMatch(dateValue);
         }
 
         /// <summary>判断字符串是否是00:00:00字符串
@@ -165,7 +165,7 @@ namespace NKnife.Util
         /// <returns>判断结果</returns>
         public static bool IsTimeString(string timeValue)
         {
-            return UtilRegex.Time.IsMatch(timeValue);
+            return RegexUtil.Time.IsMatch(timeValue);
         }
 
         /// <summary>判断字符串是否是00:00:00字符串
@@ -181,7 +181,7 @@ namespace NKnife.Util
             hour = 0;
             second = 0;
             minute = 0;
-            if (UtilRegex.Time.IsMatch(timeValue))
+            if (RegexUtil.Time.IsMatch(timeValue))
             {
                 hour = int.Parse(timeValue.Substring(0, 2));
                 second = int.Parse(timeValue.Substring(3, 2));

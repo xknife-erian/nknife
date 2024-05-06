@@ -4,12 +4,12 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using FluentAssertions;
-using NKnife.XML;
+using NKnife.Util;
 using Xunit;
 
 namespace NKnife.UnitTests.XML
 {
-    public class XmlHelperTest
+    public class XmlUtilTest
     {
         [Fact]
         public void PathSeparatorCharTest()
@@ -31,7 +31,7 @@ namespace NKnife.UnitTests.XML
             var path = $"d:\\---{Guid.NewGuid().ToString()}\\---abc\\---xyz\\---mn\\";
             var xmlFile = $"new---{Guid.NewGuid().ToString()}.xml";
             var xmlFileFullPath = Path.Combine(path, xmlFile);
-            XmlHelper.CreateNewDocument(xmlFileFullPath);
+            XmlUtil.CreateNewDocument(xmlFileFullPath);
             File.Exists(xmlFileFullPath).Should().BeTrue();
             var xml = new XmlDocument();
             xml.Load(xmlFileFullPath);

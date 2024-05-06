@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NKnife.Maths;
 
-namespace NKnife.Maths
+namespace NKnife.Util
 {
-    public class UtilityMath
+    public class MathUtil
     {
         #region RoundingMode enum
 
@@ -27,7 +28,7 @@ namespace NKnife.Maths
             /// 例如:1.15+1.25+1.35+1.45=5.2,若按四舍五入取一位小数计算1.2+1.3+1.4+1.5=5.4。
             /// 按"四舍六入五成双"计算,1.2+1.2+1.4+1.4=5.2,舍入后的结果更能反映实际结果。
             /// </summary>
-            Rounding4She6Ru5Chengshuang
+            Rounding4She6Ru5ChengShuang
         }
 
         #endregion
@@ -40,8 +41,8 @@ namespace NKnife.Maths
         public static int GetSequenceNumber<T>(List<T> list, int first = 1)
         {
             list.Sort();
-            int i = 0;
-            int n = 0;
+            var i = 0;
+            var n = 0;
             while (i < list.Count)
             {
                 var v = list[i];
@@ -85,9 +86,9 @@ namespace NKnife.Maths
         /// <returns></returns>
         public static decimal Round(decimal d, int decimals)
         {
-            decimal tenPow = Convert.ToDecimal(System.Math.Pow(10, decimals));
-            decimal scrD = d*tenPow + 0.5m;
-            return (Convert.ToDecimal(System.Math.Floor(Convert.ToDouble(scrD)))/tenPow);
+            var tenPow = Convert.ToDecimal(Math.Pow(10, decimals));
+            var scrD = d * tenPow + 0.5m;
+            return Convert.ToDecimal(Math.Floor(Convert.ToDouble(scrD))) / tenPow;
         }
 
         /// <summary>将一个字符类型的数字加1，如字符串"20060308"，加1后变成"20060309"。
@@ -100,10 +101,10 @@ namespace NKnife.Maths
         {
             if (numberStr == "") return "";
 
-            char[] numberChar = numberStr.ToCharArray();
-            bool isJw = true; //进位
-            int charIndex = numberStr.Length - 1;
-            string resultStr = "";
+            var numberChar = numberStr.ToCharArray();
+            var isJw = true; //进位
+            var charIndex = numberStr.Length - 1;
+            var resultStr = "";
 
             while (charIndex >= 0)
             {
@@ -117,8 +118,8 @@ namespace NKnife.Maths
                     }
                     else
                     {
-                        int asciiValue = numberStr[charIndex] + 1;
-                        var ascii = (char) asciiValue;
+                        var asciiValue = numberStr[charIndex] + 1;
+                        var ascii = (char)asciiValue;
                         resultStr = new string(ascii, 1) + resultStr;
                     }
                 }
@@ -148,7 +149,7 @@ namespace NKnife.Maths
                 return 1;
 
             BigInteger tempResult = 1;
-            for (int i = start; i <= end; i++)
+            for (var i = start; i <= end; i++)
             {
                 tempResult *= i;
             }
@@ -192,9 +193,9 @@ namespace NKnife.Maths
             {
                 throw new ArgumentOutOfRangeException("N >= R >= 1");
             }
-            BigInteger a = ContinuousMultiplication(n - r + 1, n);
-            BigInteger b = ContinuousMultiplication(2, r);
-            return a/b;
+            var a = ContinuousMultiplication(n - r + 1, n);
+            var b = ContinuousMultiplication(2, r);
+            return a / b;
         }
 
         /// <summary>[否决的，未完成的] 排列循环方法  
@@ -206,7 +207,7 @@ namespace NKnife.Maths
         {
             if (r > n || r <= 0 || n <= 0) throw new ArgumentException("params invalid!");
             long t = 1;
-            int i = n;
+            var i = n;
 
             while (i != n - r)
             {
@@ -264,7 +265,7 @@ namespace NKnife.Maths
         /// <returns></returns>  
         public static long _test_C(int n, int r)
         {
-            return _test_P1(n, r)/_test_P1(r, r);
+            return _test_P1(n, r) / _test_P1(r, r);
         }
 
         /// <summary>
@@ -283,10 +284,10 @@ namespace NKnife.Maths
         {
             var totalArray = new char[m];
             //记录排序次数  
-            int totalSortNum = 0;
+            var totalSortNum = 0;
 
             //建立 111...100...0  
-            for (int i = 0; i < m; i++)
+            for (var i = 0; i < m; i++)
             {
                 if (i < n)
                     totalArray[i] = '1';
@@ -296,20 +297,20 @@ namespace NKnife.Maths
             totalSortNum += 1;
 
             //"10"反转置换法  
-            int index = -1;
+            var index = -1;
             while ((index = ArrayToString(totalArray).IndexOf("10")) != -1)
             {
                 //交换"10"为"01"  
                 totalArray[index] = '0';
                 totalArray[index + 1] = '1';
                 //计算刚反转的"10"前面所有的'1'全部移动到最左边  
-                int count = 0;
-                for (int i = 0; i < index; i++)
+                var count = 0;
+                for (var i = 0; i < index; i++)
                 {
                     if (totalArray[i] == '1')
                         count++;
                 }
-                for (int j = 0; j < index; j++)
+                for (var j = 0; j < index; j++)
                 {
                     if (j < count)
                         totalArray[j] = '1';
@@ -323,7 +324,7 @@ namespace NKnife.Maths
         private string ArrayToString(IEnumerable<char> cs)
         {
             var sb = new StringBuilder();
-            foreach (char c in cs)
+            foreach (var c in cs)
             {
                 sb.Append(c);
             }

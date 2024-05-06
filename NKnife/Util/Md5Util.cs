@@ -1,13 +1,30 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
+using System;
 using System.Text;
 
-namespace NKnife.Encrypt
+namespace NKnife.Util
 {
-    public class FileMd5
+    public class Md5Util
     {
+        public static string Create(string input)
+        {
+            // Use input string to calculate MD5 hash
+            using var md5 = System.Security.Cryptography.MD5.Create();
+
+            var inputBytes = Encoding.ASCII.GetBytes(input);
+            var hashBytes = md5.ComputeHash(inputBytes);
+
+            // Convert the byte array to hexadecimal string
+            var sb = new StringBuilder();
+            foreach (var hashByte in hashBytes)
+            {
+                sb.Append($"{hashByte:X2}");
+            }
+            return sb.ToString();
+        }
+
         #region MD5签名验证
 
         /// <summary>
@@ -23,7 +40,7 @@ namespace NKnife.Encrypt
             {
                 var fsRead = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                 var md5File = new byte[fsRead.Length];
-                fsRead.Read(md5File, 0, (int) fsRead.Length); // 将文件流读取到Buffer中
+                fsRead.Read(md5File, 0, (int)fsRead.Length); // 将文件流读取到Buffer中
                 fsRead.Close();
 
                 if (isNeed)
@@ -42,7 +59,7 @@ namespace NKnife.Encrypt
                     fsWrite.Close();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.Fail($"AddMD5时异常.{e.Message}");
                 return false;
@@ -61,14 +78,14 @@ namespace NKnife.Encrypt
             {
                 var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                 var md5File = new byte[fileStream.Length]; // 读入文件
-                fileStream.Read(md5File, 0, (int) fileStream.Length);
+                fileStream.Read(md5File, 0, (int)fileStream.Length);
                 fileStream.Close();
 
                 string result = Md5Buffer(md5File, 0, md5File.Length - 32); // 对文件除最后32位以外的字节计算MD5，这个32是因为标签位为32位。
                 string md5 = Encoding.ASCII.GetString(md5File, md5File.Length - 32, 32); //读取文件最后32位，其中保存的就是MD5值
                 return result == md5;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.Fail($"CheckMD5时异常.{e.Message}");
                 return false;
