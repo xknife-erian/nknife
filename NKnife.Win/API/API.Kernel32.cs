@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-// ReSharper disable once CheckNamespace
 namespace NKnife.Win
 {
    public sealed partial class Api
