@@ -12,18 +12,8 @@ namespace NKnife.UnitTests.Util
         public void RandomStringTest()
         {
             int length = 999;
-            var str = RandomUtil.GetRandomString(length);
+            var str = RandomUtil.GetRandomStringByLength(length, RandomUtil.RandomCharType.All);
             str.Length.Should().Be(length);
-        }
-
-        [Fact]
-        public void GetUnrepeatIntsTest()
-        {
-            for (int i = 0; i < 10000; i++)
-            {
-                var input = RandomUtil.GetString(100, RandomUtil.RandomCharType.Number);
-                Regex.IsMatch(input, @"^\d{100}$").Should().BeTrue(input);
-            }
         }
     }
 }

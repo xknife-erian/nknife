@@ -11,9 +11,9 @@ namespace NKnife.NLog.WinForm.Example
 {
     class LeftToolboxViewViewModel
     {
-        private static readonly ILogger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger s_logger = LogManager.GetCurrentClassLogger();
 
-        private const string LogText1 =
+        private const string LOG_TEXT1 =
             "NLog is a flexible and free logging platform for various .NET platforms, including .NET standard. NLog makes it easy to write to several targets. (database, file, console) and change the logging configuration on-the-fly. ";
 
         public LeftToolboxViewViewModel()
@@ -21,7 +21,7 @@ namespace NKnife.NLog.WinForm.Example
             Application.ApplicationExit += (s, e) =>
             {
                 _loopTimer?.Stop();
-                _loop1 = false;
+                StopLoopTask();
             };
         }
 
@@ -34,12 +34,12 @@ namespace NKnife.NLog.WinForm.Example
         {
             Parallel.For(0, count, (i) =>
             {
-                _Logger.Trace($"{i}>{text} 1>>{GetLogText(30)}");
-                _Logger.Debug($"{i}>{text} 2>>{GetLogText(30)}");
-                _Logger.Info ($"{i}>{text} 3>>{GetLogText(30)}");
-                _Logger.Warn ($"{i}>{text} 4>>{GetLogText(30)}");
-                _Logger.Error($"{i}>{text} 5>>{GetLogText(30)}");
-                _Logger.Fatal($"{i}>{text} 6>>{GetLogText(30)}");
+                s_logger.Trace($"{i}>{text} 1>>{GetLogText(30)}");
+                s_logger.Debug($"{i}>{text} 2>>{GetLogText(30)}");
+                s_logger.Info ($"{i}>{text} 3>>{GetLogText(30)}");
+                s_logger.Warn ($"{i}>{text} 4>>{GetLogText(30)}");
+                s_logger.Error($"{i}>{text} 5>>{GetLogText(30)}");
+                s_logger.Fatal($"{i}>{text} 6>>{GetLogText(30)}");
             });
         }
 
@@ -50,17 +50,17 @@ namespace NKnife.NLog.WinForm.Example
 
         public void BuildOneGroup()
         {
-            _Logger.Trace($"1>>{GetLogText(30)}");
-            _Logger.Debug($"2>>{GetLogText(30)}");
-            _Logger.Info( $"3>>{GetLogText(30)}");
-            _Logger.Warn( $"4>>{GetLogText(30)}");
-            _Logger.Error($"5>>{GetLogText(30)}");
-            _Logger.Fatal($"6>>{GetLogText(30)}");
+            s_logger.Trace($"1>>{GetLogText(30)}");
+            s_logger.Debug($"2>>{GetLogText(30)}");
+            s_logger.Info( $"3>>{GetLogText(30)}");
+            s_logger.Warn( $"4>>{GetLogText(30)}");
+            s_logger.Error($"5>>{GetLogText(30)}");
+            s_logger.Fatal($"6>>{GetLogText(30)}");
         }
 
         public void BuildSingle()
         {
-            _Logger.Info($">[文字日志:]>{LogText1}");
+            s_logger.Info($">[文字日志:]>{LOG_TEXT1}");
         }
 
         public void BuildGroups(int count, string text = "")
@@ -71,29 +71,42 @@ namespace NKnife.NLog.WinForm.Example
         private Timer _loopTimer = new Timer();
         private bool _loop1 = true;
         private long _count = 0;
-        private Thread _thread;
+        private CancellationTokenSource _cancellationTokenSource = new();
 
-        public void BuildLoop1Millisecond1Log()
+
+        public async Task RunLoopTaskAsync()
         {
-            _count = 0;
-            _loop1 = true;
-            _thread = new Thread(() =>
+            _count                   = 0;
+            _loop1                   = true;
+            _cancellationTokenSource = new();
+            var token                = _cancellationTokenSource.Token;
+            await Task.Run( () =>
             {
                 while (_loop1)
                 {
-                    _Logger.Warn($"{_count}>[每1毫秒2.1条日志:]>{LogText1}");
-                    _Logger.Info($"{_count}>[每1毫秒2.2条日志:]>{LogText1}");
+                    token.ThrowIfCancellationRequested();
+                    Task.Delay(1, token);
+                    s_logger.Warn($"{_count}>[每1毫秒2.1条日志:]>{LOG_TEXT1}");
+                    s_logger.Info($"{_count}>[每1毫秒2.2条日志:]>{LOG_TEXT1}");
                     _count++;
-                    Thread.Sleep(1);
                 }
-            }) {IsBackground = true};
-            _thread.Start();
+            }, token).ContinueWith(task =>
+            {
+                if (task.IsCanceled)
+                {
+                    // Handle cancellation
+                }
+                else if (task.IsFaulted)
+                {
+                    // Handle exception
+                }
+            }, token);
         }
 
-        public void StopLoop1Millisecond1Log()
+        public void StopLoopTask()
         {
             _loop1 = false;
-            _thread.Abort();
+            _cancellationTokenSource.Cancel();
         }
 
         public void BuildLoop1Millisecond20GroupLog()

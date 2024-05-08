@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace NKnife.Util
     /// 针对.net的Random随机数生成器的扩展。
     /// 2008年9月9日16时46分
     /// </summary>
-    public class RandomUtil
+    public static class RandomUtil
     {
         #region RandomCharType enum
 
@@ -71,10 +72,7 @@ namespace NKnife.Util
         /// </summary>
         static RandomUtil()
         {
-            byte[] uintBuffer = new byte[1024];
-            _RngCsp.GetBytes(uintBuffer);
-            uint seed = BitConverter.ToUInt32(uintBuffer, 0);
-            //int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
+            int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
             Random = new Random((int)seed);
         }
 
@@ -112,109 +110,96 @@ namespace NKnife.Util
 
         /// <summary>获取一定数量的随机整数，可能会有重复。
         /// </summary>
-        /// <param name="num">需获得随机整数的数量</param>
+        /// <param name="count">需获得随机整数的数量</param>
         /// <param name="minValue">随机整数的最小值</param>
         /// <param name="maxValue">随机整数的最大值</param>
         /// <returns></returns>
-        public static int[] GetInts(int num, int minValue, int maxValue)
+        public static IEnumerable<int> GetRandomNumbersWithRepeats(int count, int minValue, int maxValue)
         {
-            var ints = new int[num];
-            for (int i = 0; i < num; i++)
+            var numList = new int[count];
+            for (int i = 0; i < count; i++)
             {
-                ints[i] = Random.Next(minValue, maxValue);
+                numList[i] = Random.Next(minValue, maxValue);
             }
-            return ints;
+            return numList;
         }
 
         /// <summary>获取一定数量不重复的随机整数。
         /// </summary>
-        /// <param name="num">需获得随机整数的数量</param>
+        /// <param name="count">需获得随机整数的数量</param>
         /// <param name="minValue">随机整数的最小值</param>
         /// <param name="maxValue">随机整数的最大值</param>
         /// <returns></returns>
-        public static int[] GetUnrepeatInts(int num, int minValue, int maxValue)
+        public static IEnumerable<int> GetRandomNumbersWithoutRepeats(int count, int minValue = 0, int maxValue = 100)
         {
-            if (num > maxValue - minValue)
+            if (minValue > maxValue || count > maxValue - minValue + 1)
             {
-                Debug.Fail("num > maxValue - minValue");
+                throw new ArgumentException("Count must be less than or equal to maxValue - minValue + 1");
             }
-            var ints = new List<int>(num);
-            for (int i = 0; i < num; i++)
+
+            List<int> allNumbers = Enumerable.Range(minValue, maxValue - minValue + 1).ToList();
+            allNumbers.Shuffle(Random);
+            return allNumbers.GetRange(0, count);
+        }
+
+        ///<summary>洗牌算法，打乱列表中的元素顺序</summary>  
+        public static void Shuffle<T>(this IList<T> list, Random rng)
+        {
+            int n = list.Count;
+
+            while (n > 1)
             {
-                bool hasValue = false;
-                while (!hasValue)
-                {
-                    int m = Random.Next(minValue, maxValue);
-                    if (!ints.Contains(m))
-                    {
-                        ints.Add(m);
-                        hasValue = true;
-                    }
-                } //while
-            } //for
-            return ints.ToArray();
+                n--;
+                int k = rng.Next(n + 1);
+                (list[k], list[n]) = (list[n], list[k]);
+            }
         }
 
         /// <summary>获取指定长度的(单字节)字符串
         /// </summary>
-        /// <param name="num">所需字符串的长度</param>
+        /// <param name="length">所需字符串的长度</param>
         /// <param name="type">字符串中的字符的类型</param>
         /// <returns></returns>
-        public static string GetString(int num, RandomCharType type)
+        public static string GetRandomStringByLength(int length, RandomCharType type)
         {
-            string[] chars = CHAR_TO_SPLIT.Split(',');
-            int begin = 0;
-            int end = chars.Length;
+            StringBuilder sb = new StringBuilder(length);
+
+            string valid = string.Empty;
+
             switch (type)
             {
-                    #region case
-
+                case RandomCharType.All:
+                    valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                    break;
                 case RandomCharType.Number:
-                    end = 10;
+                    valid = "0123456789";
                     break;
                 case RandomCharType.Uppercased:
-                    begin = 10 + 26;
+                    valid = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                     break;
                 case RandomCharType.Lowercased:
-                    begin = 10;
-                    end = 10 + 26;
+                    valid = "abcdefghijklmnopqrstuvwxyz";
+                    break;
+                case RandomCharType.NumberAndUppercased:
+                    valid = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                     break;
                 case RandomCharType.NumberAndLowercased:
-                    end = 10 + 26;
+                    valid = "abcdefghijklmnopqrstuvwxyz0123456789";
                     break;
                 case RandomCharType.UppercasedAndLowercased:
-                    begin = 10;
+                    valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
                     break;
-                case RandomCharType.All:
-                case RandomCharType.NumberAndUppercased:
-                    break;
+                case RandomCharType.None:
+                    throw new ArgumentException("Cannot generate a string of type None.");
                 default:
-                    Debug.Fail(type.ToString());
-                    return "";
-
-                    #endregion
+                    throw new ArgumentException("Invalid RandomCharType.");
             }
-            var sb = new StringBuilder();
-            for (int i = 0; i < num; i++)
+            
+            for (int i = 0; i < length; i++)
             {
-                if (type == RandomCharType.NumberAndUppercased)
-                {
-                    bool isLow = true;
-                    while (isLow) //如果生成的数是小写字母范围的，去除
-                    {
-                        int m = Random.Next(begin, end);
-                        if (!(m >= 10 && m < 10 + 26))
-                        {
-                            sb.Append(chars[m]);
-                            isLow = false;
-                        }
-                    }
-                }
-                else
-                {
-                    sb.Append(chars[Random.Next(begin, end)]);
-                }
+                sb.Append(valid[Random.Next(valid.Length)]);
             }
+
             return sb.ToString();
         }
 
@@ -242,38 +227,5 @@ namespace NKnife.Util
             }
             return sb.ToString();
         }
-
-        private static readonly RNGCryptoServiceProvider _RngCsp = new RNGCryptoServiceProvider();
-        private const string VALID = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890/+=-!<>#$";
-
-        /// <summary>
-        /// 生成一个6位随机数，供短信验证码使用
-        /// </summary>
-        /// <returns></returns>
-        public static int GetRandomSmsNumber()
-        {
-            return Random.Next(100000, 999999);
-        }
-
-        /// <summary>
-        /// 生成指定长度的随机英文字符串（包含大小字母，数字，和一些符号）
-        /// </summary>
-        /// <param name="length">指定的长度</param>
-        /// <returns>随机字符串</returns>
-        public static string GetRandomString(int length)
-        {
-            StringBuilder res = new StringBuilder();
-            byte[] uintBuffer = new byte[sizeof(uint)];
-
-            while (length-- > 0)
-            {
-                _RngCsp.GetBytes(uintBuffer);
-                uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(VALID[(int)(num % (uint)VALID.Length)]);
-            }
-
-            return res.ToString();
-        }
-
     }
 }
