@@ -83,13 +83,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.CRC", "NKnife.CRC\NKnife.CRC.csproj", "{C8B4E171-49EC-4A71-9868-DD3CFF82946F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.CRC", "NKnife.CRC\NKnife.CRC.csproj", "{C8B4E171-49EC-4A71-9868-DD3CFF82946F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Channel", "NKnife.Channel\NKnife.Channel.csproj", "{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Channel", "NKnife.Channel\NKnife.Channel.csproj", "{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Downloader", "NKnife.Downloader\NKnife.Downloader.csproj", "{131844A3-AE74-4E45-8ADE-65F7E1870DD4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StopUpdate", "StopUpdate", "{966F3F88-D022-46A3-A2BA-AF98B143FFA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{1FB0E778-7CF3-4F98-B541-9FBD6F1FC093}"
+	ProjectSection(SolutionItems) = preProject
+		.workflow\branch-pipeline.yml = .workflow\branch-pipeline.yml
+		.workflow\master-pipeline.yml = .workflow\master-pipeline.yml
+		.workflow\pr-pipeline.yml = .workflow\pr-pipeline.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -260,6 +267,7 @@ Global
 		{00679671-D642-4DF4-B118-9548C746E9FD} = {218110BE-6776-42C6-B493-8AA905E0B994}
 		{E91AC62F-ABA5-4AE5-8CA2-3A167FD87786} = {218110BE-6776-42C6-B493-8AA905E0B994}
 		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F} = {218110BE-6776-42C6-B493-8AA905E0B994}
+		{1FB0E778-7CF3-4F98-B541-9FBD6F1FC093} = {CD5DF2B7-6534-4A52-814C-09BC5CD2ECF4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F14B5A9D-9DDE-46AE-95C6-FBD68CC49D5D}
