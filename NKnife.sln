@@ -3,75 +3,63 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife", "NKnife\NKnife.csproj", "{B33B0509-229B-4AFE-B774-AEACF7E515C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife", "src\NKnife\NKnife.csproj", "{B33B0509-229B-4AFE-B774-AEACF7E515C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{3840FCBD-681A-4B6B-93C4-6645DB4F8F97}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{5A0AEAE7-C8B5-4B49-B032-726C928108DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog.WinForm", "NKnife.NLog.WinForm\NKnife.NLog.WinForm.csproj", "{FC94B5B1-F70C-44D4-9463-AB8EB8FAF170}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog.WinForm", "src\NKnife.NLog.WinForm\NKnife.NLog.WinForm.csproj", "{FC94B5B1-F70C-44D4-9463-AB8EB8FAF170}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Storages", "NKnife.Storages\NKnife.Storages.csproj", "{D4A2C877-7A0A-43E2-8F8D-91A58B31B700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Storages", "src\NKnife.Storages\NKnife.Storages.csproj", "{D4A2C877-7A0A-43E2-8F8D-91A58B31B700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Win", "NKnife.Win\NKnife.Win.csproj", "{D6DE90B7-0ABE-4640-8AB6-5B2818C52AD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Win", "src\NKnife.Win\NKnife.Win.csproj", "{D6DE90B7-0ABE-4640-8AB6-5B2818C52AD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Win.Forms", "NKnife.Win.Forms\NKnife.Win.Forms.csproj", "{48DCFEA4-948A-45F8-8FA5-010A1E095C19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.Win.Forms", "src\NKnife.Win.Forms\NKnife.Win.Forms.csproj", "{48DCFEA4-948A-45F8-8FA5-010A1E095C19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.UnitTests", "UnitTests\NKnife.UnitTests\NKnife.UnitTests.csproj", "{129CB0FF-8308-46D0-B6E7-186F9FD8AAFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.UnitTests", "test\NKnife.UnitTests\NKnife.UnitTests.csproj", "{129CB0FF-8308-46D0-B6E7-186F9FD8AAFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Storages.UnitTests", "UnitTests\NKnife.Storages.UnitTests\NKnife.Storages.UnitTests.csproj", "{0647C47B-DD87-4E68-82E4-766EF0CE1A6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Storages.UnitTests", "test\NKnife.Storages.UnitTests\NKnife.Storages.UnitTests.csproj", "{0647C47B-DD87-4E68-82E4-766EF0CE1A6D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.NLog.WinForm.UnitTests", "UnitTests\NKnife.NLog.WinForm.UnitTests\NKnife.NLog.WinForm.UnitTests.csproj", "{1C073F5F-5C58-48C8-BC3D-81F2B4A1C0AD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{CC7F66C3-2A47-45D9-A4C8-37E2FC308712}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example.Storage", "Example.Storage", "{CC7F66C3-2A47-45D9-A4C8-37E2FC308712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "0.Example.Common", "samples\Storage\Example.Common\0.Example.Common.csproj", "{87E7F594-4795-4122-BC60-30813E4E6156}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "0.Example.Common", "Examples\Example.Storage\Example.Common\0.Example.Common.csproj", "{87E7F594-4795-4122-BC60-30813E4E6156}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1.Example.StoragesLevel", "samples\Storage\Example.StoragesLevel\1.Example.StoragesLevel.csproj", "{992A1E01-0802-4869-AD29-2E59544C07A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1.Example.StoragesLevel", "Examples\Example.Storage\Example.StoragesLevel\1.Example.StoragesLevel.csproj", "{992A1E01-0802-4869-AD29-2E59544C07A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2.Example.Logic", "samples\Storage\Example.Logic\2.Example.Logic.csproj", "{BC1D8203-4025-4176-A2FF-665ECDB74B8F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2.Example.Logic", "Examples\Example.Storage\Example.Logic\2.Example.Logic.csproj", "{BC1D8203-4025-4176-A2FF-665ECDB74B8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "0.Example.View", "samples\Storage\Example.View\0.Example.View.csproj", "{6E89DC34-CD56-4EB8-B0D3-D1153CF384E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "0.Example.View", "Examples\Example.Storage\Example.View\0.Example.View.csproj", "{6E89DC34-CD56-4EB8-B0D3-D1153CF384E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4.Example.CoreConsole", "samples\Storage\Example.CoreConsole\4.Example.CoreConsole.csproj", "{D039C157-8895-469D-8626-DC86940CF833}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4.Example.CoreConsole", "Examples\Example.Storage\Example.CoreConsole\4.Example.CoreConsole.csproj", "{D039C157-8895-469D-8626-DC86940CF833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Downloader", "samples\Example.Downloader\Example.Downloader.csproj", "{40EC917E-4B2E-4170-BE9F-FEE743A71DBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Downloader", "Examples\Example.Downloader\Example.Downloader.csproj", "{40EC917E-4B2E-4170-BE9F-FEE743A71DBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.NLog.WinForm", "samples\Example.NLog.WinForm\Example.NLog.WinForm.csproj", "{C444BCD8-F333-4CE9-91E6-B46E356099AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.NLog.WinForm", "Examples\Example.NLog.WinForm\Example.NLog.WinForm.csproj", "{C444BCD8-F333-4CE9-91E6-B46E356099AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Bytes", "src\NKnife.Bytes\NKnife.Bytes.csproj", "{EAB5FD7B-C547-43C7-A4FA-F6CDA376D084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Win.Forms", "Examples\Example.Win.Forms\Example.Win.Forms.csproj", "{3D333325-56BE-4442-A337-9CF859AA8132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Serials", "src\NKnife.Serials\NKnife.Serials.csproj", "{F4770BEE-B8EE-4DC6-B311-5DBE6D30FC7C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Bytes", "NKnife.Bytes\NKnife.Bytes.csproj", "{EAB5FD7B-C547-43C7-A4FA-F6CDA376D084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Serials.UnitTests", "test\NKnife.Serials.UnitTests\NKnife.Serials.UnitTests.csproj", "{229C64D6-7CEA-4487-9A26-E82BE657249E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Serials", "NKnife.Serials\NKnife.Serials.csproj", "{F4770BEE-B8EE-4DC6-B311-5DBE6D30FC7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Reflection", "src\NKnife.Reflection\NKnife.Reflection.csproj", "{06F1D6D9-E613-4CAF-9461-7CFB3FA147C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Serials.UnitTests", "UnitTests\NKnife.Serials.UnitTests\NKnife.Serials.UnitTests.csproj", "{229C64D6-7CEA-4487-9A26-E82BE657249E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Bytes.UnitTests", "test\NKnife.Bytes.UnitTests\NKnife.Bytes.UnitTests.csproj", "{6BA9AA14-AB89-42DA-BB74-42A7E33D1BCF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Reflection", "NKnife.Reflection\NKnife.Reflection.csproj", "{06F1D6D9-E613-4CAF-9461-7CFB3FA147C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Reflection.UnitTests", "test\NKnife.Reflection.UnitTests\NKnife.Reflection.UnitTests.csproj", "{D80FA3B7-5863-48B0-BB03-0919A970E1BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Bytes.UnitTests", "UnitTests\NKnife.Bytes.UnitTests\NKnife.Bytes.UnitTests.csproj", "{6BA9AA14-AB89-42DA-BB74-42A7E33D1BCF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TTBT", "TTBT", "{2C9B8F4B-4E99-4C51-AEFB-D5110C6D428B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Reflection.UnitTests", "UnitTests\NKnife.Reflection.UnitTests\NKnife.Reflection.UnitTests.csproj", "{D80FA3B7-5863-48B0-BB03-0919A970E1BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abc.ClassLibrary1", "test\TTBT\Abc.ClassLibrary1\Abc.ClassLibrary1.csproj", "{2F0ED432-6CB4-42FD-9576-8ED99166E045}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NKnife.Reflection.TTBT", "NKnife.Reflection.TTBT", "{2C9B8F4B-4E99-4C51-AEFB-D5110C6D428B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abc.ClassLibrary2", "test\TTBT\Abc.ClassLibrary2\Abc.ClassLibrary2.csproj", "{2D756F17-6AFB-4A06-83F2-437E26E2ED82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abc.ClassLibrary1", "UnitTests\NKnife.Reflection.UnitTests.TTBT\Abc.ClassLibrary1\Abc.ClassLibrary1.csproj", "{2F0ED432-6CB4-42FD-9576-8ED99166E045}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abc.ClassLibrary3", "test\TTBT\Abc.ClassLibrary3\Abc.ClassLibrary3.csproj", "{008AFEF7-9CE8-48FE-8D4C-0862AF67169B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abc.ClassLibrary2", "UnitTests\NKnife.Reflection.UnitTests.TTBT\Abc.ClassLibrary2\Abc.ClassLibrary2.csproj", "{2D756F17-6AFB-4A06-83F2-437E26E2ED82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abc.Nf.ClassLibrary9", "test\TTBT\Abc.Nf.ClassLibrary9\Abc.Nf.ClassLibrary9.csproj", "{0F8A5017-EE48-41D9-9F17-5BA54F00344F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abc.ClassLibrary3", "UnitTests\NKnife.Reflection.UnitTests.TTBT\Abc.ClassLibrary3\Abc.ClassLibrary3.csproj", "{008AFEF7-9CE8-48FE-8D4C-0862AF67169B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abc.Nf.ClassLibrary9", "UnitTests\NKnife.Reflection.UnitTests.TTBT\Abc.Nf.ClassLibrary9\Abc.Nf.ClassLibrary9.csproj", "{0F8A5017-EE48-41D9-9F17-5BA54F00344F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example.NLog.WPF", "Example.NLog.WPF", "{218110BE-6776-42C6-B493-8AA905E0B994}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog.WPF", "NKnife.NLog.WPF\NKnife.NLog.WPF.csproj", "{6DAD873E-9952-41D8-938B-EEA0296773F2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Net6", "Examples\Example.NLog.WPF\Sample.Net6\Sample.Net6.csproj", "{00679671-D642-4DF4-B118-9548C746E9FD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.NF462", "Examples\Example.NLog.WPF\Sample.NF462\Sample.NF462.csproj", "{E91AC62F-ABA5-4AE5-8CA2-3A167FD87786}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Nuget", "Examples\Example.NLog.WPF\Sample.Nuget\Sample.Nuget.csproj", "{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKnife.NLog.WPF", "src\NKnife.NLog.WPF\NKnife.NLog.WPF.csproj", "{6DAD873E-9952-41D8-938B-EEA0296773F2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{CD5DF2B7-6534-4A52-814C-09BC5CD2ECF4}"
 	ProjectSection(SolutionItems) = preProject
@@ -83,11 +71,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.CRC", "NKnife.CRC\NKnife.CRC.csproj", "{C8B4E171-49EC-4A71-9868-DD3CFF82946F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.CRC", "src\NKnife.CRC\NKnife.CRC.csproj", "{C8B4E171-49EC-4A71-9868-DD3CFF82946F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Channel", "NKnife.Channel\NKnife.Channel.csproj", "{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Channel", "src\NKnife.Channel\NKnife.Channel.csproj", "{E1F34C62-AA3D-48EB-9457-4C83B0FAD76A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Downloader", "NKnife.Downloader\NKnife.Downloader.csproj", "{131844A3-AE74-4E45-8ADE-65F7E1870DD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NKnife.Downloader", "src\NKnife.Downloader\NKnife.Downloader.csproj", "{131844A3-AE74-4E45-8ADE-65F7E1870DD4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StopUpdate", "StopUpdate", "{966F3F88-D022-46A3-A2BA-AF98B143FFA9}"
 EndProject
@@ -132,10 +120,6 @@ Global
 		{0647C47B-DD87-4E68-82E4-766EF0CE1A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0647C47B-DD87-4E68-82E4-766EF0CE1A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0647C47B-DD87-4E68-82E4-766EF0CE1A6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C073F5F-5C58-48C8-BC3D-81F2B4A1C0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C073F5F-5C58-48C8-BC3D-81F2B4A1C0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C073F5F-5C58-48C8-BC3D-81F2B4A1C0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C073F5F-5C58-48C8-BC3D-81F2B4A1C0AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87E7F594-4795-4122-BC60-30813E4E6156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87E7F594-4795-4122-BC60-30813E4E6156}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87E7F594-4795-4122-BC60-30813E4E6156}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -164,10 +148,6 @@ Global
 		{C444BCD8-F333-4CE9-91E6-B46E356099AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C444BCD8-F333-4CE9-91E6-B46E356099AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C444BCD8-F333-4CE9-91E6-B46E356099AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D333325-56BE-4442-A337-9CF859AA8132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D333325-56BE-4442-A337-9CF859AA8132}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D333325-56BE-4442-A337-9CF859AA8132}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D333325-56BE-4442-A337-9CF859AA8132}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EAB5FD7B-C547-43C7-A4FA-F6CDA376D084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAB5FD7B-C547-43C7-A4FA-F6CDA376D084}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAB5FD7B-C547-43C7-A4FA-F6CDA376D084}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -212,18 +192,6 @@ Global
 		{6DAD873E-9952-41D8-938B-EEA0296773F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DAD873E-9952-41D8-938B-EEA0296773F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DAD873E-9952-41D8-938B-EEA0296773F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00679671-D642-4DF4-B118-9548C746E9FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00679671-D642-4DF4-B118-9548C746E9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00679671-D642-4DF4-B118-9548C746E9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00679671-D642-4DF4-B118-9548C746E9FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E91AC62F-ABA5-4AE5-8CA2-3A167FD87786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E91AC62F-ABA5-4AE5-8CA2-3A167FD87786}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E91AC62F-ABA5-4AE5-8CA2-3A167FD87786}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E91AC62F-ABA5-4AE5-8CA2-3A167FD87786}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8B4E171-49EC-4A71-9868-DD3CFF82946F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8B4E171-49EC-4A71-9868-DD3CFF82946F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8B4E171-49EC-4A71-9868-DD3CFF82946F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -245,7 +213,6 @@ Global
 		{48DCFEA4-948A-45F8-8FA5-010A1E095C19} = {966F3F88-D022-46A3-A2BA-AF98B143FFA9}
 		{129CB0FF-8308-46D0-B6E7-186F9FD8AAFE} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
 		{0647C47B-DD87-4E68-82E4-766EF0CE1A6D} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
-		{1C073F5F-5C58-48C8-BC3D-81F2B4A1C0AD} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
 		{CC7F66C3-2A47-45D9-A4C8-37E2FC308712} = {3840FCBD-681A-4B6B-93C4-6645DB4F8F97}
 		{87E7F594-4795-4122-BC60-30813E4E6156} = {CC7F66C3-2A47-45D9-A4C8-37E2FC308712}
 		{992A1E01-0802-4869-AD29-2E59544C07A8} = {CC7F66C3-2A47-45D9-A4C8-37E2FC308712}
@@ -254,7 +221,6 @@ Global
 		{D039C157-8895-469D-8626-DC86940CF833} = {CC7F66C3-2A47-45D9-A4C8-37E2FC308712}
 		{40EC917E-4B2E-4170-BE9F-FEE743A71DBD} = {3840FCBD-681A-4B6B-93C4-6645DB4F8F97}
 		{C444BCD8-F333-4CE9-91E6-B46E356099AD} = {966F3F88-D022-46A3-A2BA-AF98B143FFA9}
-		{3D333325-56BE-4442-A337-9CF859AA8132} = {3840FCBD-681A-4B6B-93C4-6645DB4F8F97}
 		{229C64D6-7CEA-4487-9A26-E82BE657249E} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
 		{6BA9AA14-AB89-42DA-BB74-42A7E33D1BCF} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
 		{D80FA3B7-5863-48B0-BB03-0919A970E1BD} = {5A0AEAE7-C8B5-4B49-B032-726C928108DF}
@@ -263,10 +229,6 @@ Global
 		{2D756F17-6AFB-4A06-83F2-437E26E2ED82} = {2C9B8F4B-4E99-4C51-AEFB-D5110C6D428B}
 		{008AFEF7-9CE8-48FE-8D4C-0862AF67169B} = {2C9B8F4B-4E99-4C51-AEFB-D5110C6D428B}
 		{0F8A5017-EE48-41D9-9F17-5BA54F00344F} = {2C9B8F4B-4E99-4C51-AEFB-D5110C6D428B}
-		{218110BE-6776-42C6-B493-8AA905E0B994} = {3840FCBD-681A-4B6B-93C4-6645DB4F8F97}
-		{00679671-D642-4DF4-B118-9548C746E9FD} = {218110BE-6776-42C6-B493-8AA905E0B994}
-		{E91AC62F-ABA5-4AE5-8CA2-3A167FD87786} = {218110BE-6776-42C6-B493-8AA905E0B994}
-		{B87397CA-2AFA-406F-ACF7-BBAB22C9507F} = {218110BE-6776-42C6-B493-8AA905E0B994}
 		{1FB0E778-7CF3-4F98-B541-9FBD6F1FC093} = {CD5DF2B7-6534-4A52-814C-09BC5CD2ECF4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -9,9 +9,13 @@
 
 ### NKnife.Bytes
 
+### NKnife.Channel
+
+### NKnife.CRC
+
 ### NKnife.Downloader
 
-### NKnife.NLog.WinForm
+### NKnife.NLog.WPF
 
 ### NKnife.Reflection
 
@@ -20,8 +24,6 @@
 ### NKnife.Storages
 
 ### NKnife.Win
-
-### NKnife.Win.Forms
 
 ## 作者
 作者的Blog: http://xknife.net
