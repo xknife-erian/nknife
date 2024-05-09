@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Interface;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Position
 {
     /*   FEN Dot
      * 
@@ -177,7 +174,8 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 获取或设置当前位置的棋盘横坐标(a-h)
         /// </summary>
-        public char Horizontal { get { return _horizontal; } }
+        public char Horizontal => _horizontal;
+
         /// <summary>
         /// 当前位置的棋盘横坐标(a-h)
         /// </summary>

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Gean.Gui.ChessControl.Demo
+namespace NKnife.App.Chess
 {
     class Program
     {

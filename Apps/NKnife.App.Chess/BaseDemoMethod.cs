@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Diagnostics;
-using Gean.Gui.ChessControl.Demo;
 using NKnife.Chesses.Common.Record;
 using NKnife.Chesses.Common.Record.PGN;
 
-namespace Gean.Module.Chess.Demo
+namespace NKnife.App.Chess
 {
     internal class BaseDemoMethod
     {

@@ -123,7 +123,7 @@ namespace NKnife.Chesses.Common.Pieces
             return this._pieces.Contains(item);
         }
 
-        public bool Contains(Enums.PieceType type, Position pos)
+        public bool Contains(Enums.PieceType type, Position.Position pos)
         {
             foreach (var item in _pieces)
             {

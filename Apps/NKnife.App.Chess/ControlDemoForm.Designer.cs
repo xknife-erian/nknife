@@ -1,4 +1,6 @@
-﻿namespace Gean.Gui.ChessControl.Demo
+﻿using NKnife.Chesses.Controls;
+
+namespace NKnife.App.Chess
 {
     partial class DemoMainForm
     {
@@ -37,7 +39,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this._stepsTabPage = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this._recordListView = new Gean.Gui.ChessControl.RecordListView();
+            this._recordListView = new RecordListView();
             this._mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this._openingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -349,7 +351,7 @@
 
         #endregion
 
-        private Gean.Gui.ChessControl.RecordListView _recordListView;
+        private RecordListView _recordListView;
         private System.Windows.Forms.SplitContainer _mainSpliter;
         private System.Windows.Forms.MenuStrip _mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem _openingsToolStripMenuItem;

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using Gean.Module.Chess;
 using NKnife.Chesses.Common;
+using NKnife.Chesses.Common.Position;
+using NKnife.Chesses.Controls.Interface;
 
-namespace Gean.Gui.ChessControl
+namespace NKnife.Chesses.Controls
 {
     public class RecordPlayToolStrip : ToolStrip, IRecordPlay
     {

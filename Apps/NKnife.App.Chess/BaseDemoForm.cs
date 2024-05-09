@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using NKnife.Chesses.Common;
@@ -10,7 +6,7 @@ using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Interface;
 using NKnife.Chesses.Common.Record;
 
-namespace Gean.Module.Chess.Demo
+namespace NKnife.App.Chess
 {
     partial class MyDemoDialog : Form
     {

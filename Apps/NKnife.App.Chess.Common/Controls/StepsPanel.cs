@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using Gean.Module.Chess;
 using System.Drawing;
-using System.Drawing.Text;
+using System.Windows.Forms;
 using NKnife.Interface;
 
-namespace Gean.Gui.ChessControl
+namespace NKnife.Chesses.Controls
 {
     public class StepsPanel : FlowLayoutPanel
     {

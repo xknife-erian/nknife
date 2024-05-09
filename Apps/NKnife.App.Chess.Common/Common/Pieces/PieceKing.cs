@@ -2,6 +2,7 @@
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Exceptions;
 using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Position;
 
 namespace NKnife.Chesses.Common.Pieces
 {
@@ -10,8 +11,8 @@ namespace NKnife.Chesses.Common.Pieces
         public static PieceKing _NewBlackKing = new PieceKing(Enums.GameSide.Black);
         public static PieceKing _NewWhiteKing = new PieceKing(Enums.GameSide.White);
 
-        public PieceKing(Enums.GameSide side) : this(side, Position.Empty) { }
-        public PieceKing(Enums.GameSide side, Position position)
+        public PieceKing(Enums.GameSide side) : this(side, Common.Position.Position.Empty) { }
+        public PieceKing(Enums.GameSide side, Position.Position position)
             : base(position)
         {
             this.GameSide = side;
@@ -32,16 +33,16 @@ namespace NKnife.Chesses.Common.Pieces
         /// </summary>
         public bool IsMoved { get; internal set; }
 
-        protected override Position InitPosition(Position position)
+        protected override Position.Position InitPosition(Position.Position position)
         {
-            if (position == Position.Empty)
+            if (position == Common.Position.Position.Empty)
             {
                 switch (this.GameSide)
                 {
                     case Enums.GameSide.White:
-                        return new Position(5, 1);
+                        return new Position.Position(5, 1);
                     case Enums.GameSide.Black:
-                        return new Position(5, 8);
+                        return new Position.Position(5, 8);
                     default:
                         throw new PieceException(ExString.PositionIsEmpty);
                 }
@@ -55,14 +56,14 @@ namespace NKnife.Chesses.Common.Pieces
             enableMovein = new Positions();
             enableCapture = new Positions();
 
-            Position.Shift(this.GameSide, situation, this.Position.ShiftEast(), enableMovein, enableCapture);
-            Position.Shift(this.GameSide, situation, this.Position.ShiftSouth(), enableMovein, enableCapture);
-            Position.Shift(this.GameSide, situation, this.Position.ShiftWest(), enableMovein, enableCapture);
-            Position.Shift(this.GameSide, situation, this.Position.ShiftNorth(), enableMovein, enableCapture);
-            Position.Shift(this.GameSide, situation, this.Position.ShiftEastNorth(), enableMovein, enableCapture);
-            Position.Shift(this.GameSide, situation, this.Position.ShiftEastSouth(), enableMovein, enableCapture);
-            Position.Shift(this.GameSide, situation, this.Position.ShiftWestNorth(), enableMovein, enableCapture);
-            Position.Shift(this.GameSide, situation, this.Position.ShiftWestSouth(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftEast(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftSouth(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftWest(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftNorth(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftEastNorth(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftEastSouth(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftWestNorth(), enableMovein, enableCapture);
+            Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftWestSouth(), enableMovein, enableCapture);
         }
 
     }

@@ -113,7 +113,7 @@ namespace NKnife.Chesses.Common
         /// <summary>
         /// 4) 吃过路兵目标格(En passant target square)
         /// </summary>
-        public virtual Position EnPassantTargetPosition { get; internal set; }
+        public virtual Position.Position EnPassantTargetPosition { get; internal set; }
 
         /// <summary>
         /// 5) 半回合计数(Halfmove clock)。
@@ -290,7 +290,7 @@ namespace NKnife.Chesses.Common
                                 throw new Exception("Invalid target square for black En passant captures: " + this.EnPassantTargetPosition.ToString());
                         }
                     }
-                    this.EnPassantTargetPosition = Position.Parse(note[3]);
+                    this.EnPassantTargetPosition = Position.Position.Parse(note[3]);
                 }
             }
             catch { }
@@ -381,7 +381,7 @@ namespace NKnife.Chesses.Common
 
             parms[2] = note.ToString();
             note.Length = 0;
-            if (EnPassantTargetPosition == Position.Empty)
+            if (EnPassantTargetPosition == Position.Position.Empty)
                 parms[3] = "-";
             else
                 parms[3] = EnPassantTargetPosition.ToString();
@@ -406,7 +406,7 @@ namespace NKnife.Chesses.Common
         {
             int x;
             int y;
-            Position.CalculateXY(dot, out x, out y);
+            Position.Position.CalculateXY(dot, out x, out y);
             return this.Rows[y - 1][x - 1];
         }
 
@@ -414,7 +414,7 @@ namespace NKnife.Chesses.Common
         {
             int x;
             int y;
-            Position.CalculateXY(dot, out x, out y);
+            Position.Position.CalculateXY(dot, out x, out y);
             this.Rows[y - 1][x - 1] = value;
         }
 
@@ -430,14 +430,14 @@ namespace NKnife.Chesses.Common
         /// </summary>
         protected virtual void Clear()
         {
-            this.GameSide = Enums.GameSide.White;
-            this.WhiteKingCastlingAvailability = false;
+            this.GameSide                       = Enums.GameSide.White;
+            this.WhiteKingCastlingAvailability  = false;
             this.WhiteQueenCastlingAvailability = false;
-            this.BlackKingCastlingAvailability = false;
+            this.BlackKingCastlingAvailability  = false;
             this.BlackQueenCastlingAvailability = false;
-            this.EnPassantTargetPosition = Position.Empty;
-            this.HalfMoveClock = 0;
-            this.FullMoveNumber = 1;
+            this.EnPassantTargetPosition        = Position.Position.Empty;
+            this.HalfMoveClock                  = 0;
+            this.FullMoveNumber                 = 1;
         }
 
         #endregion

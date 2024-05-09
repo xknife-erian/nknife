@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
-using Gean.Module.Chess;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Collections.Specialized;
 using System.Drawing.Text;
+using System.Windows.Forms;
 using NKnife.Chesses.Common;
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Pieces;
+using NKnife.Chesses.Common.Position;
+using NKnife.Chesses.Controls.Interface;
 using NKnife.Events;
+using Servicer = NKnife.Chesses.Controls.Base.Servicer;
 
-namespace Gean.Gui.ChessControl
+namespace NKnife.Chesses.Controls
 {
     /// <summary>
     /// 国际象棋棋盘控件

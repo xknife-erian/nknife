@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Gean.Module.Chess
+namespace NKnife.Chesses.Common.Position
 {
     public class Positions : ICollection<Position>
     {

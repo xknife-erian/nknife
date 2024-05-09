@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Gean.Module.Chess;
-
-namespace Gean.Gui.ChessControl
+﻿namespace NKnife.Chesses.Controls.Interface
 {
     public interface IRecordPlay
     {

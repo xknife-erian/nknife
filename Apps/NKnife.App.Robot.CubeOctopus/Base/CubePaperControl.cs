@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using NKnife.Base;
 
 namespace NKnife.Tools.Robot.CubeOctopus.Base
 {
