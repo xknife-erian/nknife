@@ -78,6 +78,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{1F
 		.workflow\pr-pipeline.yml = .workflow\pr-pipeline.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.SqlSugarProject", "samples\Sample.SqlSugarProject\Sample.SqlSugarProject.csproj", "{4B922582-037B-478E-AA92-7687CAA33CA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -184,6 +186,10 @@ Global
 		{131844A3-AE74-4E45-8ADE-65F7E1870DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{131844A3-AE74-4E45-8ADE-65F7E1870DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{131844A3-AE74-4E45-8ADE-65F7E1870DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B922582-037B-478E-AA92-7687CAA33CA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B922582-037B-478E-AA92-7687CAA33CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B922582-037B-478E-AA92-7687CAA33CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B922582-037B-478E-AA92-7687CAA33CA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +213,7 @@ Global
 		{008AFEF7-9CE8-48FE-8D4C-0862AF67169B} = {2C9B8F4B-4E99-4C51-AEFB-D5110C6D428B}
 		{0F8A5017-EE48-41D9-9F17-5BA54F00344F} = {2C9B8F4B-4E99-4C51-AEFB-D5110C6D428B}
 		{1FB0E778-7CF3-4F98-B541-9FBD6F1FC093} = {CD5DF2B7-6534-4A52-814C-09BC5CD2ECF4}
+		{4B922582-037B-478E-AA92-7687CAA33CA4} = {3840FCBD-681A-4B6B-93C4-6645DB4F8F97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F14B5A9D-9DDE-46AE-95C6-FBD68CC49D5D}

@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NKnife.Storages\NKnife.Storages.csproj" />
     <ProjectReference Include="..\..\src\NKnife.Storages\NKnife.Storages.csproj" />
   </ItemGroup>
 
