@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyVersion>21.2.0.726</AssemblyVersion>
     <FileVersion>21.2.0.726</FileVersion>
     <Version>21.2.0</Version>
@@ -22,16 +22,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.0.0" />
-    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
+    <Compile Remove="——\SerialChannel.cs" />
+    <Compile Remove="——\SerialChannelMap.cs" />
+    <Compile Remove="——\SerialQuestion.cs" />
+    <Compile Remove="——\SerialQuestionPool.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="——\" />
+    <None Include="——\SerialChannel.cs" />
+    <None Include="——\SerialChannelMap.cs" />
+    <None Include="——\SerialQuestion.cs" />
+    <None Include="——\SerialQuestionPool.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="5.3.2" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NKnife.Bytes\NKnife.Bytes.csproj" />
+    <ProjectReference Include="..\NKnife.CRC\NKnife.CRC.csproj" />
     <ProjectReference Include="..\NKnife\NKnife.csproj" />
   </ItemGroup>
 

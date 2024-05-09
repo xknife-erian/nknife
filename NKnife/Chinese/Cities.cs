@@ -47,16 +47,16 @@ namespace NKnife.Chinese
                 return new StringCollection();
             var indexArray = new int[count];
             for (var i = 0; i < count; i++)
-                indexArray[i] = UtilRandom.Random.Next(0, 34);
+                indexArray[i] = RandomUtil.Random.Next(0, 34);
             var sc = new StringCollection();
             foreach (var i in indexArray)
             {
                 var sheng = Data[i];
                 var city = sheng.city.Length > 1
-                    ? sheng.city[UtilRandom.Random.Next(0, sheng.city.Length - 1)]
+                    ? sheng.city[RandomUtil.Random.Next(0, sheng.city.Length - 1)]
                     : sheng.city[0];
                 var area = city.area.Count > 1
-                    ? city.area[UtilRandom.Random.Next(0, city.area.Count - 1)]
+                    ? city.area[RandomUtil.Random.Next(0, city.area.Count - 1)]
                     : city.area[0];
                 sc.Add(sheng.name == city.name
                     ? $"{city.name}{area}".Replace(" ", "")

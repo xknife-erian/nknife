@@ -134,7 +134,7 @@ namespace NKnife.Win.Forms.Common.Icons
                 var path = treeNode.ToolTipText;
                 if (string.IsNullOrWhiteSpace(path))
                     continue;
-                if (UtilFile.IsDirectory(path)) //当是目录时
+                if (FileUtil.IsDirectory(path)) //当是目录时
                 {
                     if (!imageList.Images.ContainsKey(FolderType.Open.ToString()))
                     {

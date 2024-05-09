@@ -27,7 +27,7 @@ namespace NKnife.Chinese
                 nameSource = sex.Value ? _lastNameMale : _lastNameFemale;
             else
                 nameSource = string.Concat(_lastNameMale, _lastNameFemale);
-            var r = UtilRandom.Random;
+            var r = RandomUtil.Random;
             var names = new StringCollection();
             for (int i = 0; i < count; i++)
             {

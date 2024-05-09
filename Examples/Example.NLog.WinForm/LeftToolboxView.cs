@@ -52,7 +52,7 @@ namespace NKnife.NLog.WinForm.Example
             _viewModel.BuildGroups((int)_GroupCountBox.Value);
         }
 
-        private void _Func1Button_Click(object sender, EventArgs e)
+        private async void _Func1Button_Click(object sender, EventArgs e)
         {
             var r = MessageBox.Show("测试时，因速度较快，请将所有日志窗体仅保留一个，其余关闭后再启动。\r\n是否已经关闭？", "准备", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (r == DialogResult.No)
@@ -61,7 +61,7 @@ namespace NKnife.NLog.WinForm.Example
             SetStopButtonState(false);
             _Stop1Button.Enabled = true;
             _Stop1Button.Focus();
-            _viewModel.BuildLoop1Millisecond1Log();
+            await _viewModel.RunLoopTaskAsync();
         }
 
         private void _Stop1Button_Click(object sender, EventArgs e)
@@ -69,7 +69,7 @@ namespace NKnife.NLog.WinForm.Example
             SetButtonState(true);
             SetStopButtonState(false);
             _Func1Button.Focus();
-            _viewModel.StopLoop1Millisecond1Log();
+            _viewModel.StopLoopTask();
         }
 
         private void _Func2Button_Click(object sender, EventArgs e)

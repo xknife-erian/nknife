@@ -9,19 +9,19 @@ namespace NKnife
     {
         #region Culture：当前软件的文化语言标记
 
-        private static string _culture = "zh-CN";
+        private static string s_culture = "zh-CN";
 
         /// <summary>
         ///     当前软件的文化语言标记
         /// </summary>
         public static string Culture
         {
-            get => _culture;
+            get => s_culture;
             set
             {
-                if (_culture != value)
+                if (s_culture != value)
                 {
-                    _culture = value;
+                    s_culture = value;
                     OnCultureChanged();
                 }
             }

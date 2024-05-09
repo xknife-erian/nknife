@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
+using NKnife.Channel.Interfaces;
+using NKnife.Channel.Jobs;
 using NKnife.Interface;
-using NKnife.Jobs;
 using Xunit;
 
 namespace NKnife.UnitTests.Jobs

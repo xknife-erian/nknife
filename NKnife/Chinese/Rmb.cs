@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using NKnife.Maths;
+using NKnife.Util;
 
 namespace NKnife.Chinese
 {
@@ -172,14 +172,14 @@ namespace NKnife.Chinese
             return ChineseUnit[digit - 1];
         }
 
-        public static string ToUpperChineseRmb(string numString, UtilityMath.RoundingMode roundMode = UtilityMath.RoundingMode.Rounding4She5Ru)
+        public static string ToUpperChineseRmb(string numString, MathUtil.RoundingMode roundMode = MathUtil.RoundingMode.Rounding4She5Ru)
         {
             if (!decimal.TryParse(numString, out var num))
                 throw new ArgumentException("·ÇÊý×ÖµÄ×Ö·û´®¡£");
             return ToUpperChineseRmb(num, roundMode);
         }
 
-        public static string ToUpperChineseRmb(decimal num, UtilityMath.RoundingMode roundMode = UtilityMath.RoundingMode.Rounding4She5Ru)
+        public static string ToUpperChineseRmb(decimal num, MathUtil.RoundingMode roundMode = MathUtil.RoundingMode.Rounding4She5Ru)
         {
             return ToUpperChineseRmb(num);
         }

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using NKnife.Util;
 
 namespace NKnife.XML
 {
@@ -30,7 +31,7 @@ namespace NKnife.XML
             if (!File.Exists(FilePath))
             {
                 //如果文件不存在，建立这个文件
-                _BaseXmlNode = XmlHelper.CreateNewDocument(FilePath, RootNodeLocalName);
+                _BaseXmlNode = XmlUtil.CreateNewDocument(FilePath, RootNodeLocalName);
             }
             else
             {

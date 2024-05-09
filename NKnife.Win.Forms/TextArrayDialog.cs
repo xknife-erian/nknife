@@ -70,7 +70,7 @@ namespace NKnife.Win.Forms
             get => (from ListViewItem item in _ListView.Items select item.SubItems[1].Text).ToArray();
             set
             {
-                if (!UtilCollection.IsNullOrEmpty(value))
+                if (!CollectionUtil.IsNullOrEmpty(value))
                 {
                     _ListView.Items.Clear();
                     foreach (var text in value)

@@ -10,7 +10,6 @@ using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Win32.SafeHandles;
 
-// ReSharper disable once CheckNamespace
 namespace NKnife.Win
 {
 	#region Enums

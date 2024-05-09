@@ -254,7 +254,7 @@ namespace System.Reflection
         {
             if (customAttributes == null || !customAttributes.Any())
                 return false;
-            foreach (object customAttribute in customAttributes)
+            foreach (Attribute customAttribute in customAttributes)
                 customAttribute.GetType();
             return customAttributes.Any(s => (object) s.GetType() == (object) typeof(CompilerGeneratedAttribute));
         }

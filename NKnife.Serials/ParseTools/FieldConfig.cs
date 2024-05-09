@@ -44,12 +44,12 @@ namespace NKnife.Serials.ParseTools
         /// <summary>
         ///     起始字节
         /// </summary>
-        public byte[] BeginChars { get; set; } = {0xAA};
+        public byte[] BeginChars { get; set; } = [0xAA];
 
         /// <summary>
         ///     结束字符
         /// </summary>
-        public byte[] EndChars { get; set; } = {0xCC};
+        public byte[] EndChars { get; set; } = [0xCC];
 
         /// <summary>
         ///     凭据起始字符的属性。Item1是在凭据中的索引；Item2是在凭据中所占字节数。

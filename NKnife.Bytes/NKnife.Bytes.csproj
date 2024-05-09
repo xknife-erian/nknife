@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyVersion>21.1.0.430</AssemblyVersion>
-    <FileVersion>21.1.0.430</FileVersion>
-    <Version>21.1.0</Version>
+    <AssemblyVersion>23.0.0</AssemblyVersion>
+    <FileVersion>23.0.0</FileVersion>
+    <Version>23.0.0</Version>
     <Description>一个面向.Net的byte数组的综合开发库。</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>

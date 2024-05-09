@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NLog;
 
 namespace NKnife.Serials.ParseTools
 {
     public class UsualVoucherTool : IVoucherTool
     {
-        private static readonly ILogger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger s_logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         ///     临时保存的断包数据
         /// </summary>
-        protected VoucherSegment _segment;
+        protected VoucherSegment _Segment;
 
         /// <summary>
         ///     凭据中各字段的属性
@@ -33,7 +34,7 @@ namespace NKnife.Serials.ParseTools
             if (message.Array == null || message.Count <= 0)
                 return false;
             //从上包是否为空进行判断，判断上次的凭据解析是否完成。
-            if (_segment == null)
+            if (_Segment == null)
                 return TryFirstParse(message, ref vouchers);
             return TryNextParse(message, ref vouchers);
         }
@@ -58,15 +59,15 @@ namespace NKnife.Serials.ParseTools
             if (i < 0)
             {
                 //当新包时，找不到起始字符，鬼知道是啥子数据
-                if (_Logger.IsInfoEnabled)
-                    _Logger.Info($"丢弃整包数据：{message.ToArray().ToHexString(" ")}");
+                if (s_logger.IsInfoEnabled)
+                    s_logger.Info($"丢弃整包数据：{message.ToArray().ToHexString(" ")}");
                 return false;
             }
 
             if (i > 0)
             {
-                if (_Logger.IsInfoEnabled)
-                    _Logger.Info($"丢弃前导无效数据：{message.Slice(0, i).ToArray().ToHexString(" ")}");
+                if (s_logger.IsInfoEnabled)
+                    s_logger.Info($"丢弃前导无效数据：{message.Slice(0, i).ToArray().ToHexString(" ")}");
                 message = message.Slice(i); //丢弃数据后的数据
             }
 
@@ -74,15 +75,15 @@ namespace NKnife.Serials.ParseTools
             if (message.Count < Field.GetHeadLength())
             {
                 //进入半包模式，等待新的数据到来后再处理
-                _segment = new VoucherSegment(Field);
-                _segment.AppendHead(message);
+                _Segment = new VoucherSegment(Field);
+                _Segment.AppendHead(message);
                 return false;
             }
 
-            _segment = new VoucherSegment(Field);
-            _segment.AppendHead(message.Slice(0, _head_));
+            _Segment = new VoucherSegment(Field);
+            _Segment.AppendHead(message.Slice(0, _head_));
 
-            _segment.TryGetDataFieldLength(out var dataLength);
+            _Segment.TryGetDataFieldLength(out var dataLength);
             var expect = _head_ + dataLength + _tail_; //期望的数据包长度
             var tailIndex = _head_ + dataLength;
 
@@ -90,43 +91,43 @@ namespace NKnife.Serials.ParseTools
             {
                 if (message.Count < _head_ + dataLength)
                 {
-                    _segment.AppendData(message.Slice(_head_)); //数据域数量不够
+                    _Segment.AppendData(message.Slice(_head_)); //数据域数量不够
                     return false;
                 }
 
-                _segment.AppendData(message.Slice(_head_, dataLength));
-                _segment.AppendTail(message.Slice(tailIndex, message.Count - tailIndex));
+                _Segment.AppendData(message.Slice(_head_, dataLength));
+                _Segment.AppendTail(message.Slice(tailIndex, message.Count - tailIndex));
                 //尾部不全
                 return false;
             }
 
-            _segment.AppendData(message.Slice(_head_, dataLength));
-            _segment.AppendTail(message.Slice(tailIndex, _tail_));
+            _Segment.AppendData(message.Slice(_head_, dataLength));
+            _Segment.AppendTail(message.Slice(tailIndex, _tail_));
 
             if (message.Count == expect) //哈哈，整整齐齐的一个数据包
             {
-                if (!_segment.Verify(SkipCRC))
+                if (!_Segment.Verify(SkipCRC))
                 {
-                    _segment = null;
+                    _Segment = null;
                     return false;
                 }
 
-                vouchers.Add(_segment.ToVoucher());
-                _segment = null;
+                vouchers.Add(_Segment.ToVoucher());
+                _Segment = null;
                 return true;
             }
 
             if (message.Count > expect) //有粘包，但同时有一个正确的数据包
             {
-                if (!_segment.Verify(SkipCRC))
+                if (!_Segment.Verify(SkipCRC))
                 {
-                    _segment = null;
+                    _Segment = null;
                     var success = TryParse(message.Slice(expect), ref vouchers); //将多出来的数据递归处理
                     return false | success;
                 }
 
-                vouchers.Add(_segment.ToVoucher());
-                _segment = null;
+                vouchers.Add(_Segment.ToVoucher());
+                _Segment = null;
                 TryParse(message.Slice(expect), ref vouchers); //将多出来的数据递归处理
                 return true;
             }
@@ -144,7 +145,7 @@ namespace NKnife.Serials.ParseTools
             var _head_ = Field.GetHeadLength();
             var _tail_ = Field.GetTailLength();
 
-            var currentReadCount = _segment.CountCurrentlyWritten;
+            var currentReadCount = _Segment.CountCurrentlyWritten;
             //当未收到完整的头部数据时
             if (currentReadCount < _head_)
             {
@@ -152,7 +153,7 @@ namespace NKnife.Serials.ParseTools
                 {
                     //当后续的数据补足了头部时
                     //将头部数据补齐，立即处理
-                    _segment.AppendHead(message.Slice(0, _head_ - currentReadCount));
+                    _Segment.AppendHead(message.Slice(0, _head_ - currentReadCount));
                     var again = message.Slice(_head_ - currentReadCount);
                     TryParse(again, ref vouchers);
                 }
@@ -160,30 +161,30 @@ namespace NKnife.Serials.ParseTools
                 {
                     //当后续的包仍然无法补足头部时
                     //将收到的数据置入上包中，等待接收数据
-                    _segment.AppendHead(message);
+                    _Segment.AppendHead(message);
                 }
 
                 return false;
             }
 
             //当头部正确(已知数据域长度)时。剩余数据域长度。
-            _segment.TryGetDataFieldLength(out var dataLength);
-            var restDataCount = dataLength - _segment.CountOfDataFieldCurrentlyWritten;
+            _Segment.TryGetDataFieldLength(out var dataLength);
+            var restDataCount = dataLength - _Segment.CountOfDataFieldCurrentlyWritten;
             //当头部正确(已知数据域长度)时。剩余(含尾部)数据长度。上次未收到（未解析）的完整数据包长度。
-            var restTotalCount = _head_ + dataLength + _tail_ - _segment.CountCurrentlyWritten;
+            var restTotalCount = _head_ + dataLength + _tail_ - _Segment.CountCurrentlyWritten;
             //如果本次的数据仍然不满足总长度，将当前的数据填入LastSegment，等待新的数据到来后再处理
             if (message.Count < restTotalCount)
             {
                 if (message.Count > restDataCount)
                 {
                     //可能包含一部份尾部字符
-                    _segment.AppendData(message.Slice(0, restDataCount));
-                    _segment.AppendTail(message.Slice(restDataCount));
+                    _Segment.AppendData(message.Slice(0, restDataCount));
+                    _Segment.AppendTail(message.Slice(restDataCount));
                 }
                 else
                 {
                     //尾部字符有缺失
-                    _segment.AppendData(message);
+                    _Segment.AppendData(message);
                 }
 
                 return false;
@@ -195,30 +196,30 @@ namespace NKnife.Serials.ParseTools
             {
                 //上次已将数据域收到完整的数据，只是尾部数据不完整
                 var t = _head_ + dataLength + _tail_; //期望的数据包长度
-                _segment.AppendTail(message.Slice(0, t - currentReadCount));
+                _Segment.AppendTail(message.Slice(0, t - currentReadCount));
             }
             else
             {
                 //上次已将数据域收到完整的数据，只是尾部数据不完整
                 var p = _head_ + dataLength - currentReadCount;
-                _segment.AppendData(message.Slice(0, p));
-                _segment.AppendTail(message.Slice(p, _tail_));
+                _Segment.AppendData(message.Slice(0, p));
+                _Segment.AppendTail(message.Slice(p, _tail_));
             }
 
             //本包的主体数据解析基本正确，最后一步，CRC校验
-            if (_segment.Verify(SkipCRC))
+            if (_Segment.Verify(SkipCRC))
                 //当CRC校验通过后，取出相应的数据进行相应的处理
-                vouchers.Add(_segment.ToVoucher());
+                vouchers.Add(_Segment.ToVoucher());
 
             //如果本次数据大于总长度，即又发生粘包的情况
             if (message.Count > restTotalCount)
             {
-                _segment = null;
+                _Segment = null;
                 //将未解析数据分割出来，做为一个新的事件数据
                 TryParse(message.Slice(restTotalCount, message.Count - restTotalCount), ref vouchers);
             }
 
-            _segment = null;
+            _Segment = null;
             return true;
         }
 
