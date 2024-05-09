@@ -5,7 +5,7 @@ namespace NKnife.CRC.CRCProvider
 {
     public class CRC16Modbus : BaseCRCProvider
     {
-        private static readonly uint[] _CRCTable =
+        private static readonly uint[] s_crcTable =
         {
             0X0000, 0XC0C1, 0XC181, 0X0140, 0XC301, 0X03C0, 0X0280, 0XC241,
             0XC601, 0X06C0, 0X0780, 0XC741, 0X0500, 0XC5C1, 0XC481, 0X0440,
@@ -47,7 +47,7 @@ namespace NKnife.CRC.CRCProvider
                 throw new ArgumentNullException();
             ushort crc = 0xFFFF;
             foreach (var b in source) 
-                crc = (ushort) ((crc >> 8) ^ _CRCTable[(crc ^ b) & 0xFF]);
+                crc = (ushort) ((crc >> 8) ^ s_crcTable[(crc ^ b) & 0xFF]);
             var crcArray = BitConverter.GetBytes(crc);
             switch (Endianness)
             {

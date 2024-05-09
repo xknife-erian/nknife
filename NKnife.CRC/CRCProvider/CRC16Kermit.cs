@@ -27,7 +27,7 @@ namespace NKnife.CRC.CRCProvider
 
         public override byte[] CRCheck(byte[] source)
         {
-            if (source == null || source.Length <= 0)
+            if (source is not { Length: > 0 })
                 throw new ArgumentNullException();
             ushort crc = 0;
 

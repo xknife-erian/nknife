@@ -22,12 +22,12 @@ namespace NKnife.CRC.CRCProvider
 
         public override byte[] CRCheck(byte[] source)
         {
-            if (source == null || source.Length <= 0)
+            if (source is not { Length: > 0 })
                 throw new ArgumentNullException();
             var crc = 0xffffffff;
-            for (var i = 0; i < source.Length; ++i)
+            foreach (var t in source)
             {
-                var index = (byte) ((crc & 0xff) ^ source[i]);
+                var  index = (byte) ((crc & 0xff) ^ t);
                 crc = (crc >> 8) ^ _crcTable[index];
             }
 

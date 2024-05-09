@@ -9,7 +9,7 @@ namespace NKnife.CRC.CRCProvider
     /// </summary>
     public class CRC16CCITT : BaseCRCProvider
     {
-        private const uint Initail = 4129;
+        private const uint INITAIL = 4129;
         private readonly uint[] _crcTable = new uint[256];
         private readonly uint _polynomial;
 
@@ -28,7 +28,7 @@ namespace NKnife.CRC.CRCProvider
                 for (uint j = 0; j < 8; ++j)
                 {
                     if (((temp ^ value) & 0x8000) != 0)
-                        temp = (temp << 1) ^ Initail;
+                        temp = (temp << 1) ^ INITAIL;
                     else
                         temp <<= 1;
                     value <<= 1;
