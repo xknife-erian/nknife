@@ -3,7 +3,7 @@ using NKnife.Storages;
 
 namespace Example.StoragesLevel.Interfaces
 {
-    // public interface IBookStorageRead : IStorageRead<Book, string>
-    // {
-    // }
+    public interface IBookStorageRead : IStorageRead<Book, string>
+    {
+    }
 }

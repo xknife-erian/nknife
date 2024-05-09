@@ -23,19 +23,26 @@ namespace Example.Logic
         private readonly BaseStorageWrite<BuyingRecord> _buyingRecordWrite;
         private readonly BaseStorageRead<BuyingRecord> _buyingRecordRead;
 
-        public PersonManagerLogic(IMapper mapper, BaseStorageWrite<Publisher> publisherWrite, BaseStorageRead<Publisher> publisherRead, BaseStorageWrite<Person> personWrite, 
-            BaseStorageRead<Person> personRead, BaseStorageWrite<Book> bookWrite, BaseStorageRead<Book> bookRead, BaseStorageWrite<BuyingRecord> buyingRecordWrite, BaseStorageRead<BuyingRecord> buyingRecordRead)
+        public PersonManagerLogic(IMapper mapper,
+                                  BaseStorageWrite<Publisher> publisherWrite,
+                                  BaseStorageRead<Publisher> publisherRead,
+                                  BaseStorageWrite<Person> personWrite,
+                                  BaseStorageRead<Person> personRead,
+                                  BaseStorageWrite<Book> bookWrite,
+                                  BaseStorageRead<Book> bookRead,
+                                  BaseStorageWrite<BuyingRecord> buyingRecordWrite,
+                                  BaseStorageRead<BuyingRecord> buyingRecordRead)
         {
             _mapper = mapper;
 
-            _publisherWrite = publisherWrite;
-            _publisherRead = publisherRead;
-            _personWrite = personWrite;
-            _personRead = personRead;
-            _bookWrite = bookWrite;
-            _bookRead = bookRead;
+            _publisherWrite    = publisherWrite;
+            _publisherRead     = publisherRead;
+            _personWrite       = personWrite;
+            _personRead        = personRead;
+            _bookWrite         = bookWrite;
+            _bookRead          = bookRead;
             _buyingRecordWrite = buyingRecordWrite;
-            _buyingRecordRead = buyingRecordRead;
+            _buyingRecordRead  = buyingRecordRead;
         }
 
         public async Task AddPersonAsync(PersonVo[] people)
@@ -47,9 +54,10 @@ namespace Example.Logic
 
         public async Task<PersonVo> GetRandomPerson()
         {
-            var count = await _personRead.CountAsync();
-            var index = _Random.Next(0, (int)count);
+            var count       = await _personRead.CountAsync();
+            var index       = _Random.Next(0, (int)count);
             var personArray = await _personRead.PageAsync(index, 1);
+
             return _mapper.Map<PersonVo>(personArray.ElementAt(0));
         }
 

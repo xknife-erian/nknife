@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ConsoleUi;
 using Example.Common;
@@ -23,27 +26,81 @@ namespace Example.CoreConsole
             _demoData = demoData;
             _simpleRead = simpleRead;
         }
-        
+
+        /// <summary>
+        /// 测试ConsoleUi的菜单功能
+        /// </summary>
+        public void ConsoleUiIsFreeSoftware(IMenuContext c) { }
+
+        /// <summary>
+        /// 测试ConsoleUi的菜单功能
+        /// </summary>
+        public void ConsoleUiIsDistributedInTheHopeThatItWillBeUseful(IMenuContext c){}
+
+        /// <summary>
+        /// 测试ConsoleUi的菜单功能
+        /// </summary>
+        public void ConsoleMenuRunner(IMenuContext c) { }
+
+        public async Task DoMoreStuff(IMenuContext context)
+        {
+            await context.RunUntilCancelled(async ct =>
+            {
+                using var progress = context.UserInterface.StartProgress("Doing stuff...");
+
+                for (int i = 0; i <= 100 && !ct.IsCancellationRequested; i++)
+                {
+                    await Task.Delay(30, ct);
+                    progress.SetProgress(i);
+                }
+            });
+        }
+
+        public async Task DoEvenMoreStuff(IMenuContext context)
+        {
+            await context.RunUntilCancelled(async ct =>
+            {
+                using var progress = context.UserInterface.StartProgress("Doing stuff...");
+                progress.SetIndeterminate();
+                await Task.Delay(5000, ct);
+            });
+        }
+
+        public IMenu ManyOptions()
+        {
+            ActionMenuItem BuildMenuItem(int i)
+            {
+                return new ActionMenuItem(i.ToString(), ctx => { });
+            }
+            var es = Enumerable.Range(0, 15).Select(BuildMenuItem);
+            return new Menu("Many options", es);
+        }
+
+        public IMenu Counter() => new CountingMenu();
+
+        public void I______(IMenuContext c){}
+
         public void ViewStorageOption(IMenuContext c)
         {
+            var ot = c.UserInterface;
             foreach (var sql in _config.SqlMap.Values)
             {
-                c.UserInterface.Error("---------");
-                c.UserInterface.Error("---------");
-                c.UserInterface.Info($"Name:\t{sql.TypeName}");
-                c.UserInterface.Info($"{nameof(sql.Type)}:\t{sql.Type}");
-                c.UserInterface.Info($"DbType:\t{sql.CurrentDbType}");
-                c.UserInterface.Info($"{nameof(sql.Read)}:\t{sql.Read}");
-                c.UserInterface.Info($"{nameof(sql.Write)}:\t{sql.Write}");
-                c.UserInterface.Warning("------");
+                ot.Error("---------");
+                ot.Error("---------");
+                ot.Info($"Name:\t{sql.TypeName}");
+                ot.Info($"{nameof(sql.Type)}:\t{sql.Type}");
+                ot.Info($"DbType:\t{sql.CurrentDbType}");
+                ot.Info($"{nameof(sql.Read)}:\t{sql.Read}");
+                ot.Info($"{nameof(sql.Write)}:\t{sql.Write}");
+                ot.Warning("------");
                 foreach (var pair in sql.CreateTable)
-                    c.UserInterface.Info($"{pair.Key}:\t{pair.Value}");
-                c.UserInterface.Warning("------");
+                    ot.Info($"{pair.Key}:\t{pair.Value}");
+                ot.Warning("------");
                 foreach (var pair in sql.Insert)
-                    c.UserInterface.Info($"{pair.Key}:\t{pair.Value}");
-                c.UserInterface.Warning("------");
+                    ot.Info($"{pair.Key}:\t{pair.Value}");
+                ot.Warning("------");
                 foreach (var pair in sql.Update)
-                    c.UserInterface.Info($"{pair.Key}:\t{pair.Value}");
+                    ot.Info($"{pair.Key}:\t{pair.Value}");
             }
         }
 
@@ -119,4 +176,28 @@ namespace Example.CoreConsole
             return context.UserInterface.Confirm(true, "Exit ?");
         }
     }
+
+    public class CountingMenu : DynamicMenu
+    {
+        private int counter;
+
+        public CountingMenu()
+            : base("Counter")
+        {
+        }
+
+        protected override Task<IEnumerable<IMenuItem>> LoadItems(CancellationToken cancellationToken)
+        {
+            return Task.FromResult(new IMenuItem[]
+            {
+                new ActionMenuItem($"Count: {counter}", ctx =>
+                {
+                    ++counter;
+                    ctx.SuppressPause();
+                    ctx.InvalidateMenu();
+                })
+            }.AsEnumerable());
+        }
+    }
+
 }

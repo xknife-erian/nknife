@@ -22,7 +22,7 @@ namespace Example.CoreConsole
 {
     public class SimpleData
     {
-        private static readonly ILogger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger s_logger = LogManager.GetCurrentClassLogger();
 
         private readonly BookManagerLogic _bookManagerLogic;
         private readonly PersonManagerLogic _personManagerLogic;
@@ -39,7 +39,7 @@ namespace Example.CoreConsole
         
         public async Task AddBooks()
         {
-            _Logger.Debug($"{nameof(AddBooks)}...");
+            s_logger.Debug($"{nameof(AddBooks)}...");
             //新增书籍
             var bookList = await GetBooksAsync();
             _bookManagerLogic.AddBookAsync(bookList.ToArray());
@@ -85,7 +85,7 @@ namespace Example.CoreConsole
 
         public async Task AddPeople()
         {
-            _Logger.Debug($"{nameof(AddPeople)}...");
+            s_logger.Debug($"{nameof(AddPeople)}...");
             var people = await GetPeopleAsync();
             await _personManagerLogic.AddPersonAsync(people.ToArray());
         }
@@ -136,9 +136,9 @@ namespace Example.CoreConsole
 
         #endregion
 
-        public async Task ViewPersonBuyingRecord()
+        public Task ViewPersonBuyingRecord()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

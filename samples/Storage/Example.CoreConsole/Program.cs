@@ -24,12 +24,6 @@ namespace Example.CoreConsole
             _Logger.Info("Start Application...");
             _Logger.Info(StoragesOptionFilePath);
 
-            var ts = AssemblyExtensionsLib.Extensions.ExtensionMethods.GetAllTypes(Assembly.GetEntryAssembly());
-            for (int i = 0; i < ts.Count; i++)
-            {
-                Console.WriteLine(ts[i].FullName);
-            }
-
             SimpleCRUD.SetTableNameResolver(new TableName());
 
             var builder = new ContainerBuilder();

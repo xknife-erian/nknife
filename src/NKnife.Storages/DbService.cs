@@ -12,7 +12,7 @@ namespace NKnife.Storages
     /// </summary>
     public class DbService : IDbService
     {
-        private static readonly Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger s_logger = LogManager.GetCurrentClassLogger();
 
         private readonly DomainSqlConfig _domainSqlConfig;
         private readonly IConnectionManager _connectionManager;
@@ -34,7 +34,7 @@ namespace NKnife.Storages
         {
             if (_isStart)
                 return Task.Delay(50, cancellationToken);
-            _Logger.Info("IHostedService-StartAsync:启动数据库相关管理的全局服务。……");
+            s_logger.Info("IHostedService-StartAsync:启动数据库相关管理的全局服务。……");
 
             foreach (var domainSql in _domainSqlConfig.SqlMap.Values)
             {
@@ -42,7 +42,7 @@ namespace NKnife.Storages
                 VerifyTableExists(connection.CreateCommand(), domainSql);
             }
 
-            _Logger.Info("IHostedService-StartAsync:启动数据库相关管理的全局服务。启动完成。");
+            s_logger.Info("IHostedService-StartAsync:启动数据库相关管理的全局服务。启动完成。");
             _isStart = true;
             return Task.Delay(500, cancellationToken);
         }
@@ -63,42 +63,56 @@ namespace NKnife.Storages
         protected virtual void VerifyTableExists(IDbCommand command, DomainSql domainSql)
         {
             var tableName = domainSql.TypeName;
+
             switch (domainSql.CurrentDbType)
             {
                 case DatabaseType.SqLite:
                 {
                     command.CommandText = $"SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='{tableName}';";
+
                     break;
                 }
                 case DatabaseType.MySql:
                 {
-                    command.CommandText = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{domainSql.DatabaseName}' AND TABLE_NAME='{tableName}';";
+                    command.CommandText =
+                        $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{domainSql.DatabaseName}' AND TABLE_NAME='{tableName}';";
+
                     break;
                 }
                 case DatabaseType.PostgreSql:
                 {
                     command.CommandText = $"SELECT COUNT(*) FROM pg_class WHERE relname='{tableName}';";
+
                     break;
                 }
                 case DatabaseType.SqlServer:
                 {
-                    command.CommandText = $"SELECT * FROM dbo.SysObjects WHERE ID=object_id(N'[{tableName}]') AND OBJECTPROPERTY(ID, 'IsTable')=1;";
+                    command.CommandText =
+                        $"SELECT * FROM dbo.SysObjects WHERE ID=object_id(N'[{tableName}]') AND OBJECTPROPERTY(ID, 'IsTable')=1;";
+
                     break;
                 }
             }
-            var result = (long)command.ExecuteScalar();
-            if (1 != result)
+
+            var scalar = command.ExecuteScalar();
+
+            if(scalar is long result)
             {
-                _Logger.Info($"{domainSql.TypeName}在数据库中不存在，准备创建...");
-                command.CommandText = domainSql.CreateTable[domainSql.CurrentDbType];
-                command.ExecuteNonQuery();
-                _Logger.Info($"执行建表{domainSql.TypeName}：\r\n{domainSql.CreateTable[domainSql.CurrentDbType]}");
-                // 2. 向表中填充默认数据
-                FillDefaultData(command, domainSql);
-                _Logger.Info($"向表[{domainSql.TypeName}]中填充默认数据：\r\n{domainSql.CreateTable[domainSql.CurrentDbType]}");
-                return;
+                if(1 != result)
+                {
+                    s_logger.Info($"{domainSql.TypeName}在数据库中不存在，准备创建...");
+                    command.CommandText = domainSql.CreateTable[domainSql.CurrentDbType];
+                    command.ExecuteNonQuery();
+                    s_logger.Info($"执行建表{domainSql.TypeName}：\r\n{domainSql.CreateTable[domainSql.CurrentDbType]}");
+                    // 2. 向表中填充默认数据
+                    FillDefaultData(command, domainSql);
+                    s_logger.Info($"向表[{domainSql.TypeName}]中填充默认数据：\r\n{domainSql.CreateTable[domainSql.CurrentDbType]}");
+
+                    return;
+                }
             }
-            _Logger.Debug($"数据表{domainSql.TypeName}正常。");
+
+            s_logger.Debug($"数据表{domainSql.TypeName}正常。");
         }
 
         /// <summary>
@@ -110,14 +124,14 @@ namespace NKnife.Storages
         {
             if (domainSql.DefaultData == null || domainSql.DefaultData.Count <= 0)
             {
-                _Logger.Debug("没有默认数据需要填充。");
+                s_logger.Debug("没有默认数据需要填充。");
                 return;
             }
 
             var sql = domainSql.DefaultData[domainSql.CurrentDbType];
             command.CommandText = sql;
             var result = command.ExecuteScalar();
-            _Logger.Info($"向表[{domainSql.TypeName}]中填充默认数据：{result}");
+            s_logger.Info($"向表[{domainSql.TypeName}]中填充默认数据：{result}");
         }
     }
 }

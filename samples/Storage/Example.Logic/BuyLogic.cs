@@ -22,29 +22,36 @@ namespace Example.Logic
         private readonly BaseStorageWrite<BuyingRecord> _buyingRecordWrite;
         private readonly BaseStorageRead<BuyingRecord> _buyingRecordRead;
 
-        public BuyLogic(IMapper mapper, BaseStorageWrite<Publisher> publisherWrite, BaseStorageRead<Publisher> publisherRead, BaseStorageWrite<Person> personWrite, 
-            BaseStorageRead<Person> personRead, BaseStorageWrite<Book> bookWrite, BaseStorageRead<Book> bookRead, BaseStorageWrite<BuyingRecord> buyingRecordWrite, BaseStorageRead<BuyingRecord> buyingRecordRead)
+        public BuyLogic(IMapper mapper,
+                        BaseStorageWrite<Publisher> publisherWrite,
+                        BaseStorageRead<Publisher> publisherRead,
+                        BaseStorageWrite<Person> personWrite,
+                        BaseStorageRead<Person> personRead,
+                        BaseStorageWrite<Book> bookWrite,
+                        BaseStorageRead<Book> bookRead,
+                        BaseStorageWrite<BuyingRecord> buyingRecordWrite,
+                        BaseStorageRead<BuyingRecord> buyingRecordRead)
         {
             _mapper = mapper;
 
-            _publisherWrite = publisherWrite;
-            _publisherRead = publisherRead;
-            _personWrite = personWrite;
-            _personRead = personRead;
-            _bookWrite = bookWrite;
-            _bookRead = bookRead;
+            _publisherWrite    = publisherWrite;
+            _publisherRead     = publisherRead;
+            _personWrite       = personWrite;
+            _personRead        = personRead;
+            _bookWrite         = bookWrite;
+            _bookRead          = bookRead;
             _buyingRecordWrite = buyingRecordWrite;
-            _buyingRecordRead = buyingRecordRead;
+            _buyingRecordRead  = buyingRecordRead;
         }
 
         public async Task BuyBook(PersonVo person, BookVo book)
         {
             var buyingRecord = new BuyingRecord();
-            buyingRecord.Id = Guid.NewGuid().ToString();
-            buyingRecord.TradingPrice = (float) (book.Price * 0.8);
+            buyingRecord.Id           = Guid.NewGuid().ToString();
+            buyingRecord.TradingPrice = (float)(book.Price * 0.8);
             buyingRecord.CurrentOwner = person.Id;
-            buyingRecord.TradingTime = DateTime.Now.AddMinutes(-_Random.Next(100, 10000));
-            buyingRecord.Book = book.Id;
+            buyingRecord.TradingTime  = DateTime.Now.AddMinutes(-_Random.Next(100, 10000));
+            buyingRecord.Book         = book.Id;
             await _buyingRecordWrite.InsertAsync(buyingRecord);
         }
     }

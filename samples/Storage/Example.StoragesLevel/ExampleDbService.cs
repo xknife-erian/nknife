@@ -9,7 +9,7 @@ namespace Example.StoragesLevel
 {
     public class ExampleDbService : DbService
     {
-        private static readonly ILogger _Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger s_logger = LogManager.GetCurrentClassLogger();
 
         public ExampleDbService(DomainSqlConfig domainSqlConfig, IConnectionManager connectionManager) 
             : base(domainSqlConfig, connectionManager)

@@ -1,7 +1,7 @@
 SqlMap:
   Book:
     TypeName: Book
-    Type: Example.Common.Book, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    Type: Example.Common.Book, Example.Common, Version=1.1.22.509, Culture=neutral, PublicKeyToken=null
     CurrentDbType: SqLite
     DatabaseName: 
     Write: Data Source=Z:\FT-water-zone.sqlite;
@@ -27,7 +27,7 @@ SqlMap:
       SqLite: UPDATE Book SET Id=@Id, Name=@Name, Publisher=@Publisher, ISBN=@ISBN, Price=@Price
   BuyingRecord:
     TypeName: BuyingRecord
-    Type: Example.Common.BuyingRecord, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    Type: Example.Common.BuyingRecord, Example.Common, Version=1.1.22.509, Culture=neutral, PublicKeyToken=null
     CurrentDbType: SqLite
     DatabaseName: 
     Write: Data Source=Z:\FT-water-zone.sqlite;
@@ -54,7 +54,7 @@ SqlMap:
       SqLite: UPDATE BuyingRecord SET Id=@Id, OriginalOwner=@OriginalOwner, CurrentOwner=@CurrentOwner, TradingTime=@TradingTime, TradingPrice=@TradingPrice, Book=@Book
   Person:
     TypeName: Person
-    Type: Example.Common.Person, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    Type: Example.Common.Person, Example.Common, Version=1.1.22.509, Culture=neutral, PublicKeyToken=null
     CurrentDbType: SqLite
     DatabaseName: 
     Write: Data Source=Z:\FT-water-zone.sqlite;
@@ -76,8 +76,8 @@ SqlMap:
         );
     DefaultData:
       SqLite: >
-        INSERT INTO Person(Id, Name, Birthday, IDCardNumber, ExaminationNumber, School, Class, StudentNumber, Address, Email, HasCollection) Values('ab2dd499-7200-4e7b-a440-01749941abef', '李子微', '0001/1/1 0:00:00', '', '', '', '', '', '回龙观龙锦苑四区1号楼', 'abcd@gmail.com', 0);
-        INSERT INTO Person(Id, Name, Birthday, IDCardNumber, ExaminationNumber, School, Class, StudentNumber, Address, Email, HasCollection) Values('ed58d85e-37f6-407e-8779-e5c186f9cb37', '赵晓燕', '0001/1/1 0:00:00', '', '', '', '', '', '天通苑东四区18号楼1单元', 'zhaoxiangyan@qq.com', 1);
+        INSERT INTO Person(Id, Name, Birthday, IDCardNumber, ExaminationNumber, School, Class, StudentNumber, Address, Email, HasCollection) Values('45e8a160-a515-4c07-8e97-a341ddc8d052', '李子微', '0001/1/1 0:00:00', '', '', '', '', '', '回龙观龙锦苑四区1号楼', 'abcd@gmail.com', 0);
+        INSERT INTO Person(Id, Name, Birthday, IDCardNumber, ExaminationNumber, School, Class, StudentNumber, Address, Email, HasCollection) Values('1d4d413c-b2e0-479c-9a8d-227d87eb7732', '赵晓燕', '0001/1/1 0:00:00', '', '', '', '', '', '天通苑东四区18号楼1单元', 'zhaoxiangyan@qq.com', 1);
     Insert:
       SqLite: >-
         INSERT INTO Person(
@@ -89,7 +89,7 @@ SqlMap:
       SqLite: UPDATE Person SET Id=@Id, Name=@Name, Birthday=@Birthday, IDCardNumber=@IDCardNumber, ExaminationNumber=@ExaminationNumber, School=@School, Class=@Class, StudentNumber=@StudentNumber, Address=@Address, Email=@Email, HasCollection=@HasCollection
   Publisher:
     TypeName: Publisher
-    Type: Example.Common.Publisher, Example.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    Type: Example.Common.Publisher, Example.Common, Version=1.1.22.509, Culture=neutral, PublicKeyToken=null
     CurrentDbType: SqLite
     DatabaseName: 
     Write: Data Source=Z:\FT-water-zone.sqlite;
@@ -104,7 +104,7 @@ SqlMap:
         );
     DefaultData:
       SqLite: >
-        INSERT INTO Publisher(Id, Name, Year, Scale) Values('353f015e-2d3a-4358-925e-50eaa8e142c0', '美国特别不靠谱出版社', 2020, -1);
+        INSERT INTO Publisher(Id, Name, Year, Scale) Values('a37d9f36-783d-4f75-91f6-41e0d92fdf04', '美国特别不靠谱出版社', 2020, -1);
     Insert:
       SqLite: >-
         INSERT INTO Publisher(

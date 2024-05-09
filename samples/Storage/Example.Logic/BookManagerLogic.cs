@@ -12,7 +12,7 @@ namespace Example.Logic
 {
     public class BookManagerLogic
     {
-        private static readonly Random _Random = new Random((int) DateTime.Now.Ticks);
+        private static readonly Random _Random = new Random((int)DateTime.Now.Ticks);
         private readonly IMapper _mapper;
         private readonly BaseStorageWrite<Publisher> _publisherWrite;
         private readonly BaseStorageRead<Publisher> _publisherRead;
@@ -23,19 +23,26 @@ namespace Example.Logic
         private readonly BaseStorageWrite<BuyingRecord> _buyingRecordWrite;
         private readonly BaseStorageRead<BuyingRecord> _buyingRecordRead;
 
-        public BookManagerLogic(IMapper mapper, BaseStorageWrite<Publisher> publisherWrite, BaseStorageRead<Publisher> publisherRead, BaseStorageWrite<Person> personWrite, BaseStorageRead<Person> personRead, 
-            BaseStorageWrite<Book> bookWrite, BaseStorageRead<Book> bookRead, BaseStorageWrite<BuyingRecord> buyingRecordWrite, BaseStorageRead<BuyingRecord> buyingRecordRead)
+        public BookManagerLogic(IMapper mapper,
+                                BaseStorageWrite<Publisher> publisherWrite,
+                                BaseStorageRead<Publisher> publisherRead,
+                                BaseStorageWrite<Person> personWrite,
+                                BaseStorageRead<Person> personRead,
+                                BaseStorageWrite<Book> bookWrite,
+                                BaseStorageRead<Book> bookRead,
+                                BaseStorageWrite<BuyingRecord> buyingRecordWrite,
+                                BaseStorageRead<BuyingRecord> buyingRecordRead)
         {
             _mapper = mapper;
 
-            _publisherWrite = publisherWrite;
-            _publisherRead = publisherRead;
-            _personWrite = personWrite;
-            _personRead = personRead;
-            _bookWrite = bookWrite;
-            _bookRead = bookRead;
+            _publisherWrite    = publisherWrite;
+            _publisherRead     = publisherRead;
+            _personWrite       = personWrite;
+            _personRead        = personRead;
+            _bookWrite         = bookWrite;
+            _bookRead          = bookRead;
             _buyingRecordWrite = buyingRecordWrite;
-            _buyingRecordRead = buyingRecordRead;
+            _buyingRecordRead  = buyingRecordRead;
         }
 
         /// <summary>
@@ -44,12 +51,14 @@ namespace Example.Logic
         /// </summary>
         public async void AddBookAsync(params BookVo[] books)
         {
-            var pubList = new List<Publisher>();
+            var pubList  = new List<Publisher>();
             var bookList = new List<Book>();
+
             foreach (var book in books)
             {
                 var has = pubList.Find((p) => p.Name == book.Publisher.Name);
-                if (has == null)
+
+                if(has == null)
                 {
                     var pub = _mapper.Map<Publisher>(book.Publisher);
                     pubList.Add(pub);
@@ -58,6 +67,7 @@ namespace Example.Logic
                 {
                     book.Publisher.Id = has.Id;
                 }
+
                 bookList.Add(_mapper.Map<Book>(book));
             }
 
@@ -71,7 +81,8 @@ namespace Example.Logic
         {
             var count = await _bookRead.CountAsync();
             var index = _Random.Next(0, (int)count);
-            var book = await _bookRead.PageAsync(index, 1);
+            var book  = await _bookRead.PageAsync(index, 1);
+
             return _mapper.Map<BookVo>(book.ElementAt(0));
         }
     }

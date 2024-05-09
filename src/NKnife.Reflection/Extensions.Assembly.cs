@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using NKnife.Reflection;
 
 // ReSharper disable once CheckNamespace
@@ -79,6 +81,28 @@ namespace System.Reflection
         public static List<MethodMeta> GetAllMethodsMetaData(this Assembly assembly)
         {
             return assembly.GetAllTypes().SelectMany(s => s.GetAllMethodsMetaData()).ToList();
+        }
+
+        public static string ReadAllTextFromEmbeddedFile(this Assembly assembly, string resourceName)
+        {
+            using var resourceStream = assembly.GetStreamFromEmbeddedFile(resourceName);
+
+            using var reader = new StreamReader(resourceStream, Encoding.UTF8);
+
+            var template = reader.ReadToEnd();
+            return template;
+        }
+
+        public static Stream GetStreamFromEmbeddedFile(this Assembly assembly, string resourceName)
+        {
+            var name = assembly.GetManifestResourceNames().FirstOrDefault(n => n.EndsWith(resourceName));
+
+            if (name == null)
+                throw new Exception($"Embedded resource name '{resourceName}' not found in assembly '{assembly.FullName}'.");
+
+            var resourceStream = assembly.GetManifestResourceStream(name);
+
+            return resourceStream;
         }
     }
 }
