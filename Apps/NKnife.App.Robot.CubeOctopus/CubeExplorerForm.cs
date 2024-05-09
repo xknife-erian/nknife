@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using NKnife.Utility;
 
 namespace NKnife.Tools.Robot.CubeOctopus
 {
@@ -71,7 +70,7 @@ namespace NKnife.Tools.Robot.CubeOctopus
             _CubePaper.BackCCW90();
         }
 
-        private readonly UtilityRandom _Random = new UtilityRandom();
+        private readonly Random _Random = new Random((int)(DateTime.Now.Ticks & 0xAABBCCDD));
         private void RandomButtonClick(object sender, EventArgs e)
         {
             _RandomStepTextbox.Text = string.Empty;
