@@ -1,17 +1,18 @@
 ﻿using Gean.Module.Chess;
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Position;
 
 namespace NKnife.Chesses.Common.Pieces
 {
     public class PieceKnight : Piece
     {
-        public static PieceKnight Knight02 = new PieceKnight(Enums.GameSide.Black, new Position(2, 8));
-        public static PieceKnight Knight07 = new PieceKnight(Enums.GameSide.Black, new Position(7, 8));
-        public static PieceKnight Knight58 = new PieceKnight(Enums.GameSide.White, new Position(2, 1));
-        public static PieceKnight Knight63 = new PieceKnight(Enums.GameSide.White, new Position(7, 1));
+        public static PieceKnight Knight02 = new PieceKnight(Enums.GameSide.Black, new Position.Position(2, 8));
+        public static PieceKnight Knight07 = new PieceKnight(Enums.GameSide.Black, new Position.Position(7, 8));
+        public static PieceKnight Knight58 = new PieceKnight(Enums.GameSide.White, new Position.Position(2, 1));
+        public static PieceKnight Knight63 = new PieceKnight(Enums.GameSide.White, new Position.Position(7, 1));
 
-        public PieceKnight(Enums.GameSide manSide, Position position)
+        public PieceKnight(Enums.GameSide manSide, Position.Position position)
             : base(position)
         {
             this.GameSide = manSide;
@@ -31,29 +32,29 @@ namespace NKnife.Chesses.Common.Pieces
             enableCapture = new Positions();
             enableMovein = new Positions();
 
-            Position aPos = this.Position.ShiftWestNorth();
-            Position bPos = this.Position.ShiftEastNorth();
-            Position cPos = this.Position.ShiftWestSouth();
-            Position dPos = this.Position.ShiftEastSouth();
-            if (aPos != Position.Empty)
+            Position.Position aPos = this.Position.ShiftWestNorth();
+            Position.Position bPos = this.Position.ShiftEastNorth();
+            Position.Position cPos = this.Position.ShiftWestSouth();
+            Position.Position dPos = this.Position.ShiftEastSouth();
+            if (aPos != Common.Position.Position.Empty)
             {
-                Position.Shift(this.GameSide, situation, aPos.ShiftNorth(), enableMovein, enableCapture);
-                Position.Shift(this.GameSide, situation, aPos.ShiftWest(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, aPos.ShiftNorth(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, aPos.ShiftWest(), enableMovein, enableCapture);
             }
-            if (bPos != Position.Empty)
+            if (bPos != Common.Position.Position.Empty)
             {
-                Position.Shift(this.GameSide, situation, bPos.ShiftNorth(), enableMovein, enableCapture);
-                Position.Shift(this.GameSide, situation, bPos.ShiftEast(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, bPos.ShiftNorth(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, bPos.ShiftEast(), enableMovein, enableCapture);
             }
-            if (cPos != Position.Empty)
+            if (cPos != Common.Position.Position.Empty)
             {
-                Position.Shift(this.GameSide, situation, cPos.ShiftWest(), enableMovein, enableCapture);
-                Position.Shift(this.GameSide, situation, cPos.ShiftSouth(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, cPos.ShiftWest(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, cPos.ShiftSouth(), enableMovein, enableCapture);
             }
-            if (dPos != Position.Empty)
+            if (dPos != Common.Position.Position.Empty)
             {
-                Position.Shift(this.GameSide, situation, dPos.ShiftEast(), enableMovein, enableCapture);
-                Position.Shift(this.GameSide, situation, dPos.ShiftSouth(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, dPos.ShiftEast(), enableMovein, enableCapture);
+                Common.Position.Position.Shift(this.GameSide, situation, dPos.ShiftSouth(), enableMovein, enableCapture);
             }
         }
     }

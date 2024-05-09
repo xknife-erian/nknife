@@ -1,4 +1,4 @@
-﻿namespace Gean.Module.Chess.Demo
+﻿namespace NKnife.App.Chess
 {
     partial class MyDemoDialog
     {

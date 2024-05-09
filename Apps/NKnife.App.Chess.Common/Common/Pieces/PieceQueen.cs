@@ -2,6 +2,7 @@
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Exceptions;
 using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Position;
 
 namespace NKnife.Chesses.Common.Pieces
 {
@@ -10,8 +11,8 @@ namespace NKnife.Chesses.Common.Pieces
         public static PieceQueen _NewBlackQueen = new PieceQueen(Enums.GameSide.Black);
         public static PieceQueen _NewWhiteQueen = new PieceQueen(Enums.GameSide.White);
 
-        public PieceQueen(Enums.GameSide side) : this(side, Position.Empty) { }
-        public PieceQueen(Enums.GameSide side, Position position)
+        public PieceQueen(Enums.GameSide side) : this(side, Common.Position.Position.Empty) { }
+        public PieceQueen(Enums.GameSide side, Position.Position position)
             : base(position)
         {
             this.GameSide = side;
@@ -26,16 +27,16 @@ namespace NKnife.Chesses.Common.Pieces
             }
         }
 
-        protected override Position InitPosition(Position position)
+        protected override Position.Position InitPosition(Position.Position position)
         {
-            if (position == Position.Empty)
+            if (position == Common.Position.Position.Empty)
             {
                 switch (this.GameSide)
                 {
                     case Enums.GameSide.White:
-                        return new Position(4, 1);
+                        return new Position.Position(4, 1);
                     case Enums.GameSide.Black:
-                        return new Position(4, 8);
+                        return new Position.Position(4, 8);
                     default:
                         throw new PieceException(ExString.PositionIsEmpty);
                 }

@@ -7,7 +7,7 @@ namespace NKnife.Chesses.Common.Interface
     {
         Enums.GameSide GameSide { get; }
         Enums.PieceType PieceType { get; }
-        Position Position { get; }
+        Position.Position Position { get; }
         bool IsCaptured { get; }
     }
 }

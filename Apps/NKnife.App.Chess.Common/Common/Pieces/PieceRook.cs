@@ -1,6 +1,7 @@
 ﻿using Gean.Module.Chess;
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Position;
 
 namespace NKnife.Chesses.Common.Pieces
 {
@@ -9,12 +10,12 @@ namespace NKnife.Chesses.Common.Pieces
     /// </summary>
     public class PieceRook : Piece
     {
-        public static PieceRook Rook01 = new PieceRook(Enums.GameSide.Black, new Position(1, 8));
-        public static PieceRook Rook08 = new PieceRook(Enums.GameSide.Black, new Position(8, 8));
-        public static PieceRook Rook57 = new PieceRook(Enums.GameSide.White, new Position(1, 1));
-        public static PieceRook Rook64 = new PieceRook(Enums.GameSide.White, new Position(8, 1));
+        public static PieceRook Rook01 = new PieceRook(Enums.GameSide.Black, new Position.Position(1, 8));
+        public static PieceRook Rook08 = new PieceRook(Enums.GameSide.Black, new Position.Position(8, 8));
+        public static PieceRook Rook57 = new PieceRook(Enums.GameSide.White, new Position.Position(1, 1));
+        public static PieceRook Rook64 = new PieceRook(Enums.GameSide.White, new Position.Position(8, 1));
 
-        public PieceRook(Enums.GameSide manSide, Position position)
+        public PieceRook(Enums.GameSide manSide, Position.Position position)
             : base(position)
         {
             this.GameSide = manSide;
@@ -40,18 +41,18 @@ namespace NKnife.Chesses.Common.Pieces
         /// 车的基本路线(即横平竖直)
         /// </summary>
         internal static void RookShift(
-            Enums.GameSide side, ISituation situation, Position position,
+            Enums.GameSide side, ISituation situation, Position.Position position,
             Positions moveInPs, Positions capturePs)
         {
-            bool canContine = true;
-            Position tgtPos = Position.Empty;
+            bool              canContine = true;
+            Position.Position tgtPos     = Common.Position.Position.Empty;
 
             canContine = true;
             tgtPos = position;
             while (canContine)
             {
                 tgtPos = tgtPos.ShiftEast();
-                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Common.Position.Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
 
             canContine = true;
@@ -59,7 +60,7 @@ namespace NKnife.Chesses.Common.Pieces
             while (canContine)
             {
                 tgtPos = tgtPos.ShiftSouth();
-                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Common.Position.Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
 
             canContine = true;
@@ -67,7 +68,7 @@ namespace NKnife.Chesses.Common.Pieces
             while (canContine)
             {
                 tgtPos = tgtPos.ShiftWest();
-                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Common.Position.Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
 
             canContine = true;
@@ -75,7 +76,7 @@ namespace NKnife.Chesses.Common.Pieces
             while (canContine)
             {
                 tgtPos = tgtPos.ShiftNorth();
-                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Common.Position.Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
         }
     }

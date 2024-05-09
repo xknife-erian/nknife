@@ -34,7 +34,7 @@ namespace NKnife.Chesses.Common.Interface
         /// <summary>
         /// 4) 吃过路兵目标格(En passant target square)
         /// </summary>
-        Position EnPassantTargetPosition { get; }
+        Position.Position EnPassantTargetPosition { get; }
         /// <summary>
         /// 5) 半回合计数(Halfmove clock)。用一个非负数表示自从上一次动兵或吃子之后目前走了的半回合数。这个是为了适应50步和棋规则而定。
         /// </summary>

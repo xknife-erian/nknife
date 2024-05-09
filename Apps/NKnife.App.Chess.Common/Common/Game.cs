@@ -4,6 +4,7 @@ using Gean.Module.Chess;
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Interface;
 using NKnife.Chesses.Common.Pieces;
+using NKnife.Chesses.Common.Position;
 
 namespace NKnife.Chesses.Common
 {
@@ -23,13 +24,13 @@ namespace NKnife.Chesses.Common
         #endregion
 
         #region Override EnPassantTargetPosition
-        public override Position EnPassantTargetPosition
+        public override Position.Position EnPassantTargetPosition
         {
             get
             {
                 if (_piecePawnByEnPassanted == null)
                 {
-                    return Position.Empty;
+                    return Position.Position.Empty;
                 }
                 return _piecePawnByEnPassanted.Position;
             }
@@ -69,9 +70,9 @@ namespace NKnife.Chesses.Common
             if (!value.Equals('1'))
             {
                 if (_isInitialized)//如果是初始化，增加棋子
-                    this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.GetPositionByDot(dot)));
+                    this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.Position.GetPositionByDot(dot)));
                 else//如果不是初始化，改变棋子的Position
-                    this.ActivedPieces[dot].Position = Position.GetPositionByDot(dot);
+                    this.ActivedPieces[dot].Position = Position.Position.GetPositionByDot(dot);
             }
         }
         #endregion
@@ -163,8 +164,8 @@ namespace NKnife.Chesses.Common
                     //成为能被吃过路兵的“兵”
                     if ((pair.First.Y == 1 && pair.Second.Y == 3) || (pair.First.Y == 6 && pair.Second.Y == 4))
                     {
-                        char pawnChar;
-                        Position tmpPos = pair.Second.ShiftWest();
+                        char              pawnChar;
+                        Position.Position tmpPos = pair.Second.ShiftWest();
                         if (tmpPos != null)
                         {
                             if (this.TryGetPiece(tmpPos.Dot, out pawnChar))
@@ -215,7 +216,7 @@ namespace NKnife.Chesses.Common
         /// <param name="piece">被移动的棋子</param>
         /// <param name="srcPos">源棋格</param>
         /// <param name="tgtPos">目标棋格</param>
-        private void PieceMoveIn(Piece piece, Enums.ActionCollection actions, Position srcPos, Position tgtPos)
+        private void PieceMoveIn(Piece piece, Enums.ActionCollection actions, Position.Position srcPos, Position.Position tgtPos)
         {
             switch (piece.PieceType)
             {
@@ -304,7 +305,7 @@ namespace NKnife.Chesses.Common
         /// 移除指定位置棋格的棋子
         /// </summary>
         /// <param name="pos">指定位置</param>
-        public void PieceMoveOut(Position pos)
+        public void PieceMoveOut(Position.Position pos)
         {
             Piece piece = this.ActivedPieces[pos.Dot];
             piece.IsCaptured = true;
@@ -321,7 +322,7 @@ namespace NKnife.Chesses.Common
         /// 在棋子被俘后发生
         /// </summary>
         public event PieceMoveOut PieceMoveOutEvent;
-        protected virtual void OnPieceMoveOutEvent(Piece piece, Position pos)
+        protected virtual void OnPieceMoveOutEvent(Piece piece, Position.Position pos)
         {
             if (PieceMoveOutEvent != null)
             {

@@ -1,6 +1,7 @@
 ﻿using Gean.Module.Chess;
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Pieces;
+using NKnife.Chesses.Common.Position;
 
 namespace NKnife.Chesses.Common.Interface
 {
@@ -12,7 +13,7 @@ namespace NKnife.Chesses.Common.Interface
         void PieceMoveIn(PositionPair step);
         event PieceMoveIn PieceMoveInEvent;
 
-        void PieceMoveOut(Position pos);
+        void PieceMoveOut(Position.Position pos);
         event PieceMoveOut PieceMoveOutEvent;
     }
     /// <summary>
@@ -27,5 +28,5 @@ namespace NKnife.Chesses.Common.Interface
     /// </summary>
     /// <param name="piece">棋子</param>
     /// <param name="pos">棋子被杀死时的所在棋格</param>
-    public delegate void PieceMoveOut(Piece piece, Position pos);
+    public delegate void PieceMoveOut(Piece piece, Position.Position pos);
 }

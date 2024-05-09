@@ -35,12 +35,12 @@ namespace NKnife.Chesses.Common
         /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public Position SourcePosition { get; set; }
+        public Position.Position SourcePosition { get; set; }
         public char SourceChar { get; set; }
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
-        public Position TargetPosition { get; set; }
+        public Position.Position TargetPosition { get; set; }
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
@@ -62,13 +62,13 @@ namespace NKnife.Chesses.Common
 
         public Step()
         {
-            this.Number = 0;
-            this.GameSide = Enums.GameSide.White;
-            this.PieceType = Enums.PieceType.None;
-            this.SourcePosition = Position.Empty;
-            this.SourceChar = '?';
-            this.TargetPosition = Position.Empty;
-            this.Actions = new Enums.ActionCollection();
+            this.Number             = 0;
+            this.GameSide           = Enums.GameSide.White;
+            this.PieceType          = Enums.PieceType.None;
+            this.SourcePosition     = Position.Position.Empty;
+            this.SourceChar         = '?';
+            this.TargetPosition     = Position.Position.Empty;
+            this.Actions            = new Enums.ActionCollection();
             this.PromotionPieceType = Enums.PieceType.None;
         }
 
@@ -139,67 +139,67 @@ namespace NKnife.Chesses.Common
                     {
                         #region case
                         case Servicer.AsStep.As_e4:
-                            this.PieceType = Enums.ToPieceType(this.GameSide);
-                            this.TargetPosition = Position.Parse(value);
-                            isMatch = true;
+                            this.PieceType      = Enums.ToPieceType(this.GameSide);
+                            this.TargetPosition = Position.Position.Parse(value);
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_Rd7:
-                            this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            isMatch = true;
+                            this.PieceType      = Enums.ToPieceType(value[0], this.GameSide);
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_Rxa2:
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
                             this.Actions.Add(Enums.Action.Capture);
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            isMatch = true;
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_Rbe1:
-                            this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
-                            this.SourceChar = value[1];
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            isMatch = true;
+                            this.PieceType      = Enums.ToPieceType(value[0], this.GameSide);
+                            this.SourceChar     = value[1];
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_N1c3:
-                            this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
-                            this.SourceChar = value[1];
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            isMatch = true;
+                            this.PieceType      = Enums.ToPieceType(value[0], this.GameSide);
+                            this.SourceChar     = value[1];
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_hxg6:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
                             this.SourceChar = value[0];
                             this.Actions.Add(Enums.Action.Capture);
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            isMatch = true;
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_Ngxf6:
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
                             this.SourceChar = value[1];
                             this.Actions.Add(Enums.Action.Capture);
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            isMatch = true;
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_R8xf5://N1c3
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
                             this.SourceChar = value[1];
                             this.Actions.Add(Enums.Action.Capture);
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            isMatch = true;
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_e8_Q:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
                             this.Actions.Add(Enums.ToPromoteAction(value[value.Length - 1]));
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 4, 2));
-                            isMatch = true;
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 4, 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_exf8_Q:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
                             this.SourceChar = value[0];
                             this.Actions.Add(Enums.Action.Capture);
                             this.Actions.Add(Enums.ToPromoteAction(value[value.Length - 1]));
-                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 4, 2));
-                            isMatch = true;
+                            this.TargetPosition = Position.Position.Parse(value.Substring(value.Length - 4, 2));
+                            isMatch             = true;
                             break;
                         case Servicer.AsStep.As_O_O:
                             this.PieceType = Enums.PieceType.None;

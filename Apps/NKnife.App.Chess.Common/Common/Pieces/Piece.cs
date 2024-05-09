@@ -2,6 +2,7 @@
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Exceptions;
 using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Position;
 using NKnife.Events;
 
 namespace NKnife.Chesses.Common.Pieces
@@ -13,13 +14,13 @@ namespace NKnife.Chesses.Common.Pieces
         /// <summary>
         /// 构造函数
         /// </summary>
-        protected Piece(Position position) 
+        protected Piece(Position.Position position) 
         {
             this.Position = this.InitPosition(position);
             this.IsCaptured = false;
         }
 
-        protected virtual Position InitPosition(Position position)
+        protected virtual Position.Position InitPosition(Position.Position position)
         {
             return position;
         }
@@ -43,7 +44,7 @@ namespace NKnife.Chesses.Common.Pieces
         /// <summary>
         /// 棋子所在位置
         /// </summary>
-        public virtual Position Position { get; internal set; }
+        public virtual Position.Position Position { get; internal set; }
 
         #endregion
 
@@ -110,7 +111,7 @@ namespace NKnife.Chesses.Common.Pieces
             return false;
         }
 
-        public static Piece Creator(Enums.PieceType type, Position pos)
+        public static Piece Creator(Enums.PieceType type, Position.Position pos)
         {
             switch (type)
             {
@@ -156,16 +157,16 @@ namespace NKnife.Chesses.Common.Pieces
         /// </summary>
         /// <param name="side">指定的棋子战方</param>
         /// <param name="x">指定的棋子X坐标</param>
-        protected static Position GetOpenningsPosition(Enums.GameSide side, int x)
+        protected static Position.Position GetOpenningsPosition(Enums.GameSide side, int x)
         {
-            Position point = Position.Empty;
+            Position.Position point = Common.Position.Position.Empty;
             switch (side)
             {
                 case Enums.GameSide.White:
-                    point = new Position(x, 1);
+                    point = new Position.Position(x, 1);
                     break;
                 case Enums.GameSide.Black:
-                    point = new Position(x, 8);
+                    point = new Position.Position(x, 8);
                     break;
             }
             return point;
@@ -182,12 +183,12 @@ namespace NKnife.Chesses.Common.Pieces
                 PositionChangedEvent(this, e);
         }
         public delegate void PositionChangedEventHandler(object sender, PositionChangedEventArgs e);
-        public class PositionChangedEventArgs : ChangedEventArgs<Position>
+        public class PositionChangedEventArgs : ChangedEventArgs<Position.Position>
         {
             public Enums.Action Action { get; private set; }
             public Piece MovedPiece { get; private set; }
             public Piece CaptruedPiece { get; private set; }
-            public PositionChangedEventArgs(Enums.Action action, Piece movedPiece, Piece captruedPiece, Position srcPosition, Position tgtPosition)
+            public PositionChangedEventArgs(Enums.Action action, Piece movedPiece, Piece captruedPiece, Position.Position srcPosition, Position.Position tgtPosition)
                 : base(srcPosition, tgtPosition)
             {
                 this.Action = action;

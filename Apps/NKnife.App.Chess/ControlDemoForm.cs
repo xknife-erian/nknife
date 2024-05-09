@@ -2,12 +2,12 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Gean.Module.Chess;
 using NKnife.Chesses.Common.Record;
 using NKnife.Chesses.Common.Record.PGN;
+using NKnife.Chesses.Controls;
 using NKnife.Interface;
 
-namespace Gean.Gui.ChessControl.Demo
+namespace NKnife.App.Chess
 {
     public partial class DemoMainForm : Form
     {

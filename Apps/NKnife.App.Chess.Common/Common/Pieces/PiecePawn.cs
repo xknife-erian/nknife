@@ -2,6 +2,7 @@
 using NKnife.Chesses.Common.Base;
 using NKnife.Chesses.Common.Exceptions;
 using NKnife.Chesses.Common.Interface;
+using NKnife.Chesses.Common.Position;
 
 namespace NKnife.Chesses.Common.Pieces
 {
@@ -10,31 +11,31 @@ namespace NKnife.Chesses.Common.Pieces
         public static PiecePawn[] BlackPawns = new PiecePawn[]
             #region
             {
-                new PiecePawn(Enums.GameSide.Black, new Position(1,7)),
-                new PiecePawn(Enums.GameSide.Black, new Position(2,7)),
-                new PiecePawn(Enums.GameSide.Black, new Position(3,7)),
-                new PiecePawn(Enums.GameSide.Black, new Position(4,7)),
-                new PiecePawn(Enums.GameSide.Black, new Position(5,7)),
-                new PiecePawn(Enums.GameSide.Black, new Position(6,7)),
-                new PiecePawn(Enums.GameSide.Black, new Position(7,7)),
-                new PiecePawn(Enums.GameSide.Black, new Position(8,7))
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(1,7)),
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(2,7)),
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(3,7)),
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(4,7)),
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(5,7)),
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(6,7)),
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(7,7)),
+                new PiecePawn(Enums.GameSide.Black, new Position.Position(8,7))
             };
             #endregion
         public static PiecePawn[] WhitePawns = new PiecePawn[]
             #region
             {
-                new PiecePawn(Enums.GameSide.White, new Position(1,2)),
-                new PiecePawn(Enums.GameSide.White, new Position(2,2)),
-                new PiecePawn(Enums.GameSide.White, new Position(3,2)),
-                new PiecePawn(Enums.GameSide.White, new Position(4,2)),
-                new PiecePawn(Enums.GameSide.White, new Position(5,2)),
-                new PiecePawn(Enums.GameSide.White, new Position(6,2)),
-                new PiecePawn(Enums.GameSide.White, new Position(7,2)),
-                new PiecePawn(Enums.GameSide.White, new Position(8,2))
+                new PiecePawn(Enums.GameSide.White, new Position.Position(1,2)),
+                new PiecePawn(Enums.GameSide.White, new Position.Position(2,2)),
+                new PiecePawn(Enums.GameSide.White, new Position.Position(3,2)),
+                new PiecePawn(Enums.GameSide.White, new Position.Position(4,2)),
+                new PiecePawn(Enums.GameSide.White, new Position.Position(5,2)),
+                new PiecePawn(Enums.GameSide.White, new Position.Position(6,2)),
+                new PiecePawn(Enums.GameSide.White, new Position.Position(7,2)),
+                new PiecePawn(Enums.GameSide.White, new Position.Position(8,2))
             };
             #endregion
 
-        public PiecePawn(Enums.GameSide side, Position position)
+        public PiecePawn(Enums.GameSide side, Position.Position position)
             : base(position)
         {
             this.GameSide = side;
@@ -55,16 +56,16 @@ namespace NKnife.Chesses.Common.Pieces
         /// </summary>
         public bool EnableEnPassanted { get; internal set; }
 
-        protected override Position InitPosition(Position position)
+        protected override Position.Position InitPosition(Position.Position position)
         {
-            if (position.Equals(Position.Empty))
+            if (position.Equals(Common.Position.Position.Empty))
             {
                 switch (this.GameSide)
                 {
                     case Enums.GameSide.White:
-                        return new Position(5, 1);
+                        return new Position.Position(5, 1);
                     case Enums.GameSide.Black:
-                        return new Position(5, 8);
+                        return new Position.Position(5, 8);
                     default:
                         throw new PieceException(ExString.PositionIsError);
                 }
@@ -82,10 +83,10 @@ namespace NKnife.Chesses.Common.Pieces
             {
                 #region 白兵
                 if (this.Position.Y < 1) return;//白兵怎么也不可能在第一行上
-                Position tmpPos = Position.Empty;
+                Position.Position tmpPos = Common.Position.Position.Empty;
                 //向北
                 tmpPos = this.Position.ShiftNorth();
-                if (tmpPos == Position.Empty) return;
+                if (tmpPos == Common.Position.Position.Empty) return;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
@@ -142,19 +143,19 @@ namespace NKnife.Chesses.Common.Pieces
                     #endregion
                 }
                 //剑指西北
-                Position.Shift(this.GameSide, situation, this.Position.ShiftWestNorth(), enableMovein, enableCapture, false);
+                Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftWestNorth(), enableMovein, enableCapture, false);
                 //剑指东北
-                Position.Shift(this.GameSide, situation, this.Position.ShiftEastNorth(), enableMovein, enableCapture, false);
+                Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftEastNorth(), enableMovein, enableCapture, false);
                 #endregion
             }
             else
             {
                 #region 黑兵
                 if (this.Position.Y > 6) return;
-                Position tmpPos = Position.Empty;
+                Position.Position tmpPos = Common.Position.Position.Empty;
                 //向南
                 tmpPos = this.Position.ShiftSouth();
-                if (tmpPos == Position.Empty) return;
+                if (tmpPos == Common.Position.Position.Empty) return;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
@@ -211,9 +212,9 @@ namespace NKnife.Chesses.Common.Pieces
                     #endregion
                 }
                 //剑指西南
-                Position.Shift(this.GameSide, situation, this.Position.ShiftWestSouth(), enableMovein, enableCapture, false);
+                Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftWestSouth(), enableMovein, enableCapture, false);
                 //剑指东南
-                Position.Shift(this.GameSide, situation, this.Position.ShiftEastSouth(), enableMovein, enableCapture, false);
+                Common.Position.Position.Shift(this.GameSide, situation, this.Position.ShiftEastSouth(), enableMovein, enableCapture, false);
                 #endregion
             }
         }
