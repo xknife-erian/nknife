@@ -9,6 +9,11 @@
     <Authors>lukan@xknife.net</Authors>
     <Company>xknife.net</Company>
     <Description>一个面向.Net的综合开发库。</Description>
+    <Copyright>Copyright © 2008 - $([System.DateTime]::Today.ToString(yyyy)) xknife.net.</Copyright>
+    <Product>$(AssemblyName)</Product>
+    <Title>$(AssemblyName)</Title>
+    <PackageProjectUrl>https://gitee.com/xknife/nknife</PackageProjectUrl>
+    <RepositoryUrl>https://gitee.com/xknife/nknife</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
