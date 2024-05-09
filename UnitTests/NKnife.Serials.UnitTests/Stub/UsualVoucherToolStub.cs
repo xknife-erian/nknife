@@ -6,6 +6,6 @@ namespace NKnife.Serials.UnitTests.Stub
 {
     public class UsualVoucherToolStub : UsualVoucherTool
     {
-        public VoucherSegment SegmentSource => _segment;
+        public VoucherSegment SegmentSource => _Segment;
    }
 }

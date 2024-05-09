@@ -9,18 +9,18 @@ namespace NKnife.Serials.ParseTools
     /// </summary>
     public class VoucherSegment : Voucher
     {
-        public VoucherSegment(FieldConfig fi)
+        public VoucherSegment(FieldConfig fc)
         {
-            _fieldConfig = fi;
-            var n = fi.Begin.Item2 + fi.Attribute.Item2 + fi.Address.Item2 + fi.Command.Item2 + fi.DataFieldLength.Item2;
+            _fieldConfig = fc;
+            var n = fc.Begin.Item2 + fc.Attribute.Item2 + fc.Address.Item2 + fc.Command.Item2 + fc.DataFieldLength.Item2;
             _head = new byte[n];
-            _tail = new byte[fi.CRC + fi.End];
+            _tail = new byte[fc.CRC + fc.End];
         }
 
         /// <summary>
         ///     未解析完成的原因
         /// </summary>
-        public ReasonForNonCompletionOfParse Reason { get; set; } = ReasonForNonCompletionOfParse.Unknown;
+        public UnresolvedCompletionReason UnresolvedCompletionReason { get; set; } = UnresolvedCompletionReason.Unknown;
 
         /// <summary>
         /// 当前已写入的数据量

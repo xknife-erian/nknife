@@ -42,6 +42,9 @@ namespace NKnife.Serials.ParseTools
         /// </summary>
         ArraySegment<byte> End { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         IVoucher ToVoucher();
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     ///     未解析完成的原因
     /// </summary>
-    public enum ReasonForNonCompletionOfParse
+    public enum UnresolvedCompletionReason
     {
         Unknown,
 
