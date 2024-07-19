@@ -1,4 +1,4 @@
-﻿using ConsoleUi;
+﻿using SqlSugar;
 
 namespace Sample.SqlSugarProject
 {
@@ -12,10 +12,5 @@ namespace Sample.SqlSugarProject
             var menu    = new SqlSugarLearningMenu();
             await menuRun.Run(menu);
         }
-    }
-
-    public class SqlSugarLearningMenu : SimpleMenu
-    {
-        
     }
 }
