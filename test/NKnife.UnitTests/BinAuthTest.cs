@@ -100,6 +100,12 @@ namespace NKnife.UnitTests
             BinAuth.IsHasAuth(-1, 0).Should().BeFalse();
             BinAuth.IsHasAuth(0, 0).Should().BeFalse();
         }
+
+        [Fact]
+        public void Test()
+        {
+
+        }
     }
 }
 
