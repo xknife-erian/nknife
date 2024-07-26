@@ -31,11 +31,11 @@ namespace NKnife.NLog.Target.Socket.WebSocket
         ///     创建一个WebSocket服务
         /// </summary>
         /// <param name="port">监听端口</param>
-        /// <param name="wsPath">路径</param>
-        public WebSocketServer(int port, string wsPath)
+        /// <param name="websocketUri">路径</param>
+        public WebSocketServer(int port, string websocketUri)
         {
             ListenPort = port;
-            WsPath     = wsPath;
+            WebsocketUri     = websocketUri;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace NKnife.NLog.Target.Socket.WebSocket
         /// <summary>
         ///     WebSocket的路径
         /// </summary>
-        public string WsPath { get; set; }
+        public string WebsocketUri { get; set; }
 
         // WebSocket监听的Uri
         public string Uri { get; private set; } = "";
@@ -82,7 +82,7 @@ namespace NKnife.NLog.Target.Socket.WebSocket
                 // isWindowsAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
 
-            var path = WsPath;
+            var path = WebsocketUri;
             path = path.Trim('/');
             var uri = isWindowsAdmin ? $"http://*:{ListenPort}/{path}/" : $"http://127.0.0.1:{ListenPort}/{path}/";
 
@@ -131,7 +131,7 @@ namespace NKnife.NLog.Target.Socket.WebSocket
                 WebSocket     = webSocketContext.WebSocket,
                 RemoteAddress = httpListenerContext.Request.RemoteEndPoint
             };
-            userToken.IPAddress   = ((IPEndPoint)userToken.RemoteAddress).Address;
+            userToken.IpAddress   = ((IPEndPoint)userToken.RemoteAddress).Address;
             userToken.IsWebSocket = true;
 
             try
@@ -219,7 +219,7 @@ namespace NKnife.NLog.Target.Socket.WebSocket
                 ConnectTime   = DateTime.Now,
                 RemoteAddress = s.Client.RemoteEndPoint
             };
-            userToken.IPAddress = ((IPEndPoint)userToken.RemoteAddress).Address;
+            userToken.IpAddress = ((IPEndPoint)userToken.RemoteAddress).Address;
             var buffer = ArrayPool<byte>.Shared.Rent(1024 * 1024 * 1);
 
             try

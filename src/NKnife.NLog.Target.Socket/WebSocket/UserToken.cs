@@ -10,12 +10,12 @@ namespace NKnife.NLog.Target.Socket.WebSocket
         /// <summary>
         /// 连接的Socket对象
         /// </summary>
-        public System.Net.Sockets.Socket ConnectSocket { get; set; }
+        public System.Net.Sockets.Socket? ConnectSocket { get; set; }
 
         /// <summary>
         /// websocket对象
         /// </summary>
-        public System.Net.WebSockets.WebSocket WebSocket { get; set; }
+        public System.Net.WebSockets.WebSocket? WebSocket { get; set; }
 
         /// <summary>
         /// 连接的时间
@@ -25,12 +25,12 @@ namespace NKnife.NLog.Target.Socket.WebSocket
         /// <summary>
         /// 远程地址
         /// </summary>
-        public EndPoint RemoteAddress { get; set; }
+        public EndPoint? RemoteAddress { get; set; }
 
         /// <summary>
         /// 客户端IP地址
         /// </summary>
-        public IPAddress IPAddress { get; set; }
+        public IPAddress? IpAddress { get; set; }
 
         /// <summary>
         /// 是否是 websocket（握手成功）
