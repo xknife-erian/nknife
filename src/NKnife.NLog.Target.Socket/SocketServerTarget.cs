@@ -1,15 +1,9 @@
-﻿using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+﻿using NLog;
+using NLog.Config;
+using NLog.Targets;
 using System.Diagnostics;
 using System.Text;
-using Newtonsoft.Json;
-using NLog;
-using NLog.Common;
-using NLog.Config;
-using NLog.Layouts;
-using NLog.MessageTemplates;
-using NLog.Targets;
-using NLog.Time;
+using System.Text.Json;
 using TouchSocket.Core;
 using TouchSocket.Sockets;
 
@@ -18,9 +12,13 @@ namespace NKnife.NLog.Target.Socket
     [Target("SocketServer")]
     public class SocketServerTarget : global::NLog.Targets.Target
     {
-        private readonly TouchSocketConfig _config = new();
 
+        private readonly TouchSocketConfig _config = new();
         private readonly TcpService _tcpService;
+        private static readonly JsonSerializerOptions s_jsonSerializerOptions = new JsonSerializerOptions
+        {
+            WriteIndented = false
+        };
 
         public SocketServerTarget()
         {
@@ -50,7 +48,7 @@ namespace NKnife.NLog.Target.Socket
 
         protected override void Write(LogEventInfo logEvent)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 try
                 {
@@ -59,9 +57,9 @@ namespace NKnife.NLog.Target.Socket
                     if(!clients.Any())
                         return;
                     var    record = new LogRecord(logEvent);
-                    string json   = JsonConvert.SerializeObject(record, Formatting.None);
+                    string json   = System.Text.Json.JsonSerializer.Serialize(record, s_jsonSerializerOptions);
                     byte[] data   = Encoding.UTF8.GetBytes($"{json}\t\r\n");
-                    SendAsync(data).ConfigureAwait(false);
+                    await SendAsync(data);
                 }
                 catch (Exception e)
                 {
