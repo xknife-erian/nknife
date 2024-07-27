@@ -42,9 +42,9 @@ namespace NKnife.NLog.Target.Socket
         /// <summary>
         ///     是否使用Json格式进行传输
         /// </summary>
-        /// <returns>true时，使用二进制传输；false时，使用Json字符串传输。默认采用二进制传输。</returns>
+        /// <returns>true时，使用二进制传输；false时，使用Json字符串传输。默认false,采用二进制传输。</returns>
         [RequiredParameter]
-        public bool UseJson { get; set; }
+        public bool UseJson { get; set; } = false;
 
         protected override void Write(LogEventInfo logEvent)
         {
