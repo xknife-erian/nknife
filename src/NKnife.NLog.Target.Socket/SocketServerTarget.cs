@@ -39,6 +39,13 @@ namespace NKnife.NLog.Target.Socket
         [RequiredParameter]
         public string Port { get; set; } = "10101";
 
+        /// <summary>
+        ///     是否使用Json格式进行传输
+        /// </summary>
+        /// <returns>true时，使用二进制传输；false时，使用Json字符串传输。默认采用二进制传输。</returns>
+        [RequiredParameter]
+        public bool UseJson { get; set; }
+
         protected override void Write(LogEventInfo logEvent)
         {
             Task.Run(async () =>
@@ -47,8 +54,12 @@ namespace NKnife.NLog.Target.Socket
                 {
                     if(_tcpService.Count <= 0)
                         return;
-                    var record  = new LogRecord(logEvent);
-                    var data    = Encoding.UTF8.GetBytes(record.ToJson());
+                    var    record = new LogRecord(logEvent);
+                    byte[] data;
+                    if(UseJson)
+                        data = Encoding.UTF8.GetBytes(record.ToJson());
+                    else
+                        data = await record.ToBinaryAsync();
                     var clients = _tcpService.GetClients();
                     await Task.WhenAll(clients.Select(client => client.SendAsync(data)));
                 }
