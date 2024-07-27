@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using MessagePack;
+using MessagePack.Formatters;
+using MessagePack.Resolvers;
 using Microsoft.Extensions.ObjectPool;
 using NLog;
 
@@ -11,6 +14,7 @@ namespace NKnife.NLog.Target.Socket.Common
     ///     表示日志记录的类。目的是将NLog的 <see cref="LogEventInfo" /> 转换为简化的可序列化对象。<br />
     ///     一是为了减少序列化的数据量，二是为了避免序列化 <see cref="LogEventInfo" /> 时出现循环引用的问题。
     /// </summary>
+    [MessagePackObject]
     public record LogRecord
     {
         private static readonly JsonSerializerOptions s_jsonSerializerOptions = new()
@@ -18,7 +22,19 @@ namespace NKnife.NLog.Target.Socket.Common
             WriteIndented = false
         };
 
-        private LogRecord() { }
+        private static readonly MessagePackSerializerOptions s_messagePackSerializerOptions = MessagePackSerializerOptions.Standard.WithResolver(CompositeResolver.Create(
+            new IMessagePackFormatter[] {new LogLevelFormatter()},
+            new IFormatterResolver[] {StandardResolver.Instance, ContractlessStandardResolver.Instance}
+        ));
+
+        static LogRecord()
+        {
+            // 为了避免序列化时出现循环引用的问题，需要设置以下选项。
+            s_jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            //s_jsonSerializerOptions.Converters.Add(new StackTraceConverter());
+        }
+
+        public LogRecord() { }
 
         /// <summary>
         ///     初始化 <see cref="LogRecord" /> 类的新实例。
@@ -44,32 +60,32 @@ namespace NKnife.NLog.Target.Socket.Common
         /// <summary>
         ///     获取或设置日志记录的时间戳。
         /// </summary>
-        public DateTime TimeStamp { get; set; }
+        [Key(0)] public DateTime TimeStamp { get; set; }
 
         /// <summary>
         ///     获取或设置日志记录的级别。
         /// </summary>
-        public LogLevel Level { get; set; } = LogLevel.Info;
+        [Key(1)] public LogLevel Level { get; set; } = LogLevel.Info;
 
         /// <summary>
         ///     获取或设置日志记录的异常。
         /// </summary>
-        public Exception? Exception { get; set; }
+        [Key(4)] public Exception? Exception { get; set; }
 
         /// <summary>
         ///     获取或设置日志记录的记录器名称。
         /// </summary>
-        public string? LoggerName { get; set; }
+        [Key(2)] public string? LoggerName { get; set; }
 
         /// <summary>
         ///     获取或设置日志记录的格式化消息。
         /// </summary>
-        public string FormattedMessage { get; set; } = string.Empty;
+        [Key(3)] public string FormattedMessage { get; set; } = string.Empty;
 
         /// <summary>
         ///     获取或设置日志记录的堆栈跟踪。
         /// </summary>
-        public StackTrace? StackTrace { get; set; }
+        [Key(5)] public StackTrace? StackTrace { get; set; }
 
         public override string ToString()
         {
@@ -84,15 +100,10 @@ namespace NKnife.NLog.Target.Socket.Common
 
         public async Task<byte[]> ToBinaryAsync()
         {
-            var terminatorLength = TerminatorBytes.Length;
-
             using var memoryStream = new MemoryStream();
-            var buffer = memoryStream.GetBuffer();
-
-            await MessagePackSerializer.SerializeAsync(memoryStream, this).ConfigureAwait(false);
-            memoryStream.Write(TerminatorBytes, 0, terminatorLength); // 添加终止符
-            var length = (int)memoryStream.Length;                    // 计算实际使用的长度
-            return buffer[..length].ToArray(); // C# 9.0 特性: Span slicing
+            await MessagePackSerializer.SerializeAsync(memoryStream, this, s_messagePackSerializerOptions);
+            memoryStream.Write(TerminatorBytes, 0, TerminatorBytes.Length); // 添加终止符
+            return memoryStream.ToArray();
         }
 
         public static LogRecord? FromJson(string json)
@@ -133,6 +144,20 @@ namespace NKnife.NLog.Target.Socket.Common
 
             // 清空流的内容以便下次使用。
             stream.SetLength(0);
+        }
+    }
+
+    public class LogLevelFormatter : IMessagePackFormatter<LogLevel>
+    {
+        public void Serialize(ref MessagePackWriter writer, LogLevel value, MessagePackSerializerOptions options)
+        {
+            writer.Write(value.Name);
+        }
+
+        public LogLevel Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
+        {
+            var name = reader.ReadString();
+            return LogLevel.FromString(name);
         }
     }
 }
