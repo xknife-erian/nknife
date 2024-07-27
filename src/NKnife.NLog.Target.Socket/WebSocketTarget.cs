@@ -25,7 +25,7 @@ namespace NKnife.NLog.Target.Socket
         ///     服务监听端口
         /// </summary>
         [RequiredParameter]
-        public string Port { get; set; } = "10086";
+        public string Port { get; set; } = "10100";
 
         /// <summary>
         ///     WebSocket绑定的路径
