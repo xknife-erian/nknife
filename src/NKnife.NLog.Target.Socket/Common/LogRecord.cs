@@ -21,7 +21,7 @@ namespace NKnife.NLog.Target.Socket.Common
         /// <summary>
         /// 获取日志记录的终止符。
         /// </summary>
-        public static string Terminator => "\t\r\n";
+        public static string Terminator => "\r\t\n";
 
         /// <summary>
         /// 初始化 <see cref="LogRecord"/> 类的新实例。
