@@ -20,8 +20,8 @@ namespace NKnife.NLog.Target.Socket.Common
         };
         private static readonly MessagePackSerializerOptions s_mpOptions = 
             MessagePackSerializerOptions.Standard
-                                        .WithResolver(CustomResolver.Instance);
-                                        //.WithCompression(MessagePackCompression.Lz4Block);// 使用Lz4压缩
+                                        .WithResolver(CustomResolver.Instance)
+                                        .WithCompression(MessagePackCompression.Lz4Block);// 使用Lz4压缩
         public LogRecord() { }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace NKnife.NLog.Target.Socket.Common
         {
             TimeStamp        = logEventInfo.TimeStamp;
             Level            = logEventInfo.Level;
-            Exception        = ExceptionToString(logEventInfo.Exception);
             LoggerName       = logEventInfo.LoggerName;
             FormattedMessage = logEventInfo.FormattedMessage;
+            Exception        = ExceptionToString(logEventInfo.Exception);
             StackTrace       = StackTraceToString(logEventInfo.StackTrace);
         }
 
@@ -56,7 +56,7 @@ namespace NKnife.NLog.Target.Socket.Common
         private static string? ExceptionToString(Exception? exception)
         {
             if (exception == null)
-                return null;
+                return string.Empty;
 
             var sb = new StringBuilder();
             sb.AppendLine(exception.ToString());
@@ -135,5 +135,4 @@ namespace NKnife.NLog.Target.Socket.Common
             return JsonSerializer.Deserialize<LogRecord>(json, s_jsonSerializerOptions);
         }
     }
-
 }
