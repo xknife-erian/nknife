@@ -1,10 +1,9 @@
-﻿using MemoryPack;
-using MemoryPack.Formatters;
-using NLog;
+﻿using NLog;
 using System.Buffers;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using MessagePack;
 
 namespace NKnife.NLog.Target.Socket.Common
 {
@@ -12,15 +11,17 @@ namespace NKnife.NLog.Target.Socket.Common
     ///     表示日志记录的类。目的是将NLog的 <see cref="LogEventInfo" /> 转换为简化的可序列化对象。<br />
     ///     一是为了减少序列化的数据量，二是为了避免序列化 <see cref="LogEventInfo" /> 时出现循环引用的问题。
     /// </summary>
-    [MemoryPackable]
+    [MessagePackObject]
     public partial record LogRecord
     {
         private static readonly JsonSerializerOptions s_jsonSerializerOptions = new()
         {
             WriteIndented = false
         };
-
-        [MemoryPackConstructor]
+        private static readonly MessagePackSerializerOptions s_mpOptions = 
+            MessagePackSerializerOptions.Standard
+                                        .WithResolver(CustomResolver.Instance);
+                                        //.WithCompression(MessagePackCompression.Lz4Block);// 使用Lz4压缩
         public LogRecord() { }
 
         /// <summary>
@@ -31,10 +32,44 @@ namespace NKnife.NLog.Target.Socket.Common
         {
             TimeStamp        = logEventInfo.TimeStamp;
             Level            = logEventInfo.Level;
-            Exception        = logEventInfo.Exception;
+            Exception        = ExceptionToString(logEventInfo.Exception);
             LoggerName       = logEventInfo.LoggerName;
             FormattedMessage = logEventInfo.FormattedMessage;
-            StackTrace       = logEventInfo.StackTrace;
+            StackTrace       = StackTraceToString(logEventInfo.StackTrace);
+        }
+
+        private static string? StackTraceToString(StackTrace? stackTrace)
+        {
+            var frames = stackTrace?.GetFrames();
+
+            if(frames == null
+               || frames.Length <= 0)
+                return string.Empty;
+
+            var sb = new StringBuilder();
+            foreach (StackFrame frame in frames)
+                sb.AppendLine(frame.ToString());
+
+            return sb.ToString();
+        }
+
+        private static string? ExceptionToString(Exception? exception)
+        {
+            if (exception == null)
+                return null;
+
+            var sb = new StringBuilder();
+            sb.AppendLine(exception.ToString());
+
+            var innerException = exception.InnerException;
+            while (innerException != null)
+            {
+                sb.AppendLine("Inner Exception:");
+                sb.AppendLine(innerException.ToString());
+                innerException = innerException.InnerException;
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -42,37 +77,37 @@ namespace NKnife.NLog.Target.Socket.Common
         /// </summary>
         public static string Terminator => "\r\t\n";
 
-        public static byte[] TerminatorBytes => Encoding.UTF8.GetBytes(Terminator);
+        public static byte[] TerminatorBytes => [0x0D, 0x09, 0x0A]; // \r\t\n
 
         /// <summary>
         ///     获取或设置日志记录的时间戳。
         /// </summary>
-        [MemoryPackOrder(0)] public DateTime TimeStamp { get; set; }
+        [Key(0)]public DateTime TimeStamp { get; set; }
 
         /// <summary>
         ///     获取或设置日志记录的级别。
         /// </summary>
-        [MemoryPackOrder(1)][LogLevelFormatter] public LogLevel Level { get; set; } = LogLevel.Info;
+        [Key(1)] public LogLevel Level { get; set; } = LogLevel.Info;
 
         /// <summary>
         ///     获取或设置日志记录的记录器名称。
         /// </summary>
-        [MemoryPackOrder(2)] public string? LoggerName { get; set; }
+        [Key(2)] public string? LoggerName { get; set; }
 
         /// <summary>
         ///     获取或设置日志记录的格式化消息。
         /// </summary>
-        [MemoryPackOrder(3)] public string FormattedMessage { get; set; } = string.Empty;
+        [Key(3)] public string FormattedMessage { get; set; } = string.Empty;
 
         /// <summary>
         ///     获取或设置日志记录的异常。
         /// </summary>
-        [MemoryPackOrder(4)] public Exception? Exception { get; set; }
+        [Key(4)] public string? Exception { get; set; }
 
         /// <summary>
         ///     获取或设置日志记录的堆栈跟踪。
         /// </summary>
-        [MemoryPackOrder(5)] public StackTrace? StackTrace { get; set; }
+        [Key(5)] public string? StackTrace { get; set; }
 
         public override string ToString()
         {
@@ -87,12 +122,12 @@ namespace NKnife.NLog.Target.Socket.Common
             return json;
         }
 
-        public Task<byte[]> ToBinaryAsync()
+        public byte[] ToBinary()
         {
-            var pack = MemoryPackSerializer.Serialize(this);
-            //memoryStream.Write(TerminatorBytes, 0, TerminatorBytes.Length); // 添加终止符
-
-            return Task.FromResult(pack);
+            var writer  = new ArrayBufferWriter<byte>();
+            MessagePackSerializer.Serialize(typeof(LogRecord), writer, this, s_mpOptions);
+            writer.Write(TerminatorBytes);// 添加终止符字节
+            return writer.WrittenSpan.ToArray();
         }
 
         public static LogRecord? FromJson(string json)
@@ -101,28 +136,4 @@ namespace NKnife.NLog.Target.Socket.Common
         }
     }
 
-    public sealed class LogLevelFormatterAttribute : MemoryPackCustomFormatterAttribute<LogLevel>
-    {
-        public override IMemoryPackFormatter<LogLevel> GetFormatter()
-        {
-            return new LogLevelFormatter();
-        }
-
-        private class LogLevelFormatter : IMemoryPackFormatter<LogLevel>
-        {
-            public void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref LogLevel? value)
-                where TBufferWriter : class, IBufferWriter<byte>
-            {
-                if(value != null)
-                    writer.WriteValue(value.Name);
-            }
-
-            public void Deserialize(ref MemoryPackReader reader, scoped ref LogLevel? value)
-            {
-                var name = reader.ReadString();
-                if(!string.IsNullOrEmpty(name))
-                    value = LogLevel.FromString(name);
-            }
-        }
-    }
 }

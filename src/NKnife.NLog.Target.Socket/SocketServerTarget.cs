@@ -54,12 +54,8 @@ namespace NKnife.NLog.Target.Socket
                 {
                     if(_tcpService.Count <= 0)
                         return;
-                    var    record = new LogRecord(logEvent);
-                    byte[] data;
-                    if(UseJson)
-                        data = Encoding.UTF8.GetBytes(record.ToJson());
-                    else
-                        data = await record.ToBinaryAsync();
+                    var record  = new LogRecord(logEvent);
+                    var data    = UseJson ? Encoding.UTF8.GetBytes(record.ToJson()) : record.ToBinary();
                     var clients = _tcpService.GetClients();
                     await Task.WhenAll(clients.Select(client => client.SendAsync(data)));
                 }
