@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>22.0.0.310</AssemblyVersion>
-    <FileVersion>22.0.0.310</FileVersion>
-    <Version>22.0.0</Version>
+    <AssemblyVersion>24.0.1</AssemblyVersion>
+    <FileVersion>24.0.1</FileVersion>
+    <Version>24.0.1</Version>
     <Authors>lukan@xknife.net</Authors>
     <Company>xknife.net</Company>
     <Description>一个面向.Net的综合开发库。</Description>
@@ -16,32 +16,10 @@
     <RepositoryUrl>https://gitee.com/xknife/nknife</RepositoryUrl>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\NKnife.xml</DocumentationFile>
-    <OutputPath>bin\Debug\netstandard2.0\</OutputPath>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\NKnife.xml</DocumentationFile>
-    <OutputPath>bin\Release\netstandard2.0\</OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Properties\**" />
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="Properties\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Util\UtilAssembly.cs" />
-    <Compile Remove="Util\UtilReflection.cs" />
-    <Compile Remove="Util\UtilType.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Chinese\CnCities.json" />
   </ItemGroup>
 
   <ItemGroup>

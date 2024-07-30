@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 namespace NKnife.Base;
 
 public class BasicNotifyPropertyObject : INotifyPropertyChanged
@@ -21,4 +22,6 @@ public class BasicNotifyPropertyObject : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
         return true;
     }
-}
+}  
+
+#pragma warning restore CS8632
