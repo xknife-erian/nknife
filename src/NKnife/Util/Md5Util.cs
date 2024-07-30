@@ -11,7 +11,7 @@ namespace NKnife.Util
         public static string Create(string input)
         {
             // Use input string to calculate MD5 hash
-            using var md5 = System.Security.Cryptography.MD5.Create();
+            using var md5 = MD5.Create();
 
             var inputBytes = Encoding.ASCII.GetBytes(input);
             var hashBytes = md5.ComputeHash(inputBytes);
@@ -101,7 +101,7 @@ namespace NKnife.Util
         /// <returns>计算结果</returns>
         private static string Md5Buffer(byte[] md5File, int index, int count)
         {
-            var md5 = new MD5CryptoServiceProvider();
+            using var md5 = MD5.Create();
             byte[] hashByte = md5.ComputeHash(md5File, index, count);
             string result = BitConverter.ToString(hashByte);
 

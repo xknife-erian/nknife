@@ -14,7 +14,7 @@ namespace NKnife.Collections
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
-    public class NotifySerializableMap<TKey, TValue> : IDictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged, IXmlSerializable, ISerializable, ICloneable
+    public class NotifySerializableMap<TKey, TValue> : IDictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged, IXmlSerializable, ICloneable
     {
         private readonly SerializableMap<TKey, TValue> _map = new SerializableMap<TKey, TValue>();
 
@@ -179,15 +179,6 @@ namespace NKnife.Collections
         public void WriteXml(XmlWriter writer)
         {
             ((IXmlSerializable) _map).WriteXml(writer);
-        }
-
-        #endregion
-
-        #region Implementation of ISerializable
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            ((ISerializable) _map).GetObjectData(info, context);
         }
 
         #endregion

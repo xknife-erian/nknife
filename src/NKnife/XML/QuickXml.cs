@@ -8,6 +8,7 @@ using NKnife.Util;
 using XmlDocument = System.Xml.XmlDocument;
 using XmlElement = System.Xml.XmlElement;
 
+#pragma warning disable CS8632 // be used in code within a '#nullable' annotations context.
 namespace NKnife.XML
 {
     /// <summary>
@@ -198,7 +199,7 @@ namespace NKnife.XML
         {
             var ele = _xml.CreateElement(EleName);
             ele.SetAttribute(OptionAttr, key);
-            var json = Serialize(value.ToString);
+            var json = Serialize(value.ToString());
             ele.SetCDataElement(json);
 
             return ele;

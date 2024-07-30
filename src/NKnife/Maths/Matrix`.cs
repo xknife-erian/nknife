@@ -2,6 +2,7 @@
 using System.Linq;
 using CommunityToolkit.HighPerformance;
 
+#pragma warning disable CS8632 // be used in code within a '#nullable' annotations context.
 namespace NKnife.Maths
 {
     /// <summary>

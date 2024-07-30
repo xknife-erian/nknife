@@ -28,14 +28,12 @@ namespace NKnife
                     }
                 }
                 TargetAssembly = Assembly.GetExecutingAssembly();
-                return Path.GetFileNameWithoutExtension(TargetAssembly.CodeBase);
+                var location = TargetAssembly.Location;
+                return Path.GetFileNameWithoutExtension(location);
             }
         }
 
-        public Version AssemblyVersion
-        {
-            get { return TargetAssembly.GetName().Version; }
-        }
+        public Version AssemblyVersion => TargetAssembly.GetName().Version;
 
         public string AssemblyDescription
         {

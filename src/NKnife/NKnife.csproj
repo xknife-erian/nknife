@@ -14,6 +14,7 @@
     <Title>$(AssemblyName)</Title>
     <PackageProjectUrl>https://gitee.com/xknife/nknife</PackageProjectUrl>
     <RepositoryUrl>https://gitee.com/xknife/nknife</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -90,6 +91,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+      <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
