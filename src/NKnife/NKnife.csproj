@@ -19,12 +19,11 @@
 
   <ItemGroup>
     <Compile Remove="Properties\**" />
+    <Compile Remove="ShareResources\**" />
     <EmbeddedResource Remove="Properties\**" />
+    <EmbeddedResource Remove="ShareResources\**" />
     <None Remove="Properties\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="ShareResources\CnCities.json" />
+    <None Remove="ShareResources\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,67 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ShareResources\ArgumentValidationString.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ArgumentValidationString.resx</DependentUpon>
-    </Compile>
-	<Compile Update="ShareResources\FilterString.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FilterString.resx</DependentUpon>
-    </Compile>
-	<Compile Update="ShareResources\GeneralString.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GeneralString.resx</DependentUpon>
-    </Compile>
-	<Compile Update="ShareResources\RegexString.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RegexString.resx</DependentUpon>
-    </Compile>
-	<Compile Update="ShareResources\SmartDateString.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SmartDateString.resx</DependentUpon>
-    </Compile>
-	<Compile Update="ShareResources\StringResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StringResource.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-	<EmbeddedResource Update="ShareResources\ArgumentValidationString.resx">
-	  <Generator>PublicResXFileCodeGenerator</Generator>
-	  <LastGenOutput>ArgumentValidationString.Designer.cs</LastGenOutput>
-	</EmbeddedResource>
-	<EmbeddedResource Update="ShareResources\FilterString.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>FilterString.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-	<EmbeddedResource Update="ShareResources\GeneralString.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>GeneralString.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-	<EmbeddedResource Update="ShareResources\RegexString.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-	<EmbeddedResource Update="ShareResources\SmartDateString.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-	<EmbeddedResource Update="ShareResources\StringResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>StringResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-      <None Include="README.md" Pack="true" PackagePath="\"/>
+      <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

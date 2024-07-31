@@ -36,15 +36,15 @@ namespace NKnife.Util
         /// <returns>返回间隔标志指定的时间间隔</returns>     
         public static int DateDiff(DateTime date1, DateTime date2, string interval)
         {
-            const double dblYearLen = 365; //年的长度，365天     
-            const double dblMonthLen = (365/12); //每个月平均的天数     
+            const double DBL_YEAR_LEN = 365; //年的长度，365天     
+            const double DBL_MONTH_LEN = (365/12); //每个月平均的天数     
             TimeSpan objT = date2.Subtract(date1);
             switch (interval)
             {
                 case "y": //返回日期的年份间隔     
-                    return Convert.ToInt32(objT.Days/dblYearLen);
+                    return Convert.ToInt32(objT.Days/DBL_YEAR_LEN);
                 case "M": //返回日期的月份间隔     
-                    return Convert.ToInt32(objT.Days/dblMonthLen);
+                    return Convert.ToInt32(objT.Days/DBL_MONTH_LEN);
                 case "d": //返回日期的天数间隔     
                     return objT.Days;
                 case "h": //返回日期的小时间隔     
@@ -60,137 +60,7 @@ namespace NKnife.Util
             }
             return 0;
         }
-
-        /// <summary>
-        /// 返回标准日期格式string
-        /// </summary>
-        public static string GetDate()
-        {
-            return DateTime.Now.ToString("yyyy-MM-dd");
-        }
-
-        /// <summary>
-        /// 返回指定日期格式
-        /// </summary>
-        public static string GetDate(string datetimestr, string replacestr)
-        {
-            if (string.IsNullOrEmpty(datetimestr))
-            {
-                Debug.Fail("DateTime String IsNullOrEmpty!");
-                return replacestr;
-            }
-            try
-            {
-                datetimestr = Convert.ToDateTime(datetimestr).ToString("yyyy-MM-dd").Replace("1900-01-01", replacestr);
-            }
-            catch
-            {
-                return replacestr;
-            }
-            return datetimestr;
-        }
-
-        /// <summary>
-        /// 返回标准时间格式string
-        /// </summary>
-        public static string GetTime()
-        {
-            return DateTime.Now.ToString("HH:mm:ss");
-        }
-
-        /// <summary>
-        /// 返回标准时间格式string
-        /// </summary>
-        public static string GetDateTime()
-        {
-            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        }
-
-        /// <summary>
-        /// 返回相对于当前时间的相对天数
-        /// </summary>
-        public static string GetDateTime(int relativeday)
-        {
-            return DateTime.Now.AddDays(relativeday).ToString("yyyy-MM-dd HH:mm:ss");
-        }
-
-        /// <summary>
-        /// 返回标准时间格式string
-        /// </summary>
-        public static string GetDateTimeF()
-        {
-            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fffffff");
-        }
-
-        /// <summary>
-        /// 返回标准时间 
-        /// </summary>
-        public static string GetStandardDateTime(string fDateTime, string formatStr)
-        {
-            if (fDateTime == "0000-0-0 0:00:00")
-            {
-                return fDateTime;
-            }
-            DateTime s = Convert.ToDateTime(fDateTime);
-            return s.ToString(formatStr);
-        }
-
-        /// <summary>
-        /// 返回标准时间 yyyy-MM-dd HH:mm:ss
-        /// </summary>
-        public static string GetStandardDateTime(string fDateTime)
-        {
-            return GetStandardDateTime(fDateTime, "yyyy-MM-dd HH:mm:ss");
-        }
-
-        /// <summary>返回标准时间 yyyy-MM-dd
-        /// </summary>
-        public static string GetStandardDate(string fDate)
-        {
-            return GetStandardDateTime(fDate, "yyyy-MM-dd");
-        }
-
-        /// <summary>判断字符串是否是yy-mm-dd字符串
-        /// </summary>
-        /// <param name="dateValue">待判断字符串</param>
-        /// <returns>判断结果</returns>
-        public static bool IsDateString(string dateValue)
-        {
-            return RegexUtil.Date.IsMatch(dateValue);
-        }
-
-        /// <summary>判断字符串是否是00:00:00字符串
-        /// </summary>
-        /// <param name="timeValue">待判断字符串</param>
-        /// <returns>判断结果</returns>
-        public static bool IsTimeString(string timeValue)
-        {
-            return RegexUtil.Time.IsMatch(timeValue);
-        }
-
-        /// <summary>判断字符串是否是00:00:00字符串
-        /// </summary>
-        /// <param name="timeValue">待判断字符串</param>
-        /// <param name="hour"></param>
-        /// <param name="second"></param>
-        /// <param name="minute"></param>
-        /// <returns>判断结果</returns>
-        public static bool GetTime(string timeValue, out int hour, out int second, out int minute)
-        {
-            timeValue = timeValue.Trim();
-            hour = 0;
-            second = 0;
-            minute = 0;
-            if (RegexUtil.Time.IsMatch(timeValue))
-            {
-                hour = int.Parse(timeValue.Substring(0, 2));
-                second = int.Parse(timeValue.Substring(3, 2));
-                minute = int.Parse(timeValue.Substring(6, 2));
-                return true;
-            }
-            return false;
-        }
-
+        
         /// <summary>返回与当前时间相差的秒数
         /// </summary>
         /// <param name="time"></param>
@@ -308,7 +178,7 @@ namespace NKnife.Util
         {
             string date = DateTime.Now.ToLongDateString();
             const string time = "00:00:00";
-            return DateTime.Parse(string.Format("{0} {1}", date, time));
+            return DateTime.Parse($"{date} {time}");
         }
 
         /// <summary>指定两个时间值是否是一天的时间，不考虑该值所含的“小时，分，秒”等

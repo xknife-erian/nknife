@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-using NKnife.ShareResources;
 
 namespace NKnife.Util
 {
@@ -63,7 +62,7 @@ namespace NKnife.Util
             {
                 return false;
             }
-            if (!Regex.IsMatch(fileName, RegexString.RegexStr_FileName))
+            if (!Regex.IsMatch(fileName, @"^([a-zA-Z]:)?[^:]+$"))
             {
                 return false;
             }

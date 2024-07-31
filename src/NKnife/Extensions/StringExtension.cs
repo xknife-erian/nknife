@@ -89,18 +89,6 @@ namespace System
         }
 
         /// <summary>
-        ///     清除给定字符串中的回车及换行符
-        /// </summary>
-        /// <param name="str">要清除的字符串</param>
-        /// <returns>清除后返回的字符串</returns>
-        public static string TrimBr(this string str)
-        {
-            for (Match m = RegexUtil.Br.Match(str); m.Success; m = m.NextMatch())
-                str = str.Replace(m.Groups[0].ToString(), "");
-            return str;
-        }
-
-        /// <summary>
         ///     是否是Null,空,全部是空白或全部为0的字符串
         /// </summary>
         /// <param name="str">The STR.</param>

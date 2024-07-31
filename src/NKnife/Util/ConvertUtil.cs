@@ -2,8 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
-using NKnife.ShareResources;
 
 namespace NKnife.Util
 {
@@ -378,7 +376,7 @@ namespace NKnife.Util
                                 return true;
                         }
 
-                        throw new ArgumentOutOfRangeException(string.Format(ArgumentValidationString.ValueMustIs0or1, "intParam"));
+                        throw new ArgumentException($"{intParam} 必须是1或0", nameof(intParam));
                     }
                 case ConvertMode.Relaxed:
                     return IntToBoolean(intParam);
