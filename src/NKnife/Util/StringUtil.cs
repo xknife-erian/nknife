@@ -69,47 +69,6 @@ namespace NKnife.Util
         }
 
         /// <summary>
-        /// 针对【M1#个人业务&M5#VIP业务&M2#对公业务】格式的数据进行转换
-        /// </summary>
-        public static Dictionary<string, string> SplitXx(string msg)
-        {
-            var typeMap = new Dictionary<string, string>();
-            string[] kv = msg.Split('&');
-            foreach (string item in kv)
-            {
-                if (IsNullOrEmpty(item))
-                {
-                    continue;
-                }
-                string[] ab = item.Split('#');
-                if (typeMap.ContainsKey(ab[0]))
-                {
-                    continue;
-                }
-                if (ab.Length == 2)
-                {
-                    typeMap.Add(ab[0], ab[1]);
-                }
-                else if (ab.Length > 2)
-                {
-                    var rab = new StringBuilder();
-                    for (int i = 1; i < ab.Length; i++)
-                    {
-                        if (IsNullOrEmpty(ab[i]))
-                            continue;
-                        rab.Append(ab[i]).Append("#");
-                    }
-                    typeMap.Add(ab[0], rab.ToString().TrimEnd('#'));
-                }
-                else
-                {
-                    typeMap.Add(ab[0], "");
-                }
-            }
-            return typeMap;
-        }
-
-        /// <summary>
         /// 区位码及汉字之间的互换
         /// </summary>
         /// <param name="character">汉字</param>

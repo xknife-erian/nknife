@@ -1,4 +1,5 @@
 ﻿using System;
+using NKnife.Util;
 
 namespace NKnife.Chinese
 {
@@ -22,7 +23,7 @@ namespace NKnife.Chinese
         /// </summary>
         public SpellRandom()
         {
-            Randow = new Random(unchecked((int)DateTime.Now.Ticks));
+            Randow = RandomUtil.GetRandom();
         }
 
         /// <summary>
