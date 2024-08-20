@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace NKnife.Util
 {
@@ -68,25 +69,30 @@ namespace NKnife.Util
         /// </summary>
         private const string CHAR_TO_SPLIT = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
 
-        /// <summary>构造函数
-        /// </summary>
-        static RandomUtil()
+        private static readonly ThreadLocal<Random> s_random = new ThreadLocal<Random>(() =>
         {
-            int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
-            Random = new Random((int)seed);
-        }
+            // 生成一个随机的种子值
+            byte[] seedBytes = new byte[4];
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(seedBytes);
+            }
+            // 将种子值转换为整数
+            int seed = BitConverter.ToInt32(seedBytes, 0);
+            return new Random(seed);
+        });
 
-        /// <summary>
-        /// 表示伪随机数生成器。静态属性。
-        /// </summary>
-        public static Random Random { get; set; }
+        public static Random GetRandom()
+        {
+            return s_random.Value;
+        }
 
         /// <summary>返回非负随机数。
         /// </summary>
         /// <returns>返回大于等于零且小于 System.Int32.MaxValue 的 32 位带符号整数。</returns>
         public static int Next()
         {
-            return Random.Next();
+            return s_random.Value.Next();
         }
 
         /// <summary>返回一个小于所指定最大值的非负随机数。
@@ -95,7 +101,7 @@ namespace NKnife.Util
         /// <returns>大于等于零且小于 maxValue 的 32 位带符号整数，即：返回值的范围通常包括零但不包括 maxValue。不过，如果 maxValue 等于零，则返回maxValue。</returns>
         public static int Next(int maxValue)
         {
-            return Random.Next(maxValue);
+            return s_random.Value.Next(maxValue);
         }
 
         /// <summary>返回一个指定范围内的随机数。
@@ -105,7 +111,7 @@ namespace NKnife.Util
         /// <returns>一个大于等于 minValue 且小于 maxValue 的 32 位带符号整数，即：返回的值范围包括 minValue 但不包括 maxValue。如果minValue 等于 maxValue，则返回 minValue。</returns>
         public static int Next(int minValue, int maxValue)
         {
-            return Random.Next(minValue, maxValue);
+            return s_random.Value.Next(minValue, maxValue);
         }
 
         /// <summary>获取一定数量的随机整数，可能会有重复。
@@ -119,7 +125,7 @@ namespace NKnife.Util
             var numList = new int[count];
             for (int i = 0; i < count; i++)
             {
-                numList[i] = Random.Next(minValue, maxValue);
+                numList[i] = s_random.Value.Next(minValue, maxValue);
             }
             return numList;
         }
@@ -138,7 +144,7 @@ namespace NKnife.Util
             }
 
             List<int> allNumbers = Enumerable.Range(minValue, maxValue - minValue + 1).ToList();
-            allNumbers.Shuffle(Random);
+            allNumbers.Shuffle(s_random.Value);
             return allNumbers.GetRange(0, count);
         }
 
@@ -197,7 +203,7 @@ namespace NKnife.Util
             
             for (int i = 0; i < length; i++)
             {
-                sb.Append(valid[Random.Next(valid.Length)]);
+                sb.Append(valid[s_random.Value.Next(valid.Length)]);
             }
 
             return sb.ToString();
@@ -223,9 +229,11 @@ namespace NKnife.Util
             }
             for (int i = 0; i < length - prefixLength; i++)
             {
-                sb.Append(Random.Next(0, 9));
+                sb.Append(s_random.Value.Next(0, 9));
             }
             return sb.ToString();
         }
+
+
     }
 }

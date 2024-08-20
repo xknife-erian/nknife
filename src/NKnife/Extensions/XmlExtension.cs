@@ -425,7 +425,7 @@ namespace System.Xml
                 ele = element.OwnerDocument.CreateElement(localName);
                 if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
                     ele.InnerText = value.ToString();
-                if (!CollectionUtil.IsNullOrEmpty(attributes))
+                if (attributes is { Length: > 0 })
                 {
                     foreach (var attribute in attributes)
                     {

@@ -15,7 +15,7 @@ namespace NKnife.Util
         /// </returns>
         public static bool IsCompressed(this byte[] bytes)
         {
-            if (CollectionUtil.IsNullOrEmpty(bytes))
+            if (bytes is not { Length: > 0 })
                 return false;
             return bytes[0] == 31 && bytes[1] == 139;
         }
