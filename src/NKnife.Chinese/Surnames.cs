@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace NKnife.Chinese
 {
-    public class Class1
+    public class Surnames
     {
         /*
          * https://www.gov.cn/xinwen/2021-02/08/content_5585906.htm
