@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MLChinese.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="MLChinese.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NKnife\NKnife.csproj" />
   </ItemGroup>
 

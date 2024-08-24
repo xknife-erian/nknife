@@ -112,7 +112,7 @@ namespace NKnife.Chinese
             s_cumulativeWeights = CalculateCumulativeWeights(s_surnameWeightDict);
         }
 
-        private static void Initialize()
+        internal static void Initialize()
         {
             // 计算已有的姓氏权重总和（仅前20个）
             var totalWeightFirstArray = s_surnameWeightDict.Values.Sum();
@@ -120,95 +120,58 @@ namespace NKnife.Chinese
             // 计算剩余部分的总权重
             var remainingTotalWeight = 100 - totalWeightFirstArray;
 
-            // 包括前20个姓氏在内的总姓氏数量
-            var totalSurnames = 600;
-
-            // 计算线性递减的起始权重
-            var linearStartWeight = 1.97;
-            var linearEndWeight = 1.87;
-
-            // 计算线性递减的步长
-            var linearStep = (linearStartWeight - linearEndWeight) / 10;
-
             // 计算第21个姓氏的初始权重
-            var initialWeight21st = linearEndWeight;
-
-            // 计算未归一化的权重总和
-            double unnormalizedSum = CalculateLinearSum(linearStartWeight, linearStep, 10) + initialWeight21st;
-
-            // 从第22个姓氏开始计算权重总和
-            double currentWeight = initialWeight21st;
-            for (var x = 22; x <= totalSurnames; x++)
-            {
-                var weight = 1.87 * Math.Exp(-0.005403 * x) + 0.000001; // 使用新函数
-                unnormalizedSum += weight;
-            }
-
-            // 计算归一化因子
-            var normalizationFactor = remainingTotalWeight / unnormalizedSum;
+            var initialWeight21St = Weight(1);
 
             // 添加剩余的姓氏
-            AddRemainingSurnamesWithDecay(normalizationFactor, initialWeight21st);
+            AddRemainingSurnamesWithDecay(initialWeight21St);
+        }//TODO: 递减速率不够，需要调整，现在后面的相加后原大于100. lukan, 2024-8-22
+
+        internal static double Weight(int x)
+        {
+            return (1.87 * Math.Exp(-0.0489 * x) + 0.000001);
         }
 
-        private static double CalculateLinearSum(double startWeight, double step, int count)
+        internal static void AddRemainingSurnamesWithDecay(double initialWeight)
         {
-            double sum = 0;
-            for (int i = 0; i < count; i++)
-            {
-                sum += startWeight - i * step;
-            }
-            return sum;
-        }
-
-        private static void AddRemainingSurnamesWithDecay(double normalizationFactor, double initialWeight)
-        {
-            var currentIndex = 21;
+            var currentIndex = 1;
             double currentWeight = initialWeight;
 
             // 添加第1个数组中第21个姓氏之后的姓氏
-            for (var i = 20; i < s_chineseSurnames1To100.Length; i++, currentIndex++)
+            for (var i = 0; i < s_chineseSurnames1To100.Length - 20; i++, currentIndex++)
             {
-                if (currentIndex <= 30) // 如果当前索引小于等于30，则使用线性递减
-                {
-                    var weight = normalizationFactor * (1.97 - (currentIndex - 21) * 0.01); // 使用线性递减
-                    s_surnameWeightDict.Add(s_chineseSurnames1To100[i], weight);
-                }
-                else
-                {
-                    var weight = normalizationFactor * (1.87 * Math.Exp(-0.005403 * currentIndex) + 0.000001); // 使用新函数
-                    s_surnameWeightDict.Add(s_chineseSurnames1To100[i], weight);
-                }
+                var weight = Weight(currentIndex);
+                s_surnameWeightDict.Add(s_chineseSurnames1To100[i + 20], weight);
             }
 
             // 添加剩余的四个数组中的姓氏
             for (var i = 0; i < s_chineseSurnames101To200.Length; i++, currentIndex++)
             {
-                var weight = normalizationFactor * (1.87 * Math.Exp(-0.005403 * currentIndex) + 0.000001); // 使用新函数
+                var weight = Weight(currentIndex);
                 s_surnameWeightDict.Add(s_chineseSurnames101To200[i], weight);
             }
 
             for (var i = 0; i < s_chineseSurnames201To300.Length; i++, currentIndex++)
             {
-                var weight = normalizationFactor * (1.87 * Math.Exp(-0.005403 * currentIndex) + 0.000001); // 使用新函数
+                var weight = Weight(currentIndex);
                 s_surnameWeightDict.Add(s_chineseSurnames201To300[i], weight);
             }
 
             for (var i = 0; i < s_chineseSurnames301To400.Length; i++, currentIndex++)
             {
-                var weight = normalizationFactor * (1.87 * Math.Exp(-0.005403 * currentIndex) + 0.000001); // 使用新函数
+                var weight = Weight(currentIndex);
                 s_surnameWeightDict.Add(s_chineseSurnames301To400[i], weight);
             }
 
             for (var i = 0; i < s_chineseSurnames401To500.Length; i++, currentIndex++)
             {
-                var weight = normalizationFactor * (1.87 * Math.Exp(-0.005403 * currentIndex) + 0.000001); // 使用新函数
+                var weight = Weight(currentIndex);
                 s_surnameWeightDict.Add(s_chineseSurnames401To500[i], weight);
             }
 
             for (var i = 0; i < s_chineseSurnames501To600.Length; i++, currentIndex++)
             {
-                var weight = normalizationFactor * (1.87 * Math.Exp(-0.005403 * currentIndex) + 0.000001); // 使用新函数
+                var weight = Weight(currentIndex); 
                 s_surnameWeightDict.Add(s_chineseSurnames501To600[i], weight);
             }
         }
@@ -240,7 +203,7 @@ namespace NKnife.Chinese
             return result.ToArray();
         }
 
-        private static int BinarySearch(double target)
+        internal static int BinarySearch(double target)
         {
             int left  = 0;
             int right = s_cumulativeWeights.Count - 1;
@@ -266,7 +229,7 @@ namespace NKnife.Chinese
             return left;
         }
 
-        private static List<double> CalculateCumulativeWeights(Dictionary<string, double> surnameWeightDict)
+        internal static List<double> CalculateCumulativeWeights(Dictionary<string, double> surnameWeightDict)
         {
             var    cumulativeWeights = new List<double>();
             double cumulativeWeight  = 0.0;
